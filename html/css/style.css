@@ -1,3 +1,28 @@
+body{
+	font-size: 62.5%;
+}
+
+h1{
+	font-size: 2.4em;
+}
+
+h2{
+	font-size: 2.0em;
+}
+
+h3{
+	font-size: 1.6em;
+}
+
+h4{
+	font-size: 1.6em;
+}
+
+h5{
+	font-size: 1.6em;
+}
+
+
 #wrapper {
     width:960px;
     margin: 0 auto;
@@ -40,6 +65,7 @@ pre {
 
 p {
     margin:5px 0;
+	font-size:1.4em;
 }
 
 #footer {
