@@ -1,0 +1,41 @@
+%title Linux Comamnds
+= 文件传输命令 =
+== scp ==
+{{{
+scp — secure copy (remote file copy program)
+-p参数	将每个副本的修改时间、权限等与源文件保持一致
+}}}
+
+
+
+
+
+= 系统磁盘管理命令 =
+== mount ==
+
+== df ==
+
+== du ==
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+= XXX =
+begin at 2012/09/10
