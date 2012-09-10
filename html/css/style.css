@@ -61,6 +61,9 @@ code {
 pre {
     background-color: #EBEBEB;/* #FBFBF7; */ /* #B7BECC;*/
     padding: 10px;
+	-moz-border-radius: 10px;      /* Gecko browsers */
+	-webkit-border-radius: 10px;   /* Webkit browsers */
+	border-radius:10px;            /* W3C syntax */
 }
 
 p {
