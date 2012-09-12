@@ -1,6 +1,6 @@
 %title 目录
 
-[http://wtq.me/index.html Linux Command]
+[http://wtq.me/linux_commands.html Linux Command]
 
 [http://wtq.me/git.html Git]
 
