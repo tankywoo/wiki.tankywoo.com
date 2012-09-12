@@ -1,3 +1,21 @@
+/* clear the float problem */
+.clearfix:after {
+	visibility: hidden;
+	clear: both;
+	font-size: 0;
+	content: '.';
+	display: block;
+	height: 0;
+
+}
+
+* html .clearfix{zoom: 1;}      /* IE6.0 */
+*:first-child + html .clearfix{zoom: 1;}    /* IE7.0 */
+
+a{
+	text-decoration: none;
+}
+
 body{
 	font-size: 62.5%;
 }
@@ -26,6 +44,19 @@ h5{
 #wrapper {
     width:960px;
     margin: 0 auto;
+}
+
+#header ul{
+	float: left;
+	display: block;
+}
+
+#header ul li{
+	float: left;
+	display: block;
+	margin: 0 10px;
+	padding: 10px 0;
+	border-bottom: 5px solid #555;
 }
 
 #title {
