@@ -1,6 +1,8 @@
 %title Linux Shell
 = 什么是Shell =
-
+{{{
+shell是一个座位用户与Linux系统间接口的程序，它允许用户向操作系统输入需要执行的命令
+}}}
 
 == 参考 ==
 《Linux程序设计》
