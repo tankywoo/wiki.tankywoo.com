@@ -30,9 +30,29 @@ shell是一个作为用户与Linux系统间接口的程序，它允许用户向�
 2	错误输出 2&gt; 2&gt;&gt;
 
 &lt;是输出， &lt;&lt;是以附加的方式输出
-&gt;&amp;
+&gt;&amp; kill -9 1234 &gt;killouterr.txt 2&gt;&amp;1
+
 </pre>
-<h2 id="toc_2.2">参考</h2>
+
+<h2 id="toc_2.2">管道</h2>
+<pre>
+管道用操作符 '|'
+</pre>
+
+<h1 id="toc_3">脚本</h1>
+<h2 id="toc_3.1">格式</h2>
+<pre>
+第一行指定执行shell的文件，一般是#!/bin/bash或#!/bin/sh
+</pre>
+
+<h2 id="toc_3.2">运行</h2>
+<pre>
+* 直接运行 sh xx.sh 或者 bash xx.sh
+* 可执行文件 先chmod +x xx.sh 然后 ./xx.sh
+</pre>
+
+
+<h1 id="toc_4">参考</h1>
 <p>
 《Linux程序设计》
 </p>
