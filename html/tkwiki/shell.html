@@ -91,6 +91,34 @@ hello
 
 
 <h3 id="toc_4.1.1">引号</h3>
+<ul>
+<li>
+read读入数据时，带有空格的数据不需要加引号
+<pre>
+eg. $ read var
+    Tanky Woo
+ $ echo $var
+ Tanky Woo
+</pre>
+
+<li>
+对于变量$var，如果放在双引号""中，则会替换为其值
+
+<li>
+如果放在单引号''中，则不会发生替换
+
+<li>
+还可以在$前面加上'\'符号取消其转义行为
+<pre>
+eg.
+var="tanky woo"
+echo $var     # tanky woo
+echo "$var"   # tanky woo
+echo '$var'   # $var
+echo \$var    $var
+</pre>
+
+</ul>
 
 
 

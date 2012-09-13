@@ -59,6 +59,24 @@ hello
 
 
 === 引号 ===
+* read读入数据时，带有空格的数据不需要加引号
+  {{{
+  eg. $ read var
+      Tanky Woo
+	  $ echo $var
+	  Tanky Woo
+  }}}
+* 对于变量$var，如果放在双引号""中，则会替换为其值
+* 如果放在单引号''中，则不会发生替换
+* 还可以在$前面加上'\'符号取消其转义行为
+  {{{
+  eg.
+  var="tanky woo"
+  echo $var     # tanky woo
+  echo "$var"   # tanky woo
+  echo '$var'   # $var
+  echo \$var    $var
+  }}}
 
 
 
