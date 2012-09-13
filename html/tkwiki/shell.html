@@ -51,8 +51,50 @@ shell是一个作为用户与Linux系统间接口的程序，它允许用户向�
 * 可执行文件 先chmod +x xx.sh 然后 ./xx.sh
 </pre>
 
+<h1 id="toc_4">Shell语法(*)</h1>
+<h2 id="toc_4.1">变量</h2>
+<ul>
+<li>
+变量不需要提前声明
 
-<h1 id="toc_4">参考</h1>
+<li>
+变量名区分大小写
+
+<li>
+创建变量时通过直接赋值给变量 eg. var=abc
+
+<li>
+访问变量时需要在变量名前加一个$符号 eg. echo $var 或 <code>echo ${var}</code>
+
+<li>
+在赋值时，等号两边不能有空格 eg. <code>var=abc</code>
+
+<li>
+如果字符串里有空格，则必须用双引号把字符串括起来 <code>var="Hello World"</code>
+
+</ul>
+
+<pre>
+eg.
+tankywoo@linuxmint /var/www/wiki $ a=hello
+tankywoo@linuxmint /var/www/wiki $ echo $a
+hello
+tankywoo@linuxmint /var/www/wiki $ b=a
+tankywoo@linuxmint /var/www/wiki $ echo $b
+a
+tankywoo@linuxmint /var/www/wiki $ b=world
+tankywoo@linuxmint /var/www/wiki $ echo $b
+world
+tankywoo@linuxmint /var/www/wiki $ echo $a
+hello
+</pre>
+
+
+<h3 id="toc_4.1.1">引号</h3>
+
+
+
+<h1 id="toc_5">参考</h1>
 <p>
 《Linux程序设计》
 </p>

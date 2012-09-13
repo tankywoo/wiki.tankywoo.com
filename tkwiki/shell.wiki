@@ -33,6 +33,34 @@ shell是一个作为用户与Linux系统间接口的程序，它允许用户向�
 * 可执行文件 先chmod +x xx.sh 然后 ./xx.sh
 }}}
 
+= Shell语法(*) =
+== 变量 ==
+* 变量不需要提前声明
+* 变量名区分大小写
+* 创建变量时通过直接赋值给变量 eg. var=abc
+* 访问变量时需要在变量名前加一个$符号 eg. echo $var 或 `echo ${var}`
+* 在赋值时，等号两边不能有空格 eg. `var=abc`
+* 如果字符串里有空格，则必须用双引号把字符串括起来 `var="Hello World"`
+
+{{{
+eg.
+tankywoo@linuxmint /var/www/wiki $ a=hello
+tankywoo@linuxmint /var/www/wiki $ echo $a
+hello
+tankywoo@linuxmint /var/www/wiki $ b=a
+tankywoo@linuxmint /var/www/wiki $ echo $b
+a
+tankywoo@linuxmint /var/www/wiki $ b=world
+tankywoo@linuxmint /var/www/wiki $ echo $b
+world
+tankywoo@linuxmint /var/www/wiki $ echo $a
+hello
+}}}
+
+
+=== 引号 ===
+
+
 
 = 参考 =
 《Linux程序设计》
