@@ -1,2 +1,6 @@
 %title Linux Shell
 = 什么是Shell =
+
+
+== 参考 ==
+《Linux程序设计》
