@@ -8,4 +8,5 @@
 
 [http://wtq.me/shell.html Shell]
 
+[http://wtq.me/ubuntu_network.html Ubuntu Network]
 = Vim =
