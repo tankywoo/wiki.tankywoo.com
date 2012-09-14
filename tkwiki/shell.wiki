@@ -96,5 +96,103 @@ fi
 
 }}}
 
+* 字符串的比较
+{{{
+str1 = str2
+str1 != str2
+-n str  如果字符串不为空则为True
+-z str  如果字符串为null，则结果为真
+}}}
+
+* 算数比较
+{{{
+exp1 -eq exp2	==
+exp1 -ne exp2	!=
+exp1 -gt exp2	>
+exp1 -ge exp2	>=
+exp1 -lt exp2	<
+exp1 -le exp2	<=
+!exp			如果exp为假则返回真
+}}}
+
+* 文件条件测试
+{{{
+-d file    directory
+-e file    exist
+-f file    common file
+-g file    set-group-id ???
+-r file    readable
+-s file    file space is not 0
+-u file    set-user-id ???
+-w file    writeable
+-x file    executeable
+}}}
+
+== 控制结构 ==
+=== if语句 ===
+{{{
+if condition
+then
+	statement
+elif condition; then
+	statement
+else
+	statement
+fi
+}}}
+
+=== for语句 ===
+{{{
+for var in values
+do
+	statement
+done
+}}}
+
+=== while语句 ===
+{{{
+while condition
+do
+	statenment
+done
+}}}
+
+
+=== while语句 ===
+{{{
+until condition
+do
+	statenment
+done
+}}}
+
+
+
+=== case语句 ===
+{{{
+case var in
+	passtern [| pattern]... ) statement1;;
+	passtern [| pattern]... ) statement2;;
+	...
+esac
+}}}
+注:
+每个模式都以`双引号;;`结尾
+{{{
+eg.
+#!/bin/sh
+# case statement
+echo "Please answer yes or no"
+read ans
+case "$ans" in
+        yes | y | Yes | YES )   echo "yes";;
+        no  | n | No  | NO  )   echo "no";;
+esac
+
+exit 0
+}}}
+
+
+
 = 参考 =
 《Linux程序设计》

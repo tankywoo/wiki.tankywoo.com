@@ -140,6 +140,118 @@ fi
 
 </pre>
 
+<ul>
+<li>
+字符串的比较
+<pre>
+str1 = str2
+str1 != str2
+-n str  如果字符串不为空则为True
+-z str  如果字符串为null，则结果为真
+</pre>
+
+</ul>
+
+<ul>
+<li>
+算数比较
+<pre>
+exp1 -eq exp2	==
+exp1 -ne exp2	!=
+exp1 -gt exp2	&gt;
+exp1 -ge exp2	&gt;=
+exp1 -lt exp2	&lt;
+exp1 -le exp2	&lt;=
+!exp			如果exp为假则返回真
+</pre>
+
+</ul>
+
+<ul>
+<li>
+文件条件测试
+<pre>
+-d file    directory
+-e file    exist
+-f file    common file
+-g file    set-group-id ???
+-r file    readable
+-s file    file space is not 0
+-u file    set-user-id ???
+-w file    writeable
+-x file    executeable
+</pre>
+
+</ul>
+
+<h2 id="toc_4.3">控制结构</h2>
+<h3 id="toc_4.3.1">if语句</h3>
+<pre>
+if condition
+then
+	statement
+elif condition; then
+	statement
+else
+	statement
+fi
+</pre>
+
+<h3 id="toc_4.3.2">for语句</h3>
+<pre>
+for var in values
+do
+	statement
+done
+</pre>
+
+<h3 id="toc_4.3.3">while语句</h3>
+<pre>
+while condition
+do
+	statenment
+done
+</pre>
+
+
+<h3 id="toc_4.3.4">while语句</h3>
+<pre>
+until condition
+do
+	statenment
+done
+</pre>
+
+
+
+<h3 id="toc_4.3.5">case语句</h3>
+<pre>
+case var in
+	passtern [| pattern]... ) statement1;;
+	passtern [| pattern]... ) statement2;;
+	...
+esac
+</pre>
+<p>
+注:
+每个模式都以<code>双引号;;</code>结尾
+</p>
+<pre>
+eg.
+#!/bin/sh
+# case statement
+echo "Please answer yes or no"
+read ans
+case "$ans" in
+        yes | y | Yes | YES )   echo "yes";;
+        no  | n | No  | NO  )   echo "no";;
+esac
+
+exit 0
+</pre>
+
+
+
 <h1 id="toc_5">参考</h1>
 <p>
 《Linux程序设计》
