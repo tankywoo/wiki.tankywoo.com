@@ -250,6 +250,127 @@ esac
 exit 0
 </pre>
 
+<h3 id="toc_4.3.6">AND OR列表</h3>
+<p>
+<code>&amp;&amp;</code> <code>||</code>
+</p>
+<pre>
+eg.
+con1 &amp;&amp; con2 &amp;&amp; con3
+con1 || con2 || con3
+</pre>
+  
+<h3 id="toc_4.3.7">语句块</h3>
+<p>
+<code>{}</code>
+</p>
+
+<h3 id="toc_4.3.8">函数</h3>
+<pre>
+function_name(){
+	statement
+}
+</pre>
+
+
+
+<h3 id="toc_4.3.9">命令</h3>
+<ul>
+<li>
+<code>break</code>
+
+<li>
+<code>:</code>
+
+<li>
+<code>continue</code>
+
+<li>
+<code>.</code>
+
+<li>
+<code>echo</code>
+
+<li>
+<code>eval</code> 对语句进行求值
+<pre>
+foo=10
+x=foo #echo $y --&gt; foo
+y='$'$x
+echo $y # --&gt; $foo
+
+eval y='$'$x
+echo $y # --&gt; 10
+</pre>
+
+<li>
+exec
+
+<li>
+<code>exit n</code>
+
+<li>
+<code>export</code>
+
+<li>
+<code>expr</code>
+
+</ul>
+<p>
+把参数当作表达式来求值
+</p>
+<pre>
+eg.
+x=`expr $x + 1`
+x=$(expr $x + 1)
+</pre>
+<ul>
+<li>
+<code>printf</code>
+
+<li>
+<code>return</code>
+
+<li>
+<code>set</code>
+
+<li>
+<code>shift</code>
+
+<li>
+<code>trap</code>
+
+<li>
+<code>unset</code>
+
+<li>
+<code>find</code> **
+
+<li>
+<code>grep</code> **
+
+</ul>
+
+<p>
+注：以下需要单独开一篇总结
+<code>find</code> <code>grep</code> <code>regex</code>
+</p>
+
+
+<h3 id="toc_4.3.10">补充</h3>
+<p>
+算数运算
+$((...))
+x=$(($x+1))
+</p>
+
+
+
+
+
+
+
+
 
 
 <h1 id="toc_5">参考</h1>

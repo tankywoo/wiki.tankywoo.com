@@ -192,6 +192,81 @@ esac
 exit 0
 }}}
 
+=== AND OR列表 ===
+`&&` `||`
+{{{
+eg.
+con1 && con2 && con3
+con1 || con2 || con3
+}}}
+  
+=== 语句块 ===
+`{}`
+
+=== 函数 ===
+%% TODO 
+{{{
+function_name(){
+	statement
+}
+}}}
+
+
+
+=== 命令 ===
+* `break`
+* `:`
+* `continue`
+* `.`
+* `echo`
+* `eval` 对语句进行求值
+%% TODO
+{{{
+foo=10
+x=foo #echo $y --> foo
+y='$'$x
+echo $y # --> $foo
+
+eval y='$'$x
+echo $y # --> 10
+}}}
+* exec
+%% TODO
+* `exit n`
+* `export`
+* `expr`
+把参数当作表达式来求值
+{{{
+eg.
+x=`expr $x + 1`
+x=$(expr $x + 1)
+}}}
+* `printf`
+* `return`
+* `set`
+* `shift`
+* `trap`
+* `unset`
+* `find` **
+* `grep` **
+
+%% TODO
+注：以下需要单独开一篇总结
+`find` `grep` `regex`
+
+
+=== 补充 ===
+算数运算
+$((...))
+x=$(($x+1))
+
+
+
+
+
+
+
+
 
 
 = 参考 =
