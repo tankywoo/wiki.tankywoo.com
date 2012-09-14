@@ -83,6 +83,13 @@ h2, h3, h4, h5, h6 {
     color: #999;
 }
 
+h2 {
+    margin-top:10px;
+    margin-bottom:5px;
+    padding-left:5px;
+    border-left: 3px solid #999;
+
+}
 
 code {
     background-color: #EEE;
