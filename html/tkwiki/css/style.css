@@ -40,6 +40,9 @@ h5{
 	font-size: 1.6em;
 }
 
+body{
+	margin: 0 20px;
+}
 
 #wrapper {
     width:960px;
