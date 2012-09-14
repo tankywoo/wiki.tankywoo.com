@@ -78,7 +78,23 @@ hello
   echo \$var    $var
   }}}
 
+=== 环境变量 ===
 
+== 条件 ==
+test或[命令
+{{{
+eg.
+if test -f file.c ; then
+	...
+fi
+
+或
+
+if [ -f file.c ]
+	...
+fi
+
+}}}
 
 = 参考 =
 《Linux程序设计》
