@@ -13,3 +13,4 @@
 [http://wtq.me Shell Skortkeys]
 
 = Vim =
+[http://wtq.me/vim_tips.html Vim Tips]
