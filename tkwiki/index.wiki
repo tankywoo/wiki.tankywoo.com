@@ -14,3 +14,7 @@
 
 = Vim =
 [http://wtq.me/vim_tips.html Vim Tips]
+
+
+= 小说 =
+[http://wtq.me/zhetian.html 《遮天经典语录》]
