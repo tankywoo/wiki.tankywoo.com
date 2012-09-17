@@ -95,8 +95,19 @@ h2 {
 }
 
 code {
-    background-color: #EEE;
-    padding:2px;
+    background-color: #DDD;
+	color: #6C758C;
+	display: inline-block;
+    padding:1px 3px;
+	border: 1px solid #AAA;
+	border-width: 0 1px 1px 0;
+
+}
+
+
+code:hover {
+	background: #57B8C5;
+	color: white;
 }
 
 pre {
@@ -105,6 +116,10 @@ pre {
 	-moz-border-radius: 10px;      /* Gecko browsers */
 	-webkit-border-radius: 10px;   /* Webkit browsers */
 	border-radius:10px;            /* W3C syntax */
+}
+
+pre:hover {
+	background-color: #EBEEFA;
 }
 
 p {
