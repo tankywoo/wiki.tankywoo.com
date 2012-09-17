@@ -12,7 +12,9 @@
 
 [http://wtq.me Shell Skortkeys]
 
-[http://wtq.me Linux Tips]
+[http://wtq.me/linux_tips.html Linux Tips]
+
+[http://wtq.me/ubuntu_sh_dash.html Ubuntu sh默认是dash] (2012/09/17)
 
 = Vim =
 [http://wtq.me/vim_tips.html Vim Tips]
