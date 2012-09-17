@@ -29,7 +29,7 @@ sh: /bin/sh.distrib /bin/sh /usr/share/man/man1/sh.1.gz
 
 tankywoo@linuxmint /bin $ cd /bin/
 
-tankywoo@linuxmint /bin $ ls -la |grep sh
+tankywoo@linuxmint /bin $ ls -la | grep sh
 -rwxr-xr-x  1 root root  920788 Apr  3 23:58 bash
 -rwxr-xr-x  1 root root  100284 Mar 30 01:40 dash
 lrwxrwxrwx  1 root root       4 Jul 11 11:20 rbash -> bash
