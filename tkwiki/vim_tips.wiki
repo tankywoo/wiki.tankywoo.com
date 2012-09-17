@@ -1,5 +1,9 @@
-= shell多行注释 =
+== shell多行注释 ==
 命令行模式下，注释掉line1与line2之间的行
 {{{
 line1,line2s/^/#/g
 }}}
+
+== 自动补全 ==
+Ctrl+n Ctrl+p
+Ctrl+x Ctrl+?{....}
