@@ -1,0 +1,5 @@
+== 查看现在使用的是哪一个shell ==
+echo $0
+
+== 修改login shell ==
+chsh
