@@ -44,8 +44,14 @@ eg.sudo add-apt-repository ppa:nginx/stable
 
 
 
-
-
+= 网络命令 =
+nc
+{{{
+netcat
+传输文件
+nc 192.168.2.100 8888 < test.txt
+nc -l 8888 > test.txt
+}}}
 
 
 
