@@ -21,6 +21,17 @@
 <a href="http://nmap.org/man/zh/">官方文档中文版</a>
 </p>
 
+<pre>
+nmap 173.252.192.*
+可以检测1～254中有多少机器存活，当然也有可能机器什么端口都没开，但是存活
+</pre>
+
+<pre>
+nmap -A -T5 localhost
+-A: to enable OS and version detection
+-T5: -T&lt;0-5&gt;: Set timing template (higher is faster)
+</pre>
+
 		</div>
 
 		<!-- DISQUS BEGIN -->
