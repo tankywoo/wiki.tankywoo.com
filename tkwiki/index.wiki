@@ -16,6 +16,9 @@
 
 [http://wtq.me/ubuntu_sh_dash.html Ubuntu sh默认是dash] (2012/09/17)
 
+[http://wtq.me/nmap.html nmap]
+
+
 = Vim =
 [http://wtq.me/vim_tips.html Vim Tips]
 
