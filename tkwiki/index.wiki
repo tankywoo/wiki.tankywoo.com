@@ -18,6 +18,10 @@
 
 [http://wtq.me/nmap.html nmap]
 
+[http://wtq.me/sed.html sed]
+
+[http://wtq.me/awk.html awk]
+
 
 = Vim =
 [http://wtq.me/vim_tips.html Vim Tips]
