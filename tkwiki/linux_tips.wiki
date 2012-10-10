@@ -3,3 +3,6 @@ echo $0
 
 == 修改login shell ==
 chsh
+
+== shell快捷键 ==
+cd到错误路径时，返回上一个路径：`cd -` <br>

@@ -1,1 +1,8 @@
-关键词`sed`
+%title Sed
+
+关键词 `sed` `linux` `awk` `text`
+
+= 资料 =
+# http://unixhelp.ed.ac.uk/CGI/man-cgi?sed
+# http://sed.sourceforge.net/sed1line_zh-CN.html
+# http://www.grymoire.com/Unix/Sed.html
