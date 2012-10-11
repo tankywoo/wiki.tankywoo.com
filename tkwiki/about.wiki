@@ -1,3 +1,14 @@
 = About =
 
 `Tanky Woo`
+`Linux`
+`Python`
+`Bash`
+`Ubuntu`
+`Gentoo`
+`Arch Linux`
+`C/C++`
+`Git`
+`Github`
+`StackOverflow`
+`CppLeYuan`

@@ -26,6 +26,8 @@
 = Vim =
 [http://wtq.me/vim_tips.html Vim Tips]
 
+= Python =
+[http://wtq.me/pdb.html Python Debug]
 
 = 小说 =
 [http://wtq.me/zhetian.html 《遮天经典语录》]
