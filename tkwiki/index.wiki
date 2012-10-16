@@ -25,6 +25,7 @@
 
 = Vim =
 [http://wtq.me/vim_tips.html Vim Tips]
+
 [http://wtq.me/vimrc.html .vimrc]
 
 = Python =
