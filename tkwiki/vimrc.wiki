@@ -1,0 +1,55 @@
+%title .vimrc
+
+有点乱，稍后整理（2012/10/16）
+{{{
+set nocompatible        " use the vim's keyboard setting, not vi
+"call pathogen#runtime_append_all_bundles()
+"call pathogen#helptags()
+set nu      " set the line number
+
+set foldmethod=indent       " set the indent way
+set foldlevel=99
+
+" Window Spilts
+" Vertical Split: Ctrl + w + v
+" Horizontal Split: Ctrl + w + s
+" Close current windows: Ctrl + w + q
+map <c-v> <c-w>v
+map <c-s> <c-w>s
+map <c-q> <c-w>q
+
+" tasklist plugin
+map<leader>td <Plug>TaskList
+
+" syntax highlighting
+syntax on
+
+" enable loading indent file for filetype
+" this equle:
+" filetype on
+filetype plugin on
+" filetype indent on
+filetype plugin indent on
+
+let g:pyflakes_use_quickfix = 0
+
+
+set cindent
+"
+"set tags=tags;
+
+set autochdir    " set the current dir as thr work dir
+set hlsearch    " highlight the search result
+"
+"let Tlist_Show_One_File=1
+"let Tlist_Exit_OnlyWindow=1
+"
+"let g:winManagerWindowLayout='FileExplorer|TagList'
+"nmap wm :WMToggle<cr>
+"
+"nmap <F2> :NERDTreeToggle<CR>
+"
+set autoindent
+set shiftwidth=4
+set tabstop=4
+}}}
