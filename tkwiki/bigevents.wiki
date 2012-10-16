@@ -1,0 +1,4 @@
+%title Big Events
+
+`2012/10/13`
+经过了N次的失败了，终于把gentoo给装上了
