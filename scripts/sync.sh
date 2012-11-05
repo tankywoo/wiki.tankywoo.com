@@ -17,6 +17,7 @@ TIME=`date`
 
 # add all new files
 git add .
+# TODO change to input the message by hand
 git commit -a -m "auto commit at $TIME"
 
 # push to server
