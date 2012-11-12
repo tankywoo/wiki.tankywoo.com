@@ -54,6 +54,13 @@ nc -l 8888 > test.txt
 }}}
 
 
+traceroute
+{{{
+print the route packets trace to network host
+在NAT模式下traceroute都返回* * *
+可以使用ICMP包，发送ICMP包需要有一定的权限，可以用root
+sudo traceroute -I 192.168.1.100
+}}}
 
 
 
