@@ -1,6 +1,6 @@
 %title Linux Comamnds
 = 文件传输命令 =
-== scp ==
+`scp`
 {{{
 scp — secure copy (remote file copy program)
 -p参数	将每个副本的修改时间、权限等与源文件保持一致
@@ -10,17 +10,19 @@ scp — secure copy (remote file copy program)
 
 
 = 系统磁盘管理命令 =
-== mount ==
-[http://www.blogjava.net/decode360/archive/2009/07/30/289072.html  Linux的mount命令简介]
-== df ==
+`mount`
 
-== du ==
+[http://www.blogjava.net/decode360/archive/2009/07/30/289072.html  Linux的mount命令简介]
+
+`df`
+
+`du`
 
 
 = 源 =
-== apt ==
+`apt`
 
-== add-apt-repository ==
+`add-apt-repository`
 {{{
 add-apt-repository 是由 python-software-properties 这个工具包提供的,只有ubuntu 09.10之后版本支持
 add-apt-repository - Adds a repository into the /etc/apt/sources.list or /etc/apt/sources.list.d or removes an existing one
@@ -34,18 +36,22 @@ In the second form, ppa:<user>/<ppa-name> will be expanded to the full deb line 
 eg.sudo add-apt-repository ppa:nginx/stable
 }}}
 
+`equery`
+{{{
+Gentoo的命令(Gentoo Package Query Tool)，用于查询Gentoo包的状态、文件、和USE标记
+}}}
 
 = 系统服务 =
 
-== chkconfig ==
+`chkconfig`
 
-
+`rc-update`
 
 
 
 
 = 网络命令 =
-nc
+`nc`
 {{{
 netcat
 传输文件
@@ -54,7 +60,7 @@ nc -l 8888 > test.txt
 }}}
 
 
-traceroute
+`traceroute`
 {{{
 print the route packets trace to network host
 在NAT模式下traceroute都返回* * *
@@ -62,7 +68,18 @@ print the route packets trace to network host
 sudo traceroute -I 192.168.1.100
 }}}
 
+= 查找 =
+`grep`
+{{{
+在search_path路径下查找search_content内容
+grep search_content search_path -ri
+}}}
 
+= 其他 =
+`convert`
+{{{
+这个命令是在一次需要压缩图片时用到了
+}}}
 
 = XXX =
 begin at 2012/09/10

@@ -18,7 +18,9 @@
 		<div id="content">
 			
 <h1 id="toc_1">文件传输命令</h1>
-<h2 id="toc_1.1">scp</h2>
+<p>
+<code>scp</code>
+</p>
 <pre>
 scp — secure copy (remote file copy program)
 -p参数	将每个副本的修改时间、权限等与源文件保持一致
@@ -28,19 +30,31 @@ scp — secure copy (remote file copy program)
 
 
 <h1 id="toc_2">系统磁盘管理命令</h1>
-<h2 id="toc_2.1">mount</h2>
+<p>
+<code>mount</code>
+</p>
+
 <p>
 <a href="http://www.blogjava.net/decode360/archive/2009/07/30/289072.html">Linux的mount命令简介</a>
 </p>
-<h2 id="toc_2.2">df</h2>
 
-<h2 id="toc_2.3">du</h2>
+<p>
+<code>df</code>
+</p>
+
+<p>
+<code>du</code>
+</p>
 
 
 <h1 id="toc_3">源</h1>
-<h2 id="toc_3.1">apt</h2>
+<p>
+<code>apt</code>
+</p>
 
-<h2 id="toc_3.2">add-apt-repository</h2>
+<p>
+<code>add-apt-repository</code>
+</p>
 <pre>
 add-apt-repository 是由 python-software-properties 这个工具包提供的,只有ubuntu 09.10之后版本支持
 add-apt-repository - Adds a repository into the /etc/apt/sources.list or /etc/apt/sources.list.d or removes an existing one
@@ -54,19 +68,29 @@ In the second form, ppa:&lt;user&gt;/&lt;ppa-name&gt; will be expanded to the fu
 eg.sudo add-apt-repository ppa:nginx/stable
 </pre>
 
+<p>
+<code>equery</code>
+</p>
+<pre>
+Gentoo的命令(Gentoo Package Query Tool)，用于查询Gentoo包的状态、文件、和USE标记
+</pre>
 
 <h1 id="toc_4">系统服务</h1>
 
-<h2 id="toc_4.1">chkconfig</h2>
+<p>
+<code>chkconfig</code>
+</p>
 
-
+<p>
+<code>rc-update</code>
+</p>
 
 
 
 
 <h1 id="toc_5">网络命令</h1>
 <p>
-nc
+<code>nc</code>
 </p>
 <pre>
 netcat
@@ -76,10 +100,34 @@ nc -l 8888 &gt; test.txt
 </pre>
 
 
+<p>
+<code>traceroute</code>
+</p>
+<pre>
+print the route packets trace to network host
+在NAT模式下traceroute都返回* * *
+可以使用ICMP包，发送ICMP包需要有一定的权限，可以用root
+sudo traceroute -I 192.168.1.100
+</pre>
 
+<h1 id="toc_6">查找</h1>
+<p>
+<code>grep</code>
+</p>
+<pre>
+在search_path路径下查找search_content内容
+grep search_content search_path -ri
+</pre>
 
+<h1 id="toc_7">其他</h1>
+<p>
+<code>convert</code>
+</p>
+<pre>
+这个命令是在一次需要压缩图片时用到了
+</pre>
 
-<h1 id="toc_6">XXX</h1>
+<h1 id="toc_8">XXX</h1>
 <p>
 begin at 2012/09/10
 </p>
