@@ -1,8 +1,21 @@
 == 查看现在使用的是哪一个shell ==
+{{{
 echo $0
+}}}
 
 == 修改login shell ==
+{{{
 chsh
+}}}
 
 == shell快捷键 ==
+{{{
 cd到错误路径时，返回上一个路径：`cd -` <br>
+}}}
+
+== 关于export C ==
+{{{
+建议在脚本开始处加上export C
+且如果man手册乱码，也可以
+$ export C man xxx
+}}}

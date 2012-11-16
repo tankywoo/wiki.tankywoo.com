@@ -18,19 +18,26 @@
 		<div id="content">
 			
 <h2 id="toc_0.1">查看现在使用的是哪一个shell</h2>
-<p>
+<pre>
 echo $0
-</p>
+</pre>
 
 <h2 id="toc_0.2">修改login shell</h2>
-<p>
+<pre>
 chsh
-</p>
+</pre>
 
 <h2 id="toc_0.3">shell快捷键</h2>
-<p>
-cd到错误路径时，返回上一个路径：<code>cd -</code> <br>
-</p>
+<pre>
+cd到错误路径时，返回上一个路径：`cd -` <br>
+</pre>
+
+<h2 id="toc_0.4">关于export C</h2>
+<pre>
+建议在脚本开始处加上export C
+且如果man手册乱码，也可以
+$ export C man xxx
+</pre>
 
 		</div>
 
