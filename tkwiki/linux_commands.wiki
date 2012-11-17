@@ -1,4 +1,11 @@
 %title Linux Comamnds
+= About This Page =
+{{{
+这里记录的是一些命令的常用方法
+看**man手册**等才是王道
+}}}
+
+
 = 文件传输命令 =
 `scp`
 {{{
@@ -57,6 +64,9 @@ netcat
 传输文件
 nc 192.168.2.100 8888 < test.txt
 nc -l 8888 > test.txt
+
+扫描主机的tcp端口
+nc -v -z -w2 localhost 20-30 #扫描20~30端口
 }}}
 
 
@@ -67,6 +77,23 @@ print the route packets trace to network host
 可以使用ICMP包，发送ICMP包需要有一定的权限，可以用root
 sudo traceroute -I 192.168.1.100
 }}}
+
+`route`
+
+
+`iproute2`
+{{{
+这是一个工具集
+}}}
+
+`ipcalc`
+{{{
+计算给定IP地址的相关信息，包括掩码、广播地址等
+}}}
+
+
+`tecpdump`
+
 
 = 查找 =
 `grep`

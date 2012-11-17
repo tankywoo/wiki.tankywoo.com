@@ -17,7 +17,14 @@
 		<div id="title">Linux Comamnds</div>
 		<div id="content">
 			
-<h1 id="toc_1">文件传输命令</h1>
+<h1 id="toc_1">About This Page</h1>
+<pre>
+这里记录的是一些命令的常用方法
+看**man手册**等才是王道
+</pre>
+
+
+<h1 id="toc_2">文件传输命令</h1>
 <p>
 <code>scp</code>
 </p>
@@ -29,7 +36,7 @@ scp — secure copy (remote file copy program)
 
 
 
-<h1 id="toc_2">系统磁盘管理命令</h1>
+<h1 id="toc_3">系统磁盘管理命令</h1>
 <p>
 <code>mount</code>
 </p>
@@ -47,7 +54,7 @@ scp — secure copy (remote file copy program)
 </p>
 
 
-<h1 id="toc_3">源</h1>
+<h1 id="toc_4">源</h1>
 <p>
 <code>apt</code>
 </p>
@@ -75,7 +82,7 @@ eg.sudo add-apt-repository ppa:nginx/stable
 Gentoo的命令(Gentoo Package Query Tool)，用于查询Gentoo包的状态、文件、和USE标记
 </pre>
 
-<h1 id="toc_4">系统服务</h1>
+<h1 id="toc_5">系统服务</h1>
 
 <p>
 <code>chkconfig</code>
@@ -88,7 +95,7 @@ Gentoo的命令(Gentoo Package Query Tool)，用于查询Gentoo包的状态、�
 
 
 
-<h1 id="toc_5">网络命令</h1>
+<h1 id="toc_6">网络命令</h1>
 <p>
 <code>nc</code>
 </p>
@@ -97,6 +104,9 @@ netcat
 传输文件
 nc 192.168.2.100 8888 &lt; test.txt
 nc -l 8888 &gt; test.txt
+
+扫描主机的tcp端口
+nc -v -z -w2 localhost 20-30 #扫描20~30端口
 </pre>
 
 
@@ -110,7 +120,32 @@ print the route packets trace to network host
 sudo traceroute -I 192.168.1.100
 </pre>
 
-<h1 id="toc_6">查找</h1>
+<p>
+<code>route</code>
+</p>
+
+
+<p>
+<code>iproute2</code>
+</p>
+<pre>
+这是一个工具集
+</pre>
+
+<p>
+<code>ipcalc</code>
+</p>
+<pre>
+计算给定IP地址的相关信息，包括掩码、广播地址等
+</pre>
+
+
+<p>
+<code>tecpdump</code>
+</p>
+
+
+<h1 id="toc_7">查找</h1>
 <p>
 <code>grep</code>
 </p>
@@ -119,7 +154,7 @@ sudo traceroute -I 192.168.1.100
 grep search_content search_path -ri
 </pre>
 
-<h1 id="toc_7">其他</h1>
+<h1 id="toc_8">其他</h1>
 <p>
 <code>convert</code>
 </p>
@@ -127,7 +162,7 @@ grep search_content search_path -ri
 这个命令是在一次需要压缩图片时用到了
 </pre>
 
-<h1 id="toc_8">XXX</h1>
+<h1 id="toc_9">XXX</h1>
 <p>
 begin at 2012/09/10
 </p>
