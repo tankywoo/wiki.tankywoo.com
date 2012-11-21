@@ -1,0 +1,35 @@
+%title SAMBA
+
+= Installation =
+{{{
+sudo emerge net-fs/samba
+}}}
+
+= Configuration = 
+{{{
+# TODO
+cd /etc/samba
+# the is a smb.conf.default in the dir
+sudo cp smb.conf.default smb.conf
+vim smb.conf
+# edit the [global] section
+# workgroup is the windows pc's workgroup name
+# security can be user or shareo
+# in the end, you can uncomment the [tmp] section
+}}}
+
+
+
+= Start Service =
+{{{
+sudo /etc/init.d/samba start
+}}}
+
+= Reference =
+{{{
+http://www.cnblogs.com/whiteyun/archive/2011/05/27/2059670.html
+http://bbs.chinaunix.net/thread-716599-1-1.html
+http://bbs.chinaunix.net/thread-1003730-1-1.html
+http://bbs.chinaunix.net/thread-1148734-1-1.html
+}}}
+

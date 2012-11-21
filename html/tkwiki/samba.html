@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="./css/style.css">
+		<title>SAMBA</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='about.html'>About</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">SAMBA</div>
+		<div id="content">
+			
+
+<h1 id="toc_1">Installation</h1>
+<pre>
+sudo emerge net-fs/samba
+</pre>
+
+<h1 id="toc_2">Configuration</h1>
+<pre>
+# TODO
+cd /etc/samba
+# the is a smb.conf.default in the dir
+sudo cp smb.conf.default smb.conf
+vim smb.conf
+# edit the [global] section
+# workgroup is the windows pc's workgroup name
+# security can be user or shareo
+# in the end, you can uncomment the [tmp] section
+</pre>
+
+
+
+<h1 id="toc_3">Start Service</h1>
+<pre>
+sudo /etc/init.d/samba start
+</pre>
+
+<h1 id="toc_4">Reference</h1>
+<pre>
+http://www.cnblogs.com/whiteyun/archive/2011/05/27/2059670.html
+http://bbs.chinaunix.net/thread-716599-1-1.html
+http://bbs.chinaunix.net/thread-1003730-1-1.html
+http://bbs.chinaunix.net/thread-1148734-1-1.html
+</pre>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+
+		<!-- DISQUS END -->
+	</body>
+	<div id="footer">
+		<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+			Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+		</span>
+	</div>
+</html>
