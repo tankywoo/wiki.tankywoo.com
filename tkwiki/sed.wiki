@@ -1,4 +1,4 @@
-%title Sed
+%title Sed & Awk
 
 关键词 `sed` `linux` `awk` `text`
 

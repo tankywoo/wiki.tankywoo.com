@@ -23,7 +23,24 @@
 sudo emerge net-fs/samba
 </pre>
 
-<h1 id="toc_2">Configuration</h1>
+<h1 id="toc_2">About</h1>
+<p>
+NFS、CIFS？
+</p>
+
+<p>
+Samba是用来让Unix系列的操作系统和微软Windows操作系统的SMB/CIFS（Server Message Block/Common Internet File System）网络协议做连接的自由软件
+</p>
+
+<p>
+Samba是架构在NetBIOS（Network Basic Input/Output System）这个通信协议上面开发出来的。NetBIOS是无法跨路由的，但是现在又NetBIOS over TCP/IP技术可以实现。目前Samba还是广泛用于LAN中。
+</p>
+
+<p>
+<a href="http://www.samba.org/">官方网站传送门</a>
+</p>
+
+<h1 id="toc_3">Configuration</h1>
 <pre>
 # TODO
 cd /etc/samba
@@ -36,14 +53,17 @@ vim smb.conf
 # in the end, you can uncomment the [tmp] section
 </pre>
 
+<p>
+修改完smb.conf后，可以用testparm命令来检查配置文件的语法合法性
+</p>
 
 
-<h1 id="toc_3">Start Service</h1>
+<h1 id="toc_4">Start Service</h1>
 <pre>
 sudo /etc/init.d/samba start
 </pre>
 
-<h1 id="toc_4">Reference</h1>
+<h1 id="toc_5">Reference</h1>
 <pre>
 http://www.cnblogs.com/whiteyun/archive/2011/05/27/2059670.html
 http://bbs.chinaunix.net/thread-716599-1-1.html

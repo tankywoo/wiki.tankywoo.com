@@ -22,6 +22,7 @@
 
 [http://wtq.me/awk.html awk]
 
+[http://wtq.me/samba.html Samba]
 
 = Vim =
 [http://wtq.me/vim_tips.html Vim Tips]

@@ -5,6 +5,15 @@
 sudo emerge net-fs/samba
 }}}
 
+= About =
+NFS、CIFS？
+
+Samba是用来让Unix系列的操作系统和微软Windows操作系统的SMB/CIFS（Server Message Block/Common Internet File System）网络协议做连接的自由软件
+
+Samba是架构在NetBIOS（Network Basic Input/Output System）这个通信协议上面开发出来的。NetBIOS是无法跨路由的，但是现在又NetBIOS over TCP/IP技术可以实现。目前Samba还是广泛用于LAN中。
+
+[http://www.samba.org/ 官方网站传送门]
+
 = Configuration = 
 {{{
 # TODO
@@ -18,6 +27,7 @@ vim smb.conf
 # in the end, you can uncomment the [tmp] section
 }}}
 
+修改完smb.conf后，可以用testparm命令来检查配置文件的语法合法性
 
 
 = Start Service =
