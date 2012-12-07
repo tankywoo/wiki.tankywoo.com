@@ -4,6 +4,14 @@
 		<link rel="Stylesheet" type="text/css" href="./css/style.css">
 		<title>SAMBA</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- SyntaxHighlighter -->
+        <script type="text/javascript" src="/js/scripts/shCore.js"></script>
+        <script type="text/javascript" src="/js/scripts/shBrushCpp.js"></script>
+        <script type="text/javascript" src="/js/scripts/shBrushBash.js"></script>
+        <link type="text/css" rel="stylesheet" href="/js/styles/shCoreDefault.css"/>
+        <script type="text/javascript">SyntaxHighlighter.all();</script>
+
 	</head>
 	<body>
 		<div id="header">
@@ -41,7 +49,7 @@ Samba是架构在NetBIOS（Network Basic Input/Output System）这个通信协�
 </p>
 
 <h1 id="toc_3">Configuration</h1>
-<pre>
+<pre class="brush: shell">
 # TODO
 cd /etc/samba
 # the is a smb.conf.default in the dir

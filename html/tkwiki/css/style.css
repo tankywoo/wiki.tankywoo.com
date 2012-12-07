@@ -142,3 +142,8 @@ ul li {
     margin-top:5px;
 }
 
+/* for syntaxhighlighter */
+.code{
+	font-size: 1.3em;
+}
+
