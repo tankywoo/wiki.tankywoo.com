@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="./css/style.css">
+		<title>Awk</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='about.html'>About</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">Awk</div>
+		<div id="content">
+			
+
+<h1 id="toc_1">格式</h1>
+<pre>
+gawk options program file
+
+Options:
+* -F fs
+* -f file
+* -v var=value
+* -mf N
+* -mr N
+* -W keyword
+</pre>
+
+<h1 id="toc_2">*</h1>
+<pre>
+gawk程序用一对花括号来定义
+gawk默认的字段分隔符是任意的空白字符
+$0、$1、$2...的含义
+gawk变成语言允许将多条命令组合成一个正常的程序，用冒号分开
+在处理数据前运行脚本使用BEGIN
+在处理数据后运行脚本使用END
+</pre>
+
+
+
+<h1 id="toc_3">Example</h1>
+<pre>
+$ gawk '{print "Hello, TankyWoo"}'
+
+$ gawk -F: '{print $1}' /etc/passwd
+
+$ echo "My name is TankyWoo" | gawk '{$4="TK"; print $0}'
+
+$ cat myscript
+{ print $1 "'s home dir is " $6 }
+$ gawk -F: -f myscript /etc/passwd
+
+$ gawk 'BEGIN {print "Hello World"}'
+
+$ cat mydata
+Line 1
+Line 2
+Line 3
+$ gawk 'BEGIN { print "The data fileL"} { print $0 }' mydata
+
+p
+$ gawk 'BEGIN { print "The data fileL"} { print $0 }\
+		END { print "End of File"}' mydata
+</pre>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+
+		<!-- DISQUS END -->
+	</body>
+	<div id="footer">
+		<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+			Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+		</span>
+	</div>
+</html>
