@@ -12,21 +12,23 @@
 * html .clearfix{zoom: 1;}      /* IE6.0 */
 *:first-child + html .clearfix{zoom: 1;}    /* IE7.0 */
 
-a{
+a, a:hover, a:visited {
 	text-decoration: none;
+	color: #00FF00;
 }
 
 body{
 	font-size: 62.5%;
-	/*background-color: #000;*/
+	background-color: #000000;
+	color: #BBBBBB;
 }
 
 h1{
-	font-size: 2.4em;
+	font-size: 2.0em;
 }
 
 h2{
-	font-size: 2.0em;
+	font-size: 1.6em;
 }
 
 h3{
@@ -64,18 +66,18 @@ body{
 }
 
 #title {
-    color: #45849F;
+    color: #5555FF;
     text-align:center;
     margin: 0 atuo;
     font-size:28px;
     font-weight:bold;
-    border-bottom:4px solid #FFBC29;
+    border-bottom:3px solid #5555FF;
     margin-top:20px;
     padding-bottom:5px;
 }
 
 h1 {
-    color: #45849F;
+    color: #3CAD96;
     margin-top:30px;
     margin-bottom:10px;
     padding-left:10px;
@@ -84,7 +86,7 @@ h1 {
 }
 
 h2, h3, h4, h5, h6 {
-    color: #6EAAAB;
+    color: #3C55B6;
 }
 
 h2 {
@@ -95,11 +97,11 @@ h2 {
 }
 
 code {
-    background-color: #BFBD9A;
+    background-color: #0000BB;
 	color: #6C758C;
 	display: inline-block;
     padding:1px 3px;
-	border: 1px solid #AAA;
+	border: 2px solid #5555FF;
 	border-width: 0 1px 1px 0;
 
 }
@@ -112,7 +114,7 @@ code:hover {
 */
 
 pre {
-    background-color: #EBEBEB;/* #FBFBF7; */ /* #B7BECC;*/
+    background-color: #000900;/* #FBFBF7; */ /* #B7BECC;*/
     padding: 10px;
 	-moz-border-radius: 10px;      /* Gecko browsers */
 	-webkit-border-radius: 10px;   /* Webkit browsers */
