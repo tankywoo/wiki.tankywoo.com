@@ -39,7 +39,7 @@ cd到错误路径时，返回上一个路径：`cd -` <br>
 $ export C man xxx
 </pre>
 
-<h1 id="toc_5">查看最常用的10条命令</h1>
+<h1 id="toc_5">查看本机最常用的10条命令</h1>
 <pre>
 history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 </pre>
