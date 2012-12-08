@@ -17,26 +17,31 @@
 		<div id="title">linux_tips</div>
 		<div id="content">
 			
-<h2 id="toc_0.1">查看现在使用的是哪一个shell</h2>
+<h1 id="toc_1">查看现在使用的是哪一个shell</h1>
 <pre>
 echo $0
 </pre>
 
-<h2 id="toc_0.2">修改login shell</h2>
+<h1 id="toc_2">修改login shell</h1>
 <pre>
 chsh
 </pre>
 
-<h2 id="toc_0.3">shell快捷键</h2>
+<h1 id="toc_3">shell快捷键</h1>
 <pre>
 cd到错误路径时，返回上一个路径：`cd -` <br>
 </pre>
 
-<h2 id="toc_0.4">关于export C</h2>
+<h1 id="toc_4">关于export C</h1>
 <pre>
 建议在脚本开始处加上export C
 且如果man手册乱码，也可以
 $ export C man xxx
+</pre>
+
+<h1 id="toc_5">查看最常用的10条命令</h1>
+<pre>
+history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 </pre>
 
 		</div>
