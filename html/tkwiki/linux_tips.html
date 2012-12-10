@@ -44,6 +44,13 @@ $ export C man xxx
 history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 </pre>
 
+<h1 id="toc_6">获取一个字符串的长度</h1>
+<pre>
+方法1: len=`expr length $str`
+方法2: echo ${str} | wc -L
+方法3: echo ${#str} # 推荐
+</pre>
+
 		</div>
 
 		<!-- DISQUS BEGIN -->

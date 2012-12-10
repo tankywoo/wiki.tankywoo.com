@@ -146,8 +146,11 @@ fi
 <pre>
 str1 = str2
 str1 != str2
+str1 &gt; str2
+str1 &lt; str2
 -n str  如果字符串不为空则为True
 -z str  如果字符串为null，则结果为真
+
 </pre>
 
 </ul>
@@ -180,6 +183,38 @@ exp1 -le exp2	&lt;=
 -u file    set-user-id ???
 -w file    writeable
 -x file    executeable
+</pre>
+
+</ul>
+
+<ul>
+<li>
+(( expression ))
+<pre>
+可以使用高级数学特性
+val++
+val--
+++val
+--val
+!		逻辑求反
+~		位求反
+**		幂运算
+&lt;&lt;		左移位
+&gt;&gt;
+&amp;		按位与
+|
+&amp;&amp;		逻辑与
+||	
+</pre>
+
+</ul>
+
+<ul>
+<li>
+[\[ expression ]]
+<pre>
+字符串的比较，但是支持模式匹配
+
 </pre>
 
 </ul>

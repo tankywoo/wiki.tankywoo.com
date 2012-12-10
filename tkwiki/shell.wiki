@@ -100,8 +100,11 @@ fi
 {{{
 str1 = str2
 str1 != str2
+str1 > str2
+str1 < str2
 -n str  如果字符串不为空则为True
 -z str  如果字符串为null，则结果为真
+
 }}}
 
 * 算数比较
@@ -126,6 +129,30 @@ exp1 -le exp2	<=
 -u file    set-user-id ???
 -w file    writeable
 -x file    executeable
+}}}
+
+* (( expression ))
+{{{
+可以使用高级数学特性
+val++
+val--
+++val
+--val
+!		逻辑求反
+~		位求反
+**		幂运算
+<<		左移位
+>>
+&		按位与
+|
+&&		逻辑与
+||	
+}}}
+
+* [\[ expression ]]
+{{{
+字符串的比较，但是支持模式匹配
+
 }}}
 
 == 控制结构 ==
