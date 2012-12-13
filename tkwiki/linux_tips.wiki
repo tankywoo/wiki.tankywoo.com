@@ -24,3 +24,10 @@ $ export C man xxx
 {{{
 history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 }}}
+
+= 获取一个字符串的长度 =
+{{{
+方法1: len=`expr length $str`
+方法2: echo ${str} | wc -L
+方法3: echo ${#str} # 推荐
+}}}
