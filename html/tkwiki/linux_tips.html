@@ -51,6 +51,12 @@ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 方法3: echo ${#str} # 推荐
 </pre>
 
+<h1 id="toc_7">统计当前目录下（包括子目录）以.py结尾文件的个数及总代码行数</h1>
+<pre>
+文件个数: find . -name "*.py" | wc -l
+单个文件代码行数及总行数: find . -name "*.py" | xargs wc -l
+</pre>
+
 		</div>
 
 		<!-- DISQUS BEGIN -->
