@@ -1,39 +1,41 @@
 %title 目录
 
 = Linux =
+[[linux_commands.html|Linux Command]]
 
-[http://wtq.me/linux_commands.html Linux Command]
+[[shell.html|Shell]]
 
-[http://wtq.me/git.html Git]
+[[ubuntu_network.html|Ubuntu Network]]
 
-[http://wtq.me/shell.html Shell]
+[[shellkeys.html|Shell Skortkeys]]
 
-[http://wtq.me/ubuntu_network.html Ubuntu Network]
+[[linux_tips.html|Linux Tips]]
 
-[http://wtq.me Shell Skortkeys]
+%% [[ubuntu_sh_dash.html|Ubuntu sh默认是dash]] (2012/09/17)
 
-[http://wtq.me/linux_tips.html Linux Tips]
+[[sed.html|sed]]
 
-[http://wtq.me/ubuntu_sh_dash.html Ubuntu sh默认是dash] (2012/09/17)
+[[awk.html|awk]]
 
-[http://wtq.me/nmap.html nmap]
-
-[http://wtq.me/sed.html sed]
-
-[http://wtq.me/awk.html awk]
-
-[http://wtq.me/samba.html Samba]
+[[samba.html|Samba]]
 
 = Vim =
-[http://wtq.me/vim_tips.html Vim Tips]
+[[vim_tips.html|Vim Tips]]
 
-[http://wtq.me/vimrc.html .vimrc]
+[[vimrc.html|.vimrc]]
 
 = Python =
-[http://wtq.me/pdb.html Python Debug]
+[[pdb.html|Python Debug]]
+
+= Other =
+[[git.html|Git]]
+
+[[nmap.html|nmap]]
+
+[[msmtp_mutt.html|msmtp + mutt]]
 
 = 小说 =
-[http://wtq.me/zhetian.html 《遮天经典语录》]
+[[zhetian.html|《遮天经典语录》]]
 
 = Nothing is Important = 
-[http://wtq.me/bigevents.html Big Events]
+[[bigevents.html|Big Events]]

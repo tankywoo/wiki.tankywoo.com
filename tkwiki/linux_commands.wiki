@@ -92,8 +92,13 @@ sudo traceroute -I 192.168.1.100
 }}}
 
 
-`tecpdump`
+`tcpdump`
 
+`nscd`
+{{{
+name service cache daemon
+nscd -i xx # Invalidate the specified cache
+}}}
 
 = 查找 =
 `grep`

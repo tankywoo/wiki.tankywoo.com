@@ -17,30 +17,23 @@ a, a:hover, a:visited {
 	color: #00FF00;
 }
 
+html{
+	font-family : 'Courier New';
+}
+
 body{
-	font-size: 62.5%;
+	font-size: 16px;
 	background-color: #000000;
 	color: #BBBBBB;
+	font-family : 'Courier New';
 }
 
 h1{
-	font-size: 2.0em;
+	font-size: 20px;
 }
 
-h2{
-	font-size: 1.6em;
-}
-
-h3{
-	font-size: 1.6em;
-}
-
-h4{
-	font-size: 1.6em;
-}
-
-h5{
-	font-size: 1.6em;
+h2, h3, h4{
+	font-size: 16px;
 }
 
 body{
@@ -55,6 +48,7 @@ body{
 #header ul{
 	float: left;
 	display: block;
+	font-size: 16px;
 }
 
 #header ul li{
@@ -119,7 +113,8 @@ pre {
 	-moz-border-radius: 10px;      /* Gecko browsers */
 	-webkit-border-radius: 10px;   /* Webkit browsers */
 	border-radius:10px;            /* W3C syntax */
-	font-size: 12px;
+	font-size: 16px;
+	font-family : 'Courier New';
 }
 
 /*
@@ -129,7 +124,7 @@ pre:hover {
 */
 p {
     margin:5px 0;
-	font-size:1.4em;
+	font-size:16px;
 }
 
 #footer {
@@ -147,6 +142,6 @@ ul li {
 
 /* for syntaxhighlighter */
 .code{
-	font-size: 1.3em;
+	font-size: 13px;
 }
 
