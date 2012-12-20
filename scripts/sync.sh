@@ -13,7 +13,7 @@ else
 fi
 
 
-TIME=`date`
+TIME=`date '+%F %T'`
 
 # add all new files
 git add .
