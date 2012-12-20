@@ -1,6 +1,7 @@
-#Tanky Woo's Wiki#
+# Wiki #
+This is my personal wiki site, powered by `vimwiki`
 
-#Structure#
+# Structure #
 	.
 	├── html
 	├── manage.sh
@@ -9,4 +10,14 @@
 	├── template
 	└── tkwiki
 
+`html` -- Generate the html file in this dir
+`scripts` -- Some scripts to manage this wiki project
+`template` -- The template the generate the html file
+`tkwiki` -- The wiki source file
+`manage.sh` -- Manage the project 
 
+# My wiki site #
+(http://wiki.wutianqi.com wiki.wutianqi.com)
+
+# Contact #
+wtq1990@gmail.com
