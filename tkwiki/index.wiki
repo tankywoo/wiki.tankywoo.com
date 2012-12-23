@@ -2,38 +2,38 @@
 
 = Linux =
 
-[http://wiki.wutianqi.com/linux_commands.html Linux Command]
+[[linux_commands.html|Linux Command]]
 
-[http://wiki.wutianqi.com/git.html Git]
+[[git.html|Git]]
 
-[http://wiki.wutianqi.com/shell.html Shell]
+[[shell.html|Shell]]
 
-[http://wiki.wutianqi.com/ubuntu_network.html Ubuntu Network]
+[[ubuntu_network.html|Ubuntu Network]]
 
-[http://wiki.wutianqi.com Shell Skortkeys]
+[[shellkeys.html|Shell Skortkeys]]
 
-[http://wiki.wutianqi.com/linux_tips.html Linux Tips]
+[[linux_tips.html|Linux Tips]]
 
-[http://wiki.wutianqi.com/ubuntu_sh_dash.html Ubuntu sh默认是dash] (2012/09/17)
+[[ubuntu_sh_dash.html|Ubuntu sh默认是dash]] (2012/09/17)
 
-[http://wiki.wutianqi.com/nmap.html nmap]
+[[nmap.html|nmap]]
 
-[http://wiki.wutianqi.com/sed.html sed]
+[[sed.html|sed]]
 
-[http://wiki.wutianqi.com/awk.html awk]
+[[awk.html|awk]]
 
-[http://wiki.wutianqi.com/samba.html Samba]
+[[samba.html|Samba]]
 
 = Vim =
-[http://wiki.wutianqi.com/vim_tips.html Vim Tips]
+[[vim_tips.html|Vim Tips]]
 
-[http://wiki.wutianqi.com/vimrc.html .vimrc]
+[[vimrc.html|.vimrc]]
 
 = Python =
-[http://wiki.wutianqi.com/pdb.html Python Debug]
+[[pdb.html|Python Debug]]
 
 = 小说 =
-[http://wiki.wutianqi.com/zhetian.html 《遮天经典语录》]
+[[zhetian.html|《遮天经典语录》]]
 
 = Nothing is Important = 
-[http://wiki.wutianqi.com/bigevents.html Big Events]
+[[bigevents.html|Big Events]]
