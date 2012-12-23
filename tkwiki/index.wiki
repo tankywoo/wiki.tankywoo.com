@@ -2,38 +2,38 @@
 
 = Linux =
 
-[http://wtq.me/linux_commands.html Linux Command]
+[http://wiki.wutianqi.com/linux_commands.html Linux Command]
 
-[http://wtq.me/git.html Git]
+[http://wiki.wutianqi.com/git.html Git]
 
-[http://wtq.me/shell.html Shell]
+[http://wiki.wutianqi.com/shell.html Shell]
 
-[http://wtq.me/ubuntu_network.html Ubuntu Network]
+[http://wiki.wutianqi.com/ubuntu_network.html Ubuntu Network]
 
-[http://wtq.me Shell Skortkeys]
+[http://wiki.wutianqi.com Shell Skortkeys]
 
-[http://wtq.me/linux_tips.html Linux Tips]
+[http://wiki.wutianqi.com/linux_tips.html Linux Tips]
 
-[http://wtq.me/ubuntu_sh_dash.html Ubuntu sh默认是dash] (2012/09/17)
+[http://wiki.wutianqi.com/ubuntu_sh_dash.html Ubuntu sh默认是dash] (2012/09/17)
 
-[http://wtq.me/nmap.html nmap]
+[http://wiki.wutianqi.com/nmap.html nmap]
 
-[http://wtq.me/sed.html sed]
+[http://wiki.wutianqi.com/sed.html sed]
 
-[http://wtq.me/awk.html awk]
+[http://wiki.wutianqi.com/awk.html awk]
 
-[http://wtq.me/samba.html Samba]
+[http://wiki.wutianqi.com/samba.html Samba]
 
 = Vim =
-[http://wtq.me/vim_tips.html Vim Tips]
+[http://wiki.wutianqi.com/vim_tips.html Vim Tips]
 
-[http://wtq.me/vimrc.html .vimrc]
+[http://wiki.wutianqi.com/vimrc.html .vimrc]
 
 = Python =
-[http://wtq.me/pdb.html Python Debug]
+[http://wiki.wutianqi.com/pdb.html Python Debug]
 
 = 小说 =
-[http://wtq.me/zhetian.html 《遮天经典语录》]
+[http://wiki.wutianqi.com/zhetian.html 《遮天经典语录》]
 
 = Nothing is Important = 
-[http://wtq.me/bigevents.html Big Events]
+[http://wiki.wutianqi.com/bigevents.html Big Events]
