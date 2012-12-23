@@ -17,8 +17,13 @@ a, a:hover, a:visited {
 	color: #00FF00;
 }
 
+html{
+	font-family : 'Courier New';
+	font-size: 62.5%
+}
+
 body{
-	font-size: 62.5%;
+	font-size: 1.2em;
 	background-color: #000000;
 	color: #BBBBBB;
 	font-family : 'Courier New';
@@ -56,6 +61,7 @@ body{
 #header ul{
 	float: left;
 	display: block;
+	font-size: 1.2em;
 }
 
 #header ul li{
