@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="./css/style.css">
+		<title>Msmtp + Mutt搭建邮件客户端</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='about.html'>About</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">Msmtp + Mutt搭建邮件客户端</div>
+		<div id="content">
+			
+
+<h1 id="toc_1">需求</h1>
+<p>
+最近在写一个脚本，需要定时给邮件发送一些备份的东西
+</p>
+
+
+<h1 id="toc_2">msmtp</h1>
+<p>
+<a href="http://msmtp.sourceforge.net">主页</a>
+</p>
+<pre>
+msmtp is an SMTP client.
+In the default mode, it transmits a mail to an SMTP server which takes care of further delivery.
+To use this program with your mail user agent (MUA), create a configuration file with your mail account(s),
+and tell your MUA to call msmtp instead of /usr/sbin/sendmail.
+</pre>
+
+
+<h1 id="toc_3">mutt</h1>
+<p>
+<a href="http://www.mutt.org">主页</a>
+</p>
+<pre>
+Mutt is a small but very powerful text-based mail client for Unix operating systems.
+</pre>
+
+
+<h1 id="toc_4">msmtp和mutt搭建邮件客户端</h1>
+<p>
+首先得了解MUA，MTA的概念（可参考鸟哥私房菜服务器篇）
+</p>
+
+<ul>
+<li>
+MUA(Mail User Agent):主要用户接收邮件和撰写邮件
+
+<li>
+MTA(Mail Transfer Agent):主要用于邮件的转发，如Postfix，Sendmail, msmtp
+
+</ul>
+
+<p>
+因为Sendmail的配置很麻烦( 听说,还未验证:-( )
+</p>
+
+<p>
+在网上找相关的方案，就搜到了mutt+msmtp组合
+</p>
+
+
+<h1 id="toc_5">msmtp配置</h1>
+<p>
+在用户home目录新建一个.msmtprc配置文件
+</p>
+<pre>
+account default
+host smtp.163.com	#邮件服务器，我用的是163的
+from xxx@163.com
+auth login
+user xxx@163.com	#账号
+password *******	#密码
+logfile /var/log/msmtp.log
+</pre>
+<p>
+因为这里涉及到了密码，所以建议把配置文件的权限改为600
+</p>
+
+<p>
+测试：<br>
+&gt;&gt; msmtp xxx@xx.com(收件人邮箱)<br>
+然后随便输入一些字符，按Ctrl+D退出，查看收件人邮箱是否有邮件
+</p>
+
+
+<h1 id="toc_6">mutt配置</h1>
+<pre>
+set sendmail="/usr/bin/msmtp"	#这里设置调用的MTA
+set use_from=yes
+set realname="XXX"				#发件人名称
+set editor="vim"				#调用的编辑器
+
+</pre>
+<p>
+测试：<br>
+&gt;&gt; echo 'HelloWorld' | mutt -s 'Hi, Just a test!' xxx@xx.com
+</p>
+
+
+<h1 id="toc_7">更多参考</h1>
+<ul>
+<li>
+<a href="http://www.gentoo.org/doc/zh_cn/guide-to-mutt.xml?style=printable">Gentoo文档:Mutt电子邮件快速入门指南</a>
+
+<li>
+<a href="http://msmtp.sourceforge.net/doc/mutt+msmtp.txt">msmtp官方文档:Using msmtp with Mutt</a>
+
+</ul>
+
+
+<h1 id="toc_8">记录</h1>
+<p>
+创建时间：2012/12/24 平安夜
+</p>
+
+<p>
+最后修改：2012/12/24
+</p>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+
+		<!-- DISQUS END -->
+	</body>
+	<div id="footer">
+		<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+			Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+		</span>
+	</div>
+</html>

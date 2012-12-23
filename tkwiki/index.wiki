@@ -1,10 +1,7 @@
 %title 目录
 
 = Linux =
-
 [[linux_commands.html|Linux Command]]
-
-[[git.html|Git]]
 
 [[shell.html|Shell]]
 
@@ -14,9 +11,7 @@
 
 [[linux_tips.html|Linux Tips]]
 
-[[ubuntu_sh_dash.html|Ubuntu sh默认是dash]] (2012/09/17)
-
-[[nmap.html|nmap]]
+%% [[ubuntu_sh_dash.html|Ubuntu sh默认是dash]] (2012/09/17)
 
 [[sed.html|sed]]
 
@@ -31,6 +26,13 @@
 
 = Python =
 [[pdb.html|Python Debug]]
+
+= Other =
+[[git.html|Git]]
+
+[[nmap.html|nmap]]
+
+[[msmtp_mutt.html|msmtp + mutt]]
 
 = 小说 =
 [[zhetian.html|《遮天经典语录》]]
