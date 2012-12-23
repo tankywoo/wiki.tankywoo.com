@@ -51,6 +51,7 @@ logfile /var/log/msmtp.log
 
 
 = mutt配置 =
+在用户home目录新建一个.muttrc配置文件
 {{{
 set sendmail="/usr/bin/msmtp"	#这里设置调用的MTA
 set use_from=yes
@@ -61,6 +62,10 @@ set editor="vim"				#调用的编辑器
 测试：<br>
 >> echo 'HelloWorld' | mutt -s 'Hi, Just a test!' xxx@xx.com
 
+= 备注 =
+以上是通过网上查的资料总结，官方具体文档还未细看
+
+待补充完善!
 
 = 更多参考 =
 * [http://www.gentoo.org/doc/zh_cn/guide-to-mutt.xml?style=printable Gentoo文档:Mutt电子邮件快速入门指南]
