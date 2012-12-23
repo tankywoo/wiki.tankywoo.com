@@ -120,7 +120,8 @@ pre {
 	-moz-border-radius: 10px;      /* Gecko browsers */
 	-webkit-border-radius: 10px;   /* Webkit browsers */
 	border-radius:10px;            /* W3C syntax */
-	font-size: 12px;
+	font-size: 1.2em;
+	font-family : 'Courier New';
 }
 
 /*
