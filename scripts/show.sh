@@ -1,4 +1,5 @@
 #!/bin/bash
+# @Tanky Woo
 
 echo "--------------------------------"
 echo "| 1.Create a wiki file         |"

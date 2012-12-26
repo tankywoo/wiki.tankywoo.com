@@ -1,5 +1,5 @@
 #!/bin/bash
-# Tanky Woo
+# @Tanky Woo
 # manage the all script of the wiki
 
 echo "Enter the number(1/2/3/4/0) to choose the operatration:"

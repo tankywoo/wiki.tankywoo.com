@@ -34,8 +34,8 @@
 
 [[msmtp_mutt.html|msmtp + mutt]]
 
-= 小说 =
-[[zhetian.html|《遮天经典语录》]]
+%%= 小说 =
+%%[[zhetian.html|《遮天经典语录》]]
 
 = Nothing is Important = 
 [[bigevents.html|Big Events]]
