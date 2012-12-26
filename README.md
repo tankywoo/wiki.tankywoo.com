@@ -1,4 +1,4 @@
-# Wiki #
+# About #
 This is my personal wiki site, powered by `vimwiki`
 
 # Structure #
