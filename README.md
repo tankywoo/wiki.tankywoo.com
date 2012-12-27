@@ -6,13 +6,10 @@ This is my personal wiki site, powered by `vimwiki`
 	├── html
 	├── manage.sh
 	├── README.md
-	├── scripts
 	├── template
 	└── tkwiki
 
 `html` -- Generate the html file in this dir
-
-`scripts` -- Some scripts to manage this wiki project
 
 `template` -- The template the generate the html file
 
