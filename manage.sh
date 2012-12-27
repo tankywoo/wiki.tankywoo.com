@@ -1,40 +1,101 @@
 #!/bin/bash
 # @Tanky Woo
-# manage the all script of the wiki
 
-echo "Enter the number(1/2/3/4/0) to choose the operatration:"
-#echo "--------------------------------"
-#echo "| 1.Create a wiki file         |"
-#echo "| 2.Update the wiki files      |"
-#echo "| 3.Generate the html files    |"
-#echo "| 4.Sync the files to Github   |"
-#echo "--------------------------------"
+# Show the input information
+function Show()
+{
+	echo ''
+	echo "-------------------------------"
+	echo "| 1.Create a wiki file        |"
+	echo "| 2.Update the wiki files     |"
+	echo "| 3.Generate the html files   |"
+	echo "| 4.Sync the files to Github  |"
+	echo "| 0.Exit                      |"
+	echo "-------------------------------"
+	echo "Enter the number(1/2/3/4/0) to choose the operatration:"
+}
 
-# TODO????? can't use `xxx`
-bash ./scripts/show.sh
+# Create the wiki file
+function Create()
+{
+	echo "Enter the wiki file's name:"
+	read filename
+
+	vim ./tkwiki/"$filename.wiki"
+}
+
+# Use git pull to update wiki project
+function Update()
+{
+	echo "Now will git pull codes from the remote"
+	echo "Enter (y/Y) to continue, others to exit :"
+	read input
+	if [ "$input" = "y" ] || [ "$input" = "Y" ]; then
+		git pull
+		echo "Git Pull is OK..."
+	else
+		:
+		#return
+	fi
+}
+
+# Batch generate html file from .wiki
+function Generate()
+{
+	for file in ./tkwiki/*.wiki
+	do
+		vim -c Vimwiki2HTML -f +"wq" $file
+	done
+}
+
+# Sync the wiki project to github
+function Sync()
+{
+	git status
+
+	echo "Input y/Y to continue sync to github, others to exit"
+	read input
+
+	if [ "$input" = "y" ] || [ "$input" = "Y" ]; then
+		git add .
+	else
+		return
+	fi
+
+	TIME=`date '+%F %T'`
+
+	echo 'Input the commit message'
+	read commit_msg
+	# XXX
+	if [[ $commit_msg ]]; then
+		git commit -a -m "$commit_msg @ $TIME"
+	else
+		git commit -a -m "auto commit @ $TIME"
+	fi
+
+	# push to server
+	git push
+}
+
+
+# Main Entry
+Show
 
 while true
 do
 	read input
 	case "$input" in
-		1 | a | A ) bash ./scripts/create.sh;;
-		2 | b | B ) bash ./scripts/update.sh;;
-		3 | c | C ) bash ./scripts/generate_html.sh;;
-		4 | d | D ) bash ./scripts/sync.sh;;
-		0 ) flag=false;break;; 
+		1 | a | A ) Create ;;
+		2 | b | B ) Update ;;
+		3 | c | C ) Generate ;;
+		4 | d | D ) Sync ;;
+		0 ) flag=false; break ;; 
 	esac
-
-	# $flag用来记录是否输入的是0
-	echo $flag
-	if [ "$flag" = "" ]; then
-		#echo "haha"
-		break
-	fi
 
 	echo "Do you want to continue(y/n)?"
 	read yes_or_no
 	case "$yes_or_no" in
-		y | yes | Y ) bash ./scripts/show.sh;;
+		y | yes | Y ) Show;;
 		n | no | N ) break;;
 	esac
 done
