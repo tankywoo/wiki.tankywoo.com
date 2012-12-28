@@ -1,41 +1,43 @@
 %title 目录
 
 = Linux =
-[[linux_commands.html|Linux Command]]
+[[linux_commands|Linux Command]]
 
-[[shell.html|Shell]]
+[[shell|Shell]]
 
-[[ubuntu_network.html|Ubuntu Network]]
+[[ubuntu_network|Ubuntu Network]]
 
-[[shellkeys.html|Shell Skortkeys]]
+[[shellkeys|Shell Skortkeys]]
 
-[[linux_tips.html|Linux Tips]]
+[[linux_tips|Linux Tips]]
 
 %% [[ubuntu_sh_dash.html|Ubuntu sh默认是dash]] (2012/09/17)
 
-[[sed.html|sed]]
+[[sed|sed]]
 
-[[awk.html|awk]]
+[[awk|awk]]
 
-[[samba.html|Samba]]
+[[samba|Samba]]
 
 = Vim =
-[[vim_tips.html|Vim Tips]]
+[[vim_tips|Vim Tips]]
 
-[[vimrc.html|.vimrc]]
+[[vimrc|.vimrc]]
 
 = Python =
-[[pdb.html|Python Debug]]
+[[pdb|Python Debug]]
 
 = Other =
-[[git.html|Git]]
+[[git|Git]]
 
-[[nmap.html|nmap]]
+[[nmap|nmap]]
 
-[[msmtp_mutt.html|msmtp + mutt]]
+[[msmtp_mutt|msmtp + mutt]]
+
+[[vimwiki|VimWiki入门]]
 
 %%= 小说 =
 %%[[zhetian.html|《遮天经典语录》]]
 
 = Nothing is Important = 
-[[bigevents.html|Big Events]]
+[[bigevents|Big Events]]

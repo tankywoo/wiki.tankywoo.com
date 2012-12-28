@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="./css/style.css">
+		<title>TankyWoo's Wiki -- VimWiki入门</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='about.html'>About</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">VimWiki入门</div>
+		<div id="content">
+			
+
+<h1 id="toc_1">简介</h1>
+<p>
+VimWiki，<a href="http://code.google.com/p/vimwiki/">官方</a>给出的解释：
+</p>
+<pre>
+    Vimwiki is a personal wiki for Vim -- a number of linked text files that have their own syntax highlighting. 
+</pre>
+<p>
+通过VimWiki，你可以：<br />
+</p>
+<ul>
+<li>
+organize notes and ideas
+
+<li>
+manage todo-lists
+
+<li>
+write documentation
+
+</ul>
+
+<h1 id="toc_2">安装</h1>
+<p>
+首先下载插件(<a href="http://www.vim.org/scripts/script.php?script_id=2226">下载1</a>， <a href="http://code.google.com/p/vimwiki/">下载2</a>)，然后:<br />
+</p>
+<pre>
+Windows: 
+======== 
+1. Unpack. 
+2. Open vimwiki-N-N.vba with Vim. (N-N is version number ie 1-1) 
+3. Source it with :so % command 
+
+Linux: 
+====== 
+1. Open vimwiki-N-N.vba.gz with Vim. (N-N is version number ie 1-1) 
+2. Source it with :so % command 
+</pre>
+
+<h1 id="toc_3">配置</h1>
+<p>
+官方建议在.vimrc中添加以下代码：<br />
+</p>
+<pre>
+set nocompatible 
+filetype plugin on 
+syntax on 
+</pre>
+<p>
+然后继续做其他配置：<br />
+</p>
+<pre>
+" vimwiki
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+    \ 'path_html': '~/vimwiki/html/',
+    \ 'template_path': '~/vimwiki/template/',
+    \ 'template_default': 'template',
+    \ 'template_ext': '.html'}]
+
+let g:vimwiki_camel_case = 0
+
+map &lt;F4&gt; &lt;Plug&gt;Vimwiki2HTML
+map &lt;S-F4&gt; &lt;Plug&gt;VimwikiAll2HTML
+</pre>
+
+<ul>
+<li>
+path指定wiki路径
+
+<li>
+path_html制定生成的html路径，一些相关调用的css,js也都放在这里
+
+<li>
+template_path是模板的路径
+
+<li>
+template_default指定默认的模板名称
+
+<li>
+template_ext指定模板的后缀名
+
+<li>
+综上，template_path/template_default.template_ext就是模板了
+
+<li>
+绑定快捷键F4为把wiki页面转为html页面
+
+</ul>
+
+<h1 id="toc_4">使用</h1>
+
+<h2 id="toc_4.1">打开wiki</h2>
+<p>
+<code>&lt;Leader&gt;</code>键一般是<code>\</code>键<br />
+</p>
+<pre>
+&lt;Leader&gt;ww -- Open default wiki index file. 
+&lt;Leader&gt;wt -- Open default wiki index file in a new tab. 
+&lt;Leader&gt;ws -- Select and open wiki index file. 
+&lt;Leader&gt;wd -- Delete wiki file you are in. 
+&lt;Leader&gt;wr -- [[Rename]] wiki file you are in. 
+&lt;Enter&gt; -- Folow/Create wiki link 
+&lt;Shift-Enter&gt; -- Split and folow/create wiki link 
+&lt;Ctrl-Enter&gt; -- Vertical split and folow/create wiki link 
+&lt;Backspace&gt; -- Go back to parent(previous) wiki link 
+&lt;Tab&gt; -- Find next wiki link 
+&lt;Shift-Tab&gt; -- Find previous wiki link 
+</pre>
+
+
+<h2 id="toc_4.2">语法</h2>
+<p>
+可以<code>:h vimwiki</code> 或者看这个<a href="http://vimwiki.googlecode.com/hg/misc/Vimwiki1.1.1QR.pdf">vimwiki quick reference card</a>
+</p>
+
+<h1 id="toc_5">参考的文章</h1>
+<ul>
+<li>
+<a href="http://www.berlinix.com/VimWiki.html">Vim插件-VimWiki</a>
+
+<li>
+<a href="http://zwiki.sinaapp.com/">拾墨.Wiki</a>
+
+<li>
+<a href="http://xbeta.info/vimwiki.htm">Xbeta Pkm工具：Vimwiki</a>
+
+<li>
+<a href="http://www.clarkok.com/blog/?p=534">VimWiki，创建你自己的Wiki世界</a>
+
+<li>
+<a href="http://arccos.github.com/blog/20110510-use-vimwiki-for-knowledge-managment.html">使用 VimWiki 进行知识管理</a>
+
+<li>
+<a href="http://code.google.com/p/vim-script-cn/source/browse/trunk/doc/vimwiki.cnx">vimwiki中文文档</a>
+
+</ul>
+
+<h1 id="toc_6">最后修改</h1>
+<p>
+2012/5/8<br .>
+继续完善中...<br />
+</p>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+		<!-- DISQUS END -->
+	</body>
+	<div id="footer">
+		<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+			Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+		</span>
+	</div>
+</html>
