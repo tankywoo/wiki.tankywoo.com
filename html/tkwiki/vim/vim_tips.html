@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<link rel="Stylesheet" type="text/css" href="./css/style.css">
-		<title>TankyWoo's Wiki -- pdb (The Python Debug)</title>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>TankyWoo's Wiki -- vim_tips</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	</head>
 	<body>
@@ -16,9 +16,31 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">pdb (The Python Debug)</div>
+		<div id="title">vim_tips</div>
 		<div id="content">
 			
+<h2 id="toc_0.1">shell多行注释</h2>
+<p>
+命令行模式下，注释掉line1与line2之间的行
+</p>
+<pre>
+line1,line2s/^/#/g
+</pre>
+
+<h2 id="toc_0.2">自动补全</h2>
+<p>
+Ctrl+n Ctrl+p
+Ctrl+x Ctrl+?{....}
+</p>
+
+<h2 id="toc_0.3">左右分割打开help文档</h2>
+<p>
+默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便
+</p>
+<pre>
+:set spr
+:vert help xxx
+</pre>
 
 		</div>
 
