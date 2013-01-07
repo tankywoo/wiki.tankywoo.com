@@ -42,11 +42,16 @@ function Update()
 # Batch generate html file from .wiki
 function Generate()
 {
-	for file in ./tkwiki/*.wiki
+ 	for f in $1/*
 	do
-		vim -c Vimwiki2HTML -f +"wq" $file
+		if [ -d $f ];then
+			Generate $f
+		elif [ -f $f ];then
+			vim -c Vimwiki2HTML -f +"wq" $f
+		fi
 	done
 }
+
 
 # Sync the wiki project to github
 function Sync()
@@ -81,13 +86,14 @@ function Sync()
 # Main Entry
 Show
 
+WIKI_PATH='./tkwiki'
 while true
 do
 	read input
 	case "$input" in
 		1 | a | A ) Create ;;
 		2 | b | B ) Update ;;
-		3 | c | C ) Generate ;;
+		3 | c | C ) Generate $WIKI_PATH ;;
 		4 | d | D ) Sync ;;
 		0 ) flag=false; break ;; 
 	esac
