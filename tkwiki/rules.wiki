@@ -1,0 +1,3 @@
+%title My Wiki Rules
+* `>>` or `<pre> tag` means it is a code example
+* In `Read More` links, the (*) means this article is very good

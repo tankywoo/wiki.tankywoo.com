@@ -67,12 +67,12 @@ set editor="vim"				#调用的编辑器
 
 待补充完善!
 
-= 更多参考 =
+= Read More =
 * [http://www.gentoo.org/doc/zh_cn/guide-to-mutt.xml?style=printable Gentoo文档:Mutt电子邮件快速入门指南]
 * [http://msmtp.sourceforge.net/doc/mutt+msmtp.txt msmtp官方文档:Using msmtp with Mutt]
 
 
-= 记录 =
+= History =
 创建时间：2012/12/24 平安夜
 
 最后修改：2012/12/24

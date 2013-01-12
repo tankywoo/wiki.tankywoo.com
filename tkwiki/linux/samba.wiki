@@ -12,7 +12,7 @@ Samba是用来让Unix系列的操作系统和微软Windows操作系统的SMB/CIF
 
 Samba是架构在NetBIOS（Network Basic Input/Output System）这个通信协议上面开发出来的。NetBIOS是无法跨路由的，但是现在又NetBIOS over TCP/IP技术可以实现。目前Samba还是广泛用于LAN中。
 
-[http://www.samba.org/ 官方网站传送门]
+[http://www.samba.org 官方网站传送门]
 
 = Configuration = 
 {{{
@@ -35,7 +35,7 @@ vim smb.conf
 sudo /etc/init.d/samba start
 }}}
 
-= Reference =
+= Read More =
 {{{
 http://www.cnblogs.com/whiteyun/archive/2011/05/27/2059670.html
 http://bbs.chinaunix.net/thread-716599-1-1.html

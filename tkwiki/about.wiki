@@ -12,3 +12,12 @@ tankywoo@gentoo ~ $ cat /etc/issue.logo
   `Q$$P"                                  """
 
 }}}
+
+= Contact =
+If there is any problems, you can contact me by email:
+{{{
+echo YWRtaW5AdGFua3l3b28uY29tCg== | base64 -d
+}}}
+
+= My Wiki Rules =
+-> [[rules.html|Rules]]
