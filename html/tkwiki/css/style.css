@@ -91,14 +91,19 @@ h2 {
 }
 
 code {
-    background-color: #0000BB;
-	color: #6C758C;
+    /*background-color: #0000BB;*/
+    background-color: #002B36;
+	color: #667B00;
 	display: inline-block;
-    padding:1px 3px;
+	margin: 0 5px;
+    padding:1px 8px;
 	border: 2px solid #5555FF;
 	border-width: 0 1px 1px 0;
-
+	-moz-border-radius: 3px;      /* Gecko browsers */
+	-webkit-border-radius: 3px;   /* Webkit browsers */
+	border-radius:3px;            /* W3C syntax */
 }
+
 
 /*
 code:hover {
