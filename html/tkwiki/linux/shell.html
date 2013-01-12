@@ -66,7 +66,7 @@ shell是一个作为用户与Linux系统间接口的程序，它允许用户向�
 创建变量时通过直接赋值给变量 eg. var=abc
 
 <li>
-访问变量时需要在变量名前加一个\(符号 eg. echo \)var 或 <code>echo ${var}</code>
+访问变量时需要在变量名前加一个$符号 eg. echo $var 或 <code>echo ${var}</code>
 
 <li>
 在赋值时，等号两边不能有空格 eg. <code>var=abc</code>
@@ -97,10 +97,10 @@ hello
 <li>
 read读入数据时，带有空格的数据不需要加引号
 <pre>
-  eg. $ read var
-      Tanky Woo
-	  $ echo $var
-	  Tanky Woo
+eg. $ read var
+    Tanky Woo
+ $ echo $var
+ Tanky Woo
 </pre>
 
 <li>
@@ -112,12 +112,12 @@ read读入数据时，带有空格的数据不需要加引号
 <li>
 还可以在$前面加上'\'符号取消其转义行为
 <pre>
-  eg.
-  var="tanky woo"
-  echo $var     # tanky woo
-  echo "$var"   # tanky woo
-  echo '$var'   # $var
-  echo \$var    $var
+eg.
+var="tanky woo"
+echo $var     # tanky woo
+echo "$var"   # tanky woo
+echo '$var'   # $var
+echo \$var    $var
 </pre>
 
 </ul>
@@ -398,7 +398,7 @@ x=$(expr $x + 1)
 <p>
 算数运算
 $((...))
-x=\(((\)x+1))
+x=$(($x+1))
 </p>
 
 
