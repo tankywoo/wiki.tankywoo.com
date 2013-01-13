@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>TankyWoo's Wiki -- My Wiki Rules</title>
+		<title>TankyWoo's Wiki -- nc(netcat)</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	</head>
@@ -17,20 +17,70 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">My Wiki Rules</div>
+		<div id="title">nc(netcat)</div>
 		<div id="content">
 			
-<ul>
-<li>
-<code>$</code> or <code>&lt;pre&gt; tag</code> means it is a code example
 
-<li>
-<code>&gt;&gt;</code> and under is the output result
+<p>
+TCP/IP swiss army knife
+</p>
 
-<li>
-In <code>Read More</code> links, the (*) means this article is very good
+<h1 id="toc_1">Argument</h1>
 
-</ul>
+<h2 id="toc_1.1">-l</h2>
+<p>
+listen mode. can be used as server
+&gt;&gt; nc -l -p 9999	# listen to port 9999
+</p>
+
+<p>
+NOTE: TODO, not for sure
+</p>
+
+<h2 id="toc_1.2">-p</h2>
+<p>
+local port num(port numbers can be individual or ranges: lo-hi [inclusive])
+</p>
+
+<h2 id="toc_1.3">-v/-vv</h2>
+<p>
+verbose information
+</p>
+
+<h2 id="toc_1.4">-z</h2>
+<p>
+zero-I/O mode [used for scanning]
+</p>
+
+<p>
+NOTE: what is the meaning of <code>zero-IO</code>?
+</p>
+
+<h1 id="toc_2">Example</h1>
+<pre>
+# Transfer file
+# Server
+&gt;&gt; nc -l -p 9999 &lt; getfile.txt
+
+# Client
+$ nc -l 9999 &gt; sendfile.txt
+
+
+
+# Scan Port
+$ nc -v -z localhost 20-100
+&gt;&gt;
+localhost [127.0.0.1] 80 (http) open
+localhost [127.0.0.1] 22 (ssh) open
+</pre>
+
+
+<h1 id="toc_3">Read More</h1>
+<ol>
+<li>
+<a href="http://www.thegeekstuff.com/2012/04/nc-command-examples/">8 Practical Linux Netcat NC Command Examples</a>
+
+</ol>
 
 		</div>
 

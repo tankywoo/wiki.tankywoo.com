@@ -36,6 +36,8 @@
 
 [[command/nmap|nmap]]
 
+[[command/nc|Nc(Netcat)]]
+
 = Other =
 [[other/git|Git]]
 
