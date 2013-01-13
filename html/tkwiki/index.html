@@ -4,6 +4,7 @@
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
 		<title>TankyWoo's Wiki -- 目录</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	</head>
 	<body>
 		<div id="header">
@@ -54,9 +55,6 @@
 <a href="linux/samba.html">Samba</a>
 </p>
 
-<p>
-<a href="linux/tcpdump.html">Tcpdump</a>
-</p>
 
 <h1 id="toc_2">Vim</h1>
 <p>
@@ -72,14 +70,25 @@
 <a href="python/pdb.html">Python Debug</a>
 </p>
 
-<h1 id="toc_4">Other</h1>
+<h1 id="toc_4">Tools(Commands)</h1>
+
+<p>
+<a href="command/tcpdump.html">tcpdump</a>
+</p>
+
+<p>
+<a href="command/route.html">route</a>
+</p>
+
+<p>
+<a href="command/nmap.html">nmap</a>
+</p>
+
+<h1 id="toc_5">Other</h1>
 <p>
 <a href="other/git.html">Git</a>
 </p>
 
-<p>
-<a href="other/nmap.html">nmap</a>
-</p>
 
 <p>
 <a href="other/msmtp_mutt.html">msmtp + mutt</a>
@@ -90,7 +99,7 @@
 </p>
 
 
-<h1 id="toc_5">Nothing is Important</h1>
+<h1 id="toc_6">Nothing is Important</h1>
 <p>
 <a href="other/bigevents.html">Big Events</a>
 </p>
@@ -99,10 +108,17 @@
 
 		<!-- DISQUS BEGIN -->
 		<!-- DISQUS END -->
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
 	</body>
-	<div id="footer">
-		<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-			Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
-		</span>
-	</div>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+	</script>
 </html>

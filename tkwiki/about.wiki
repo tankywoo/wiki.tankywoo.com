@@ -14,7 +14,7 @@ tankywoo@gentoo ~ $ cat /etc/issue.logo
 }}}
 
 = Contact =
-If there is any problems, you can contact me by email:
+Contact me if there is any problems:
 {{{
 echo YWRtaW5AdGFua3l3b28uY29tCg== | base64 -d
 }}}
