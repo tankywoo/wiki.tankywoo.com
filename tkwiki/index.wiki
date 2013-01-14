@@ -38,6 +38,8 @@
 
 [[command/nc|Nc(Netcat)]]
 
+[[command/curl|cUrl]]
+
 = My Projects =
 [[myproject/passtk|Passtk]]
 
