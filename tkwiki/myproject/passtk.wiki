@@ -9,7 +9,7 @@ https://github.com/tankywoo/passtk
 = Usage =
 It can specified the level and the length of the password
 {{{
-usage: passtk.py [-h] [-l LEVEL] [-n LENGTH]
+usage: passtk [-h] [-l LEVEL] [-n LENGTH]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -47,7 +47,7 @@ Maybe the generated password(the pwd_length characters) are all digits, or other
 
 And another reason is that random.sample function returns a set(unique)
 
-But, my `Pastk` can ensure the randomness
+But, my `Passtk` can ensure the randomness
 
 If it is the third level, the password will certainly include letters, digits and punctuation,
 
