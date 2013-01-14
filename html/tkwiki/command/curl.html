@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>cUrl @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='/about.html'>About</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">cUrl</div>
+		<div id="content">
+			
+
+<h1 id="toc_1">Argument</h1>
+
+<h2 id="toc_1.1">-o/-O</h2>
+<p>
+-o file: output to file
+</p>
+
+<p>
+-O: output to file named the same with the remote name
+</p>
+
+<h2 id="toc_1.2">-i/-I</h2>
+<p>
+-i: Include the HTTP-header in the output
+</p>
+
+<p>
+-I: only get the HTTP-header
+</p>
+
+<h2 id="toc_1.3">-u</h2>
+<p>
+-u username:password
+</p>
+
+<h1 id="toc_2">Example</h1>
+<pre>
+# get the file source and output to the STDOUT
+curl http://wiki.wutianqi.com/index.html
+
+# download the file
+curl -o myindex.html http://wiki.wutianqi.com/index.html
+curl -O http://wiki.wutianqi.com/index.html
+
+# get the HTTP-header only
+curl -I http://wiki.wutianqi.com/index.html
+</pre>
+
+
+<h1 id="toc_3">Read More</h1>
+<ul>
+<li>
+[<a href="http://www.thegeekstuff.com/2012/04/curl-examples/">http://www.thegeekstuff.com/2012/04/curl-examples/</a> 15 Practical Linux cURL Command Examples]
+
+<li>
+[<a href="http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage/">http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage/</a> curl tutorial with examples of usage]
+
+<li>
+[<a href="http://www.ruanyifeng.com/blog/2011/09/curl.html">http://www.ruanyifeng.com/blog/2011/09/curl.html</a> curl网站开发指南]
+
+</ul>
+
+<h1 id="toc_4">History</h1>
+<p>
+Create 2013/01/14
+</p>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+		<!-- DISQUS END -->
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+		<!-- bShare -->
+		<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=4&amp;fs=4&amp;bgcolor=Grey"></script>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+	</script>
+</html>
