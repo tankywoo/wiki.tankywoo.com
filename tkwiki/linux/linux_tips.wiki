@@ -37,3 +37,9 @@ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 文件个数: find . -name "*.py" | wc -l
 单个文件代码行数及总行数: find . -name "*.py" | xargs wc -l
 }}}
+
+= 输出错误重定向 =
+{{{
+ls 1>/dev/null 2>/dev/null
+ls >/dev/null 2>&1
+[[}}}]]

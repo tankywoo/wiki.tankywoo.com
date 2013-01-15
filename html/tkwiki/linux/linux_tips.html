@@ -34,7 +34,7 @@ chsh
 
 <h1 id="toc_3">shell快捷键</h1>
 <pre>
-cd到错误路径时，返回上一个路径：`cd -` <br>
+cd到错误路径时，返回上一个路径：`cd -` &lt;br&gt;
 </pre>
 
 <h1 id="toc_4">关于export C</h1>
@@ -60,6 +60,12 @@ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 <pre>
 文件个数: find . -name "*.py" | wc -l
 单个文件代码行数及总行数: find . -name "*.py" | xargs wc -l
+</pre>
+
+<h1 id="toc_8">输出错误重定向</h1>
+<pre>
+ls 1&gt;/dev/null 2&gt;/dev/null
+ls &gt;/dev/null 2&gt;&amp;1
 </pre>
 
 		</div>
