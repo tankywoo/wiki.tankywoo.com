@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>Grep @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='/about.html'>About</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">Grep</div>
+		<div id="content">
+			
+
+<p>
+grep [OPTIONS] PATTERN [FILE...]
+</p>
+
+<p>
+grep [OPTIONS] [-e PATTERN | -f FILE] [FILE...]
+</p>
+
+<p>
+egrep == grep -E
+</p>
+
+<p>
+fgrep == grep -F
+</p>
+
+<h1 id="toc_1">Arguments</h1>
+
+<h2 id="toc_1.1">-e</h2>
+<p>
+This can be used to specify multiple search patterns
+</p>
+
+<h2 id="toc_1.2">-f</h2>
+<p>
+Obtain patterns from FILE, one per line.
+</p>
+
+<hr />
+
+<h2 id="toc_1.3">-i</h2>
+<p>
+--ignore-case
+</p>
+
+<h2 id="toc_1.4">-v</h2>
+<p>
+--invert-match
+</p>
+
+<h2 id="toc_1.5">-w</h2>
+<p>
+--word-regexp
+</p>
+
+<h2 id="toc_1.6">-x</h2>
+<p>
+--line-regexp
+</p>
+
+<h2 id="toc_1.7">-c</h2>
+<p>
+print the match line number
+</p>
+
+<h2 id="toc_1.8">-m</h2>
+
+<h2 id="toc_1.9">-n</h2>
+<p>
+print line number
+</p>
+
+<h2 id="toc_1.10">-r/-R</h2>
+
+
+<h1 id="toc_2">Examples</h1>
+<pre>
+# The test.file is :
+root@gentoo-jl tmp # cat -n test.file
+     1  TankyWoo
+     2  tankywoo
+     3  tank
+     4  helloworld
+     5  say hello
+
+
+root@gentoo-jl tmp # grep -in 'tanky' test.file
+1:TankyWoo
+2:tankywoo
+
+root@gentoo-jl tmp # grep -in -e 'tanky' -e 'hello' test.file
+1:TankyWoo
+2:tankywoo
+4:helloworld
+5:say hello
+
+root@gentoo-jl tmp # grep -inv 'tanky' test.file
+3:tank
+4:helloworld
+5:say hello
+
+root@gentoo-jl tmp # grep -in -w 'sa' test.file
+root@gentoo-jl tmp # grep -in -w 'say' test.file
+5:say hello
+
+root@gentoo-jl tmp # grep -in -x 'say' test.file
+root@gentoo-jl tmp # grep -in -x 'say hello' test.file
+5:say hello
+
+
+
+</pre>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+		<!-- DISQUS END -->
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+		<!-- bShare -->
+		<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=4&amp;fs=4&amp;bgcolor=Grey"></script>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+	</script>
+</html>
