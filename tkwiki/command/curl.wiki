@@ -30,9 +30,9 @@ curl -I http://wiki.wutianqi.com/index.html
 
 
 = Read More =
-* [http://www.thegeekstuff.com/2012/04/curl-examples/ 15 Practical Linux cURL Command Examples]
-* [http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage/ curl tutorial with examples of usage]
-* [http://www.ruanyifeng.com/blog/2011/09/curl.html curl网站开发指南]
+* [[http://www.thegeekstuff.com/2012/04/curl-examples/|15 Practical Linux cURL Command Examples]]
+* [[http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage/|curl tutorial with examples of usage]]
+* [[http://www.ruanyifeng.com/blog/2011/09/curl.html|curl网站开发指南]]
 
 = History =
 Create 2013/01/14
