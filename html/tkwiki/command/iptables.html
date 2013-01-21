@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>iptables @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='/about.html'>About</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">iptables</div>
+		<div id="content">
+			
+
+<p>
+iptables:按照官方文档，是一个ipv4 包过滤和NAT的管理工具
+</p>
+
+
+<p>
+先开始好像使用iptables命令时，报错，提示没有netfilter模块
+</p>
+
+<p>
+后来make maenuconfig添加后，重新编译一遍，就OK了
+</p>
+
+<p>
+其实这个问题折腾了半天，好像是参考这篇：
+<a href="http://en.gentoo-wiki.com/wiki/HOWTO_Iptables_for_newbies">Iptables for newbies</a>
+</p>
+
+<h1 id="toc_1">一些术语</h1>
+<h2 id="toc_1.1">Chain</h2>
+<p>
+Each chain is a list of rules which can match a set of packets.
+</p>
+
+<h2 id="toc_1.2">Table</h2>
+<h3 id="toc_1.2.1">filter</h3>
+<h3 id="toc_1.2.2">nat</h3>
+<h3 id="toc_1.2.3">mangle</h3>
+<h3 id="toc_1.2.4">raw</h3>
+<h3 id="toc_1.2.5">security</h3>
+
+
+
+<h1 id="toc_2">Read More</h1>
+<ul>
+<li>
+<a href="http://lesca.me/archives/iptables-architecture-commands-extensions.html">iptables入门：iptables构架、基本命令及扩展（功能）简介</a> 
+
+<li>
+<a href="http://www.ha97.com/4093.html">iptables的基本概念和数据包流程图</a>
+
+<li>
+<a href="http://www.21andy.com/blog/20120528/2043.html">Linux iptables 配置详解</a>（*）
+
+<li>
+<a href="http://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2">网络地址转换(NAT)</a>
+
+</ul>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+		<!-- DISQUS END -->
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+		<!-- bShare -->
+		<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=4&amp;fs=4&amp;bgcolor=Grey"></script>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+	</script>
+</html>
