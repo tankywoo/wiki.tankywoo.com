@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Ubuntu默认的sh是dash @ TankyWoo's Wiki</title>
+		<title>mysql @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,69 +19,9 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">Ubuntu默认的sh是dash</div>
+		<div id="title">mysql</div>
 		<div id="content">
 			
-
-<p>
-今天在执行一段shell脚本时，提示：
-<code>let: not found</code>
-</p>
-
-<p>
-我把代码提取关键部分加精简下：
-</p>
-<pre>
-#!/bin/bash
-# test.sh
-a=10
-b=5
-
-let c="$a"-"$b"
-
-echo $c
-</pre>
-
-<p>
-然后
-</p>
-<pre>
-tankywoo@linuxmint ~ $ sh test.sh
-test.sh: 6: test.sh: let: not found
-</pre>
-
-<p>
-网上查了下，原来是ubuntu下sh是指向dash，而dash不支持let命令
-</p>
-
-<pre>
-tankywoo@linuxmint /bin $ whereis sh
-sh: /bin/sh.distrib /bin/sh /usr/share/man/man1/sh.1.gz
-
-tankywoo@linuxmint /bin $ cd /bin/
-
-tankywoo@linuxmint /bin $ ls -la | grep sh
--rwxr-xr-x  1 root root  920788 Apr  3 23:58 bash
--rwxr-xr-x  1 root root  100284 Mar 30 01:40 dash
-lrwxrwxrwx  1 root root       4 Jul 11 11:20 rbash -&gt; bash
-lrwxrwxrwx  1 root root       4 Jul 11 11:20 sh -&gt; dash
-lrwxrwxrwx  1 root root       4 Jul 11 11:20 sh.distrib -&gt; dash
-lrwxrwxrwx  1 root root       7 Jul 11 11:20 static-sh -&gt; busybox
-
-可以看到，sh是指向dash的
-</pre>
-
-<p>
-有两种解决方法:
-</p>
-<ol>
-<li>
-bash test.sh
-
-<li>
-chmod +x test.sh; ./test.sh
-
-</ol>
 
 		</div>
 

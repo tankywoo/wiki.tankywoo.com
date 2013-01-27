@@ -66,6 +66,7 @@ history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 <pre>
 ls 1&gt;/dev/null 2&gt;/dev/null
 ls &gt;/dev/null 2&gt;&amp;1
+[[}}}]]
 </pre>
 
 		</div>
@@ -87,5 +88,8 @@ ls &gt;/dev/null 2&gt;&amp;1
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
+	$('h2').prepend('>> ')
+	$('h3').prepend('>>> ')
+
 	</script>
 </html>

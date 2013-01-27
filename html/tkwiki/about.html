@@ -47,7 +47,7 @@ echo YWRtaW5AdGFua3l3b28uY29tCg== | base64 -d
 
 <h1 id="toc_3">My Wiki Rules</h1>
 <p>
--&gt; <a href="rules.html">Rules</a>
+-&gt; <a href="rules.html.html">Rules</a>
 </p>
 
 		</div>
@@ -69,5 +69,8 @@ echo YWRtaW5AdGFua3l3b28uY29tCg== | base64 -d
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
+	$('h2').prepend('>> ')
+	$('h3').prepend('>>> ')
+
 	</script>
 </html>

@@ -28,12 +28,28 @@ body{
 	font-family : 'Courier New';
 }
 
+
 h1{
 	font-size: 20px;
+    color: #3CAD96;
+    margin-top:30px;
+    margin-bottom:10px;
+    padding-left:10px;
+    border-left: 5px solid #366D9C;
+
 }
 
-h2, h3, h4{
+h2{
+	font-size: 18px;
+    color: #3C55B6;
+    margin-top:10px;
+    margin-bottom:5px;
+}
+
+h3{
 	font-size: 16px;
+    color: #3C55B6;
+	padding-left: 5px;
 }
 
 body{
@@ -70,25 +86,6 @@ body{
     padding-bottom:5px;
 }
 
-h1 {
-    color: #3CAD96;
-    margin-top:30px;
-    margin-bottom:10px;
-    padding-left:10px;
-    border-left: 5px solid #366D9C;
-
-}
-
-h2, h3, h4, h5, h6 {
-    color: #3C55B6;
-}
-
-h2 {
-    margin-top:10px;
-    margin-bottom:5px;
-    padding-left:5px;
-
-}
 
 code {
     /*background-color: #0000BB;*/

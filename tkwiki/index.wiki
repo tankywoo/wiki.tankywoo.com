@@ -36,9 +36,11 @@
 
 [[command/nmap|nmap]]
 
-[[command/nc|Nc(Netcat)]]
+[[command/nc|nc(Netcat)]]
 
 [[command/curl|cUrl]]
+
+[[command/iptables|iptables]]
 
 = My Projects =
 [[myproject/passtk|Passtk]]
