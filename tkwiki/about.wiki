@@ -20,4 +20,4 @@ echo YWRtaW5AdGFua3l3b28uY29tCg== | base64 -d
 }}}
 
 = My Wiki Rules =
--> [[rules.html|Rules]]
+-> [[rules|Rules]]

@@ -42,6 +42,10 @@
 
 [[command/iptables|iptables]]
 
+[[command/mount|mount]]
+
+[[command/find|find]]
+
 = My Projects =
 [[myproject/passtk|Passtk]]
 

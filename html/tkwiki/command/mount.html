@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>about @ TankyWoo's Wiki</title>
+		<title>mount @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,35 +19,49 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">about</div>
+		<div id="title">mount</div>
 		<div id="content">
 			
-<h1 id="toc_1">About</h1>
-<pre>
-tankywoo@gentoo ~ $ cat /etc/issue.logo
-                                           .
-     .vir.                                d$b
-  .d$$$$$$b.    .cd$$b.     .d$$b.   d$$$$$$$$$$$b  .d$$b.      .d$$b.
-  $$$$( )$$$b d$$$()$$$.   d$$$$$$$b Q$$$$$$$P$$$P.$$$$$$$b.  .$$$$$$$b.
-  Q$$$$$$$$$$B$$$$$$$$P"  d$$$PQ$$$$b.   $$$$.   .$$$P' `$$$ .$$$P' `$$$
-    "$$$$$$$P Q$$$$$$$b  d$$$P   Q$$$$b  $$$$b   $$$$b..d$$$ $$$$b..d$$$
-   d$$$$$$P"   "$$$$$$$$ Q$$$     Q$$$$  $$$$$   `Q$$$$$$$P  `Q$$$$$$$P
-  $$$$$$$P       `"""""   ""        ""   Q$$$P     "Q$$$P"     "Q$$$P"
-  `Q$$P"                                  """
 
-</pre>
-
-<h1 id="toc_2">Contact</h1>
 <p>
-Contact me if there is any problems:
+mount，用于挂载到文件系统
 </p>
-<pre>
-echo YWRtaW5AdGFua3l3b28uY29tCg== | base64 -d
-</pre>
 
-<h1 id="toc_3">My Wiki Rules</h1>
 <p>
--&gt; <a href="rules.html">Rules</a>
+常用操作：
+mount -t type device dir
+</p>
+
+<p>
+mount [-l] [-t type]
+可以列出挂载列表中指定的类型
+</p>
+
+
+<p>
+/etc/fstab是启动时读取的挂载列表
+</p>
+
+<p>
+具体可看/etc/fstab的注释和<code>man fstab</code>
+</p>
+
+<p>
+/etc/mtab是正在挂载的文件
+</p>
+
+<p>
+参考：
+<a href="http://www.brunolinux.com/02-The_Terminal/Fstab_and_Mtab.html">fstab and mtab</a>
+</p>
+
+<h1 id="toc_1">History</h1>
+<p>
+Create 2013/01/27
+</p>
+
+<p>
+Last modified 2013/01/27
 </p>
 
 		</div>
