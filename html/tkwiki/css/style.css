@@ -153,3 +153,7 @@ ul li {
 	font-size: 13px;
 }
 
+
+.toc_block {
+	display:none;
+}
