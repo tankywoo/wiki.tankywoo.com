@@ -11,6 +11,8 @@
 
 [[linux/linux_tips|Linux Tips]]
 
+[[linux/ssh|ssh]]
+
 %% [[ubuntu_sh_dash.html|Ubuntu sh默认是dash]] (2012/09/17)
 
 [[linux/sed|sed]]

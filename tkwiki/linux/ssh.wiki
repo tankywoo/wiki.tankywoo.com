@@ -1,0 +1,31 @@
+%title SSH
+
+= Read =
+{{{
+man ssh
+man sshd
+man ssh_config
+man sshd_config
+}}}
+
+
+= 关于ssh config =
+ssh_config
+有两个文件：
+~/.ssh/config
+/etc/ssh/config
+
+config文件的格式：
+{{{
+空行和#开头的是注释文件
+用Host指定特定的主机，*表示默认的
+具体可以参考/etc/ssh/config样例
+
+比如可能有多个私钥文件，其中对于所有网站，要用私钥A。而对于某一个网站，必须用私钥B
+则可以配置：
+Host xxx
+	IdentityFile ~/.ssh/tankywoo     # tankywoo就是私钥文件
+
+Host name还可以用匹配，具体可以man ssh_config
+}}}
+

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>SSH @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='/about.html'>About</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">SSH</div>
+		<div id="content">
+			
+
+<h1 id="toc_1">Read</h1>
+<pre>
+man ssh
+man sshd
+man ssh_config
+man sshd_config
+</pre>
+
+
+<h1 id="toc_2">关于ssh config</h1>
+<p>
+ssh_config
+有两个文件：
+~/.ssh/config
+/etc/ssh/config
+</p>
+
+<p>
+config文件的格式：
+</p>
+<pre>
+空行和#开头的是注释文件
+用Host指定特定的主机，*表示默认的
+具体可以参考/etc/ssh/config样例
+
+比如可能有多个私钥文件，其中对于所有网站，要用私钥A。而对于某一个网站，必须用私钥B
+则可以配置：
+Host xxx
+	IdentityFile ~/.ssh/tankywoo     # tankywoo就是私钥文件
+
+Host name还可以用匹配，具体可以man ssh_config
+</pre>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+		<!-- DISQUS END -->
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+		<!-- bShare -->
+		<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=4&amp;fs=4&amp;bgcolor=Grey"></script>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+	$('h2').prepend('>> ')
+	$('h3').prepend('>>> ')
+
+	</script>
+</html>
