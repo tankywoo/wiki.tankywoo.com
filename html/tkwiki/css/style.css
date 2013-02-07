@@ -94,14 +94,13 @@ code {
 	/*color: #667B00;*/
 	color: #6C758C;
 	display: inline-block;
-	margin: 1px 2px;
-    padding:1px 2px;
+	margin: 1px 1px;
+    padding:0px 1px;
 	/*border: 3px solid #AAA;*/
 	/*border-width: 0 1px 1px 0;*/
 	-moz-border-radius: 1px;      /* Gecko browsers */
 	-webkit-border-radius: 1px;   /* Webkit browsers */
 	border-radius:1px;            /* W3C syntax */
-	font-weight: bold;
 }
 
 pre {
