@@ -89,16 +89,19 @@ body{
 
 code {
     /*background-color: #0000BB;*/
-    background-color: #002B36;
-	color: #667B00;
+    /*background-color: #002B36;*/
+    background-color: #222;
+	/*color: #667B00;*/
+	color: #6C758C;
 	display: inline-block;
 	margin: 0 2px;
     padding:0px 3px;
-	border: 2px solid #5555FF;
-	border-width: 0 1px 1px 0;
+	/*border: 3px solid #AAA;*/
+	/*border-width: 0 1px 1px 0;*/
 	-moz-border-radius: 1px;      /* Gecko browsers */
 	-webkit-border-radius: 1px;   /* Webkit browsers */
 	border-radius:1px;            /* W3C syntax */
+	font-weight: bold;
 }
 
 pre {
