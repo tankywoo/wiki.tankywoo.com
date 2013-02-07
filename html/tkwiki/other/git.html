@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Git学习笔记 @ TankyWoo's Wiki</title>
+		<title>Git @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -19,9 +19,106 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">Git学习笔记</div>
+		<div id="title">Git</div>
 		<div id="content">
 			
+
+<p>
+<code>NOTE</code>:git的help信息非常好，很多可以直接help来了解
+</p>
+
+<h1 id="toc_1">关于Git的分支</h1>
+<p>
+参考的<a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">何谓分支</a>
+</p>
+
+<p>
+因为git是保存的快照，Git仓库有以下几个基本对象
+</p>
+<ul>
+<li>
+<code>blog</code>对象用于表示文件快照内容
+
+<li>
+<code>tree</code>对象记录目录树内容和各个文件对应的blob对象索引
+
+<li>
+<code>commit</code>对象记录提交信息，指向tree对象或其他commit对象
+
+</ul>
+
+<p>
+Git的分支，其本质是一个指向commit对象的可变<code>指针</code>，git使用<code>master</code>作为分支的默认名字
+</p>
+
+<p>
+<code>HEAD</code>指针指向当前的分支指针
+</p>
+
+<p>
+使用<code>git branch</code>是查看当前的分支列表
+</p>
+
+<p>
+使用<code>git branch branch_name</code>新建分支，然后可以使用<code>git checkout branch_name</code>切换分支
+</p>
+
+<p>
+最后可以用<code>git merge branch_name</code>来合并分支
+</p>
+
+<p>
+如果遇到冲突，需要到冲突的文件下根据提示编辑后再commit
+</p>
+
+<h1 id="toc_2">远程分支</h1>
+<p>
+参考的<a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">远程分支</a>
+</p>
+
+<p>
+从远程git repo克隆，Git会自动将此remote repo命名为<code>origin</code>，并下载其中所有的数据，建立一个指向它的<code>master</code>分支的指针，在本地命名为<code>origin/master</code>
+</p>
+
+<p>
+但无法在本地更改其数据。接着，Git建立一个属于自己的本地<code>master</code>分支，始于<code>origin</code>上<code>master</code>分支相同的位置，这样可以就此开始工作
+</p>
+<pre>
+touch README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:tankywoo/test.git
+git push -u origin master
+</pre>
+<p>
+这里origin是remote repo name，branch name 是master
+</p>
+
+<h2 id="toc_2.1">关于fetch和pull区别</h2>
+<p>
+What is <code>git fetch</code>? and what is the difference to <code>git pull</code>?
+</p>
+
+<p>
+<code>git fetch</code>是update from remote repo，但是不合并
+</p>
+
+<p>
+<code>git pull</code>是fetch and merge
+</p>
+
+
+
+<h1 id="toc_3">Read More</h1>
+<ul>
+<li>
+<a href="http://git-scm.com/book/zh">ProGit中文版</a>
+
+<li>
+<a href="http://gitref.org/">Git Reference</a>
+
+</ul>
 
 		</div>
 

@@ -75,7 +75,7 @@ map <S-F4> <Plug>VimwikiAll2HTML
 
 
 == 语法 ==
-可以`:h vimwiki` 或者看这个[[http://vimwiki.googlecode.com/hg/misc/Vimwiki1.1.1QR.pdf|vimwiki quick reference card]]
+可以`:h vimwiki` 或者看这个[[http://vimwiki.googlecode.com/hg/misc/Vimwiki1.1.1QR.pdf|vimwiki quick reference card]](此文档是vimwiki1.1.1，新版vimwiki已有一些改动，如有问题，可email探讨或自行看vimwiki help帮助文档)
 
 = 参考的文章 =
 * [[http://www.berlinix.com/VimWiki.html|Vim插件-VimWiki]]
