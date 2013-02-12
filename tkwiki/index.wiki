@@ -48,6 +48,9 @@
 
 [[command/find|find]]
 
+= Server =
+[[server/fastcgi|FastCGI]]
+
 = My Projects =
 [[myproject/passtk|Passtk]]
 
