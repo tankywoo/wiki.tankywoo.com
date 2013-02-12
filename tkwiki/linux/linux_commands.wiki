@@ -2,6 +2,7 @@
 = About This Page =
 {{{
 这里记录的是一些命令的常用方法
+有些强大的命令会单独放在Tools(Command)目录下单独总结
 看**man手册**等才是王道
 }}}
 
@@ -124,5 +125,21 @@ sudo chsh -s /bin/fish
 其实就是修改了/etc/passwd的最后一个字段（login shell）
 }}}
 
-= XXX =
+`xargs`
+
+[[http://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/]]
+{{{
+从标准输入获取数据,然后对数据执行命令
+xargs从标准输入读取各个元素
+执行命令,默认是echo命令
+分隔符是空格或者换行符
+
+常用参数：
+-d 指定分隔符
+-t 在执行前将命令行打印到STDERR
+-I 非常常用的一个参数，用来指定替换符，例子：
+$ find . -name "*.bak" -print0 | xargs -0 -I {} mv {} ~/old.files
+}}}
+
+= History =
 begin at 2012/09/10

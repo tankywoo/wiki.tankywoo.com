@@ -23,6 +23,9 @@ html{
 
 body{
 	font-size: 16px;
+	padding: 5px 0;
+	margin: 20px 0;
+	line-height: 1.5;	/* 行间距 */
 	background-color: #000000;
 	color: #BBBBBB;
 	font-family : 'Courier New';
@@ -121,6 +124,7 @@ pre:hover {
 */
 p {
     margin:5px 0;
+	/* padding: 3px 0; */	/* 段落间距 */
 	font-size:16px;
 }
 
