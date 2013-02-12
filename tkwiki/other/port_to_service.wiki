@@ -1,8 +1,6 @@
 %title Port Numbers and Associated Services
 
 {{{
-xxx
-xxx
 Name		Port/Prot.   Service
 
 #                 0/tcp    Reserved
