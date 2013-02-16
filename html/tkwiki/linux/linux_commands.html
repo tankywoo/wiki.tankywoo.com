@@ -190,9 +190,6 @@ sudo chsh -s /bin/fish
 
 <p>
 <code>xargs</code>
-</p>
-
-<p>
 <a href="http://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/">http://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/</a>
 </p>
 <pre>
@@ -208,10 +205,16 @@ xargs从标准输入读取各个元素
 $ find . -name "*.bak" -print0 | xargs -0 -I {} mv {} ~/old.files
 </pre>
 
-<h1 id="toc_9">History</h1>
 <p>
-begin at 2012/09/10
+<code>pgrep</code>
 </p>
+<pre>
+用于搜索服务的pid
+}}
+
+= History =
+begin at 2012/09/10
+</pre>
 
 		</div>
 
