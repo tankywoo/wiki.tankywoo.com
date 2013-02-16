@@ -1500,6 +1500,7 @@ port  65000 - Devil
 = Read More =
 * [[http://www.nohack.net/information/port-numbers-associated-services/|Port Numbers & Associated Services]]
 * [[http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers|List of TCP and UDP port numbers]]
+* [[http://www.ostools.net/commons?type=7|开源中国-常用端口]]
 
 = History =
 Create 2013/02/12
