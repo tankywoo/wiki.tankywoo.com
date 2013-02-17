@@ -6,4 +6,4 @@
 
 # 2013/02/17
 * 使用了Pagify
-* 根据Pagify修改了index，每个目录由单独的页面维护，统一放在pages目录下
+* 根据Pagify修改了index，每个目录由单独的页面维护

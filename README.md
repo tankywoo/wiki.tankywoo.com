@@ -7,6 +7,7 @@ This is my personal wiki site, powered by `vimwiki`
 	├── manage.sh
 	├── README.md
 	├── template
+	├── history
 	└── tkwiki
 
 `html` -- Generate the html file in this dir
@@ -14,6 +15,8 @@ This is my personal wiki site, powered by `vimwiki`
 `template` -- The template the generate the html file
 
 `tkwiki` -- The wiki source file
+
+`history` -- Save the abandoned file
 
 `manage.sh` -- Manage the project 
 
