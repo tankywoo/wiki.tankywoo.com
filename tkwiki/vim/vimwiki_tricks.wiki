@@ -1,0 +1,5 @@
+%title Vimwiki Tricks
+
+记录Vimwiki的各种小技巧
+
+= nested_syntaxes =
