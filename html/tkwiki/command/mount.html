@@ -82,6 +82,11 @@ Last modified 2013/01/27
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
 	$('h2').prepend('>> ')
 	$('h3').prepend('>>> ')
 

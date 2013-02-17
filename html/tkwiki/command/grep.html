@@ -144,6 +144,11 @@ root@gentoo-jl tmp # grep -in -x 'say hello' test.file
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
 	$('h2').prepend('>> ')
 	$('h3').prepend('>>> ')
 

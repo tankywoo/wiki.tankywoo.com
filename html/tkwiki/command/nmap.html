@@ -85,6 +85,11 @@ Ping扫描
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
 	$('h2').prepend('>> ')
 	$('h3').prepend('>>> ')
 

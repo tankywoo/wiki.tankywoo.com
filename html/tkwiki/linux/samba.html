@@ -94,6 +94,11 @@ http://bbs.chinaunix.net/thread-1148734-1-1.html
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
 	$('h2').prepend('>> ')
 	$('h3').prepend('>>> ')
 

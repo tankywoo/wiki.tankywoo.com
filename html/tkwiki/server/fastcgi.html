@@ -119,6 +119,11 @@ PHP-FPM 是 PHP（Web Application）对 Web Server 提供的 FastCGI 协议的�
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
 	$('h2').prepend('>> ')
 	$('h3').prepend('>>> ')
 
