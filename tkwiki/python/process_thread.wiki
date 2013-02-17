@@ -1,0 +1,7 @@
+%title Python 进程/线程
+
+= Python的伪多线程 =
+相关讨论:
+* [[http://bbs.chinaunix.net/thread-1264893-1-1.html|py的多线程是伪线程吗?]]
+* [[http://mail.python.org/pipermail/python-3000/2007-May/007414.html|[Python-3000] the future of the GIL]]
+* [[http://bbs.csdn.net/topics/390226723|Python多线程的问题]]
