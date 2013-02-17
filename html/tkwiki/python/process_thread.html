@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>SAMBA @ TankyWoo's Wiki</title>
+		<title>Python 进程/线程 @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,62 +18,25 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">SAMBA</div>
+		<div id="title">Python 进程/线程</div>
 		<div id="content">
 			
 
-<h1 id="toc_1">Installation</h1>
-<pre>
-sudo emerge net-fs/samba
-</pre>
-
-<h1 id="toc_2">About</h1>
+<h1 id="toc_1">Python的伪多线程</h1>
 <p>
-NFS、CIFS？
+相关讨论:
 </p>
+<ul>
+<li>
+<a href="http://bbs.chinaunix.net/thread-1264893-1-1.html">py的多线程是伪线程吗?</a>
 
-<p>
-Samba是用来让Unix系列的操作系统和微软Windows操作系统的SMB/CIFS（Server Message Block/Common Internet File System）网络协议做连接的自由软件
-</p>
+<li>
+<a href="http://mail.python.org/pipermail/python-3000/2007-May/007414.html">[Python-3000] the future of the GIL</a>
 
-<p>
-Samba是架构在NetBIOS（Network Basic Input/Output System）这个通信协议上面开发出来的。NetBIOS是无法跨路由的，但是现在又NetBIOS over TCP/IP技术可以实现。目前Samba还是广泛用于LAN中。
-</p>
+<li>
+<a href="http://bbs.csdn.net/topics/390226723">Python多线程的问题</a>
 
-<p>
-[<a href="http://www.samba.org">http://www.samba.org</a> 官方网站传送门]
-</p>
-
-<h1 id="toc_3">Configuration</h1>
-<pre>
-# TODO
-cd /etc/samba
-# the is a smb.conf.default in the dir
-sudo cp smb.conf.default smb.conf
-vim smb.conf
-# edit the [global] section
-# workgroup is the windows pc's workgroup name
-# security can be user or shareo
-# in the end, you can uncomment the [tmp] section
-</pre>
-
-<p>
-修改完smb.conf后，可以用testparm命令来检查配置文件的语法合法性
-</p>
-
-
-<h1 id="toc_4">Start Service</h1>
-<pre>
-sudo /etc/init.d/samba start
-</pre>
-
-<h1 id="toc_5">Read More</h1>
-<pre>
-http://www.cnblogs.com/whiteyun/archive/2011/05/27/2059670.html
-http://bbs.chinaunix.net/thread-716599-1-1.html
-http://bbs.chinaunix.net/thread-1003730-1-1.html
-http://bbs.chinaunix.net/thread-1148734-1-1.html
-</pre>
+</ul>
 
 		</div>
 

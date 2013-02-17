@@ -12,7 +12,6 @@
 		<div id="header">
 			<ul>
 				<li><a href='/'>Home</a></li>
-				<li><a href='/about.html'>About</a></li>
 				<li><a href='http://www.wutianqi.com'>Blog</a></li>
 				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
 			</ul>
@@ -135,11 +134,38 @@ emerge -u dev-libs/libxml2:2
 你也可能会遇到某些特定版本的包被屏蔽的情况，比如&lt;media-video/mplayer-bin-1.0_rc1-r2。在这种情况下，升级到一个更新的版本就能解决问题
 </pre>
 
+<h1 id="toc_1">自动成成xorg配置</h1>
+<pre>
+root@gentoo profiles # Xorg -configure
+
+X.Org X Server 1.13.1
+Release Date: 2012-12-13
+X Protocol Version 11, Revision 0
+Build Operating System: Linux 3.4.9-gentoo x86_64 Gentoo
+Current Operating System: Linux gentoo-jl 3.4.9-gentoo #1 SMP Thu Nov 29 01:18:03 Local time zone must be set--see zic  x86_64
+Kernel command line: root=/dev/ram0 real_root=/dev/sda3
+Build Date: 12 February 2013  09:40:50PM
+
+Current version of pixman: 0.26.0
+        Before reporting problems, check http://wiki.x.org
+        to make sure that you have the latest version.
+Markers: (--) probed, (**) from config file, (==) default setting,
+        (++) from command line, (!!) notice, (II) informational,
+        (WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+(==) Log file: "/var/log/Xorg.0.log", Time: Tue Feb 12 22:03:54 2013
+List of video drivers:
+        nvidia
+modprobe: ERROR: could not insert 'nvidia': No such device
+No devices to configure.  Configuration failed.
+Server terminated with error (2). Closing log file.
+
+</pre>
 
 
 
-
-
+<p>
+x11-misc/Xorgautoconfig
+</p>
 
 
 <p>
@@ -154,7 +180,7 @@ masked
 slot
 </p>
 
-<h1 id="toc_1">网上找的Linux X相关术语解释</h1>
+<h1 id="toc_2">网上找的Linux X相关术语解释</h1>
 <p>
 <span class="todo">TODO:</span>
 </p>
@@ -269,7 +295,7 @@ fbdev (FrameBuffer Device)
 </p>
 
 
-<h1 id="toc_2">Read More</h1>
+<h1 id="toc_3">Read More</h1>
 <ul>
 <li>
 <a href="http://www.ogalik.ee/upgrading-old-gentoo/">Upgrading old Gentoo installations</a>
