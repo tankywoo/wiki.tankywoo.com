@@ -38,6 +38,83 @@
 
 </ul>
 
+<h1 id="toc_2">相关的模块</h1>
+<ul>
+<li>
+thread
+
+<li>
+threading
+
+<li>
+Queue
+
+<li>
+multiprocessing
+
+</ul>
+
+<h1 id="toc_3">threading</h1>
+<p>
+PyMOTW <a href="http://www.doughellmann.com/PyMOTW/threading/index.html">Manege concurrent threads</a>
+</p>
+
+<p>
+在看上面链接的第一个代码时，遇到了一个<code>print</code>和<code>sys.stdout.write</code>的问题<br />
+具体见<a href="TODO.html">TODO</a>
+</p>
+
+<p>
+最简单的threading配合Queue的Example
+</p>
+<pre class="brush: python">
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# wutq@2013-02-18
+# Python参考手册 P363
+
+import threading
+from Queue import Queue
+
+class WorkThread(threading.Thread):
+	def __init__(self, *args, **kwargs):
+		threading.Thread.__init__(self, *args, **kwargs)
+		self.input_queue = Queue()
+
+	def send(self, item):
+		self.input_queue.put(item)
+
+	def close(self):
+		#在队列上设置一个标志，使线程在处理完毕后关闭
+		self.input_queue.put(None)
+		self.input_queue.join()
+
+	def run(self):
+		while True:
+			item = self.input_queue.get()
+			if item is None:
+				break
+			print item
+			self.input_queue.task_done()
+		self.input_queue.task_done()
+		return
+
+w = WorkThread()
+w.start()
+w.send("hello")
+w.send("world")
+w.close()
+</pre>
+
+<p>
+在StackOverflow上也找到一篇帖子：<a href="http://stackoverflow.com/questions/2846653/python-multithreading-for-dummies">python multithreading for dummies</a>
+里面也提到了
+</p>
+<pre>
+CPython can use threads only for *I\O waits* due to *GIL*. 
+If you want to benefit from multiple cores for CPU-bound tasks, use *mutliprocessing*
+</pre>
+
 		</div>
 
 		<!-- DISQUS BEGIN -->

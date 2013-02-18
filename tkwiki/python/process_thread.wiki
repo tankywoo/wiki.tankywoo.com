@@ -5,3 +5,62 @@
 * [[http://bbs.chinaunix.net/thread-1264893-1-1.html|py的多线程是伪线程吗?]]
 * [[http://mail.python.org/pipermail/python-3000/2007-May/007414.html|[Python-3000] the future of the GIL]]
 * [[http://bbs.csdn.net/topics/390226723|Python多线程的问题]]
+
+= 相关的模块 = 
+* thread
+* threading
+* Queue
+* multiprocessing
+
+= threading =
+PyMOTW [[http://www.doughellmann.com/PyMOTW/threading/index.html|Manege concurrent threads]]
+
+在看上面链接的第一个代码时，遇到了一个`print`和`sys.stdout.write`的问题<br />
+具体见[[TODO]]
+
+最简单的threading配合Queue的Example
+{{{class="brush: python"
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# wutq@2013-02-18
+# Python参考手册 P363
+
+import threading
+from Queue import Queue
+
+class WorkThread(threading.Thread):
+	def __init__(self, *args, **kwargs):
+		threading.Thread.__init__(self, *args, **kwargs)
+		self.input_queue = Queue()
+
+	def send(self, item):
+		self.input_queue.put(item)
+
+	def close(self):
+		#在队列上设置一个标志，使线程在处理完毕后关闭
+		self.input_queue.put(None)
+		self.input_queue.join()
+
+	def run(self):
+		while True:
+			item = self.input_queue.get()
+			if item is None:
+				break
+			print item
+			self.input_queue.task_done()
+		self.input_queue.task_done()
+		return
+
+w = WorkThread()
+w.start()
+w.send("hello")
+w.send("world")
+w.close()
+}}}
+
+在StackOverflow上也找到一篇帖子：[[http://stackoverflow.com/questions/2846653/python-multithreading-for-dummies|python multithreading for dummies]]
+里面也提到了
+{{{
+CPython can use threads only for *I\O waits* due to *GIL*. 
+If you want to benefit from multiple cores for CPU-bound tasks, use *mutliprocessing*
+}}}
