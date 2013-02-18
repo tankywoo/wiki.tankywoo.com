@@ -77,6 +77,9 @@ map <S-F4> <Plug>VimwikiAll2HTML
 == 语法 ==
 可以`:h vimwiki` 或者看这个[[http://vimwiki.googlecode.com/hg/misc/Vimwiki1.1.1QR.pdf|vimwiki quick reference card]](此文档是vimwiki1.1.1，新版vimwiki已有一些改动，如有问题，可email探讨或自行看vimwiki help帮助文档)
 
+= Vimwik 技巧 =
+Vimwiki的小技巧见[[vimwiki_tricks]]
+
 = 参考的文章 =
 * [[http://www.berlinix.com/VimWiki.html|Vim插件-VimWiki]]
 * [[http://zwiki.sinaapp.com/|拾墨.Wiki]]
@@ -85,7 +88,7 @@ map <S-F4> <Plug>VimwikiAll2HTML
 * [[http://arccos.github.com/blog/20110510-use-vimwiki-for-knowledge-managment.html|使用 VimWiki 进行知识管理]]
 * [[http://code.google.com/p/vim-script-cn/source/browse/trunk/doc/vimwiki.cnx|vimwiki中文文档]]
 
-= 最后修改 =
-2012/5/8<br .>
-继续完善中...<br />
+= History =
+Create 2012/05/08<br />
 
+Modify 2013/02/18
