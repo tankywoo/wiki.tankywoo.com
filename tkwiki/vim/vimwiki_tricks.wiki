@@ -2,6 +2,8 @@
 
 记录Vimwiki的各种小技巧
 
+Vimwiki 入门见[[vimwiki]]
+
 = wiki文件中代码高亮 =
 使用`nested_syntaxes`选项，比如我的`.vimrc`文件:
 {{{class="brush: shell"
