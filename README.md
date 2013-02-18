@@ -20,8 +20,8 @@ This is my personal wiki site, powered by `vimwiki`
 
 `manage.sh` -- Manage the project 
 
-# My wiki site #
+# Wiki@TankyWoo #
 http://wiki.wutianqi.com
 
 # Contact #
-wtq1990@gmail.com
+	echo YWRtaW5AdGFua3l3b28uY29tCg== | base64 -d
