@@ -28,7 +28,6 @@ html{
 body{
 	font-size: 16px;
 	padding: 5px 0;
-	margin: 20px 0;
 	line-height: 1.5;	/* 行间距 */
 	background-color: #000000;
 	color: #BBBBBB;
@@ -64,10 +63,6 @@ h3{
 	padding-left: 5px;
 }
 
-body{
-	margin: 0 20px;
-}
-
 #wrapper {
     width:960px;
     margin: 0 auto;
@@ -100,24 +95,18 @@ body{
 
 
 code {
-    /*background-color: #0000BB;*/
-    /*background-color: #002B36;*/
     background-color: #222;
-	/*color: #667B00;*/
 	color: #6C758C;
 	display: inline-block;
-	margin: 1px 1px;
+	margin: 1px;
     padding:0px 1px;
-	/*border: 3px solid #AAA;*/
-	/*border-width: 0 1px 1px 0;*/
 	-moz-border-radius: 1px;      /* Gecko browsers */
 	-webkit-border-radius: 1px;   /* Webkit browsers */
 	border-radius:1px;            /* W3C syntax */
 }
 
 pre {
-    /*background-color: #000900;*/	/* #FBFBF7; */ /* #B7BECC;*/
-    background-color: #002b36;/* #FBFBF7; */ /* #B7BECC;*/
+    background-color: #002b36;
     padding: 10px;
 	-moz-border-radius: 10px;      /* Gecko browsers */
 	-webkit-border-radius: 10px;   /* Webkit browsers */
@@ -126,14 +115,8 @@ pre {
 	font-family : 'Courier New';
 }
 
-/*
-pre:hover {
-	background-color: #EBEEFA;
-}
-*/
 p {
-    margin:5px 0;
-	/* padding: 3px 0; */	/* 段落间距 */
+    margin:10px 0;
 	font-size:16px;
 }
 
