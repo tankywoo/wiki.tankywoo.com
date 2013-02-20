@@ -24,6 +24,7 @@
 
 <h1 id="toc_1">Python的伪多线程</h1>
 <p>
+TODO 待研究
 相关讨论:
 </p>
 <ul>
@@ -54,7 +55,29 @@ multiprocessing
 
 </ul>
 
-<h1 id="toc_3">threading</h1>
+
+<h1 id="toc_3">Queue</h1>
+<p>
+Queue模块主要有三种队列实现
+</p>
+<ul>
+<li>
+Queue(FIFO)
+
+<li>
+LifoQueue
+
+<li>
+PriorityQueue
+
+</ul>
+
+<p>
+Queue是线程同步的
+</p>
+
+
+<h1 id="toc_4">threading</h1>
 <p>
 PyMOTW <a href="http://www.doughellmann.com/PyMOTW/threading/index.html">Manege concurrent threads</a>
 </p>
@@ -114,6 +137,124 @@ w.close()
 CPython can use threads only for *I\O waits* due to *GIL*. 
 If you want to benefit from multiple cores for CPU-bound tasks, use *mutliprocessing*
 </pre>
+
+<h1 id="toc_5">线程池</h1>
+<p>
+线程池概念
+</p>
+<pre>
+所谓的线程池就是完成一种任务的一组线程
+一般情况下是首先初始化一定数量的工作线程，并把任务提交给空闲的线程
+当线程都处于忙的状态的时候，则重新生成新的工作线程
+当空闲线程较多的时候则停止一部分线程
+这些要看具体的调度算法。
+但是线程不能滥用，因为并不是线程越多就会带来更好的性能
+</pre>
+<p>
+参考
+</p>
+<ul>
+<li>
+<a href="http://bbs.csdn.net/topics/50024963">线程池概念讨论</a>
+
+<li>
+<a href="http://blog.chinaunix.net/uid-26983585-id-3336491.html">线程池的概念及Linux 怎么设计一个简单的线程池</a>
+
+</ul>
+
+<p>
+一个不错的Example
+</p>
+<pre class="brush:python">
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import Queue
+import threading
+import time
+
+class WorkManager(object):
+    def __init__(self, work_num=1000,thread_num=2):
+        self.work_queue = Queue.Queue()
+        self.threads = []
+        self.__init_work_queue(work_num)
+        self.__init_thread_pool(thread_num)
+
+    def __init_work_queue(self, jobs_num):
+        """初始化工作队列"""
+        for i in range(jobs_num):
+            self.add_job(do_job, i)
+
+    def __init_thread_pool(self,thread_num):
+        """初始化线程"""
+        for i in range(thread_num):
+            self.threads.append(Work(self.work_queue))
+
+    def add_job(self, func, *args):
+        """添加一项工作入队"""
+        #任务入队，Queue内部实现了同步机制
+        self.work_queue.put((func, list(args)))
+
+    def check_queue(self):
+        """检查剩余队列任务"""
+        return self.work_queue.qsize()
+
+    def wait_allcomplete(self):
+        """等待所有线程运行完毕"""
+        for item in self.threads:
+            if item.isAlive():item.join()
+
+class Work(threading.Thread):
+    def __init__(self, work_queue):
+        threading.Thread.__init__(self)
+        self.work_queue = work_queue
+        self.start()
+
+    def run(self):
+        while True:
+            try:
+                #任务异步出队，Queue内部实现了同步机制
+                do, args = self.work_queue.get(block=False)
+                do(args)
+                self.work_queue.task_done()#通知系统任务完成
+            except Exception,e:
+                print str(e)
+                break
+
+#具体要做的任务
+def do_job(args):
+    #print args
+    time.sleep(0.1)#模拟处理时间
+    #print threading.current_thread(), list(args)
+
+if __name__ == '__main__':
+    for thread_num in (10, 20):
+        print "Thread Num: %d" % thread_num
+        start = time.time()
+        work_manager =  WorkManager(500, thread_num)
+        work_manager.wait_allcomplete()
+        end = time.time()
+        print "cost all time: %s" % (end-start)
+</pre>
+<p>
+来源:<a href="http://www.open-open.com/home/space-5679-do-blog-id-3247.html">http://www.open-open.com/home/space-5679-do-blog-id-3247.html</a>
+略做了一点修改
+</p>
+
+<p>
+网上关于线程池不错的文章:
+</p>
+<ul>
+<li>
+<a href="http://www.the5fire.net/python-thread-pool.html">python线程池</a>
+
+<li>
+<a href="http://www.handaoliang.com/a/20071102/184706.html">python线程池的实现</a>
+
+<li>
+<a href="http://www.chrisarndt.de/projects/threadpool/">python threadpool第三方模块</a>
+
+</ul>
 
 		</div>
 
