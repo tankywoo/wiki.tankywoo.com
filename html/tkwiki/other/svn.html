@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Python Built-in Functions @ TankyWoo's Wiki</title>
+		<title>Svn @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,13 +18,61 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">Python Built-in Functions</div>
+		<div id="title">Svn</div>
 		<div id="content">
 			
 
-<p>
-<code>callable</code>
-</p>
+<h1 id="toc_1">还原到某个版本</h1>
+<ul>
+<li>
+svn up -r 版本号
+
+<li>
+svn up -r 版本号 文件名
+
+</ul>
+
+<h1 id="toc_2">撤销修改</h1>
+<ul>
+<li>
+svn revert
+
+</ul>
+
+<h1 id="toc_3">diff比较</h1>
+<ul>
+<li>
+svn diff					#将修改后和未修改的比较
+
+<li>
+svn diff -r 5				#将本地代码和版本好为5的所有文件比较
+
+<li>
+svn diff -r 5 a.txt		#将本地代码和版本号为5的a.txt文件比较
+
+<li>
+svn diff -r 5:9			#将比较版本5和版本9之间所有文件比较
+
+<li>
+svn diff -r 5:9 a.txt		#将版本5和版本9之间的a.txt文件比较
+
+</ul>
+
+<h1 id="toc_4">查看log</h1>
+<ul>
+<li>
+svn log			#查看所有的log信息
+
+<li>
+svn log -r 5:9	#只查看版本5和版本9的日志信息
+
+<li>
+svn log a.txt		#查看文件a.txt的日志修改信息;
+
+<li>
+svn log -v dir	#查看目录的日志修改信息,需要加v;
+
+</ul>
 
 		</div>
 

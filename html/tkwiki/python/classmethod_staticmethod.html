@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>ClassMethod and StaticMethod @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">ClassMethod and StaticMethod</div>
+		<div id="content">
+			
+
+<h1 id="toc_1">主要</h1>
+
+<ul>
+<li>
+Functions
+
+<ul>
+<li>
+staticmethod
+
+<li>
+classmethod
+
+</ul>
+<li>
+Decorator
+
+</ul>
+
+<h1 id="toc_2">Example</h1>
+<pre class="brush:python">
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# wutq@2013-02-20
+
+class A(object):
+    @classmethod
+    def cm(cls):
+        print '类方法cm(cls)调用者：', cls.__name__
+
+    @staticmethod
+    def sm():
+        print '静态方法sm()被调用'
+
+class B(A):
+    pass
+
+A.cm()
+B.cm()
+A.sm()
+B.sm()
+
+# $ Output
+# 类方法cm(cls)调用者： A
+# 类方法cm(cls)调用者： B
+# 静态方法sm()被调用
+# 静态方法sm()被调用
+</pre>
+
+<p>
+<a href="http://blog.csdn.net/qigan30125/article/details/7550338">python之静态和类方法：staticmethod和classmethod内置函数</a>
+</p>
+
+
+<p>
+<a href="http://luozhaoyu.iteye.com/blog/1506376">理解python的staticmethod与classmethod实现</a>
+</p>
+
+<p>
+Python文档里有一句话：
+<strong>Static methods in Python are similar to those found in Java or C++.</strong>
+</p>
+
+<p>
+把python的static method理解成为c++/java的类的static方法就差不多了
+</p>
+
+<p>
+一个staticmethod和一个普通的global method没有太大的区别，放在类里面主要基于模块化的考虑。
+</p>
+
+<p>
+SO上关于两者的讨论
+</p>
+<ul>
+<li>
+<a href="http://stackoverflow.com/questions/136097/what-is-the-difference-between-staticmethod-and-classmethod-in-python">What is the difference between @staticmethod and @classmethod in Python?</a>
+
+<li>
+<a href="http://stackoverflow.com/questions/12179271/python-classmethod-and-staticmethod-for-beginner">Python @classmethod and @staticmethod for beginner?</a>
+
+</ul>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+		<!-- DISQUS END -->
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+		<!-- bShare -->
+		<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=4&amp;fs=4&amp;bgcolor=Grey"></script>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$('h2').prepend('>> ')
+	$('h3').prepend('>>> ')
+
+	</script>
+</html>
