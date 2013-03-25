@@ -11,3 +11,6 @@
 # 2013/02/18
 * 将template目录由根目录下移到html目录下，修改.vimrc即可
 * 将文章的width也限制为 960px
+
+# 2013/03/23
+* 将wiki搬到yardvps上
