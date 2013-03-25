@@ -1,5 +1,7 @@
 %title MoinMoin Wiki
 
+[[http://www.moinmo.in/|官方网站]]
+
 = 安装篇 =
 参考官方的[[http://www.moinmo.in/HowTo|HowTo]]
 
