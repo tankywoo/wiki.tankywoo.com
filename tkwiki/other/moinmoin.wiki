@@ -3,9 +3,14 @@
 [[http://www.moinmo.in/|官方网站]]
 
 = 安装篇 =
+
+环境: Nginx + uWsgi
+
 参考官方的[[http://www.moinmo.in/HowTo|HowTo]]
 
 虽然我用的是Gentoo，但是基本都大同小异，我参考的是[[http://www.moinmo.in/HowTo/UbuntuQuick|Ubuntu]]的安装，非常详细
+
+下面参照官方文档稍微改了一下
 
 == 使用virtualenv构造一个隔离的python环境 ==
 官方用了virtualenv，搭建一个隔离的环境
@@ -36,7 +41,7 @@ cp server/moin.wsgi ./
 
 == 做基本的配置 ==
 {{{
-vim /srv/www/moin/wiki/moin.wsgi
+vim /var/www/moin/wiki/moin.wsgi
 
 sys.path.insert(0, '/var/www/moin/pythonenv/lib/python2.7/site-packages/')
 sys.path.insert(0, '/var/www/moin/wiki/')
