@@ -17,9 +17,9 @@
 {{{
 # Install and activate python virtualenv
 emerge -av  virtualenv
-mkdir -p /var/www/moin
-virtualenv /var/www/moin/pythonenv
-source /var/www/moin/pythonenv/bin/activate
+mkdir -p /var/www/moinmoin
+virtualenv /var/www/moinmoin/pythonenv
+source /var/www/moinmoin/pythonenv/bin/activate
 
 # Download and install moinmoin:
 cd /tmp
@@ -30,38 +30,39 @@ python setup.py install	# 这样就会将一个python包安装在/var/www/moin/p
 # Deactivate python virtualenv
 deactivate
 
-# Copy wiki to /var/www/moin
-cp -r ./wiki /var/www/moin/
+# Copy wiki to /var/www/moinmoin
+cp -r ./wiki /var/www/moinmoin/
 
 # Copy configs to wiki root directory
-cd /var/www/moin/wiki/
+cd /var/www/moinmoin/wiki/
 cp config/wikiconfig.py ./
 cp server/moin.wsgi ./
+
+# cp moin.wsgi moin_wsgi.py	#TODO
 }}}
 
 == 做基本的配置 ==
 {{{
-vim /var/www/moin/wiki/moin.wsgi
+vim /var/www/moinmoin/wiki/moin.wsgi
 
-sys.path.insert(0, '/var/www/moin/pythonenv/lib/python2.7/site-packages/')
-sys.path.insert(0, '/var/www/moin/wiki/')
+sys.path.insert(0, '/var/www/moinmoin/pythonenv/lib/python2.7/site-packages/')
+sys.path.insert(0, '/var/www/moinmoin/wiki/')
 
 #Fix permission
-chown nginx:nginx -R /var/www/moin
-chmod o-rwx -R /var/www/moin
+chown nginx:nginx -R /var/www/moinmoin
+chmod o-rwx -R /var/www/moinmoin
 }}}
 
 == 部署uwsgi ==
 {{{
 # Add an uwsgi.xml config file:
-vim /var/www/moin/wiki/uwsgi.xml
+vim /var/www/moinmoin/wiki/uwsgi.xml
 
 <uwsgi>
     <uid>nginx</uid>
     <gid>nginx</gid>
     <plugin>python27</plugin>
-    <socket>/var/www/moin/moin.sock</socket>
-    <wsgi-file>/var/www/moin/wiki/moin.wsgi</wsgi-file>
+    <socket>/tmp/moin.sock</socket>
     <limit-as>256</limit-as>
     <processes>8</processes>
     <memory-report/>
@@ -71,7 +72,7 @@ vim /var/www/moin/wiki/uwsgi.xml
 }}}
 然后启动uwsgi
 {{{
-uwsgi -x /var/www/moin/wiki/uwsgi.xml
+uwsgi -x /var/www/moinmoin/wiki/uwsgi.xml
 }}}
 
 == 最后配置Nginx ==
@@ -88,7 +89,7 @@ server {
     location ^~ /wiki {
         include uwsgi_params;
         uwsgi_pass unix:///tmp/wiki.sock;
-        uwsgi_param UWSGI_PYHOME /var/www/moinmoin/python-env/;
+        uwsgi_param UWSGI_PYHOME /var/www/moinmoin/pythonenv/;
         uwsgi_param UWSGI_CHDIR /var/www/moinmoin/wiki/;
         uwsgi_param UWSGI_SCRIPT moin_wsgi;
         uwsgi_param SCRIPT_NAME /wiki;
@@ -96,7 +97,7 @@ server {
     }
 
     location ^~ /wiki/moin_static196/ {
-        alias /var/www/moinmoin/python-env/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/;
+        alias /var/www/moinmoin/pythonenv/lib/python2.7/site-packages/MoinMoin/web/static/htdocs/;
     }
 }
 }}}
