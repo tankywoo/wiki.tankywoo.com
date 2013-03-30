@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>iftop @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">iftop</div>
+		<div id="content">
+			
+
+<p>
+<code>iftop</code> - display bandwidth usage on an interface by host
+</p>
+
+<h1 id="toc_1">Display</h1>
+
+<pre>
+Right Part:
+
+foo.example.com  =&gt;  bar.example.com      1Kb  500b   100b
+                 &lt;=                       2Mb    2Mb    2Mb
+				 
+The right part, indicates that 
+the rate at which data has been sent and received over the preceding 2, 10 and 40 second intervals
+</pre>
+
+
+<pre>
+Bottom Part:
+
+TX:    cumm:   575KB   peak:   35.6Kb            rates:   9.61Kb  8.37Kb  5.83Kb
+RX:            120KB           3.78Kb                      688b   2.26Kb  1.45Kb
+TOTAL:         695KB           39.1Kb                     10.3Kb  10.6Kb  7.28Kb
+
+TX is send, RX is receive
+comm is the total, peak is the top rate over last 40s
+rates indicate the rate average of 2s, 10s, 40s 
+</pre>
+
+
+<h1 id="toc_2">Read More</h1>
+<ul>
+<li>
+<a href="http://www.linuxjournal.com/content/sysadmins-toolbox-iftop">The Sysadmin's Toolbox: iftop</a>
+
+<li>
+<a href="http://www.thegeekstuff.com/2008/12/iftop-guide-display-network-interface-bandwidth-usage-on-linux/">IFTOP Guide: Display Network Interface Bandwidth Usage on Linux</a>
+
+<li>
+<a href="http://www.vpser.net/manage/iftop.html">Linux流量监控工具 - iftop</a>
+
+</ul>
+
+<h1 id="toc_3">History</h1>
+<p>
+Create @ 2013/03/30
+</p>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+		<!-- DISQUS END -->
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+		<!-- bShare -->
+		<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=4&amp;fs=4&amp;bgcolor=Grey"></script>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$('h2').prepend('>> ')
+	$('h3').prepend('>>> ')
+
+	</script>
+</html>
