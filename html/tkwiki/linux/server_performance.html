@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>服务器性能用到的知识 @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">服务器性能用到的知识</div>
+		<div id="content">
+			
+
+<ul>
+<li>
+Load
+
+<li>
+CPU
+
+<li>
+Mem
+
+<li>
+磁盘I/O
+
+<li>
+网络I/O
+
+</ul>
+
+<h1 id="toc_1">Load</h1>
+<p>
+系统负载指运行队列的平均长度，也就是等待CPU的平均进程数
+</p>
+
+<p>
+可以通过<code>cat /proc/loadavg</code> <code>w</code> <code>top</code>等命令获取
+</p>
+
+<p>
+推荐一篇文章<a href="http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages">Understanding Linux CPU Load</a>
+</p>
+
+<h1 id="toc_2">CPU</h1>
+<p>
+<code>top</code> <code>atop</code> <code>htop</code>
+获取CPU信息<code>cat /proc/cpuinfo</code>
+</p>
+
+<p>
+其中%wa指CPU等待磁盘写入完成的时间
+</p>
+
+<p>
+<code>vmstat</code> <code>sar</code> <code>iostat</code>
+</p>
+
+<h1 id="toc_3">Mem</h1>
+<p>
+<code>free</code> <code>vmstat</code> <code>top</code> <code>cat /proc/meminfo</code>
+</p>
+
+<h1 id="toc_4">磁盘I/O</h1>
+<p>
+<code>iostat</code>
+</p>
+
+<h1 id="toc_5">网络I/O</h1>
+<p>
+<code>netstat</code>
+</p>
+
+<h1 id="toc_6">Read More</h1>
+<ul>
+<li>
+<a href="http://blog.chinaunix.net/uid-27127953-id-3333176.htmlLinux服务器性能小结">http://blog.chinaunix.net/uid-27127953-id-3333176.htmlLinux服务器性能小结</a>
+
+<li>
+<a href="http://www.cnblogs.com/mfryf/archive/2012/03/12/2392000.html">linux wa%过高，iostat查看io状况</a>
+
+</ul>
+
+<h1 id="toc_7">History</h1>
+<p>
+Create 2013/02/21
+</p>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+		<!-- DISQUS END -->
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+		<!-- bShare -->
+		<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=4&amp;fs=4&amp;bgcolor=Grey"></script>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$('h2').prepend('>> ')
+	$('h3').prepend('>>> ')
+
+	</script>
+</html>

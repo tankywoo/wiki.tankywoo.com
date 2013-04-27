@@ -404,8 +404,30 @@ x=\(((\)x+1))
 </p>
 
 
+<h2 id="toc_4.4">Special Parameters</h2>
+<p>
+The shell treats several parameters specially. These parameters may only be referenced; assignment to them is not allowed.
+</p>
 
+<p>
+<code>\(\*</code> : \\)\* is equivalent to "\\(1c\\)2c..", where c is the first character of the value of the <code>IFS</code> variable
+</p>
 
+<p>
+<code>\(@</code> : <code>\)@</code> is equivalent to "\\(1" "\\)2"
+</p>
+
+<p>
+<code>$#</code> : The number of the parameters
+</p>
+
+<p>
+<code>$?</code> : The exit status
+</p>
+
+<p>
+<code>$0</code> : The source file name
+</p>
 
 
 
@@ -415,6 +437,7 @@ x=\(((\)x+1))
 <h1 id="toc_5">参考</h1>
 <p>
 《Linux程序设计》
+<a href="http://www.gnu.org/software/bash/manual/bashref.html">Bash Manual</a>
 </p>
 
 		</div>

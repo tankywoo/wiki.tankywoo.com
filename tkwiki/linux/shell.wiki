@@ -288,8 +288,20 @@ $((...))
 x=$(($x+1))
 
 
+== Special Parameters ==
+TODO vimwiki的转义怎么弄?
 
+The shell treats several parameters specially. These parameters may only be referenced; assignment to them is not allowed.
 
+`$*` : $* is equivalent to "\$1c\$2c..", where c is the first character of the value of the `IFS` variable
+
+`$@` : `$@` is equivalent to "\$1" "\$2"
+
+`$#` : The number of the parameters
+
+`$?` : The exit status
+
+`$0` : The source file name
 
 
 
@@ -298,3 +310,4 @@ x=$(($x+1))
 
 = 参考 =
 《Linux程序设计》
+[[http://www.gnu.org/software/bash/manual/bashref.html|Bash Manual]]

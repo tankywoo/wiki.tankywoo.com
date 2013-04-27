@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>ps @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">ps</div>
+		<div id="content">
+			
+
+<p>
+report a snapshot of the current processes
+</p>
+
+<p>
+If you want a repetitive update of the selection and the displayed information, use top instead.
+</p>
+
+<p>
+ps accepts several kinds of options:
+</p>
+<ul>
+<li>
+UNIX options, which may be grouped and must be preceded by a dash.
+
+<li>
+BSD options, which may be grouped and must not be used with a dash.
+
+<li>
+GNU long options, which are preceded by two dashes.
+
+</ul>
+
+<p>
+Note:
+<code>ps aux</code> vs <code>ps -aux</code>, the latter print all processes owned by user named 'x'
+</p>
+
+<p>
+By default, ps selects all processes with the same effective user ID (euid=EUID) as the current user and associated with the same terminal as the invoker. It displays the process ID(pid=PID), the terminal associated with the process (tname=TTY), the cumulated CPU time in [DD-]hh:mm:ss format (time=TIME), and the executable name (ucmd=CMD). Output is unsorted by default.
+</p>
+
+		</div>
+
+		<!-- DISQUS BEGIN -->
+		<!-- DISQUS END -->
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+		<!-- bShare -->
+		<a class="bshareDiv" href="http://www.bshare.cn/share">分享按钮</a>
+		<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#uuid=&amp;style=4&amp;fs=4&amp;bgcolor=Grey"></script>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$('h2').prepend('>> ')
+	$('h3').prepend('>>> ')
+
+	</script>
+</html>
