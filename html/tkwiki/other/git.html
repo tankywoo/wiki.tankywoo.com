@@ -26,7 +26,29 @@
 <code>NOTE</code>:git的help信息非常好，很多可以直接help来了解
 </p>
 
-<h1 id="toc_1">关于Git的分支</h1>
+<h1 id="toc_1">给git输出信息增加颜色</h1>
+<p>
+编辑<code>/etc/gitconfig</code>
+比如要对git status设置颜色，可以:
+</p>
+<pre>
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[color "status"]
+	changed = yellow
+	added = green
+	untracked = red
+</pre>
+
+<p>
+参考: <a href="http://stackoverflow.com/questions/12255028/how-to-show-git-colors-on-zsh">Ref1</a>
+<a href="http://stackoverflow.com/questions/8131322/enabling-git-syntax-highlighting-for-macs-terminal">Ref2</a>
+</p>
+
+
+<h1 id="toc_2">关于Git的分支</h1>
 <p>
 参考的<a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">何谓分支</a>
 </p>
@@ -36,7 +58,7 @@
 </p>
 <ul>
 <li>
-<code>blog</code>对象用于表示文件快照内容
+<code>blob</code>对象用于表示文件快照内容
 
 <li>
 <code>tree</code>对象记录目录树内容和各个文件对应的blob对象索引
@@ -70,7 +92,7 @@ Git的分支，其本质是一个指向commit对象的可变<code>指针</code>�
 如果遇到冲突，需要到冲突的文件下根据提示编辑后再commit
 </p>
 
-<h1 id="toc_2">远程分支</h1>
+<h1 id="toc_3">远程分支</h1>
 <p>
 参考的<a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">远程分支</a>
 </p>
@@ -94,7 +116,7 @@ git push -u origin master
 这里origin是remote repo name，branch name 是master
 </p>
 
-<h2 id="toc_2.1">关于fetch和pull区别</h2>
+<h2 id="toc_3.1">关于fetch和pull区别</h2>
 <p>
 What is <code>git fetch</code>? and what is the difference to <code>git pull</code>?
 </p>
@@ -107,7 +129,7 @@ What is <code>git fetch</code>? and what is the difference to <code>git pull</co
 <code>git pull</code>是fetch and merge
 </p>
 
-<h1 id="toc_3">Git标签</h1>
+<h1 id="toc_4">Git标签</h1>
 <ul>
 <li>
 含附注的标签(annotated)
@@ -121,7 +143,7 @@ What is <code>git fetch</code>? and what is the difference to <code>git pull</co
 <a href="http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE">2.6 Git 基础 - 打标签</a>
 </p>
 
-<h1 id="toc_4">Read More</h1>
+<h1 id="toc_5">Read More</h1>
 <ul>
 <li>
 <a href="http://git-scm.com/book/zh">ProGit中文版</a>
@@ -131,7 +153,7 @@ What is <code>git fetch</code>? and what is the difference to <code>git pull</co
 
 </ul>
 
-<h1 id="toc_5">History</h1>
+<h1 id="toc_6">History</h1>
 <p>
 Create 2013/02/07
 </p>
