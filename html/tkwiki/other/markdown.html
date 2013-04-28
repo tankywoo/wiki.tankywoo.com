@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>MySQL @ TankyWoo's Wiki</title>
+		<title>MarkDown @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,51 +18,54 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">MySQL</div>
+		<div id="title">MarkDown</div>
 		<div id="content">
 			
 
-<h1 id="toc_1">查看单个数据库或表的大小</h1>
+<h1 id="toc_1">About</h1>
 <p>
-要想知道每个数据库的大小的话，步骤如下：
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a> is written by <a href="http://daringfireball.net/projects/markdown/">Perl</a><br>
+And there are some implementation by other languages, such as <a href="http://freewisdom.org/projects/python-markdown/">Python</a>, in Gentoo, it is <code>dev-python/markdown</code><br>
 </p>
 
-<p>
-1、进入information_schema 数据库（存放了其他的数据库的信息）
-</p>
-<pre>
-use information_schema;
-</pre>
+<h1 id="toc_2">Syntax</h1>
+<ul>
+<li>
+<a href="http://daringfireball.net/projects/markdown/syntax">Official Doc</a>
 
-<p>
-2、查询所有数据的大小：
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables;
-</pre>
-<p>
-3、查看指定数据库的大小：
-</p>
+<li>
+<a href="http://wowubuntu.com/markdown">Markdown 语法说明</a>
 
-<p>
-比如查看数据库home的大小
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='home';
-</pre>
-<p>
-4、查看指定数据库的某个表的大小
-</p>
+<li>
+<a href="https://reader.mx/p/6529">献给写作者的 Markdown 新手指南</a>
 
-<p>
-比如查看数据库home中 members 表的大小
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='home' and table_name='members';
-</pre>
-<p>
-(转载至网上)
-</p>
+<li>
+<a href="http://liufeiyu.cn/markdown/2012/12/28/markdown-learning.html">Markdown语法示例</a>
+
+</ul>
+ 
+<h1 id="toc_3">Markdown in VIM</h1>
+<ul>
+<li>
+<a href="http://www.vim.org/scripts/script.php?script_id=2882">http://www.vim.org/scripts/script.php?script_id=2882</a>
+
+<li>
+<a href="https://github.com/plasticboy/vim-markdown">https://github.com/plasticboy/vim-markdown</a>
+
+<li>
+<a href="https://github.com/hallison/vim-markdown/tree/changes">https://github.com/hallison/vim-markdown/tree/changes</a>
+
+</ul>
+
+<h1 id="toc_4">CSS</h1>
+<ul>
+<li>
+<a href="https://github.com/gcollazo/mou-theme-github2">Mou Theme</a>
+
+<li>
+<a href="http://uedsky.com/static/css/markdown-github.css">http://uedsky.com/static/css/markdown-github.css</a>
+
+</ul>
 
 		</div>
 

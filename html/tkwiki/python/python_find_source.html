@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>MySQL @ TankyWoo's Wiki</title>
+		<title>Python: How to Find the Source Code @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,51 +18,45 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">MySQL</div>
+		<div id="title">Python: How to Find the Source Code</div>
 		<div id="content">
 			
 
-<h1 id="toc_1">查看单个数据库或表的大小</h1>
 <p>
-要想知道每个数据库的大小的话，步骤如下：
+Python是用C实现的开源项目，所以可以阅读它的一些优秀代码
 </p>
 
-<p>
-1、进入information_schema 数据库（存放了其他的数据库的信息）
-</p>
-<pre>
-use information_schema;
-</pre>
+<h1 id="toc_1">_<em>file</em>_</h1>
 
+<h1 id="toc_2">inspect</h1>
 <p>
-2、查询所有数据的大小：
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables;
-</pre>
-<p>
-3、查看指定数据库的大小：
+<a href="http://docs.python.org/2/library/inspect.html\#retrieving-source-code">inspect module - Retrieving source code</a>
 </p>
 
+<h1 id="toc_3">IPython</h1>
 <p>
-比如查看数据库home的大小
+在IPython命令行里：
 </p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='home';
-</pre>
-<p>
-4、查看指定数据库的某个表的大小
-</p>
+<ul>
+<li>
+使用一个<code>?</code>问号，是显示<code>__doc__</code>
 
-<p>
-比如查看数据库home中 members 表的大小
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='home' and table_name='members';
-</pre>
-<p>
-(转载至网上)
-</p>
+<li>
+使用两个<code>??</code>两个问号，是显示<code>源码</code>
+
+</ul>
+
+
+
+<h1 id="toc_4">Read More</h1>
+<ul>
+<li>
+<a href="http://stackoverflow.com/questions/8608587/finding-the-source-code-for-built-in-python-functions">Finding the source code for built-in Python functions?</a>
+
+<li>
+<a href="http://www.zhihu.com/question/20336475">知乎问答 - Pythonic的源码推荐</a>
+
+</ul>
 
 		</div>
 

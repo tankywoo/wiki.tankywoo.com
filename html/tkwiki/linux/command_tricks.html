@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>MySQL @ TankyWoo's Wiki</title>
+		<title>Command Tricks @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,51 +18,19 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">MySQL</div>
+		<div id="title">Command Tricks</div>
 		<div id="content">
 			
 
-<h1 id="toc_1">查看单个数据库或表的大小</h1>
+<h1 id="toc_1">About</h1>
 <p>
-要想知道每个数据库的大小的话，步骤如下：
+Collect from <code>commandlinefu.com</code>
 </p>
 
-<p>
-1、进入information_schema 数据库（存放了其他的数据库的信息）
-</p>
+<h1 id="toc_2">Show number of connections per remote IP</h1>
 <pre>
-use information_schema;
+netstat -antu | awk '$5 ~ /[0-9]:/{split($5, a, ":"); ips[a[1]]++} END {for (ip in ips) print ips[ip], ip | "sort -k1 -nr"}'
 </pre>
-
-<p>
-2、查询所有数据的大小：
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables;
-</pre>
-<p>
-3、查看指定数据库的大小：
-</p>
-
-<p>
-比如查看数据库home的大小
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='home';
-</pre>
-<p>
-4、查看指定数据库的某个表的大小
-</p>
-
-<p>
-比如查看数据库home中 members 表的大小
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='home' and table_name='members';
-</pre>
-<p>
-(转载至网上)
-</p>
 
 		</div>
 

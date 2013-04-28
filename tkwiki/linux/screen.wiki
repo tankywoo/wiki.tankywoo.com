@@ -1,0 +1,9 @@
+%title Screen
+
+= What is Screen =
+
+= .screenrc =
+`info screen "String Escapes"` [ [[http://superuser.com/questions/31047/how-do-i-change-the-colors-in-the-hardstatus-line-in-gnu-screen|Ref]] ]
+[ [[http://unix.stackexchange.com/questions/28430/screen-status-bar-to-display-current-directory-for-zsh-bash-shell|Ref1]] ]
+[ [[http://serverfault.com/questions/3740/what-are-useful-screenrc-settings|Ref2]] ]
+[ [[http://unix.stackexchange.com/questions/62842/how-can-i-change-screens-hardstatus-color-based-on-the-logged-in-user|Ref3]] ]

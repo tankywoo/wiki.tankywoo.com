@@ -1,0 +1,23 @@
+%title MarkDown
+
+= About =
+[[http://daringfireball.net/projects/markdown/|Markdown]] is written by [[http://daringfireball.net/projects/markdown/|Perl]]<br>
+And there are some implementation by other languages, such as [[http://freewisdom.org/projects/python-markdown/|Python]], in Gentoo, it is `dev-python/markdown`<br>
+
+= Syntax =
+* [[http://daringfireball.net/projects/markdown/syntax|Official Doc]]
+* [[http://wowubuntu.com/markdown|Markdown 语法说明]]
+* [[https://reader.mx/p/6529|献给写作者的 Markdown 新手指南]]
+* [[http://liufeiyu.cn/markdown/2012/12/28/markdown-learning.html|Markdown语法示例]]
+ 
+= Markdown in VIM =
+* http://www.vim.org/scripts/script.php?script_id=2882
+* https://github.com/plasticboy/vim-markdown
+* https://github.com/hallison/vim-markdown/tree/changes
+
+= CSS =
+* [[https://github.com/gcollazo/mou-theme-github2|Mou Theme]]
+* [[http://uedsky.com/static/css/markdown-github.css]]
+* [[https://github.com/mrcoles/markdown-css|markdown-css]]
+* [[http://kevinburke.bitbucket.org/markdowncss]]
+

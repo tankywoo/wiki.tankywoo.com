@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>MySQL @ TankyWoo's Wiki</title>
+		<title>Screen @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,50 +18,15 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">MySQL</div>
+		<div id="title">Screen</div>
 		<div id="content">
 			
 
-<h1 id="toc_1">查看单个数据库或表的大小</h1>
-<p>
-要想知道每个数据库的大小的话，步骤如下：
-</p>
+<h1 id="toc_1">What is Screen</h1>
 
+<h1 id="toc_2">.screenrc</h1>
 <p>
-1、进入information_schema 数据库（存放了其他的数据库的信息）
-</p>
-<pre>
-use information_schema;
-</pre>
-
-<p>
-2、查询所有数据的大小：
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables;
-</pre>
-<p>
-3、查看指定数据库的大小：
-</p>
-
-<p>
-比如查看数据库home的大小
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='home';
-</pre>
-<p>
-4、查看指定数据库的某个表的大小
-</p>
-
-<p>
-比如查看数据库home中 members 表的大小
-</p>
-<pre>
-select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='home' and table_name='members';
-</pre>
-<p>
-(转载至网上)
+<code>info screen "String Escapes"</code> [ <a href="http://superuser.com/questions/31047/how-do-i-change-the-colors-in-the-hardstatus-line-in-gnu-screen">Ref</a> ]
 </p>
 
 		</div>
