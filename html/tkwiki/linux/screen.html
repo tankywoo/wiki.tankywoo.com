@@ -27,7 +27,23 @@
 <h1 id="toc_2">.screenrc</h1>
 <p>
 <code>info screen "String Escapes"</code> [ <a href="http://superuser.com/questions/31047/how-do-i-change-the-colors-in-the-hardstatus-line-in-gnu-screen">Ref</a> ]
+[ <a href="http://unix.stackexchange.com/questions/28430/screen-status-bar-to-display-current-directory-for-zsh-bash-shell">Ref1</a> ]
+[ <a href="http://serverfault.com/questions/3740/what-are-useful-screenrc-settings">Ref2</a> ]
+[ <a href="http://unix.stackexchange.com/questions/62842/how-can-i-change-screens-hardstatus-color-based-on-the-logged-in-user">Ref3</a> ]
 </p>
+
+<h1 id="toc_3">Tricks</h1>
+
+<h2 id="toc_3.1">同步显示同一个screen</h2>
+<p>
+A打开一个screen, B可以登录这个screen,同步显示A的操作;B也可以在上面操作.
+</p>
+<pre>
+A 打开一个叫tankywoo的会话
+screen -S tankywoo
+B 使用`-x`参数登入这个会话
+screen -x tankywoo
+</pre>
 
 		</div>
 
