@@ -33,18 +33,26 @@
 </p>
 <pre>
 [color]
-	diff = auto
-	status = auto
-	branch = auto
+	ui = auto
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
 [color "status"]
-	changed = yellow
-	added = green
-	untracked = red
+	added = yellow
+	changed = green
+	untracked = cyan
 </pre>
 
 <p>
 参考: <a href="http://stackoverflow.com/questions/12255028/how-to-show-git-colors-on-zsh">Ref1</a>
 <a href="http://stackoverflow.com/questions/8131322/enabling-git-syntax-highlighting-for-macs-terminal">Ref2</a>
+<a href="http://nathanhoad.net/how-to-colours-in-git">Ref3</a>
 </p>
 
 
