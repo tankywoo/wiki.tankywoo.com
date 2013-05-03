@@ -112,6 +112,8 @@ grep search_content search_path -ri
 `convert`
 {{{
 这个命令是在一次需要压缩图片时用到了
+e.g:
+convert -resize 50% input.jpg output.png
 }}}
 
 `chsh`
