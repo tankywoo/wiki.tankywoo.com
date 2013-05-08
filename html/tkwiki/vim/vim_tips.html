@@ -47,6 +47,20 @@ Ctrl+x Ctrl+?{....}
 :vert help xxx
 </pre>
 
+<h2 id="toc_0.4">逐个替换</h2>
+<p>
+一般情况下
+</p>
+<pre>
+:%s/old_str/new_str/g
+</pre>
+<p>
+是对old_str做全文替换，加上参数c可以逐个替换，这样可以对每一个再确认
+</p>
+<pre>
+:%s/old_str/new_str/gc
+</pre>
+
 		</div>
 
 		<div id="footer">
