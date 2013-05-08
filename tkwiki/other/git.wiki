@@ -81,6 +81,12 @@ What is `git fetch`? and what is the difference to `git pull`?
 * [[http://git-scm.com/book/zh|ProGit中文版]]
 * [[http://gitref.org/|Git Reference]]
 
+= Git 全局配置 =
+全局忽略文件
+* [[http://git-scm.com/book/zh/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-%E9%85%8D%E7%BD%AE-Git|Ref1]]
+* [[https://github.com/GitHub/gitignore|Ref2]]
+
+
 = History =
 Create 2013/02/07
 
