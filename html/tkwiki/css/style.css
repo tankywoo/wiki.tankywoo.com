@@ -167,6 +167,10 @@ ul li {
 	display:none;
 }
 
+.toc {
+	border: 1px solid #888;
+}
+
 
 header h1 {
 	font-size: 40px; 

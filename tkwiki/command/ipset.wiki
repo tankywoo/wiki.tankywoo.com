@@ -1,8 +1,17 @@
 %title IPSET
+%toc Table of Contents
+
+{{{
+% ipset -v
+ipset v6.17, protocol version: 6
+}}}
+
+------
+
+= Advanced Firewall Configurations with ipset =
 
 [ Ref: [[http://www.linuxjournal.com/content/advanced-firewall-configurations-ipset | Advanced Firewall Configurations with ipset]] ]
 
-------
 
 iptables has been the Linux firewall solution since the 2.4 kernel.<br />
 iptables在kernel2.4后已经是Linux防火墙的解决方案
@@ -252,3 +261,211 @@ The next time you're working on your firewall setup, consider adding ipset to th
 Netfilter/iptables Project Home Page: http://www.netfilter.org
 
 ipset Home Page: http://ipset.netfilter.org
+
+------
+
+= Man IPSET =
+
+[ Ref: [[http://ipset.netfilter.org/ipset.man.html|man ipset]] ]
+
+ipset -- administration tool for IP sets
+
+{{{
+ipset [ OPTIONS ] COMMAND [ COMMAND-OPTIONS ]
+COMMANDS := { create | add | del | test | destroy | list | save | restore | flush | rename | swap | help | version | - }
+
+OPTIONS := { -exist | -output { plain | save | xml } | -quiet | -resolve | -sorted }
+
+ipset create SETNAME TYPENAME [ CREATE-OPTIONS ]
+
+ipset add SETNAME ADD-ENTRY [ ADD-OPTIONS ]
+
+ipset del SETNAME DEL-ENTRY [ DEL-OPTIONS ]
+
+ipset test SETNAME TEST-ENTRY [ TEST-OPTIONS ]
+
+ipset destroy [ SETNAME ]
+
+ipset list [ SETNAME ]
+
+ipset save [ SETNAME ]
+
+ipset restore
+
+ipset flush [ SETNAME ]
+
+ipset rename SETNAME-FROM SETNAME-TO
+
+ipset swap SETNAME-FROM SETNAME-TO
+
+ipset help [ TYPENAME ]
+
+ipset version
+
+ipset -  
+}}}
+
+一组类型包括该数据的存储方式和存储类型
+{{{
+TYPENAME = method:datatype[,datatype[,datatype]]
+}}}
+
+当前的存储方式有`bitmap`, `hash`, `list`<br />
+数据类型有`ip`, `mac`, `port`
+
+`bitmap`和`list`方式使用一个固定大小的存储。`hash`方式使用一个hash来存储元素
+
+== Set Type ==
+=== `bitmap:ip` ===
+此集合类型使用内存段来存储 `IPv4主机(默认)` 或 `IPv4网络地址`<br />
+一个此类型可以存储最多 `65536` 个 entry
+{{{
+CREATE-OPTIONS := range fromip-toip|ip/cidr [ netmask cidr ] [ timeout value ]
+ADD-ENTRY := { ip | fromip-toip | ip/cidr }
+ADD-OPTIONS := [ timeout value ]
+DEL-ENTRY := { ip | fromip-toip | ip/cidr }
+TEST-ENTRY := ip
+}}}
+必选参数:
+`range fromip-toip|ip/cidr` 创建一个指定IPv4地址范围的集合，范围的大小(entry个数)最大个数是65536个
+
+可选参数:
+`netmask cidr` 当可选的netmask参数指定时，网络地址将取代IP主机地址存储在集合众。
+
+举例:
+{{{
+ipset create foo bitmap:ip range 192.168.0.0/16
+ipset add foo 192.168.1/24
+ipset test foo 192.168.1.1
+}}}
+
+=== `bitmap:ip,mac` ===
+存储一个IPv4和MAC地址对。此类型最多存储65536个entry。
+{{{
+CREATE-OPTIONS := range fromip-toip|ip/cidr [ timeout value ]
+ADD-ENTRY := ip[,macaddr]
+ADD-OPTIONS := [ timeout value ]
+DEL-ENTRY := ip[,macaddr]
+TEST-ENTRY := ip[,macaddr]
+}}}
+// TODO
+举例：
+{{{
+ipset create foo bitmap:ip,mac range 192.168.0.0/16
+ipset add foo 192.168.1.1,12:34:56:78:9A:BC
+ipset test foo 192.168.1.1
+}}}
+
+=== bitmap:port ===
+端口集合最多可存储 `65536` 个
+{{{
+CREATE-OPTIONS := range fromport-toport [ timeout value ]
+ADD-ENTRY := { port | fromport-toport }
+ADD-OPTIONS := [ timeout value ]
+DEL-ENTRY := { port | fromport-toport }
+TEST-ENTRY := port
+}}}
+
+举例：
+{{{
+ipset create foo bitmap:port range 0-1024
+ipset add foo 80
+ipset test foo 80
+% ipset add foo 1025
+ipset v6.17: Element is out of the range of the set
+}}}
+
+=== `hash:ip` ===
+{{{
+CREATE-OPTIONS := [ family { inet | inet6 } ] | [ hashsize value ] [ maxelem value ] [ netmask cidr ] [ timeout value ]
+ADD-ENTRY := ipaddr
+ADD-OPTIONS := [ timeout value ]
+DEL-ENTRY := ipaddr
+TEST-ENTRY := ipaddr
+// ipaddr := { ip | fromaddr-toaddr | ip/cidr }
+}}}
+
+Note: 
+{{{
+netmask cidr
+When the optional netmask parameter specified, network addresses will be stored in the set instead of IP host addresses. The cidr prefix value must be between 1-32 for IPv4 and between 1-128 for IPv6. An IP address will be in the set if the network address, which is resulted by masking the address with the netmask calculated from the prefix, can be found in the set.
+
+意思就是当默认是存储单个ip地址(ip address)，如果指定掩码，则默认是存储的网络地址，见下面的例子
+}}}
+
+举例：
+{{{
+ipset create foo hash:ip netmask 30
+ipset add foo 192.168.1.0 // 则默认会添加network address: 192.168.1.0/30
+ipset add foo 192.168.1.0/24
+ipset test foo 192.168.1.2
+}}}
+
+=== hash:net ===
+hash:net用于使用hash来存储不同范围大小的ip网络地址。
+{{{
+CREATE-OPTIONS := [ family { inet | inet6 } ] | [ hashsize value ] [ maxelem value ] [ timeout value ]
+ADD-ENTRY := ip[/cidr]
+ADD-OPTIONS := [ timeout value ]
+DEL-ENTRY := ip[/cidr]
+TEST-ENTRY := ip[/cidr]
+}}}
+
+When adding/deleting/testing entries, if the cidr prefix parameter is not specified, then the host prefix value is assumed. When adding/deleting entries, the exact element is added/deleted and overlapping elements are not checked by the kernel. When testing entries, if a host address is tested, then the kernel tries to match the host address in the networks added to the set and reports the result accordingly.
+当添加/删除/测试一条entry时，如果cidr没有指定，则相当于一个host address。<br />
+当添加/删除entry时，精确的元素会添加/删除并覆盖原来的<br />
+当测试entry时，如果host address被测试，则内核尝试在添加的network中匹配这个host address。
+
+举例：
+{{{
+ipset create foo hash:net
+ipset add foo 192.168.0.0/24
+ipset add foo 10.1.0.0/16
+ipset test foo 192.168.0/24
+}}}
+
+=== hash:ip,port ===
+此类型使用hash存储ip和port对。这个端口号随协议一起被解析(默认是tcp)
+{{{
+CREATE-OPTIONS := [ family { inet | inet6 } ] | [ hashsize value ] [ maxelem value ] [ timeout value ]
+ADD-ENTRY := ipaddr,[proto:]port
+ADD-OPTIONS := [ timeout value ]
+DEL-ENTRY := ipaddr,[proto:]port
+TEST-ENTRY := ipaddr,[proto:]port
+//ipaddr := { ip | fromaddr-toaddr | ip/cidr }
+}}}
+
+举例：
+{{{
+ipset create foo hash:ip,port
+ipset add foo 192.168.1.0/24,80-82
+ipset add foo 192.168.1.1,udp:53
+ipset add foo 192.168.1.1,vrrp:0
+ipset test foo 192.168.1.1,80
+}}}
+
+=== hash:net,port ===
+相当于`hash:net`和`hash:port`的结合
+
+=== hash:ip,port,ip ===
+TODO The hash:ip,port,ip type of sets require three src/dst parameters of the set match and SET target kernel modules.
+
+=== hash:ip,port,net ===
+
+=== list:set ===
+此类型使用一个简单的list，可以存储如set名称
+{{{
+CREATE-OPTIONS := [ size value ] [ timeout value ]
+ADD-ENTRY := setname [ { before | after } setname ]
+ADD-OPTIONS := [ timeout value ]
+DEL-ENTRY := setname [ { before | after } setname ]
+TEST-ENTRY := setname [ { before | after } setname ]
+}}}
+TODO
+
+== 额外的评论 ==
+If you want to store same size subnets from a given network (say /24 blocks from a /8 network), use the bitmap:ip set type. If you want to store random same size networks (say random /24 blocks), use the hash:ip set type. If you have got random size of netblocks, use hash:net.
+* 如果想存储相同的掩码大小，可以使用`bitmap:ip`
+* 如果想存储随机大小的网络，可以使用`hash:ip`
+* 如果存储？？
+* `iptree`和`iptreemap` set类型都被移除。如果使用他们，则会自动被替换为`hash:ip`
