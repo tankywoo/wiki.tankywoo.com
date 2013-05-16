@@ -305,6 +305,44 @@ ipset version
 ipset -  
 }}}
 
+ipset有三种存储方式：
+* bitmao
+* hash
+* list
+bitmap和list方式使用一个固定大小的存储。hash方式使用一个hash来存储元素。
+
+ipset 配合ip/port/mac/net等可以组成多种类型
+
+== 基本操作：==
+{{{
+create SETNAME TYPENAME [ CREATE-OPTIONS ]
+新建一个set
+
+add SETNAME ADD-ENTRY [ ADD-OPTIONS ]
+给已有的set添加一个entry(entry可以理解为一条匹配规则)
+
+del SETNAME DEL-ENTRY [ DEL-OPTIONS ]
+删除一条entry
+
+test SETNAME TEST-ENTRY [ TEST-OPTIONS ]
+测试一个地址是否匹配这个set(即set中有一条entry符合)
+
+x, destroy [ SETNAME ]
+删除set，如果没有指定set名，则删除所有set
+
+list [ SETNAME ]
+根据set名列出set相关信息，没有接set名称则列出所有
+
+save [ SETNAME ]
+输出一个restory操作可读的格式到标准输出，用于导出数据
+
+restore
+通过标准输入恢复save操作产生的数据
+
+flush [ SETNAME ]
+清空指定set的所有entry
+}}}
+
 一组类型包括该数据的存储方式和存储类型
 {{{
 TYPENAME = method:datatype[,datatype[,datatype]]
@@ -444,13 +482,16 @@ ipset add foo 192.168.1.1,vrrp:0
 ipset test foo 192.168.1.1,80
 }}}
 
+详细例子见下面的场景3
+
 === hash:net,port ===
 相当于`hash:net`和`hash:port`的结合
 
 === hash:ip,port,ip ===
-TODO The hash:ip,port,ip type of sets require three src/dst parameters of the set match and SET target kernel modules.
+需要三个src/dst匹配，具体见下面的场景三
 
 === hash:ip,port,net ===
+同上一个
 
 === list:set ===
 此类型使用一个简单的list，可以存储如set名称
@@ -465,7 +506,87 @@ TODO
 
 == 额外的评论 ==
 If you want to store same size subnets from a given network (say /24 blocks from a /8 network), use the bitmap:ip set type. If you want to store random same size networks (say random /24 blocks), use the hash:ip set type. If you have got random size of netblocks, use hash:net.
-* 如果想存储相同的掩码大小，可以使用`bitmap:ip`
-* 如果想存储随机大小的网络，可以使用`hash:ip`
-* 如果存储？？
+* 如果想在一个给定的网络范围里存储相同子网大小的段，可以使用`bitmap:ip`
+* 如果想存储掩码长度相同，网络号随机的网络地址，可以使用`hash:ip`
+* 如果想存储随机的网络范围(掩码长度和主机号都不一样)，可以使用`hash:net`
 * `iptree`和`iptreemap` set类型都被移除。如果使用他们，则会自动被替换为`hash:ip`
+
+= 应用场景 =
+== 场景1 ==
+{{{
+iptables -A INPUT -s 1.1.1.1 -j DROP
+iptables -A INPUT -s 2.2.2.2 -j DROP
+...
+iptables -A INPUT -s 100.100.100.100 -j DROP
+}}}
+这样会导致iptables规则非常多，降低效率 如果使用ipset
+{{{
+ipset -N myset hash:ip
+ipset -A myset 1.1.1.1
+ipset -A myset 2.2.2.2
+...
+ipset -A myset 100.100.100.100
+iptables -A INPUT -m set --set myset src -j DROP
+}}}
+iptables只需要一条规则，不但提高效率，还易于管理
+
+== 场景2 ==
+
+比如有以下两条iptables规则：
+{{{
+iptables -A INPUT -s ! 1.1.1.1 -g mychain
+iptables -A INPUT -s ! 2.2.2.2 -g mychain
+}}}
+如果packet来至1.1.1.1，则不会匹配第一条规则，但是会匹配第二条规则
+
+如果packet来至2.2.2.2，则不会匹配第二条规则，但是会匹配第一条规则
+
+这样就互相矛盾了，它实际会匹配所有的packet
+
+用ipset就可以很简单的解决这个问题：
+{{{
+ipset -N myset iphash
+ipset -A myset 1.1.1.1
+ipset -A myset 2.2.2.2
+iptables -A INPUT -m set ! --set myset src -g mychain
+}}}
+如果来至1.1.1.1和2.2.2.2的packet，都会不匹配这条规则，但其他packet可以匹配
+
+== 场景3(*) ==
+比如我们要设置一个ip黑名单，禁止访问本机80端口
+
+=== 方式1 ===
+参考:[[http://daemonkeeper.net/781/mass-blocking-ip-addresses-with-ipset/|Mass-blocking IP addresses with ipset]]
+{{{
+ipset create blacklist hash:ip hashsize 4096
+iptables -I INPUT  -m set --match-set blacklist src -p TCP \
+     --destination-port 80 -j REJECT
+ipset add blacklist 192.168.0.5 
+ipset add blacklist 192.168.0.100 
+ipset add blacklist 192.168.0.220
+}}}
+
+这样blacklist里面的ip都回被禁止访问本机80端口
+
+=== 方式2 ===
+假设本机ip是192.168.0.5
+{{{
+ipset create foo hash:ip,port
+iptables -I INPUT -m set --match-set foo dst,dst -j REJECT
+// 上面这句就是把foo里面的ip,port都当目的ip和目的port来匹配
+ipset add foo 192.168.0.5,80
+// 这样当外面访问本机的80端口时，会被REJECT
+}}}
+
+这个的效果和上面类似，不过可以理解hash:ip,port的作用。
+
+在hash:ip,port手册里有这么一句话：
+{{{
+The hash:ip,port type of sets require two src/dst parameters of the set match and SET target kernel modules.
+}}}
+先开始一直不明白是什么意思，参考[[http://serverfault.com/questions/384132/iptables-limit-rate-of-a-specific-incoming-ip|IPTABLES - Limit rate of a specific incoming IP]]后才弄懂
+
+如果使用hash:ip,port类型，就需要指定两个scr/dst，第一个指定ip是src还是dst的，第二个指定port是src还是dst的。这么控制真是太灵活and牛逼了
+
+包括hash:ip,port,ip等需要三个src/dst都是一样的意思
+
