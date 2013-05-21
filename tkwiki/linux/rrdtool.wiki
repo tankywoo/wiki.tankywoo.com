@@ -1,0 +1,71 @@
+%title RRDtool
+
+%toc Table of Contents
+
+= 简介 =
+RRDtool(Round Robin Database Tool)
+
+效果图
+
+= 安装篇 =
+略过 :(
+
+参考ChinaUnix的那篇
+
+= 新建RRD =
+[[http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html|Offical Doc]]
+
+{{{
+rrdtool create filename [--start|-b start time] [--step|-s step] [--no-overwrite] \
+		[DS:ds-name:DST:dst arguments] \
+		[RRA:CF:cf arguments]
+------
+* filename
+rrd的名称，默认以.rrd结尾
+
+* --start
+
+* --step
+// 其余详细介绍
+}}}
+
+* DS - Data Source
+一个RRD可以接受多个DS. 比如入口流量和出口流量分别作为各作为一个DS存在一个RRD里.<br>
+`ds-name`: DS的名称, 长度为1~19个字符(Note)<br>
+`DST`: Data Source Type, DS的类型, 有GAUGE, COUNTER, DERIVE, ABSOLUTE, COMPUTE
+{{{
+DS:ds-name:GAUGE | COUNTER | DERIVE | ABSOLUTE:heartbeat:min:max
+DS:ds-name:COMPUTE:rpn-expression
+	
+* GAUGE: 直接把值存入RRD
+* COUNTER: 用于记录持续增长的计数器. 适合一个率的计算，如流量增长率.
+* DERIVE: 和COUNTER类似. 但是可以计算增长或减少的率.
+* ABSOLUTE: #TODO#
+* COMPUTE: #TODO#
+
+`heartbeat`: 心跳. 定义两次更新间最大的秒数.#TODO#
+`min`,`max`: 定义期望数据的范围. 如果超出其中，则会被当作`UNKNOWN`. 如果不知道或不关心这个，可以设置为`U`
+`rpn-expression`: #TODO#
+}}}
+
+* RRA - Round Robin Archives
+RRD的目的就是把数据存入RRA中. 一个RRA由许多数据值组成.
+CF: Consolidation Function. 有AVERAGE, MIN, MAX, LAST类型.
+详细的RRA定义:
+{{{
+RRA:AVERAGE | MIN | MAX | LAST:xff:steps:rows
+
+xff - #TODO#
+steps -
+rows -
+}}}
+
+
+例子:
+{{{
+}}}
+
+= 资料 =
+* [[http://oss.oetiker.ch/rrdtool/tut/|RRDtool Tutorail(Offical)]]
+* [[http://oss.oetiker.ch/rrdtool/doc/index.en.html|RRDtool Documentation(Offical)]]
+* [[http://bbs.chinaunix.net/thread-2150417-1-1.html|RRDtool简体中文教程(ChinaUnix)]]

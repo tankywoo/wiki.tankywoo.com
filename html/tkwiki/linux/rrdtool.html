@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>RRDtool @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">RRDtool</div>
+		<div id="content">
+			
+
+<h1>Table of Contents</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">简介</a>
+<li><a href="#toc_2">安装篇</a>
+<li><a href="#toc_3">新建RRD</a>
+<li><a href="#toc_4">资料</a>
+</ul>
+</div>
+
+<h1 id="toc_1">简介</h1>
+<p>
+RRDtool(Round Robin Database Tool)
+</p>
+
+<p>
+效果图
+</p>
+
+<h1 id="toc_2">安装篇</h1>
+<p>
+略过 :(
+</p>
+
+<p>
+参考ChinaUnix的那篇
+</p>
+
+<h1 id="toc_3">新建RRD</h1>
+<p>
+<a href="http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html">Offical Doc</a>
+</p>
+
+<pre>
+rrdtool create filename [--start|-b start time] [--step|-s step] [--no-overwrite] \
+		[DS:ds-name:DST:dst arguments] \
+		[RRA:CF:cf arguments]
+------
+* filename
+rrd的名称，默认以.rrd结尾
+
+* --start
+
+* --step
+// 其余详细介绍
+</pre>
+
+<ul>
+<li>
+DS - Data Source
+
+</ul>
+<p>
+一个RRD可以接受多个DS. 比如入口流量和出口流量分别作为各作为一个DS存在一个RRD里.<br>
+<code>ds-name</code>: DS的名称, 长度为1~19个字符(Note)<br>
+<code>DST</code>: Data Source Type, DS的类型, 有GAUGE, COUNTER, DERIVE, ABSOLUTE, COMPUTE
+</p>
+<pre>
+	DS:ds-name:GAUGE | COUNTER | DERIVE | ABSOLUTE:heartbeat:min:max
+	DS:ds-name:COMPUTE:rpn-expression
+		
+	* GAUGE: 直接把值存入RRD
+	* COUNTER: 用于记录持续增长的计数器. 适合一个率的计算，如流量增长率.
+	* DERIVE: 和COUNTER类似. 但是可以计算增长或减少的率.
+	* ABSOLUTE: #TODO#
+	* COMPUTE: #TODO#
+
+	`heartbeat`: 心跳. 定义两次更新间最大的秒数.#TODO#
+	`min`,`max`: 定义期望数据的范围. 如果超出其中，则会被当作`UNKNOWN`. 如果不知道或不关心这个，可以设置为`U`
+	`rpn-expression`: #TODO#
+</pre>
+
+<ul>
+<li>
+RRA
+
+</ul>
+
+
+<h1 id="toc_4">资料</h1>
+<ul>
+<li>
+<a href="http://oss.oetiker.ch/rrdtool/tut/">RRDtool Tutorail(Offical)</a>
+
+<li>
+<a href="http://oss.oetiker.ch/rrdtool/doc/index.en.html">RRDtool Documentation(Offical)</a>
+
+<li>
+<a href="http://bbs.chinaunix.net/thread-2150417-1-1.html">RRDtool简体中文教程(ChinaUnix)</a>
+
+</ul>
+
+		</div>
+
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$('h2').prepend('>> ')
+	$('h3').prepend('>>> ')
+
+	</script>
+</html>
