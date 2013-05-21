@@ -70,6 +70,7 @@
 <li><a href="#toc_3.3.2">方式2</a>
 </ul>
 </ul>
+<li><a href="#toc_4">补充</a>
 </ul>
 </div>
 
@@ -900,6 +901,33 @@ The hash:ip,port type of sets require two src/dst parameters of the set match an
 
 <p>
 包括hash:ip,port,ip等需要三个src/dst都是一样的意思
+</p>
+
+
+<h1 id="toc_4">补充</h1>
+<pre>
+Name: foo
+Type: hash:ip
+Revision: 0
+Header: family inet hashsize 1024 maxelem 65536
+Size in memory: 16480
+References: 0
+Members:
+</pre>
+<p>
+<code>Size in memory</code> 的单位是?(暂时猜测是字节)
+<code>References</code> 是指被iptables引用的个数，值为非0时表示有被引用的，这时不能用ipset destroy清除
+</p>
+
+<hr />
+
+<p>
+<code>timeout</code> 属性用于设置规则多久自动清除
+必须在set类型设置了timeout后, entry才能使用set设置的默认timeout或自己设置timeout
+</p>
+
+<p>
+<code>nomatch</code> 用于匹配 <code>hash:*net*</code>的类型, 表示这些entry不匹配, 相当于 <code>逻辑非</code> 操作
 </p>
 
 		</div>
