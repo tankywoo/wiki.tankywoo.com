@@ -1,0 +1,176 @@
+%title Vim
+
+= 我的配置 =
+
+{{{
+" Author: Tanky Woo
+" Blog: www.wutianqi.com
+
+""""""""""""""""""""""""""""
+" General
+""""""""""""""""""""""""""""
+set nu      " set the line number
+syntax on       " syntax highlighting
+set autochdir       " set the current dir as thr work dir
+set hlsearch        " highlight the search result
+set incsearch		" real-time search
+filetype on         " file type detection
+filetype plugin on  " loading the plugin files for specific file types
+filetype indent on  " loading the indent file for specific file types with
+set foldmethod=indent       " The kind of folding used for the current window
+set foldlevel=99
+set nocompatible        " use the vim's keyboard setting, not vi
+set cindent
+set autoindent      " Copy indent from current line when starting a new line
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+"set expandtab   " use the space to instead of tab
+set smartindent
+set showmatch       "
+set showmode        " show the mode
+set cursorline      " highlighter the current line
+set nobackup        " no backup
+" hi cursorline   gui=UNDERLINE cterm=UNDERLINE
+set cc=81       " short for colorcolumn
+colorscheme elflord
+set fileencodings=utf-8,gb18030,cp936,big5      " set the encode
+
+""""""""""""""""""""""""""""
+" VimWiki Plugin
+""""""""""""""""""""""""""""
+let g:vimwiki_list = [{'path': '/home/tankywoo/wiki/',
+            \ 'path_html': '/home/tankywoo/wiki/html/',
+            \ 'template_path': '/home/tankywoo/wiki/template/',
+            \ 'template_default': 'template',
+            \ 'template_ext': '.html'}]
+let g:vimwiki_camel_case = 0
+" 个人喜欢utf-8，要换的话下面模板中编码也要改
+"set encoding=utf-8
+map <F4> <Plug>Vimwiki2HTML
+map <S-F4> <Plug>VimwikiAll2HTML
+
+
+""""""""""""""""""""""""""""
+" Auto add the head by .py file
+""""""""""""""""""""""""""""
+function HeaderPython()
+    call setline(1, "#!/usr/bin/env python")
+    call append(1,  "# -*- coding: utf-8 -*-")
+    call append(2,  "# wutq@" . strftime('%Y-%m-%d', localtime()))
+    "call append(3,  "# vim: set noexpandtab tabstop=4 shiftwidth=4 softtabstop=4:")
+    normal G
+    normal o
+    normal o
+endf
+autocmd bufnewfile *.py call HeaderPython()
+
+""""""""""""""""""""""""""""
+" Auto add the head by .sh file
+""""""""""""""""""""""""""""
+function HeaderBash()
+    call setline(1, "#!/bin/bash")
+    call append(1,  "# Tanky Woo@" . strftime('%Y-%m-%d %T', localtime()))
+    call append(2,  "# About: ")
+    normal G
+    normal o
+    normal o
+endf
+autocmd bufnewfile *.sh call HeaderBash()
+
+}}}
+<HR>
+
+= 快捷键=
+== Movement ==
+| `h`  | Move *left*                  |
+| `j`  | Move *down*                  |
+| `k`  | Move *up*                    |
+| `l`  | Move *right*                 |
+| `0`  | Move to *beginging* of line  |
+| `$`  | Move to *end* of line        |
+| `gg` | Move to *first* line of file |
+| `G`  | Move to *last* line of file  |
+| `w`  | Move *forward* to next word  |
+| `b`  | Move *backward* to next word |
+
+== Search ==
+| `*`     | Search *forward* for word under cursor                   |
+| `#`     | Search *backward* for word under curor                   |
+| `/word` | Search *forward* for *word*. Support *RE*                |
+| `?word` | Search *backward* for *word*. Support *RE*               |
+| `n`     | Repeat the last `/` or `?` command                       |
+| `N`     | Repeat the last `/` or `?` command in opposite direction |
+
+== Deletion ==
+| `x`  | Delete character *forward*(under cursor), and remain in normal mode   |
+| `X`  | Delete character *backward*(before cursor), and remain in normal mode |
+| `r`  | Replace single character under cursor, and remain in normal mode    |
+| `s`  | Delete single character under cursor, and *switch* to insert mode     |
+| `dw` | Delete a *word* forward                                               |
+| `db` | Delete a *word* backward                                              |
+| `dd` | Delete *entire* current line                                          |
+| `D`  | Delete until end of line                                            |
+
+== Yank & Put ==
+| `y`   | Yank(copy)                                  |
+| `yy`  | Yank current line                           |
+| `nyy` | Yank `n` lines form current line            |
+| `p`   | Put(paste) yanked text *below* current line |
+| `P`   | Put(paste) yanked text *above* current line |
+
+== Insert Mode ==
+| `i` | Enter insert mode to the *left* of the cursor          |
+| `a` | Enter insert mode to the *right* of the cursor         |
+| `o` | Enter insert mode to the line *below* the current line |
+| `O` | Enter insert mode to the line *above* the current line |
+
+== Visual Mode ==
+| `v`   | Enter visual mode, highlight characters |
+| `V`   | Enter visual mode, highlight lines      |
+| `C-v` | Enter visual mode, highlight block      |
+
+== Other ==
+| `u`   | Undo                             |
+| `U`   | Undo all changes on current line |
+| `C-r` | Redo                             |
+
+
+== Read More ==
+* [[http://eastcoastefx.vaesite.com/vim|A handy guide to Vim shortcuts]]
+* [[http://www.tuxfiles.org/linuxhelp/vimcheat.html|tuxfiles-vimcheat]]
+* [[http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim|What is your most productive shortcut with Vim?]]
+
+
+<HR>
+
+= 技巧 =
+== shell多行注释 ==
+命令行模式下，注释掉line1与line2之间的行
+{{{
+line1,line2s/^/#/g
+}}}
+
+== 自动补全 ==
+Ctrl+n Ctrl+p
+Ctrl+x Ctrl+?{....}
+
+== 左右分割打开help文档 ==
+默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便
+{{{
+:set spr
+:vert help xxx
+}}}
+
+== 逐个替换 ==
+一般情况下
+{{{
+:%s/old_str/new_str/g
+}}}
+是对old_str做全文替换，加上参数c可以逐个替换，这样可以对每一个再确认
+{{{
+:%s/old_str/new_str/gc
+}}}
+
+= 修改历史 =
+最后修改: 2013-05-28
