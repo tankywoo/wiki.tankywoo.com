@@ -1,4 +1,0 @@
-%title My Wiki Rules
-* `$` or `<pre> tag` means it is a code example
-* `>>` and under is the output result
-* In `Read More` links, the (*) means this article is very good
