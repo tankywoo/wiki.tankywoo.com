@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>SSH @ TankyWoo's Wiki</title>
+		<title>SSH 及其 相关组件 @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,11 +21,60 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">SSH</div>
+		<div id="title">SSH 及其 相关组件</div>
 		<div id="content">
 			
 
-<h1 id="toc_1">Read</h1>
+<h1>Table of Contents</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">ssh</a>
+<ul>
+<li><a href="#toc_1.1">RTFM</a>
+<li><a href="#toc_1.2">关于ssh config</a>
+</ul>
+<li><a href="#toc_2">ssh-agent</a>
+<li><a href="#toc_3">修改历史</a>
+</ul>
+</div>
+
+<p>
+我们总监上次提到了一句话非常好，他说他每安装一个工具，都要 <code>equery files toolname</code> 来查看这个工具到底会带有多少小工具。&lt;BR&gt;
+就像我没有执行 equery 查询，我也不会发现，原来 ssh 自带了这么多好用的工具！
+</p>
+
+<ul>
+<li>
+/usr/bin/scp
+
+<li>
+/usr/bin/sftp
+
+<li>
+/usr/bin/slogin
+
+<li>
+/usr/bin/ssh
+
+<li>
+/usr/bin/ssh-add
+
+<li>
+/usr/bin/ssh-agent
+
+<li>
+/usr/bin/ssh-copy-id
+
+<li>
+/usr/bin/ssh-keygen
+
+<li>
+/usr/bin/ssh-keyscan
+
+</ul>
+
+<h1 id="toc_1">ssh</h1>
+<h2 id="toc_1.1">RTFM</h2>
 <pre>
 man ssh
 man sshd
@@ -34,7 +83,7 @@ man sshd_config
 </pre>
 
 
-<h1 id="toc_2">关于ssh config</h1>
+<h2 id="toc_1.2">关于ssh config</h2>
 <p>
 ssh_config
 有两个文件：
@@ -58,14 +107,40 @@ Host xxx
 Host name还可以用匹配，具体可以man ssh_config
 </pre>
 
-
-<h1 id="toc_3">History</h1>
+<h1 id="toc_2">ssh-agent</h1>
 <p>
-Create 2013/02/03
+ssh-agent 是一个ssh私钥的认证代理工具，类似于 windows 下的 <code>[[http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html|Pageant]]</code> 
 </p>
 
 <p>
-Last modified 2013/02/03
+这类 authentication agent 适合于特别多私钥需要管理，或者私钥有密码等情况
+</p>
+
+<p>
+思想是 ssh-agent 启动一个会话(X-session/login session)，然后其他程序在这个会话里使用ssh时，都会通过使用agent的环境变量自动加载私钥来认证
+</p>
+
+<p>
+ssh-agent 后可以接一些参数和命令，一般接shell名称就可以启动一个新的加载ssh-agent环境变量的会话，如:
+</p>
+<pre>
+ssh-agent zsh
+</pre>
+<p>
+然后就可以用ssh-add加载私钥了，加载后可以用 <code>ssh-add -l</code>查看当前会话加载了哪些私钥。
+</p>
+
+<p>
+通过 ssh-agent 启动一个会话，然后用 <code>ssh-add</code> 加载私钥，以后使用ssh就无需关心私钥的事情了。
+</p>
+
+<h1 id="toc_3">修改历史</h1>
+<p>
+创建时间 2013-02-03
+</p>
+
+<p>
+最后修改 2013-05-28
 </p>
 
 		</div>
