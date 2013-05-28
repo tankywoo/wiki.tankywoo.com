@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Vim Shortcuts @ TankyWoo's Wiki</title>
+		<title>Vim @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,11 +21,95 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">Vim Shortcuts</div>
+		<div id="title">Vim</div>
 		<div id="content">
 			
 
-<h1 id="toc_1">Movement</h1>
+<h1 id="toc_1">我的配置</h1>
+
+<pre>
+" Author: Tanky Woo
+" Blog: www.wutianqi.com
+
+""""""""""""""""""""""""""""
+" General
+""""""""""""""""""""""""""""
+set nu      " set the line number
+syntax on       " syntax highlighting
+set autochdir       " set the current dir as thr work dir
+set hlsearch        " highlight the search result
+set incsearch		" real-time search
+filetype on         " file type detection
+filetype plugin on  " loading the plugin files for specific file types
+filetype indent on  " loading the indent file for specific file types with
+set foldmethod=indent       " The kind of folding used for the current window
+set foldlevel=99
+set nocompatible        " use the vim's keyboard setting, not vi
+set cindent
+set autoindent      " Copy indent from current line when starting a new line
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+"set expandtab   " use the space to instead of tab
+set smartindent
+set showmatch       "
+set showmode        " show the mode
+set cursorline      " highlighter the current line
+set nobackup        " no backup
+" hi cursorline   gui=UNDERLINE cterm=UNDERLINE
+set cc=81       " short for colorcolumn
+colorscheme elflord
+set fileencodings=utf-8,gb18030,cp936,big5      " set the encode
+
+""""""""""""""""""""""""""""
+" VimWiki Plugin
+""""""""""""""""""""""""""""
+let g:vimwiki_list = [{'path': '/home/tankywoo/wiki/',
+            \ 'path_html': '/home/tankywoo/wiki/html/',
+            \ 'template_path': '/home/tankywoo/wiki/template/',
+            \ 'template_default': 'template',
+            \ 'template_ext': '.html'}]
+let g:vimwiki_camel_case = 0
+" 个人喜欢utf-8，要换的话下面模板中编码也要改
+"set encoding=utf-8
+map &lt;F4&gt; &lt;Plug&gt;Vimwiki2HTML
+map &lt;S-F4&gt; &lt;Plug&gt;VimwikiAll2HTML
+
+
+""""""""""""""""""""""""""""
+" Auto add the head by .py file
+""""""""""""""""""""""""""""
+function HeaderPython()
+    call setline(1, "#!/usr/bin/env python")
+    call append(1,  "# -*- coding: utf-8 -*-")
+    call append(2,  "# wutq@" . strftime('%Y-%m-%d', localtime()))
+    "call append(3,  "# vim: set noexpandtab tabstop=4 shiftwidth=4 softtabstop=4:")
+    normal G
+    normal o
+    normal o
+endf
+autocmd bufnewfile *.py call HeaderPython()
+
+""""""""""""""""""""""""""""
+" Auto add the head by .sh file
+""""""""""""""""""""""""""""
+function HeaderBash()
+    call setline(1, "#!/bin/bash")
+    call append(1,  "# Tanky Woo@" . strftime('%Y-%m-%d %T', localtime()))
+    call append(2,  "# About: ")
+    normal G
+    normal o
+    normal o
+endf
+autocmd bufnewfile *.sh call HeaderBash()
+
+</pre>
+<p>
+&lt;HR&gt;
+</p>
+
+<h1 id="toc_2">快捷键</h1>
+<h2 id="toc_2.1">Movement</h2>
 <table>
 <tr>
 <td>
@@ -109,7 +193,7 @@ Move <strong>backward</strong> to next word
 </tr>
 </table>
 
-<h1 id="toc_2">Search</h1>
+<h2 id="toc_2.2">Search</h2>
 <table>
 <tr>
 <td>
@@ -161,7 +245,7 @@ Repeat the last <code>/</code> or <code>?</code> command in opposite direction
 </tr>
 </table>
 
-<h1 id="toc_3">Deletion</h1>
+<h2 id="toc_2.3">Deletion</h2>
 <table>
 <tr>
 <td>
@@ -229,7 +313,7 @@ Delete until end of line
 </tr>
 </table>
 
-<h1 id="toc_4">Yank &amp; Put</h1>
+<h2 id="toc_2.4">Yank &amp; Put</h2>
 <table>
 <tr>
 <td>
@@ -273,7 +357,7 @@ Put(paste) yanked text <strong>above</strong> current line
 </tr>
 </table>
 
-<h1 id="toc_5">Insert Mode</h1>
+<h2 id="toc_2.5">Insert Mode</h2>
 <table>
 <tr>
 <td>
@@ -309,7 +393,7 @@ Enter insert mode to the line <strong>above</strong> the current line
 </tr>
 </table>
 
-<h1 id="toc_6">Visual Mode</h1>
+<h2 id="toc_2.6">Visual Mode</h2>
 <table>
 <tr>
 <td>
@@ -337,7 +421,7 @@ Enter visual mode, highlight block
 </tr>
 </table>
 
-<h1 id="toc_7">Other</h1>
+<h2 id="toc_2.7">Other</h2>
 <table>
 <tr>
 <td>
@@ -366,7 +450,7 @@ Redo
 </table>
 
 
-<h1 id="toc_8">Read More</h1>
+<h2 id="toc_2.8">Read More</h2>
 <ul>
 <li>
 <a href="http://eastcoastefx.vaesite.com/vim">A handy guide to Vim shortcuts</a>
@@ -378,6 +462,54 @@ Redo
 <a href="http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim">What is your most productive shortcut with Vim?</a>
 
 </ul>
+
+
+<p>
+&lt;HR&gt;
+</p>
+
+<h1 id="toc_3">技巧</h1>
+<h2 id="toc_3.1">shell多行注释</h2>
+<p>
+命令行模式下，注释掉line1与line2之间的行
+</p>
+<pre>
+line1,line2s/^/#/g
+</pre>
+
+<h2 id="toc_3.2">自动补全</h2>
+<p>
+Ctrl+n Ctrl+p
+Ctrl+x Ctrl+?{....}
+</p>
+
+<h2 id="toc_3.3">左右分割打开help文档</h2>
+<p>
+默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便
+</p>
+<pre>
+:set spr
+:vert help xxx
+</pre>
+
+<h2 id="toc_3.4">逐个替换</h2>
+<p>
+一般情况下
+</p>
+<pre>
+:%s/old_str/new_str/g
+</pre>
+<p>
+是对old_str做全文替换，加上参数c可以逐个替换，这样可以对每一个再确认
+</p>
+<pre>
+:%s/old_str/new_str/gc
+</pre>
+
+<h1 id="toc_4">修改历史</h1>
+<p>
+最后修改: 2013-05-28
+</p>
 
 		</div>
 

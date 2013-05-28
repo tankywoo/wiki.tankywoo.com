@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>VimWiki入门 @ TankyWoo's Wiki</title>
+		<title>VimWiki @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,11 +21,13 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">VimWiki入门</div>
+		<div id="title">VimWiki</div>
 		<div id="content">
 			
 
-<h1 id="toc_1">简介</h1>
+<h1 id="toc_1">安装篇</h1>
+
+<h2 id="toc_1.1">简介</h2>
 <p>
 VimWiki，<a href="http://code.google.com/p/vimwiki/">官方</a>给出的解释：
 </p>
@@ -47,7 +49,7 @@ write documentation
 
 </ul>
 
-<h1 id="toc_2">安装</h1>
+<h2 id="toc_1.2">安装</h2>
 <p>
 首先下载插件(<a href="http://www.vim.org/scripts/script.php?script_id=2226">下载1</a>， <a href="http://code.google.com/p/vimwiki/">下载2</a>)，然后:<br />
 </p>
@@ -64,7 +66,7 @@ Linux:
 2. Source it with :so % command 
 </pre>
 
-<h1 id="toc_3">配置</h1>
+<h2 id="toc_1.3">配置</h2>
 <p>
 官方建议在.vimrc中添加以下代码：<br />
 </p>
@@ -114,9 +116,9 @@ template_ext指定模板的后缀名
 
 </ul>
 
-<h1 id="toc_4">使用</h1>
+<h2 id="toc_1.4">使用</h2>
 
-<h2 id="toc_4.1">打开wiki</h2>
+<h3 id="toc_1.4.1">打开wiki</h3>
 <p>
 <code>&lt;Leader&gt;</code>键一般是<code>\</code>键<br />
 </p>
@@ -135,17 +137,12 @@ template_ext指定模板的后缀名
 </pre>
 
 
-<h2 id="toc_4.2">语法</h2>
+<h3 id="toc_1.4.2">语法</h3>
 <p>
 可以<code>:h vimwiki</code> 或者看这个<a href="http://vimwiki.googlecode.com/hg/misc/Vimwiki1.1.1QR.pdf">vimwiki quick reference card</a>(此文档是vimwiki1.1.1，新版vimwiki已有一些改动，如有问题，可email探讨或自行看vimwiki help帮助文档)
 </p>
 
-<h1 id="toc_5">Vimwik 技巧</h1>
-<p>
-Vimwiki的小技巧见<a href="vimwiki_tricks.html">vimwiki_tricks</a>
-</p>
-
-<h1 id="toc_6">参考的文章</h1>
+<h2 id="toc_1.5">参考的文章</h2>
 <ul>
 <li>
 <a href="http://www.berlinix.com/VimWiki.html">Vim插件-VimWiki</a>
@@ -167,13 +164,52 @@ Vimwiki的小技巧见<a href="vimwiki_tricks.html">vimwiki_tricks</a>
 
 </ul>
 
-<h1 id="toc_7">History</h1>
+
+<h1 id="toc_2">实用篇</h1>
+
+<p>
+记录Vimwiki的各种小技巧
+</p>
+
+<h2 id="toc_2.1">wiki文件中代码高亮</h2>
+<p>
+使用<code>nested_syntaxes</code>选项，比如我的<code>.vimrc</code>文件:
+</p>
+<pre class="brush: shell">
+'nested_syntaxes' : {'python': 'python', 'c++': 'cpp', 'shell': 'sh'}}]
+</pre>
+<p>
+里面保存的是键值对，键是brush调用时的name，值是vim filetype<br />
+然后在<code>{{{code}}}</code>里就可以按filetype来高亮代码了, Example:
+</p>
+<pre>
+XXXclass="brush: c++"
+#include "helloworld.h"
+int helloworld()
+{
+	printf("hello world");
+}
+XXX
+
+注：XXX代表花括号
+</pre>
+
+<p>
+更多可以help vimwiki，然后搜<code>vimwiki-option-nested_syntaxes</code>
+</p>
+
+<p>
+More：如果考虑在html时对<code>&lt;pre&gt;</code>代码高亮，可以考虑<code>syntaxhighlight</code>插件
+</p>
+
+
+<h1 id="toc_3">History</h1>
 <p>
 Create 2012/05/08<br />
 </p>
 
 <p>
-Modify 2013/02/18
+Modify 2013/05/28
 </p>
 
 		</div>
