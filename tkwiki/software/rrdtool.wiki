@@ -63,8 +63,42 @@ rows -
 
 例子:
 {{{
+15:31 tankywoo@gentoo-gs /home/tankywoo/rrd
+% rrdtool create test.rrd -s 60 DS:woo:COUNTER:120:0:U RRA:AVERAGE:0.5:1:1440
+
+15:31 tankywoo@gentoo-gs /home/tankywoo/rrd
+% rrdtool info test.rrd
+filename = "test.rrd"
+rrd_version = "0003"
+step = 60
+last_update = 1369985290
+header_size = 584
+ds[woo].index = 0
+ds[woo].type = "COUNTER"
+ds[woo].minimal_heartbeat = 120
+ds[woo].min = 0.0000000000e+00
+ds[woo].max = NaN
+ds[woo].last_ds = "U"
+ds[woo].value = 0.0000000000e+00
+ds[woo].unknown_sec = 10
+rra[0].cf = "AVERAGE"
+rra[0].rows = 1440
+rra[0].cur_row = 47
+rra[0].pdp_per_row = 1
+rra[0].xff = 5.0000000000e-01
+rra[0].cdp_prep[0].value = NaN
+rra[0].cdp_prep[0].unknown_datapoints = 0
 }}}
 
+= 更新RRD =
+{{{
+rrdtool {update | updatev} filename
+		[--template|-t ds-name[:ds-name]...]
+		[--daemon address] [--]
+		N|timestamp:value[:value...]
+		at-timestamp@value[:value...]
+		[timestamp:value[:value...] ...]
+}}}
 = 资料 =
 * [[http://oss.oetiker.ch/rrdtool/tut/|RRDtool Tutorail(Offical)]]
 * [[http://oss.oetiker.ch/rrdtool/doc/index.en.html|RRDtool Documentation(Offical)]]
