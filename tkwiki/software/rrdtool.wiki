@@ -7,7 +7,7 @@ RRDtool(Round Robin Database Tool)
 
 效果图
 
-= 安装篇 =
+= 安装 =
 略过 :(
 
 参考ChinaUnix的那篇
@@ -21,12 +21,13 @@ rrdtool create filename [--start|-b start time] [--step|-s step] [--no-overwrite
 		[RRA:CF:cf arguments]
 ------
 * filename
-rrd的名称，默认以.rrd结尾
+rrd的名称. 默认以.rrd结尾
 
 * --start
+设置rrd的起始时间, rrd不接收比这个时间靠前的数据. 默认是当前时间前10s
 
 * --step
-// 其余详细介绍
+设置时间步长. 默认是300s
 }}}
 
 * DS - Data Source
@@ -43,7 +44,7 @@ DS:ds-name:COMPUTE:rpn-expression
 * ABSOLUTE: #TODO#
 * COMPUTE: #TODO#
 
-`heartbeat`: 心跳. 定义两次更新间最大的秒数.#TODO#
+`heartbeat`: 心跳. 定义两次更新间最大的秒数. 长于这个时间未获取到数据的, 则为 Unknown
 `min`,`max`: 定义期望数据的范围. 如果超出其中，则会被当作`UNKNOWN`. 如果不知道或不关心这个，可以设置为`U`
 `rpn-expression`: #TODO#
 }}}
@@ -63,34 +64,48 @@ rows -
 
 例子:
 {{{
-15:31 tankywoo@gentoo-gs /home/tankywoo/rrd
-% rrdtool create test.rrd -s 60 DS:woo:COUNTER:120:0:U RRA:AVERAGE:0.5:1:1440
+11:06 tankywoo@gentoo-gs /home/tankywoo/rrd
+% rrdtool create test.rrd -s 60 \
+> DS:testds:GAUGE:120:0:U \
+> RRA:AVERAGE:0.5:1:60 \
+> RRA:AVERAGE:0.5:1:1440
 
-15:31 tankywoo@gentoo-gs /home/tankywoo/rrd
+11:06 tankywoo@gentoo-gs /home/tankywoo/rrd
 % rrdtool info test.rrd
 filename = "test.rrd"
 rrd_version = "0003"
 step = 60
-last_update = 1369985290
-header_size = 584
-ds[woo].index = 0
-ds[woo].type = "COUNTER"
-ds[woo].minimal_heartbeat = 120
-ds[woo].min = 0.0000000000e+00
-ds[woo].max = NaN
-ds[woo].last_ds = "U"
-ds[woo].value = 0.0000000000e+00
-ds[woo].unknown_sec = 10
+last_update = 1370142396
+header_size = 792
+ds[testds].index = 0
+ds[testds].type = "GAUGE"
+ds[testds].minimal_heartbeat = 120
+ds[testds].min = 0.0000000000e+00
+ds[testds].max = NaN
+ds[testds].last_ds = "U"
+ds[testds].value = 0.0000000000e+00
+ds[testds].unknown_sec = 36
 rra[0].cf = "AVERAGE"
-rra[0].rows = 1440
-rra[0].cur_row = 47
+rra[0].rows = 60
+rra[0].cur_row = 51
 rra[0].pdp_per_row = 1
 rra[0].xff = 5.0000000000e-01
 rra[0].cdp_prep[0].value = NaN
 rra[0].cdp_prep[0].unknown_datapoints = 0
+rra[1].cf = "AVERAGE"
+rra[1].rows = 1440
+rra[1].cur_row = 339
+rra[1].pdp_per_row = 1
+rra[1].xff = 5.0000000000e-01
+rra[1].cdp_prep[0].value = NaN
+rra[1].cdp_prep[0].unknown_datapoints = 0
+
+
 }}}
 
 = 更新RRD =
+[[http://oss.oetiker.ch/rrdtool/doc/rrdupdate.en.html|Offical Doc]]
+
 {{{
 rrdtool {update | updatev} filename
 		[--template|-t ds-name[:ds-name]...]
@@ -99,6 +114,100 @@ rrdtool {update | updatev} filename
 		at-timestamp@value[:value...]
 		[timestamp:value[:value...] ...]
 }}}
+
+`updatev`<br>
+是 `update` 的 verbose版, 会描述返回信息.
+
+`--template|-t ds-name[:ds-name]...`<br>
+默认情况下, update希望数据是按DS定义的顺序来更新的. 但是有可能会弄错顺序, 导致传入的数据错误. <br>
+template函数允许指定更新DS的顺序<br>
+
+`N|timestamp:value[:value...]`<br>
+更新DS的数据要有一个指定的时间戳. 如果使用 `N`, 则使用当前时间.<br>
+如果时间是负数, 则使当前时间减去指定的时间. 此时要用 `--` 来分隔选项和数据, 否则数据会被当作参数传进去. <br>
+如果使用 `@` 代替 `:`, 则限定结束时间.<br> # TODO #
+
+{{{
+# 下面写了一个 Python 传入随机数据来更新 RRD
+# 我放到 crontab 里面每分钟调用一次
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import rrdtool
+import random
+
+v = random.randint(1, 100)
+rrdtool.updatev('test.rrd', 'N:%d' % v)
+}}}
+
+= 画图 =
+{{{
+rrdtool graph|graphv filename [option ...] 
+		[data definition ...] 
+		[data calculation ...] 
+		[variable definition ...] 
+		[graph element ...] 
+		[print element ...]
+
+# 其中以下三个分别是data definition, data calculation, variable definition的格式
+DEF:vname=rrdfile:ds-name:CF[:step=step][:start=time][:end=time]
+
+CDEF:vname=RPN expression
+
+VDEF:vname=RPN expression
+}}}
+
+rrdtool graph 需要数据提供以画图. 它并不局限于单个RRD, 可以收集多个rrd的数据画图.<br>
+从 RRA 里 fetch 出来数据, 然后合并(consolidated)它们, 所以图上一个像素一个数据点(data point).<br>
+有时数据的格式并不是我们想要的. 在合并数据后, 强大的 `RPN` 命令集可以实现它们.<br>
+
+`graphv` 与 `graph` 的关系类似 `updatev` 和 `update`. 可以获取相信的画图信息.
+
+== options的一些参数 ==
+`[-s|--start time] [-e|--end time] [-S|--step seconds]`<br>
+
+`[-t|--title string] [-v|--vertical-label string]`<br>
+分别是: 图片顶部的横坐标label 和 左边纵坐标的label
+
+`[-w|--width pixels] [-h|--height pixels] [-j|--only-graph] [-D|--full-size-mode]`<br>
+设置图片的宽度和高度
+--only-graph 和  --full-size-mode # TODO #
+
+`[-u|--upper-limit value] [-l|--lower-limit value] [-r|--rigid]`<br>
+TODO
+
+
+{{{
+DEF:vname=rrdfile:ds-name:CF[:step=step][:start=time][:end=time]
+
+CDEF:vname=RPN expression
+
+VDEF:vname=RPN expression
+}}}
+
+在上面更新RRD的代码里添加画图代码:
+{{{
+import time
+now = int(time.time())
+onehour = str(now - 3600)
+ret = rrdtool.graphv('test.png',
+        '--start', str(onehour),
+        'DEF:v=test.rrd:testds:AVERAGE',
+        'AREA:v#00008B',
+        '-w 400 -h 100')
+
+print ret
+17:26 tankywoo@gentoo-gs /home/tankywoo/rrd
+% python pyrrd.py
+{'graph_width': 400L, 'value_min': 8.0, 'image_width': 481L, 'graph_left': 51L, 'image_height': 141L, 'graph_top': 15L, 'graph_start': 1370161620L, 'graph_end': 1370165220L, 'value_max': 100.0, 'graph_height': 100L}
+}}}
+
+
+{{http://wutianqi-wiki.b0.upaiyun.com/rrd1.png}}
+
+
+
 = 资料 =
 * [[http://oss.oetiker.ch/rrdtool/tut/|RRDtool Tutorail(Offical)]]
 * [[http://oss.oetiker.ch/rrdtool/doc/index.en.html|RRDtool Documentation(Offical)]]
