@@ -50,12 +50,9 @@ RRDtool(Round Robin Database Tool)
 </p>
 
 <h1 id="toc_2">安装</h1>
-<p>
-略过 :(
-</p>
 
 <p>
-参考ChinaUnix的那篇
+参考 <a href="http://bbs.chinaunix.net/thread-2150417-1-1.html">RRDtool简体中文教程(ChinaUnix)</a>
 </p>
 
 <h1 id="toc_3">新建RRD</h1>
@@ -212,6 +209,10 @@ rrdtool.updatev('test.rrd', 'N:%d' % v)
 </pre>
 
 <h1 id="toc_5">画图</h1>
+<p>
+<a href="http://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html">Offical Doc</a>
+</p>
+
 <pre>
 rrdtool graph|graphv filename [option ...] 
 		[data definition ...] 
@@ -269,10 +270,19 @@ VDEF:vname=RPN expression
 </pre>
 
 <p>
-在上面更新RRD的代码里添加画图代码:
+在上面更新RRD的代码里增加画图代码:
 </p>
 <pre>
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import rrdtool
+import random
 import time
+
+v = random.randint(1, 100)
+ret = rrdtool.updatev('test.rrd', 'N:%d' % v)
+
 now = int(time.time())
 onehour = str(now - 3600)
 ret = rrdtool.graphv('test.png',
@@ -280,15 +290,10 @@ ret = rrdtool.graphv('test.png',
         'DEF:v=test.rrd:testds:AVERAGE',
         'AREA:v#00008B',
         '-w 400 -h 100')
-
-print ret
-17:26 tankywoo@gentoo-gs /home/tankywoo/rrd
-% python pyrrd.py
-{'graph_width': 400L, 'value_min': 8.0, 'image_width': 481L, 'graph_left': 51L, 'image_height': 141L, 'graph_top': 15L, 'graph_start': 1370161620L, 'graph_end': 1370165220L, 'value_max': 100.0, 'graph_height': 100L}
 </pre>
 
-
 <p>
+效果图:<br>
 <img src="http://wutianqi-wiki.b0.upaiyun.com/rrd1.png" />
 </p>
 
