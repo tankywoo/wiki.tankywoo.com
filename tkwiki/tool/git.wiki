@@ -1,4 +1,5 @@
 %title Git
+%toc 目录
 
 `NOTE`:git的help信息非常好，很多可以直接help来了解
 
@@ -77,17 +78,60 @@ What is `git fetch`? and what is the difference to `git pull`?
 
 [[http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE|2.6 Git 基础 - 打标签]]
 
-= Read More =
-* [[http://git-scm.com/book/zh|ProGit中文版]]
-* [[http://gitref.org/|Git Reference]]
 
 = Git 全局配置 =
 全局忽略文件
 * [[http://git-scm.com/book/zh/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-%E9%85%8D%E7%BD%AE-Git|Ref1]]
 * [[https://github.com/GitHub/gitignore|Ref2]]
 
+= 使用vimdiff =
+默认的diff应该是使用diff命令, 这个命令也非常有必要掌握.
 
-= History =
-Create 2013/02/07
+但是, 更直观的, 可以选择vimdiff.
 
-Last modified 2013/02/07
+{{{
+# 配置git使用vimdiff来做差异比较
+git config --global diff.tool vimdiff
+# 在merge时使用
+git config --global merge.tool vimdiff
+# 因为在使用vimdiff时, vim会有如下提示:
+# Viewing: 'tkwiki/tool/git.wiki'
+# Launch 'vimdiff' [Y/n]: y
+# 可以取消这个提示
+git config --global difftool.prompt false
+}}}
+
+然后就可以
+{{{
+git difftool tkwiki/tool/git.wiki
+}}}
+来查看修改的地方, 效果图:
+{{http://wutianqi-wiki.b0.upaiyun.com/git_vimdiff.png}}
+
+参考:
+* [[http://usevim.com/2012/03/21/git-and-vimdiff/|Git and Vimdiff]]
+* [[http://agileadam.com/using-vimdiff-git|Using Vimdiff with Git]]
+
+= 查看提交log =
+
+git log 会查看当前git repo里所有的提交历史
+
+git log filename 会查看这个文件的所有提交历史
+
+git log -p -2 [filename] 会把最近的2次提交变更展开
+
+git log --pretty=oneline [filename] 这个太牛逼了, 只显示id和提交说明.
+
+git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格式
+
+参考:
+* [[http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2|查看提交历史]]
+
+
+= Git资料 =
+* [[http://git-scm.com/book/zh|ProGit中文版]]
+* [[http://gitref.org/|Git Reference]]
+
+= 修改历史 =
+创建于: 2013/02/07<br>
+最后修改: 2013/06/04
