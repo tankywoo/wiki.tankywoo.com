@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>linux_tricks @ TankyWoo's Wiki</title>
+		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
+		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+
+	</head>
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">linux_tricks</div>
+		<div id="content">
+			
+<h1 id="toc_1">查看现在使用的是哪一个shell</h1>
+<pre>
+echo $0
+</pre>
+
+<h1 id="toc_2">修改login shell</h1>
+<pre>
+chsh
+</pre>
+
+<h1 id="toc_3">shell快捷键</h1>
+<pre>
+cd到错误路径时，返回上一个路径：`cd -` &lt;br&gt;
+</pre>
+
+<h1 id="toc_4">关于export C</h1>
+<pre>
+建议在脚本开始处加上export C
+且如果man手册乱码，也可以
+$ export C man xxx
+</pre>
+
+<h1 id="toc_5">查看本机最常用的10条命令</h1>
+<pre>
+history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
+</pre>
+
+<h1 id="toc_6">获取一个字符串的长度</h1>
+<pre>
+方法1: len=`expr length $str`
+方法2: echo ${str} | wc -L
+方法3: echo ${#str} # 推荐
+</pre>
+
+<h1 id="toc_7">统计当前目录下（包括子目录）以.py结尾文件的个数及总代码行数</h1>
+<pre>
+文件个数: find . -name "*.py" | wc -l
+单个文件代码行数及总行数: find . -name "*.py" | xargs wc -l
+</pre>
+
+<h1 id="toc_8">输出错误重定向</h1>
+<pre>
+ls 1&gt;/dev/null 2&gt;/dev/null
+ls &gt;/dev/null 2&gt;&amp;1
+</pre>
+
+<h1 id="toc_9">Show number of connections per remote IP</h1>
+<pre>
+netstat -antu | awk '$5 ~ /[0-9]:/{split($5, a, ":"); ips[a[1]]++} END {for (ip in ips) print ips[ip], ip | "sort -k1 -nr"}'
+</pre>
+
+<h1 id="toc_10">以root身份执行上一条命令</h1>
+<pre>
+sudo !!
+</pre>
+
+<h1 id="toc_11">开启一个Web服务器(传输)</h1>
+<pre>
+# -m 表示找到模块, 执行相应的.py文件
+# SimpleHTTPServer 是一个 Http Server 模块
+python -m SimpleHTTPServer
+</pre>
+
+<h1 id="toc_12">返回上一个目录</h1>
+<p>
+有时候移到一个目录, 想直接返回去
+</p>
+<pre>
+cd -
+</pre>
+
+<h1 id="toc_13">vim里强制保存</h1>
+<p>
+有时候, 一些文件编辑后, 才发现只有root可写
+</p>
+<pre>
+:w !sudo tee %
+</pre>
+
+<h1 id="toc_14">替换上条命令的关键字并执行</h1>
+<pre>
+# 将上一条命令的pint换成traceroute
+^ping^traceroute^
+</pre>
+
+<h1 id="toc_15">复制一个备份文件</h1>
+<p>
+有时候, 为了测试, 为防止意外, 可能需要把 filename 在备份一个 filename.bak
+</p>
+<pre>
+cp filename{,.bak}
+</pre>
+
+<h1 id="toc_16">搜索最近一条符合关键字的命令</h1>
+<p>
+比如上面执行过命令是ping wutianqi.com, 想再执行, 可以
+</p>
+<pre>
+# p是关键字, 也可以 pi, pin, ping都行
+!p
+</pre>
+
+<h1 id="toc_17">给远程机器添加公钥认证</h1>
+<pre>
+ssh-copy-id user@host
+
+很多人喜欢生成公私钥后, 用scp传过去, 再登录上去设置
+其实完全没必要, ssh-copy-id会自动把公钥添加到~/.ssh/authorized_keys末尾
+如果 ssh-add -L 里面有内容，会优先使用里面的公钥
+其次，可以用 -i 指定要添加的公钥
+最后会用默认的 ~/.ssh/id_rsa.pub
+</pre>
+
+<h1 id="toc_18">把 Linux 桌面录制为视频</h1>
+<p>
+#TODO 这个命令先记录一下, 还没尝试
+</p>
+<pre>
+ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq /tmp/out.mpg
+</pre>
+
+		</div>
+
+		<div id="footer">
+			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			</span>
+		</div>
+	</body>
+	
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+
+	$('h2').prepend('>> ')
+	$('h3').prepend('>>> ')
+
+	</script>
+</html>
