@@ -1,4 +1,5 @@
 %title MarkDown
+%toc 目录
 
 = About =
 [[http://daringfireball.net/projects/markdown/|Markdown]] is written by [[http://daringfireball.net/projects/markdown/|Perl]]<br>
@@ -21,3 +22,23 @@ And there are some implementation by other languages, such as [[http://freewisdo
 * [[https://github.com/mrcoles/markdown-css|markdown-css]]
 * [[http://kevinburke.bitbucket.org/markdowncss]]
 
+= 遇到的问题 =
+
+== code标签里使用` ==
+在md语法里, 反引号(backtick quotes) 本身就是来定义一个 `<code>` 标签, 如果还需要使用它, 可以使用多个反引号来括住.
+
+[[http://daringfireball.net/projects/markdown/syntax#code|官方文档]]里给出的样例:
+{{{
+To include a literal backtick character within a code span, you can use multiple backticks as the opening and closing delimiters:
+``There is a literal backtick (`) here.``
+
+which will produce this:
+<p><code>There is a literal backtick (`) here.</code></p>
+}}}
+
+PS: vimwiki好像没解决方法...
+
+== 支持表格 ==
+原生的md是不支持表格的, 但是很多第三方实现都已经支持了.
+
+比如md的py实现[[https://github.com/trentm/python-markdown2|python-markdown2]]就可以实现. 可以参考[[https://github.com/trentm/python-markdown2/wiki/wiki-tables|官方wiki]]

@@ -24,6 +24,20 @@
 		<div id="title">MarkDown</div>
 		<div id="content">
 			
+<h1>目录</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">About</a>
+<li><a href="#toc_2">Syntax</a>
+<li><a href="#toc_3">Markdown in VIM</a>
+<li><a href="#toc_4">CSS</a>
+<li><a href="#toc_5">遇到的问题</a>
+<ul>
+<li><a href="#toc_5.1">code标签里使用`</a>
+<li><a href="#toc_5.2">支持表格</a>
+</ul>
+</ul>
+</div>
 
 <h1 id="toc_1">About</h1>
 <p>
@@ -75,6 +89,37 @@ And there are some implementation by other languages, such as <a href="http://fr
 <a href="http://kevinburke.bitbucket.org/markdowncss">http://kevinburke.bitbucket.org/markdowncss</a>
 
 </ul>
+
+<h1 id="toc_5">遇到的问题</h1>
+
+<h2 id="toc_5.1">code标签里使用`</h2>
+<p>
+在md语法里, 反引号(backtick quotes) 本身就是来定义一个 <code>&lt;code&gt;</code> 标签, 如果还需要使用它, 可以使用多个反引号来括住.
+</p>
+
+<p>
+<a href="http://daringfireball.net/projects/markdown/syntax#code">官方文档</a>里给出的样例:
+</p>
+<pre>
+To include a literal backtick character within a code span, you can use multiple backticks as the opening and closing delimiters:
+``There is a literal backtick (`) here.``
+
+which will produce this:
+&lt;p&gt;&lt;code&gt;There is a literal backtick (`) here.&lt;/code&gt;&lt;/p&gt;
+</pre>
+
+<p>
+PS: vimwiki好像没解决方法...
+</p>
+
+<h2 id="toc_5.2">支持表格</h2>
+<p>
+原生的md是不支持表格的, 但是很多第三方实现都已经支持了.
+</p>
+
+<p>
+比如md的py实现<a href="https://github.com/trentm/python-markdown2">python-markdown2</a>就可以实现. 可以参考<a href="https://github.com/trentm/python-markdown2/wiki/wiki-tables">官方wiki</a>
+</p>
 
 		</div>
 
