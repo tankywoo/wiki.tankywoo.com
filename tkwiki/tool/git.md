@@ -1,0 +1,148 @@
+`NOTE`:git的help信息非常好，很多可以直接help来了解
+
+# 给git输出信息增加颜色 #
+
+编辑`/etc/gitconfig`
+比如要对git status设置颜色，可以:
+
+	[color]
+		ui = auto
+	[color "branch"]
+		current = yellow reverse
+		local = yellow
+		remote = green
+	[color "diff"]
+		meta = yellow bold
+		frag = magenta bold
+		old = red bold
+		new = green bold
+	[color "status"]
+		added = yellow
+		changed = green
+		untracked = cyan
+
+
+参考:
+
+* [How to show git colors on zsh](http://stackoverflow.com/questions/12255028/how-to-show-git-colors-on-zsh)
+* [Enabling git syntax highlighting for macs terminal](http://stackoverflow.com/questions/8131322/enabling-git-syntax-highlighting-for-macs-terminal)
+* [How to colours in git](http://nathanhoad.net/how-to-colours-in-git)
+
+
+# 关于Git的分支 #
+
+参考的 [何谓分支](http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF)
+
+因为git是保存的快照，Git仓库有以下几个基本对象
+
+* `blob` 对象用于表示文件快照内容
+* `tree` 对象记录目录树内容和各个文件对应的blob对象索引
+* `commit` 对象记录提交信息，指向tree对象或其他commit对象
+
+Git的分支，其本质是一个指向commit对象的可变`指针`，git使用`master`作为分支的默认名字
+
+`HEAD`指针指向当前的分支指针
+
+使用`git branch`是查看当前的分支列表
+
+使用`git branch branch_name`新建分支，然后可以使用`git checkout branch_name`切换分支
+
+最后可以用`git merge branch_name`来合并分支
+
+如果遇到冲突，需要到冲突的文件下根据提示编辑后再commit
+
+# 远程分支 #
+
+参考的 [远程分支](http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF)
+
+从远程git repo克隆，Git会自动将此remote repo命名为`origin`，并下载其中所有的数据，建立一个指向它的`master`分支的指针，在本地命名为`origin/master`
+
+但无法在本地更改其数据。接着，Git建立一个属于自己的本地`master`分支，始于`origin`上`master`分支相同的位置，这样可以就此开始工作
+
+	touch README.md
+	git init
+	git add README.md
+	git commit -m "first commit"
+	git remote add origin git@github.com:tankywoo/test.git
+	git push -u origin master
+
+这里origin是remote repo name，branch name 是master
+
+## 关于fetch和pull区别 ##
+
+What is `git fetch`? and what is the difference to `git pull`?
+
+`git fetch`是update from remote repo，但是不合并
+
+`git pull`是fetch and merge
+
+# Git标签 #
+
+* 含附注的标签(annotated)
+* 轻量级标签(lightweight)
+
+[2.6 Git 基础 - 打标签](http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)
+
+
+# Git 全局配置 #
+
+全局忽略文件
+
+* [忽略文件](http://git-scm.com/book/zh/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-%E9%85%8D%E7%BD%AE-Git)
+* [git ignore repo](https://github.com/GitHub/gitignore)
+
+# 使用vimdiff #
+
+默认的diff应该是使用diff命令, 这个命令也非常有必要掌握.
+
+但是, 更直观的, 可以选择vimdiff.
+
+	# 配置git使用vimdiff来做差异比较
+	git config --global diff.tool vimdiff
+	# 在merge时使用
+	git config --global merge.tool vimdiff
+	# 因为在使用vimdiff时, vim会有如下提示:
+	# Viewing: 'tkwiki/tool/git.wiki'
+	# Launch 'vimdiff' [Y/n]: y
+	# 可以取消这个提示
+	git config --global difftool.prompt false
+
+然后就可以
+
+	git difftool tkwiki/tool/git.wiki
+
+来查看修改的地方, 效果图:
+
+![git vimdiff](http://wutianqi-wiki.b0.upaiyun.com/git_vimdiff.png)
+
+参考:
+
+* [Git and Vimdiff](http://usevim.com/2012/03/21/git-and-vimdiff/)
+* [Using Vimdiff with Git](http://agileadam.com/using-vimdiff-git)
+
+# 查看提交log #
+
+git log 会查看当前git repo里所有的提交历史
+
+git log filename 会查看这个文件的所有提交历史
+
+git log -p -2 [filename] 会把最近的2次提交变更展开
+
+git log --pretty=oneline [filename] 这个太牛逼了, 只显示id和提交说明.
+
+git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格式
+
+参考:
+
+* [查看提交历史](http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2)
+
+
+# Git资料 #
+
+* [ProGit中文版](http://git-scm.com/book/zh)
+* [Git Reference](http://gitref.org/)
+
+# 修改历史 #
+
+创建于: 2013/02/07  
+最后修改: 2013/06/04

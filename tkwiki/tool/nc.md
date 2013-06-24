@@ -1,0 +1,44 @@
+TCP/IP swiss army knife
+
+# Argument #
+
+` -l ` : listen mode. can be used as server
+	
+	>> nc -l -p 9999	# listen to port 9999
+
+NOTE: TODO, not for sure
+
+` -p ` : local port num(port numbers can be individual or ranges: lo-hi [inclusive])
+
+` -v/-vv ` : verbose information
+
+` -z ` : zero-I/O mode [used for scanning]
+
+NOTE: what is the meaning of `zero-IO`?
+
+# Example #
+
+	# Transfer file
+	# Server
+	>> nc -l -p 9999 < getfile.txt
+
+	# Client
+	$ nc -l 9999 > sendfile.txt
+
+
+
+	# Scan Port
+	$ nc -v -z localhost 20-100
+	>>
+	localhost [127.0.0.1] 80 (http) open
+	localhost [127.0.0.1] 22 (ssh) open
+
+
+# Read More #
+
+* [8 Practical Linux Netcat NC Command Examples](http://www.thegeekstuff.com/2012/04/nc-command-examples/)
+
+
+# History #
+
+Create 2013/01/13

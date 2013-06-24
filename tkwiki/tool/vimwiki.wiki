@@ -1,0 +1,122 @@
+%title VimWiki
+
+= 安装篇 =
+
+== 简介 ==
+VimWiki，[[http://code.google.com/p/vimwiki/|官方]]给出的解释：
+{{{
+    Vimwiki is a personal wiki for Vim -- a number of linked text files that have their own syntax highlighting. 
+}}}
+通过VimWiki，你可以：<br />
+* organize notes and ideas
+* manage todo-lists
+* write documentation
+
+== 安装 ==
+首先下载插件([[http://www.vim.org/scripts/script.php?script_id=2226|下载1]]， [[http://code.google.com/p/vimwiki/|下载2]])，然后:<br />
+{{{
+Windows: 
+======== 
+1. Unpack. 
+2. Open vimwiki-N-N.vba with Vim. (N-N is version number ie 1-1) 
+3. Source it with :so % command 
+
+Linux: 
+====== 
+1. Open vimwiki-N-N.vba.gz with Vim. (N-N is version number ie 1-1) 
+2. Source it with :so % command 
+}}}
+
+== 配置 ==
+官方建议在.vimrc中添加以下代码：<br />
+{{{
+set nocompatible 
+filetype plugin on 
+syntax on 
+}}}
+然后继续做其他配置：<br />
+{{{
+" vimwiki
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+    \ 'path_html': '~/vimwiki/html/',
+    \ 'template_path': '~/vimwiki/template/',
+    \ 'template_default': 'template',
+    \ 'template_ext': '.html'}]
+
+let g:vimwiki_camel_case = 0
+
+map <F4> <Plug>Vimwiki2HTML
+map <S-F4> <Plug>VimwikiAll2HTML
+}}}
+
+* path指定wiki路径
+* path_html制定生成的html路径，一些相关调用的css,js也都放在这里
+* template_path是模板的路径
+* template_default指定默认的模板名称
+* template_ext指定模板的后缀名
+* 综上，template_path/template_default.template_ext就是模板了
+* 绑定快捷键F4为把wiki页面转为html页面
+
+== 使用 == 
+
+=== 打开wiki ===
+`<Leader>`键一般是`\`键<br />
+{{{
+<Leader>ww -- Open default wiki index file. 
+<Leader>wt -- Open default wiki index file in a new tab. 
+<Leader>ws -- Select and open wiki index file. 
+<Leader>wd -- Delete wiki file you are in. 
+<Leader>wr -- [[Rename]] wiki file you are in. 
+<Enter> -- Folow/Create wiki link 
+<Shift-Enter> -- Split and folow/create wiki link 
+<Ctrl-Enter> -- Vertical split and folow/create wiki link 
+<Backspace> -- Go back to parent(previous) wiki link 
+<Tab> -- Find next wiki link 
+<Shift-Tab> -- Find previous wiki link 
+}}}
+
+
+=== 语法 ===
+可以`:h vimwiki` 或者看这个[[http://vimwiki.googlecode.com/hg/misc/Vimwiki1.1.1QR.pdf|vimwiki quick reference card]](此文档是vimwiki1.1.1，新版vimwiki已有一些改动，如有问题，可email探讨或自行看vimwiki help帮助文档)
+
+== 参考的文章 ==
+* [[http://www.berlinix.com/VimWiki.html|Vim插件-VimWiki]]
+* [[http://zwiki.sinaapp.com/|拾墨.Wiki]]
+* [[http://xbeta.info/vimwiki.htm|Xbeta Pkm工具：Vimwiki]]
+* [[http://www.clarkok.com/blog/?p=534|VimWiki，创建你自己的Wiki世界]]
+* [[http://arccos.github.com/blog/20110510-use-vimwiki-for-knowledge-managment.html|使用 VimWiki 进行知识管理]]
+* [[http://code.google.com/p/vim-script-cn/source/browse/trunk/doc/vimwiki.cnx|vimwiki中文文档]]
+
+
+= 实用篇 =
+
+记录Vimwiki的各种小技巧
+
+== wiki文件中代码高亮 ==
+使用`nested_syntaxes`选项，比如我的`.vimrc`文件:
+{{{class="brush: shell"
+'nested_syntaxes' : {'python': 'python', 'c++': 'cpp', 'shell': 'sh'}}]
+}}}
+里面保存的是键值对，键是brush调用时的name，值是vim filetype<br />
+然后在`{{{code}}}`里就可以按filetype来高亮代码了, Example:
+{{{
+XXXclass="brush: c++"
+#include "helloworld.h"
+int helloworld()
+{
+	printf("hello world");
+}
+XXX
+
+注：XXX代表花括号
+}}}
+
+更多可以help vimwiki，然后搜`vimwiki-option-nested_syntaxes`
+
+More：如果考虑在html时对`<pre>`代码高亮，可以考虑`syntaxhighlight`插件
+
+
+= History =
+Create 2012/05/08<br />
+
+Modify 2013/05/28
