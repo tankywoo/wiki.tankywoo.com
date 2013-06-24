@@ -45,3 +45,11 @@ PS: vimwiki好像没解决方法...
 原生的md是不支持表格的, 但是很多第三方实现都已经支持了.
 
 比如md的py实现 [python-markdown2](https://github.com/trentm/python-markdown2) 就可以实现. 可以参考 [官方wiki](https://github.com/trentm/python-markdown2/wiki/wiki-tables)
+
+## 分隔两个pre ##
+在md里, 使用 `Tab` 或 `4个空格` 来生成 `<pre>` 标签  
+但是就算中间有空行, 也依然会被放在同一个 pre 里  
+
+可以使用 html 的注释 `<!-- comment -->` 来分隔两个 pre
+
+参考: [Separating consecutive code blocks](http://meta.stackoverflow.com/questions/152358/separating-consecutive-code-blocks)
