@@ -23,13 +23,16 @@
 		</div>
 		<div id="title">Tmux</div>
 		<div id="content">
-			
+
 <h1>TMUX - terminal multiplexer</h1>
 
-<p>三个术语:
-* session: 管理多个window的会话
-* window: 一个window就是整个屏幕
-* pane: 一个window可以被横向或纵向分割为多个pane, 也就是俗称的分屏</p>
+<p>三个术语:</p>
+
+<ul>
+<li>session: 管理多个window的会话</li>
+<li>window: 一个window就是整个屏幕</li>
+<li>pane: 一个window可以被横向或纵向分割为多个pane, 也就是俗称的分屏</li>
+</ul>
 
 <p>tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是<code>C-b</code>, 如果习惯了screen的<code>C-a</code>, 可以修改prefix, 以下都用<code>C-b</code>表示前缀</p>
 
@@ -39,9 +42,10 @@
 <li>C-b : 进入tmux的命令行模式</li>
 <li>C-b ? 显示所有的bind-key</li>
 <li>C-b [ 进入复制模式</li>
-<li>C-b ] 进入粘贴模式
-如果有设置 setw -g mode-keys vi 的话，可按 vi 的按键模式操作。移动至待复制的文本处，按一下空格，结合 vi 移动命令开始选择，选好后按回车确认.</li>
+<li>C-b ] 进入粘贴模式</li>
 </ul>
+
+<p>如果有设置 setw -g mode-keys vi 的话，可按 vi 的按键模式操作。移动至待复制的文本处，按一下空格，结合 vi 移动命令开始选择，选好后按回车确认.</p>
 
 <h1>session 操作</h1>
 
@@ -84,6 +88,8 @@
 <h1>配置文件</h1>
 
 <p><a href="https://github.com/tankywoo/linux-autoconfig/blob/master/.tmux.conf">我的tmux配置</a></p>
+
+<p>以下配置就不更新了, 最近的请访问上面链接</p>
 
 <pre><code>set -g default-terminal "screen-256color"   # use 256 colors
 set -g display-time 5000                    # status line messages display
@@ -162,7 +168,7 @@ select-pane -t 1
 <p>在 ~/.tmux.conf 里绑定快捷键: bind T source-file ~/.tmux/tanky</p>
 
 <p>这样, 就可以通过快捷键 C-b S-t 一键初始化一个如下图的布局.
-<img src="http://wutianqi-wiki.b0.upaiyun.com/tmux-script.png" alt="Script Tmux" /></p>
+<img src="http://wutianqi-wiki.b0.upaiyun.com/tmux_new.png" alt="Script Tmux" /></p>
 
 <p>另外, 还可以直接写shell脚本, 然后运行, 比如:</p>
 
@@ -190,18 +196,20 @@ fi
 tmux attach-session -d -t 'tankywoo'
 </code></pre>
 
-<p>下面这几个链接不错
-* http://amjith.blogspot.com/2011/08/scripting-tmux-layouts.html
-* http://blog.htbaa.com/news/tmux-scripting
-* http://toastdriven.com/blog/2009/oct/09/scripting-tmux/</p>
+<p>下面这几个链接不错</p>
+
+<ul>
+<li><a href="http://amjith.blogspot.com/2011/08/scripting-tmux-layouts.html">Scripting Tmux Layouts</a></li>
+<li><a href="http://blog.htbaa.com/news/tmux-scripting">TMUX SCRIPTING</a></li>
+<li><a href="http://toastdriven.com/blog/2009/oct/09/scripting-tmux/">Scripting tmux</a></li>
+</ul>
 
 <h1>扩展 - tmux powerline</h1>
 
-<p>https://github.com/erikw/tmux-powerline <br />
-官方说此项目现在只做维护, 不更新. <br />
-最新的见:https://github.com/Lokaltog/powerline  </p>
-
-<p>因为tmux-powerline用到了一些字符需要字体的支持, 所以终端下用不了</p>
+<ul>
+<li><a href="https://github.com/erikw/tmux-powerline">tmux-powerline项目</a> 官方说此项目现在只做维护, 不更新</li>
+<li><a href="https://github.com/Lokaltog/powerline">powerline项目</a> 这个是最新项目</li>
+</ul>
 
 <h1>其他资料</h1>
 
@@ -211,6 +219,7 @@ tmux attach-session -d -t 'tankywoo'
 <li>http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/</li>
 <li>https://wiki.freebsdchina.org/software/t/tmux</li>
 </ul>
+
 		</div>
 
 		<div id="footer">
