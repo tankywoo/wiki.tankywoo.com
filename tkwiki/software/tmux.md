@@ -1,0 +1,177 @@
+# TMUX - terminal multiplexer #
+
+三个术语:
+
+* session: 管理多个window的会话
+* window: 一个window就是整个屏幕
+* pane: 一个window可以被横向或纵向分割为多个pane, 也就是俗称的分屏
+
+tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-b`, 如果习惯了screen的`C-a`, 可以修改prefix, 以下都用`C-b`表示前缀
+
+# 基本操作 #
+
+* C-b : 进入tmux的命令行模式
+* C-b ? 显示所有的bind-key
+* C-b [ 进入复制模式
+* C-b ] 进入粘贴模式
+
+如果有设置 setw -g mode-keys vi 的话，可按 vi 的按键模式操作。移动至待复制的文本处，按一下空格，结合 vi 移动命令开始选择，选好后按回车确认.
+
+# session 操作 #
+
+* C-b d deattch当前的session
+* C-b C-z 挂起当前的session
+* tmux attach [-t sessionname] 恢复session
+* C-b $ 可以重命名当前的session
+* tmux ls 显示tmux的所有session
+
+# window 操作 #
+
+* C-b c 可以新建一个新的window
+* C-b & 关闭当前的window
+* C-b , 可以重命名当前的window
+* C-b p 切换到前一个window
+* C-b n 切换到后一个window
+* C-b l 切换到上一次的window
+* C-b number 切换到指定编号的window, 默认从0开始
+* C-b w 显示当前会话的window, 可以通过上下选择来切换
+* tmux neww -n tmux 新建一个window, 名称是tmux
+
+# pane 操作 #
+
+* C-b " 将当前window横向分割为两个pane
+* C-b % 将当前window纵向分割为两个pane
+* C-b 方向键 在当前window里移动到其他pane
+* C-b o 切换到下一个pane
+* C-b Alt+方向键 调整pane的大小
+* C-b q 显示pane的编号
+* C-b x 关闭当前的pane, 会有确认提示. 也可以直接C-d
+* C-b { 把当前的pane移到左边
+* C-b } 把当前的pane移到右边
+
+# 配置文件 #
+
+[我的tmux配置](https://github.com/tankywoo/linux-autoconfig/blob/master/.tmux.conf)
+
+以下配置就不更新了, 最近的请访问上面链接
+
+	set -g default-terminal "screen-256color"   # use 256 colors
+	set -g display-time 5000                    # status line messages display
+	set -g status-utf8 on                       # enable utf-8
+	set -g history-limit 100000                 # scrollback buffer n lines
+	setw -g mode-keys vi                        # use vi mode
+
+	# start window indexing at one instead of zero
+	set -g base-index 1
+
+	# set the prefix key and some key bindings to match GNU Screen
+	set -g prefix C-a
+	unbind-key C-b
+	bind-key C-a send-prefix
+
+	# key bindings for horizontal and vertical panes
+	unbind %
+	bind | split-window -h
+	unbind '"'
+	bind - split-window -v
+
+	# enable window titles
+	#set -g set-titles on
+
+	# window title string (uses statusbar variables)
+	set -g set-titles-string '#T'
+
+	# status bar with load and time
+	set -g status-bg '#4e4e4e'
+	set -g status-fg '#bbbbbb'
+	set -g status-left-fg '#55ff55'
+	set -g status-left-bg '#555555'
+	set -g status-right-fg '#55ff55'
+	set -g status-right-bg '#555555'
+	set -g status-left-length 90
+	set -g status-right-length 90
+	set -g status-left '[#(whoami)]'
+	set -g status-right '[#(date +" %m-%d %H:%M ")]'
+	set -g status-justify "centre"
+	set -g window-status-format '#I #W'
+	set -g window-status-current-format ' #I #W '
+	setw -g window-status-current-bg '#B3D9D9'
+	setw -g window-status-current-fg '#DDDDFF'
+
+	# pane border colors
+	set -g pane-active-border-fg '#55ff55'
+	set -g pane-border-fg '#555555'
+
+	# bind to reload config
+	bind r source-file ~/.tmux.conf
+
+	# add window to session
+	new -s tankywoo -n tankywoo
+	neww -n ops-dev
+	selectw -t 1
+
+	# scripting tmux
+	bind T source-file ~/.tmux/tanky
+
+# 脚本化tmux #
+
+脚本化可以让我们自己定义一些脚本, 来构造自己的tmux布局
+
+比如我写了一个分割三个pane的小脚本放在 ~/.tmux/tanky 里:
+
+	select-pane -t 0
+	split-window -h -p 60
+	select-pane -t 1
+	split-window -v -p 25
+	send-keys -t 0 'ipython' C-m
+	# The C-m at the end is interpreted by Tmux as the enter key.
+	select-pane -t 1
+
+在 ~/.tmux.conf 里绑定快捷键: bind T source-file ~/.tmux/tanky
+
+这样, 就可以通过快捷键 C-b S-t 一键初始化一个如下图的布局.
+![Script Tmux](http://wutianqi-wiki.b0.upaiyun.com/tmux_new.png)
+
+另外, 还可以直接写shell脚本, 然后运行, 比如:
+
+	#!/bin/bash
+	# Tanky Woo@2013-06-19 10:51:15
+	# About:
+
+	tmux start-server
+
+	if ! $(tmux has-session -t 'tankywoo'); then
+	        tmux new-session -d -s 'tankywoo' -n 'tankywoo' # -d *
+	        tmux select-window -t 'tankywoo'
+	        tmux split-window -h -p 60
+	        tmux select-pane -t 1
+	        tmux split-window -v -p 25
+	        tmux send-keys -t 0 'ipython' C-m
+	        # The C-m at the end is interpreted by Tmux as the enter key.
+
+	        tmux new-window -n 'ops-dev'
+
+	        tmux select-window -t 'tankywoo'
+	        tmux select-pane -t 1
+	fi
+
+	tmux attach-session -d -t 'tankywoo'
+
+
+下面这几个链接不错
+
+* [Scripting Tmux Layouts](http://amjith.blogspot.com/2011/08/scripting-tmux-layouts.html)
+* [TMUX SCRIPTING](http://blog.htbaa.com/news/tmux-scripting)
+* [Scripting tmux](http://toastdriven.com/blog/2009/oct/09/scripting-tmux/)
+
+# 扩展 - tmux powerline #
+
+* [tmux-powerline项目](https://github.com/erikw/tmux-powerline) 官方说此项目现在只做维护, 不更新
+* [powerline项目](https://github.com/Lokaltog/powerline) 这个是最新项目
+
+# 其他资料 #
+
+* http://www.dayid.org/os/notes/tm.html screen和tmux的操作对比
+* https://wiki.archlinux.org/index.php/Tmux 对tmux介绍的非常详细
+* http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/
+* https://wiki.freebsdchina.org/software/t/tmux
