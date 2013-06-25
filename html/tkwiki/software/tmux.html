@@ -165,6 +165,13 @@ send-keys -t 0 'ipython' C-m
 select-pane -t 1
 </code></pre>
 
+<p>google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 <code>C-m</code> 是干嘛的, 查看绑定键也没找到 <br />
+后来在<a href="http://spin.atomicobject.com/2013/04/11/tmux-key-binding-scripting/">An Introduction to Scripting Tmux Key Bindings</a>上看到了解释.</p>
+
+<blockquote>
+  <p>The C-m at the end is interpreted by Tmux as the enter key.</p>
+</blockquote>
+
 <p>在 ~/.tmux.conf 里绑定快捷键: bind T source-file ~/.tmux/tanky</p>
 
 <p>这样, 就可以通过快捷键 C-b S-t 一键初始化一个如下图的布局.

@@ -127,6 +127,11 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 	# The C-m at the end is interpreted by Tmux as the enter key.
 	select-pane -t 1
 
+google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-m` 是干嘛的, 查看绑定键也没找到  
+后来在[An Introduction to Scripting Tmux Key Bindings](http://spin.atomicobject.com/2013/04/11/tmux-key-binding-scripting/)上看到了解释.
+
+> The C-m at the end is interpreted by Tmux as the enter key.
+
 在 ~/.tmux.conf 里绑定快捷键: bind T source-file ~/.tmux/tanky
 
 这样, 就可以通过快捷键 C-b S-t 一键初始化一个如下图的布局.
