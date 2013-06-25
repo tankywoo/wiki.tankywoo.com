@@ -45,7 +45,7 @@ if __name__ == '__main__':
     tpl = open(TPLPATH, 'r')
     tpl_html = ''.join(tpl.readlines())
     html = re.sub('{{ content }}', content, unicode(tpl_html, 'utf-8'))
-    html = re.sub('{{ title }}', title, html)
+    html = re.sub('{{ title }}', unicode(title, 'utf-8'), html)
     html = html.encode('utf-8')
     html_path = osp.join(HTMLPATH, dir_name, md_name.split('.')[0]+'.html')
     if debug:
