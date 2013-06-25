@@ -171,7 +171,11 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 
 # 其他资料 #
 
-* http://www.dayid.org/os/notes/tm.html screen和tmux的操作对比
-* https://wiki.archlinux.org/index.php/Tmux 对tmux介绍的非常详细
-* http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/
-* https://wiki.freebsdchina.org/software/t/tmux
+* [screen and tmux](http://www.dayid.org/os/notes/tm.html) screen和tmux的操作对比
+* [Tmux - ArchWIKI](https://wiki.archlinux.org/index.php/Tmux) 对tmux介绍的非常详细
+* [TMUX – The Terminal Multiplexer (Part 1)](http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/)
+* [使用tmux](https://wiki.freebsdchina.org/software/t/tmux)
+
+# 历史记录 #
+
+2013-06-25 : 完善整个tmux wiki
