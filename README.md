@@ -1,7 +1,9 @@
 # About #
+
 This is my personal wiki site, powered by `vimwiki`
 
 # Structure #
+
 	.
 	├── html
 	├── manage.sh
@@ -21,7 +23,9 @@ This is my personal wiki site, powered by `vimwiki`
 `manage.sh` -- Manage the project 
 
 # Wiki@TankyWoo #
+
 http://wiki.wutianqi.com
 
 # Contact #
-	echo YWRtaW5AdGFua3l3b28uY29tCg== | base64 -d
+
+	echo bWVAdGFua3l3b28uY29tCg== | base64 -d
