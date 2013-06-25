@@ -9,9 +9,10 @@ import re
 import markdown2
 
 from os import path as osp
+from articles import articles
 
+DEBUG = False
 
-# The global 
 MDPATH = './tkwiki'  # The path put markdown files
 HTMLPATH = './html/tkwiki'  # The path put the generated html files
 TPLPATH = './html/template/markdown.tpl'  # The template file path
@@ -24,16 +25,24 @@ if __name__ == '__main__':
     _md = sys.argv[1]
     dir_name = _md.split('/')[-2]
     md_name = _md.split('/')[-1]
+    try:
+        title = articles[dir_name][md_name.split('.')[0]]['title']
+    except Exception:
+        print('>>ERROR: ', 'There is no title map to %s' % _md)
     md_suffix = ['md', 'mkd', 'markdown']
     if '.' not in md_name or md_name.split('.')[1] not in md_suffix:
         print('>>ERROR: ', 'Suffix is error')
         sys.exit(1)
 
-    html = markdown2.markdown_path(_md)
+    content = markdown2.markdown_path(_md)
     tpl = open(TPLPATH, 'r')
     tpl_html = ''.join(tpl.readlines())
-    newhtml = re.sub('{{ content }}', html, unicode(tpl_html, 'utf-8'))
-    newhtml = newhtml.encode('utf-8')
+    html = re.sub('{{ content }}', content, unicode(tpl_html, 'utf-8'))
+    html = re.sub('{{ title }}', title, html)
+    html = html.encode('utf-8')
     html_path = osp.join(HTMLPATH, dir_name, md_name.split('.')[0]+'.html2')
-    with open(html_path, 'w') as wfd:
-        wfd.write(newhtml)
+    if DEBUG:
+        print(html)
+    else:
+        with open(html_path, 'w') as wfd:
+            wfd.write(html)
