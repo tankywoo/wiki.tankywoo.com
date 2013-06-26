@@ -44,8 +44,15 @@
 		<!-- Duoshuo Comment END -->
 
 		<div id="footer">
-			<span class="">Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
