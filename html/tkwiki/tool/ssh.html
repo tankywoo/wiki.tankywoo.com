@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>SSH 及其 相关组件 @ TankyWoo's Wiki</title>
+		<title>ssh @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -21,80 +20,40 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">SSH 及其 相关组件</div>
+		<div id="title">ssh</div>
+		
 		<div id="content">
-			
 
-<h1>Table of Contents</h1>
-<div class="toc">
-<ul>
-<li><a href="#toc_1">ssh</a>
-<ul>
-<li><a href="#toc_1.1">RTFM</a>
-<li><a href="#toc_1.2">关于ssh config</a>
-</ul>
-<li><a href="#toc_2">ssh-agent</a>
-<li><a href="#toc_3">修改历史</a>
-</ul>
-</div>
+<p>我们总监上次提到了一句话非常好，他说他每安装一个工具，都要 <code>equery files toolname</code> 来查看这个工具到底会带有多少小工具
+就像我没有执行 equery 查询，我也不会发现，原来 ssh 自带了这么多好用的工具！</p>
 
-<p>
-我们总监上次提到了一句话非常好，他说他每安装一个工具，都要 <code>equery files toolname</code> 来查看这个工具到底会带有多少小工具。&lt;BR /&gt;
-就像我没有执行 equery 查询，我也不会发现，原来 ssh 自带了这么多好用的工具！
-</p>
+<pre><code>* /usr/bin/scp
+* /usr/bin/sftp
+* /usr/bin/slogin
+* /usr/bin/ssh
+* /usr/bin/ssh-add
+* /usr/bin/ssh-agent
+* /usr/bin/ssh-copy-id
+* /usr/bin/ssh-keygen
+* /usr/bin/ssh-keyscan
+</code></pre>
 
-<ul>
-<li>
-/usr/bin/scp
+<h1>ssh</h1>
 
-<li>
-/usr/bin/sftp
+<h2>RTFM</h2>
 
-<li>
-/usr/bin/slogin
-
-<li>
-/usr/bin/ssh
-
-<li>
-/usr/bin/ssh-add
-
-<li>
-/usr/bin/ssh-agent
-
-<li>
-/usr/bin/ssh-copy-id
-
-<li>
-/usr/bin/ssh-keygen
-
-<li>
-/usr/bin/ssh-keyscan
-
-</ul>
-
-<h1 id="toc_1">ssh</h1>
-<h2 id="toc_1.1">RTFM</h2>
-<pre>
-man ssh
+<pre><code>man ssh
 man sshd
 man ssh_config
 man sshd_config
-</pre>
+</code></pre>
 
+<h2>关于ssh config</h2>
 
-<h2 id="toc_1.2">关于ssh config</h2>
-<p>
-ssh_config
-有两个文件：
-~/.ssh/config
-/etc/ssh/config
-</p>
+<p>ssh_config 有两个文件：<code>~/.ssh/config</code> 和 <code>/etc/ssh/config</code></p>
 
-<p>
-config文件的格式：
-</p>
-<pre>
+<pre><code>config文件的格式：
+
 空行和#开头的是注释文件
 用Host指定特定的主机，*表示默认的
 具体可以参考/etc/ssh/config样例
@@ -102,68 +61,73 @@ config文件的格式：
 比如可能有多个私钥文件，其中对于所有网站，要用私钥A。而对于某一个网站，必须用私钥B
 则可以配置：
 Host xxx
-	IdentityFile ~/.ssh/tankywoo     # tankywoo就是私钥文件
+    IdentityFile ~/.ssh/tankywoo     # tankywoo就是私钥文件
 
 Host name还可以用匹配，具体可以man ssh_config
-</pre>
+</code></pre>
 
-<h1 id="toc_2">ssh-agent</h1>
-<p>
-ssh-agent 是一个ssh私钥的认证代理工具，类似于 windows 下的 <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">Pageant</a>
-</p>
+<h1>ssh-agent</h1>
 
-<p>
-这类 authentication agent 适合于特别多私钥需要管理，或者私钥有密码等情况
-</p>
+<p>ssh-agent 是一个ssh私钥的认证代理工具，类似于 windows 下的 <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">Pageant</a></p>
 
-<p>
-思想是 ssh-agent 启动一个会话(X-session/login session)，然后其他程序在这个会话里使用ssh时，都会通过使用agent的环境变量自动加载私钥来认证
-</p>
+<p>这类 authentication agent 适合于特别多私钥需要管理，或者私钥有密码等情况</p>
 
-<p>
-ssh-agent 后可以接一些参数和命令，一般接shell名称就可以启动一个新的加载ssh-agent环境变量的会话，如:
-</p>
-<pre>
-ssh-agent zsh
-</pre>
-<p>
-然后就可以用ssh-add加载私钥了，加载后可以用 <code>ssh-add -l</code> 查看当前会话加载了哪些私钥。
-</p>
+<p>思想是 ssh-agent 启动一个会话(X-session/login session)，然后其他程序在这个会话里使用ssh时，都会通过使用agent的环境变量自动加载私钥来认证</p>
 
-<p>
-通过 ssh-agent 启动一个会话，然后用 <code>ssh-add</code> 加载私钥，以后使用ssh就无需关心私钥的事情了。
-</p>
+<p>ssh-agent 后可以接一些参数和命令，一般接shell名称就可以启动一个新的加载ssh-agent环境变量的会话，如:</p>
 
-<h1 id="toc_3">修改历史</h1>
-<p>
-创建时间 2013-02-03
-</p>
+<pre><code>ssh-agent zsh
+</code></pre>
 
-<p>
-最后修改 2013-05-28
-</p>
+<p>然后就可以用ssh-add加载私钥了，加载后可以用 <code>ssh-add -l</code> 查看当前会话加载了哪些私钥。</p>
+
+<p>通过 ssh-agent 启动一个会话，然后用 <code>ssh-add</code> 加载私钥，以后使用ssh就无需关心私钥的事情了。</p>
+
+<h1>修改历史</h1>
+
+<p>创建时间 2013-02-03</p>
+
+<p>最后修改 2013-05-28</p>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

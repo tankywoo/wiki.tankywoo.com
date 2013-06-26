@@ -7,10 +7,9 @@
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -22,156 +21,113 @@
 		<div class="clearfix">
 		</div>
 		<div id="title">Bash Shortcuts</div>
+		
 		<div id="content">
-			
 
-<p>
-了解Bash的快捷键，在实际开发/管理中，可以大大的增加效率
-</p>
+<h1>Bash Shortcuts</h1>
 
-<p>
-关于Bash Shortcuts，google了下，基本都差不多
-</p>
+<p>了解Bash的快捷键，在实际开发/管理中，可以大大的增加效率</p>
 
-<p>
-本篇也主要记录自己平时常用的，会逐步完善
-</p>
+<p>关于Bash Shortcuts，google了下，基本都差不多</p>
 
-<p>
-更多的可以参考下面的Read More
-</p>
+<p>本篇也主要记录自己平时常用的，会逐步完善</p>
 
+<p>更多的可以参考下面的Read More</p>
 
-<h1 id="toc_1">Ctrl</h1>
-<p>
-<code>Ctrl + a</code>	-	Jump to the start of the line # 如果使用screen，C-a可能会被占用，请使用C-a a
-</p>
+<h1>Ctrl</h1>
 
-<p>
-<code>Ctrl + e</code>	-	Jump to the end of the line
-</p>
+<p><code>Ctrl + a</code>  -  Jump to the start of the line # 如果使用screen，C-a可能会被占用，请使用C-a a</p>
 
-<p>
-<code>Ctrl + k</code>	-	Delete from cursor to EOL # 从cursor处(包括光标)直接删除到行尾，很管用的命令
-</p>
+<p><code>Ctrl + e</code>  -  Jump to the end of the line</p>
 
-<p>
-<code>Ctrl + u</code>	-	Delete backward from cursor # 从cursor处(不包括光标)直接前面所有，适合输错密码时用
-</p>
+<p><code>Ctrl + k</code>  -  Delete from cursor to EOL # 从cursor处(包括光标)直接删除到行尾，很管用的命令</p>
 
-<p>
-<code>Ctrl + w</code>	-	Delete a word
-</p>
+<p><code>Ctrl + u</code>  -  Delete backward from cursor # 从cursor处(不包括光标)直接前面所有，适合输错密码时用</p>
 
+<p><code>Ctrl + w</code>  -  Delete a word</p>
 
-<p>
-<code>Ctrl + c</code>	-	Terminate the command
-</p>
+<p><code>Ctrl + c</code>  -  Terminate the command</p>
 
-<p>
-<code>Ctrl + d</code>	-	Delete char under the cursor
-</p>
+<p><code>Ctrl + d</code>  -  Delete char under the cursor</p>
 
+<p><code>Ctrl + b</code>  -  Move back a char</p>
 
-<p>
-<code>Ctrl + b</code>	-	Move back a char
-</p>
+<p><code>Ctrl + f</code>  -  Move forward a char</p>
 
-<p>
-<code>Ctrl + f</code>	-	Move forward a char
-</p>
+<p><code>Ctrl + r</code>  -  Search the history backwards</p>
 
+<p><code>Ctrl + R</code>  -  Search the history with multi occurrence # ???还不明白这个和C-r的区别</p>
 
-<p>
-<code>Ctrl + r</code>	-	Search the history backwards
-</p>
+<p><code>Ctrl + l</code>  -  Clear the screen</p>
 
-<p>
-<code>Ctrl + R</code>	-	Search the history with multi occurrence # ???还不明白这个和C-r的区别
-</p>
+<p><code>Ctrl + z</code>  -  Suspend/Stop the command</p>
 
+<h1>Bash Mode</h1>
 
-<p>
-<code>Ctrl + l</code>	-	Clear the screen
-</p>
+<p><em>TODO</em> 待具体研究</p>
 
-<p>
-<code>Ctrl + z</code>	-	Suspend/Stop the command
-</p>
+<p><code>set -o</code>        List all the modes</p>
 
+<p>默认情况下，emacs mode是on，而vi mode是off，可以通过<code>set -o vi</code>改为vi mode</p>
 
-<h1 id="toc_2">Bash Mode</h1>
-<p>
-<strong>TODO</strong> 待具体研究
-</p>
+<h1>Read More</h1>
 
-<p>
-<code>set -o</code>	-	List all the modes
-</p>
-
-<p>
-默认情况下，emacs mode是on，而vi mode是off，可以通过<code>set -o vi</code>改为vi mode
-</p>
-
-<h1 id="toc_3">Read More</h1>
 <ul>
-<li>
-<a href="http://www.aboutlinux.info/2005/08/bash-shell-shortcuts.html">Bash Shortcuts</a>
-
-<li>
-<a href="http://dbanotes.net/tech-memo/shell_shortcut.html">Bash Shell 快捷键的学习使用</a>(此文是参考上文)
-
-<li>
-<a href="http://www.skorks.com/2009/09/bash-shortcuts-for-maximum-productivity/">Bash Shortcuts For Maximum Productivity</a>
-
-<li>
-<a href="http://linuxtoy.org/archives/bash-shortcuts.html">让你提升命令行效率的 Bash 快捷键</a>
-
-<li>
-<a href="http://www.bigsmoke.us/readline/shortcuts">Readline shortcuts</a>
-
-<li>
-<a href="http://www.huangwei.me/blog/2010/10/27/bash_shortcuts_mindmap/">Bash快捷键的思维导图</a>
-
-<li>
-<a href="http://ahei.info/bash.htm">高效操作Bash</a>
-
-<li>
-<a href="http://blog.longwin.com.tw/2006/09/bash_hot_key_2006/">Bash Shell 快速鍵列表</a>
-
+<li><a href="http://www.aboutlinux.info/2005/08/bash-shell-shortcuts.html">Bash Shortcuts</a></li>
+<li><a href="http://dbanotes.net/tech-memo/shell_shortcut.html">Bash Shell 快捷键的学习使用</a> (此文是参考上文)</li>
+<li><a href="http://www.skorks.com/2009/09/bash-shortcuts-for-maximum-productivity/">Bash Shortcuts For Maximum Productivity</a></li>
+<li><a href="http://linuxtoy.org/archives/bash-shortcuts.html">让你提升命令行效率的 Bash 快捷键</a></li>
+<li><a href="http://www.bigsmoke.us/readline/shortcuts">Readline shortcuts</a></li>
+<li><a href="http://www.huangwei.me/blog/2010/10/27/bash_shortcuts_mindmap/">Bash快捷键的思维导图</a></li>
+<li><a href="http://ahei.info/bash.htm">高效操作Bash</a></li>
+<li><a href="http://blog.longwin.com.tw/2006/09/bash_hot_key_2006/">Bash Shell 快速鍵列表</a></li>
 </ul>
 
+<h1>History</h1>
 
-<h1 id="toc_4">History</h1>
-<p>
-Create 2013/02/04
-</p>
+<p>Create 2013/02/04</p>
 
-<p>
-Last modified 2013/02/04
-</p>
+<p>Last modified 2013/02/04</p>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Linux Shell @ TankyWoo's Wiki</title>
+		<title>Shell @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -21,69 +20,60 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">Linux Shell</div>
+		<div id="title">Shell</div>
+		
 		<div id="content">
-			
-<h1 id="toc_1">什么是Shell</h1>
-<pre>
-shell是一个作为用户与Linux系统间接口的程序，它允许用户向操作系统输入需要执行的命令
-</pre>
 
-<h1 id="toc_2">基本</h1>
-<h2 id="toc_2.1">重定向</h2>
-<pre>
-0	标准输入 &lt;  &lt;&lt;
-1	标准输出 &gt;  &gt;&gt;
-2	错误输出 2&gt; 2&gt;&gt;
+<h1>Linux Shell</h1>
+
+<h1>什么是Shell</h1>
+
+<pre><code>shell是一个作为用户与Linux系统间接口的程序，它允许用户向操作系统输入需要执行的命令
+</code></pre>
+
+<h1>基本</h1>
+
+<h2>重定向</h2>
+
+<pre><code>0   标准输入 &lt;  &lt;&lt;
+1   标准输出 &gt;  &gt;&gt;
+2   错误输出 2&gt; 2&gt;&gt;
 
 &lt;是输出， &lt;&lt;是以附加的方式输出
 &gt;&amp; kill -9 1234 &gt;killouterr.txt 2&gt;&amp;1
+</code></pre>
 
-</pre>
+<h2>管道</h2>
 
-<h2 id="toc_2.2">管道</h2>
-<pre>
-管道用操作符 '|'
-</pre>
+<pre><code>管道用操作符 '|'
+</code></pre>
 
-<h1 id="toc_3">脚本</h1>
-<h2 id="toc_3.1">格式</h2>
-<pre>
-第一行指定执行shell的文件，一般是#!/bin/bash或#!/bin/sh
-</pre>
+<h1>脚本</h1>
 
-<h2 id="toc_3.2">运行</h2>
-<pre>
-* 直接运行 sh xx.sh 或者 bash xx.sh
+<h2>格式</h2>
+
+<pre><code>第一行指定执行shell的文件，一般是#!/bin/bash或#!/bin/sh
+</code></pre>
+
+<h2>运行</h2>
+
+<pre><code>* 直接运行 sh xx.sh 或者 bash xx.sh
 * 可执行文件 先chmod +x xx.sh 然后 ./xx.sh
-</pre>
+</code></pre>
 
-<h1 id="toc_4">Shell语法(*)</h1>
-<h2 id="toc_4.1">变量</h2>
+<h1>Shell语法(*)</h1>
+
+<h2>变量</h2>
+
 <ul>
-<li>
-变量不需要提前声明
+<li>变量不需要提前声明</li>
+<li>变量名区分大小写</li>
+<li>创建变量时通过直接赋值给变量 eg. var=abc</li>
+<li>访问变量时需要在变量名前加一个$符号 eg. echo $var 或 <code>echo ${var}</code></li>
+<li>在赋值时，等号两边不能有空格 eg. <code>var=abc</code></li>
+<li><p>如果字符串里有空格，则必须用双引号把字符串括起来 <code>var="Hello World"</code></p>
 
-<li>
-变量名区分大小写
-
-<li>
-创建变量时通过直接赋值给变量 eg. var=abc
-
-<li>
-访问变量时需要在变量名前加一个\(符号 eg. echo \)var 或 <code>echo ${var}</code>
-
-<li>
-在赋值时，等号两边不能有空格 eg. <code>var=abc</code>
-
-<li>
-如果字符串里有空格，则必须用双引号把字符串括起来 <code>var="Hello World"</code>
-
-</ul>
-
-<pre>
-eg.
-tankywoo@linuxmint /var/www/wiki $ a=hello
+<pre><code>tankywoo@linuxmint /var/www/wiki $ a=hello
 tankywoo@linuxmint /var/www/wiki $ echo $a
 hello
 tankywoo@linuxmint /var/www/wiki $ b=a
@@ -94,94 +84,71 @@ tankywoo@linuxmint /var/www/wiki $ echo $b
 world
 tankywoo@linuxmint /var/www/wiki $ echo $a
 hello
-</pre>
-
-
-<h3 id="toc_4.1.1">引号</h3>
-<ul>
-<li>
-read读入数据时，带有空格的数据不需要加引号
-<pre>
-  eg. $ read var
-      Tanky Woo
-	  $ echo $var
-	  Tanky Woo
-</pre>
-
-<li>
-对于变量$var，如果放在双引号""中，则会替换为其值
-
-<li>
-如果放在单引号''中，则不会发生替换
-
-<li>
-还可以在$前面加上'\'符号取消其转义行为
-<pre>
-  eg.
-  var="tanky woo"
-  echo $var     # tanky woo
-  echo "$var"   # tanky woo
-  echo '$var'   # $var
-  echo \$var    $var
-</pre>
-
+</code></pre></li>
 </ul>
 
-<h3 id="toc_4.1.2">环境变量</h3>
+<h3>引号</h3>
 
-<h2 id="toc_4.2">条件</h2>
-<p>
-test或[命令
-</p>
-<pre>
-eg.
-if test -f file.c ; then
-	...
+<p>* read读入数据时，带有空格的数据不需要加引号</p>
+
+<pre><code>    $ read var
+    Tanky Woo
+    $ echo $var
+    Tanky Woo
+</code></pre>
+
+<p>* 对于变量$var，如果放在双引号""中，则会替换为其值
+* 如果放在单引号''中，则不会发生替换
+* 还可以在$前面加上'\'符号取消其转义行为</p>
+
+<pre><code>    var="tanky woo"
+    echo $var     # tanky woo
+    echo "$var"   # tanky woo
+    echo '$var'   # $var
+    echo \$var    $var
+</code></pre>
+
+<h3>环境变量</h3>
+
+<h2>条件</h2>
+
+<p>test或[命令</p>
+
+<pre><code>if test -f file.c ; then
+    ...
 fi
 
 或
 
 if [ -f file.c ]
-	...
+    ...
 fi
-
-</pre>
+</code></pre>
 
 <ul>
-<li>
-字符串的比较
-<pre>
-str1 = str2
+<li><p>字符串的比较</p>
+
+<pre><code>str1 = str2
 str1 != str2
 str1 &gt; str2
 str1 &lt; str2
 -n str  如果字符串不为空则为True
 -z str  如果字符串为null，则结果为真
+</code></pre></li>
 
-</pre>
+<li><p>算数比较</p>
 
-</ul>
+<pre><code>exp1 -eq exp2   ==
+exp1 -ne exp2   !=
+exp1 -gt exp2   &gt;
+exp1 -ge exp2   &gt;=
+exp1 -lt exp2   &lt;
+exp1 -le exp2   &lt;=
+!exp            如果exp为假则返回真
+</code></pre></li>
+<li><p>文件条件测试</p>
 
-<ul>
-<li>
-算数比较
-<pre>
-exp1 -eq exp2	==
-exp1 -ne exp2	!=
-exp1 -gt exp2	&gt;
-exp1 -ge exp2	&gt;=
-exp1 -lt exp2	&lt;
-exp1 -le exp2	&lt;=
-!exp			如果exp为假则返回真
-</pre>
-
-</ul>
-
-<ul>
-<li>
-文件条件测试
-<pre>
--d file    directory
+<pre><code>-d file    directory
 -e file    exist
 -f file    common file
 -g file    set-group-id ???
@@ -190,96 +157,81 @@ exp1 -le exp2	&lt;=
 -u file    set-user-id ???
 -w file    writeable
 -x file    executeable
-</pre>
+</code></pre></li>
+<li><p>(( expression ))</p>
 
-</ul>
-
-<ul>
-<li>
-(( expression ))
-<pre>
-可以使用高级数学特性
+<pre><code>可以使用高级数学特性
 val++
 val--
 ++val
 --val
-!		逻辑求反
-~		位求反
-**		幂运算
-&lt;&lt;		左移位
+!       逻辑求反
+~       位求反
+**      幂运算
+&lt;&lt;      左移位
 &gt;&gt;
-&amp;		按位与
+&amp;       按位与
 |
-&amp;&amp;		逻辑与
-||	
-</pre>
+&amp;&amp;      逻辑与
+||
+</code></pre></li>
+<li><p>[[ expression ]]</p>
 
+<pre><code>字符串的比较，但是支持模式匹配
+</code></pre></li>
 </ul>
 
-<ul>
-<li>
-[\[ expression ]]
-<pre>
-字符串的比较，但是支持模式匹配
+<h2>控制结构</h2>
 
-</pre>
+<h3>if语句</h3>
 
-</ul>
-
-<h2 id="toc_4.3">控制结构</h2>
-<h3 id="toc_4.3.1">if语句</h3>
-<pre>
-if condition
+<pre><code>if condition
 then
-	statement
+    statement
 elif condition; then
-	statement
+    statement
 else
-	statement
+    statement
 fi
-</pre>
+</code></pre>
 
-<h3 id="toc_4.3.2">for语句</h3>
-<pre>
-for var in values
+<h3>for语句</h3>
+
+<pre><code>for var in values
 do
-	statement
+    statement
 done
-</pre>
+</code></pre>
 
-<h3 id="toc_4.3.3">while语句</h3>
-<pre>
-while condition
+<h3>while语句</h3>
+
+<pre><code>while condition
 do
-	statenment
+    statenment
 done
-</pre>
+</code></pre>
 
+<h3>while语句</h3>
 
-<h3 id="toc_4.3.4">while语句</h3>
-<pre>
-until condition
+<pre><code>until condition
 do
-	statenment
+    statenment
 done
-</pre>
+</code></pre>
 
+<h3>case语句</h3>
 
-
-<h3 id="toc_4.3.5">case语句</h3>
-<pre>
-case var in
-	passtern [| pattern]... ) statement1;;
-	passtern [| pattern]... ) statement2;;
-	...
+<pre><code>case var in
+    passtern [| pattern]... ) statement1;;
+    passtern [| pattern]... ) statement2;;
+    ...
 esac
-</pre>
-<p>
-注:
-每个模式都以<code>双引号;;</code>结尾
-</p>
-<pre>
-eg.
+</code></pre>
+
+<p>注:
+每个模式都以<code>双引号;;</code>结尾</p>
+
+<pre><code>eg.
 #!/bin/sh
 # case statement
 echo "Please answer yes or no"
@@ -290,184 +242,140 @@ case "$ans" in
 esac
 
 exit 0
-</pre>
+</code></pre>
 
-<h3 id="toc_4.3.6">AND OR列表</h3>
-<p>
-<code>&amp;&amp;</code> <code>||</code>
-</p>
-<pre>
-eg.
-con1 &amp;&amp; con2 &amp;&amp; con3
+<h3>AND OR列表</h3>
+
+<p><code>&amp;&amp;</code> <code>||</code></p>
+
+<pre><code>con1 &amp;&amp; con2 &amp;&amp; con3
 con1 || con2 || con3
-</pre>
-  
-<h3 id="toc_4.3.7">语句块</h3>
-<p>
-<code>{}</code>
-</p>
+</code></pre>
 
-<h3 id="toc_4.3.8">函数</h3>
-<pre>
-function_name(){
-	statement
+<h3>语句块</h3>
+
+<p><code>{}</code></p>
+
+<h3>函数</h3>
+
+<pre><code>function_name(){
+    statement
 }
-</pre>
+</code></pre>
 
+<h3>命令</h3>
 
-
-<h3 id="toc_4.3.9">命令</h3>
 <ul>
-<li>
-<code>break</code>
+<li><code>break</code></li>
+<li><code>:</code></li>
+<li><code>continue</code></li>
+<li><code>.</code></li>
+<li><code>echo</code></li>
+<li><p><code>eval</code> 对语句进行求值</p>
 
-<li>
-<code>:</code>
-
-<li>
-<code>continue</code>
-
-<li>
-<code>.</code>
-
-<li>
-<code>echo</code>
-
-<li>
-<code>eval</code> 对语句进行求值
-<pre>
-foo=10
+<pre><code>foo=10
 x=foo #echo $y --&gt; foo
 y='$'$x
 echo $y # --&gt; $foo
 
 eval y='$'$x
 echo $y # --&gt; 10
-</pre>
-
-<li>
-exec
-
-<li>
-<code>exit n</code>
-
-<li>
-<code>export</code>
-
-<li>
-<code>expr</code>
-
+</code></pre></li>
+<li><p>exec</p></li>
+<li><code>exit n</code></li>
+<li><code>export</code></li>
+<li><code>expr</code></li>
 </ul>
-<p>
-把参数当作表达式来求值
-</p>
-<pre>
-eg.
+
+<p>把参数当作表达式来求值</p>
+
+<pre><code>eg.
 x=`expr $x + 1`
 x=$(expr $x + 1)
-</pre>
+</code></pre>
+
 <ul>
-<li>
-<code>printf</code>
-
-<li>
-<code>return</code>
-
-<li>
-<code>set</code>
-
-<li>
-<code>shift</code>
-
-<li>
-<code>trap</code>
-
-<li>
-<code>unset</code>
-
-<li>
-<code>find</code> **
-
-<li>
-<code>grep</code> **
-
+<li><code>printf</code></li>
+<li><code>return</code></li>
+<li><code>set</code></li>
+<li><code>shift</code></li>
+<li><code>trap</code></li>
+<li><code>unset</code></li>
+<li><code>find</code> **</li>
+<li><code>grep</code> **</li>
 </ul>
 
-<p>
-注：以下需要单独开一篇总结
-<code>find</code> <code>grep</code> <code>regex</code>
-</p>
+<p>注：以下需要单独开一篇总结
+<code>find</code> <code>grep</code> <code>regex</code></p>
 
+<h3>补充</h3>
 
-<h3 id="toc_4.3.10">补充</h3>
-<p>
-算数运算
-$((...))
-x=\(((\)x+1))
-</p>
+<p>算数运算 <br />
+$((...)) <br />
+x=$(($x+1))  </p>
 
+<h2>Special Parameters</h2>
 
-<h2 id="toc_4.4">Special Parameters</h2>
-<p>
-TODO vimwiki的转义怎么弄?
-</p>
+<p>TODO vimwiki的转义怎么弄?</p>
 
-<p>
-The shell treats several parameters specially. These parameters may only be referenced; assignment to them is not allowed.
-</p>
+<p>The shell treats several parameters specially. These parameters may only be referenced; assignment to them is not allowed.</p>
 
-<p>
-<code>\(*</code> : \)* is equivalent to "\\(1c\\)2c..", where c is the first character of the value of the <code>IFS</code> variable
-</p>
+<p><code>$*</code> : $* is equivalent to "\$1c\$2c..", where c is the first character of the value of the <code>IFS</code> variable</p>
 
-<p>
-<code>\(@</code> : <code>\)@</code> is equivalent to "\\(1" "\\)2"
-</p>
+<p><code>$@</code> : <code>$@</code> is equivalent to "\$1" "\$2"</p>
 
-<p>
-<code>$#</code> : The number of the parameters
-</p>
+<p><code>$#</code> : The number of the parameters</p>
 
-<p>
-<code>$?</code> : The exit status
-</p>
+<p><code>$?</code> : The exit status</p>
 
-<p>
-<code>$0</code> : The source file name
-</p>
+<p><code>$0</code> : The source file name</p>
 
+<h1>参考</h1>
 
+<ul>
+<li>Linux程序设计</li>
+<li><a href="http://www.gnu.org/software/bash/manual/bashref.html">Bash Manual</a></li>
+</ul>
 
-
-
-
-<h1 id="toc_5">参考</h1>
-<p>
-《Linux程序设计》
-<a href="http://www.gnu.org/software/bash/manual/bashref.html">Bash Manual</a>
-</p>
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

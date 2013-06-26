@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Vsftpd @ TankyWoo's Wiki</title>
+		<title>vsftpd @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -21,113 +20,100 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">Vsftpd</div>
+		<div id="title">vsftpd</div>
+		
 		<div id="content">
-			
 
-<p>
-参考<a href="http://vbird.dic.ksu.edu.tw/linux_server/0410vsftpd.php">鸟哥私房菜</a>
-</p>
+<h1>Vsftpd</h1>
 
+<p>参考: <a href="http://vbird.dic.ksu.edu.tw/linux_server/0410vsftpd.php">鸟哥私房菜</a></p>
 
-<p>
-三种群体：
-</p>
+<p>三种群体：</p>
+
 <ul>
-<li>
-anonymous
-
-<li>
-guest
-
-<li>
-real user
-
+<li>anonymous</li>
+<li>guest</li>
+<li>real user</li>
 </ul>
 
-<p>
-关于设置real user，有三个设置：
-</p>
-<pre class="brush:shell">
-userlist_enable=YES
+<p>关于设置real user，有三个设置：</p>
+
+<pre><code>userlist_enable=YES
 userlist_deny=NO
 userlist_file=/etc/vsftpd/user_list
-</pre>
-<p>
-<code>userlist_enable</code>开启就是支持real user
-</p>
+</code></pre>
 
-<p>
-在<code>userlist_file</code>设置user名，一个一行
-</p>
+<p><code>userlist_enable</code>开启就是支持real user</p>
 
-<p>
-如果<code>userlist_deny</code>设置为YES，则userlist_file中的用户被拒绝；
-</p>
+<p>在<code>userlist_file</code>设置user名，一个一行</p>
 
-<p>
-如果设置为NO，则只有userlist_file中的用户可以登录（系统用户除外？ <strong>TODO</strong> ）
-</p>
+<p>如果<code>userlist_deny</code>设置为YES，则userlist_file中的用户被拒绝；</p>
 
+<p>如果设置为NO，则只有userlist_file中的用户可以登录（系统用户除外？ <em>TODO</em> ）</p>
 
-<p>
-<code>local_umask</code>设置新文件的掩码，推荐是022
-</p>
+<p><code>local_umask</code>设置新文件的掩码，推荐是022</p>
 
-<p>
-我先开始这里设置了022，anonymous上传的文件权限就是600，所以自然就没法下载
-</p>
+<p>我先开始这里设置了022，anonymous上传的文件权限就是600，所以自然就没法下载</p>
 
-<p>
-在设置了<code>chroot_local_user=YES</code>后，用户限制在自己的home目录，但是登录会报错:
-</p>
-<pre>
-500 OOPS: vsftpd: refusing to run with writable root inside chroot ()
-</pre>
-<p>
-Google了下，网上还是很常见的
-</p>
+<p>在设置了<code>chroot_local_user=YES</code>后，用户限制在自己的home目录，但是登录会报错:</p>
 
-<p>
-对于<code>version &gt; 3</code>的(网上讨论的结果，未确定)，添加
-</p>
-<pre>
-allow_writeable_chroot=YES
-</pre>
-<p>
-即可解决问题，参考<a href="http://www.benscobie.com/fixing-500-oops-vsftpd-refusing-to-run-with-writable-root-inside-chroot/">benscobie的Blog</a>
-</p>
+<pre><code>500 OOPS: vsftpd: refusing to run with writable root inside chroot ()
+</code></pre>
 
-<p>
-如果是<code>2.x</code>的版本，<a href="http://blog.thefrontiergroup.com.au/2012/10/making-vsftpd-with-chrooted-users-work-again/">参考</a>
-</p>
+<p>Google了下，网上还是很常见的</p>
 
-<h1 id="toc_1">History</h1>
-<p>
-Create 2013/02/23
-</p>
+<p>对于<code>version &gt; 3</code>的(网上讨论的结果，未确定)，添加</p>
+
+<pre><code>allow_writeable_chroot=YES
+</code></pre>
+
+<p>即可解决问题，参考: <a href="http://www.benscobie.com/fixing-500-oops-vsftpd-refusing-to-run-with-writable-root-inside-chroot/">benscobie的Blog</a></p>
+
+<p>如果是<code>2.x</code>的版本，<a href="http://blog.thefrontiergroup.com.au/2012/10/making-vsftpd-with-chrooted-users-work-again/">参考</a></p>
+
+<h1>History</h1>
+
+<p>Create 2013/02/23</p>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

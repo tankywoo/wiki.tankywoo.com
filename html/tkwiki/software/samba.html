@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>SAMBA @ TankyWoo's Wiki</title>
+		<title>samba @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -21,35 +20,30 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">SAMBA</div>
+		<div id="title">samba</div>
+		
 		<div id="content">
-			
 
-<h1 id="toc_1">Installation</h1>
-<pre>
-sudo emerge net-fs/samba
-</pre>
+<h1>SAMBA</h1>
 
-<h1 id="toc_2">About</h1>
-<p>
-NFS、CIFS？
-</p>
+<h1>Installation</h1>
 
-<p>
-Samba是用来让Unix系列的操作系统和微软Windows操作系统的SMB/CIFS（Server Message Block/Common Internet File System）网络协议做连接的自由软件
-</p>
+<pre><code>sudo emerge net-fs/samba
+</code></pre>
 
-<p>
-Samba是架构在NetBIOS（Network Basic Input/Output System）这个通信协议上面开发出来的。NetBIOS是无法跨路由的，但是现在又NetBIOS over TCP/IP技术可以实现。目前Samba还是广泛用于LAN中。
-</p>
+<h1>About</h1>
 
-<p>
-[<a href="http://www.samba.org">http://www.samba.org</a> 官方网站传送门]
-</p>
+<p>NFS、CIFS？</p>
 
-<h1 id="toc_3">Configuration</h1>
-<pre>
-# TODO
+<p>Samba是用来让Unix系列的操作系统和微软Windows操作系统的SMB/CIFS（Server Message Block/Common Internet File System）网络协议做连接的自由软件</p>
+
+<p>Samba是架构在NetBIOS（Network Basic Input/Output System）这个通信协议上面开发出来的。NetBIOS是无法跨路由的，但是现在又NetBIOS over TCP/IP技术可以实现。目前Samba还是广泛用于LAN中。</p>
+
+<p><a href="http://www.samba.org">官方网站传送门</a></p>
+
+<h1>Configuration</h1>
+
+<pre><code># TODO
 cd /etc/samba
 # the is a smb.conf.default in the dir
 sudo cp smb.conf.default smb.conf
@@ -58,47 +52,63 @@ vim smb.conf
 # workgroup is the windows pc's workgroup name
 # security can be user or shareo
 # in the end, you can uncomment the [tmp] section
-</pre>
+</code></pre>
 
-<p>
-修改完smb.conf后，可以用testparm命令来检查配置文件的语法合法性
-</p>
+<p>修改完smb.conf后，可以用testparm命令来检查配置文件的语法合法性</p>
 
+<h1>Start Service</h1>
 
-<h1 id="toc_4">Start Service</h1>
-<pre>
-sudo /etc/init.d/samba start
-</pre>
+<pre><code>sudo /etc/init.d/samba start
+</code></pre>
 
-<h1 id="toc_5">Read More</h1>
-<pre>
-http://www.cnblogs.com/whiteyun/archive/2011/05/27/2059670.html
-http://bbs.chinaunix.net/thread-716599-1-1.html
-http://bbs.chinaunix.net/thread-1003730-1-1.html
-http://bbs.chinaunix.net/thread-1148734-1-1.html
-</pre>
+<h1>Read More</h1>
+
+<ul>
+<li><a href="http://www.cnblogs.com/whiteyun/archive/2011/05/27/2059670.html">Linux中Samba详细安装</a></li>
+<li><a href="http://bbs.chinaunix.net/thread-716599-1-1.html">samba安装和配置文档以及和域控制器配合部分</a></li>
+<li><a href="http://bbs.chinaunix.net/thread-1003730-1-1.html">快速搭建Samba服务器</a></li>
+<li><a href="http://bbs.chinaunix.net/thread-1148734-1-1.html">一步一学Linux与Windows 共享文件Samba</a></li>
+</ul>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

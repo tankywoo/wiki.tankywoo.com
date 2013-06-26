@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>服务器性能用到的知识 @ TankyWoo's Wiki</title>
+		<title>Server Peformance @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -21,106 +20,99 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">服务器性能用到的知识</div>
+		<div id="title">Server Peformance</div>
+		
 		<div id="content">
-			
+
+<h1>服务器性能用到的知识</h1>
 
 <ul>
-<li>
-Load
-
-<li>
-CPU
-
-<li>
-Mem
-
-<li>
-磁盘I/O
-
-<li>
-网络I/O
-
+<li>Load</li>
+<li>CPU</li>
+<li>Mem</li>
+<li>磁盘I/O</li>
+<li>网络I/O</li>
 </ul>
 
-<h1 id="toc_1">Load</h1>
-<p>
-系统负载指运行队列的平均长度，也就是等待CPU的平均进程数
-</p>
+<h1>Load</h1>
 
-<p>
-可以通过<code>cat /proc/loadavg</code> <code>w</code> <code>top</code>等命令获取
-</p>
+<p>系统负载指运行队列的平均长度，也就是等待CPU的平均进程数</p>
 
-<p>
-推荐一篇文章<a href="http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages">Understanding Linux CPU Load</a>
-</p>
+<p>可以通过<code>cat /proc/loadavg</code> <code>w</code> <code>top</code>等命令获取</p>
 
-<h1 id="toc_2">CPU</h1>
-<p>
-<code>top</code> <code>atop</code> <code>htop</code>
-获取CPU信息<code>cat /proc/cpuinfo</code>
-</p>
+<p>推荐一篇文章[[http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages|Understanding Linux CPU Load]]</p>
 
-<p>
-其中%wa指CPU等待磁盘写入完成的时间
-</p>
+<h1>CPU</h1>
 
-<p>
-<code>vmstat</code> <code>sar</code> <code>iostat</code>
-</p>
+<p><code>top</code> <code>atop</code> <code>htop</code>
+获取CPU信息<code>cat /proc/cpuinfo</code></p>
 
-<h1 id="toc_3">Mem</h1>
-<p>
-<code>free</code> <code>vmstat</code> <code>top</code> <code>cat /proc/meminfo</code>
-</p>
+<p>其中%wa指CPU等待磁盘写入完成的时间</p>
 
-<h1 id="toc_4">磁盘I/O</h1>
-<p>
-<code>iostat</code>
-</p>
+<p><code>vmstat</code> <code>sar</code> <code>iostat</code></p>
 
-<h1 id="toc_5">网络I/O</h1>
-<p>
-<code>netstat</code>
-</p>
+<h1>Mem</h1>
 
-<h1 id="toc_6">Read More</h1>
+<p><code>free</code> <code>vmstat</code> <code>top</code> <code>cat /proc/meminfo</code></p>
+
+<h1>磁盘I/O</h1>
+
+<p><code>iostat</code></p>
+
+<h1>网络I/O</h1>
+
+<p><code>netstat</code></p>
+
+<h1>Read More</h1>
+
 <ul>
-<li>
-<a href="http://blog.chinaunix.net/uid-27127953-id-3333176.htmlLinux服务器性能小结">http://blog.chinaunix.net/uid-27127953-id-3333176.htmlLinux服务器性能小结</a>
-
-<li>
-<a href="http://www.cnblogs.com/mfryf/archive/2012/03/12/2392000.html">linux wa%过高，iostat查看io状况</a>
-
+<li><a href="http://blog.chinaunix.net/uid-27127953-id-3333176.html">Linux服务器性能小结</a></li>
+<li><a href="http://www.cnblogs.com/mfryf/archive/2012/03/12/2392000.html">linux wa%过高，iostat查看io状况</a></li>
 </ul>
 
-<h1 id="toc_7">History</h1>
-<p>
-Create 2013/02/21
-</p>
+<h1>History</h1>
+
+<p>Create 2013/02/21</p>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

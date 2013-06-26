@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Vim @ TankyWoo's Wiki</title>
+		<title>vim @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -21,517 +20,177 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">Vim</div>
+		<div id="title">vim</div>
+		
 		<div id="content">
-			
 
-<h1 id="toc_1">我的配置</h1>
+<h1>Vim</h1>
 
-<pre>
-" Author: Tanky Woo
-" Blog: www.wutianqi.com
+<h1>我的配置</h1>
 
-""""""""""""""""""""""""""""
-" General
-""""""""""""""""""""""""""""
-set nu      " set the line number
-syntax on       " syntax highlighting
-set autochdir       " set the current dir as thr work dir
-set hlsearch        " highlight the search result
-set incsearch		" real-time search
-filetype on         " file type detection
-filetype plugin on  " loading the plugin files for specific file types
-filetype indent on  " loading the indent file for specific file types with
-set foldmethod=indent       " The kind of folding used for the current window
-set foldlevel=99
-set nocompatible        " use the vim's keyboard setting, not vi
-set cindent
-set autoindent      " Copy indent from current line when starting a new line
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-"set expandtab   " use the space to instead of tab
-set smartindent
-set showmatch       "
-set showmode        " show the mode
-set cursorline      " highlighter the current line
-set nobackup        " no backup
-" hi cursorline   gui=UNDERLINE cterm=UNDERLINE
-set cc=81       " short for colorcolumn
-colorscheme elflord
-set fileencodings=utf-8,gb18030,cp936,big5      " set the encode
+<h1>快捷键</h1>
 
-""""""""""""""""""""""""""""
-" VimWiki Plugin
-""""""""""""""""""""""""""""
-let g:vimwiki_list = [{'path': '/home/tankywoo/wiki/',
-            \ 'path_html': '/home/tankywoo/wiki/html/',
-            \ 'template_path': '/home/tankywoo/wiki/template/',
-            \ 'template_default': 'template',
-            \ 'template_ext': '.html'}]
-let g:vimwiki_camel_case = 0
-" 个人喜欢utf-8，要换的话下面模板中编码也要改
-"set encoding=utf-8
-map &lt;F4&gt; &lt;Plug&gt;Vimwiki2HTML
-map &lt;S-F4&gt; &lt;Plug&gt;VimwikiAll2HTML
+<h2>Movement</h2>
 
-
-""""""""""""""""""""""""""""
-" Auto add the head by .py file
-""""""""""""""""""""""""""""
-function HeaderPython()
-    call setline(1, "#!/usr/bin/env python")
-    call append(1,  "# -*- coding: utf-8 -*-")
-    call append(2,  "# wutq@" . strftime('%Y-%m-%d', localtime()))
-    "call append(3,  "# vim: set noexpandtab tabstop=4 shiftwidth=4 softtabstop=4:")
-    normal G
-    normal o
-    normal o
-endf
-autocmd bufnewfile *.py call HeaderPython()
-
-""""""""""""""""""""""""""""
-" Auto add the head by .sh file
-""""""""""""""""""""""""""""
-function HeaderBash()
-    call setline(1, "#!/bin/bash")
-    call append(1,  "# Tanky Woo@" . strftime('%Y-%m-%d %T', localtime()))
-    call append(2,  "# About: ")
-    normal G
-    normal o
-    normal o
-endf
-autocmd bufnewfile *.sh call HeaderBash()
-
-</pre>
-<p>
-&lt;HR&gt;
-</p>
-
-<h1 id="toc_2">快捷键</h1>
-<h2 id="toc_2.1">Movement</h2>
-<table>
-<tr>
-<td>
-<code>h</code>
-</td>
-<td>
-Move <strong>left</strong>
-</td>
-</tr>
-<tr>
-<td>
-<code>j</code>
-</td>
-<td>
-Move <strong>down</strong>
-</td>
-</tr>
-<tr>
-<td>
-<code>k</code>
-</td>
-<td>
-Move <strong>up</strong>
-</td>
-</tr>
-<tr>
-<td>
-<code>l</code>
-</td>
-<td>
-Move <strong>right</strong>
-</td>
-</tr>
-<tr>
-<td>
-<code>0</code>
-</td>
-<td>
-Move to <strong>beginging</strong> of line
-</td>
-</tr>
-<tr>
-<td>
-<code>$</code>
-</td>
-<td>
-Move to <strong>end</strong> of line
-</td>
-</tr>
-<tr>
-<td>
-<code>gg</code>
-</td>
-<td>
-Move to <strong>first</strong> line of file
-</td>
-</tr>
-<tr>
-<td>
-<code>G</code>
-</td>
-<td>
-Move to <strong>last</strong> line of file
-</td>
-</tr>
-<tr>
-<td>
-<code>w</code>
-</td>
-<td>
-Move <strong>forward</strong> to next word
-</td>
-</tr>
-<tr>
-<td>
-<code>b</code>
-</td>
-<td>
-Move <strong>backward</strong> to next word
-</td>
-</tr>
-</table>
-
-<h2 id="toc_2.2">Search</h2>
-<table>
-<tr>
-<td>
-<code>*</code>
-</td>
-<td>
-Search <strong>forward</strong> for word under cursor
-</td>
-</tr>
-<tr>
-<td>
-<code>#</code>
-</td>
-<td>
-Search <strong>backward</strong> for word under curor
-</td>
-</tr>
-<tr>
-<td>
-<code>/word</code>
-</td>
-<td>
-Search <strong>forward</strong> for <strong>word</strong>. Support <strong>RE</strong>
-</td>
-</tr>
-<tr>
-<td>
-<code>?word</code>
-</td>
-<td>
-Search <strong>backward</strong> for <strong>word</strong>. Support <strong>RE</strong>
-</td>
-</tr>
-<tr>
-<td>
-<code>n</code>
-</td>
-<td>
-Repeat the last <code>/</code> or <code>?</code> command
-</td>
-</tr>
-<tr>
-<td>
-<code>N</code>
-</td>
-<td>
-Repeat the last <code>/</code> or <code>?</code> command in opposite direction
-</td>
-</tr>
-</table>
-
-<h2 id="toc_2.3">Deletion</h2>
-<table>
-<tr>
-<td>
-<code>x</code>
-</td>
-<td>
-Delete character <strong>forward</strong>(under cursor), and remain in normal mode
-</td>
-</tr>
-<tr>
-<td>
-<code>X</code>
-</td>
-<td>
-Delete character <strong>backward</strong>(before cursor), and remain in normal mode
-</td>
-</tr>
-<tr>
-<td>
-<code>r</code>
-</td>
-<td>
-Replace single character under cursor, and remain in normal mode
-</td>
-</tr>
-<tr>
-<td>
-<code>s</code>
-</td>
-<td>
-Delete single character under cursor, and <strong>switch</strong> to insert mode
-</td>
-</tr>
-<tr>
-<td>
-<code>dw</code>
-</td>
-<td>
-Delete a <strong>word</strong> forward
-</td>
-</tr>
-<tr>
-<td>
-<code>db</code>
-</td>
-<td>
-Delete a <strong>word</strong> backward
-</td>
-</tr>
-<tr>
-<td>
-<code>dd</code>
-</td>
-<td>
-Delete <strong>entire</strong> current line
-</td>
-</tr>
-<tr>
-<td>
-<code>D</code>
-</td>
-<td>
-Delete until end of line
-</td>
-</tr>
-</table>
-
-<h2 id="toc_2.4">Yank &amp; Put</h2>
-<table>
-<tr>
-<td>
-<code>y</code>
-</td>
-<td>
-Yank(copy)
-</td>
-</tr>
-<tr>
-<td>
-<code>yy</code>
-</td>
-<td>
-Yank current line
-</td>
-</tr>
-<tr>
-<td>
-<code>nyy</code>
-</td>
-<td>
-Yank <code>n</code> lines form current line
-</td>
-</tr>
-<tr>
-<td>
-<code>p</code>
-</td>
-<td>
-Put(paste) yanked text <strong>below</strong> current line
-</td>
-</tr>
-<tr>
-<td>
-<code>P</code>
-</td>
-<td>
-Put(paste) yanked text <strong>above</strong> current line
-</td>
-</tr>
-</table>
-
-<h2 id="toc_2.5">Insert Mode</h2>
-<table>
-<tr>
-<td>
-<code>i</code>
-</td>
-<td>
-Enter insert mode to the <strong>left</strong> of the cursor
-</td>
-</tr>
-<tr>
-<td>
-<code>a</code>
-</td>
-<td>
-Enter insert mode to the <strong>right</strong> of the cursor
-</td>
-</tr>
-<tr>
-<td>
-<code>o</code>
-</td>
-<td>
-Enter insert mode to the line <strong>below</strong> the current line
-</td>
-</tr>
-<tr>
-<td>
-<code>O</code>
-</td>
-<td>
-Enter insert mode to the line <strong>above</strong> the current line
-</td>
-</tr>
-</table>
-
-<h2 id="toc_2.6">Visual Mode</h2>
-<table>
-<tr>
-<td>
-<code>v</code>
-</td>
-<td>
-Enter visual mode, highlight characters
-</td>
-</tr>
-<tr>
-<td>
-<code>V</code>
-</td>
-<td>
-Enter visual mode, highlight lines
-</td>
-</tr>
-<tr>
-<td>
-<code>C-v</code>
-</td>
-<td>
-Enter visual mode, highlight block
-</td>
-</tr>
-</table>
-
-<h2 id="toc_2.7">Other</h2>
-<table>
-<tr>
-<td>
-<code>u</code>
-</td>
-<td>
-Undo
-</td>
-</tr>
-<tr>
-<td>
-<code>U</code>
-</td>
-<td>
-Undo all changes on current line
-</td>
-</tr>
-<tr>
-<td>
-<code>C-r</code>
-</td>
-<td>
-Redo
-</td>
-</tr>
-</table>
-
-
-<h2 id="toc_2.8">Read More</h2>
 <ul>
-<li>
-<a href="http://eastcoastefx.vaesite.com/vim">A handy guide to Vim shortcuts</a>
-
-<li>
-<a href="http://www.tuxfiles.org/linuxhelp/vimcheat.html">tuxfiles-vimcheat</a>
-
-<li>
-<a href="http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim">What is your most productive shortcut with Vim?</a>
-
+<li><code>Ch</code>  - Move <em>left</em></li>
+<li><code>j</code>  - Move <em>down</em></li>
+<li><code>k</code>  - Move <em>up</em></li>
+<li><code>l</code>  - Move <em>right</em></li>
+<li><code>0</code>  - Move to <em>beginging</em> of line</li>
+<li><code>$</code>  - Move to <em>end</em> of line</li>
+<li><code>gg</code> - Move to <em>first</em> line of file</li>
+<li><code>G</code>  - Move to <em>last</em> line of file</li>
+<li><code>w</code>  - Move <em>forward</em> to next word</li>
+<li><code>b</code>  - Move <em>backward</em> to next word</li>
 </ul>
 
+<h2>Search</h2>
 
-<p>
-&lt;HR&gt;
-</p>
+<ul>
+<li><code>*</code>     - Search <em>forward</em> for word under cursor</li>
+<li><code>#</code>     - Search <em>backward</em> for word under curor</li>
+<li><code>/word</code> - Search <em>forward</em> for <em>word</em>. Support <em>RE</em></li>
+<li><code>?word</code> - Search <em>backward</em> for <em>word</em>. Support <em>RE</em></li>
+<li><code>n</code>     - Repeat the last <code>/</code> or <code>?</code> command  </li>
+<li><code>N</code>     - Repeat the last <code>/</code> or <code>?</code> command in opposite direction</li>
+</ul>
 
-<h1 id="toc_3">技巧</h1>
-<h2 id="toc_3.1">shell多行注释</h2>
-<p>
-命令行模式下，注释掉line1与line2之间的行
-</p>
-<pre>
-line1,line2s/^/#/g
-</pre>
+<h2>Deletion</h2>
 
-<h2 id="toc_3.2">自动补全</h2>
-<p>
-Ctrl+n Ctrl+p
+<ul>
+<li><code>x</code>  - Delete character <em>forward</em>(under cursor), and remain in normal mode</li>
+<li><code>X</code>  - Delete character <em>backward</em>(before cursor), and remain in normal mode</li>
+<li><code>r</code>  - Replace single character under cursor, and remain in normal mode</li>
+<li><code>s</code>  - Delete single character under cursor, and <em>switch</em> to insert mode</li>
+<li><code>dw</code> - Delete a <em>word</em> forward</li>
+<li><code>db</code> - Delete a <em>word</em> backward</li>
+<li><code>dd</code> - Delete <em>entire</em> current line</li>
+<li><code>D</code>  - Delete until end of line</li>
+</ul>
+
+<h2>Yank &amp; Put</h2>
+
+<ul>
+<li><code>y</code>   - Yank(copy)</li>
+<li><code>yy</code>  - Yank current line</li>
+<li><code>nyy</code> - Yank <code>n</code> lines form current line</li>
+<li><code>p</code>   - Put(paste) yanked text <em>below</em> current line</li>
+<li><code>P</code>   - Put(paste) yanked text <em>above</em> current line</li>
+</ul>
+
+<h2>Insert Mode</h2>
+
+<ul>
+<li><code>i</code> - Enter insert mode to the <em>left</em> of the cursor</li>
+<li><code>a</code> - Enter insert mode to the <em>right</em> of the cursor</li>
+<li><code>o</code> - Enter insert mode to the line <em>below</em> the current line</li>
+<li><code>O</code> - Enter insert mode to the line <em>above</em> the current line</li>
+</ul>
+
+<h2>Visual Mode</h2>
+
+<ul>
+<li><code>v</code>   - Enter visual mode, highlight characters</li>
+<li><code>V</code>   - Enter visual mode, highlight lines</li>
+<li><code>C-v</code> - Enter visual mode, highlight block</li>
+</ul>
+
+<h2>Other</h2>
+
+<ul>
+<li><code>u</code>   - Undo</li>
+<li><code>U</code>   - Undo all changes on current line</li>
+<li><code>C-r</code> - Redo</li>
+</ul>
+
+<h2>Read More</h2>
+
+<ul>
+<li><a href="http://eastcoastefx.vaesite.com/vim">A handy guide to Vim shortcuts</a></li>
+<li><a href="http://www.tuxfiles.org/linuxhelp/vimcheat.html">tuxfiles-vimcheat</a></li>
+<li><a href="http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim">What is your most productive shortcut with Vim?</a></li>
+</ul>
+
+<p>C</p>
+
+<h1>技巧</h1>
+
+<h2>shell多行注释</h2>
+
+<p>命令行模式下，注释掉line1与line2之间的行</p>
+
+<pre><code>line1,line2s/^/#/g
+</code></pre>
+
+<h2>自动补全</h2>
+
+<pre><code>Ctrl+n Ctrl+p
 Ctrl+x Ctrl+?{....}
-</p>
+</code></pre>
 
-<h2 id="toc_3.3">左右分割打开help文档</h2>
-<p>
-默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便
-</p>
-<pre>
-:set spr
+<h2>左右分割打开help文档</h2>
+
+<p>默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便</p>
+
+<pre><code>:set spr
 :vert help xxx
-</pre>
+</code></pre>
 
-<h2 id="toc_3.4">逐个替换</h2>
-<p>
-一般情况下
-</p>
-<pre>
-:%s/old_str/new_str/g
-</pre>
-<p>
+<h2>逐个替换</h2>
+
+<p>一般情况下</p>
+
+<pre><code>:%s/old_str/new_str/g
+}}}
 是对old_str做全文替换，加上参数c可以逐个替换，这样可以对每一个再确认
-</p>
-<pre>
+{{{
 :%s/old_str/new_str/gc
-</pre>
+</code></pre>
 
-<h1 id="toc_4">修改历史</h1>
-<p>
-最后修改: 2013-05-28
-</p>
+<h1>修改历史</h1>
+
+<p>最后修改: 2013-05-28</p>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

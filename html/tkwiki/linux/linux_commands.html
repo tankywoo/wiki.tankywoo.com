@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Linux Comamnds @ TankyWoo's Wiki</title>
+		<title>Linux Commands @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -21,57 +20,44 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">Linux Comamnds</div>
+		<div id="title">Linux Commands</div>
+		
 		<div id="content">
-			
-<h1 id="toc_1">About This Page</h1>
-<pre>
-这里记录的是一些命令的常用方法
+
+<h1>Linux Comamnds</h1>
+
+<h1>About This Page</h1>
+
+<pre><code>这里记录的是一些命令的常用方法
 有些强大的命令会单独放在Tools(Command)目录下单独总结
 看**man手册**等才是王道
-</pre>
+</code></pre>
 
+<h1>文件传输命令</h1>
 
-<h1 id="toc_2">文件传输命令</h1>
-<p>
-<code>scp</code>
-</p>
-<pre>
-scp — secure copy (remote file copy program)
--p参数	将每个副本的修改时间、权限等与源文件保持一致
-</pre>
+<p><code>scp</code></p>
 
+<pre><code>scp — secure copy (remote file copy program)
+-p参数    将每个副本的修改时间、权限等与源文件保持一致
+</code></pre>
 
+<h1>系统磁盘管理命令</h1>
 
+<p><code>mount</code></p>
 
-<h1 id="toc_3">系统磁盘管理命令</h1>
-<p>
-<code>mount</code>
-</p>
+<p><a href="http://www.blogjava.net/decode360/archive/2009/07/30/289072.html">Linux的mount命令简介</a></p>
 
-<p>
-[<a href="http://www.blogjava.net/decode360/archive/2009/07/30/289072.html">http://www.blogjava.net/decode360/archive/2009/07/30/289072.html</a>  Linux的mount命令简介]
-</p>
+<p><code>df</code></p>
 
-<p>
-<code>df</code>
-</p>
+<p><code>du</code></p>
 
-<p>
-<code>du</code>
-</p>
+<h1>源</h1>
 
+<p><code>apt</code></p>
 
-<h1 id="toc_4">源</h1>
-<p>
-<code>apt</code>
-</p>
+<p><code>add-apt-repository</code></p>
 
-<p>
-<code>add-apt-repository</code>
-</p>
-<pre>
-add-apt-repository 是由 python-software-properties 这个工具包提供的,只有ubuntu 09.10之后版本支持
+<pre><code>add-apt-repository 是由 python-software-properties 这个工具包提供的,只有ubuntu 09.10之后版本支持
 add-apt-repository - Adds a repository into the /etc/apt/sources.list or /etc/apt/sources.list.d or removes an existing one
 这个命令是在ubuntu10.04安装nginx时遇到的，用于添加最新的nginx源
 格式：add-apt-repository [OPTIONS] REPOSITORY
@@ -81,123 +67,92 @@ In the first form, REPOSITORY will just be appended to /etc/apt/sources.list.
 In the second form, ppa:&lt;user&gt;/&lt;ppa-name&gt; will be expanded to the full deb line of the PPA and added into a new file in the /etc/apt/sources.list.d/ directory. 
 执行命令后要记得apt-get update
 eg.sudo add-apt-repository ppa:nginx/stable
-</pre>
+</code></pre>
 
-<p>
-<code>equery</code>
-</p>
-<pre>
-Gentoo的命令(Gentoo Package Query Tool)，用于查询Gentoo包的状态、文件、和USE标记
-</pre>
+<p><code>equery</code></p>
 
-<h1 id="toc_5">系统服务</h1>
+<pre><code>Gentoo的命令(Gentoo Package Query Tool)，用于查询Gentoo包的状态、文件、和USE标记
+</code></pre>
 
-<p>
-<code>chkconfig</code>
-</p>
+<h1>系统服务</h1>
 
-<p>
-<code>rc-update</code>
-</p>
+<p><code>chkconfig</code></p>
 
+<p><code>rc-update</code></p>
 
+<h1>网络命令</h1>
 
+<p><code>nc</code></p>
 
-<h1 id="toc_6">网络命令</h1>
-<p>
-<code>nc</code>
-</p>
-<pre>
-netcat
+<pre><code>netcat
 传输文件
 nc 192.168.2.100 8888 &lt; test.txt
 nc -l 8888 &gt; test.txt
 
 扫描主机的tcp端口
 nc -v -z -w2 localhost 20-30 #扫描20~30端口
-</pre>
+</code></pre>
 
+<p><code>traceroute</code></p>
 
-<p>
-<code>traceroute</code>
-</p>
-<pre>
-print the route packets trace to network host
+<pre><code>print the route packets trace to network host
 在NAT模式下traceroute都返回* * *
 可以使用ICMP包，发送ICMP包需要有一定的权限，可以用root
 sudo traceroute -I 192.168.1.100
-</pre>
+</code></pre>
 
-<p>
-<code>route</code>
-</p>
+<p><code>route</code></p>
 
+<p><code>iproute2</code></p>
 
-<p>
-<code>iproute2</code>
-</p>
-<pre>
-这是一个工具集
-</pre>
+<pre><code>这是一个工具集
+</code></pre>
 
-<p>
-<code>ipcalc</code>
-</p>
-<pre>
-计算给定IP地址的相关信息，包括掩码、广播地址等
-</pre>
+<p><code>ipcalc</code></p>
 
+<pre><code>计算给定IP地址的相关信息，包括掩码、广播地址等
+</code></pre>
 
-<p>
-<code>tcpdump</code>
-</p>
+<p><code>tcpdump</code></p>
 
-<p>
-<code>nscd</code>
-</p>
-<pre>
-name service cache daemon
+<p><code>nscd</code></p>
+
+<pre><code>name service cache daemon
 nscd -i xx # Invalidate the specified cache
-</pre>
+</code></pre>
 
-<h1 id="toc_7">查找</h1>
-<p>
-<code>grep</code>
-</p>
-<pre>
-在search_path路径下查找search_content内容
+<h1>查找</h1>
+
+<p><code>grep</code></p>
+
+<pre><code>在search_path路径下查找search_content内容
 grep search_content search_path -ri
-</pre>
+</code></pre>
 
-<h1 id="toc_8">其他</h1>
-<p>
-<code>convert</code>
-</p>
-<pre>
-这个命令是在一次需要压缩图片时用到了
+<h1>其他</h1>
+
+<p><code>convert</code></p>
+
+<pre><code>这个命令是在一次需要压缩图片时用到了
 e.g:
 convert -resize 50% input.jpg output.png
-</pre>
+</code></pre>
 
-<p>
-<code>chsh</code>
-</p>
-<pre>
-Change login shell
+<p><code>chsh</code></p>
+
+<pre><code>Change login shell
 更改当前用户的login shell
 所以这里先开始我用
 sudo chsh -s /bin/fish
 导致没有变化，因为修改的是root的shell
 另外，通过cat /etc/passwd可以看见
 其实就是修改了/etc/passwd的最后一个字段（login shell）
-</pre>
+</code></pre>
 
-<p>
-<code>xargs</code>
-<a href="http://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/">http://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/</a>
-</p>
-<pre>
-从标准输入获取数据,然后对数据执行命令
+<p><code>xargs</code>
+<a href="http://www.cyberciti.biz/faq/linux-unix-bsd-xargs-construct-argument-lists-utility/">xargs: How To Control and Use Command Line Arguments</a></p>
+
+<pre><code>从标准输入获取数据,然后对数据执行命令
 xargs从标准输入读取各个元素
 执行命令,默认是echo命令
 分隔符是空格或者换行符
@@ -207,40 +162,56 @@ xargs从标准输入读取各个元素
 -t 在执行前将命令行打印到STDERR
 -I 非常常用的一个参数，用来指定替换符，例子：
 $ find . -name "*.bak" -print0 | xargs -0 -I {} mv {} ~/old.files
-</pre>
+</code></pre>
 
-<p>
-<code>pgrep</code>
-</p>
-<pre>
-用于搜索服务的pid
-}}
+<p><code>pgrep</code></p>
 
-= History =
-begin at 2012/09/10
-</pre>
+<pre><code>用于搜索服务的pid
+</code></pre>
+
+<h1>History</h1>
+
+<p>begin at 2012/09/10</p>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

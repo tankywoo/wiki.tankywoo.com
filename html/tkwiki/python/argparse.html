@@ -7,10 +7,9 @@
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -22,47 +21,34 @@
 		<div class="clearfix">
 		</div>
 		<div id="title">argparse</div>
+		
 		<div id="content">
-			
 
-<p>
-最近在写Nagios的插件，因为一个插件会涉及到很多的命令行参数选项，所以argparse这个模块就大大的发挥了作用
-</p>
+<h1>argparse</h1>
 
-<p>
-在python 2.7以前是optparse，不过到了python 2.7，optparse已经不推荐了，官方新出了argparse
-</p>
+<p>最近在写Nagios的插件，因为一个插件会涉及到很多的命令行参数选项，所以argparse这个模块就大大的发挥了作用</p>
 
-<p>
-使用command-line parser要比sys.argv方便&amp;友好多了
-</p>
+<p>在python 2.7以前是optparse，不过到了python 2.7，optparse已经不推荐了，官方新出了argparse</p>
 
-<h1 id="toc_1">基本步骤</h1>
-<ol>
-<li>
-Creating a parser : <code>ArgumentParser</code>
+<p>使用command-line parser要比sys.argv方便&amp;友好多了</p>
 
-<li>
-Adding arguments : <code>add_argument</code>
+<h1>基本步骤</h1>
 
-<li>
-Parsing arguments : <code>parse_args</code>
+<ul>
+<li>Creating a parser : <code>ArgumentParser</code></li>
+<li>Adding arguments : <code>add_argument</code></li>
+<li>Parsing arguments : <code>parse_args</code></li>
+</ul>
 
-</ol>
+<h1>add_argument</h1>
 
+<h2>name or flags</h2>
 
-<h1 id="toc_2">add_argument</h1>
+<p>positional argument是什么意思？</p>
 
-<h2 id="toc_2.1">name or flags</h2>
-<p>
-positional argument是什么意思？
-</p>
+<p>example:</p>
 
-<p>
-example:
-</p>
-<pre>
-import argparse
+<pre><code>import argparse
 parser = argparse.ArgumentParser(description="argparse test")
 parser.add_argument('-f', '--foo')
 parser.add_argument('bar')
@@ -74,32 +60,24 @@ usage: test.py [-h] [-f FOO] bar
 
 argparse test
 
-positional arguments:	&lt;---注意这里
+positional arguments:   &lt;---注意这里
   bar
 
 optional arguments:
   -h, --help         show this help message and exit
   -f FOO, --foo FOO
 None
+</code></pre>
 
-</pre>
+<h2>action</h2>
 
-<h2 id="toc_2.2">action</h2>
-<p>
-这个参数用来设置保存
-</p>
+<p>这个参数用来设置保存</p>
 
-<p>
-默认是<code>store</code>，保存的是str类型
-</p>
+<p>默认是<code>store</code>，保存的是str类型</p>
 
-<p>
-其中<code>store_const</code>的用法见example:
-</p>
-<pre>
-xxx
-xxx
-import argparse
+<p>其中<code>store_const</code>的用法见example:</p>
+
+<pre><code>import argparse
 parser = argparse.ArgumentParser(description="argparse test")
 parser.add_argument('-f', '--foo', action='store_const', const=42)
 
@@ -108,31 +86,19 @@ print parser.parse_args(['-f'])
 &gt;&gt;&gt;
 $ python test.py
 Namespace(foo=42)
-</pre>
+</code></pre>
 
-<p>
-example中-w的store_const配合<code>const</code>来使用，如果有-w参数，则其值为42，不能指定值;如果没有-w参数，则其值是None
-</p>
+<p>example中-w的store_const配合<code>const</code>来使用，如果有-w参数，则其值为42，不能指定值;如果没有-w参数，则其值是None</p>
 
-<p>
-学过C/C++的就很好容易理解const这个的意义了
-</p>
+<p>学过C/C++的就很好容易理解const这个的意义了</p>
 
-<p>
-<code>store_true</code>和<code>store_false</code>这两个是用来保存boolean值的，不过容易搞混，可以写个test example来理解
-</p>
+<p><code>store_true</code>和<code>store_false</code>这两个是用来保存boolean值的，不过容易搞混，可以写个test example来理解</p>
 
-<p>
-TODO
-</p>
+<p><em>TODO</em></p>
 
-<p>
-<code>append</code>是附加，用于输入多个相同参数，example:
-</p>
-<pre>
-xxx
-xxx
-import argparse
+<p><code>append</code>是附加，用于输入多个相同参数，example:</p>
+
+<pre><code>import argparse
 parser = argparse.ArgumentParser(description="argparse test")
 parser.add_argument('-f', '--foo', action='append')
 
@@ -141,18 +107,13 @@ print parser.parse_args("-f 5 -f 8".split())
 &gt;&gt;&gt;
 $ python test.py
 Namespace(foo=['5', '8'])
-</pre>
-<p>
-如果不使用append，则-f的值只有8
-</p>
+</code></pre>
 
-<p>
-关于<code>append_const</code>，就是<code>append</code>和<code>const</code>的结合，example:
-</p>
-<pre>
-xxx
-xxxx
-import argparse
+<p>如果不使用append，则-f的值只有8</p>
+
+<p>关于<code>append_const</code>，就是<code>append</code>和<code>const</code>的结合，example:</p>
+
+<pre><code>import argparse
 parser = argparse.ArgumentParser(description="argparse test")
 parser.add_argument('--str', dest='types', action='append_const', const=str)
 parser.add_argument('--int', dest='types', action='append_const', const=int)
@@ -161,47 +122,32 @@ print parser.parse_args('--str --int'.split())
 &gt;&gt;&gt;
 $ python test.py
 Namespace(types=[&lt;type 'str'&gt;, &lt;type 'int'&gt;])
-</pre>
+</code></pre>
 
-<p>
-这个example很有意义
-</p>
+<p>这个example很有意义</p>
 
-<p>
-首先可以看到，两个add_argument的dest值是一样的，以前没注意到，这样也可以append
-</p>
+<p>首先可以看到，两个add_argument的dest值是一样的，以前没注意到，这样也可以append</p>
 
-<p>
-另外，const还可以是类型值
-</p>
+<p>另外，const还可以是类型值</p>
 
+<p><code>count</code>就是记录参数个数的值</p>
 
-<p>
-<code>count</code>就是记录参数个数的值
-</p>
+<p>还可以自定义help和version信息</p>
 
-<p>
-还可以自定义help和version信息
-</p>
+<h2>nargs</h2>
 
-<h2 id="toc_2.3">nargs</h2>
-<p>
-<code>nargs</code>指定某个参数后面要接的值得个数，有以下几个值可以使用
-</p>
+<p><code>nargs</code>指定某个参数后面要接的值得个数，有以下几个值可以使用</p>
 
-<p>
-<code>N(an integer)</code>	-	比如2，那么其后接的值的个数就必须是2个
-<code>?</code>	-	表示可以接0或1个值
-<code>*</code>	-	表示可以接0或多个值
-<code>+</code>	-	表示可以接1或多个值
-</p>
+<p><code>N(an integer)</code> -   比如2，那么其后接的值的个数就必须是2个
+<code>?</code> -   表示可以接0或1个值
+<code>*</code> -   表示可以接0或多个值
+<code>+</code> -   表示可以接1或多个值</p>
 
-<p>
-TODO
-<del>这个在与store_const混用要注意，本来store_const后面不能接值，但是比如和nargs='?'一起用后，则可以接1个值，example:</del>
-</p>
-<pre>
-import argparse
+<p><em>TODO</em></p>
+
+<p>这个在与<code>store_const</code>混用要注意，本来<code>store_const</code>后面不能接值，但是比如和nargs='?'一起用后，则可以接1个值，example:</p>
+
+<pre><code>import argparse
 parser = argparse.ArgumentParser(description="argparse test")
 parser.add_argument('-f', '--foo', nargs='?', const=42)
 
@@ -214,55 +160,38 @@ $ python test.py
 Namespace(foo=None)
 Namespace(foo=42)
 Namespace(foo='100')
-</pre>
+</code></pre>
 
-<h2 id="toc_2.4">const</h2>
-<p>
-这个是配合：
-</p>
+<h2>const</h2>
+
+<p>这个是配合：</p>
+
 <ul>
-<li>
-store_const或append_const
-
-<li>
-nargs='?'
-
+<li><code>store_const</code> 或 <code>append_const</code></li>
+<li>nargs='?'</li>
 </ul>
-<p>
-使用的
-</p>
 
-<p>
-具体还需要研究TODO
-</p>
+<p>使用的</p>
 
+<p>具体还需要研究 <em>TODO</em></p>
 
-<h2 id="toc_2.5">default</h2>
-<p>
-用于设置默认值
-</p>
+<h2>default</h2>
 
-<h2 id="toc_2.6">type</h2>
-<p>
-用于指定参数值的类型
-</p>
+<p>用于设置默认值</p>
 
-<h2 id="toc_2.7">choices</h2>
-<p>
-用于限定参数的值的范围
-</p>
+<h2>type</h2>
 
-<p>
-比如choice = ['a', 'b', 'c']则参数只能在这几个中选择
-</p>
+<p>用于指定参数值的类型</p>
 
-<p>
-example:
-</p>
-<pre>
-xxx
-xxx
-import argparse
+<h2>choices</h2>
+
+<p>用于限定参数的值的范围</p>
+
+<p>比如choice = ['a', 'b', 'c']则参数只能在这几个中选择</p>
+
+<p>example:</p>
+
+<pre><code>import argparse
 parser = argparse.ArgumentParser(description="argparse test")
 parser.add_argument('-f', '--foo', choices=['a', 'b', 'c'])
 
@@ -272,33 +201,25 @@ print parser.parse_args("-f d".split())
 $ python test.py
 usage: test.py [-h] [-f {a,b,c}]
 test.py: error: argument -f/--foo: invalid choice: 'd' (choose from 'a', 'b', 'c')
-</pre>
+</code></pre>
 
+<h2>required</h2>
 
-<h2 id="toc_2.8">required</h2>
-<p>
-表明这个参数是必须写的
-</p>
+<p>表明这个参数是必须写的</p>
 
-<h2 id="toc_2.9">dest</h2>
-<p>
-用于指定存储参数值的变量名
-</p>
+<h2>dest</h2>
 
-<h2 id="toc_2.10">metavar</h2>
-<p>
-不写此参数时，help信息会自动成成usage的命令行格式
-</p>
+<p>用于指定存储参数值的变量名</p>
 
-<p>
-metavar可以修改help信息中的命令行的参数
-</p>
+<h2>metavar</h2>
 
-<p>
-example:
-</p>
-<pre>
-import argparse
+<p>不写此参数时，help信息会自动成成usage的命令行格式</p>
+
+<p>metavar可以修改help信息中的命令行的参数</p>
+
+<p>example:</p>
+
+<pre><code>import argparse
 parser = argparse.ArgumentParser(description="argparse test")
 parser.add_argument('-f', '--foo')
 parser.add_argument('-w', '--woo', metavar='hello')
@@ -307,48 +228,62 @@ print parser.print_usage()
 
 &gt;&gt;&gt;
 $ python test.py
-usage: test.py [-h] [-f FOO] [-w hello]	&lt;--- 这里-w后面就不是WOO了，而是hello
+usage: test.py [-h] [-f FOO] [-w hello] &lt;--- 这里-w后面就不是WOO了，而是hello
 None
-</pre>
+</code></pre>
 
+<h1>Read More</h1>
 
-<h1 id="toc_3">Read More</h1>
-<p>
-<a href="http://docs.python.org/2/library/argparse.html">python doc -- argparse</a>
-<a href="http://www.doughellmann.com/PyMOTW/argparse/">PyMOTW -- argparse</a>
-</p>
+<ul>
+<li><a href="http://docs.python.org/2/library/argparse.html">python doc -- argparse</a></li>
+<li><a href="http://www.doughellmann.com/PyMOTW/argparse/">PyMOTW -- argparse</a></li>
+</ul>
 
+<h1>History</h1>
 
-<h1 id="toc_4" class="justcenter">History</h1>
-<p>
-Create 2013/02/07
-</p>
+<p>Create 2013/02/07</p>
 
-<p>
-Last modified 2013/02/07
-</p>
+<p>Last modified 2013/02/07</p>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

@@ -7,10 +7,9 @@
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -22,180 +21,116 @@
 		<div class="clearfix">
 		</div>
 		<div id="title">Git</div>
+		
 		<div id="content">
-			
-<h1>目录</h1>
-<div class="toc">
-<ul>
-<li><a href="#toc_1">给git输出信息增加颜色</a>
-<li><a href="#toc_2">关于Git的分支</a>
-<li><a href="#toc_3">远程分支</a>
-<ul>
-<li><a href="#toc_3.1">关于fetch和pull区别</a>
-</ul>
-<li><a href="#toc_4">Git标签</a>
-<li><a href="#toc_5">Git 全局配置</a>
-<li><a href="#toc_6">使用vimdiff</a>
-<li><a href="#toc_7">查看提交log</a>
-<li><a href="#toc_8">Git资料</a>
-<li><a href="#toc_9">修改历史</a>
-</ul>
-</div>
 
-<p>
-<code>NOTE</code>:git的help信息非常好，很多可以直接help来了解
-</p>
+<p><strong>NOTE</strong>: git的<code>help</code>信息非常好，很多可以直接help来了解</p>
 
-<h1 id="toc_1">给git输出信息增加颜色</h1>
-<p>
-编辑<code>/etc/gitconfig</code>
-比如要对git status设置颜色，可以:
-</p>
-<pre>
-[color]
-	ui = auto
+<h1>给git输出信息增加颜色</h1>
+
+<p>编辑<code>/etc/gitconfig</code>
+比如要对git status设置颜色，可以:</p>
+
+<pre><code>[color]
+    ui = auto
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+    current = yellow reverse
+    local = yellow
+    remote = green
 [color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
-</pre>
+    added = yellow
+    changed = green
+    untracked = cyan
+</code></pre>
 
-<p>
-参考: <a href="http://stackoverflow.com/questions/12255028/how-to-show-git-colors-on-zsh">Ref1</a>
-<a href="http://stackoverflow.com/questions/8131322/enabling-git-syntax-highlighting-for-macs-terminal">Ref2</a>
-<a href="http://nathanhoad.net/how-to-colours-in-git">Ref3</a>
-</p>
+<p>参考:</p>
 
-
-<h1 id="toc_2">关于Git的分支</h1>
-<p>
-参考的<a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">何谓分支</a>
-</p>
-
-<p>
-因为git是保存的快照，Git仓库有以下几个基本对象
-</p>
 <ul>
-<li>
-<code>blob</code>对象用于表示文件快照内容
-
-<li>
-<code>tree</code>对象记录目录树内容和各个文件对应的blob对象索引
-
-<li>
-<code>commit</code>对象记录提交信息，指向tree对象或其他commit对象
-
+<li><a href="http://stackoverflow.com/questions/12255028/how-to-show-git-colors-on-zsh">How to show git colors on zsh</a></li>
+<li><a href="http://stackoverflow.com/questions/8131322/enabling-git-syntax-highlighting-for-macs-terminal">Enabling git syntax highlighting for macs terminal</a></li>
+<li><a href="http://nathanhoad.net/how-to-colours-in-git">How to colours in git</a></li>
 </ul>
 
-<p>
-Git的分支，其本质是一个指向commit对象的可变<code>指针</code>，git使用<code>master</code>作为分支的默认名字
-</p>
+<h1>关于Git的分支</h1>
 
-<p>
-<code>HEAD</code>指针指向当前的分支指针
-</p>
+<p>参考的 <a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">何谓分支</a></p>
 
-<p>
-使用<code>git branch</code>是查看当前的分支列表
-</p>
+<p>因为git是保存的快照，Git仓库有以下几个基本对象</p>
 
-<p>
-使用<code>git branch branch_name</code>新建分支，然后可以使用<code>git checkout branch_name</code>切换分支
-</p>
+<ul>
+<li><code>blob</code> 对象用于表示文件快照内容</li>
+<li><code>tree</code> 对象记录目录树内容和各个文件对应的blob对象索引</li>
+<li><code>commit</code> 对象记录提交信息，指向tree对象或其他commit对象</li>
+</ul>
 
-<p>
-最后可以用<code>git merge branch_name</code>来合并分支
-</p>
+<p>Git的分支，其本质是一个指向commit对象的可变<code>指针</code>，git使用<code>master</code>作为分支的默认名字</p>
 
-<p>
-如果遇到冲突，需要到冲突的文件下根据提示编辑后再commit
-</p>
+<p><code>HEAD</code>指针指向当前的分支指针</p>
 
-<h1 id="toc_3">远程分支</h1>
-<p>
-参考的<a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">远程分支</a>
-</p>
+<p>使用<code>git branch</code>是查看当前的分支列表</p>
 
-<p>
-从远程git repo克隆，Git会自动将此remote repo命名为<code>origin</code>，并下载其中所有的数据，建立一个指向它的<code>master</code>分支的指针，在本地命名为<code>origin/master</code>
-</p>
+<p>使用<code>git branch branch_name</code>新建分支，然后可以使用<code>git checkout branch_name</code>切换分支</p>
 
-<p>
-但无法在本地更改其数据。接着，Git建立一个属于自己的本地<code>master</code>分支，始于<code>origin</code>上<code>master</code>分支相同的位置，这样可以就此开始工作
-</p>
-<pre>
-touch README.md
+<p>最后可以用<code>git merge branch_name</code>来合并分支</p>
+
+<p>如果遇到冲突，需要到冲突的文件下根据提示编辑后再commit</p>
+
+<h1>远程分支</h1>
+
+<p>参考的 <a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">远程分支</a></p>
+
+<p>从远程git repo克隆，Git会自动将此remote repo命名为<code>origin</code>，并下载其中所有的数据，建立一个指向它的<code>master</code>分支的指针，在本地命名为<code>origin/master</code></p>
+
+<p>但无法在本地更改其数据。接着，Git建立一个属于自己的本地<code>master</code>分支，始于<code>origin</code>上<code>master</code>分支相同的位置，这样可以就此开始工作</p>
+
+<pre><code>touch README.md
 git init
 git add README.md
 git commit -m "first commit"
 git remote add origin git@github.com:tankywoo/test.git
 git push -u origin master
-</pre>
-<p>
-这里origin是remote repo name，branch name 是master
-</p>
+</code></pre>
 
-<h2 id="toc_3.1">关于fetch和pull区别</h2>
-<p>
-What is <code>git fetch</code>? and what is the difference to <code>git pull</code>?
-</p>
+<p>这里origin是remote repo name，branch name 是master</p>
 
-<p>
-<code>git fetch</code>是update from remote repo，但是不合并
-</p>
+<h2>关于fetch和pull区别</h2>
 
-<p>
-<code>git pull</code>是fetch and merge
-</p>
+<p>What is <code>git fetch</code>? and what is the difference to <code>git pull</code>?</p>
 
-<h1 id="toc_4">Git标签</h1>
+<p><code>git fetch</code>是update from remote repo，但是不合并</p>
+
+<p><code>git pull</code>是fetch and merge</p>
+
+<h1>Git标签</h1>
+
 <ul>
-<li>
-含附注的标签(annotated)
-
-<li>
-轻量级标签(lightweight)
-
+<li>含附注的标签(annotated)</li>
+<li>轻量级标签(lightweight)</li>
 </ul>
 
-<p>
-<a href="http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE">2.6 Git 基础 - 打标签</a>
-</p>
+<p><a href="http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE">2.6 Git 基础 - 打标签</a></p>
 
+<h1>Git 全局配置</h1>
 
-<h1 id="toc_5">Git 全局配置</h1>
-<p>
-全局忽略文件
-</p>
+<p>全局忽略文件</p>
+
 <ul>
-<li>
-<a href="http://git-scm.com/book/zh/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-%E9%85%8D%E7%BD%AE-Git">Ref1</a>
-
-<li>
-<a href="https://github.com/GitHub/gitignore">Ref2</a>
-
+<li><a href="http://git-scm.com/book/zh/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-%E9%85%8D%E7%BD%AE-Git">忽略文件</a></li>
+<li><a href="https://github.com/GitHub/gitignore">git ignore repo</a></li>
 </ul>
 
-<h1 id="toc_6">使用vimdiff</h1>
-<p>
-默认的diff应该是使用diff命令, 这个命令也非常有必要掌握.
-</p>
+<h1>使用vimdiff</h1>
 
-<p>
-但是, 更直观的, 可以选择vimdiff.
-</p>
+<p>默认的diff应该是使用diff命令, 这个命令也非常有必要掌握.</p>
 
-<pre>
-# 配置git使用vimdiff来做差异比较
+<p>但是, 更直观的, 可以选择vimdiff.</p>
+
+<pre><code># 配置git使用vimdiff来做差异比较
 git config --global diff.tool vimdiff
 # 在merge时使用
 git config --global merge.tool vimdiff
@@ -204,100 +139,95 @@ git config --global merge.tool vimdiff
 # Launch 'vimdiff' [Y/n]: y
 # 可以取消这个提示
 git config --global difftool.prompt false
-</pre>
+</code></pre>
 
-<p>
-然后就可以
-</p>
-<pre>
-git difftool tkwiki/tool/git.wiki
-</pre>
-<p>
-来查看修改的地方, 效果图:
-<img src="http://wutianqi-wiki.b0.upaiyun.com/git_vimdiff.png" />
-</p>
+<p>然后就可以</p>
 
-<p>
-参考:
-</p>
+<pre><code>git difftool tkwiki/tool/git.wiki
+</code></pre>
+
+<p>来查看修改的地方, 效果图:</p>
+
+<p><img src="http://wutianqi-wiki.b0.upaiyun.com/git_vimdiff.png" alt="git vimdiff" /></p>
+
+<p>参考:</p>
+
 <ul>
-<li>
-<a href="http://usevim.com/2012/03/21/git-and-vimdiff/">Git and Vimdiff</a>
-
-<li>
-<a href="http://agileadam.com/using-vimdiff-git">Using Vimdiff with Git</a>
-
+<li><a href="http://usevim.com/2012/03/21/git-and-vimdiff/">Git and Vimdiff</a></li>
+<li><a href="http://agileadam.com/using-vimdiff-git">Using Vimdiff with Git</a></li>
 </ul>
 
-<h1 id="toc_7">查看提交log</h1>
+<h1>查看提交log</h1>
 
-<p>
-git log 会查看当前git repo里所有的提交历史
-</p>
+<p>git log 会查看当前git repo里所有的提交历史</p>
 
-<p>
-git log filename 会查看这个文件的所有提交历史
-</p>
+<p>git log filename 会查看这个文件的所有提交历史</p>
 
-<p>
-git log -p -2 [filename] 会把最近的2次提交变更展开
-</p>
+<p>git log -p -2 [filename] 会把最近的2次提交变更展开</p>
 
-<p>
-git log --pretty=oneline [filename] 这个太牛逼了, 只显示id和提交说明.
-</p>
+<p>git log --pretty=oneline [filename] 这个太牛逼了, 只显示id和提交说明.</p>
 
-<p>
-git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格式
-</p>
+<p>git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格式</p>
 
-<p>
-参考:
-</p>
+<p>参考:</p>
+
 <ul>
-<li>
-<a href="http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2">查看提交历史</a>
-
+<li><a href="http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2">查看提交历史</a></li>
 </ul>
 
+<h1>Git资料</h1>
 
-<h1 id="toc_8">Git资料</h1>
 <ul>
-<li>
-<a href="http://git-scm.com/book/zh">ProGit中文版</a>
-
-<li>
-<a href="http://gitref.org/">Git Reference</a>
-
+<li><a href="http://git-scm.com/book/zh">ProGit中文版</a></li>
+<li><a href="http://gitref.org/">Git Reference</a></li>
 </ul>
 
-<h1 id="toc_9">修改历史</h1>
-<p>
-创建于: 2013/02/07<br>
-最后修改: 2013/06/04
-</p>
+<h1>修改历史</h1>
+
+<ul>
+<li>2013-02-07 : 创建</li>
+<li>2013-06-04 : git使用vimdiff</li>
+</ul>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

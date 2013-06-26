@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>nc(netcat) @ TankyWoo's Wiki</title>
+		<title>nc(Netcat) @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -21,48 +20,32 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">nc(netcat)</div>
+		<div id="title">nc(Netcat)</div>
+		
 		<div id="content">
-			
 
-<p>
-TCP/IP swiss army knife
-</p>
+<p>TCP/IP swiss army knife</p>
 
-<h1 id="toc_1">Argument</h1>
+<h1>Argument</h1>
 
-<h2 id="toc_1.1">-l</h2>
-<p>
-listen mode. can be used as server
-&gt;&gt; nc -l -p 9999	# listen to port 9999
-</p>
+<p><code>-l</code> : listen mode. can be used as server</p>
 
-<p>
-NOTE: TODO, not for sure
-</p>
+<pre><code>&gt;&gt; nc -l -p 9999    # listen to port 9999
+</code></pre>
 
-<h2 id="toc_1.2">-p</h2>
-<p>
-local port num(port numbers can be individual or ranges: lo-hi [inclusive])
-</p>
+<p>NOTE: TODO, not for sure</p>
 
-<h2 id="toc_1.3">-v/-vv</h2>
-<p>
-verbose information
-</p>
+<p><code>-p</code> : local port num(port numbers can be individual or ranges: lo-hi [inclusive])</p>
 
-<h2 id="toc_1.4">-z</h2>
-<p>
-zero-I/O mode [used for scanning]
-</p>
+<p><code>-v/-vv</code> : verbose information</p>
 
-<p>
-NOTE: what is the meaning of <code>zero-IO</code>?
-</p>
+<p><code>-z</code> : zero-I/O mode [used for scanning]</p>
 
-<h1 id="toc_2">Example</h1>
-<pre>
-# Transfer file
+<p>NOTE: what is the meaning of <code>zero-IO</code>?</p>
+
+<h1>Example</h1>
+
+<pre><code># Transfer file
 # Server
 &gt;&gt; nc -l -p 9999 &lt; getfile.txt
 
@@ -76,43 +59,57 @@ $ nc -v -z localhost 20-100
 &gt;&gt;
 localhost [127.0.0.1] 80 (http) open
 localhost [127.0.0.1] 22 (ssh) open
-</pre>
+</code></pre>
 
+<h1>Read More</h1>
 
-<h1 id="toc_3">Read More</h1>
-<ol>
-<li>
-[<a href="http://www.thegeekstuff.com/2012/04/nc-command-examples/">http://www.thegeekstuff.com/2012/04/nc-command-examples/</a> 8 Practical Linux Netcat NC Command Examples]
+<ul>
+<li><a href="http://www.thegeekstuff.com/2012/04/nc-command-examples/">8 Practical Linux Netcat NC Command Examples</a></li>
+</ul>
 
-</ol>
+<h1>History</h1>
 
+<p>Create 2013/01/13</p>
 
-<h1 id="toc_4">History</h1>
-<p>
-Create 2013/01/13
-</p>
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

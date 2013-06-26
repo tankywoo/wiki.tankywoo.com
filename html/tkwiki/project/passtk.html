@@ -7,10 +7,9 @@
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -22,25 +21,24 @@
 		<div class="clearfix">
 		</div>
 		<div id="title">Passtk</div>
+		
 		<div id="content">
-			
 
-<h1 id="toc_1">What is it?</h1>
-<p>
-Passtk is a <code>python</code> script that can generate a <code>random</code> password
-</p>
+<h1>Passtk</h1>
 
-<h1 id="toc_2">Home Page</h1>
-<p>
-<a href="https://github.com/tankywoo/passtk">https://github.com/tankywoo/passtk</a>
-</p>
+<h1>What is it?</h1>
 
-<h1 id="toc_3">Usage</h1>
-<p>
-It can specified the level and the length of the password
-</p>
-<pre>
-usage: passtk [-h] [-l LEVEL] [-n LENGTH]
+<p>Passtk is a <code>python</code> script that can generate a <code>random</code> password</p>
+
+<h1>Home Page</h1>
+
+<p><a href="https://github.com/tankywoo/passtk">https://github.com/tankywoo/passtk</a></p>
+
+<h1>Usage</h1>
+
+<p>It can specified the level and the length of the password</p>
+
+<pre><code>usage: passtk [-h] [-l LEVEL] [-n LENGTH]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -49,94 +47,87 @@ optional arguments:
                         is complex
   -n LENGTH, --length LENGTH
                         The length of the password
-</pre>
+</code></pre>
 
+<h1>Setup</h1>
 
-<h1 id="toc_4">Setup</h1>
-<p>
-Use it in your Unix/Linux system:
-</p>
-<pre>
-sudo cp passtk.py /usr/bin/passtk
-</pre>
-<p>
-And then you can use <code>passtk</code> command to use it.
-</p>
+<p>Use it in your Unix/Linux system:</p>
 
-<h1 id="toc_5"><strong>Thought</strong></h1>
-<p>
-I have seen many projects like this, but most of them don't have real randomness.
-</p>
+<pre><code>sudo cp passtk.py /usr/bin/passtk
+</code></pre>
 
-<p>
-Such as:
-</p>
+<p>And then you can use <code>passtk</code> command to use it.</p>
 
-<p>
-A project has the same functions with mine. 
-</p>
+<h1>Thought</h1>
 
-<p>
-And it has three levels, the third level is the most higher, and can generate the complex password
-</p>
+<p>I have seen many projects like this, but most of them don't have real randomness.</p>
 
-<p>
-He use
-</p>
-<pre>
-$ random.sample((string.letters + string.digits + string.punctuation), pwd_length)
-</pre>
-<p>
-But This way can't ensure the randomness.
-</p>
+<p>Such as:</p>
 
-<p>
-Maybe the generated password(the pwd_length characters) are all digits, or others
-</p>
+<p>A project has the same functions with mine. </p>
 
-<p>
-And another reason is that random.sample function returns a set(unique)
-</p>
+<p>And it has three levels, the third level is the most higher, and can generate the complex password</p>
 
-<p>
-But, my <code>Passtk</code> can ensure the randomness
-</p>
+<p>He use</p>
 
-<p>
-If it is the third level, the password will certainly include letters, digits and punctuation,
-</p>
+<pre><code>$ random.sample((string.letters + string.digits + string.punctuation), pwd_length)
+</code></pre>
 
-<p>
-and the numbers of them will also be random
-</p>
+<p>But This way can't ensure the randomness.</p>
 
+<p>Maybe the generated password(the pwd_length characters) are all digits, or others</p>
 
-<h1 id="toc_6">License</h1>
-<p>
-MIT License
-</p>
+<p>And another reason is that random.sample function returns a set(unique)</p>
+
+<p>But, my <code>Passtk</code> can ensure the randomness</p>
+
+<p>If it is the third level, the password will certainly include letters, digits and punctuation,</p>
+
+<p>and the numbers of them will also be random</p>
+
+<h1>License</h1>
+
+<p>MIT License</p>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>

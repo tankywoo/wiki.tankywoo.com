@@ -2,15 +2,14 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>RUID EUID SUID介绍 @ TankyWoo's Wiki</title>
+		<title>RUID/EUID/SUID @ TankyWoo's Wiki</title>
 		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
 		<meta name="description" content="A wiki about Linux, Python, and so on"/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-        <a href="https://github.com/tankywoo/wiki"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
-
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
 	</head>
+
 	<body>
 		<div id="header">
 			<ul>
@@ -21,173 +20,143 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">RUID EUID SUID介绍</div>
+		<div id="title">RUID/EUID/SUID</div>
+		
 		<div id="content">
-			
 
-<p>
-参考:<a href="http://blog.cykerway.com/post/396">UID/EUID/SUID</a>
-</p>
+<h1>RUID EUID SUID介绍</h1>
+
+<p>参考: <a href="http://blog.cykerway.com/post/396">UID/EUID/SUID</a></p>
 
 <ul>
-<li>
-<code>Real user ID(RUID)</code> - Login时所用的ID，表示用户的真实身份
-
-<li>
-<code>Effective user ID(EUID)</code> - 有效ID，执行各种操作，进行权限检查，创建文件、目录时所用的ID
-
-<li>
-<code>Saved set-user ID(SUID)</code> - 执行具有setuid位的程序时用于保存该程序文件的属主ID
-
+<li><code>Real user ID(RUID)</code> - Login时所用的ID，表示用户的真实身份</li>
+<li><code>Effective user ID(EUID)</code> - 有效ID，执行各种操作，进行权限检查，创建文件、目录时所用的ID</li>
+<li><code>Saved set-user ID(SUID)</code> - 执行具有setuid位的程序时用于保存该程序文件的属主ID</li>
 </ul>
 
-<p>
-先介绍SUID，修改密码时，会用到<code>passwd</code>命令，修改的文件是<code>/etc/shadown</code>
-</p>
-<pre>
-root@gentoo ~ # ll /etc/shadow
+<p>先介绍SUID，修改密码时，会用到<code>passwd</code>命令，修改的文件是<code>/etc/shadown</code></p>
+
+<pre><code>root@gentoo ~ # ll /etc/shadow
 -rw-r----- 1 root root 663 Feb 16 10:02 /etc/shadow
-</pre>
-<p>
-可以看到owner/group都是root
-</p>
+</code></pre>
 
-<p>
-但是为什么任何用户都可以修改自己密码，这就是SUID的作用
-</p>
+<p>可以看到owner/group都是root</p>
 
-<p>
-修改密码的命令<code>passwd</code>，路径<code>/bin/passwd</code>
-</p>
-<pre>
-root@gentoo-gs ~ # ll /bin/passwd
+<p>但是为什么任何用户都可以修改自己密码，这就是SUID的作用</p>
+
+<p>修改密码的命令<code>passwd</code>，路径<code>/bin/passwd</code></p>
+
+<pre><code>root@gentoo-gs ~ # ll /bin/passwd
 -rws--x--x 1 root root 42592 Sep 17 13:20 /bin/passwd
-</pre>
-<p>
-可以看到，owner得x权限位置不是x，而是s，这就是suid权限
-</p>
+</code></pre>
 
-<p>
-至于SUID的详细作用，Google之[TODO]
-</p>
+<p>可以看到，owner得x权限位置不是x，而是s，这就是suid权限</p>
 
+<p>至于SUID的详细作用，Google之</p>
 
-<p>
-接下来谈RUID和EUID
-</p>
+<p>接下来谈RUID和EUID</p>
 
-<p>
-RUID就是实际登陆时的UID，可以通过<code>id</code>命令来获取
-</p>
-<pre>
-$ man id
+<p>RUID就是实际登陆时的UID，可以通过<code>id</code>命令来获取</p>
+
+<pre><code>$ man id
 id - print real and effective user and group IDs
 
 $ id -run
 root
-</pre>
+</code></pre>
 
-<p>
-而EUID是实际起作用的UID
-</p>
-<pre>
-$ id -un
+<p>而EUID是实际起作用的UID</p>
+
+<pre><code>$ id -un
 root
 
 或者
 
 $ whoami
-</pre>
+</code></pre>
 
-<p>
-NOTE：这里在看<code>man id</code>时，
-</p>
-<pre>
--n, --name
-	  print a name instead of a number, for -ugG
+<p>NOTE：这里在看<code>man id</code>时，</p>
+
+<pre><code>-n, --name
+      print a name instead of a number, for -ugG
 
 -r, --real
-	  print the real ID instead of the effective ID, with -ugG
+      print the real ID instead of the effective ID, with -ugG
 
 -u, --user
-	  print only the effective user ID
-</pre>
-<p>
-先开始我使用
-</p>
-<pre>
-$ id -r
+      print only the effective user ID
+</code></pre>
+
+<p>先开始我使用</p>
+
+<pre><code>$ id -r
 id: cannot print only names or real IDs in default format
-</pre>
-<p>
-后来发现上面已经写了，<code>with -ugG</code>，意思就是要配合<code>ugG</code>这三个使用
-</p>
+</code></pre>
 
-<p>
-<code>-ru</code>就是使用read uid代替effective uid，先开始没注意，以为用<code>-r</code>就可以了
-</p>
+<p>后来发现上面已经写了，<code>with -ugG</code>，意思就是要配合<code>ugG</code>这三个使用</p>
 
-<p>
-不过这里感觉确实怪怪的，不如直接用<code>-r</code>就可以获取read uid方便
-</p>
+<p><code>-ru</code>就是使用read uid代替effective uid，先开始没注意，以为用<code>-r</code>就可以了</p>
 
+<p>不过这里感觉确实怪怪的，不如直接用<code>-r</code>就可以获取read uid方便</p>
 
-<p>
-一般情况下，RUID == EUID<br />
-但是遇到比如上面距离的passwd，则就不同了，具体过程[TODO]
-</p>
+<p>一般情况下，RUID == EUID <br />
+但是遇到比如上面距离的passwd，则就不同了，具体过程[TODO]</p>
 
+<h1>Read More</h1>
 
-<h1 id="toc_1">Read More</h1>
 <ul>
-<li>
-<a href="http://centoscert.com/content/what-gid-what-euid-what-suid-what-ruid">http://centoscert.com/content/what-gid-what-euid-what-suid-what-ruid</a>
-
-<li>
-<a href="http://blog.csdn.net/guosha/article/details/2679334">http://blog.csdn.net/guosha/article/details/2679334</a>
-
-<li>
-<a href="http://en.allexperts.com/q/Unix-Linux-OS-1064/real-effective-user-id.htm">http://en.allexperts.com/q/Unix-Linux-OS-1064/real-effective-user-id.htm</a>
-
-<li>
-<a href="http://www.makelinux.net/alp/083">http://www.makelinux.net/alp/083</a>
-
-<li>
-<a href="http://www.cyberciti.biz/tips/linux-more-on-user-id-password-and-group-management.html">Linux &gt; More on USER ID, Password, and Group management</a>(*)
-
+<li><a href="http://centoscert.com/content/what-gid-what-euid-what-suid-what-ruid">What is GID? What is EUID? What is SUID? What is RUID?</a></li>
+<li><a href="http://blog.csdn.net/guosha/article/details/2679334">实际用户ID，有效用户ID及设置用户ID</a></li>
+<li><a href="http://en.allexperts.com/q/Unix-Linux-OS-1064/real-effective-user-id.htm">real and effective user id</a></li>
+<li><a href="http://www.makelinux.net/alp/083">Real and Effective IDs</a></li>
+<li><a href="http://www.cyberciti.biz/tips/linux-more-on-user-id-password-and-group-management.html">Linux &gt; More on USER ID, Password, and Group management</a>(*)</li>
 </ul>
 
+<h1>History</h1>
 
-<h1 id="toc_2">History</h1>
-<p>
-Create 2013/02/16
-</p>
+<p>Create 2013/02/16</p>
 
-<p>
-Modify 2013/02/16
-</p>
+<p>Modify 2013/02/16</p>
+
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
-			<span class="">Copyright © 2012 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
-				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://code.google.com/p/vimwiki/" target="_blank">Vimwiki</a>
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
 			</span>
 		</div>
 	</body>
-	
+
 	<!-- add _blank to outer links -->
 	<script type="text/javascript">
 	$("a[href^='http://']").each(function(){
 			this.target = "_blank";
 	});
-
 	$("a[href^='https://']").each(function(){
 			this.target = "_blank";
 	});
-
-	$('h2').prepend('>> ')
-	$('h3').prepend('>>> ')
-
 	</script>
 </html>
