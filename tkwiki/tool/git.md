@@ -1,4 +1,4 @@
-`NOTE`:git的help信息非常好，很多可以直接help来了解
+**NOTE**: git的`help`信息非常好，很多可以直接help来了解
 
 # 给git输出信息增加颜色 #
 
@@ -20,7 +20,6 @@
 		added = yellow
 		changed = green
 		untracked = cyan
-
 
 参考:
 
@@ -144,5 +143,5 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 
 # 修改历史 #
 
-创建于: 2013/02/07  
-最后修改: 2013/06/04
+* 2013-02-07 : 创建
+* 2013-06-04 : git使用vimdiff
