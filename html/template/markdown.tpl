@@ -28,6 +28,21 @@
 
 		</div>
 
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
 		<div id="footer">
 			<span class="">Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a> 
 				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>
