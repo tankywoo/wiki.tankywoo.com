@@ -73,6 +73,9 @@ articles = {
         'iftop' : {
             'title' : 'iftop',
          },
+        'bwm-ng' : {
+            'title' : 'bwm-ng',
+         },
         'git' : {
             'title' : 'Git',
          },
