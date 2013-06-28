@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>host @ Tanky Woo's Wiki</title>
+		<meta name="keywords" content="Tanky Woo, wiki, makrdown, linux, python, cpp, ops"/>
+		<meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+	</head>
+
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">host</div>
+		
+		<div id="content">
+
+<h1>host</h1>
+
+<p>host - DNS lookup utility</p>
+
+<p>host 命令式一个查询dns的小工具. 它可以通过域名查询ip, 或者相反.</p>
+
+<h1>基本方法</h1>
+
+<pre><code>host name/ip [server]
+
+# 通过域名查询地址
+host domainname
+
+# 通过ip地址反向查询域名 **TODO**
+host ipaddress
+
+# 指定ns服务器, 这样就不会从/etc/resolv.conf下查询ns
+host domainname ns
+</code></pre>
+
+<h1>参数</h1>
+
+<p><code>-a</code> - 相当于指定了<code>-v</code>并查询<code>ANY</code>类型
+<code>-t</code> - 后面接查询的指定类型(CNAME, NS, SOA, SIG, KEY, AXFR, etc). 当没有指定类型时, host会自动选择合适的查询类型, 默认是 A, AAAA, MX 类型. 如果使用了<code>-C</code>参数, 显然会查询<code>SOA</code>记录. 如果<code>name</code>是ip, 则会查询<code>PTR</code>类型.</p>
+
+
+		</div>
+
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
+		<div id="footer">
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
+			</span>
+		</div>
+	</body>
+
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+	</script>
+</html>

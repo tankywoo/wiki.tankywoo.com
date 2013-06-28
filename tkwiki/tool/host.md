@@ -12,7 +12,7 @@ host 命令式一个查询dns的小工具. 它可以通过域名查询ip, 或者
 	# 通过域名查询地址
 	host domainname
 
-	# 通过ip地址查询域名 **TODO**
+	# 通过ip地址反向查询域名 **TODO**
 	host ipaddress
 
 	# 指定ns服务器, 这样就不会从/etc/resolv.conf下查询ns

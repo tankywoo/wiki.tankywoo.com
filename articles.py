@@ -37,6 +37,15 @@ articles = {
         'ss' : {
             'title' : 'ss',
          },
+        'host' : {
+            'title' : 'host',
+         },
+        'nslookup' : {
+            'title' : 'nslookup',
+         },
+        'dig' : {
+            'title' : 'dig',
+         },
         'netstat' : {
             'title' : 'netstat',
          },
