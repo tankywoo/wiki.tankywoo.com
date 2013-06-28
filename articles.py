@@ -59,7 +59,7 @@ articles = {
             'title' : 'nc(Netcat)',
          },
         'curl' : {
-            'title' : 'cUrl',
+            'title' : 'curl',
          },
         'iptables' : {
             'title' : 'iptables',

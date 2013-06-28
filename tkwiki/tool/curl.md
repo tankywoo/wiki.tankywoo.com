@@ -1,17 +1,10 @@
 # Argument #
 
-## -o/-O ##
--o file: output to file
-
--O: output to file named the same with the remote name
-
-## -i/-I ##
--i: Include the HTTP-header in the output
-
--I: only get the HTTP-header
-
-## -u ##
--u username:password
+* `-o` - output to file
+* `-O` - output to file named the same with the remote name
+* `-i` - Include the HTTP-header in the output
+* `-I` - only get the HTTP-header
+* `-u`
 
 # Example #
 
@@ -32,6 +25,7 @@
 * [curl tutorial with examples of usage](http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage)
 * [curl网站开发指南](http://www.ruanyifeng.com/blog/2011/09/curl.html)
 
-# History #
 
-Create 2013/01/14
+# 修改历史 #
+
+* 2013-01-14 : 创建
