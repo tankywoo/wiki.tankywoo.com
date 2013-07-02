@@ -134,6 +134,9 @@ articles = {
         'samba' : {
             'title' : 'samba',
          },
+        'rsync' : {
+            'title' : 'rsync',
+         },
         'nginx' : {
             'title' : 'nginx',
          },
