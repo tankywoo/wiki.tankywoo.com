@@ -171,6 +171,9 @@ articles = {
         'pdb' : {
             'title' : 'Python Debug',
         },
+        'py_performance_analysis_tool' : {
+            'title' : 'Python Performance Analysis Tool',
+        },
         'argparse' : {
             'title' : 'argparse',
         },
