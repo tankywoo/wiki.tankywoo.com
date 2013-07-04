@@ -2,9 +2,9 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Tmux @ TankyWoo's Wiki</title>
-		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
-		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<title>Tmux @ Tanky Woo's Wiki</title>
+		<meta name="keywords" content="Tanky Woo, wiki, makrdown, linux, python, cpp, ops"/>
+		<meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
@@ -39,50 +39,50 @@
 <h1>基本操作</h1>
 
 <ul>
-<li>C-b : 进入tmux的命令行模式</li>
-<li>C-b ? 显示所有的bind-key</li>
-<li>C-b [ 进入复制模式</li>
-<li>C-b ] 进入粘贴模式</li>
+<li><code>C-b :</code> 进入tmux的命令行模式</li>
+<li><code>C-b ?</code> 显示所有的bind-key</li>
+<li><code>C-b [</code> 进入复制模式</li>
+<li><code>C-b ]</code> 进入粘贴模式</li>
 </ul>
 
-<p>如果有设置 setw -g mode-keys vi 的话，可按 vi 的按键模式操作。移动至待复制的文本处，按一下空格，结合 vi 移动命令开始选择，选好后按回车确认.</p>
+<p>如果有设置 <code>setw -g mode-keys vi</code> 的话，可按 vi 的按键模式操作。移动至待复制的文本处，按一下空格，结合 vi 移动命令开始选择，选好后按回车确认.</p>
 
 <h1>session 操作</h1>
 
 <ul>
-<li>C-b d deattch当前的session</li>
-<li>C-b C-z 挂起当前的session</li>
-<li>tmux attach [-t sessionname] 恢复session</li>
-<li>C-b $ 可以重命名当前的session</li>
-<li>tmux ls 显示tmux的所有session</li>
+<li><code>C-b d</code> deattch当前的session</li>
+<li><code>C-b C-z</code> 挂起当前的session</li>
+<li><code>tmux attach [-t sessionname]</code> 恢复session</li>
+<li><code>C-b $</code> 可以重命名当前的session</li>
+<li><code>tmux ls</code> 显示tmux的所有session</li>
 </ul>
 
 <h1>window 操作</h1>
 
 <ul>
-<li>C-b c 可以新建一个新的window</li>
-<li>C-b &amp; 关闭当前的window</li>
-<li>C-b , 可以重命名当前的window</li>
-<li>C-b p 切换到前一个window</li>
-<li>C-b n 切换到后一个window</li>
-<li>C-b l 切换到上一次的window</li>
-<li>C-b number 切换到指定编号的window, 默认从0开始</li>
-<li>C-b w 显示当前会话的window, 可以通过上下选择来切换</li>
-<li>tmux neww -n tmux 新建一个window, 名称是tmux</li>
+<li><code>C-b c</code> 可以新建一个新的window</li>
+<li><code>C-b &amp;</code> 关闭当前的window</li>
+<li><code>C-b ,</code> 可以重命名当前的window</li>
+<li><code>C-b p</code> 切换到前一个window</li>
+<li><code>C-b n</code> 切换到后一个window</li>
+<li><code>C-b l</code> 切换到上一次的window</li>
+<li><code>C-b number</code> 切换到指定编号的window, 默认从0开始</li>
+<li><code>C-b w</code> 显示当前会话的window, 可以通过上下选择来切换</li>
+<li><code>tmux neww -n tmux</code> 新建一个window, 名称是tmux</li>
 </ul>
 
 <h1>pane 操作</h1>
 
 <ul>
-<li>C-b " 将当前window横向分割为两个pane</li>
-<li>C-b % 将当前window纵向分割为两个pane</li>
-<li>C-b 方向键 在当前window里移动到其他pane</li>
-<li>C-b o 切换到下一个pane</li>
-<li>C-b Alt+方向键 调整pane的大小</li>
-<li>C-b q 显示pane的编号</li>
-<li>C-b x 关闭当前的pane, 会有确认提示. 也可以直接C-d</li>
-<li>C-b { 把当前的pane移到左边</li>
-<li>C-b } 把当前的pane移到右边</li>
+<li><code>C-b "</code> 将当前window横向分割为两个pane</li>
+<li><code>C-b %</code> 将当前window纵向分割为两个pane</li>
+<li><code>C-b 方向键</code> 在当前window里移动到其他pane</li>
+<li><code>C-b o</code> 切换到下一个pane</li>
+<li><code>C-b Alt+方向键</code> 调整pane的大小</li>
+<li><code>C-b q</code> 显示pane的编号</li>
+<li><code>C-b x</code> 关闭当前的pane, 会有确认提示. 也可以直接C-d</li>
+<li><code>C-b {</code> 把当前的pane移到左边</li>
+<li><code>C-b }</code> 把当前的pane移到右边</li>
 </ul>
 
 <h1>配置文件</h1>
@@ -211,6 +211,14 @@ tmux attach-session -d -t 'tankywoo'
 <li><a href="http://toastdriven.com/blog/2009/oct/09/scripting-tmux/">Scripting tmux</a></li>
 </ul>
 
+<h1>技巧</h1>
+
+<h2>批量操作</h2>
+
+<p>当需要在多个机器执行相同操作时, 可以考虑用<code>pdsh</code>等内容分发的工具, 而tmux也有它的一种强悍的方式. 在一个windows里打开多个pane, 每个pane登录一台服务器, 设置windows的选项, 在其中一个pane上操作时, 其它pane都会复制相同的操作.</p>
+
+<p>在tmux的命令行里, 使用选项<code>set synchronize-panes on</code>即可.</p>
+
 <h1>扩展 - tmux powerline</h1>
 
 <ul>
@@ -229,7 +237,8 @@ tmux attach-session -d -t 'tankywoo'
 
 <h1>历史记录</h1>
 
-<p>2013-06-25 : 完善整个tmux wiki</p>
+<p>2013-06-25 : 完善整个tmux wiki
+2013-07-04 : 补充批量操作技巧</p>
 
 
 		</div>

@@ -10,44 +10,44 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 
 # 基本操作 #
 
-* C-b : 进入tmux的命令行模式
-* C-b ? 显示所有的bind-key
-* C-b [ 进入复制模式
-* C-b ] 进入粘贴模式
+* `C-b :` 进入tmux的命令行模式
+* `C-b ?` 显示所有的bind-key
+* `C-b [` 进入复制模式
+* `C-b ]` 进入粘贴模式
 
-如果有设置 setw -g mode-keys vi 的话，可按 vi 的按键模式操作。移动至待复制的文本处，按一下空格，结合 vi 移动命令开始选择，选好后按回车确认.
+如果有设置 `setw -g mode-keys vi` 的话，可按 vi 的按键模式操作。移动至待复制的文本处，按一下空格，结合 vi 移动命令开始选择，选好后按回车确认.
 
 # session 操作 #
 
-* C-b d deattch当前的session
-* C-b C-z 挂起当前的session
-* tmux attach [-t sessionname] 恢复session
-* C-b $ 可以重命名当前的session
-* tmux ls 显示tmux的所有session
+* `C-b d` deattch当前的session
+* `C-b C-z` 挂起当前的session
+* `tmux attach [-t sessionname]` 恢复session
+* `C-b $` 可以重命名当前的session
+* `tmux ls` 显示tmux的所有session
 
 # window 操作 #
 
-* C-b c 可以新建一个新的window
-* C-b & 关闭当前的window
-* C-b , 可以重命名当前的window
-* C-b p 切换到前一个window
-* C-b n 切换到后一个window
-* C-b l 切换到上一次的window
-* C-b number 切换到指定编号的window, 默认从0开始
-* C-b w 显示当前会话的window, 可以通过上下选择来切换
-* tmux neww -n tmux 新建一个window, 名称是tmux
+* `C-b c` 可以新建一个新的window
+* `C-b &` 关闭当前的window
+* `C-b ,` 可以重命名当前的window
+* `C-b p` 切换到前一个window
+* `C-b n` 切换到后一个window
+* `C-b l` 切换到上一次的window
+* `C-b number` 切换到指定编号的window, 默认从0开始
+* `C-b w` 显示当前会话的window, 可以通过上下选择来切换
+* `tmux neww -n tmux` 新建一个window, 名称是tmux
 
 # pane 操作 #
 
-* C-b " 将当前window横向分割为两个pane
-* C-b % 将当前window纵向分割为两个pane
-* C-b 方向键 在当前window里移动到其他pane
-* C-b o 切换到下一个pane
-* C-b Alt+方向键 调整pane的大小
-* C-b q 显示pane的编号
-* C-b x 关闭当前的pane, 会有确认提示. 也可以直接C-d
-* C-b { 把当前的pane移到左边
-* C-b } 把当前的pane移到右边
+* `C-b "` 将当前window横向分割为两个pane
+* `C-b %` 将当前window纵向分割为两个pane
+* `C-b 方向键` 在当前window里移动到其他pane
+* `C-b o` 切换到下一个pane
+* `C-b Alt+方向键` 调整pane的大小
+* `C-b q` 显示pane的编号
+* `C-b x` 关闭当前的pane, 会有确认提示. 也可以直接C-d
+* `C-b {` 把当前的pane移到左边
+* `C-b }` 把当前的pane移到右边
 
 # 配置文件 #
 
@@ -169,6 +169,14 @@ google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-
 * [TMUX SCRIPTING](http://blog.htbaa.com/news/tmux-scripting)
 * [Scripting tmux](http://toastdriven.com/blog/2009/oct/09/scripting-tmux/)
 
+# 技巧 #
+
+## 批量操作 ##
+
+当需要在多个机器执行相同操作时, 可以考虑用`pdsh`等内容分发的工具, 而tmux也有它的一种强悍的方式. 在一个windows里打开多个pane, 每个pane登录一台服务器, 设置windows的选项, 在其中一个pane上操作时, 其它pane都会复制相同的操作.
+
+在tmux的命令行里, 使用选项`set synchronize-panes on`即可.
+
 # 扩展 - tmux powerline #
 
 * [tmux-powerline项目](https://github.com/erikw/tmux-powerline) 官方说此项目现在只做维护, 不更新
@@ -184,3 +192,4 @@ google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-
 # 历史记录 #
 
 2013-06-25 : 完善整个tmux wiki
+2013-07-04 : 补充批量操作技巧
