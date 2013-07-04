@@ -32,7 +32,7 @@ articles = {
 
     'tool' : {
         'tcpdump' : {
-            'title' : 'Tcpdump',
+            'title' : 'tcpdump',
          },
         'ss' : {
             'title' : 'ss',
@@ -53,10 +53,10 @@ articles = {
             'title' : 'route',
          },
         'nmap' : {
-            'title' : 'Nmap',
+            'title' : 'nmap',
          },
         'nc' : {
-            'title' : 'nc(Netcat)',
+            'title' : 'nc',
          },
         'curl' : {
             'title' : 'curl',
@@ -86,10 +86,10 @@ articles = {
             'title' : 'bwm-ng',
          },
         'git' : {
-            'title' : 'Git',
+            'title' : 'git',
          },
         'svn' : {
-            'title' : 'Svn',
+            'title' : 'svn',
          },
         'grep' : {
             'title' : 'grep',
@@ -123,16 +123,19 @@ articles = {
 
     'software' : {
         'screen' : {
-            'title' : 'Screen',
+            'title' : 'screen',
          },
         'tmux' : {
-            'title' : 'Tmux',
+            'title' : 'tmux',
          },
         'vsftpd' : {
             'title' : 'vsftpd',
          },
         'samba' : {
             'title' : 'samba',
+         },
+        'rsync' : {
+            'title' : 'rsync',
          },
         'nginx' : {
             'title' : 'nginx',

@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>nc(Netcat) @ Tanky Woo's Wiki</title>
+		<title>nc @ Tanky Woo's Wiki</title>
 		<meta name="keywords" content="Tanky Woo, wiki, makrdown, linux, python, cpp, ops"/>
 		<meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,46 +20,63 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">nc(Netcat)</div>
+		<div id="title">nc</div>
 		
 		<div id="content">
 
+<h1>netcat</h1>
+
 <p>TCP/IP swiss army knife</p>
+
+<p>装的是 <code>net-analyzer/netcat6</code>, 这个是增强版, 支持IPv6.</p>
+
+<p>见过的有三个版本: <code>net-analyzer/netcat6</code>, <code>net-analyzer/netcat</code>, <code>net-analyzer/gnu-netcat</code>. 不同的版本参数上也会有些差异, 好像是第三个实现版本在监听端口时不需要指定<code>-p</code>参数.</p>
 
 <h1>Argument</h1>
 
-<p><code>-l</code> : listen mode. can be used as server</p>
+<p><code>-l</code> : 监听模式</p>
 
-<pre><code>&gt;&gt; nc -l -p 9999    # listen to port 9999
-</code></pre>
+<p><code>-s</code> : 指定本地的地址. 默认是全部, 可以是本地环回地址, 或者指定某一个绑定的具体ip地址</p>
 
-<p>NOTE: TODO, not for sure</p>
+<p><code>-p</code> : 指定本地开启的端口</p>
 
-<p><code>-p</code> : local port num(port numbers can be individual or ranges: lo-hi [inclusive])</p>
+<p><code>-u</code> : 连接模式设置为udp, 默认是tcp</p>
 
-<p><code>-v/-vv</code> : verbose information</p>
+<p><code>-v/-vv</code> : 更详细的输出内容</p>
 
-<p><code>-z</code> : zero-I/O mode [used for scanning]</p>
-
-<p>NOTE: what is the meaning of <code>zero-IO</code>?</p>
+<p><code>-e, --exec=CMD</code> : 连接后执行命令. 这个看起来很牛逼, 还没试过. <strong>TODO</strong></p>
 
 <h1>Example</h1>
 
-<pre><code># Transfer file
-# Server
+<p>传输文件:</p>
+
+<pre><code># Server端
 &gt;&gt; nc -l -p 9999 &lt; getfile.txt
 
-# Client
+# Client端
 $ nc -l 9999 &gt; sendfile.txt
+</code></pre>
 
+<!-- comment -->
 
+<p>扫描端口( <strong>NOTE</strong>: 这个好像是gnu-netcat版才有的功能 ):</p>
 
-# Scan Port
-$ nc -v -z localhost 20-100
+<pre><code>$ nc -v -z localhost 20-100
 &gt;&gt;
 localhost [127.0.0.1] 80 (http) open
 localhost [127.0.0.1] 22 (ssh) open
 </code></pre>
+
+<!-- comment -->
+
+<p>假设本机内网ip是192.168.1.99, 开启一个针对此ip的udp端口:</p>
+
+<pre><code>$ nc -l -s 192.168.1.99 -p 1234 -u
+</code></pre>
+
+<p>使用 <code>netstat -uanp</code> 就可以看到此端口, 显示的Program name是nc</p>
+
+<p>我在写snmp扫描端口的代码时, 因为要调试查看端口获取是否准确, 就用到了nc, 包括区分tcp/udp, 区分wan/lan等, 非常牛逼.</p>
 
 <h1>Read More</h1>
 
@@ -67,9 +84,12 @@ localhost [127.0.0.1] 22 (ssh) open
 <li><a href="http://www.thegeekstuff.com/2012/04/nc-command-examples/">8 Practical Linux Netcat NC Command Examples</a></li>
 </ul>
 
-<h1>History</h1>
+<h1>修改历史</h1>
 
-<p>Create 2013/01/13</p>
+<ul>
+<li>2013-01-13 : 创建</li>
+<li>2013-07-03 : 写nmap引擎时用到snmp扫描端口, 总结</li>
+</ul>
 
 
 		</div>
