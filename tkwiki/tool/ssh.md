@@ -1,15 +1,15 @@
-我们总监上次提到了一句话非常好，他说他每安装一个工具，都要 `equery files toolname` 来查看这个工具到底会带有多少小工具
+我们老大上次提到了一句话非常好，他说他每安装一个工具，都要 `equery files toolname` 来查看这个工具到底会带有多少小工具.  
 就像我没有执行 equery 查询，我也不会发现，原来 ssh 自带了这么多好用的工具！
 
-	* /usr/bin/scp
-	* /usr/bin/sftp
-	* /usr/bin/slogin
-	* /usr/bin/ssh
-	* /usr/bin/ssh-add
-	* /usr/bin/ssh-agent
-	* /usr/bin/ssh-copy-id
-	* /usr/bin/ssh-keygen
-	* /usr/bin/ssh-keyscan
+* /usr/bin/scp
+* /usr/bin/sftp
+* /usr/bin/slogin
+* /usr/bin/ssh
+* /usr/bin/ssh-add
+* /usr/bin/ssh-agent
+* /usr/bin/ssh-copy-id
+* /usr/bin/ssh-keygen
+* /usr/bin/ssh-keyscan
 
 # ssh #
 ## RTFM ##
@@ -22,7 +22,7 @@
 
 ## 关于ssh config ##
 
-ssh_config 有两个文件：`~/.ssh/config` 和 `/etc/ssh/config`
+ssh\_config 有两个文件：`~/.ssh/config` 和 `/etc/ssh/config`
 
 	config文件的格式：
 
