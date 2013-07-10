@@ -115,6 +115,9 @@ articles = {
         'markdown' : {
             'title' : 'markdown',
          },
+         'blkid' : {
+            'title' : 'blkid',
+        },
         'efficiency_tools_i_use' : {
             'title' : '我使用的效率工具',
          },
