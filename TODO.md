@@ -8,3 +8,5 @@
 	+ ethtool
 	+ e2label
 	+ dump2efs
+	+ tune2fs
+	+ mount
