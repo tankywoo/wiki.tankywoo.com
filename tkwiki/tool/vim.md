@@ -1,7 +1,6 @@
 # Vim #
 
-# 我的配置 #
-
+[我的vimrc配置文件](https://github.com/tankywoo/linux-autoconfig/blob/master/.vimrc)
 
 
 # 快捷键 #
@@ -16,6 +15,9 @@
 * `G`  - Move to *last* line of file
 * `w`  - Move *forward* to next word
 * `b`  - Move *backward* to next word
+* `%`  - 在匹配的括号、块的首尾移动
+* `C-o`- 返回到上次移动前的位置
+* `C-i`- 前进到后一次移动的位置
 
 ## Search ##
 * `*`     - Search *forward* for word under cursor
@@ -65,41 +67,41 @@
 * [What is your most productive shortcut with Vim?](http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim)
 
 
-C
 # 技巧 #
 
 ## shell多行注释 ##
 
 命令行模式下，注释掉line1与line2之间的行
 
-    line1,line2s/^/#/g
+	line1,line2s/^/#/g
 
 
 ## 自动补全 ##
 
-    Ctrl+n Ctrl+p
-    Ctrl+x Ctrl+?{....}
+	Ctrl+n Ctrl+p
+	Ctrl+x Ctrl+?{....}
 
 ## 左右分割打开help文档 ##
 
 默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便
 
-    :set spr
-    :vert help xxx
+	:set spr
+	:vert help xxx
 
 
 ## 逐个替换 ##
 
 一般情况下
 
-    :%s/old_str/new_str/g
-    }}}
-    是对old_str做全文替换，加上参数c可以逐个替换，这样可以对每一个再确认
-    {{{
-    :%s/old_str/new_str/gc
+	:%s/old_str/new_str/g
+	}}}
+	是对old_str做全文替换，加上参数c可以逐个替换，这样可以对每一个再确认
+	{{{
+	:%s/old_str/new_str/gc
 
 
 
 # 修改历史 #
 
-最后修改: 2013-05-28
+* 2013-05-28 : 创建
+* 2013-07-10 : 补充 匹配括号的移动, 前后位置的移动. 这两个都是非常实用的快捷键.
