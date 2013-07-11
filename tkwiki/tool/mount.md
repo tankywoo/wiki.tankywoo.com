@@ -46,6 +46,7 @@ bind方式可以把一个已被挂载的目录再挂载到其他目录下
 # 参考 #
 
 * [fstab and mtab](http://www.brunolinux.com/02-The_Terminal/Fstab_and_Mtab.html)
+* [How to Mount and Unmount Filesystem / Partition in Linux](http://www.thegeekstuff.com/2013/01/mount-umount-examples/)
 
 # 修改历史 #
 
