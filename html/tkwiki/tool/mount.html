@@ -2,9 +2,9 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>mount @ TankyWoo's Wiki</title>
-		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
-		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<title>mount @ Tanky Woo's Wiki</title>
+		<meta name="keywords" content="Tanky Woo, wiki, makrdown, linux, python, cpp, ops"/>
+		<meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
@@ -24,31 +24,66 @@
 		
 		<div id="content">
 
-<p>mount, 用于挂载到文件系统</p>
+<p>mount, 用于挂载分区到文件系统</p>
 
-<p>常用操作：
-mount -t type device dir</p>
-
-<p>mount [-l] [-t type]
-可以列出挂载列表中指定的类型</p>
-
-<p>/etc/fstab是启动时读取的挂载列表</p>
+<p><code>/etc/fstab</code> 是启动时读取的挂载列表, 挂载后的结果是存储在 <code>/proc/mounts</code> 里. 所以如果proc没有被挂载上, 则 <code>fdisk -l</code> 是看不到任何东西的.</p>
 
 <p>具体可看/etc/fstab的注释和<code>man fstab</code></p>
 
-<p>/etc/mtab是正在挂载的文件</p>
+<p><code>/etc/mtab</code> 是正在挂载的文件</p>
 
-<p>参考：</p>
+<h1>常用操作</h1>
+
+<h2>挂载分区</h2>
+
+<pre><code>mount -t type device dir
+</code></pre>
+
+<p>把 device 指定挂载格式挂载到 dir 上</p>
+
+<h2>查看已挂载分区</h2>
+
+<pre><code>mount [-l] [-t type]
+</code></pre>
+
+<p>可以列出挂载列表中指定的类型</p>
+
+<h2>重新挂载</h2>
+
+<pre><code>mount -o remount,rw device dir
+</code></pre>
+
+<p>最近遇到一个问题, fstab里都是以 <code>label</code> 挂载的, 但是 device 只用了uuid, 没有设置 label, 导致启动后挂载的权限是 ro, 最后在修改文件时一直无法保存, 还以为设置了 chattr, 后来才发现是这个地方导致的. 设置了 label 后, 重新挂载并设置 rw 权限就可以了.</p>
+
+<h2>bind方式挂载</h2>
+
+<pre><code>mount --bind olddir newdir
+</code></pre>
+
+<p>bind方式可以把一个已被挂载的目录再挂载到其他目录下</p>
+
+<p>比如我的 /dev/sda5 已经挂载到 /home 目录下, 我可以把 /home 再挂载到 /mnt/home 下:</p>
+
+<pre><code>mount --bind /home /mnt/home
+结果如下:
+/dev/sda5 on /home type ext4 (rw,noatime)
+/home on /mnt/home type none (rw,bind)
+</code></pre>
+
+<p>在挂载一个 livecd 来安装系统时(比如gentoo安装, 或rynsc安装linux), 就是先挂载根目录等, 然后以bind方式挂载 <code>sys</code>, <code>dev</code>, <code>proc</code>.</p>
+
+<h1>参考</h1>
 
 <ul>
 <li><a href="http://www.brunolinux.com/02-The_Terminal/Fstab_and_Mtab.html">fstab and mtab</a></li>
 </ul>
 
-<h1>History</h1>
+<h1>修改历史</h1>
 
-<p>Create 2013/01/27</p>
-
-<p>Last modified 2013/01/27</p>
+<ul>
+<li>2013-01-27 : 创建</li>
+<li>2013-07-10 : 根据这几天装机积累的经验补充一些常用操作</li>
+</ul>
 
 
 		</div>
