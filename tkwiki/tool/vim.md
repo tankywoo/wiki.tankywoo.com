@@ -5,7 +5,7 @@
 
 # 快捷键 #
 ## Movement ##
-* `Ch`  - Move *left*
+* `h`  - Move *left*
 * `j`  - Move *down*
 * `k`  - Move *up*
 * `l`  - Move *right*
@@ -91,12 +91,12 @@
 
 ## 逐个替换 ##
 
-一般情况下
+全文直接替换:
 
 	:%s/old_str/new_str/g
-	}}}
-	是对old_str做全文替换，加上参数c可以逐个替换，这样可以对每一个再确认
-	{{{
+
+加上参数c可以逐个替换，这样可以对每一个再确认:
+
 	:%s/old_str/new_str/gc
 
 

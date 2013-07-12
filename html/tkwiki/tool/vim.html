@@ -33,7 +33,7 @@
 <h2>Movement</h2>
 
 <ul>
-<li><code>Ch</code>  - Move <em>left</em></li>
+<li><code>h</code>  - Move <em>left</em></li>
 <li><code>j</code>  - Move <em>down</em></li>
 <li><code>k</code>  - Move <em>up</em></li>
 <li><code>l</code>  - Move <em>right</em></li>
@@ -140,13 +140,14 @@ Ctrl+x Ctrl+?{....}
 
 <h2>逐个替换</h2>
 
-<p>一般情况下</p>
+<p>全文直接替换:</p>
 
 <pre><code>:%s/old_str/new_str/g
-}}}
-是对old_str做全文替换，加上参数c可以逐个替换，这样可以对每一个再确认
-{{{
-:%s/old_str/new_str/gc
+</code></pre>
+
+<p>加上参数c可以逐个替换，这样可以对每一个再确认:</p>
+
+<pre><code>:%s/old_str/new_str/gc
 </code></pre>
 
 <h1>修改历史</h1>
