@@ -26,7 +26,7 @@
 
 <h1>Vim</h1>
 
-<p><a href="https://github.com/tankywoo/linux-autoconfig/blob/master/.vimrc">我的vimrc配置文件</a></p>
+<p><a href="https://github.com/tankywoo/linux-autoconfig/blob/master/.vimrc">.vimrc</a></p>
 
 <h1>快捷键</h1>
 
@@ -37,14 +37,16 @@
 <li><code>j</code>  - Move <em>down</em></li>
 <li><code>k</code>  - Move <em>up</em></li>
 <li><code>l</code>  - Move <em>right</em></li>
-<li><code>0</code>  - Move to <em>beginging</em> of line</li>
+<li><code>0</code>  - Move to <em>beginging</em> of line, 也可以使用 <code>Home</code>.</li>
+<li><code>^</code>  - 在有tab或space的代码行里, <code>0</code>是移到最行首, 而<code>^</code>是移到代码行首</li>
 <li><code>$</code>  - Move to <em>end</em> of line</li>
 <li><code>gg</code> - Move to <em>first</em> line of file</li>
 <li><code>G</code>  - Move to <em>last</em> line of file</li>
+<li><code>ngg</code>- 移动到指定的第n行, 也可以用<code>nG</code></li>
 <li><code>w</code>  - Move <em>forward</em> to next word</li>
 <li><code>b</code>  - Move <em>backward</em> to next word</li>
 <li><code>%</code>  - 在匹配的括号、块的首尾移动</li>
-<li><code>C-o</code>- 返回到上次移动前的位置</li>
+<li><code>C-o</code>- 返回到上次移动前的位置, 也可以用两个单引号<code>'</code></li>
 <li><code>C-i</code>- 前进到后一次移动的位置</li>
 </ul>
 
@@ -59,6 +61,8 @@
 <li><code>N</code>     - Repeat the last <code>/</code> or <code>?</code> command in opposite direction</li>
 </ul>
 
+<p>在搜索后, 被搜索的单词都会高亮, 一般想取消那些高亮的单词, 可以再次搜索随便输入一些字母, 搜索不到自然就取消了. 另外也可以使用 <code>nohl</code> 取消这些被高亮的词.</p>
+
 <h2>Deletion</h2>
 
 <ul>
@@ -66,7 +70,9 @@
 <li><code>X</code>  - Delete character <em>backward</em>(before cursor), and remain in normal mode</li>
 <li><code>r</code>  - Replace single character under cursor, and remain in normal mode</li>
 <li><code>s</code>  - Delete single character under cursor, and <em>switch</em> to insert mode</li>
+<li><code>shift+~</code> - 这个可以把光标下的单词转换为大写/小写, 并自动移到下一个字符</li>
 <li><code>dw</code> - Delete a <em>word</em> forward</li>
+<li><code>daw</code>- 上面的<code>dw</code>是删除一个单词的前向部分, 而这个是删除整个单词, 不论cursor是否在单词中间</li>
 <li><code>db</code> - Delete a <em>word</em> backward</li>
 <li><code>dd</code> - Delete <em>entire</em> current line</li>
 <li><code>D</code>  - Delete until end of line</li>
@@ -134,8 +140,7 @@ Ctrl+x Ctrl+?{....}
 
 <p>默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便</p>
 
-<pre><code>:set spr
-:vert help xxx
+<pre><code>:vert help xxx
 </code></pre>
 
 <h2>逐个替换</h2>
@@ -155,6 +160,7 @@ Ctrl+x Ctrl+?{....}
 <ul>
 <li>2013-05-28 : 创建</li>
 <li>2013-07-10 : 补充 匹配括号的移动, 前后位置的移动. 这两个都是非常实用的快捷键.</li>
+<li>2013-07-12 : showcase时和同事分享了, 也给了我很多他们积累的技巧, 赞!</li>
 </ul>
 
 
