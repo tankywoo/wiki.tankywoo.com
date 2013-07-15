@@ -19,8 +19,8 @@ articles = {
         'server_performance' : {
             'title' : 'Server Peformance',
         },
-        'ubuntu_network' : {
-            'title' : 'Ubuntu Network',
+        'linux_network_config' : {
+            'title' : 'Linux Network Configuration',
         },
         'uid' : {
             'title' : 'RUID/EUID/SUID',
