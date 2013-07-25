@@ -135,6 +135,13 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 
 * [查看提交历史](http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2)
 
+# 文件中文名问题 #
+2013-07-25 更新:
+
+最近遇到同步文件下来, 中文文件名全部是unicode, 解决这个问题加配置:
+
+	git config --global core.quotepath false
+
 
 # Git资料 #
 
@@ -145,3 +152,4 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 
 * 2013-02-07 : 创建
 * 2013-06-04 : git使用vimdiff
+* 2013-07-25 : 补充文件名是中文的问题
