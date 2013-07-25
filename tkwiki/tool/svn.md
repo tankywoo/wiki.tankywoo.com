@@ -54,6 +54,43 @@
 * [更换svn diff为vimdiff](http://www.ccvita.com/445.html)
 * [使用vimdiff作为svn diff的默认工具](http://www.blogjava.net/stone2083/archive/2011/05/24/350917.html)
 
+# diff: file marked as a binary type 问题  #
+
+2013-07-25 补充:
+
+今天在 svn diff 看一个 xml 文件时, 显示:
+
+	Index: assets-meishan.xml
+	===================================================================
+	Cannot display: file marked as a binary type.
+	svn:mime-type = application/xml
+
+无法查看, 但是另外一个 xml 文件就可以 diff, 且用 file 命令查看, 都是 `XML document text`
+
+google 了下, 找到了解决方法
+
+方法一:
+
+	svn diff --force path/to/file
+
+方法二:
+
+You can use the [Subversion property](http://svnbook.red-bean.com/en/1.5/svn.ref.properties.html) svn:mime-type to set an explicit mimetype on the file:
+
+	svn propset svn:mime-type 'text/plain' path/to/file
+
+Alternatively, you can delete this property (since Subversion assumes plaintext, otherwise) using:
+
+	svn propdel svn:mime-type path/to/file
+
+参考:
+
+* [svn diff: file marked as binary type](http://stackoverflow.com/questions/2634043/svn-diff-file-marked-as-binary-type)
+* [Persistently overriding svn's mime to binary mapping?](http://stackoverflow.com/questions/3580092/persistently-overriding-svns-mime-to-binary-mapping)
+
+**TODO** : 当时是直接用方法一解决的, 抽时间研究下 `svn:mine-type` 的问题
+
 # 修改历史 #
 
 * 2013-06-25 : 增加了vimdiff方法
+* 2013-07-25 : 增加 diff: file marked as a binary type 问题

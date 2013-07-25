@@ -2,9 +2,9 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
-		<title>Svn @ TankyWoo's Wiki</title>
-		<meta name="keywords" content="TankyWoo, Wiki, vimwiki, linux, python, cpp"/>
-		<meta name="description" content="A wiki about Linux, Python, and so on"/>
+		<title>svn @ Tanky Woo's Wiki</title>
+		<meta name="keywords" content="Tanky Woo, wiki, makrdown, linux, python, cpp, ops"/>
+		<meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
@@ -20,7 +20,7 @@
 		</div>
 		<div class="clearfix">
 		</div>
-		<div id="title">Svn</div>
+		<div id="title">svn</div>
 		
 		<div id="content">
 
@@ -93,10 +93,53 @@ $DIFF $LEFT $RIGHT
 <li><a href="http://www.blogjava.net/stone2083/archive/2011/05/24/350917.html">使用vimdiff作为svn diff的默认工具</a></li>
 </ul>
 
+<h1>diff: file marked as a binary type 问题</h1>
+
+<p>2013-07-25 补充:</p>
+
+<p>今天在 svn diff 看一个 xml 文件时, 显示:</p>
+
+<pre><code>Index: assets-meishan.xml
+===================================================================
+Cannot display: file marked as a binary type.
+svn:mime-type = application/xml
+</code></pre>
+
+<p>无法查看, 但是另外一个 xml 文件就可以 diff, 且用 file 命令查看, 都是 <code>XML document text</code></p>
+
+<p>google 了下, 找到了解决方法</p>
+
+<p>方法一:</p>
+
+<pre><code>svn diff --force path/to/file
+</code></pre>
+
+<p>方法二:</p>
+
+<p>You can use the <a href="http://svnbook.red-bean.com/en/1.5/svn.ref.properties.html">Subversion property</a> svn:mime-type to set an explicit mimetype on the file:</p>
+
+<pre><code>svn propset svn:mime-type 'text/plain' path/to/file
+</code></pre>
+
+<p>Alternatively, you can delete this property (since Subversion assumes plaintext, otherwise) using:</p>
+
+<pre><code>svn propdel svn:mime-type path/to/file
+</code></pre>
+
+<p>参考:</p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/2634043/svn-diff-file-marked-as-binary-type">svn diff: file marked as binary type</a></li>
+<li><a href="http://stackoverflow.com/questions/3580092/persistently-overriding-svns-mime-to-binary-mapping">Persistently overriding svn's mime to binary mapping?</a></li>
+</ul>
+
+<p><strong>TODO</strong> : 当时是直接用方法一解决的, 抽时间研究下 <code>svn:mine-type</code> 的问题</p>
+
 <h1>修改历史</h1>
 
 <ul>
 <li>2013-06-25 : 增加了vimdiff方法</li>
+<li>2013-07-25 : 增加 diff: file marked as a binary type 问题</li>
 </ul>
 
 
