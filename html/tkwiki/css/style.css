@@ -73,7 +73,18 @@ pre , code, kbd, samp {
 	border: 1px solid #CCC; 
 }
 code { color: #d14; margin: 0 2px;  }
-pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; padding: 5px 12px;}
+pre { 
+	/* white-space: pre; */
+	/* white-space: pre-wrap; */
+	/* word-wrap: break-word; */
+	white-space: pre;
+	white-space: -moz-pre-wrap; /* Firefox */
+	white-space: -pre-wrap; /* ancient Opera */
+	white-space: -o-pre-wrap; /* newer Opera */
+	white-space: pre-wrap; /* Chrome; W3C standard */
+	word-wrap: break-word; /* IE */
+	padding: 5px 12px;
+}
 pre code { border: 0px !important; padding: 0; color: #000; font-size: 1em; }
 code { padding: 0 3px 0 3px; }
 pre { font-family: Consolas; }
