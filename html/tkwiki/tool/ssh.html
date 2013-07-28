@@ -84,11 +84,31 @@ Host name还可以用匹配，具体可以man ssh_config
 
 <p>通过 ssh-agent 启动一个会话，然后用 <code>ssh-add</code> 加载私钥，以后使用ssh就无需关心私钥的事情了。</p>
 
+<h1>Github: 'Error: Key already in use' 问题</h1>
+
+<p>2013-07-28 补充:</p>
+
+<p>今天在给 Github 上的一个 repo 添加公钥时, 提示 <code>Error: Key already in use</code></p>
+
+<p><strong>TODO</strong> 我是记得这个 公钥 给同一个账户下的另外一个 repo 添加过, 但是没想到居然会冲突, 看来要么加成<code>全局公钥</code>, 要么一个公钥只能指定到一个 <strong>特定</strong> repo</p>
+
+<p>搜到 <a href="https://help.github.com/articles/error-key-already-in-use">官方的Help</a> 有讲到这个问题:</p>
+
+<pre><code>$ ssh -T -i ~/.ssh/id_rsa git@github.com
+# Connect to github.com using a specific ssh key
+# Hi username! You've successfully authenticated, but GitHub does not
+# provide shell access.
+</code></pre>
+
+<p>通过 <code>-i</code> 指定 密钥, 然后通过输出的 <code>username</code> 可以知道是哪个 repo 在使用这个密钥.</p>
+
 <h1>修改历史</h1>
 
-<p>创建时间 2013-02-03</p>
-
-<p>最后修改 2013-05-28</p>
+<ul>
+<li>2013-02-03 : 创建</li>
+<li>2013-05-28 : 补充 ssh-agent</li>
+<li>2013-07-28 : Github: 'Error: Key already in use' 问题</li>
+</ul>
 
 
 		</div>

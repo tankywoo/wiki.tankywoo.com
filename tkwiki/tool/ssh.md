@@ -54,9 +54,26 @@ ssh-agent 后可以接一些参数和命令，一般接shell名称就可以启�
 
 通过 ssh-agent 启动一个会话，然后用 `ssh-add` 加载私钥，以后使用ssh就无需关心私钥的事情了。
 
+# Github: 'Error: Key already in use' 问题 #
+
+2013-07-28 补充:
+
+今天在给 Github 上的一个 repo 添加公钥时, 提示 `Error: Key already in use`
+
+**TODO** 我是记得这个 公钥 给同一个账户下的另外一个 repo 添加过, 但是没想到居然会冲突, 看来要么加成`全局公钥`, 要么一个公钥只能指定到一个 **特定** repo
+
+搜到 [官方的Help](https://help.github.com/articles/error-key-already-in-use) 有讲到这个问题:
+
+	$ ssh -T -i ~/.ssh/id_rsa git@github.com
+	# Connect to github.com using a specific ssh key
+	# Hi username! You've successfully authenticated, but GitHub does not
+	# provide shell access.
+
+通过 `-i` 指定 密钥, 然后通过输出的 `username` 可以知道是哪个 repo 在使用这个密钥.
+
 # 修改历史 #
 
-创建时间 2013-02-03
-
-最后修改 2013-05-28
+* 2013-02-03 : 创建
+* 2013-05-28 : 补充 ssh-agent
+* 2013-07-28 : Github: 'Error: Key already in use' 问题
 
