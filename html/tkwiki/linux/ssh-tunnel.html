@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<title>SSH Tunnel @ Tanky Woo's Wiki</title>
+		<meta name="keywords" content="Tanky Woo, wiki, makrdown, linux, python, cpp, ops"/>
+		<meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+	</head>
+
+	<body>
+		<div id="header">
+			<ul>
+				<li><a href='/'>Home</a></li>
+				<li><a href='http://www.wutianqi.com'>Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+			</ul>
+		</div>
+		<div class="clearfix">
+		</div>
+		<div id="title">SSH Tunnel</div>
+		
+		<div id="content">
+
+<h1>SSH Tunnel</h1>
+
+<h2>本地绑定端口从ssh转发出去</h2>
+
+<p>可以让未加密的数据, 全部通过 ssh端口 <strong>转发</strong> 出去</p>
+
+<p><code>-D [bind_address:]port</code></p>
+
+<p>例如想让 8080 端口的数据, 全部从 ssh端口传到远程主机, 可以:</p>
+
+<pre><code>ssh -D 8080 user@host
+</code></pre>
+
+<p>TODO : 这么做, 远程如何区别 ssh 连接的包 和 转发的包?</p>
+
+<h2>本地端口转发</h2>
+
+<p>假设有 A, B, C 三台主机, A 和 B 因为某种原因(比如GFW), 无法直接从 A 访问 B.</p>
+
+<p>但是 A 和 C 可以互联, 且 B 和 C 也可以互联.</p>
+
+<p>这时就可以通过 C 做 <strong>跳板</strong> , 从而从 A 访问 C.</p>
+
+<p>ssh 翻墙就是这么做的.</p>
+
+<p>在主机 A 上执行命令:</p>
+
+<pre><code>ssh -L 8080:host_B:80 [user_C@]host_C
+</code></pre>
+
+<p>语法: <code>-L [bind_address:]port:host:hostport</code></p>
+
+<p><code>-L</code> 表示 Local(L), 即本地转发.</p>
+
+<p>执行命令后, 相当于通过 localhost:8080, 就可以访问主机 B 的 80 端口资源.</p>
+
+<h2>远程端口转发</h2>
+
+<p>依然假设是上面 A, B, C 三台主机.</p>
+
+<p>A 和 B 无法互联, 而 C 是一台内网主机, 可以访问 A, 但是 A 无法访问 C.</p>
+
+<p>这时可以在主机 C 上, 做端口转发, 这样 A 就依然可以通过 C 访问 B 了.</p>
+
+<p>在主机 C 上执行命令:</p>
+
+<pre><code>ssh -R 8080:host_B:80 [user_A@]host_A
+</code></pre>
+
+<p>语法: <code>-R [bind_address:]port:host:hostport</code></p>
+
+<p><code>-R</code> 表示 Remote(R), 即远程转发</p>
+
+<p>这时命令中的第一个端口是远程主机(相对于C, A就是远程主机)的端口.</p>
+
+<p>相当于在主机 C 上, 建立一个反向隧道, 在主机 A 访问本地端口 8080 时, 相当于访问主机 B 的 80 端口.</p>
+
+<h1>putty</h1>
+
+<h1>参考资料</h1>
+
+<ul>
+<li><a href="http://www.ruanyifeng.com/blog/2011/12/ssh_port_forwarding.html">SSH原理与运用（二）：远程操作与端口转发</a> *</li>
+<li><a href="http://emmoblin.github.io/blog/2013/02/19/ssh-tunnel/">Ssh隧道技术</a></li>
+<li><a href="http://blog.creke.net/722.html">SSH隧道与端口转发及内网穿透</a> *</li>
+<li><a href="http://gnailuy.com/2011/08/02/linux%E4%B8%8B%E5%BB%BA%E7%AB%8Bssh%E9%9A%A7%E9%81%93%E5%81%9Asocket%E4%BB%A3%E7%90%86/">Linux下建立SSH隧道做Socket代理</a></li>
+<li><a href="http://codelife.me/blog/2012/12/09/three-types-of-ssh-turneling/">三种不同类型的ssh隧道</a> *</li>
+<li><a href="http://blog.pluskid.org/?p=369">SSH tunnel tips</a> *</li>
+</ul>
+
+<h1>修改历史</h1>
+
+<ul>
+<li>2013-07-29 : 创建</li>
+</ul>
+
+
+		</div>
+
+		<!-- Duoshuo Comment BEGIN -->
+		<div class="ds-thread"></div>
+		<script type="text/javascript">
+		var duoshuoQuery = {short_name:"tkwiki"};
+			(function() {
+				var ds = document.createElement('script');
+				ds.type = 'text/javascript';ds.async = true;
+				ds.src = 'http://static.duoshuo.com/embed.js';
+				ds.charset = 'UTF-8';
+				(document.getElementsByTagName('head')[0] 
+				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+			})();
+			</script>
+		<!-- Duoshuo Comment END -->
+
+		<div id="footer">
+			<span class="">
+				Copyright © 2012-2013 <a href="http://www.wutianqi.com/" target="_blank">Tanky Woo</a>.
+				Powered by <a href="http://www.vim.org/" target="_blank">Vim</a> and <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown</a>.
+				<!-- baidu statistics -->
+				<script type="text/javascript">
+				var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+				document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+				</script>
+				<!-- baidu statistics end -->
+			</span>
+		</div>
+	</body>
+
+	<!-- add _blank to outer links -->
+	<script type="text/javascript">
+	$("a[href^='http://']").each(function(){
+			this.target = "_blank";
+	});
+	$("a[href^='https://']").each(function(){
+			this.target = "_blank";
+	});
+	</script>
+</html>

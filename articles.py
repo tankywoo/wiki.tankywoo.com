@@ -28,6 +28,9 @@ articles = {
         'x-windows' : {
             'title' : 'X Windows安装',
         },
+        'ssh-tunnel' : {
+            'title' : 'SSH Tunnel',
+        },
     },
 
     'tool' : {
