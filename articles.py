@@ -36,140 +36,143 @@ articles = {
     'tool' : {
         'tcpdump' : {
             'title' : 'tcpdump',
-         },
+        },
         'ss' : {
             'title' : 'ss',
-         },
+        },
         'host' : {
             'title' : 'host',
-         },
+        },
         'nslookup' : {
             'title' : 'nslookup',
-         },
+        },
         'dig' : {
             'title' : 'dig',
-         },
+        },
         'netstat' : {
             'title' : 'netstat',
-         },
+        },
         'route' : {
             'title' : 'route',
-         },
+        },
         'nmap' : {
             'title' : 'nmap',
-         },
+        },
         'nc' : {
             'title' : 'nc',
-         },
+        },
         'curl' : {
             'title' : 'curl',
-         },
+        },
         'iptables' : {
             'title' : 'iptables',
-         },
+        },
         'ipset' : {
             'title' : 'ipset',
-         },
+        },
         'mount' : {
             'title' : 'mount',
-         },
+        },
         'find' : {
             'title' : 'find',
-         },
+        },
         'top' : {
             'title' : 'top',
-         },
+        },
         'ps' : {
             'title' : 'ps',
-         },
+        },
         'iftop' : {
             'title' : 'iftop',
-         },
+        },
         'bwm-ng' : {
             'title' : 'bwm-ng',
-         },
+        },
         'git' : {
             'title' : 'git',
-         },
+        },
         'svn' : {
             'title' : 'svn',
-         },
+        },
         'grep' : {
             'title' : 'grep',
-         },
+        },
         'sed' : {
             'title' : 'sed',
-         },
+        },
         'awk' : {
             'title' : 'awk',
-         },
+        },
         'uniq' : {
             'title' : 'uniq',
-         },
+        },
         'ssh' : {
             'title' : 'ssh',
-         },
+        },
         'vim' : {
             'title' : 'vim',
-         },
+        },
         'vimwiki' : {
             'title' : 'vimwiki',
-         },
+        },
         'markdown' : {
             'title' : 'markdown',
-         },
-         'blkid' : {
+        },
+        'blkid' : {
             'title' : 'blkid',
         },
-         'ethtool' : {
+        'ethtool' : {
              'title' : 'ethtool',
         },
         'arp' : {
              'title' : 'arp',
         },
+        'sar' : {
+             'title' : 'sar',
+        },
         'efficiency_tools_i_use' : {
             'title' : '我使用的效率工具',
-         },
+        },
 
     },
 
     'software' : {
         'screen' : {
             'title' : 'screen',
-         },
+        },
         'tmux' : {
             'title' : 'tmux',
-         },
+        },
         'vsftpd' : {
             'title' : 'vsftpd',
-         },
+        },
         'samba' : {
             'title' : 'samba',
-         },
+        },
         'rsync' : {
             'title' : 'rsync',
-         },
+        },
         'nginx' : {
             'title' : 'nginx',
-         },
+        },
         'fastcgi' : {
             'title' : 'fastcgi',
-         },
+        },
         'mysql' : {
             'title' : 'mysql',
-         },
+        },
         'mongodb' : {
             'title' : 'mongodb',
-         },
+        },
         'rrdtool' : {
             'title' : 'rrdtool',
-         },
+        },
         'msmtp_mutt' : {
             'title' : 'msmtp + mutt',
-         },
+        },
         'moinmoin' : {
             'title' : 'moinmoin',
-         },
+        },
 
     },
 
