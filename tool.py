@@ -60,7 +60,8 @@ def _check_md_file_exists(md_file):
 def _check_suffix(md_file):
     """Check if the md_file's suffix is right.
 
-    Supported markdown suffix is .md, .mkd, .markdown. Do not use other suffixes.
+    Supported markdown suffixes are .md, .mkd, .markdown. Do not use 
+    other suffixes.
     """
     md_suffixes = ["md", "mkd", "markdown"]
     md_suffix = md_file.split(".")[-1]
