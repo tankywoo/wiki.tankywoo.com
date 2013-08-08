@@ -53,9 +53,9 @@ DIR_HTML = osp.join(BASE_DIR, "html/%s" % WIKI_NAME) # generrated html file
 DIR_TPL = osp.join(BASE_DIR, "html/template/markdown.tpl") # html template
 
 def _check_md_file_exists(md_file):
-    """Check if md_file is exists."""
+    """Check if the md_file exists."""
     if not osp.exists(md_file):
-        sys.exit("%s is not exists" % md_file)
+        sys.exit("%s does not exists" % md_file)
 
 def _check_suffix(md_file):
     """Check if the md_file's suffix is right.
@@ -66,7 +66,7 @@ def _check_suffix(md_file):
     md_suffixes = ["md", "mkd", "markdown"]
     md_suffix = md_file.split(".")[-1]
     if md_suffix not in md_suffixes:
-        sys.exit("markdown file's suffix is error!")
+        sys.exit("markdown file's suffix is wrong!")
 
 def _get_dir_and_md_name(md_file):
     """Get the subdir's name and markdown file's name"""
@@ -78,7 +78,7 @@ def _get_title(md_file):
     """Get the wiki's title.
 
     Established:
-        The first line of wiki is the title, write in html comment syntax.
+        The first line of wiki is the title, written in html comment syntax.
         such as:
             <!-- title : The wiki title -->
     """
@@ -86,10 +86,10 @@ def _get_title(md_file):
     with open(md_file, "r") as fd:
         first_line = fd.readline().strip()
         if "title" not in first_line.lower():
-            sys.exit("Wiki's first line must have `title` keyword")
+            sys.exit("the wiki's first line must have `title` keyword")
         if not (first_line.startswith(notations["left"]) 
                 and first_line.endswith(notations["right"])):
-            sys.exit("wiki's title syntax is error!")
+            sys.exit("the wiki's title syntax is wrong!")
 
         for notation in notations.values():
             first_line = first_line.replace(notation, "")
