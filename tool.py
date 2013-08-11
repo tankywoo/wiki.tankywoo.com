@@ -31,6 +31,7 @@ Directory Structure:
 
 from __future__ import print_function
 
+import os
 import sys
 import re
 import argparse
@@ -48,14 +49,15 @@ if BASE_DIR not in sys.path:
 
 # CONFIGURATION
 WIKI_NAME = "tkwiki"
-DIR_WIKI = osp.join(BASE_DIR, WIKI_NAME) # markdown wiki file
-DIR_HTML = osp.join(BASE_DIR, "html/%s" % WIKI_NAME) # generrated html file
-DIR_TPL = osp.join(BASE_DIR, "html/template/markdown.tpl") # html template
+WIKI_PATH = osp.join(BASE_DIR, WIKI_NAME) # markdown wiki file
+HTML_PATH = osp.join(BASE_DIR, "html/%s" % WIKI_NAME) # generrated html file
+TPL_PATH = osp.join(BASE_DIR, "html/template/markdown.tpl") # html template
 
-def _check_file_exists(file_):
-    """Check if the file exists."""
-    if not osp.exists(file_):
-        sys.exit("%s does not exists" % file_)
+def _check_path_exists(path):
+    """Check if the path(include file and directory) exists."""
+    if not osp.exists(path):
+        return False
+    return True
 
 def _check_suffix(md_file):
     """Check if the md_file's suffix is right.
@@ -69,7 +71,7 @@ def _check_suffix(md_file):
         sys.exit("markdown file's suffix is wrong!")
 
 def _get_dir_and_md_name(md_file):
-    """Get the subdir's name and markdown file's name"""
+    """Get the subdir's name and markdown file's name."""
     dir_name = md_file.split("/")[-2] # html subdir
     md_name = md_file.split("/")[-1].split(".")[0]
     return (dir_name, md_name)
@@ -83,7 +85,7 @@ def _get_title(md_file):
             <!-- title : The wiki title -->
     """
     notations = {"left" : "<!--", "right" : "-->"}
-    with open(md_file, "r") as fd:
+    with open(md_file, "rb") as fd:
         first_line = fd.readline().strip()
         if "title" not in first_line.lower():
             sys.exit("the wiki's first line must have `title` keyword")
@@ -105,9 +107,9 @@ def _get_title(md_file):
         return title
 
 def _md2html(md_file, title):
-    """Generate the html from md file, and embed it in html template"""
+    """Generate the html from md file, and embed it in html template."""
     content = markdown2.markdown_path(md_file)
-    tpl = open(DIR_TPL, "r")
+    tpl = open(TPL_PATH, "rb")
     tpl_html = "".join(tpl.readlines())
     html = re.sub("{{ content }}", content, unicode(tpl_html, "utf-8"))
     html = re.sub("{{ title }}", unicode(title, "utf-8"), html)
@@ -116,7 +118,7 @@ def _md2html(md_file, title):
     return html
 
 def _update_dir_page(dir_name, md_name, title):
-    """dir_page is the directory page to list the wiki(html)'s link
+    """The dir_page is directory page to list the wiki(html)'s link.
 
     A <li> label's syntax is:
 
@@ -126,15 +128,18 @@ def _update_dir_page(dir_name, md_name, title):
     the top wiki is the newest.
 
     TODO:
-        * if dir_page_file not exists, create it.
         * if there is blanklines between <li>, delete it.
         * if there is blanklinks out of <ul>..</ul>, delete it.
-        * is it necessary to add tab or 4 spaces before ever <li>?
     """
-    dir_page_file = osp.join(DIR_HTML, dir_name+".html")
-    _check_file_exists(dir_page_file)
+    dir_page_file = osp.join(HTML_PATH, dir_name+".html")
 
-    with open(dir_page_file, "rb+") as fd:
+    # append mode will ignore seek
+    if _check_path_exists(dir_page_file):
+        file_mode = "rb+"
+    else:
+        file_mode = "wb+"
+
+    with open(dir_page_file, file_mode) as fd:
         li_list = fd.readlines()[1:-1]  # ignore the <ul>..</ul> label
         new_li = "<li><a href=\"../%s/%s.html\">%s</a></li>" % \
                 (dir_name, md_name, title)
@@ -149,8 +154,15 @@ def _update_dir_page(dir_name, md_name, title):
         fd.write(new_content)
 
 def _update_wiki_page(dir_name, md_name):
-    html_path = osp.join(DIR_HTML, dir_name, md_name+".html")
-    with open(html_path, "w") as wfd:
+    """Write the wiki html to file.
+
+    If the parent directory not exists, mkdir it.
+    """
+    html_dir_path = osp.join(HTML_PATH, dir_name)
+    if not _check_path_exists(html_dir_path):
+        os.mkdir(html_dir_path)
+    html_path = osp.join(html_dir_path, md_name+".html")
+    with open(html_path, "wb") as wfd:
         wfd.write(html)
 
 
@@ -167,16 +179,17 @@ if __name__ == "__main__":
     md_file = osp.realpath(parse_args.md_file)
     debug_mode = parse_args.debug
 
-    _check_file_exists(md_file)
+    if not _check_path_exists(md_file):
+        sys.exit("%s does not exists" % md_file)
     _check_suffix(md_file)
 
     dir_name, md_name = _get_dir_and_md_name(md_file)
     title = _get_title(md_file)
     html = _md2html(md_file, title)
 
-    _update_dir_page(dir_name, md_name, title)
-
     if debug_mode:
         print(html)
     else:
         _update_wiki_page(dir_name, md_name)
+        _update_dir_page(dir_name, md_name, title)
+        print("Update wiki ok.")
