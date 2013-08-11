@@ -40,7 +40,7 @@ import markdown2
 from os import path as osp
 
 __author__  = 'Tanky Woo <me@tankywoo.com>'
-__version__ = "1.1"
+__version__ = "2.0"
 __license__ = "MIT License"
 
 BASE_DIR = osp.dirname(osp.realpath(__file__))
@@ -169,9 +169,9 @@ def _update_wiki_page(dir_name, md_name):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="")
     parser.add_argument("-f", "--file", dest="md_file", required=True, 
-            help="")
+            help="The markdown file")
     parser.add_argument("--debug", dest="debug", action="store_true", 
-            help="")
+            help="Display to stdout")
     parser.add_argument("--version", action="version", 
             version="%(prog)s " + __version__)
 
