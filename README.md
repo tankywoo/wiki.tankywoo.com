@@ -6,15 +6,25 @@
 
 # 结构 #
 
+最基本的结构:
+
 	.
 	├── html
 	│   ├── template
+	│   │   └── markdown.tpl
 	│   └── tkwiki
+	│       ├── css
+	│       │   └── style.css
+	│       ├── img
+	│       ├── index.html
+	│       └── js
+	│           ├── jquery.js
+	│           └── pagify.js
+	├── README.md
 	├── tkwiki
-	│   ├── python
+	│   ├── python(此处不是基本结构, 只是举例如何分目录存放)
 	│   ├── ...
 	│   └── tool
-	├── ...
 	└── tool.py
 
 * `tkwiki` -- markdown wiki 文件的目录
