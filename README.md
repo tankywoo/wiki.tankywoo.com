@@ -2,7 +2,7 @@
 
 这是我个人的 wiki 文档, 使用 `vim` 和 `markdown` 来记录.
 
-大家如果觉得不错, 也可以把这个基本框架拿去用, 我在下面写了详细的使用方法.
+如果大家喜欢, 也可以把这个基本框架拿去用, 我在下面写了详细的使用方法.
 
 # 结构 #
 
@@ -30,7 +30,7 @@
 
 首先了解下上面介绍的 wiki 结构, 其中 `tkwiki` 是用来分`目录`存放 .md 文件的.
 
-`html` 目录下, `template` 下的 `markdown.tpl` 文件是基本的 html 模板, 大家可以自己定制, 只要别修改其中的 `{{ title  }}` 和 ` 和 `{{ content  }}` 这两个就行了, 这两个是 tool.py 生成器用来嵌套 html 用的.
+`html` 目录下, `template` 下的 `markdown.tpl` 文件是基本的 html 模板, 大家可以自己定制, 只要别修改其中的 `{{ title  }}` 和 `{{ content  }}` 这两个就行了, 这两个是 tool.py 生成器用来嵌套 html 用的.
 
 `html/tkwiki` 是用来存放 css, js, index.html 和生成的 html. 生成的 html 也会同 markdown 文件一样, 存放在同样的目录下. 比如 `tkwiki/tool/tmux.md`, 生成的 html 会放在 `html/tkwiki/tool/tmux.html`.
 
