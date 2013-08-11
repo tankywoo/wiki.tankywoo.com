@@ -75,12 +75,24 @@
 
 我取名是叫 mdgen, 这个可以随便设置
 
-* 生成 html 文件 : `mdgen -f md\_file`
-* html只输出到屏幕 : `mdgen -f md\_file --debug`
+* 生成 html 文件 : `mdgen -f mdfile`
+* html只输出到屏幕 : `mdgen -f mdfile --debug`
 
 其它可以 `mdgen -h` 看, 暂时还没其它功能.
 
 大家如果有兴趣, 可以看看 tool.py, 如果有功能改进或逻辑问题, 都可以发 issue 或 email.
+
+## Nginx 的配置 ##
+
+因为都是静态页面, 所以配置非常简单, 给个最简单的样例, 其它优化比如图片和 css/js 的 expires 可以自己设置:
+
+	server
+	{
+		listen 80;
+		server_name wiki.wutianqi.com;
+		index index.html index.htm default.html default.htm;
+		root /path/to/wiki;
+	}
 
 # 站点 #
 
