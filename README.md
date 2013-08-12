@@ -101,7 +101,7 @@
 		listen 80;
 		server_name wiki.wutianqi.com;
 		index index.html index.htm default.html default.htm;
-		root /path/to/wiki;
+		root /path/to/wiki/html/tkwiki;
 	}
 
 # 站点 #
