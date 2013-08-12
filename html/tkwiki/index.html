@@ -10,14 +10,16 @@
 		<script type="text/javascript" src="/js/pagify.js"></script>
 
 		<script type='text/javascript'>
-		  $(document).ready(function() {
+		$(document).ready(function() {
 			$('#page_holder').pagify({
-			  pages: ['about', 'rules', 'linux', 'tool', 'software', 'cpp', 'python', 'project'],
-			  animation: 'fadeIn',
-			  'default': 'about',
-			  cache: true
+				// pages 是用来注册目录页面
+				pages: ['about', 'rules', 'linux', 'tool', 'software', 'cpp', 'python', 'project'],
+				animation: 'fadeIn',
+				// default 指定首页默认使用的目录页面
+				'default': 'about',
+				cache: true
 			});
-		  });
+		});
 		</script>
 
         <a href="https://github.com/tankywoo/wiki"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
@@ -40,6 +42,7 @@
 			<h1>Wiki<small>@TankyWoo $ echo "Hello World!"</small></h1>
 			</header>
 			<nav>
+				<!-- 添加目录页面的显示 -->
 				<a href='#about'>About</a>
 				<a href='#rules'>Rules</a>
 				<a href='#linux'>Linux</a>

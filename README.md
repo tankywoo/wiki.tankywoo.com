@@ -52,9 +52,9 @@
 
 注册方法(修改两个地方):
 
-![注册目录](http://wutianqi-wiki.b0.upaiyun.com/wiki_readme1.png)
+![注册目录](http://wutianqi-wiki.b0.upaiyun.com/wiki_readme_1.png)
 
-![增加目录](http://wutianqi-wiki.b0.upaiyun.com/wiki_readme2.png)
+![增加目录](http://wutianqi-wiki.b0.upaiyun.com/wiki_readme_2.png)
 
 ## 注意点 ##
 
