@@ -74,8 +74,12 @@
 
 生成器使用 `Python` 写的, 会有一些模块的依赖.
 
-* argparse : 这个在 `Python2.7` 以后会自带, 如果低于此版本, 可能需要额外安装. Python 3.x 的我还没测试过, 暂不知道有没有问题.
+* argparse : 这个在 `Python2.7` 以后会自带, 如果低于此版本, 需要额外安装. Python 3.x 的我还没测试过, 暂不知道有没有问题.
 * markdown2 : markdown 生成引擎, [项目主页](http://github.com/trentm/python-markdown2)
+
+上面两个都通过通过 `pip` (当然首先得安装pip) 或 从各自的`linux发行版的源`里搜索安装(gentoo源测试ok).
+
+	pip install package_name
 
 ## wiki 生成器使用方法 ##
 
@@ -103,6 +107,15 @@
 		index index.html index.htm default.html default.htm;
 		root /path/to/wiki/html/tkwiki;
 	}
+
+## 截图 ##
+
+![截图](http://wutianqi-wiki.b0.upaiyun.com/wiki_readme_3.png)
+
+给 Sublime Text 2 装过 markdown 预览插件的童鞋肯定看出来了, 这个效果和它基本类似. 
+
+因为我的CSS有一部分引用它的了, 样式非常小清新.
+
 
 # 站点 #
 
