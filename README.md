@@ -25,22 +25,22 @@
 	│   ├── python(此处不是基本结构, 只是举例如何分目录存放)
 	│   ├── ...
 	│   └── tool
-	└── tool.py
+	└── mdgen.py
 
 * `tkwiki` -- markdown wiki 文件的目录
 * `html` -- markdown 生成的 html 文件的目录
 * `template` -- html 模板目录, 生成的 html 嵌套进这个模板
-* `tool.py` -- markdown2html 生成器
+* `mdgen.py` -- markdown2html 生成器
 
 # 使用 #
 
-我现在尽量在对 `tool.py` 这个 wiki 生成器做优化和改进, 保证大家可以简单的移植过去, 当作自己的 wiki 来使用.
+我现在尽量在对 `mdgen.py` 这个 wiki 生成器做优化和改进, 保证大家可以简单的移植过去, 当作自己的 wiki 来使用.
 
 ## wiki 结构详细介绍 ##
 
 首先了解下上面介绍的 wiki 结构, 其中 `tkwiki` 是用来分`目录`存放 .md 文件的.
 
-`html` 目录下, `template` 下的 `markdown.tpl` 文件是基本的 html 模板, 大家可以自己定制, 只要别修改其中的 `{{ title  }}` 和 `{{ content  }}` 这两个就行了, 这两个是 tool.py 生成器用来嵌套 html 用的.
+`html` 目录下, `template` 下的 `markdown.tpl` 文件是基本的 html 模板, 大家可以自己定制, 只要别修改其中的 `{{ title  }}` 和 `{{ content  }}` 这两个就行了, 这两个是 mdgen.py 生成器用来嵌套 html 用的.
 
 `html/tkwiki` 是用来存放 css, js, index.html 和生成的 html. 生成的 html 也会同 markdown 文件一样, 存放在同样的目录下. 比如 `tkwiki/tool/tmux.md`, 生成的 html 会放在 `html/tkwiki/tool/tmux.html`.
 
@@ -58,7 +58,7 @@
 
 ## 注意点 ##
 
-关于 .md 的格式, 只有一个地方要注意, 首行 **必须** 填写`标题`, 为了方便, tool.py 是通过 .md 的首行获取标题的. 格式如下:
+关于 .md 的格式, 只有一个地方要注意, 首行 **必须** 填写`标题`, 为了方便, mdgen.py 是通过 .md 的首行获取标题的. 格式如下:
 
 	<!-- title : The wiki title -->
 
@@ -79,9 +79,9 @@
 
 ## wiki 生成器使用方法 ##
 
-为了方便, 可以把 tool.py 放在 `/usr/bin` 下
+为了方便, 可以把 mdgen.py 放在 `/usr/bin` 下
 
-	sudo ln -s /path/to/tool.py /usr/bin/mdgen
+	sudo ln -s /path/to/mdgen.py /usr/bin/mdgen
 
 我取名是叫 mdgen, 这个可以随便设置
 
@@ -90,7 +90,7 @@
 
 其它可以 `mdgen -h` 看, 暂时还没其它功能.
 
-大家如果有兴趣, 可以看看 tool.py, 如果有功能改进或逻辑问题, 都可以发 issue 或 email.
+大家如果有兴趣, 可以看看 mdgen.py, 如果有功能改进或逻辑问题, 都可以发 issue 或 email.
 
 ## Nginx 的配置 ##
 
