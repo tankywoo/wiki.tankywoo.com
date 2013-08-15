@@ -11,7 +11,7 @@ Requirement:
 
 Use this tool, please:
 
-    sudo ln -s /path/to/tool.py /usr/bin/mdgen
+    sudo ln -s /path/to/mdgen.py /usr/bin/mdgen
 
 Usage:
 
@@ -25,7 +25,7 @@ Directory Structure:
     │   ├── template
     │   └── tkwiki
     ├── tkwiki
-    └── tool.py
+    └── mdgen.py
 
 """
 
