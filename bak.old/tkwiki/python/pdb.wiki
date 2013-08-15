@@ -1,3 +1,0 @@
-%title pdb (The Python Debug)
-
-

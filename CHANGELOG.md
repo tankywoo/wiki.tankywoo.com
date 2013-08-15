@@ -31,3 +31,7 @@
 
 * 不再使用`vimwiki`, 全部替换为`markdown`
 * 修改wiki的样式, 参考了`Sublime Text2`的markdown preview插件样式
+
+# 2013/08/10 #
+
+* 重写 wiki 的 `生成器 mdgen`, 除了目录需要注册, 其余全部自动化

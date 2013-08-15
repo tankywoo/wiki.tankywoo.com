@@ -1,4 +1,0 @@
-%title Python Built-in Functions
-
-`callable`
-

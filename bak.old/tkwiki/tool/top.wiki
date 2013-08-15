@@ -1,7 +1,0 @@
-%title top
-
-* top
-* htop
-* atop
-
-= top =
