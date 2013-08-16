@@ -1,3 +1,5 @@
+<!-- title : tmux -->
+
 # TMUX - terminal multiplexer #
 
 前序: [布道 Tmux](http://www.wutianqi.com/?p=3676)

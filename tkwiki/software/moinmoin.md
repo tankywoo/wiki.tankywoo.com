@@ -1,3 +1,5 @@
+<!-- title : MoinMoin Wiki -->
+
 # MoinMoin Wiki #
 
 [官方网站](http://www.moinmo.in/)
