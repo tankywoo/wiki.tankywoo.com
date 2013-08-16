@@ -6,6 +6,7 @@
 		- md5 变化
 		- git log (更倾向这种)
 		- github 接口
+* bug: 没有考虑更新 title 的情况
 
 
 # wiki #
