@@ -1,3 +1,5 @@
+<!-- title : 《Linux C 编程一站式学习笔记》 -->
+
 # Linux C 编程一站式学习 读书笔记 #
 
 * [在线阅读](http://akaedu.github.com/book/)
