@@ -1,3 +1,5 @@
+<!-- title : ClassMethod & StaticMethod -->
+
 # ClassMethod and StaticMethod #
 
 # 主要 #
