@@ -153,7 +153,7 @@ def _update_dir_page(dir_name, md_name, title):
         new_content = "<ul>\n" + "".join(li_list) + "</ul>\n"
         fd.write(new_content)
 
-def _update_wiki_page(dir_name, md_name):
+def _update_wiki_page(dir_name, md_name, html):
     """Write the wiki html to file.
 
     If the parent directory not exists, mkdir it.
@@ -165,6 +165,21 @@ def _update_wiki_page(dir_name, md_name):
     with open(html_path, "wb") as wfd:
         wfd.write(html)
 
+def generator(md_file, debug_mode=False):
+    if not _check_path_exists(md_file):
+        sys.exit("%s does not exists" % md_file)
+    _check_suffix(md_file)
+
+    dir_name, md_name = _get_dir_and_md_name(md_file)
+    title = _get_title(md_file)
+    html = _md2html(md_file, title)
+
+    if debug_mode:
+        print(html)
+    else:
+        _update_wiki_page(dir_name, md_name, html)
+        _update_dir_page(dir_name, md_name, title)
+        print("[%s] update ok." % md_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="")
@@ -179,17 +194,4 @@ if __name__ == "__main__":
     md_file = osp.realpath(parse_args.md_file)
     debug_mode = parse_args.debug
 
-    if not _check_path_exists(md_file):
-        sys.exit("%s does not exists" % md_file)
-    _check_suffix(md_file)
-
-    dir_name, md_name = _get_dir_and_md_name(md_file)
-    title = _get_title(md_file)
-    html = _md2html(md_file, title)
-
-    if debug_mode:
-        print(html)
-    else:
-        _update_wiki_page(dir_name, md_name)
-        _update_dir_page(dir_name, md_name, title)
-        print("Update wiki ok.")
+    generator(md_file, debug_mode)
