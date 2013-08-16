@@ -1,3 +1,5 @@
+<!-- title : host -->
+
 # host #
 
 host - DNS lookup utility

@@ -1,3 +1,5 @@
+<!-- title : awk -->
+
 # 格式 #
 
 	gawk options program file

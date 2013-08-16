@@ -1,3 +1,5 @@
+<!-- title : vim -->
+
 # Vim #
 
 [.vimrc](https://github.com/tankywoo/linux-autoconfig/blob/master/.vimrc)

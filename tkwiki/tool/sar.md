@@ -1,3 +1,5 @@
+<!-- title : sar -->
+
 # sar #
 
 Sar commands comes with the sysstat package. Make sure sysstat is installed. If you don’t have sar installed on your system, get it from Sysstat project.

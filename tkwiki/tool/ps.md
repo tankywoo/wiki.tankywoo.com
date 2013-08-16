@@ -1,3 +1,5 @@
+<!-- title : ps -->
+
 report a snapshot of the current processes
 
 If you want a repetitive update of the selection and the displayed information, use top instead.

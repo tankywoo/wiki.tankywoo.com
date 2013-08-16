@@ -1,3 +1,5 @@
+<!-- title : bwm-ng -->
+
 # bwm-ng #
 
 Bandwidth Monitor NG (Next Generation), a live bandwidth monitor for network and disk io.

@@ -1,3 +1,5 @@
+<!-- title : mount -->
+
 mount, 用于挂载分区到文件系统
 
 `/etc/fstab` 是启动时读取的挂载列表, 挂载后的结果是存储在 `/proc/mounts` 里. 所以如果proc没有被挂载上, 则 `fdisk -l` 是看不到任何东西的.
