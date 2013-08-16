@@ -1,3 +1,5 @@
+<!-- title : Bash Shortcuts -->
+
 # Bash Shortcuts #
 
 了解Bash的快捷键，在实际开发/管理中，可以大大的增加效率

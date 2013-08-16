@@ -1,3 +1,5 @@
+<!-- X Windows安装 -->
+
 # X-Windows安装记录 #
 
 参考: [X服务器配置指南](http://www.gentoo.org/doc/zh_cn/xorg-config.xml)

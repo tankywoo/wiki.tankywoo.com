@@ -1,3 +1,5 @@
+<!-- title : Linux Tricks -->
+
 # 查看现在使用的是哪一个shell #
 
 	echo $0
