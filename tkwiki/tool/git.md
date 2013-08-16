@@ -1,3 +1,5 @@
+<!-- title : git -->
+
 **NOTE**: git的`help`信息非常好，很多可以直接help来了解
 
 # 给git输出信息增加颜色 #
@@ -142,6 +144,13 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 
 	git config --global core.quotepath false
 
+[2013-08-17] 补充:
+
+在 `git mv` (rename) 文件后, 直接 git log 只能看到这个文件被 rename 后的日志, 想要看到完整的日志, 要用 `git log --follow xxx`
+
+参考:
+* [Is it possible to move/rename files in git and maintain their history?](http://stackoverflow.com/questions/2314652/is-it-possible-to-move-rename-files-in-git-and-maintain-their-history)
+* [What's the purpose of git-mv?](http://stackoverflow.com/questions/1094269/whats-the-purpose-of-git-mv)
 
 # Git资料 #
 
@@ -153,3 +162,4 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 * 2013-02-07 : 创建
 * 2013-06-04 : git使用vimdiff
 * 2013-07-25 : 补充文件名是中文的问题
+* 2013-08-17 : 补充 git mv 后日志的问题

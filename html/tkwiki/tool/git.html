@@ -24,6 +24,8 @@
 		
 		<div id="content">
 
+<!-- title : git -->
+
 <p><strong>NOTE</strong>: git的<code>help</code>信息非常好，很多可以直接help来了解</p>
 
 <h1>给git输出信息增加颜色</h1>
@@ -184,6 +186,14 @@ git config --global difftool.prompt false
 <pre><code>git config --global core.quotepath false
 </code></pre>
 
+<p>[2013-08-17] 补充:</p>
+
+<p>在 <code>git mv</code> (rename) 文件后, 直接 git log 只能看到这个文件被 rename 后的日志, 想要看到完整的日志, 要用 <code>git log --follow xxx</code></p>
+
+<p>参考:
+* <a href="http://stackoverflow.com/questions/2314652/is-it-possible-to-move-rename-files-in-git-and-maintain-their-history">Is it possible to move/rename files in git and maintain their history?</a>
+* <a href="http://stackoverflow.com/questions/1094269/whats-the-purpose-of-git-mv">What's the purpose of git-mv?</a></p>
+
 <h1>Git资料</h1>
 
 <ul>
@@ -197,6 +207,7 @@ git config --global difftool.prompt false
 <li>2013-02-07 : 创建</li>
 <li>2013-06-04 : git使用vimdiff</li>
 <li>2013-07-25 : 补充文件名是中文的问题</li>
+<li>2013-08-17 : 补充 git mv 后日志的问题</li>
 </ul>
 
 
