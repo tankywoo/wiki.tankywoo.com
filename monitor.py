@@ -3,27 +3,27 @@
 # Tanky Woo @ 2013-08-18
 
 # TODO:
-# filter
 # daemon
 # logging | pyinotify log
 # configable
 
 import sys
 from time import sleep
-import fnmatch
 import pyinotify
 
-def suffix_filter(fn):
-    suffixes = ["*.md", "*.mkd", "*.markdown"]
-    for suffix in suffixes:
-        if fnmatch.fnmatch(fn, suffix):
-            return False
-    return True 
+from os import path as osp
+
+def filter_event(event):
+    """
+    Ref: http://stackoverflow.com/a/18308871/1276501
+    """
+    suffixes = [".md", ".mkd", ".markdown"]
+    # return True to stop processing of event (to "stop chaining")
+    return osp.splitext(event.name)[1] not in suffixes
 
 class EventHandler(pyinotify.ProcessEvent):
     def process_IN_CREATE(self, event):
-        if not suffix_filter(event.name):
-            print "Creating:", event.pathname
+        print "Creating:", event.pathname
 
     def process_IN_DELETE(self, event):
         print "Removing:", event.pathname
@@ -68,7 +68,7 @@ def monitor():
 
     # Internally, 'handler' is a callable object which on new events will 
     # be called like this: handler(new_event)
-    handler = EventHandler()
+    handler = EventHandler(pevent=filter_event)
     notifier = SleepNotifier(wm, handler)
 
     notifier.loop()
