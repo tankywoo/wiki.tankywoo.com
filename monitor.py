@@ -13,13 +13,14 @@ import pyinotify
 
 from os import path as osp
 
+SUFFIXES = {".md", ".mkd", ".markdown"}
+
 def filter_event(event):
     """
     Ref: http://stackoverflow.com/a/18308871/1276501
     """
-    suffixes = [".md", ".mkd", ".markdown"]
     # return True to stop processing of event (to "stop chaining")
-    return osp.splitext(event.name)[1] not in suffixes
+    return osp.splitext(event.name)[1] not in SUFFIXES
 
 class EventHandler(pyinotify.ProcessEvent):
     def process_IN_CREATE(self, event):
