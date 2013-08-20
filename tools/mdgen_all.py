@@ -24,18 +24,16 @@ import sys
 import fnmatch
 from os import path as osp
 
+import configs
 from mdgen import generator
 
 __author__  = "Tanky Woo <me@tankywoo.com>"
 __version__ = "0.1"
 __license__ = "MIT License"
 
-BASE_DIR = osp.dirname(osp.realpath(__file__))
-if BASE_DIR not in sys.path:
-    sys.path.insert(BASE_DIR)
 
 if __name__ == "__main__":
-    root_path = osp.join(BASE_DIR, "tkwiki")
+    root_path = configs.WIKI_PATH
     patterns = ["*.md", "*.mkd", "*.markdown"]
 
     for root, dirs, files in os.walk(root_path):

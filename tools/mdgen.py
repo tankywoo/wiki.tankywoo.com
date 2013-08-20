@@ -39,19 +39,12 @@ import markdown2
 
 from os import path as osp
 
+import configs
+
 __author__  = 'Tanky Woo <me@tankywoo.com>'
 __version__ = "2.0"
 __license__ = "MIT License"
 
-BASE_DIR = osp.dirname(osp.realpath(__file__))
-if BASE_DIR not in sys.path:
-    sys.path.insert(BASE_DIR)
-
-# CONFIGURATION
-WIKI_NAME = "tkwiki"
-WIKI_PATH = osp.join(BASE_DIR, WIKI_NAME) # markdown wiki file
-HTML_PATH = osp.join(BASE_DIR, "html/%s" % WIKI_NAME) # generrated html file
-TPL_PATH = osp.join(BASE_DIR, "html/template/markdown.tpl") # html template
 
 def _check_path_exists(path):
     """Check if the path(include file and directory) exists."""
@@ -109,7 +102,7 @@ def _get_title(md_file):
 def _md2html(md_file, title):
     """Generate the html from md file, and embed it in html template."""
     content = markdown2.markdown_path(md_file)
-    tpl = open(TPL_PATH, "rb")
+    tpl = open(configs.TPL_PATH, "rb")
     tpl_html = "".join(tpl.readlines())
     html = re.sub("{{ content }}", content, unicode(tpl_html, "utf-8"))
     html = re.sub("{{ title }}", unicode(title, "utf-8"), html)
@@ -131,7 +124,7 @@ def _update_dir_page(dir_name, md_name, title):
         * if there is blanklines between <li>, delete it.
         * if there is blanklinks out of <ul>..</ul>, delete it.
     """
-    dir_page_file = osp.join(HTML_PATH, dir_name+".html")
+    dir_page_file = osp.join(configs.HTML_PATH, dir_name+".html")
 
     # append mode will ignore seek
     if _check_path_exists(dir_page_file):
@@ -158,7 +151,7 @@ def _update_wiki_page(dir_name, md_name, html):
 
     If the parent directory not exists, mkdir it.
     """
-    html_dir_path = osp.join(HTML_PATH, dir_name)
+    html_dir_path = osp.join(configs.HTML_PATH, dir_name)
     if not _check_path_exists(html_dir_path):
         os.mkdir(html_dir_path)
     html_path = osp.join(html_dir_path, md_name+".html")

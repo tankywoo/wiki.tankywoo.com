@@ -13,15 +13,9 @@ from os import path as osp
 
 import pyinotify
 
+import configs
 from mdgen import generator
 
-BASE_DIR = osp.dirname(osp.realpath(__file__))
-if BASE_DIR not in sys.path:
-    sys.path.insert(BASE_DIR)
-
-# CONFIGURATION
-WIKI_NAME = "tkwiki"
-WIKI_PATH = osp.join(BASE_DIR, WIKI_NAME) # markdown wiki file
 
 SUFFIXES = {".md", ".mkd", ".markdown"}
 
@@ -91,4 +85,4 @@ def monitor(path):
 
 
 if __name__ == "__main__":
-    monitor(WIKI_PATH)
+    monitor(configs.WIKI_PATH)
