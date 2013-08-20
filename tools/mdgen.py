@@ -40,6 +40,7 @@ import markdown2
 from os import path as osp
 
 import configs
+import comm
 
 __author__  = 'Tanky Woo <me@tankywoo.com>'
 __version__ = "2.0"
@@ -172,7 +173,7 @@ def generator(md_file, debug_mode=False):
     else:
         _update_wiki_page(dir_name, md_name, html)
         _update_dir_page(dir_name, md_name, title)
-        print("[%s] update ok." % md_name)
+        comm.print_ok("[%s]" % md_name, " updated ok.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="")

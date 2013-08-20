@@ -14,6 +14,7 @@ from os import path as osp
 import pyinotify
 
 import configs
+import comm
 from mdgen import generator
 
 
@@ -30,7 +31,7 @@ def filter_event(event):
 
 class EventHandler(pyinotify.ProcessEvent):
     def my_init(self):
-        print "Starting wiki monitor daemon..."
+        comm.print_ok("Starting wiki monitor daemon...")
         FORMAT = ("%(asctime)s %(levelname)8s "
         "%(funcName)s(%(filename)s:%(lineno)s) : %(message)s")
         logging.basicConfig(
