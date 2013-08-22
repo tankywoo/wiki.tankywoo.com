@@ -40,4 +40,7 @@ if __name__ == "__main__":
         for pattern in patterns:
             for filename in fnmatch.filter(files, pattern):
                 md_file = osp.join(root, filename)
-                generator(md_file)
+                try:
+                    generator(md_file)
+                except BaseException, e:
+                    print(str(e))
