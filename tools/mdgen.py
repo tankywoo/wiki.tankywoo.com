@@ -62,7 +62,8 @@ def _check_suffix(md_file):
     md_suffixes = ["md", "mkd", "markdown"]
     md_suffix = md_file.split(".")[-1]
     if md_suffix not in md_suffixes:
-        sys.exit("markdown file's suffix is wrong!")
+        _, md_name = _get_dir_and_md_name(md_file)
+        sys.exit(comm.color_error("[%s] suffix is wrong!" % md_name))
 
 def _get_dir_and_md_name(md_file):
     """Get the subdir's name and markdown file's name."""
@@ -79,13 +80,15 @@ def _get_title(md_file):
             <!-- title : The wiki title -->
     """
     notations = {"left" : "<!--", "right" : "-->"}
+    _, md_name = _get_dir_and_md_name(md_file)
     with open(md_file, "rb") as fd:
         first_line = fd.readline().strip()
         if "title" not in first_line.lower():
-            sys.exit("the wiki's first line must have `title` keyword")
+            sys.exit(comm.color_error(
+                "[%s] first line must have `title` keyword" % md_name))
         if not (first_line.startswith(notations["left"]) 
                 and first_line.endswith(notations["right"])):
-            sys.exit("the wiki's title syntax is wrong!")
+            sys.exit(comm.color_error("[%s] title syntax is wrong!" % md_name))
 
         for notation in notations.values():
             first_line = first_line.replace(notation, "")
@@ -161,7 +164,8 @@ def _update_wiki_page(dir_name, md_name, html):
 
 def generator(md_file, debug_mode=False):
     if not _check_path_exists(md_file):
-        sys.exit("%s does not exists" % md_file)
+        _, md_name = _get_dir_and_md_name(md_file)
+        sys.exit(comm.color_error("[%s] file does not exists" % md_name))
     _check_suffix(md_file)
 
     dir_name, md_name = _get_dir_and_md_name(md_file)
