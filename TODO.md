@@ -10,6 +10,7 @@
 	+ daemon :
 		- daemon tools (使用这种)
 		- pyinotify 自带的 daemonize
+	+ 增加一个 disable 属性, 不对此md生成html
 * bug: 没有考虑更新 title 的情况
 
 
