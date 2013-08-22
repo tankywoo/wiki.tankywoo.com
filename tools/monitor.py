@@ -2,11 +2,6 @@
 # -*- coding: utf-8 -*-
 # Tanky Woo @ 2013-08-18
 
-# TODO:
-# configable
-# check if the pid file exists
-# start|restart|reload
-
 import sys
 import logging
 from os import path as osp
@@ -19,6 +14,7 @@ from mdgen import generator
 
 
 SUFFIXES = {".md", ".mkd", ".markdown"}
+LOG_FILE = "/var/log/monitor.log"
 
 def filter_event(event):
     """
@@ -36,7 +32,7 @@ class EventHandler(pyinotify.ProcessEvent):
         "%(funcName)s(%(filename)s:%(lineno)s) : %(message)s")
         logging.basicConfig(
                 level=logging.INFO, 
-                filename="/tmp/monitor.log", 
+                filename=LOG_FILE, 
                 format=FORMAT)
         logging.info("Starting wiki monitor...")
 
@@ -82,7 +78,7 @@ def monitor(path):
     handler = EventHandler(pevent=filter_event)
     notifier = pyinotify.Notifier(wm, handler)
 
-    notifier.loop(daemonize=True, pid_file="/tmp/monitor.pid")
+    notifier.loop()
 
 
 if __name__ == "__main__":
