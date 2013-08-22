@@ -1,4 +1,4 @@
-<!-- X Windows安装 -->
+<!-- title : X Windows安装 -->
 
 # X-Windows安装记录 #
 
