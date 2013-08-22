@@ -29,3 +29,15 @@ def print_warn(msg, extra_msg=""):
 
 def print_error(msg, extra_msg=""):
     print(bcolors.ERROR + msg + bcolors.ENDC + extra_msg)
+
+def color_ok(msg):
+    return bcolors.OK + msg + bcolors.ENDC
+
+def color_info(msg):
+    return bcolors.INFO + msg + bcolors.ENDC
+
+def color_warn(msg):
+    return bcolors.WARNING + msg + bcolors.ENDC
+
+def color_error(msg):
+    return bcolors.ERROR + msg + bcolors.ENDC
