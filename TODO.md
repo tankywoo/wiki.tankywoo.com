@@ -3,9 +3,13 @@
 * 修改/添加/删除 的 日志功能
 	+ 比如修改了一个.md, 则可以在首页显示 xxx 时间 修改了xxx.md
 	+ 获取方式:
+		- notipy (使用这种)
 		- md5 变化
 		- git log (更倾向这种)
 		- github 接口
+	+ daemon :
+		- daemon tools (使用这种)
+		- pyinotify 自带的 daemonize
 * bug: 没有考虑更新 title 的情况
 
 
