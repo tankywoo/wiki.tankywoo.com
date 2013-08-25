@@ -14,7 +14,7 @@ from mdgen import generator
 
 
 SUFFIXES = {".md", ".mkd", ".markdown"}
-LOG_FILE = "/var/log/monitor.log"
+LOG_FILE = "/var/log/wiki_monitor.log"
 
 def filter_event(event):
     """
