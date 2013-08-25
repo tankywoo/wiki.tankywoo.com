@@ -1,9 +1,6 @@
-__NOTE__ : 最近代码结构做了调整, README 我也会尽快抽时间来做相应的调整.
-
-
 # 关于 #
 
-这是我个人的 wiki 文档, 使用 `vim` 和 `markdown` 来记录.
+这是我个人的 wiki 文档, 使用 `vim` 和 `markdown` 来记录. 生成器和监控器等都是用 `Python` 写的.
 
 如果大家喜欢, 也可以把这个基本框架拿去用, 我在下面写了详细的使用方法.
 
@@ -14,26 +11,30 @@ __NOTE__ : 最近代码结构做了调整, README 我也会尽快抽时间来做
 	.
 	├── html
 	│   ├── template
-	│   │   └── markdown.tpl
+	│   │   └── markdown.tpl    # wiki 的 基本模板, .md文件转换的内容会嵌入这个模板
 	│   └── tkwiki
-	│       ├── css
-	│       │   └── style.css
-	│       ├── img
-	│       ├── index.html
-	│       └── js
-	│           ├── jquery.js
-	│           └── pagify.js
-	├── README.md
+	│       ├── index.html    # 控制页面展示的页面, 包括注册要显示的目录
+	│       ├── about.html    # 首页, 这个可以在 index.html 里指定具体用哪个页面当首页
+	│       ├── css    # wiki 的 css 目录
+	│       ├── js     # wiki 的 js 目录
+	│       └── img    # 存放 .md 中使用到的图片的位置, 我暂时直接使用了又拍云(upyun)
 	├── tkwiki
-	│   ├── python(此处不是基本结构, 只是举例如何分目录存放)
+	│   ├── python     # 此处不是基本结构, 只是举例如何分目录存放 *
 	│   ├── ...
 	│   └── tool
-	└── mdgen.py
+	└── tools
+		├── comm.py        # 其他脚本用到的一些公共函数等
+		├── configs.py     # 注册文件, 设置 wiki 使用到的一些目录路径等
+		├── __init__.py
+		├── mdgen_all.py   # 把所有的 .md 文件都转换成 .html 文件
+		├── mdgen.py       # .md文件生成器. 对指定文件转换成 .html 文件. 具体可以 `-h` 查看使用方法
+		└── monitor.py     # wiki 的监控脚本. 用于对修改后的 .md 文件自动生成 .html
 
-* `tkwiki` -- markdown wiki 文件的目录
-* `html` -- markdown 生成的 html 文件的目录
-* `template` -- html 模板目录, 生成的 html 嵌套进这个模板
-* `mdgen.py` -- markdown2html 生成器
+wiki 分为三个主目录:
+
+* `tkwiki` -- markdown wiki 文件的目录. 此目录存放的是分类的`子目录`, 所有 .md 文件都存放在自己定义的相应的子目录中
+* `html` -- 包括模板, 一些必须的.html文件, 以及markdown 生成的 html 文件的目录
+* `tools` -- 里面都是 wiki 的一些工具, 包括 `生成器`, `监控器` 等
 
 # 使用 #
 
@@ -77,29 +78,25 @@ __NOTE__ : 最近代码结构做了调整, README 我也会尽快抽时间来做
 
 生成器使用 `Python` 写的, 会有一些模块的依赖.
 
+### Python 模块 ###
+
 * argparse : 这个在 `Python2.7` 以后会自带, 如果低于此版本, 需要额外安装. Python 3.x 的我还没测试过, 暂不知道有没有问题.
 * markdown2 : markdown 生成引擎, [项目主页](http://github.com/trentm/python-markdown2)
+* pyinotify : inotify 是监控文件系统变化的工具. [项目主业](https://github.com/seb-m/pyinotify).
 
-上面两个都通过通过 `pip` (当然首先得安装pip) 或 从各自的`linux发行版的源`里搜索安装(gentoo源测试ok).
+上面可以使用 `pip` (当然首先得安装pip) 或 从各自的`linux发行版的源`里搜索安装(gentoo源测试ok).
 
 	pip install package_name
 
-## wiki 生成器使用方法 ##
+**Note** : `pyinotify` 是对 `inotify` 封装的 Python 接口. `inotify` 是 Linux内核从 2.6.13 开始引入. 要判断内核是否开启 `inotify` 的支持, 可以看看我总结的 [inotify wiki](http://wiki.wutianqi.com/linux/inotify.html).
 
-为了方便, 可以把 mdgen.py 放在 `/usr/bin` 下
+### 第三方工具 ###
 
-	sudo ln -s /path/to/mdgen.py /usr/bin/mdgen
+* daemontools : 一个服务集合的管理工具. 用于监控和管理监控脚本.
 
-我取名是叫 mdgen, 这个可以随便设置
+## 配置wiki ##
 
-* 生成 html 文件 : `mdgen -f mdfile`
-* html只输出到屏幕 : `mdgen -f mdfile --debug`
-
-其它可以 `mdgen -h` 看, 暂时还没其它功能.
-
-大家如果有兴趣, 可以看看 mdgen.py, 如果有功能改进或逻辑问题, 都可以发 issue 或 email.
-
-## Nginx 的配置 ##
+### Nginx 配置 ###
 
 因为都是静态页面, 所以配置非常简单, 给个最简单的样例, 其它优化比如图片和 css/js 的 expires 可以自己设置:
 
@@ -110,6 +107,41 @@ __NOTE__ : 最近代码结构做了调整, README 我也会尽快抽时间来做
 		index index.html index.htm default.html default.htm;
 		root /path/to/wiki/html/tkwiki;
 	}
+
+### 生成器使用和配置 ###
+
+为了方便, 可以把 mdgen.py 和 mdgen_all.py 放在 `/usr/bin` 下
+
+	sudo ln -s /path/to/mdgen.py /usr/bin/mdgen
+	sudo ln -s /path/to/mdgen_all.py /usr/bin/mdgen_all
+
+
+* 生成 html 文件 : `mdgen -f mdfile`
+* html只输出到屏幕 : `mdgen -f mdfile --debug`
+
+其它可以 `mdgen -h` 看, 暂时还没其它功能.
+
+大家如果有兴趣, 可以看看 mdgen.py, 如果有功能改进或逻辑问题, 都可以发 issue 或 email.
+
+### 监控器配置 ###
+
+#### Gentoo ####
+
+安装好 `daemontools` 后会自动在 `根分区` 下建一个 `/service` 目录.
+
+	$ cd /service
+	$ mkdir wiki_monitor
+
+	$ vim run # 新建一个叫run的脚本
+	#!/bin/sh
+	pushd /path/to/wiki/tools
+	exec sudo ./monitor.py
+
+	$ rc-update add svscan default
+
+#### Ubuntu ####
+
+TODO
 
 ## 截图 ##
 
