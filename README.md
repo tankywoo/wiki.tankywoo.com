@@ -126,4 +126,4 @@ http://wiki.wutianqi.com
 
 # Email #
 
-	echo bWVAdGFua3l3b28uY29tCg== | base64 -d
+	me#tankywoo.com
