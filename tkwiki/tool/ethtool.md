@@ -31,6 +31,9 @@
 								   drv probe link
 			Link detected: yes
 
+
+`Link detected` 可用来检测网线是否连接
+
 # 修改历史 #
 
 * 2013-07-11 : 创建
