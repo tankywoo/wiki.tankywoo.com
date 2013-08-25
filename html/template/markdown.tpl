@@ -14,8 +14,8 @@
 		<div id="header">
 			<ul>
 				<li><a href='/'>Home</a></li>
-				<li><a href='http://www.wutianqi.com'>Blog</a></li>
-				<li><a href='https://github.com/tankywoo/wiki'>Github</a></li>
+				<li><a href='http://www.wutianqi.com' target="_blank">Blog</a></li>
+				<li><a href='https://github.com/tankywoo/wiki' target="_blank">Github</a></li>
 			</ul>
 		</div>
 		<div class="clearfix">
@@ -27,21 +27,6 @@
 {{ content }}
 
 		</div>
-
-		<!-- Duoshuo Comment BEGIN -->
-		<div class="ds-thread"></div>
-		<script type="text/javascript">
-		var duoshuoQuery = {short_name:"tkwiki"};
-			(function() {
-				var ds = document.createElement('script');
-				ds.type = 'text/javascript';ds.async = true;
-				ds.src = 'http://static.duoshuo.com/embed.js';
-				ds.charset = 'UTF-8';
-				(document.getElementsByTagName('head')[0] 
-				|| document.getElementsByTagName('body')[0]).appendChild(ds);
-			})();
-			</script>
-		<!-- Duoshuo Comment END -->
 
 		<div id="footer">
 			<span class="">
