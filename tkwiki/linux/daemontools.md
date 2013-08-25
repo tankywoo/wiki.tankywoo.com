@@ -21,9 +21,13 @@ emerge 安装 `sys-process/daemontools` 后, 它自动在 `/分区` 下新建一
 ### Ubuntu ###
 安装了 daemontools, 发现并没有自动新建 `/service` 目录, 也没有启动脚本...
 
-可参考 [Manage your services with Daemontools](http://isotope11.com/blog/manage-your-services-with-daemontools)
+可参考:
+* [Manage your services with Daemontools](http://isotope11.com/blog/manage-your-services-with-daemontools)
+* [How to start daemontools](http://cr.yp.to/daemontools/start.html)
 
-
+网上找了两个启动脚本:
+* [Configuring Daemontools for Ubuntu 10](https://gist.github.com/gregory80/563598)
+* [chkconfig-compatible init script for daemontools / svscan](https://blog.darmasoft.net/2011/06/24/chkconfig-compatible-daemontools-init-script.html)
 
 ## 参考链接 ##
 
