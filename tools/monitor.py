@@ -60,6 +60,15 @@ class EventHandler(pyinotify.ProcessEvent):
         except BaseException, e:
             logging.error("Modifing: %s. %s" % (event.pathname, str(e)))
 
+    def process_IN_MOVED_TO(self, event):
+        """For `svn up`.
+        """
+        try:
+            generator(event.pathname)
+            logging.info("Svn up: %s" % event.pathname)
+        except BaseException, e:
+            logging.error("Svn up: %s. %s" % (event.pathname, str(e)))
+
     def process_default(self, event):
         logging.info("Default: %s" % event.pathname)
 
@@ -67,7 +76,8 @@ class EventHandler(pyinotify.ProcessEvent):
 def monitor(path):
     mask = pyinotify.IN_DELETE | \
            pyinotify.IN_CREATE | \
-           pyinotify.IN_MODIFY  # watched events
+           pyinotify.IN_MODIFY | \
+           pyinotify.IN_MOVED_TO # watched events
 
     # The watch manager stores the watches and provides operations on watches
     wm = pyinotify.WatchManager()
