@@ -195,6 +195,7 @@ google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-
 * [Tmux - ArchWIKI](https://wiki.archlinux.org/index.php/Tmux) 对tmux介绍的非常详细
 * [TMUX – The Terminal Multiplexer (Part 1)](http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/)
 * [使用tmux](https://wiki.freebsdchina.org/software/t/tmux)
+* [Using tmux](http://510x.se/notes/posts/Using_tmux/)
 
 # 历史记录 #
 
