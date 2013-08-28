@@ -7,7 +7,7 @@
 Requirement:
 
     * argparse : python 2.7.x include it by default
-    * markdown2 : http://github.com/trentm/python-markdown2
+    * Python-Markdown : https://github.com/waylan/Python-Markdown
 
 Use this tool, please:
 
@@ -35,7 +35,7 @@ import os
 import sys
 import re
 import argparse
-import markdown2
+import markdown
 
 from os import path as osp
 
@@ -105,8 +105,9 @@ def _get_title(md_file):
 
 def _md2html(md_file, title):
     """Generate the html from md file, and embed it in html template."""
-    content = markdown2.markdown_path(md_file, 
-            extras={'fenced-code-blocks': {'cssclass': 'code_block'}})
+    md_file_text = "".join(open(md_file, "rb").readlines())
+    content = markdown.markdown(md_file_text, \
+            extensions=["fenced_code", "codehilite(guess_lang=False)"])
     tpl = open(configs.TPL_PATH, "rb")
     tpl_html = "".join(tpl.readlines())
     html = re.sub("{{ content }}", content, unicode(tpl_html, "utf-8"))
