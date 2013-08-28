@@ -105,7 +105,8 @@ def _get_title(md_file):
 
 def _md2html(md_file, title):
     """Generate the html from md file, and embed it in html template."""
-    content = markdown2.markdown_path(md_file)
+    content = markdown2.markdown_path(md_file, 
+            extras={'fenced-code-blocks': {'cssclass': 'code_block'}})
     tpl = open(configs.TPL_PATH, "rb")
     tpl_html = "".join(tpl.readlines())
     html = re.sub("{{ content }}", content, unicode(tpl_html, "utf-8"))
