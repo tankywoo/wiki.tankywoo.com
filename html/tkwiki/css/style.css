@@ -198,3 +198,11 @@ header h1 small {
 nav a {
 	margin-right: 20px
 }
+
+.codeblock {
+	border-radius:5px;
+}
+
+.codeblock pre, .codeblock code {
+	background-color: #404040;
+}

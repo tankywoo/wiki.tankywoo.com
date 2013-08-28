@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<link rel="Stylesheet" type="text/css" href="/css/style.css">
+		<link rel="Stylesheet" type="text/css" href="/css/codeblock.css">
 		<title>{{ title }} @ Tanky Woo's Wiki</title>
 		<meta name="keywords" content="Tanky Woo, wiki, makrdown, linux, python, cpp, ops"/>
 		<meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
