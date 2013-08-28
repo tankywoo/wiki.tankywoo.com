@@ -60,6 +60,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 
 以下配置就不更新了, 最近的请访问上面链接
 
+```bash
 	set -g default-terminal "screen-256color"   # use 256 colors
 	set -g display-time 5000                    # status line messages display
 	set -g status-utf8 on                       # enable utf-8
@@ -117,6 +118,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 
 	# scripting tmux
 	bind T source-file ~/.tmux/tanky
+```
 
 # 脚本化tmux #
 
@@ -126,6 +128,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 
 比如我写了一个分割三个pane的小脚本放在 ~/.tmux/tanky 里:
 
+```bash
 	select-pane -t 0
 	split-window -h -p 60
 	select-pane -t 1
@@ -133,6 +136,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 	send-keys -t 0 'ipython' C-m
 	# The C-m at the end is interpreted by Tmux as the enter key.
 	select-pane -t 1
+```
 
 google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-m` 是干嘛的, 查看绑定键也没找到  
 后来在[An Introduction to Scripting Tmux Key Bindings](http://spin.atomicobject.com/2013/04/11/tmux-key-binding-scripting/)上看到了解释.
@@ -146,6 +150,7 @@ google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-
 
 另外, 还可以直接写shell脚本, 然后运行, 比如:
 
+```bash
 	#!/bin/bash
 	# Tanky Woo@2013-06-19 10:51:15
 	# About:
@@ -168,6 +173,7 @@ google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-
 	fi
 
 	tmux attach-session -d -t 'tankywoo'
+```
 
 
 下面这几个链接不错
