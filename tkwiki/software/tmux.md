@@ -61,63 +61,63 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 以下配置就不更新了, 最近的请访问上面链接
 
 ```bash
-	set -g default-terminal "screen-256color"   # use 256 colors
-	set -g display-time 5000                    # status line messages display
-	set -g status-utf8 on                       # enable utf-8
-	set -g history-limit 100000                 # scrollback buffer n lines
-	setw -g mode-keys vi                        # use vi mode
+set -g default-terminal "screen-256color"   # use 256 colors
+set -g display-time 5000                    # status line messages display
+set -g status-utf8 on                       # enable utf-8
+set -g history-limit 100000                 # scrollback buffer n lines
+setw -g mode-keys vi                        # use vi mode
 
-	# start window indexing at one instead of zero
-	set -g base-index 1
+# start window indexing at one instead of zero
+set -g base-index 1
 
-	# set the prefix key and some key bindings to match GNU Screen
-	set -g prefix C-a
-	unbind-key C-b
-	bind-key C-a send-prefix
+# set the prefix key and some key bindings to match GNU Screen
+set -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
 
-	# key bindings for horizontal and vertical panes
-	unbind %
-	bind | split-window -h
-	unbind '"'
-	bind - split-window -v
+# key bindings for horizontal and vertical panes
+unbind %
+bind | split-window -h
+unbind '"'
+bind - split-window -v
 
-	# enable window titles
-	#set -g set-titles on
+# enable window titles
+#set -g set-titles on
 
-	# window title string (uses statusbar variables)
-	set -g set-titles-string '#T'
+# window title string (uses statusbar variables)
+set -g set-titles-string '#T'
 
-	# status bar with load and time
-	set -g status-bg '#4e4e4e'
-	set -g status-fg '#bbbbbb'
-	set -g status-left-fg '#55ff55'
-	set -g status-left-bg '#555555'
-	set -g status-right-fg '#55ff55'
-	set -g status-right-bg '#555555'
-	set -g status-left-length 90
-	set -g status-right-length 90
-	set -g status-left '[#(whoami)]'
-	set -g status-right '[#(date +" %m-%d %H:%M ")]'
-	set -g status-justify "centre"
-	set -g window-status-format '#I #W'
-	set -g window-status-current-format ' #I #W '
-	setw -g window-status-current-bg '#B3D9D9'
-	setw -g window-status-current-fg '#DDDDFF'
+# status bar with load and time
+set -g status-bg '#4e4e4e'
+set -g status-fg '#bbbbbb'
+set -g status-left-fg '#55ff55'
+set -g status-left-bg '#555555'
+set -g status-right-fg '#55ff55'
+set -g status-right-bg '#555555'
+set -g status-left-length 90
+set -g status-right-length 90
+set -g status-left '[#(whoami)]'
+set -g status-right '[#(date +" %m-%d %H:%M ")]'
+set -g status-justify "centre"
+set -g window-status-format '#I #W'
+set -g window-status-current-format ' #I #W '
+setw -g window-status-current-bg '#B3D9D9'
+setw -g window-status-current-fg '#DDDDFF'
 
-	# pane border colors
-	set -g pane-active-border-fg '#55ff55'
-	set -g pane-border-fg '#555555'
+# pane border colors
+set -g pane-active-border-fg '#55ff55'
+set -g pane-border-fg '#555555'
 
-	# bind to reload config
-	bind r source-file ~/.tmux.conf
+# bind to reload config
+bind r source-file ~/.tmux.conf
 
-	# add window to session
-	new -s tankywoo -n tankywoo
-	neww -n ops-dev
-	selectw -t 1
+# add window to session
+new -s tankywoo -n tankywoo
+neww -n ops-dev
+selectw -t 1
 
-	# scripting tmux
-	bind T source-file ~/.tmux/tanky
+# scripting tmux
+bind T source-file ~/.tmux/tanky
 ```
 
 # 脚本化tmux #
@@ -129,13 +129,13 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 比如我写了一个分割三个pane的小脚本放在 ~/.tmux/tanky 里:
 
 ```bash
-	select-pane -t 0
-	split-window -h -p 60
-	select-pane -t 1
-	split-window -v -p 25
-	send-keys -t 0 'ipython' C-m
-	# The C-m at the end is interpreted by Tmux as the enter key.
-	select-pane -t 1
+select-pane -t 0
+split-window -h -p 60
+select-pane -t 1
+split-window -v -p 25
+send-keys -t 0 'ipython' C-m
+# The C-m at the end is interpreted by Tmux as the enter key.
+select-pane -t 1
 ```
 
 google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-m` 是干嘛的, 查看绑定键也没找到  
@@ -151,28 +151,28 @@ google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-
 另外, 还可以直接写shell脚本, 然后运行, 比如:
 
 ```bash
-	#!/bin/bash
-	# Tanky Woo@2013-06-19 10:51:15
-	# About:
+#!/bin/bash
+# Tanky Woo@2013-06-19 10:51:15
+# About:
 
-	tmux start-server
+tmux start-server
 
-	if ! $(tmux has-session -t 'tankywoo'); then
-	        tmux new-session -d -s 'tankywoo' -n 'tankywoo' # -d *
-	        tmux select-window -t 'tankywoo'
-	        tmux split-window -h -p 60
-	        tmux select-pane -t 1
-	        tmux split-window -v -p 25
-	        tmux send-keys -t 0 'ipython' C-m
-	        # The C-m at the end is interpreted by Tmux as the enter key.
+if ! $(tmux has-session -t 'tankywoo'); then
+        tmux new-session -d -s 'tankywoo' -n 'tankywoo' # -d *
+        tmux select-window -t 'tankywoo'
+        tmux split-window -h -p 60
+        tmux select-pane -t 1
+        tmux split-window -v -p 25
+        tmux send-keys -t 0 'ipython' C-m
+        # The C-m at the end is interpreted by Tmux as the enter key.
 
-	        tmux new-window -n 'ops-dev'
+        tmux new-window -n 'ops-dev'
 
-	        tmux select-window -t 'tankywoo'
-	        tmux select-pane -t 1
-	fi
+        tmux select-window -t 'tankywoo'
+        tmux select-pane -t 1
+fi
 
-	tmux attach-session -d -t 'tankywoo'
+tmux attach-session -d -t 'tankywoo'
 ```
 
 
