@@ -36,6 +36,13 @@ class EventHandler(pyinotify.ProcessEvent):
                 format=FORMAT)
         logging.info("Starting wiki monitor...")
 
+    def _generate(self, event):
+        try:
+            generator(event.pathname)
+            logging.info("Svn up: %s" % event.pathname)
+        except BaseException, e:
+            logging.error("Svn up: %s. %s" % (event.pathname, str(e)))
+
     def process_IN_CREATE(self, event):
         """Do nothing. If open a new file and edit, it will trigger CREATE and 
         MODIFY event, only need to treat the MODIFY event.  If the event is a 
@@ -54,20 +61,12 @@ class EventHandler(pyinotify.ProcessEvent):
     def process_IN_MODIFY(self, event):
         """When the .md file is modified, update the corresponging html.
         """
-        try:
-            generator(event.pathname)
-            logging.info("Modifing: %s" % event.pathname)
-        except BaseException, e:
-            logging.error("Modifing: %s. %s" % (event.pathname, str(e)))
+        self._generate(self, event)
 
     def process_IN_MOVED_TO(self, event):
         """For `svn up`.
         """
-        try:
-            generator(event.pathname)
-            logging.info("Svn up: %s" % event.pathname)
-        except BaseException, e:
-            logging.error("Svn up: %s. %s" % (event.pathname, str(e)))
+        self._generate(self, event)
 
     def process_default(self, event):
         logging.info("Default: %s" % event.pathname)
