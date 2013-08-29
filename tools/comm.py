@@ -2,7 +2,13 @@
 # -*- coding: utf-8 -*-
 # Tanky Woo @ 2013-08-20
 
+"""Common functions used by other files.
+"""
+
 from __future__ import print_function
+from os import path as osp
+
+import configs
 
 class bcolors:
     OK = "\033[1;32m" # GREEN
@@ -41,3 +47,15 @@ def color_warn(msg):
 
 def color_error(msg):
     return bcolors.ERROR + msg + bcolors.ENDC
+
+def filter_suffix(filename):
+    """Filter file by suffix.
+    If the file suffix not in the allowed suffixes, the return true and filter.
+
+    The `fnmatch` module can also get the suffix:
+
+        patterns = ["*.md", "*.mkd", "*.markdown"]
+        fnmatch.filter(files, pattern)
+
+    """
+    return osp.splitext(filename)[1] not in configs.SUFFIXES

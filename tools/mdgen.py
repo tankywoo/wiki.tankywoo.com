@@ -17,16 +17,6 @@ Usage:
 
     mdgen -h
 
-Directory Structure:
-
-    .
-    ├── articles.py
-    ├── html
-    │   ├── template
-    │   └── tkwiki
-    ├── tkwiki
-    └── mdgen.py
-
 """
 
 from __future__ import print_function
@@ -42,7 +32,7 @@ from os import path as osp
 import configs
 import comm
 
-__author__  = 'Tanky Woo <me@tankywoo.com>'
+__author__  = "Tanky Woo <me@tankywoo.com>"
 __version__ = "2.0"
 __license__ = "MIT License"
 
@@ -56,12 +46,10 @@ def _check_path_exists(path):
 def _check_suffix(md_file):
     """Check if the md_file's suffix is right.
 
-    Supported markdown suffixes are .md, .mkd, .markdown. Do not use 
+    Supported markdown suffixes are configs.SUFFIXES. Do not use 
     other suffixes.
     """
-    md_suffixes = ["md", "mkd", "markdown"]
-    md_suffix = md_file.split(".")[-1]
-    if md_suffix not in md_suffixes:
+    if comm.filter_suffix(md_file):
         _, md_name = _get_dir_and_md_name(md_file)
         sys.exit(comm.color_error("[%s] suffix is wrong!" % md_name))
 

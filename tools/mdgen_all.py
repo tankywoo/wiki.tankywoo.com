@@ -20,27 +20,21 @@ TODO:
 
 from __future__ import print_function
 import os
-import sys
-import fnmatch
 from os import path as osp
 
 import configs
+import comm
 from mdgen import generator
-
-__author__  = "Tanky Woo <me@tankywoo.com>"
-__version__ = "0.1"
-__license__ = "MIT License"
-
 
 if __name__ == "__main__":
     root_path = configs.WIKI_PATH
-    patterns = ["*.md", "*.mkd", "*.markdown"]
 
     for root, dirs, files in os.walk(root_path):
-        for pattern in patterns:
-            for filename in fnmatch.filter(files, pattern):
-                md_file = osp.join(root, filename)
-                try:
-                    generator(md_file)
-                except BaseException, e:
-                    print(str(e))
+        for filename in files:
+            if comm.filter_suffix(filename):
+                continue
+            md_file = osp.join(root, filename)
+            try:
+                generator(md_file)
+            except BaseException, e:
+                print(str(e))
