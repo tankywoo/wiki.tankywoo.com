@@ -1,10 +1,10 @@
-# 关于 #
+# TKwiki #
 
 这是我个人的 wiki 文档, 使用 `vim` 和 `markdown` 来记录. 生成器和监控器等都是用 `Python` 写的.
 
 如果大家喜欢, 也可以把这个基本框架拿去用, 我在下面写了详细的使用方法.
 
-# 结构 #
+## 结构 ##
 
 最基本的结构:
 
@@ -36,11 +36,11 @@ wiki 分为三个主目录:
 * `html` -- 包括模板, 一些必须的.html文件, 以及markdown 生成的 html 文件的目录
 * `tools` -- 里面都是 wiki 的一些工具, 包括 `生成器`, `监控器` 等
 
-# 使用 #
+## 使用 ##
 
 我现在尽量在对 `mdgen.py` 这个 wiki 生成器做优化和改进, 保证大家可以简单的移植过去, 当作自己的 wiki 来使用.
 
-## wiki 结构详细介绍 ##
+### wiki 结构详细介绍 ###
 
 首先了解下上面介绍的 wiki 结构, 其中 `tkwiki` 是用来分`目录`存放 .md 文件的.
 
@@ -48,7 +48,7 @@ wiki 分为三个主目录:
 
 `html/tkwiki` 是用来存放 css, js, index.html 和生成的 html. 生成的 html 也会同 markdown 文件一样, 存放在同样的目录下. 比如 `tkwiki/tool/tmux.md`, 生成的 html 会放在 `html/tkwiki/tool/tmux.html`.
 
-## 使用介绍 ##
+### 使用介绍 ###
 
 在 `tkwiki` 下建立目录文件夹, 把相应的 .md 文件放在合适的目录里. 写完后, 用生成器生成就可以了, 不需要做额外的操作.
 
@@ -60,7 +60,7 @@ wiki 分为三个主目录:
 
 ![增加目录](http://wutianqi-wiki.b0.upaiyun.com/wiki_readme_2.png)
 
-## 注意点 ##
+### 注意点 ###
 
 关于 .md 的格式, 只有一个地方要注意, 首行 **必须** 填写`标题`, 为了方便, mdgen.py 是通过 .md 的首行获取标题的. 格式如下:
 
@@ -74,15 +74,16 @@ wiki 分为三个主目录:
 
 关于生成的目录页面, 因为生成器会自动生成, 所以大家不要做其它改动, 生成器对这一块的容错还没写完, 所以如果改了格式, 可能会发生错误操作.
 
-## 依赖 ##
+### 依赖 ###
 
 生成器使用 `Python` 写的, 会有一些模块的依赖.
 
-### Python 模块 ###
+#### Python 模块 ####
 
 * argparse : 这个在 `Python2.7` 以后会自带, 如果低于此版本, 需要额外安装. Python 3.x 的我还没测试过, 暂不知道有没有问题.
-* markdown2 : markdown 生成引擎, [项目主页](http://github.com/trentm/python-markdown2)
+* Python-Markdown : markdown 生成引擎, [项目主页](https://github.com/waylan/Python-Markdown)
 * pyinotify : inotify 是监控文件系统变化的工具. [项目主业](https://github.com/seb-m/pyinotify).
+* Pygments : 语法高亮插件. 配合 `Python-Markdown` 的 [CodeHilite](https://github.com/waylan/Python-Markdown) 使用的.
 
 上面可以使用 `pip` (当然首先得安装pip) 或 从各自的`linux发行版的源`里搜索安装(gentoo源测试ok).
 
@@ -90,13 +91,13 @@ wiki 分为三个主目录:
 
 **Note** : `pyinotify` 是对 `inotify` 封装的 Python 接口. `inotify` 是 Linux内核从 2.6.13 开始引入. 要判断内核是否开启 `inotify` 的支持, 可以看看我总结的 [inotify wiki](http://wiki.wutianqi.com/linux/inotify.html).
 
-### 第三方工具 ###
+#### 第三方工具 ####
 
 * daemontools : 一个服务集合的管理工具. 用于监控和管理监控脚本.
 
-## 配置wiki ##
+### 配置wiki ###
 
-### Nginx 配置 ###
+#### Nginx 配置 ####
 
 因为都是静态页面, 所以配置非常简单, 给个最简单的样例, 其它优化比如图片和 css/js 的 expires 可以自己设置:
 
@@ -108,7 +109,7 @@ wiki 分为三个主目录:
 		root /path/to/wiki/html/tkwiki;
 	}
 
-### 生成器使用和配置 ###
+#### 生成器使用和配置 ####
 
 为了方便, 可以把 mdgen.py 和 mdgen_all.py 放在 `/usr/bin` 下
 
@@ -123,9 +124,9 @@ wiki 分为三个主目录:
 
 大家如果有兴趣, 可以看看 mdgen.py, 如果有功能改进或逻辑问题, 都可以发 issue 或 email.
 
-### 监控器配置 ###
+#### 监控器配置 ####
 
-#### Gentoo ####
+##### Gentoo #####
 
 安装好 `daemontools` 后会自动在 `根分区` 下建一个 `/service` 目录.
 
@@ -139,23 +140,26 @@ wiki 分为三个主目录:
 
 	$ rc-update add svscan default
 
-#### Ubuntu ####
+##### Ubuntu #####
 
 TODO
 
-## 截图 ##
+#### Crontab 设置 ####
+
+为了防止 inotify 因为一些原因, 异常退出. 虽然 daemontools 可以监控, 但是中间依然有 5s 的等待. 所以为了防止这种情况, 最好配合 `crontab` 每个小时整体遍历更新一次.
+
+	crontab -e
+	0 */1 * * * python /python/to/wiki/tools/mdgen_all.py
+
+### 截图 ###
 
 ![截图](http://wutianqi-wiki.b0.upaiyun.com/wiki_readme_3.png)
 
-给 Sublime Text 2 装过 markdown 预览插件的童鞋肯定看出来了, 这个效果和它基本类似. 
 
-因为我的CSS有一部分引用它的了, 样式非常小清新.
-
-
-# 站点 #
+## 站点 ##
 
 http://wiki.wutianqi.com
 
-# Email #
+## Email ##
 
 	me#tankywoo.com
