@@ -157,9 +157,14 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 
 以前都是 cd 到仓库当前目录然后 pull. 因为想到 `svn up` 可以直接指定路径, 这种基本功能 git 肯定会有的, 但是直接指定路径不行.
 
-搜了下, [Git pulling depends on the current dir](http://stackoverflow.com/questions/9851644/git-pulling-depends-on-the-current-dir) 上的这个[回答](http://stackoverflow.com/a/9876901/1276501) 很给力.
+搜了下, StackOverflow 上的 [回答1](http://stackoverflow.com/a/9876901/1276501) 和 [回答2](http://stackoverflow.com/a/9746005/1276501) 非常给力.
 
-git 的参数 `--git-dir` 可以指定 repo 的路径来操作, 而不需要 cd 过去.
+git 的参数 `--git-dir` 可以指定 git 的路径, 即使用这个 `.git` 的配置等来更新 repo. 但是这个会以 `pwd` 为要更新的 repo 路径.
+所以还需要 `--work-tree` 来指定要更新的 repo 的路径, 而不需要 cd 过去.
+
+```bash
+git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
+```
 
 # Git资料 #
 
