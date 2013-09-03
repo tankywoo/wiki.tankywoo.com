@@ -152,6 +152,15 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 * [Is it possible to move/rename files in git and maintain their history?](http://stackoverflow.com/questions/2314652/is-it-possible-to-move-rename-files-in-git-and-maintain-their-history)
 * [What's the purpose of git-mv?](http://stackoverflow.com/questions/1094269/whats-the-purpose-of-git-mv)
 
+## 指定路径pull ##
+2013-09-03 更新:
+
+以前都是 cd 到仓库当前目录然后 pull. 因为想到 `svn up` 可以直接指定路径, 这种基本功能 git 肯定会有的, 但是直接指定路径不行.
+
+搜了下, [Git pulling depends on the current dir](http://stackoverflow.com/questions/9851644/git-pulling-depends-on-the-current-dir) 上的这个[回答](http://stackoverflow.com/a/9876901/1276501) 很给力.
+
+git 的参数 `--git-dir` 可以指定 repo 的路径来操作, 而不需要 cd 过去.
+
 # Git资料 #
 
 * [ProGit中文版](http://git-scm.com/book/zh)
@@ -163,3 +172,4 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 * 2013-06-04 : git使用vimdiff
 * 2013-07-25 : 补充文件名是中文的问题
 * 2013-08-17 : 补充 git mv 后日志的问题
+* 2013-09-03 : 更新指定路径更新git方法
