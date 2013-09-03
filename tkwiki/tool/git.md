@@ -1,8 +1,10 @@
 <!-- title : git -->
 
+# Git #
+
 **NOTE**: git的`help`信息非常好，很多可以直接help来了解
 
-# 给git输出信息增加颜色 #
+## 给git输出信息增加颜色 ##
 
 编辑`/etc/gitconfig`
 比如要对git status设置颜色，可以:
@@ -30,7 +32,7 @@
 * [How to colours in git](http://nathanhoad.net/how-to-colours-in-git)
 
 
-# 关于Git的分支 #
+## 关于Git的分支 ##
 
 参考的 [何谓分支](http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF)
 
@@ -52,7 +54,7 @@ Git的分支，其本质是一个指向commit对象的可变`指针`，git使用
 
 如果遇到冲突，需要到冲突的文件下根据提示编辑后再commit
 
-# 远程分支 #
+## 远程分支 ##
 
 参考的 [远程分支](http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF)
 
@@ -69,7 +71,7 @@ Git的分支，其本质是一个指向commit对象的可变`指针`，git使用
 
 这里origin是remote repo name，branch name 是master
 
-## 关于fetch和pull区别 ##
+### 关于fetch和pull区别 ###
 
 What is `git fetch`? and what is the difference to `git pull`?
 
@@ -77,7 +79,7 @@ What is `git fetch`? and what is the difference to `git pull`?
 
 `git pull`是fetch and merge
 
-# Git标签 #
+## Git标签 ##
 
 * 含附注的标签(annotated)
 * 轻量级标签(lightweight)
@@ -85,14 +87,14 @@ What is `git fetch`? and what is the difference to `git pull`?
 [2.6 Git 基础 - 打标签](http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)
 
 
-# Git 全局配置 #
+## Git 全局配置 ##
 
 全局忽略文件
 
 * [忽略文件](http://git-scm.com/book/zh/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-%E9%85%8D%E7%BD%AE-Git)
 * [git ignore repo](https://github.com/GitHub/gitignore)
 
-# 使用vimdiff #
+## 使用vimdiff ##
 
 默认的diff应该是使用diff命令, 这个命令也非常有必要掌握.
 
@@ -121,7 +123,7 @@ What is `git fetch`? and what is the difference to `git pull`?
 * [Git and Vimdiff](http://usevim.com/2012/03/21/git-and-vimdiff/)
 * [Using Vimdiff with Git](http://agileadam.com/using-vimdiff-git)
 
-# 查看提交log #
+## 查看提交log ##
 
 git log 会查看当前git repo里所有的提交历史
 
@@ -137,14 +139,15 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 
 * [查看提交历史](http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2)
 
-# 文件中文名问题 #
-2013-07-25 更新:
+## 文件中文名问题 ##
+[2013-07-25] 更新:
 
 最近遇到同步文件下来, 中文文件名全部是unicode, 解决这个问题加配置:
 
 	git config --global core.quotepath false
 
-[2013-08-17] 补充:
+## git mv 日志问题 ##
+[2013-08-17] 更新:
 
 在 `git mv` (rename) 文件后, 直接 git log 只能看到这个文件被 rename 后的日志, 想要看到完整的日志, 要用 `git log --follow xxx`
 
@@ -153,7 +156,7 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 * [What's the purpose of git-mv?](http://stackoverflow.com/questions/1094269/whats-the-purpose-of-git-mv)
 
 ## 指定路径pull ##
-2013-09-03 更新:
+[2013-09-03] 更新:
 
 以前都是 cd 到仓库当前目录然后 pull. 因为想到 `svn up` 可以直接指定路径, 这种基本功能 git 肯定会有的, 但是直接指定路径不行.
 
@@ -166,12 +169,12 @@ git 的参数 `--git-dir` 可以指定 git 的路径, 即使用这个 `.git` 的
 git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 ```
 
-# Git资料 #
+## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
 * [Git Reference](http://gitref.org/)
 
-# 修改历史 #
+## 修改历史 ##
 
 * 2013-02-07 : 创建
 * 2013-06-04 : git使用vimdiff
