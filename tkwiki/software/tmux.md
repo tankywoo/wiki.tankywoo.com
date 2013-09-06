@@ -12,7 +12,9 @@
 
 tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-b`, 如果习惯了screen的`C-a`, 可以修改prefix, 以下都用`C-b`表示前缀
 
-# 基本操作 #
+## 快捷键 ##
+
+### 基本操作 ###
 
 * `C-b :` 进入tmux的命令行模式
 * `C-b ?` 显示所有的bind-key
@@ -21,7 +23,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 
 如果有设置 `setw -g mode-keys vi` 的话，可按 vi 的按键模式操作。移动至待复制的文本处，按一下空格，结合 vi 移动命令开始选择，选好后按回车确认.
 
-# session 操作 #
+### session 操作 ###
 
 * `C-b d` deattch当前的session
 * `C-b C-z` 挂起当前的session
@@ -29,7 +31,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 * `C-b $` 可以重命名当前的session
 * `tmux ls` 显示tmux的所有session
 
-# window 操作 #
+### window 操作 ###
 
 * `C-b c` 可以新建一个新的window
 * `C-b &` 关闭当前的window
@@ -41,7 +43,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 * `C-b w` 显示当前会话的window, 可以通过上下选择来切换
 * `tmux neww -n tmux` 新建一个window, 名称是tmux
 
-# pane 操作 #
+### pane 操作 ###
 
 * `C-b "` 将当前window横向分割为两个pane
 * `C-b %` 将当前window纵向分割为两个pane
@@ -54,7 +56,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 * `C-b }` 把当前的pane移到右边
 * `C-b z` 把当前pane最大化/恢复. 感谢 yanyaoer 和 陈兴明Mingo 两位同学, tmux 升级到 1.8 后有这个特性了.
 
-# 配置文件 #
+## 配置文件 ##
 
 [我的tmux配置](https://github.com/tankywoo/linux-autoconfig/blob/master/.tmux.conf)
 
@@ -120,9 +122,9 @@ selectw -t 1
 bind T source-file ~/.tmux/tanky
 ```
 
-# 脚本化tmux #
+## 脚本化tmux ##
 
-** 脚本化这个是 Tmux 的一大亮点, 不用就太浪费了 **
+** 脚本化是 Tmux 的一大亮点 **
 
 脚本化可以让我们自己定义一些脚本, 来构造自己的tmux布局
 
@@ -175,37 +177,67 @@ fi
 tmux attach-session -d -t 'tankywoo'
 ```
 
-
 下面这几个链接不错
 
 * [Scripting Tmux Layouts](http://amjith.blogspot.com/2011/08/scripting-tmux-layouts.html)
 * [TMUX SCRIPTING](http://blog.htbaa.com/news/tmux-scripting)
 * [Scripting tmux](http://toastdriven.com/blog/2009/oct/09/scripting-tmux/)
 
-# 技巧 #
+## 技巧 ##
 
-## 批量操作 ##
+### 批量操作 ###
 
 当需要在多个机器执行相同操作时, 可以考虑用`pdsh`等内容分发的工具, 而tmux也有它的一种强悍的方式. 在一个windows里打开多个pane, 每个pane登录一台服务器, 设置windows的选项, 在其中一个pane上操作时, 其它pane都会复制相同的操作.
 
 在tmux的命令行里, 使用选项`set synchronize-panes on`即可.
 
-# 扩展 - tmux powerline #
+### 在不同大小的屏幕打开一个session ###
+
+** TODO **
+
+比如在一个较小的桌面打开一个session, 然后又在一个较大的桌面也打开这个session:
+
+	tmux attach -t session-name
+
+则会发现在较大的桌面上, 也只会显示和小桌面同样大小的窗口, 其余部分被密密麻麻的小点扩充.
+
+解决方法之一是:
+
+	tmux attach -d -t session-name
+
+即先强制 `detach` 掉小桌面的session, 然后再在较大桌面打开session.
+
+另外, 看到很多帖子说可以设置:
+
+	setw -g aggressive-resize on
+
+但是我设置后还是没有成功.
+
+参考:
+
+* [Attach to different windows in session](http://unix.stackexchange.com/questions/24274/attach-to-different-windows-in-session)
+* [Maximize window in tmux](http://superuser.com/questions/300251/maximize-window-in-tmux)
+* [Practical Tmux](https://mutelight.org/practical-tmux)
+* [Archlinux - Tmux](https://wiki.archlinux.org/index.php/Tmux)
+
+## 扩展 - tmux powerline ##
 
 * [tmux-powerline项目](https://github.com/erikw/tmux-powerline) 官方说此项目现在只做维护, 不更新
 * [powerline项目](https://github.com/Lokaltog/powerline) 这个是最新项目
 
-# 其他资料 #
+## 其他资料 ##
 
 * [screen and tmux](http://www.dayid.org/os/notes/tm.html) screen和tmux的操作对比
 * [Tmux - ArchWIKI](https://wiki.archlinux.org/index.php/Tmux) 对tmux介绍的非常详细
 * [TMUX – The Terminal Multiplexer (Part 1)](http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/)
 * [使用tmux](https://wiki.freebsdchina.org/software/t/tmux)
 * [Using tmux](http://510x.se/notes/posts/Using_tmux/)
+* [Practical Tmux](https://mutelight.org/practical-tmux)
 
-# 历史记录 #
+## 历史记录 ##
 
 * 2013-06-25 : 完善整个tmux wiki
 * 2013-07-04 : 补充批量操作技巧
 * 2013-07-29 : 开头引进博客的tmux简介; 对脚本化的强调说明;
 * 2013-08-05 : 补充 C-b z 特性
+* 2013-09-06 : tmux resize的问题
