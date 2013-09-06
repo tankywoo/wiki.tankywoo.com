@@ -61,12 +61,12 @@ class EventHandler(pyinotify.ProcessEvent):
     def process_IN_MODIFY(self, event):
         """When the .md file is modified, update the corresponging html.
         """
-        self._generate(self, event)
+        self._generate(event)
 
     def process_IN_MOVED_TO(self, event):
         """For `svn up`.
         """
-        self._generate(self, event)
+        self._generate(event)
 
     def process_default(self, event):
         logging.info("Default: %s" % event.pathname)
