@@ -169,6 +169,23 @@ git 的参数 `--git-dir` 可以指定 git 的路径, 即使用这个 `.git` 的
 git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 ```
 
+## Github ##
+
+### 关于对一个项目语言识别的问题 ###
+
+最近发现, 我写的这个 [tkwiki](https://github.com/tankywoo/tkwiki) 程序, 其语言被识别为 CSS 和 Javascript.
+
+这个有点闹心啊, 明明是用 Python 写的, 只是因为是一个 web 程序, 所以不可避免会有一些自定义或第三方的 CSS 和 JS.
+
+Github 是用其项目 [Linguist](https://github.com/github/linguist) 来识别项目语言的, 按照项目中每个语言的代码量排序.
+
+暂时还没找到方法可以解决这个问题.
+
+参考:
+
+* [Github Help - My repository is marked as the wrong language](https://help.github.com/articles/my-repository-is-marked-as-the-wrong-language)
+* [How does github figure out a project's language?](http://stackoverflow.com/questions/5318580/how-does-github-figure-out-a-projects-language)
+
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
