@@ -2,9 +2,9 @@
 
 # Screen #
 
-# What is Screen #
+## What is Screen ##
 
-# .screenrc #
+## .screenrc ##
 
 `info screen "String Escapes"`  
 
@@ -13,9 +13,9 @@
 * [What are useful .screenrc settings?](http://serverfault.com/questions/3740/what-are-useful-screenrc-settings)
 * [How can I change screen's hardstatus color based on the logged in user?](http://unix.stackexchange.com/questions/62842/how-can-i-change-screens-hardstatus-color-based-on-the-logged-in-user)
 
-# Tricks #
+## Tricks ##
 
-## 同步显示同一个screen ##
+### 同步显示同一个screen ###
 A打开一个screen, B可以登录这个screen,同步显示A的操作;B也可以在上面操作.
 
 	A 打开一个叫tankywoo的会话
