@@ -55,6 +55,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 * `C-b {` 把当前的pane移到左边
 * `C-b }` 把当前的pane移到右边
 * `C-b z` 把当前pane最大化/恢复. 感谢 yanyaoer 和 陈兴明Mingo 两位同学, tmux 升级到 1.8 后有这个特性了.
+* `C-b Space` 切换到下一个布局(这个布局应该是系统默认的一些)
 
 ## 配置文件 ##
 
