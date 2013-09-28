@@ -1,3 +1,7 @@
+**NOTE**
+
+wiki 程序 正在重写中, 此项目中`/tkwiki`下的文档继续更新, 但是代码暂不更新了.
+
 # TKwiki #
 
 这是我个人的 wiki 文档, 使用 `vim` 和 `markdown` 来记录. 生成器和监控器等都是用 `Python` 写的.
