@@ -59,9 +59,7 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 
 ## 配置文件 ##
 
-[我的tmux配置](https://github.com/tankywoo/linux-autoconfig/blob/master/.tmux.conf)
-
-以下配置就不更新了, 最近的请访问上面链接
+以下配置更新会有延迟, 最新配置见我的 [dotfiles](https://github.com/tankywoo/dotfiles)
 
 ```bash
 set -g default-terminal "screen-256color"   # use 256 colors
@@ -242,3 +240,4 @@ tmux attach-session -d -t 'tankywoo'
 * 2013-07-29 : 开头引进博客的tmux简介; 对脚本化的强调说明;
 * 2013-08-05 : 补充 C-b z 特性
 * 2013-09-06 : tmux resize的问题
+* 2013-10-16 : 更新tmux.conf配置文件的链接到dotfiles
