@@ -169,6 +169,17 @@ git 的参数 `--git-dir` 可以指定 git 的路径, 即使用这个 `.git` 的
 git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 ```
 
+# 查看指定目录下的 status #
+
+	git status [path]
+
+比如当前目录下的 status:
+
+	git status .
+
+[git status - is there a way to show changes only in a specific directory?](http://stackoverflow.com/questions/715321/git-status-is-there-a-way-to-show-changes-only-in-a-specific-directory)
+
+
 ## Github ##
 
 ### 关于对一个项目语言识别的问题 ###
