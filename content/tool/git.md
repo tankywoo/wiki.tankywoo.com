@@ -1,12 +1,9 @@
 ---
-title: "git"
+title: "Git"
 date: 2013-11-08 00:02
 ---
 
-
-# Git #
-
-**NOTE**: git的`help`信息非常好，很多可以直接help来了解
+git的`help`信息非常好，很多可以直接help来了解
 
 ## 给git输出信息增加颜色 ##
 
@@ -173,7 +170,7 @@ git 的参数 `--git-dir` 可以指定 git 的路径, 即使用这个 `.git` 的
 git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 ```
 
-# 查看指定目录下的 status #
+## 查看指定目录下的 status ##
 
 	git status [path]
 
@@ -182,6 +179,24 @@ git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 	git status .
 
 [git status - is there a way to show changes only in a specific directory?](http://stackoverflow.com/questions/715321/git-status-is-there-a-way-to-show-changes-only-in-a-specific-directory)
+
+## 杂项 ##
+
+只从 git repo 中移除文件, 但不删除实际文件:
+
+	git rm --cached file
+
+默认使用 `git rm` 会把文件也一并删除掉.
+
+## 修改最后一次提交 ##
+
+使用:
+
+	git commit --amend
+
+如果当前 stage区 没有东西, 则相当于可以修改 commit comment.
+
+如果 stage区 有新的文件, 比如有个文件staged后忘了和上次的提交一次commit, 则可以撤销并重新提交.
 
 
 ## Github ##
