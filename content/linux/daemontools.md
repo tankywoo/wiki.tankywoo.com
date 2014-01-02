@@ -22,6 +22,15 @@ emerge 安装 `sys-process/daemontools` 后, 它自动在 `/分区` 下新建一
 
 参考: [Service creation](http://cr.yp.to/daemontools/faq/create.html)
 
+daemontools 还有一些工具, 如 `svc`, `svstat` 等
+
+`svc` 用于控制单个服务的 up, down, pause, continue, hangup 等, 具体man.
+
+`svstat` 用于查看某个服务的状态, 比如:
+
+	» sudo svstat /service/test
+	/service/test: up (pid 1541) 1 seconds
+
 ### Ubuntu ###
 <strike>安装了 daemontools, 发现并没有自动新建 `/service` 目录, 也没有启动脚本...</strike>
 
@@ -49,3 +58,4 @@ ubuntu 有个 `daemontools-run` 程序, 我原先是把服务放在自己新建�
 ## 历史日志 ##
 
 * 2013-08-25 : 创建
+* 2014-01-02 : 增加 svc, svstat 等介绍
