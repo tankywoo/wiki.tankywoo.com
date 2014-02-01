@@ -181,6 +181,15 @@ git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 
 [git status - is there a way to show changes only in a specific directory?](http://stackoverflow.com/questions/715321/git-status-is-there-a-way-to-show-changes-only-in-a-specific-directory)
 
+## 选择一部分修改提交 ##
+
+使用 `git add -p filename`。
+
+具体见:
+
+* [Git 工具 - 交互式暂存](http://git-scm.com/book/zh/Git-%E5%B7%A5%E5%85%B7-%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%9A%82%E5%AD%98)
+* [How can I commit only part of a file in git](http://stackoverflow.com/questions/1085162/how-can-i-commit-only-part-of-a-file-in-git)
+
 ## 杂项 ##
 
 只从 git repo 中移除文件, 但不删除实际文件:
