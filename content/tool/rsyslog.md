@@ -107,6 +107,40 @@ value 是用来比较的值，必须用引号括起来。
 
 参考: [Filter Conditions](http://www.rsyslog.com/doc/rsyslog_conf_filter.html)
 
+
+## Rsyslog Queue ##
+
+Rsyslog的队列。
+
+来至[官方文档](http://www.rsyslog.com/doc/queues_analogy.html)的一幅图：
+
+![dataflow](http://www.rsyslog.com/doc/dataflow.png)
+
+### impstats 模块 ###
+
+[impstats配置讲解](http://www.rsyslog.com/doc/impstats.html)
+[使用impstats](http://www.rsyslog.com/how-to-use-impstats/)
+[Main Queue输出术语](http://www.rsyslog.com/rsyslog-statistic-counter-queues/)
+
+关于Rsyslog Queue的官方文档:
+
+* [](http://www.rsyslog.com/doc/queues.html)
+* [](http://www.rsyslog.com/doc/queues_analogy.html)
+
+## 关于 block queue ##
+
+http://lists.adiscon.net/pipermail/rsyslog/2012-February/029513.html
+
+https://bugs.launchpad.net/ubuntu/+source/sysklogd/+bug/26986
+
+http://blog.chinaunix.net/uid-773723-id-3900229.html
+
+https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/7-Beta/html/System_Administrators_Guide/s1-working_with_queues_in_rsyslog.html
+
+http://www.tuicool.com/articles/Jv2eUvn
+
+http://phpor.net/blog/post/1187
+
 # 更多资料 #
 * [rsyslog研究](http://www.cnblogs.com/tobeseeker/archive/2013/03/10/2953250.html)
 * [用rsyslog处理日志](http://dmyz.org/archives/394)
