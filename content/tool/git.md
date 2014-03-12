@@ -117,7 +117,7 @@ What is `git fetch`? and what is the difference to `git pull`?
 
 来查看修改的地方, 效果图:
 
-![git vimdiff](http://wutianqi-wiki.b0.upaiyun.com/git_vimdiff.png)
+![git vimdiff](http://tankywoo-wb.b0.upaiyun.com/git_vimdiff.png)
 
 参考:
 
