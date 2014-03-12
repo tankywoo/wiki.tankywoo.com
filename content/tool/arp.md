@@ -14,9 +14,15 @@ Address Resolution Protocol
 
 摘自[维基百科](http://zh.wikipedia.org/wiki/%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AE)
 
-## 清空 arp 缓存 ##
+## 清空所有arp缓存 ##
 
 	arp -n | awk '/^[1-9]/{print "arp -d " $1}' | sudo sh -x
+
+或
+
+	for a in `arp | grep "eth1" | cut -d " " -f1`; do arp -d $a; done
+
+
 
 ## arp 缓存问题 ##
 
