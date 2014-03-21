@@ -4,13 +4,11 @@ date: 2013-08-17 07:32
 ---
 
 
-# Vim #
-
 [.vimrc](https://github.com/tankywoo/linux-autoconfig/blob/master/.vimrc)
 
 
-# 快捷键 #
-## Movement ##
+## 快捷键 ##
+### Movement ###
 * `h`  - Move *left*
 * `j`  - Move *down*
 * `k`  - Move *up*
@@ -27,7 +25,7 @@ date: 2013-08-17 07:32
 * `C-o`- 返回到上次移动前的位置, 也可以用两个单引号`'`
 * `C-i`- 前进到后一次移动的位置
 
-## Search ##
+### Search ###
 * `*`     - Search *forward* for word under cursor
 * `#`     - Search *backward* for word under curor
 * `/word` - Search *forward* for *word*. Support *RE*
@@ -37,7 +35,7 @@ date: 2013-08-17 07:32
 
 在搜索后, 被搜索的单词都会高亮, 一般想取消那些高亮的单词, 可以再次搜索随便输入一些字母, 搜索不到自然就取消了. 另外也可以使用 `nohl` 取消这些被高亮的词.
 
-## Deletion ##
+### Deletion ###
 * `x`  - Delete character *forward*(under cursor), and remain in normal mode
 * `X`  - Delete character *backward*(before cursor), and remain in normal mode
 * `r`  - Replace single character under cursor, and remain in normal mode
@@ -50,58 +48,58 @@ date: 2013-08-17 07:32
 * `D`  - Delete until end of line
 
 
-## Yank & Put ##
+### Yank & Put ###
 * `y`   - Yank(copy)
 * `yy`  - Yank current line
 * `nyy` - Yank `n` lines form current line
 * `p`   - Put(paste) yanked text *below* current line
 * `P`   - Put(paste) yanked text *above* current line
 
-## Insert Mode ##
+### Insert Mode ###
 * `i` - Enter insert mode to the *left* of the cursor
 * `a` - Enter insert mode to the *right* of the cursor
 * `o` - Enter insert mode to the line *below* the current line
 * `O` - Enter insert mode to the line *above* the current line
 
-## Visual Mode ##
+### Visual Mode ###
 * `v`   - Enter visual mode, highlight characters
 * `V`   - Enter visual mode, highlight lines
 * `C-v` - Enter visual mode, highlight block
 
-## Other ##
+### Other ###
 * `u`   - Undo
 * `U`   - Undo all changes on current line
 * `C-r` - Redo
 
-## Read More ##
+### Read More ###
 
 * [A handy guide to Vim shortcuts](http://eastcoastefx.vaesite.com/vim)
 * [tuxfiles-vimcheat](http://www.tuxfiles.org/linuxhelp/vimcheat.html)
 * [What is your most productive shortcut with Vim?](http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim)
 
 
-# 技巧 #
+## 技巧 ##
 
-## shell多行注释 ##
+### shell多行注释 ###
 
 命令行模式下，注释掉line1与line2之间的行
 
 	line1,line2s/^/#/g
 
 
-## 自动补全 ##
+### 自动补全 ###
 
 	Ctrl+n Ctrl+p
 	Ctrl+x Ctrl+?{....}
 
-## 左右分割打开help文档 ##
+### 左右分割打开help文档 ###
 
 默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便
 
 	:vert help xxx
 
 
-## 逐个替换 ##
+### 逐个替换 ###
 
 全文直接替换:
 
@@ -112,8 +110,27 @@ date: 2013-08-17 07:32
 	:%s/old_str/new_str/gc
 
 
+### 关于 search/replace 中的换行符 ###
 
-# 修改历史 #
+Search:
+
+`\n` is `newline`, `\r` is `CR`(carriage return = Ctrl-M = ^M)
+
+Replace:
+
+`\r` is newline, `\n` is a null byte(0x00)
+
+比如字符串 test1,test2,test3 把逗号换成换行：
+
+	%s/,/\r/g
+
+参考:
+
+* [How to replace a character for a newline in Vim?] (http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim)
+* [Why is \r a newline for Vim?](http://stackoverflow.com/questions/71417/why-is-r-a-newline-for-vim)
+* [How can I add a string to the end of each line in Vim?](http://stackoverflow.com/questions/594448/how-can-i-add-a-string-to-the-end-of-each-line-in-vim)
+
+## 修改历史 ##
 
 * 2013-05-28 : 创建
 * 2013-07-10 : 补充 匹配括号的移动, 前后位置的移动. 这两个都是非常实用的快捷键.
