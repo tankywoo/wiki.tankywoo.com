@@ -210,7 +210,7 @@ ereregex
 
 ### In-Memory Queues ###
 
-这种队列是最常使用的队列，它分为 `FixedArray` 和 `LinkedList` 两种。它们使用内存作为缓存，这也导致它们的可靠性没有Disk Queue好。
+这种队列是最常使用的队列，它分为 `FixedArray` 和 `LinkedList` 两种。它们使用内存作为缓存，所以效率非常高，但是相对的它们的可靠性没有Disk Queue好。
 
 FixedArray 是预分配固定大小的队列，也是Main Queue的默认模式。它针对的是队列日志相对较小的情况，拥有很好的性能。
 
@@ -224,7 +224,106 @@ LinkedList 是动态分配大小的队列，适合队列日志很大的情况。
 
 如果一个In-Memory Queue定义了队列名(通过 `$<object>QueueFileName`)，它自动就变成 `Disk-Assisted`(DA)模式。
 
-DA队列实际是两个队，一个普通的memory队列 (called the "primary queue")和一个disk队列(called the "DA queue")。当达到一定条件后，DA队列就会被激活。
+DA队列实际是两个队列，一个普通的memory队列 (called the "primary queue")和一个disk队列(called the "DA queue")。当达到一定条件后，DA队列就会被激活。
+
+### 关于队列的配置 ###
+
+因为 MainMsgQueue 和 ActionQueue 的配置基本一样(除了有些默认值可能不同)， 所以这里以MainMsgQueue 为例:
+
+* `$MainMsgQueueType [FixedArray/LinkedList/Direct/Disk]`
+* `$MainMsgQueueFileName <name>` 针对disk queue的配置，定义队列名，存储队列数据时用的文件名就是这个名称
+* `MainMsgQueueCheckpointInterval <number>` 针对disk queue的配置，单位 `s`，增加可靠性 TODO
+* `$MainMsgQueueDequeueBatchSize <number>` [default 32] 设置多少条队列作为一个batch一起出队，针对一个日志量很大的系统，可以考虑把这个值调高来增加性能，不过要结合可使用内存考虑实际情况
+
+对于DA队列，最有特点就是队列阈值的设置了。主要包括这几个配置:
+
+* `$MainMsgQueueSize` 设置队列的最大大小
+* `$MainMsgQueueDiscardMark <number>` [default 9750] 配合下面的 `$MainMsgQueueDiscardSeverity`，超过这个watermark后，不重要的日志都会丢弃，包括新进来和已经在队列里的
+* `$MainMsgQueueDiscardSeverity <severity>` [default 4 (warning)] 0-Emergency, 1-Alert, 2-Critical, 3-Error, 4-Warning, 5-Notice, 6-Informational, 7-Debug
+* `$MainMsgQueueHighWaterMark <number>` [default 8000] 设置 high watermark
+* `$MainMsgQueueLowWaterMark <number>` [default 2000] 设置 low watermark
+* `$MainMsgQueueMaxFileSize <size_nbr>` [default 1m] 针对disk情况下，单个文件的最大大小
+* `$MainMsgQueueMaxDiskSpace` 控制占用硬盘总空间大小
+
+DA 对于阈值处理的逻辑比较有意思，并不是单纯的内存满了就开始使用硬盘。首先，有 `low watermark` 和 `high watermark` 这两个概念。
+
+如果队列大小达到 high watermark，队列开始写数据到disk
+如果队列大小降到 low watermark，停止写入disk(直到再次达到 high watermark); 或者 disk queue 队列为空(即da队列里的数据处理完)，这两种情况都会进入in-memory 模式
+
+关于终止队列的一些处理配置:
+
+* `$MainMsgQueueTimeoutEnqueue` 
+
+	[number is timeout in ms (1000ms is 1sec!), default 2000, 0 means indefinite] 
+
+	当队列或硬盘满了，在这个超时时间后新来的日志，设置0可以直接丢弃掉
+
+* `$MainMsgQueueTimeoutShutdown <number>` 
+
+	[number is timeout in ms (1000ms is 1sec!), default 0 (indefinite)] 
+
+	当队列关闭时，还有数据在进入队列，rsyslog会尽可能在这个timeout周期内处理掉这些数据
+
+* `$MainMsgQueueTimeoutActionCompletion <number>` 
+
+	[number is timeout in ms (1000ms is 1sec!), default 1000, 0 means immediate!] 
+
+	配置需要多久来处理完当前的数据
+
+* `$MainMsgQueueSaveOnShutdown  [**on**/off]` 
+
+	针对disk queue的配置，当运行中的队列关闭时，会先把队列中的数据存在硬盘中
+
+* `$MainMsgQueueDequeueSlowdown <number>` 
+
+	[number is timeout in microseconds (1000000us is 1sec!), default 0 (no delay). Simple rate-limiting!]
+
+	简单的出队速度限制，单位微秒
+
+* `$MainMsgQueueImmediateShutdown [on/off]` 貌似是一个被弃用的选项
+
+当配置的队列大小或硬盘空间满了以后，rsyslogd 会限制数据submitter。配置 `$MainMsgQueueTimeoutEnqueue` 后，当超过这个时间后新来的日志会被丢弃；设置0为直接丢弃。
+
+`$MainMsgQueueTimeoutShutdown`、`$MainMsgQueueTimeoutActionCompletion` 和 `$MainMsgQueueSaveOnShutdown` 是在队列终止后可以做的一系列措施。
+
+关于队列的worker thread:
+
+* `$MainMsgQueueWorkerThreadMinumumMessages <number>` [default 100]
+* `$MainMsgQueueWorkerThreads <number>` [num worker threads, default 1, recommended 1]
+* `$MainMsgQueueWorkerTimeoutThreadShutdown <number>` [number is timeout in ms (1000ms is 1sec!), default 60000 (1 minute)]
+
+每个队列(direct queue除外)都有一个工作线程池(worker thread pool).
+初始时，是没有worker thread的，当有消息来是，会自动启动一个.
+`$MainMsgQueueWorkerThreadMinumumMessages` 配置一个worker thread处理的消息大小，
+`$MainMsgQueueWorkerThreads` 配置work thread的上限值。
+
+比如设置一个worker thread的最小处理消息大小是100个，当小于100个是，只有一个worker，当超过100个，小于200个时，会有两个worker。。。
+
+以上配置要注意`单位`, `默认值`。
+
+另外所有指名`针对disk`的配置，都是包括 disk queue 和 DA queue.
+
+更多配置参考[这里](http://www.rsyslog.com/doc/rsyslog_conf_global.html)
+
+在一般情况下，大部分的配置都可以直接使用默认的配置，这里给出一份Action使用DA队列的配置:
+
+	# 这两个是全局的 
+	$ActionResumeRetryCount                  3
+	$ActionResumeInterval                    10
+	# 以下是每个ActionQueue自己的配置
+	$ActionQueueType                         LinkedList
+	$ActionQueueFileName                     da_queue
+	$ActionQueueMaxFileSize                  100M         # 设置单个disk文件的大小
+	$ActionQueueMaxDiskSpace                 10G          # 设置最大占用空间
+	$ActionQueueDisacdSeverity               3            # 设置忽略的等级
+	$ActionQueueLowWaterMark                 5000         # 默认是2000
+	$ActionQueueHighWatermark                15000        # 默认是8000
+	$ActionQueueDiscardMark                  30000        # 默认是9750
+	$ActionQueueSize                         80000        # 文档没写，测试发现默认是1000
+	$ActionQueueSaveOnShutdown               on
+	
+	*.* @log-center.xxx.com:514
+
 
 ---
 
