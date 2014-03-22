@@ -12,7 +12,6 @@ date: 2013-08-17 07:23
 	sudo route add default gw 192.168.2.254
 	配置DNS
 	sudo vim /etc/resolv.conf
-	重启网络
 
 ## Gentoo 网络配置文件 ##
 
