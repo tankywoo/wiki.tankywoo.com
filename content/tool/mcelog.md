@@ -5,7 +5,24 @@ date: 2014-03-25 14:08
 
 MCE - Machine Check Exception(Error)
 
+[解释1](http://www.cyberciti.biz/tips/linux-server-predicting-hardware-failure.html):
+
+> MCE is nothing but feature of AMD / Intel 64 bit systems which is used to detect an unrecoverable hardware problem. MCE can detect:
+> 
+> * Communication error between CPU and motherboard.
+> * Memory error - ECC problems.
+> * CPU cache errors and so on.
+> 
+> Program such mcelog decodes machine check events (hardware errors) on x86-64 machines running a 64-bit Linux kernel.
+
+
 mcelog 是 X86架构上(32bit and 64bit) 的 Linux 系统上用来检查硬件错误，特别是内存和CPU错误的工具。
+
+[官方介绍](http://www.mcelog.org/README.html):
+
+> mcelog is the user space backend for logging machine check errors reported by the hardware to the kernel. 
+> The kernel does the immediate actions (like killing processes etc.) and mcelog decodes the errors and manages various other advanced error responses like offlining memory, CPUs or triggering events.
+
 
 要了解mcelog，首先应该了解下官方列出的一些[术语](http://www.mcelog.org/glossary.html)
 
@@ -13,13 +30,13 @@ mcelog 是 X86架构上(32bit and 64bit) 的 Linux 系统上用来检查硬件�
 
 Gentoo 上安装比较简单, emerge就能在官方源里搜到:
 
-*  app-admin/mcelog
-      Latest version available: 1.0_pre3_p20130621-r1
-      Latest version installed: [ Not Installed ]
-      Size of files: 280 kB
-      Homepage:      http://mcelog.org/
-      Description:   A tool to log and decode Machine Check Exceptions
-      License:       GPL-2
+	*  app-admin/mcelog
+		  Latest version available: 1.0_pre3_p20130621-r1
+		  Latest version installed: [ Not Installed ]
+		  Size of files: 280 kB
+		  Homepage:      http://mcelog.org/
+		  Description:   A tool to log and decode Machine Check Exceptions
+		  License:       GPL-2
 
 其它发行版需要具体参考[官方安装说明](http://www.mcelog.org/installation.html)
 
@@ -67,6 +84,24 @@ trigger is a newer method where the kernel runs mcelog on a error. This is confi
 
 大部分可以使用默认的选项，下面列出一些需要修改(开启)的:
 
+	# 修改cpu类型，可以通过 mcelog --help 看到支持的合法类型选项
+	cpu = type 
+	
+	# 使用daemon方式运行
+	daemon = yes
+
+	# cpu主频，可以通过 cat /proc/cpuinfo 输出的 `cpu MHz` 看到
+	cpuhz = 1800.00
+
+	# 配置是否写入syslog
+	syslog = yes
+	syslog-error = yes
+	no-syslog = yes
+	logfile = filename
+
+	# server 区域可以配置读取mcelog socket的权限，建议使用 root 权限。
+	client-user = yes
+
 ## 命令行参数选项 ##
 
 具体可以 man mcelog
@@ -108,11 +143,42 @@ trigger is a newer method where the kernel runs mcelog on a error. This is confi
 
 `mcelog --client` 相当于一个mcelog客户端，用来从mcelog进程查询信息
 
-下面的选项都可以通过mcelog的配置文件进行配置。
+下面的选项都可以通过mcelog的配置文件进行配置。建议直接在配置文件中配置，其中还有一些配置是参数选项中没有的。
 
 最下面是合法的cpu类型，在--cpu配置时使用
 
+下面可以从指定文件中读取内核日志进行解码输出:
 
+	# Decode machine check ASCII output from kernel logs
+	mcelog [options] --ascii < log
+
+比如在 mcelog 项目源码中的 input/ 目录中有一些samples可以直接使用:
+
+	tankywoo@gentoo-local::input/ (master*) » cat dimm0
+	# dimm0, channel0 corrected error
+	CPU 0 2
+	PROCESSOR 0:0x106a0
+	STATUS 0x8800000000000080
+	MISC 0
+
+	tankywoo@gentoo-local::input/ (master*) » sudo mcelog --ascii < dimm0
+	# dimm0, channel0 corrected error
+	Hardware event. This is not a software error.
+	CPU 0 BANK 2
+	MISC 0
+	MCG status:
+	MCi status:
+	Corrected error
+	MCi_MISC register valid
+	MCA: MEMORY CONTROLLER GEN_CHANNEL0_ERR
+	Transaction: Generic undefined request
+	Memory corrected error count (CORE_ERR_CNT): 0
+	Memory transaction Tracker ID (RTId): 0
+	Memory DIMM ID of error: 0
+	Memory channel ID of error: 0
+	Memory ECC syndrome: 0
+	STATUS 8800000000000080 MCGSTATUS 0
+	CPUID Vendor Intel Family 6 Model 26
 
 ## 一些依赖 ##
 
@@ -134,3 +200,6 @@ trigger is a newer method where the kernel runs mcelog on a error. This is confi
 * lk10-mcelog.pdf - mcelog 处理的错误简介
 * mce.pdf - 比较老的文档，介绍的是mcelog第一个发行版
 * mcelog --help
+* [mcelog-lk10-pres.pdf](http://www.halobates.de/mcelog-lk10-pres.pdf)
+* [mce的一些零散记录](http://blog.casparant.com/posts/some-misc-items-of-mce.html)
+* [Linux系统无法ping通，导致需要重启系统](http://www.flatws.cn/article/program/linux/2011-05-04/23961.html)
