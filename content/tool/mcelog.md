@@ -76,7 +76,13 @@ mcelog 安装的主要文件(配置和程序)有:
 
 cronjob 方式是通过 cron程序定时检查，这样会导致一些错误被延时汇报, mcelog也无法保存一些扩展的状态。
 
-trigger is a newer method where the kernel runs mcelog on a error. This is configured with echo /usr/sbin/mcelog > /sys/devices/system/machinecheck/machinecheck0/trigger This is faster, but still doesn't allow mcelog to keep state, and has relatively high overhead for each error because a program has to be initialized from scratch.
+> trigger is a newer method where the kernel runs mcelog on a error. This is configured with echo /usr/sbin/mcelog > /sys/devices/system/machinecheck/machinecheck0/trigger This is faster, but still doesn't allow mcelog to keep state, and has relatively high overhead for each error because a program has to be initialized from scratch.
+
+trigger 是一种新的方式，通过配置:
+
+	echo /usr/sbin/mcelog > /sys/devices/system/machinecheck/machinecheck0/trigger 
+
+这种方式更快，但是仍然也无法保存状态，且因为每次错误都需要初始化，所以开销大。
 
 ## 配置 ##
 
