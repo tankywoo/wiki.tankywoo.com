@@ -143,14 +143,12 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 * [查看提交历史](http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2)
 
 ## 文件中文名问题 ##
-[2013-07-25] 更新:
 
 最近遇到同步文件下来, 中文文件名全部是unicode, 解决这个问题加配置:
 
 	git config --global core.quotepath false
 
 ## git mv 日志问题 ##
-[2013-08-17] 更新:
 
 在 `git mv` (rename) 文件后, 直接 git log 只能看到这个文件被 rename 后的日志, 想要看到完整的日志, 要用 `git log --follow xxx`
 
@@ -192,9 +190,7 @@ git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 * [Git 工具 - 交互式暂存](http://git-scm.com/book/zh/Git-%E5%B7%A5%E5%85%B7-%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%9A%82%E5%AD%98)
 * [How can I commit only part of a file in git](http://stackoverflow.com/questions/1085162/how-can-i-commit-only-part-of-a-file-in-git)
 
-## 杂项 ##
-
-只从 git repo 中移除文件, 但不删除实际文件:
+## 只从 git repo 中移除文件, 但不删除实际文件##
 
 	git rm --cached file
 
@@ -210,6 +206,122 @@ git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 
 如果 stage区 有新的文件, 比如有个文件staged后忘了和上次的提交一次commit, 则可以撤销并重新提交.
 
+## 修改commit的author ##
+
+如果是staged的文件，提交时直接指定 `--author` 就可以了:
+
+	git commit -m "xxx" --author="Tanky Woo <noreply@tankywoo.com>"
+
+修改最后一次提交的author，可以配合 `--amend`:
+
+	git commit --amend --author="Tanky Woo <noreply@tankywoo.com>"
+
+修改指定commit的author:
+
+	* 2f1e828 - (HEAD, origin/test, origin/master, test, master) update test-git-submodule (2 days ago) <Tanky Woo>
+	* 3243b09 - first commit with submodule (2 days ago) <Tanky Woo>
+	* 5956ab0 - why conflict and merge? (3 weeks ago) <Tanky Woo>
+
+现在想修改 3243b09 的 author name，需要从它之前的一个commit开始`rebase`:
+
+	TankyWoo@Mac::test-git/ (master) » git rebase -i 5956ab0
+
+git 会使用设置的编辑器打开如下:
+
+	pick 3243b09 first commit with submodule
+	pick 2f1e828 update test-git-submodule
+
+	# Rebase 5956ab0..2f1e828 onto 5956ab0
+	#
+	# Commands:
+	#  p, pick = use commit
+	#  r, reword = use commit, but edit the commit message
+	#  e, edit = use commit, but stop for amending
+	#  s, squash = use commit, but meld into previous commit
+	#  f, fixup = like "squash", but discard this commit's log message
+	#  x, exec = run command (the rest of the line) using shell
+	#
+	# These lines can be re-ordered; they are executed from top to bottom.
+	#
+	# If you remove a line here THAT COMMIT WILL BE LOST.
+	#
+	# However, if you remove everything, the rebase will be aborted.
+	#
+	# Note that empty commits are commented out
+
+根据提示，把需要修改的一行用`edit`替换`pick`:
+
+	edit 3243b09 first commit with submodule
+	pick 2f1e828 update test-git-submodule
+
+保存关闭后会提示:
+
+	Stopped at 3243b09... first commit with submodule
+	You can amend the commit now, with
+
+			git commit --amend
+
+	Once you are satisfied with your changes, run
+
+			git rebase --continue
+
+我设置的PS1的括号里是分支名，可以看到现在的分支是这个要修改的commit id:
+
+	TankyWoo@Mac::test-git/ (3243b09*) » git commit --amend --author="Tanky <noreply@tankywoo.com>"
+
+修改完后会进入下一个commit id分支，直接`--continue`，因为604c35c这个commit设置的是pick，所以不会做改动:
+
+	TankyWoo@Mac::test-git/ (604c35c*) » git rebase --continue
+	Successfully rebased and updated refs/heads/master.
+
+再查看日志:
+
+	* 16c4757 - (HEAD, master) update test-git-submodule (2 seconds ago) <Tanky Woo>
+	* b9fbd8a - first commit with submodule (15 seconds ago) <Tanky>
+	* 5956ab0 - why conflict and merge? (3 weeks ago) <Tanky Woo>
+
+[SO](http://stackoverflow.com/a/3042512/1276501)上的回答:
+
+> For example, if your commit history is `A-B-C-D-E-F` with `F` as `HEAD`, and you want to change the author of `C` and `D`, then you would...
+> 
+>  1. Specify `git rebase -i B`
+>  2. change the lines for both `C` and `D` to `edit`
+>  3. Once the rebase started, it would first pause at `C`
+>  4. You would `git commit --amend --author="Author Name <email@address.com>"`
+>  5. Then `git rebase --continue`
+>  6. It would pause again at `D`
+>  7. Then you would `git commit --amend --author="Author Name <email@address.com>"` again
+>  8. `git rebase --continue`
+>  9. The rebase would complete.
+
+如果要修改指定用户全部commit的author:
+
+	git filter-branch -f --env-filter '
+	an="$GIT_AUTHOR_NAME"
+	am="$GIT_AUTHOR_EMAIL"
+	cn="$GIT_COMMITTER_NAME"
+	cm="$GIT_COMMITTER_EMAIL"
+
+	if [ "$GIT_COMMITTER_EMAIL" = "<OLD EMAIL>" ] ; then
+		cn="<NEW NAME>"
+		cm="<NEW EMAIL>"
+		export GIT_COMMITTER_NAME="$cn"
+		export GIT_COMMITTER_EMAIL="$cm"
+	fi
+	if [ "$GIT_AUTHOR_EMAIL" = "<OLD EMAIL>" ] ; then
+		an="<NEW NAME>"
+		am="<NEW EMAIL>"
+		export GIT_AUTHOR_NAME="$an"
+		export GIT_AUTHOR_EMAIL="$am"
+	fi
+	'
+
+这个在[github官方help](https://help.github.com/articles/changing-author-info)里也有脚本。
+
+StackOverflow上有两篇讨论非常好:
+
+* [How do I change the author of a commit in git?](http://stackoverflow.com/questions/750172/how-do-i-change-the-author-of-a-commit-in-git)
+* [Change commit author at one specific commit](http://stackoverflow.com/questions/3042437/change-commit-author-at-one-specific-commit)
 
 ## Github ##
 
