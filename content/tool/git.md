@@ -216,6 +216,10 @@ git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 
 	git commit --amend --author="Tanky Woo <noreply@tankywoo.com>"
 
+如果user config配置修改了，可以直接`--reset-author`:
+
+	git commit --amend --reset-author
+
 修改指定commit的author:
 
 	* 2f1e828 - (HEAD, origin/test, origin/master, test, master) update test-git-submodule (2 days ago) <Tanky Woo>
