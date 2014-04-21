@@ -24,7 +24,13 @@ emerge 安装 `sys-process/daemontools` 后, 它自动在 `/分区` 下新建一
 
 daemontools 还有一些工具, 如 `svc`, `svstat` 等
 
-`svc` 用于控制单个服务的 up, down, pause, continue, hangup 等, 具体man.
+`svc` 用于控制单个服务的 up, down, pause, continue, hangup 等:
+
+	svc -h /service/yourdaemon: sends HUP 
+	svc -t /service/yourdaemon: sends TERM, and automatically restarts the daemon after it dies 
+	svc -d /service/yourdaemon: sends TERM, and leaves the service down 
+	svc -u /service/yourdaemon: brings the service back up 
+	svc -o /service/yourdaemon: runs the service once
 
 `svstat` 用于查看某个服务的状态, 比如:
 
