@@ -180,6 +180,14 @@ test或[命令
 		statement
 	done
 
+循环一个序列:
+
+	for var in {1..5}
+	do
+		echo $var
+	done
+
+[Bash For Loop Examples](http://www.cyberciti.biz/faq/bash-for-loop/)
 
 ### while语句 ###
 

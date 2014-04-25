@@ -181,14 +181,13 @@ ereregex
 
 ## Rsyslog Queue ##
 
-队列，rsyslog 的重点。
+队列是 rsyslog 的核心。下午([来源](https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/7-Beta/html/System_Administrators_Guide/s1-working_with_queues_in_rsyslog.html)) 展示了rsyslog处理消息的流程:
 
 <!-- 来至[官方文档](http://www.rsyslog.com/doc/queues_analogy.html)的一幅图： -->
 <!-- ![dataflow](http://www.rsyslog.com/doc/dataflow.png) -->
 
 ![message flow](http://tankywoo-wb.b0.upaiyun.com/rsyslog_message_flow.png)
 
-图片[来源](https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/7-Beta/html/System_Administrators_Guide/s1-working_with_queues_in_rsyslog.html)
 
 队列分为 `Main Queue` 和 `Action Queue`，Main Queue 只有一个，Action Queue 有多个，每一个 Action 前面都有一个 Action Queue。Main Queue 的配置一般以`MainMsg`开头，Action Queue的配置以`Action`开头，两者的配置基本相同。
 
@@ -232,7 +231,7 @@ DA队列实际是两个队列，一个普通的memory队列 (called the "primary
 
 * `$MainMsgQueueType [FixedArray/LinkedList/Direct/Disk]`
 * `$MainMsgQueueFileName <name>` 针对disk queue的配置，定义队列名，存储队列数据时用的文件名就是这个名称
-* `MainMsgQueueCheckpointInterval <number>` 针对disk queue的配置，单位 `s`，增加可靠性 TODO
+* `MainMsgQueueCheckpointInterval <number>` 针对disk queue的配置，单位条数，设置在检查点写入相关信息，增加可靠性，但是会降低性能
 * `$MainMsgQueueDequeueBatchSize <number>` [default 32] 设置多少条队列作为一个batch一起出队，针对一个日志量很大的系统，可以考虑把这个值调高来增加性能，不过要结合可使用内存考虑实际情况
 
 对于DA队列，最有特点就是队列阈值的设置了。主要包括这几个配置:
@@ -252,35 +251,12 @@ DA 对于阈值处理的逻辑比较有意思，并不是单纯的内存满了�
 
 关于终止队列的一些处理配置:
 
-* `$MainMsgQueueTimeoutEnqueue` 
-
-	[number is timeout in ms (1000ms is 1sec!), default 2000, 0 means indefinite] 
-
-	当队列或硬盘满了，在这个超时时间后新来的日志，设置0可以直接丢弃掉
-
-* `$MainMsgQueueTimeoutShutdown <number>` 
-
-	[number is timeout in ms (1000ms is 1sec!), default 0 (indefinite)] 
-
-	当队列关闭时，还有数据在进入队列，rsyslog会尽可能在这个timeout周期内处理掉这些数据
-
-* `$MainMsgQueueTimeoutActionCompletion <number>` 
-
-	[number is timeout in ms (1000ms is 1sec!), default 1000, 0 means immediate!] 
-
-	配置需要多久来处理完当前的数据
-
-* `$MainMsgQueueSaveOnShutdown  [**on**/off]` 
-
-	针对disk queue的配置，当运行中的队列关闭时，会先把队列中的数据存在硬盘中
-
-* `$MainMsgQueueDequeueSlowdown <number>` 
-
-	[number is timeout in microseconds (1000000us is 1sec!), default 0 (no delay). Simple rate-limiting!]
-
-	简单的出队速度限制，单位微秒
-
-* `$MainMsgQueueImmediateShutdown [on/off]` 貌似是一个被弃用的选项
+* `$MainMsgQueueTimeoutEnqueue` [number is timeout in ms (1000ms is 1sec!), default 2000, 0 means indefinite] 当队列或硬盘满了，在这个超时时间后新来的日志，设置0可以直接丢弃掉
+* `$MainMsgQueueTimeoutShutdown <number>` [number is timeout in ms (1000ms is 1sec!), default 0 (indefinite)] 当队列关闭时，还有数据在进入队列，rsyslog会尽可能在这个timeout周期内处理掉这些数据
+* `$MainMsgQueueTimeoutActionCompletion <number>` [number is timeout in ms (1000ms is 1sec!), default 1000, 0 means immediate!] 配置需要多久来处理完当前的数据
+* `$MainMsgQueueSaveOnShutdown  [**on**/off]` 针对disk queue的配置，当运行中的队列关闭时，会先把队列中的数据存在硬盘中
+* `$MainMsgQueueDequeueSlowdown <number>` [number is timeout in microseconds (1000000us is 1sec!), default 0 (no delay). Simple rate-limiting!] 简单的出队速度限制，单位微秒
+* `$MainMsgQueueImmediateShutdown [on/off]` 弃用的选项
 
 当配置的队列大小或硬盘空间满了以后，rsyslogd 会限制数据submitter。配置 `$MainMsgQueueTimeoutEnqueue` 后，当超过这个时间后新来的日志会被丢弃；设置0为直接丢弃。
 
@@ -297,11 +273,11 @@ DA 对于阈值处理的逻辑比较有意思，并不是单纯的内存满了�
 `$MainMsgQueueWorkerThreadMinumumMessages` 配置一个worker thread处理的消息大小，
 `$MainMsgQueueWorkerThreads` 配置work thread的上限值。
 
-比如设置一个worker thread的最小处理消息大小是100个，当小于100个是，只有一个worker，当超过100个，小于200个时，会有两个worker。。。
+比如设置一个worker thread的最小处理消息大小是100个，当小于100个是，只有一个worker，当超过100个，小于200个时，会有两个worker...
 
-以上配置要注意`单位`, `默认值`。
+以上配置要注意`单位`, `默认值`，Main Queue 和 Action Queue 可能有些配置的默认值不一样。
 
-另外所有指名`针对disk`的配置，都是包括 disk queue 和 DA queue.
+另外所有指明`针对disk`的配置，都是包括 disk queue 和 DA queue.
 
 更多配置参考[这里](http://www.rsyslog.com/doc/rsyslog_conf_global.html)
 
@@ -347,6 +323,38 @@ Main Queue 的默认模式是 `FixedArray`，Action Queue 的默认模式是 `Di
 	&~
 
 样例表示每5s(默认是300s)生成一个统计信息，日志等级是7及以上(默认是6)，日志写入/var/log/rsyslog-stats后丢弃。
+
+这里我配置为DA类型，通过 impstats 模块观察:
+
+	2014-03-14T17:51:16.744660+08:00 localhost rsyslogd-pstats: imuxsock: submitted=3086634 ratelimit.discarded=0 ratelimit.numratelimiters=0
+	2014-03-14T17:51:16.744712+08:00 localhost rsyslogd-pstats: action 1 queue[DA]: size=138176 enqueued=138176 full=0 maxqsize=138176
+	2014-03-14T17:51:16.744720+08:00 localhost rsyslogd-pstats: action 1 queue: size=13808 enqueued=151976 full=0 maxqsize=20009
+	2014-03-14T17:51:16.744727+08:00 localhost rsyslogd-pstats: main Q[DA]: size=0 enqueued=0 full=0 maxqsize=0
+	2014-03-14T17:51:16.744732+08:00 localhost rsyslogd-pstats: main Q: size=4 enqueued=3087045 full=0 maxqsize=261
+
+可以看到，action queue使用了da队列，因为默认的 `$WorkDirectory /var/spool/rsyslog`，在 /var/spool/rsyslog 下可以看到存储的日志:
+
+	root@localhost:/var/spool/rsyslog# ll
+	total 160384
+	drwxr-xr-x 2 syslog adm        36864 Mar 14 17:50 ./
+	drwxr-xr-x 7 root   root        4096 Oct 29 13:27 ../
+	-rw------- 1 syslog syslog 100000283 Mar 14 17:50 fwdacq.00000001
+	-rw------- 1 syslog syslog  50443050 Mar 14 17:52 fwdacq.00000002
+	
+	root@localhost:/var/spool/rsyslog# du -sh *
+	96M     fwdacq.00000001
+	49M     fwdacq.00000002
+
+存储文件默认是用`队列名.7位数字`以递增方式命名的，因为定义了存储文件的最大值是100M，所以可以看到第一个是96M，再存储就存不了了，进而新建第二个文件存储。
+	
+	2014-03-14T17:27:07.485964+08:00 localhost rsyslogd-pstats: imuxsock: submitted=32005 ratelimit.discarded=0 ratelimit.numratelimiters=0
+	2014-03-14T17:27:08.090574+08:00 localhost rsyslogd-pstats: action 1 queue[DA]: size=0 enqueued=0 full=0 maxqsize=0
+	2014-03-14T17:27:08.090590+08:00 localhost rsyslogd-pstats: action 1 queue: size=1000 enqueued=1065 full=65 maxqsize=1000
+	2014-03-14T17:27:08.090598+08:00 localhost rsyslogd-pstats: main Q[DA]: size=0 enqueued=0 full=0 maxqsize=0
+	2014-03-14T17:27:08.090604+08:00 localhost rsyslogd-pstats: main Q: size=9940 enqueued=32042 full=18 maxqsize=10000
+
+在没有配置 `$MainMsgQueueSize` 和 `$ActionQueueSize` 时，可以看到队列最大值分别是10000和1000。
+
 
 更多的可以参考:
 
