@@ -88,9 +88,7 @@ td {
 
 /* Optimization for pre and code tag */
 pre, code { 
-    /* font-family: Consolas, "Courier New", monospace, serif; */
-	font-family: Consolas, "DejaVu Sans Mono", "Lucida Console", Monaco, Andale Mono, "MS Gothic", monospace;
-	/* font-family: Consolas, "DejaVu Sans Mono", "Lucida Console", Manaco, Andale Mono, "MS Gothic", monospace; */
+    font-family: Consolas, "DejaVu Sans Mono", "Lucida Console", Monaco, Andale Mono, "MS Gothic", monospace;
     font-size: 13px;
     border-radius: 3px;
     -moz-border-radius: 3px;
