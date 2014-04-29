@@ -5,6 +5,28 @@ date: 2014-04-28 23:31
 
 [TOC]
 
+## 3. Getting Started ##
+
+	# For a complete list of git subcommands
+	git help --all
+
+	# document for git subcommand
+	git help <subcommand>
+	git <subcommand> --help
+
+double dash in command #todo# P19
+
+`git show` : 
+
+	# show the details of the most recent commit
+	git show
+
+	# To see more detail about a particular commit
+	git show <commit number>
+
+`git show-branch` :
+
+	git show-branch --more=10
 
 ## 8. Diffs ##
 
