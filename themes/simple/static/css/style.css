@@ -68,6 +68,8 @@ ul, ol {
 
 ul li { list-style-type: square; }
 
+ul li p { margin: 0;  }
+
 img {
     border: 0;
     vertical-align: middle;
