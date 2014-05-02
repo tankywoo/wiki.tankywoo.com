@@ -5,12 +5,12 @@ date: 2013-11-08 00:02
 
 [TOC]
 
-git的`help`信息非常好，很多可以直接help来了解
+Git的`help`信息非常好，很多可以直接help来了解
 
-## 给git输出信息增加颜色 ##
+## 给Git输出信息增加颜色 ##
 
 编辑`/etc/gitconfig`
-比如要对git status设置颜色，可以:
+比如要对`git status`设置颜色，可以:
 
 	[color]
 		ui = auto
@@ -39,13 +39,13 @@ git的`help`信息非常好，很多可以直接help来了解
 
 参考的 [何谓分支](http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF)
 
-因为git是保存的快照，Git仓库有以下几个基本对象
+因为Git是保存的快照，Git仓库有以下几个基本对象
 
 * `blob` 对象用于表示文件快照内容
 * `tree` 对象记录目录树内容和各个文件对应的blob对象索引
 * `commit` 对象记录提交信息，指向tree对象或其他commit对象
 
-Git的分支，其本质是一个指向commit对象的可变`指针`，git使用`master`作为分支的默认名字
+Git的分支，其本质是一个指向commit对象的可变`指针`，Git使用`master`作为分支的默认名字
 
 `HEAD`指针指向当前的分支指针
 
@@ -61,7 +61,7 @@ Git的分支，其本质是一个指向commit对象的可变`指针`，git使用
 
 参考的 [远程分支](http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF)
 
-从远程git repo克隆，Git会自动将此remote repo命名为`origin`，并下载其中所有的数据，建立一个指向它的`master`分支的指针，在本地命名为`origin/master`
+从远程Git repo克隆，Git会自动将此remote repo命名为`origin`，并下载其中所有的数据，建立一个指向它的`master`分支的指针，在本地命名为`origin/master`
 
 但无法在本地更改其数据。接着，Git建立一个属于自己的本地`master`分支，始于`origin`上`master`分支相同的位置，这样可以就此开始工作
 
@@ -103,7 +103,7 @@ What is `git fetch`? and what is the difference to `git pull`?
 
 但是, 更直观的, 可以选择vimdiff.
 
-	# 配置git使用vimdiff来做差异比较
+	# 配置Git使用vimdiff来做差异比较
 	git config --global diff.tool vimdiff
 	# 在merge时使用
 	git config --global merge.tool vimdiff
@@ -148,7 +148,7 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 
 	git config --global core.quotepath false
 
-## git mv 日志问题 ##
+## Git mv 日志问题 ##
 
 在 `git mv` (rename) 文件后, 直接 git log 只能看到这个文件被 rename 后的日志, 想要看到完整的日志, 要用 `git log --follow xxx`
 
@@ -158,13 +158,12 @@ git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格�
 * [What's the purpose of git-mv?](http://stackoverflow.com/questions/1094269/whats-the-purpose-of-git-mv)
 
 ## 指定路径pull ##
-[2013-09-03] 更新:
 
 以前都是 cd 到仓库当前目录然后 pull. 因为想到 `svn up` 可以直接指定路径, 这种基本功能 git 肯定会有的, 但是直接指定路径不行.
 
 搜了下, StackOverflow 上的 [回答1](http://stackoverflow.com/a/9876901/1276501) 和 [回答2](http://stackoverflow.com/a/9746005/1276501) 非常给力.
 
-git 的参数 `--git-dir` 可以指定 git 的路径, 即使用这个 `.git` 的配置等来更新 repo. 但是这个会以 `pwd` 为要更新的 repo 路径.
+Git 的参数 `--git-dir` 可以指定 Git 的路径, 即使用这个 `.git` 的配置等来更新 repo. 但是这个会以 `pwd` 为要更新的 repo 路径.
 所以还需要 `--work-tree` 来指定要更新的 repo 的路径, 而不需要 cd 过去.
 
 ```bash
@@ -230,7 +229,7 @@ git --git-dir=/path/to/git-repo/.git --work-tree=/path/to/git-repo/ pull
 
 	TankyWoo@Mac::test-git/ (master) » git rebase -i 5956ab0
 
-git 会使用设置的编辑器打开如下:
+Git 会使用设置的编辑器打开如下:
 
 	pick 3243b09 first commit with submodule
 	pick 2f1e828 update test-git-submodule
@@ -327,16 +326,103 @@ StackOverflow上有两篇讨论非常好:
 * [How do I change the author of a commit in git?](http://stackoverflow.com/questions/750172/how-do-i-change-the-author-of-a-commit-in-git)
 * [Change commit author at one specific commit](http://stackoverflow.com/questions/3042437/change-commit-author-at-one-specific-commit)
 
+## Git diff 技巧 ##
+
+(待整理)
+
+	git diff tag                    比较tag和HEAD之间的不同。
+	git diff tag file               比较一个文件在两者之间的不同。
+	git diff tag1..tag2             比较两个tag之间的不同。
+	git diff SHA11..SHA12           比较两个提交之间的不同。
+	git diff tag1 tag2 file or
+	git diff tag1:file tag2:file    比较一个文件在两个tag之间的不同。
+
+`ORIG_HEAD` 用于指向前一个操作状态，因此在git pull之后如果想得到pull的
+	内容就可以：
+	 
+	git diff ORIG_HEAD
+	 
+	git diff --stat                 用于生成统计信息。
+	git diff --stat ORIG_HEAD
+
+## `HEAD` vs `ORIG_HEAD` ##
+
+关于 `HEAD` 和 `ORIG_HEAD` 的区别，来至StackOverflow的[回答](http://stackoverflow.com/a/967611/1276501):
+
+> `HEAD` is (direct or indirect, i.e. symbolic) reference to the current commit. It is a commit that you have checked in the working directory (unless you made some changes, or equivalent), and it is a commit on top of which "git commit" would make a new one. Usually `HEAD` is symbolic reference to some other named branch; this branch is currently checked out branch, or current branch. `HEAD` can also point directly to a commit; this state is called "detached HEAD", and can be understood as being on unnamed, anonymous branch.
+
+> `ORIG_HEAD` is previous state of `HEAD`, set by commands that have possibly dangerous behavior, to be easy to revert them. It is less useful now that Git has reflog: `HEAD@{1}` is roughly equivalent to `ORIG_HEAD` (`HEAD@{1}` is always last value of `HEAD`, `ORIG_HEAD` is last value of `HEAD` before dangerous operation).
+
+For more information read [git(1) manpage](http://www.kernel.org/pub/software/scm/git/docs/git.html), [Git User's Manual](http://www.kernel.org/pub/software/scm/git/docs/user-manual.html), the [Git Community Book](http://book.git-scm.com/) and [Git Glossary](http://www.kernel.org/pub/software/scm/git/docs/gitglossary.html)
+
+其它的一些讲解:
+
+* [ORIG\_HEAD, FETCH\_HEAD, MERGE\_HEAD etc](http://stackoverflow.com/questions/17595524/orig-head-fetch-head-merge-head-etc)
+* [GIT基本概念和用法总结](http://guibin.iteye.com/blog/1014369)
+
+## git revert/reset/checkout 区别 ##
+
+讲得挺好的一篇 [Undoing Git Changes](https://www.atlassian.com/git/tutorial/undoing-changes)，关于`git checkout`, `git revert`,`git reset`, `git clean` 的对比。
+
+## 统计每个提交者的提交次数 ##
+
+	git shortlog --numbered --summary
+
+## git reflog ##
+
+TODO
+
+## git cherry-pick ##
+
+TODO
+
+## Git Commit Message 基本准则 ##
+
+一些基本的准则:
+
+* commmit时不建议使用`-m/--message`，这样能提交的信息太简单的；建议直接commit通过编辑器来撰写message.
+* **第一行不**超过50个字符，作为简单的描述，第二行为空行，第三行开始再做详细描述，例子(<http://git-scm.com/book/ch5-2.html>):
+
+		Short (50 chars or less) summary of changes
+
+		More detailed explanatory text, if necessary.  Wrap it to about 72
+		characters or so.  In some contexts, the first line is treated as the
+		subject of an email and the rest of the text as the body.  The blank
+		line separating the summary from the body is critical (unless you omit
+		the body entirely); tools like rebase can get confused if you run the
+		two together.
+
+		Further paragraphs come after blank lines.
+
+		 - Bullet points are okay, too
+
+		 - Typically a hyphen or asterisk is used for the bullet, preceded by a
+		   single space, with blank lines in between, but conventions vary here	
+
+* **第一行** 结尾不要用句号，这个可以认为是一个标题
+* **第三行** 开始的详细描述长度不超过72个字符
+* 使用 `git diff --check` 对无用的空白做检查:
+
+		--check -- warn if changes introduce trailing whitespace or space/tab indents
+
+* 使用 `fix`, `add`, `change` 而不是 `fixed`, `added`, `changed`
+
+	> Write the summary line and description of what you have done in the imperative mode, that is as if you were commanding someone. Write "fix", "add", "change" instead of "fixed", "added", "changed".
+
+* 尽量使用英文提交
+* 针对Github，在commit message中使用 `#id`(id 为具体issue的标号)，可以把message关联到具体的issue
+
+可以看看Git源码的提交log : <https://git.kernel.org/cgit/git/git.git/log/>
+
+一些不错的文章:
+
+* [5 Useful Tips For A Better Commit Message](http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message)
+* [Git commit 注释格式](http://www.fwolf.com/blog/post/14)
+* [http://www.fwolf.com/blog/post/14](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
+* [Writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
+* [Distributed Git - Contributing to a Project](http://git-scm.com/book/en/Distributed-Git-Contributing-to-a-Project)
 
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
 * [Git Reference](http://gitref.org/)
-
-## 修改历史 ##
-
-* 2013-02-07 : 创建
-* 2013-06-04 : git使用vimdiff
-* 2013-07-25 : 补充文件名是中文的问题
-* 2013-08-17 : 补充 git mv 后日志的问题
-* 2013-09-03 : 更新指定路径更新git方法
