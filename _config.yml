@@ -5,7 +5,7 @@
 url: http://wiki.tankywoo.com
 title: Wiki · Tanky Woo
 keywords: wiki, makrdown, linux, python, cpp, ops, simiki
-description: Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on.
+description: "Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."
 author: Tanky Woo
 
 # If publishing to a subdirectory as in http://example.com/project set 'root: /project'
@@ -33,4 +33,4 @@ debug: false
 # or you can set any wiki file as index, such as "tool/git.md".
 # If not set or set `false`, simiki will auto generate catalog as index, this is
 # the default action
-index:
+index: 
