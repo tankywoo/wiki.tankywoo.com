@@ -14,6 +14,10 @@ dig - domain information groper
 
 当没有指定 type 时, 默认是查询 **A记录**
 
+查询BIND DNS的版本号:
+
+	dig chaos txt version.bind @dns-host
+
 # 参数 #
 
 当没有任何参数选项时(直接敲dig并回车), dig会默认查询 root(.) 的 NS 记录.  
