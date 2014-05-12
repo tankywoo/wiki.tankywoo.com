@@ -1,11 +1,4 @@
 *.swp
 *.bak
 *.pyc
-html/tkwiki/*
-!html/tkwiki/index.html
-!html/tkwiki/about.html
-!html/tkwiki/rules.html
-!html/tkwiki/css
-!html/tkwiki/js
-!html/tkwiki/img
-
+output*

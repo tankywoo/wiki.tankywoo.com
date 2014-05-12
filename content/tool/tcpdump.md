@@ -1,8 +1,13 @@
-<!-- title : Tcpdump -->
+---
+title: "tcpdump"
+date: 2013-09-06 10:24
+---
+
+TODO
 
 tcpdump is a common packet analyzer that runs under the command line
 
-= Syntax =
+## 语法 ##
 Syntax: 
 | Protocol | Direction | Host(s) | Value | Logical Operations | Other expression |
 
@@ -64,12 +69,16 @@ Don't convert addresses to names
 
 = Read More =
 
-* [http://www.ha97.com/4550.html Linux抓包工具tcpdump详解]
-* [http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html Linux tcpdump命令详解]
-* [http://openmaniak.com/tcpdump.php TCPDUMP - The Easy Tutorial(*)]
-* [http://danielmiessler.com/study/tcpdump/ A tcpdump Tutorial and Primer]
-* [http://www.tecmint.com/12-tcpdump-commands-a-network-sniffer-tool/ 12 Tcpdump Commands – A Network Sniffer Tool]
-* [http://en.wikipedia.org/wiki/Tcpdump wiki-tcpdump]
+* [The Easy Tutorial](http://openmaniak.com/tcpdump.php TCPDUMP)
+* [Linux抓包工具tcpdump详解](http://www.ha97.com/4550.html)
+* [Linux tcpdump命令详解](http://www.cnblogs.com/ggjucheng/archive/2012/01/14/2322659.html)
+* [A tcpdump Tutorial and Primer](http://danielmiessler.com/study/tcpdump/)
+* [12 Tcpdump Commands – A Network Sniffer Tool](http://www.tecmint.com/12-tcpdump-commands-a-network-sniffer-tool/)
+* [wiki-tcpdump](http://en.wikipedia.org/wiki/Tcpdump)
+http://www.alexonlinux.com/tcpdump-for-dummies
+http://www.carnal0wnage.com/papers/TCPdumpBasics.pdf
+http://science.hamptonu.edu/compsci/docs/iac/packet_sniffing.pdf
+http://www.danielmiessler.com/study/tcpdump/
 
 
 = History =
