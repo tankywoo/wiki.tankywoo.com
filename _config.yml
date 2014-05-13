@@ -15,7 +15,7 @@ destination: output
 themes_dir: themes
 
 # choose the theme
-theme: simple
+theme: yasimple
 
 # Default file extension
 default_ext: "md"
