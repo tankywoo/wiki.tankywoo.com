@@ -14,7 +14,7 @@ env.local_output = os.path.join(
         os.path.abspath(os.path.dirname(__file__)), 
         "output/")
 # Remote path to deploy output
-env.remote_output = "/tmp/test/"
+env.remote_output = "/opt/wiki.tankywoo.com/output/"
 
 
 def update_simiki():

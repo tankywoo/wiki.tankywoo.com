@@ -4,9 +4,9 @@ date: 2013-08-25 10:01
 ---
 
 
-# ethtool #
+用来查询网卡信息
 
-用来查询网卡信息的
+直接接网卡名:
 
 	19:36 tankywoo@gentoo-gs /home/tankywoo/wiki
 	% sudo ethtool enp2s1
@@ -36,8 +36,22 @@ date: 2013-08-25 10:01
 			Link detected: yes
 
 
-`Link detected` 可用来检测网线是否连接
+`Link detected` <strike>可用来检测网线是否连接</strike>。在这里被坑过，之前一直错误的理解为链路连接正常，即插上线就是yes，其实这里是指网卡是否up。
 
-# 修改历史 #
+就算插上线，但是网卡没有启动，依然是no。
 
-* 2013-07-11 : 创建
+`-i` 参数可以查看网卡驱动类型:
+
+	tankywoo@gentoo-local::~/ » sudo ethtool -i enp0s5
+	driver: e1000
+	version: 7.3.21-k8-NAPI
+	firmware-version:
+	bus-info: 0000:00:05.0
+	supports-statistics: yes
+	supports-test: yes
+	supports-eeprom-access: yes
+	supports-register-dump: yes
+	supports-priv-flags: no
+
+
+* [9 Linux ethtool Examples to Manipulate Ethernet Card (NIC Card)](http://www.thegeekstuff.com/2010/10/ethtool-command/)
