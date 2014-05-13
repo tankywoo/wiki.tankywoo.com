@@ -40,6 +40,9 @@ date: 2013-08-25 10:01
 
 就算插上线，但是网卡没有启动，依然是no。
 
+这个[回答](http://stackoverflow.com/a/808595/1276501)中@Jamie Kitson的评论也提到了这点。
+
+
 `-i` 参数可以查看网卡驱动类型:
 
 	tankywoo@gentoo-local::~/ » sudo ethtool -i enp0s5
