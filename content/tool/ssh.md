@@ -17,8 +17,7 @@ date: 2013-09-13 10:48
 * /usr/bin/ssh-keygen
 * /usr/bin/ssh-keyscan
 
-# ssh #
-## RTFM ##
+### RTFM ###
 
 	man ssh
 	man sshd
@@ -44,7 +43,7 @@ ssh\_config 有两个文件：`~/.ssh/config` 和 `/etc/ssh/config`
 	Host name还可以用匹配，具体可以man ssh_config
 
 
-# ssh-agent #
+## ssh-agent ##
 
 ssh-agent 是一个ssh私钥的认证代理工具，类似于 windows 下的 [Pageant](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html)
 
@@ -60,7 +59,7 @@ ssh-agent 后可以接一些参数和命令，一般接shell名称就可以启�
 
 通过 ssh-agent 启动一个会话，然后用 `ssh-add` 加载私钥，以后使用ssh就无需关心私钥的事情了。
 
-# Github: 'Error: Key already in use' 问题 #
+## Github: 'Error: Key already in use' 问题 ##
 
 2013-07-28 补充:
 
@@ -89,10 +88,3 @@ ssh-agent 后可以接一些参数和命令，一般接shell名称就可以启�
 
 	~.      Disconnect.
 
-
-# 修改历史 #
-
-* 2013-02-03 : 创建
-* 2013-05-28 : 补充 ssh-agent
-* 2013-07-28 : Github: 'Error: Key already in use' 问题
-* 2013-09-13 : 补充ssh卡住的解决方法

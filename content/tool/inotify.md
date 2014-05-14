@@ -89,7 +89,3 @@ pyinotify 的 [wiki](https://github.com/seb-m/pyinotify/wiki) 讲的非常详细
 * [IBM - 用 inotify 监控 Linux 文件系统事件](http://www.ibm.com/developerworks/cn/linux/l-inotify/)
 * [inotify+rsync实现触发式文件同步](http://www.517sou.net/Article/367.aspx)
 * [linux inotify 监控文件系统事件](http://www.51know.info/system_security/inotify.html)
-
-## 修改历史 ##
-
-* 2013-08-16 : 创建

@@ -4,7 +4,7 @@ date: 2013-08-17 07:32
 ---
 
 
-# dig #
+## dig ##
 
 dig - domain information groper
 
@@ -18,7 +18,7 @@ dig - domain information groper
 
 	dig chaos txt version.bind @dns-host
 
-# 参数 #
+## 参数 ##
 
 当没有任何参数选项时(直接敲dig并回车), dig会默认查询 root(.) 的 NS 记录.  
 输出结果可以看到全球**13个根域**.

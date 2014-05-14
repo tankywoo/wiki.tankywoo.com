@@ -4,7 +4,7 @@ date: 2013-08-17 07:32
 ---
 
 
-# Argument #
+## Argument ##
 
 * `-o` - output to file
 * `-O` - output to file named the same with the remote name
@@ -12,7 +12,7 @@ date: 2013-08-17 07:32
 * `-I` - only get the HTTP-header
 * `-u`
 
-# Example #
+## Example ##
 
 	# get the file source and output to the STDOUT
 	curl http://wiki.wutianqi.com/index.html
@@ -25,13 +25,9 @@ date: 2013-08-17 07:32
 	curl -I http://wiki.wutianqi.com/index.html
 
 
-# Read More #
+## Read More ##
 
 * [15 Practical Linux cURL Command Examples](http://www.thegeekstuff.com/2012/04/curl-examples/)
 * [curl tutorial with examples of usage](http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage)
 * [curl网站开发指南](http://www.ruanyifeng.com/blog/2011/09/curl.html)
 
-
-# 修改历史 #
-
-* 2013-01-14 : 创建

@@ -66,10 +66,7 @@ date: 2013-08-17 07:23
 	# 添加一条静态路由
 	up route add -net 192.0.0.0/8 gw 192.0.0.1 dev eth0
 
-# 参考链接 #
+## 参考链接 ##
 
 * [static routing](http://wiki.gentoo.org/wiki/Static_Routing)
 
-
-# 修改历史 #
-* 2013-07-15 : 添加 gentoo 的网络配置, 文件改名 linux 网络配置

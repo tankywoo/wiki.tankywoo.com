@@ -4,20 +4,20 @@ date: 2013-08-17 07:36
 ---
 
 
-# RRDtool #
+## RRDtool ##
 
 
-# 简介 #
+## 简介 ##
 
 RRDtool(Round Robin Database Tool)
 
 效果图
 
-# 安装 #
+## 安装 ##
 
 参考: [RRDtool简体中文教程(ChinaUnix)](http://bbs.chinaunix.net/thread-2150417-1-1.html)
 
-# 新建RRD #
+## 新建RRD ##
 [Offical Doc - rrdcreate](http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html)
 
 	rrdtool create filename [--start|-b start time] [--step|-s step] [--no-overwrite] \
@@ -34,7 +34,7 @@ RRDtool(Round Robin Database Tool)
 	设置时间步长. 默认是300s
 
 
-## DS ##
+### DS ###
 
 DS - Data Source
 
@@ -57,7 +57,7 @@ DS - Data Source
 		`rpn-expression`: 逆波兰表达式
 
 
-## RRA ##
+### RRA ###
 
 RRA - Round Robin Archives
 
@@ -119,7 +119,7 @@ CF: Consolidation Function. 有AVERAGE, MIN, MAX, LAST类型.
 	rra[1].cdp_prep[0].unknown_datapoints = 0
 
 
-# 更新RRD #
+## 更新RRD ##
 [Offical Doc - rrdupdate](http://oss.oetiker.ch/rrdtool/doc/rrdupdate.en.html)
 
 	rrdtool {update | updatev} filename
@@ -155,7 +155,7 @@ template函数允许指定更新DS的顺序
 	rrdtool.updatev('test.rrd', 'N:%d' % v)
 
 
-# 画图 #
+## 画图 ##
 [Offical Doc - rrdgraph](http://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html)
 
 	rrdtool graph|graphv filename [option ...] 
@@ -179,7 +179,7 @@ rrdtool graph 需要数据提供以画图. 它并不局限于单个RRD, 可以�
 
 `graphv` 与 `graph` 的关系类似 `updatev` 和 `update`. 可以获取相信的画图信息.
 
-## options的一些参数 ##
+### options的一些参数 ###
 
 `[-s|--start time] [-e|--end time] [-S|--step seconds]` :  
 设置了画图的起始时间和结束时间, 一般使用结束时间减去需要监控的时间段范围就行.
@@ -230,7 +230,8 @@ rrdtool graph 需要数据提供以画图. 它并不局限于单个RRD, 可以�
 
 
 
-# 资料 #
+## 资料 ##
+
 * [RRDtool Tutorail(Offical)](http://oss.oetiker.ch/rrdtool/tut/)
 * [RRDtool Documentation(Offical)](http://oss.oetiker.ch/rrdtool/doc/index.en.html)
 * [RRDtool简体中文教程(ChinaUnix)](http://bbs.chinaunix.net/thread-2150417-1-1.html)

@@ -4,17 +4,18 @@ date: 2013-08-22 23:48
 ---
 
 
-# Python 进程/线程 #
 
-# Python的伪多线程 #
-TODO 待研究
+## Python的伪多线程 ##
+
+TODO
+
 相关讨论:
 
 * [py的多线程是伪线程吗?](http://bbs.chinaunix.net/thread-1264893-1-1.html)
 * [[Python-3000] the future of the GIL](http://mail.python.org/pipermail/python-3000/2007-May/007414.html)
 * [Python多线程的问题](http://bbs.csdn.net/topics/390226723)
 
-# 相关的模块 #
+## 相关的模块 ##
 
 * thread
 * threading
@@ -22,7 +23,7 @@ TODO 待研究
 * multiprocessing
 
 
-# Queue #
+### Queue ###
 
 Queue模块主要有三种队列实现
 
@@ -33,12 +34,12 @@ Queue模块主要有三种队列实现
 Queue是线程同步的
 
 
-# threading #
+### threading ###
 
 PyMOTW [Manege concurrent threads](http://www.doughellmann.com/PyMOTW/threading/index.html)
 
 在看上面链接的第一个代码时，遇到了一个`print`和`sys.stdout.write`的问题<br />
-具体见 *TODO*
+具体见 TODO
 
 最简单的threading配合Queue的Example
 
@@ -87,7 +88,7 @@ PyMOTW [Manege concurrent threads](http://www.doughellmann.com/PyMOTW/threading/
     If you want to benefit from multiple cores for CPU-bound tasks, use *mutliprocessing*
 
 
-# 线程池 #
+## 线程池 ##
 线程池概念
 
     所谓的线程池就是完成一种任务的一组线程

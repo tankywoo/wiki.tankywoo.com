@@ -4,16 +4,16 @@ date: 2013-08-17 07:32
 ---
 
 
-# 还原到某个版本 #
+## 还原到某个版本 ##
 
 * svn up -r 版本号
 * svn up -r 版本号 文件名
 
-# 撤销修改 #
+## 撤销修改 ##
 
 * svn revert
 
-# diff比较 #
+## diff比较 ##
 
 * svn diff					#将修改后和未修改的比较
 * svn diff -r 5				#将本地代码和版本好为5的所有文件比较
@@ -21,14 +21,14 @@ date: 2013-08-17 07:32
 * svn diff -r 5:9			#将比较版本5和版本9之间所有文件比较
 * svn diff -r 5:9 a.txt		#将版本5和版本9之间的a.txt文件比较
 
-# 查看log #
+## 查看log ##
 
 * svn log			#查看所有的log信息
 * svn log -r 5:9	#只查看版本5和版本9的日志信息
 * svn log a.txt		#查看文件a.txt的日志修改信息;
 * svn log -v dir	#查看目录的日志修改信息,需要加v;
 
-# svn使用vimdiff #
+## svn使用vimdiff ##
 
 在 [git](git.html) 里提到了git使用vimdiff替换默认的diff工具, svn也可以实现
 
@@ -60,7 +60,7 @@ date: 2013-08-17 07:32
 * [更换svn diff为vimdiff](http://www.ccvita.com/445.html)
 * [使用vimdiff作为svn diff的默认工具](http://www.blogjava.net/stone2083/archive/2011/05/24/350917.html)
 
-# diff: file marked as a binary type 问题  #
+## diff: file marked as a binary type 问题  ##
 
 2013-07-25 补充:
 
@@ -95,8 +95,3 @@ Alternatively, you can delete this property (since Subversion assumes plaintext,
 * [Persistently overriding svn's mime to binary mapping?](http://stackoverflow.com/questions/3580092/persistently-overriding-svns-mime-to-binary-mapping)
 
 **TODO** : 当时是直接用方法一解决的, 抽时间研究下 `svn:mine-type` 的问题
-
-# 修改历史 #
-
-* 2013-06-25 : 增加了vimdiff方法
-* 2013-07-25 : 增加 diff: file marked as a binary type 问题

@@ -4,7 +4,7 @@ date: 2013-08-17 07:32
 ---
 
 
-# 格式 #
+## 格式 ##
 
 	gawk options program file
 
@@ -16,7 +16,7 @@ date: 2013-08-17 07:32
 	* -mr N
 	* -W keyword
 
-# * #
+## * ##
 
 	gawk程序用一对花括号来定义
 	gawk默认的字段分隔符是任意的空白字符
@@ -25,7 +25,7 @@ date: 2013-08-17 07:32
 	在处理数据前运行脚本使用BEGIN
 	在处理数据后运行脚本使用END
 
-# Example #
+## Example ##
 
 	$ gawk '{print "Hello, TankyWoo"}'
 

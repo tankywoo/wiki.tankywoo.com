@@ -4,7 +4,7 @@ date: 2013-08-17 07:36
 ---
 
 
-# rsync #
+## rsync ##
 
 rsync - a fast, versatile, remote (and local) file-copying tool
 
@@ -20,7 +20,7 @@ rsync - a fast, versatile, remote (and local) file-copying tool
 	+ the source or destination path contains a double colon (::) separator after a  host  specification
 	+ OR  when  an rsync://  URL  is  specified
 
-# 使用方式 #
+## 使用方式 ##
 
 	Local:
 		rsync [OPTION...] SRC... [DEST]
@@ -37,11 +37,11 @@ rsync - a fast, versatile, remote (and local) file-copying tool
 
 	Usages with just one SRC arg and no DEST arg will list the source files instead of copying.
 
-## 本地同步 ##
+### 本地同步 ###
 
 	rsync [OPTION...] SRC... [DEST]
 
-## remote shell方式 远程同步 ##
+### remote shell方式 远程同步 ###
 
 使用一个冒号`:`分隔主机和目录
 
@@ -56,7 +56,7 @@ rsync - a fast, versatile, remote (and local) file-copying tool
 	rsync -e 'ssh -p 1234' root@tankywoo:/data /tmp/backup/
 
 
-## rsync daemon方式 远程同步 ##
+### rsync daemon方式 远程同步 ###
 
 有两种方式:
 
@@ -70,7 +70,7 @@ rsync - a fast, versatile, remote (and local) file-copying tool
 	Push: rsync [OPTION...] SRC... [USER@]HOST::DEST
 	rsync [OPTION...] SRC... rsync://[USER@]HOST[:PORT]/DEST
 
-# 常用参数 #
+## 常用参数 ##
 
 * `-a` - archive mode; 相当于 `-rlptgoD`
 * `-r` - 递归. 和`cp`的 -r 参数一样
@@ -98,10 +98,6 @@ rsync - a fast, versatile, remote (and local) file-copying tool
 
 	rsync -hvaHEXA --delete --stats --progress --numeric-ids --exclude-from=/root/filter_file tankywoo::wiki /data
 
-# 资料 #
+## 资料 ##
 
 * [howtocn - rsync](http://www.howtocn.org/rsync)
-
-# 修改记录 #
-
-* 2013-07-02 : 创建

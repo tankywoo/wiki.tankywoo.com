@@ -4,12 +4,10 @@ date: 2013-08-17 07:36
 ---
 
 
-# MySQL #
-
-# 查看单个数据库或表的大小 #
+## 查看单个数据库或表的大小 ##
 要想知道每个数据库的大小的话，步骤如下：
 
-1、进入information_schema 数据库（存放了其他的数据库的信息）
+1、进入`information_schema` 数据库（存放了其他的数据库的信息）
 
 	use information_schema;
 

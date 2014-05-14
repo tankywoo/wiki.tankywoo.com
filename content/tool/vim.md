@@ -130,8 +130,3 @@ Replace:
 * [Why is \r a newline for Vim?](http://stackoverflow.com/questions/71417/why-is-r-a-newline-for-vim)
 * [How can I add a string to the end of each line in Vim?](http://stackoverflow.com/questions/594448/how-can-i-add-a-string-to-the-end-of-each-line-in-vim)
 
-## 修改历史 ##
-
-* 2013-05-28 : 创建
-* 2013-07-10 : 补充 匹配括号的移动, 前后位置的移动. 这两个都是非常实用的快捷键.
-* 2013-07-12 : showcase时和同事分享了, 也给了我很多他们积累的技巧, 赞!

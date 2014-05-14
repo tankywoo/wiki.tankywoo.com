@@ -4,9 +4,9 @@ date: 2013-08-17 07:39
 ---
 
 
-# Python 性能分析工具 #
+Python 性能分析工具
 
-# timeit #
+## timeit ##
 
 timeit 模块提供了简单的接口来测量小段代码的执行时间.
 
@@ -22,10 +22,10 @@ timeit 模块提供了简单的接口来测量小段代码的执行时间.
 
 timeit的Timer类接口分别是一个要执行的语句和初始化语句, timeit成员函数提供一个反复执行语句的次数(默认1000000次)和重复执行timeit的次数.
 
-# profile #
+## profile ##
 
-# pstats #
+TODO
 
-# 修改历史 #
+## pstats ##
 
-* 2013-07-05 : 增加timeit
+TODO

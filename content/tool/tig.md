@@ -29,8 +29,3 @@ date: 2013-09-06 11:35
 * [git? tig!](http://blogs.atlassian.com/2013/05/git-tig/)
 * [Using Tig: A Text Interface for Git](http://ericjmritz.wordpress.com/2013/05/16/using-tig-a-text-interface-for-git/)
 * [tig, the ncurses front-end to Git](http://gitready.com/advanced/2009/07/31/tig-the-ncurses-front-end-to-git.html)
-
-## 修改历史 ##
-
-* 2013-10-01 : 创建
-

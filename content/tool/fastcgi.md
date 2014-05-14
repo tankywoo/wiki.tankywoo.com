@@ -4,11 +4,11 @@ date: 2013-08-17 07:36
 ---
 
 
-# FastCGI #
+## FastCGI ##
 
 参考: [Nginx+FastCGI运行原理](http://book.51cto.com/art/201202/314840.htm)
 
-# FastCGI介绍 #
+## FastCGI介绍 ##
 
 FastCGI是从CGI发展改进而来的。  
 传统CGI接口方式的主要缺点是性能很差，因为每次HTTP服务器遇到动态程序时都需要重新启动脚本解析器来执行解析，然后将结果返回给HTTP服务器。  
@@ -24,7 +24,7 @@ FastCGI致力于减少网页服务器与CGI程序之间的互动，从而使服�
 参考: [维基百科-FastCGI](http://zh.wikipedia.org/wiki/FastCGI)
 
 
-# Nginx+FastCGI运行原理 #
+## Nginx+FastCGI运行原理 ##
 
 Nginx不支持对外部程序的直接调用或者解析，所有的外部程序（包括PHP）必须通过FastCGI接口来调用。  
 FastCGI接口在Linux下是socket（这个socket可以是文件socket，也可以是ip socket）。  
@@ -35,10 +35,11 @@ FastCGI接口在Linux下是socket（这个socket可以是文件socket，也可�
 接着，wrapper再将返回的数据通过FastCGI接口，沿着固定的socket传递给Nginx；  
 最后，Nginx将返回的数据发送给客户端。这就是Nginx+FastCGI的整个运作过程。  
 如图所示  
-{{/img/fastcgi_1.jpg}}
-*TODO*
 
-# spawn-fcgi与PHP-FPM #
+TODO
+	{{/img/fastcgi_1.jpg}}
+
+## spawn-fcgi与PHP-FPM ##
 
 前面介绍过，FastCGI接口方式在脚本解析服务器上启动一个或者多个守护进程对动态脚本进行解析，这些进程就是FastCGI进程管理器，或者称之为FastCGI引擎  
 spawn-fcgi与PHP-FPM就是支持PHP的两个FastCGI进程管理器。  
@@ -56,7 +57,7 @@ FastCGI 的主要优点是把动态语言和HTTP Server分离开来
 所以Nginx与PHP/PHP-FPM经常被部署在不同的服务器上，以分担前端Nginx服务器的压力，使Nginx专一处理静态请求和转发动态请求  
 而PHP/PHP-FPM服务器专一解析PHP动态请求。
 
-# 关于php-cgi和php-fpm #
+## 关于php-cgi和php-fpm ##
 
 CGI 是 Web Server 与 Web Application 之间数据交换的一种协议。  
 FastCGI 同 CGI 是一种通信协议，但比  CGI 在效率上做了一些优化，同样 SCGI 协议与 FastCGI 类似。  

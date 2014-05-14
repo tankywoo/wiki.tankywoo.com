@@ -3,9 +3,6 @@ title: "bwm-ng"
 date: 2013-08-17 07:32
 ---
 
-
-# bwm-ng #
-
 Bandwidth Monitor NG (Next Generation), a live bandwidth monitor for network and disk io.
 
 一个用于实时监控网络流量和硬盘io的软件, 在流量监控方面感觉比 `iftop` 更简单一些

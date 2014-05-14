@@ -4,8 +4,6 @@ date: 2013-08-17 07:36
 ---
 
 
-# Vsftpd #
-
 参考: [鸟哥私房菜](http://vbird.dic.ksu.edu.tw/linux_server/0410vsftpd.php)
 
 
@@ -25,9 +23,9 @@ date: 2013-08-17 07:36
 
 在`userlist_file`设置user名，一个一行
 
-如果`userlist_deny`设置为YES，则userlist_file中的用户被拒绝；
+如果`userlist_deny`设置为YES，则`userlist_file`中的用户被拒绝；
 
-如果设置为NO，则只有userlist_file中的用户可以登录（系统用户除外？ *TODO* ）
+如果设置为NO，则只有`userlist_file`中的用户可以登录（系统用户除外？ *TODO* ）
 
 
 `local_umask`设置新文件的掩码，推荐是022
@@ -47,7 +45,3 @@ Google了下，网上还是很常见的
 即可解决问题，参考: [benscobie的Blog](http://www.benscobie.com/fixing-500-oops-vsftpd-refusing-to-run-with-writable-root-inside-chroot/)
 
 如果是`2.x`的版本，[参考](http://blog.thefrontiergroup.com.au/2012/10/making-vsftpd-with-chrooted-users-work-again/)
-
-# History #
-
-Create 2013/02/23

@@ -4,14 +4,10 @@ date: 2013-08-17 07:23
 ---
 
 
-
-# 什么是Shell #
-
 	shell是一个作为用户与Linux系统间接口的程序，它允许用户向操作系统输入需要执行的命令
 
-
-# 基本 #
-## 重定向 ##
+## 基本 ##
+### 重定向 ###
 
 	0	标准输入 <  <<
 	1	标准输出 >  >>
@@ -22,25 +18,25 @@ date: 2013-08-17 07:23
 
 
 
-## 管道 ##
+### 管道 ###
 
 	管道用操作符 '|'
 
 
-# 脚本 #
-## 格式 ##
+## 脚本 ##
+### 格式 ###
 
 	第一行指定执行shell的文件，一般是#!/bin/bash或#!/bin/sh
 
 
-## 运行 ##
+### 运行 ###
 
 	* 直接运行 sh xx.sh 或者 bash xx.sh
 	* 可执行文件 先chmod +x xx.sh 然后 ./xx.sh
 
 
-# Shell语法(*) #
-## 变量 ##
+## Shell语法(*) ##
+### 变量 ###
 
 * 变量不需要提前声明
 * 变量名区分大小写
@@ -63,7 +59,7 @@ date: 2013-08-17 07:23
 
 
 
-### 引号 ###
+#### 引号 ####
 
 * read读入数据时，带有空格的数据不需要加引号
 
@@ -83,9 +79,9 @@ date: 2013-08-17 07:23
 		echo \$var    $var
 
 
-### 环境变量 ###
+#### 环境变量 ####
 
-## 条件 ##
+### 条件 ###
 
 test或[命令
 
@@ -160,8 +156,8 @@ test或[命令
 
 
 
-## 控制结构 ##
-### if语句 ###
+### 控制结构 ###
+#### if语句 ####
 
 	if condition
 	then
@@ -173,7 +169,7 @@ test或[命令
 	fi
 
 
-### for语句 ###
+#### for语句 ####
 
 	for var in values
 	do
@@ -189,7 +185,7 @@ test或[命令
 
 [Bash For Loop Examples](http://www.cyberciti.biz/faq/bash-for-loop/)
 
-### while语句 ###
+#### while语句 ####
 
 	while condition
 	do
@@ -198,7 +194,7 @@ test或[命令
 
 
 
-### while语句 ###
+#### while语句 ####
 
 	until condition
 	do
@@ -208,7 +204,7 @@ test或[命令
 
 
 
-### case语句 ###
+#### case语句 ####
 
 	case var in
 		passtern [| pattern]... ) statement1;;
@@ -233,7 +229,7 @@ test或[命令
 	exit 0
 
 
-### AND OR列表 ###
+#### AND OR列表 ####
 
 `&&` `||`
 
@@ -241,11 +237,11 @@ test或[命令
 	con1 || con2 || con3
 
   
-### 语句块 ###
+#### 语句块 ####
 
 `{}`
 
-### 函数 ###
+#### 函数 ####
  
 
 	function_name(){
@@ -255,7 +251,7 @@ test或[命令
 
 
 
-### 命令 ###
+#### 命令 ####
 
 * `break`
 * `:`
@@ -298,19 +294,19 @@ test或[命令
 `find` `grep` `regex`
 
 
-### 补充 ###
+#### 补充 ####
 
 算数运算  
 $((...))  
 x=$(($x+1))  
 
 
-## Special Parameters ##
+### Special Parameters ###
 TODO vimwiki的转义怎么弄?
 
 The shell treats several parameters specially. These parameters may only be referenced; assignment to them is not allowed.
 
-`$*` : $* is equivalent to "\$1c\$2c..", where c is the first character of the value of the `IFS` variable
+`$*` : equivalent to "\$1c\$2c..", where c is the first character of the value of the `IFS` variable
 
 `$@` : `$@` is equivalent to "\$1" "\$2"
 
@@ -321,7 +317,7 @@ The shell treats several parameters specially. These parameters may only be refe
 `$0` : The source file name
 
 
-# 参考 #
+## 参考 ##
 
 * Linux程序设计
 * [Bash Manual](http://www.gnu.org/software/bash/manual/bashref.html)

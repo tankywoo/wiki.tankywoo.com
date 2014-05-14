@@ -45,7 +45,3 @@ date: 2013-08-17 07:23
 
 * [Linux服务器性能小结](http://blog.chinaunix.net/uid-27127953-id-3333176.html)
 * [linux wa%过高，iostat查看io状况](http://www.cnblogs.com/mfryf/archive/2012/03/12/2392000.html)
-
-## History ##
-
-Create 2013/02/21

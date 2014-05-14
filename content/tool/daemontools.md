@@ -60,8 +60,3 @@ ubuntu 有个 `daemontools-run` 程序, 我原先是把服务放在自己新建�
 * [Manage your services with Daemontools](http://isotope11.com/blog/manage-your-services-with-daemontools)
 * [使用daemontools确保指定进程的运行](http://idaemon.net/post-797.html)
 * [Daemontools: Tutorial](http://blog.teksol.info/pages/daemontools/tutorial)
-
-## 历史日志 ##
-
-* 2013-08-25 : 创建
-* 2014-01-02 : 增加 svc, svstat 等介绍

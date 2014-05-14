@@ -3,7 +3,7 @@ title: "Bash Shortcuts"
 date: 2013-08-17 07:23
 ---
 
-# Ctrl #
+## Ctrl ##
 
 `Ctrl + a`  -  Jump to the start of the line # 如果使用screen，C-a可能会被占用，请使用C-a a
 
@@ -55,9 +55,3 @@ date: 2013-08-17 07:23
 * [高效操作Bash](http://ahei.info/bash.htm)
 * [Bash Shell 快速鍵列表](http://blog.longwin.com.tw/2006/09/bash_hot_key_2006/)
 
-
-# History #
-
-Create 2013/02/04
-
-Last modified 2013/02/04

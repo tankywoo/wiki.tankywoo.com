@@ -4,7 +4,7 @@ date: 2013-09-03 22:03
 ---
 
 
-# netcat #
+## netcat ##
 
 TCP/IP swiss army knife
 
@@ -12,7 +12,7 @@ TCP/IP swiss army knife
 
 见过的有三个版本: `net-analyzer/netcat6`, `net-analyzer/netcat`, `net-analyzer/gnu-netcat`. 不同的版本参数上也会有些差异, 好像是第三个实现版本在监听端口时不需要指定`-p`参数.
 
-## Argument ##
+### Argument ###
 
 ` -l ` : 监听模式
 
@@ -27,7 +27,7 @@ TCP/IP swiss army knife
 ` -e, --exec=CMD ` : 连接后执行命令. 这个看起来很牛逼, 还没试过. **TODO**
 
 
-## Example ##
+### Example ###
 
 传输文件:
 
@@ -61,8 +61,3 @@ TCP/IP swiss army knife
 
 * [8 Practical Linux Netcat NC Command Examples](http://www.thegeekstuff.com/2012/04/nc-command-examples/)
 
-
-## 修改历史 ##
-
-* 2013-01-13 : 创建
-* 2013-07-03 : 写nmap引擎时用到snmp扫描端口, 总结

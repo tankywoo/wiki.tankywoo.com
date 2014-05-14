@@ -6,7 +6,7 @@ date: 2013-08-17 07:32
 
 `iftop` - display bandwidth usage on an interface by host
 
-# Display #
+## Display ##
 
 Right Part:
 
@@ -28,14 +28,9 @@ comm is the total, peak is the top rate over last 40s
 rates indicate the rate average of 2s, 10s, 40s  
 
 
-# Read More #
+## Read More ##
 
 * [Sysadmin's Toolbox: iftop](http://www.linuxjournal.com/content/sysadmins-toolbox-iftop|The)
 * [Guide: Display Network Interface Bandwidth Usage on Linux](http://www.thegeekstuff.com/2008/12/iftop-guide-display-network-interface-bandwidth-usage-on-linux/|IFTOP)
 * [Linux流量监控工具 - iftop](http://www.vpser.net/manage/iftop.html)
-
-# History #
-
-Create @ 2013/03/30
-
 

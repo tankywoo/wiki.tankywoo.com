@@ -13,12 +13,13 @@ iptables:按照官方文档，是一个ipv4 包过滤和NAT的管理工具
 其实这个问题折腾了半天，好像是参考这篇：
 [Iptables for newbies](http://en.gentoo-wiki.com/wiki/HOWTO_Iptables_for_newbies)
 
-# 一些术语 #
+## 一些术语 ##
 
-## Chain ##
+### Chain ###
+
 Each chain is a list of rules which can match a set of packets.
 
-## Table ##
+### Table ###
 
 ` filter `
 ` nat `
@@ -27,14 +28,14 @@ Each chain is a list of rules which can match a set of packets.
 ` security `
 
 
-# Example #
+## Example ##
 
 	iptables -L
 	iptables -F
 	iptables -X
 
 
-# Read More #
+## Read More ##
 
 * [iptables入门：iptables构架、基本命令及扩展（功能）简介](http://lesca.me/archives/iptables-architecture-commands-extensions.html) 
 * [iptables的基本概念和数据包流程图](http://www.ha97.com/4093.html)

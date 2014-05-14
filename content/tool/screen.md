@@ -3,11 +3,6 @@ title: "screen"
 date: 2013-09-06 10:22
 ---
 
-
-# Screen #
-
-## What is Screen ##
-
 ## .screenrc ##
 
 `info screen "String Escapes"`  

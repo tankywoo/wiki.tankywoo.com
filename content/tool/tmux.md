@@ -236,12 +236,3 @@ tmux attach-session -d -t 'tankywoo'
 * [使用tmux](https://wiki.freebsdchina.org/software/t/tmux)
 * [Using tmux](http://510x.se/notes/posts/Using_tmux/)
 * [Practical Tmux](https://mutelight.org/practical-tmux)
-
-## 历史记录 ##
-
-* 2013-06-25 : 完善整个tmux wiki
-* 2013-07-04 : 补充批量操作技巧
-* 2013-07-29 : 开头引进博客的tmux简介; 对脚本化的强调说明;
-* 2013-08-05 : 补充 C-b z 特性
-* 2013-09-06 : tmux resize的问题
-* 2013-10-16 : 更新tmux.conf配置文件的链接到dotfiles
