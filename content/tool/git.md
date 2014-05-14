@@ -422,6 +422,14 @@ TODO
 * [Writing good commit messages](https://github.com/erlang/otp/wiki/Writing-good-commit-messages)
 * [Distributed Git - Contributing to a Project](http://git-scm.com/book/en/Distributed-Git-Contributing-to-a-Project)
 
+## git add 只添加 tracked 的文件 ##
+
+git add 有一个 `-u` 选项，会只添加tracked的文件，比如在项目根目录下，可以添加所有修改过的已经tracked的文件:
+
+	git add -u .
+
+如果单纯的`git add .` 会把untracked的文件也加进去
+
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
