@@ -430,6 +430,42 @@ git add 有一个 `-u` 选项，会只添加tracked的文件，比如在项目�
 
 如果单纯的`git add .` 会把untracked的文件也加进去
 
+## 删除untracked files ##
+
+	git clean -f
+
+**But beware... there's no going back. Use -n or --dry-run to preview the damage you'll do.**
+
+If you want to also remove directories, run `git clean -f -d`
+
+If you just want to remove ignored files, run `git clean -f -X`
+
+If you want to remove ignored as well as non-ignored files, run `git clean -f -x`
+
+Note the case difference on the X for the two latter commands.
+
+If `clean.requireForce` is set to "true" (the default) in your configuration, then unless you specify -f nothing will actually happen, with a recent enough version of git.
+
+See the [git-clean docs](http://git-scm.com/docs/git-clean) for more information.
+
+[from](http://stackoverflow.com/a/64966/1276501)
+
+## 同一个文件选择部分提交 ##
+
+You can do `git add -p filename`, and it'll ask you what you want to stage. You can then:
+
+* hit `s` to split whatever change into smaller hunks. This only works if there is at least one unchanged line in the "middle" of the hunk, which is where the hunk will be split
+* then hit either:
+	* `y` to stage that hunk, or
+	* `n` to not stage that hunk, or
+	* `e` to manually edit the hunk (useful when git can't split it automatically)
+* and `d` to exit or go to the next file.
+* Use `?` to get the whole list of available options.
+
+If the file is not in the repository yet, do first `git add -N filename`. Afterwards you can go on with `git add -p filename`.
+
+[Source](http://stackoverflow.com/a/1085191/1276501)
+
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
