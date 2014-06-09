@@ -13,7 +13,7 @@ date: 2014-01-25 15:08
 * [Moom]() 窗口布局
 * [Gemini]() 检查重复文件
 * [Hazel]() 自动清理存放
-* [Cyderbuck]() FTP
+* [Cyberduck]() FTP
 
 
 ## 开发
