@@ -7,13 +7,13 @@ date: 2014-01-25 15:08
 ## 综合(其它)
 
 * [Alfred](http://www.alfredapp.com/) 神器。四周年时打九折入的Mega License，都要接近300R，真心好贵，不过物有所值
-* [1Password 4]() 密码管理
-* [Parallels Desktop]() 虚拟机
-* [Fantastical]() 日历&TODO
-* [Moom]() 窗口布局
-* [Gemini]() 检查重复文件
-* [Hazel]() 自动清理存放
-* [Cyberduck]() FTP
+* [1Password 4](https://agilebits.com/onepassword/mac) 密码管理
+* [Parallels Desktop](http://www.parallels.com/uk/products/desktop/) 虚拟机
+* [Fantastical](https://flexibits.com/fantastical) 日历&TODO
+* [Moom](http://manytricks.com/moom/) 窗口布局
+* [Gemini](http://macpaw.com/gemini) 检查重复文件
+* [Hazel](http://www.noodlesoft.com/hazel.php) 自动清理存放
+* [Cyberduck](http://cyberduck.io/`) FTP
 
 
 ## 开发
