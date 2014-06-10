@@ -13,7 +13,7 @@ date: 2014-01-25 15:08
 * [Moom](http://manytricks.com/moom/) 窗口布局
 * [Gemini](http://macpaw.com/gemini) 检查重复文件
 * [Hazel](http://www.noodlesoft.com/hazel.php) 自动清理存放
-* [Cyberduck](http://cyberduck.io/`) FTP
+* [Cyberduck](http://cyberduck.io/) FTP
 
 
 ## 开发
