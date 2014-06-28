@@ -120,3 +120,39 @@ date: 2013-08-17 07:23
 
 		for a in `arp | grep "eth1" | cut -d " " -f1`; do arp -d $a; done
 
+* 检查硬盘是HDD还是SSD
+
+	方法1:
+
+		cat /sys/block/sda/queue/rotational
+
+	输出`1`则是HDD, 输出`0`则是SSD
+
+	方法2:
+
+	安装`smartmontools`工具，使用`smartctl`命令查看信息。
+
+		tankywoo@gentoo-local::~/ » sudo smartctl -a /dev/sda
+		smartctl 6.1 2013-03-16 r3800 [x86_64-linux-3.7.10-gentoo-r1-ks] (local build)
+		Copyright (C) 2002-13, Bruce Allen, Christian Franke, www.smartmontools.org
+
+		=== START OF INFORMATION SECTION ===
+		Device Model:     gentoo-0 SSD
+		Serial Number:    36CBA5PYHBJMH4MDR0YY
+		Firmware Version: F.9AGAJ4
+		User Capacity:    34,359,738,368 bytes [34.3 GB]
+		Sector Sizes:     512 bytes logical, 4096 bytes physical
+		Rotation Rate:    Solid State Device
+		Device is:        Not in smartctl database [for details use: -P showall]
+		ATA Version is:   ATA8-ACS, ATA/ATAPI-5 T13/1321D revision 1
+		SATA Version is:  SATA 2.6, 3.0 Gb/s
+		Local Time is:    Mon Jun 23 23:31:46 2014 CST
+		SMART support is: Unavailable - device lacks SMART capability.
+
+		A mandatory SMART command failed: exiting. To continue, add one or more '-T permissive' options.
+
+	其中`Rotation Rate:    Solid State Device` 显示了是HDD还是SSD
+
+	+ [How to Find Out if a Drive is a SSD or an HDD](http://linuxg.net/how-to-find-out-if-a-drive-is-a-ssd-or-an-hdd/)
+	+ [How to know if a disk is an SSD or an HDD](http://stackoverflow.com/questions/908188/is-there-any-way-of-detecting-if-a-drive-is-a-ssd)
+	+ [http://linuxg.net/how-to-find-out-if-a-drive-is-a-ssd-or-an-hdd/](http://stackoverflow.com/questions/908188/is-there-any-way-of-detecting-if-a-drive-is-a-ssd)
