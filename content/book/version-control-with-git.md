@@ -30,6 +30,8 @@ double dash in command #todo# P19
 
 ## 4.Basic Git Concepts ##
 
+**NOTE**: This chapter is the most important section in this book.
+
 Within a repository, Git maintains two primary data structures, the `object store` and the `index`.
 
 At the heart of Git’s repository implementation is the object store. It contains your original data files and all the log messages, author information, dates, and other infor- mation required to rebuild any version or branch of the project.
@@ -40,7 +42,7 @@ Git places only four types of objects in the object store: `blob`, `tree`, `comm
 
 * Blob : 
 
-    Each version of a file is represented as a blob. A blob holds a file’s data but does not contain any metadata about the file or even its name.
+    Each version of a file is represented as a blob. "Blob" is a contraction of "binary large object". A blob holds a file’s data but does not contain any metadata about the file or even its name.
 
 * Tree :
 
@@ -64,7 +66,77 @@ It records and retains changes, keeping them safe until ready to commit them.
 
 Index also called `stage area`.
 
-Every commit content store under `.git/objects`:
+### Content-Addressable Names ###
+
+Git object store is organized and implemented as as content-addressable storage system.
+
+Each object in the object store has a unique name produced by applying SHA1 to the contents of the object, yielding an SHA1 hash value. SHA1 values are 160-bit values that are usually represented as a 40-digit hexadecimal number.
+
+### Git Tracks Content ###
+
+**Git is a content tracking system**
+
+Git’s object store is based on the hashed computation of the contents of its objects, not on the file or directory names from the user’s original file layout.
+
+If two separate files have exactly the same content, whether in the same or different directories, Git stores a single copy of that content as a blob within the object store.
+
+	# An initial git repo
+	TankyWoo@Mac::test/ (master) » find .git/objects
+	.git/objects
+	.git/objects/info
+	.git/objects/pack
+
+Add a file a.txt which content is 'hello' to the index, the SHA1 value is ce013625030ba8dba906f756967f9e9ca394464a
+
+	TankyWoo@Mac::test/ (master) » echo 'hello' > a.txt
+	TankyWoo@Mac::test/ (master*) » git add a.txt
+	TankyWoo@Mac::test/ (master*) » find .git/objects
+	.git/objects
+	.git/objects/ce
+	.git/objects/ce/013625030ba8dba906f756967f9e9ca394464a
+	.git/objects/info
+	.git/objects/pack
+	TankyWoo@Mac::test/ (master*) » git cat-file -p ce013625030ba8dba906f756967f9e9ca394464a
+	hello
+
+Write this change to the tree object
+
+	TankyWoo@Mac::test/ (master*) » git write-tree
+	2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
+	TankyWoo@Mac::test/ (master*) » git cat-file -p 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
+	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
+
+Now add another file b.txt, which is the same content with a.txt
+
+	TankyWoo@Mac::test/ (master*) » echo 'hello' > b.txt
+	TankyWoo@Mac::test/ (master*) » git add b.txt
+	TankyWoo@Mac::test/ (master*) » git write-tree
+	b5b0cccf7401633f12e0fafc6b85731251b86850
+	TankyWoo@Mac::test/ (master*) » git cat-file -p b5b0cccf7401633f12e0fafc6b85731251b86850
+	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
+	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    b.txt
+
+a.txt and b.txt point to the same blob object.
+
+Now change the content of a.txt file.
+
+	TankyWoo@Mac::test/ (master*) » echo 'world' >> a.txt
+	TankyWoo@Mac::test/ (master*) » git add a.txt
+	TankyWoo@Mac::test/ (master*) » git write-tree
+	579c3877d5f450e34ea642b3a29d2d01dcf8e392
+	TankyWoo@Mac::test/ (master*) » git cat-file -p 579c3877d5f450e34ea642b3a29d2d01dcf8e392
+	100644 blob 94954abda49de8615a048f8d2e64b5de848e27a1    a.txt
+	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    b.txt
+
+b.txt still point to the old blob, and a.txt point to the new blob
+
+### Pathname Versus Content ###
+
+Git’s physical data layout isn’t modeled after the user’s file directory structure. Instead, it has a completely different structure that can, nonetheless, reproduce the user’s orig- inal layout. Git’s internal structure is a more efficient data structure for its own internal operations and storage considerations.
+
+### Practise ###
+
+Every object store under `.git/objects`:
 
 	TankyWoo@Mac::test-git2/ (master*) » find .git/objects
 	.git/objects
@@ -92,7 +164,96 @@ Use `git rev-parse` can parse short hash to completely hash:
 	TankyWoo@Mac::test-git2/ (master*) » git rev-parse 3b18
 	3b18e512dba79e4c8300dd08aeb37f8e728b8dad
 
-**TODO**
+As mentioned before, Git tracks the pathnames of files through another kind of object called a `tree`.
+
+When you use git add, Git creates an object(blob) for the contents of each file you add(in .git/objects/), but it doesn’t create an object for your tree right away. Instead, it updates the index.
+
+The index is found in `.git/index` and keeps track of file pathnames and corre-sponding blobs.
+
+`git ls-files` can show information about files in the index and the working tree
+
+`git write-tree` create a tree object from current index by capturing a snapshot of its current information
+
+	TankyWoo@Mac::test/ (master*) » git ls-files -s
+	100644 ce013625030ba8dba906f756967f9e9ca394464a 0       a.txt
+
+	TankyWoo@Mac::test/ (master*) » git write-tree
+	2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
+
+### Tree Hierarchies ###
+
+	TankyWoo@Mac::test/ (master*) » tree .git/objects
+	.git/objects
+	├── 2e
+	│   └── 81171448eb9f2ee3821e3d447aa6b2fe3ddba1
+	├── ce
+	│   └── 013625030ba8dba906f756967f9e9ca394464a
+	├── info
+	└── pack
+
+The tree object `2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1`:
+
+	TankyWoo@Mac::test/ (master*) » git cat-file -p 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
+	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
+
+Create a sub directory, and copy a.txt in it:
+
+	TankyWoo@Mac::test/ (master*) » git add subdir/a.txt
+	TankyWoo@Mac::test/ (master*) » git write-tree
+	ec518d6bb3cabb8e88b5458cf18d862aa0514622
+
+In the new tree object, subdir object is a tree object, and point to `2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1`.
+which is the same as the top tree object.
+
+	TankyWoo@Mac::test/ (master*) » git cat-file -p ec518d6bb3cabb8e88b5458cf18d862aa0514622
+	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
+	040000 tree 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1    subdir
+
+The new tree for subdir contains only one file, a.txt, and that file contains the same old “hello” content. So the subdir tree is exactly the same as the older, top-level tree! And of course it has the same SHA1 object name as before.
+
+### Commits ###
+
+Use the low-level command `git commit-tree` to commit the tree object, and generate a commit object:
+
+	TankyWoo@Mac::test/ (master*) » echo -n 'Init site\n' | git commit-tree ec518d6bb3cabb8e88b5458cf18d862aa0514622
+	5c5e63c0ee9a9c51304f352ec0581704411003ad
+
+
+	TankyWoo@Mac::test/ (master*) » git cat-file -p 5c5e63c0ee9a9c51304f352ec0581704411003ad
+	tree ec518d6bb3cabb8e88b5458cf18d862aa0514622
+	author Tanky Woo <wtq1990@gmail.com> 1406774332 +0800
+	committer Tanky Woo <wtq1990@gmail.com> 1406774332 +0800
+
+	Init site
+
+`author` vs `committer`(from [Pro Git](http://git-scm.com/book/ch2-3.html))
+
+> The author is the person who originally wrote the patch, whereas the committer is the person who last applied the patch. So, if you send in a patch to a project and one of the core members applies the patch, both of you get credit — you as the author and the core member as the committer.
+
+A more detailed explanation see [this](http://stackoverflow.com/a/18754896/1276501)
+
+### Tag ###
+
+Create an annotated, unsigned tag:
+
+	TankyWoo@Mac::test/ (master*) » git tag -m 'version 1.0 tag' v1.0 5c5e63c0ee9a9c51304f352ec0581704411003ad
+
+Get the SHA1 id by tag name:
+
+	TankyWoo@Mac::test/ (master*) » git rev-parse v1.0
+	606d5478f68648e14de7b204d5484e4b83b2a3a0
+
+The tag object:
+
+	TankyWoo@Mac::test/ (master*) » git cat-file -p 606d5478f68648e14de7b204d5484e4b83b2a3a0
+	object 5c5e63c0ee9a9c51304f352ec0581704411003ad
+	type commit
+	tag v1.0
+	tagger Tanky Woo <wtq1990@gmail.com> 1406811935 +0800
+
+	version 1.0 tag
+
+**NOTE**: In this section, most of the commands are the low-level comamnds. In real life, should not use this commands!
 
 ## 5. File Management and the Index ##
 
