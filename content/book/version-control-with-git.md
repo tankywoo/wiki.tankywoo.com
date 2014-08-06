@@ -313,6 +313,180 @@ Git 把文件fa改为fb，会在`object store`中保存原始的文件内容，�
 
 经过mv操作后，使用`git log fb`只会看到变更后的提交(包括变更的那个提交)，即关联内容并为fb文件的历史，可以通过`git log --follow fb` 来查看关联这段内容的完整历史。
 
+## 6. Commits ##
+
+To identify commits, there are two ways: explicit references and a few implied references.
+
+The explicit reference to commit is its hash ID(SHA1).
+
+Git also provides mechanisms for identifying a commit relative to another reference.
+
+such as `master^` and `master~2` etc.
+
+The `caret`(`^`) is used to select a different parent.
+
+Given a commit C, C^1 is the first parent, C^2 is the second parent, C^3 is the third parent, and so on, as shown in Figure 6-1(see on book).
+
+The `tilde`(`~`) is used to go back before an ancestral parent and select a preceding generation. Again, given the commit C, C~1 is the first parent, C~2 is the first grandparent, and C~3 is the first great-grandparent. as shown in Figure 6-2.(see on book)
+
+For example, a simple repo log:
+
+    *   75b09c2 - (HEAD, master) Merge branch 'dev' (4 seconds ago) <Tanky Woo>
+    |\
+    | * 0aab100 - (dev) Add d (26 seconds ago) <Tanky Woo>
+    | * 6a9379e - Add c (31 seconds ago) <Tanky Woo>
+    * | 015b5b9 - Add f (14 seconds ago) <Tanky Woo>
+    |/
+    * 545851d - Add b (59 seconds ago) <Tanky Woo>
+    * 1509ece - Add a (80 seconds ago) <Tanky Woo>
+
+Choose the first parent:
+
+    $ git log -1 --pretty=oneline --abbrev-commit -p master^1
+    015b5b9 Add f
+
+Choose the second parent, this is the dev branch commit merged into master:
+
+    $ git log -1 --pretty=oneline --abbrev-commit -p master^1
+    0aab100 Add d
+
+such as `master^` refers to the penultimate commit on the master branch.
+
+Use `tilde`:
+
+    $ git log -1 --pretty=oneline --abbrev-commit -p master~1
+    015b5b9 Add f
+
+`master^1` is the same as `master~1`
+
+If the number is not specified, as `master^` or `master~`, it's default to `master^1` or `master~1`, also, `master^^` is the same as `master^1^1`, and it's the same as `master~2`.
+
+See the parent of the second parent:
+
+    $ git log -1 --pretty=oneline --abbrev-commit -p master^2~1
+    6a9379e Add c
+
+
+**TODO** 
+2. `git show-branch`
+
+### refs and symrefs ###
+
+1. A ref is an SHA1 hash ID that refers to an object within the Git object store. Although a ref may refer to any Git object, it usually refers to a commit object.
+2. A symbolic reference, or symref, is a name that indirectly points to a Git object. It is still just a ref.
+
+`refs`(reference, 引用), 一般指向某个commit.
+
+Local topic branch names, remote tracking branch names, and tag names are all refs.
+
+本地分支名, 远程分支名, tag名都是refs.
+
+* local branch - `.git/refs/heads/`
+* remote branch - `.git/refs/remotes/`
+* tag - `.git/refs/tags/`
+
+所以如本地分支`master`, 全名就是`.git/refs/heads/master`
+
+存放在`.git/refs` 目录下:
+
+    TankyWoo@Mac::simiki/ (master) » tree .git/refs
+    .git/refs
+    ├── heads
+    │   ├── dev
+    │   ├── jinja-extensions
+    │   └── master
+    ├── remotes
+    │   └── origin
+    │       ├── HEAD
+    │       ├── dev
+    │       └── master
+    └── tags
+        └── v1.2.1
+
+master这个refs存放的就是master分支的最后一次commit id:
+
+    TankyWoo@Mac::simiki/ (master) » more .git/refs/heads/master
+    569898602add495da34fb8684e39f60d26176a19
+
+tags记录的是最新的一个tag
+
+`symrefs`(symbol reference, 符号引用), 是一个指向引用的引用(指针).存放在`.git/`目录下
+
+`HEAD`: `.git/HEAD`, 总是指向当前分支的最后一次提交, 当分支改变，HEAD也会变
+
+    TankyWoo@Mac::simiki/ (master) » more .git/HEAD
+    ref: refs/heads/master
+
+`ORIG_HEAD`: `.git/ORIG_HEAD`, 一些操作, 如`merge`或`reset`, 会记录操前的commit(HEAD). 作为一个保护措施，使操作可以回溯.
+
+比如最近三个commits:
+
+    * d46546a - (HEAD, master) update d (42 seconds ago) <Tanky Woo>
+    * 8ed2d79 - update f (76 seconds ago) <Tanky Woo>
+    * 75b09c2 - (tag: v0.1) Merge branch 'dev' (3 days ago) <Tanky Woo>
+
+`ORIG_HEAD` 存储的是之前某一个commit:
+
+    TankyWoo@Mac::test-git/ (master) » more .git/ORIG_HEAD
+    015b5b99f5c9973e840f29c9f6e6b936c99b92a5
+
+做一次reset操作:
+
+    TankyWoo@Mac::test-git/ (master) » git reset --soft HEAD^
+
+查看`ORIG_HEAD`, 会指向之前的HEAD:
+
+    TankyWoo@Mac::test-git/ (master) » more .git/ORIG_HEAD
+    d46546a5192b7e1c834947b612e3401a6f7729c7
+
+这样就可以回溯到reset之前的版本:
+
+    git reset ORIG_HEAD
+
+`HEAD` vs `ORIG_HEAD` [HEAD and ORIG\_HEAD in Git](http://stackoverflow.com/questions/964876/head-and-orig-head-in-git)
+
+`FETCH_HEAD`: TODO
+
+`MERGE_HEAD`: TODO
+
+`git symbolic-ref` TODO
+
+详细可以参考[progit-9.3](http://git-scm.com/book/en/Git-Internals-Git-References)
+
+### Viewing Old Commits ###
+
+Specify a commit range using the form `since..until`, this will show the commit from since(**exclude**) to until(**include**)
+
+    $ git log --pretty=oneline --abbrev-commit master~3..master~1
+    015b5b9 Add f
+    545851d Add b
+
+Use `-p|--patch` option to print the patch(changes):
+
+    $ git log -1 -p master
+
+This is the same as:
+
+    $ git show master
+
+`git show` can also display blob in remote branch. **TODO**
+
+    $ git show origin/master:setup.py
+
+Notice the `-1` to restricts the output to a single commit, otherwise will display all commits in master. type `-n` to limit output to at most n commits.
+
+`--stat` option enumerates the files changed in a commit and tallies how many lines were modified in each file.
+
+### Commit Ranges ###
+
+TODO
+
+### Finding Commits ###
+
+`git bisect`
+`git blame`
+
+TODO
 
 ## 8. Diffs ##
 
