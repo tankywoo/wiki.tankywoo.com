@@ -62,3 +62,12 @@ dshbak 是 pdsh 的一个配套工具, 用于格式化输出结果.
     ----------------
     root
 
+### pdcp ###
+
+pdcp 是一个批量传输的工具，也是pdsh工具集中的一个，还有一个反向的`rpdcp`
+
+比如要传一个目录到/home目录下:
+
+    pdcp -r -l root -g myhosts /dir /home/
+
+
