@@ -72,7 +72,7 @@ analysis message section 输出格式:
 
 上面的一些tables中有`previous`，可以和前一次的做对比，这个数据是存在`~/.pylint.d/`, 由环境变量`PYLINTHOME`控制.
 
-## 其它 ##
+## 经验 ##
 
 针对analysis message, 如果想要看详细的解释, 可以:
 
@@ -102,3 +102,24 @@ report tables太长了，如果不关心这个，可以用`-rn`关闭.
 * html 输出为html, 可重定向保存然后浏览器打开
 
 `--msg-template` 可以修改输出信息的模板，默认见上面提到的. 可参考[页面](http://docs.pylint.org/output.html)
+
+@TODO:
+
+如果导入的第三方模块都是在`virtualenv`中安装，则`pylint`也应该在virtualenv中安装。
+
+如果pylint是全局安装, 虽然进入了virtualenv, `sys.path`也有virtualenv安装模块的路径，但是依然会报Warning, 提示模块找不到.
+
+## 其它类似工具 ##
+
+@TODO, 待尝试.
+
+PyChecker ?
+[Pyflakes](https://pypi.python.org/pypi/pyflakes) 使用Vim插件, 对一些语法和运行时错误检查, 比较好用.
+[PEP8](https://pypi.python.org/pypi/pep8) 针对PEP8的一些检查.
+[Flake8](https://pypi.python.org/pypi/flake8) 是Pyflakes和PEP8的集合.
+[Syntastic](https://github.com/scrooloose/syntastic) 听说很强大?
+
+讨论:
+
+* [PyLint, PyChecker or PyFlakes?](http://stackoverflow.com/questions/1428872/pylint-pychecker-or-pyflakes)
+* [Static Code Analizers for Python](http://doughellmann.com/2008/03/01/static-code-analizers-for-python.html)
