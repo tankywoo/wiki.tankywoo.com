@@ -181,7 +181,7 @@ ereregex
 
 ## Rsyslog Queue ##
 
-队列是 rsyslog 的核心。下午([来源](https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/7-Beta/html/System_Administrators_Guide/s1-working_with_queues_in_rsyslog.html)) 展示了rsyslog处理消息的流程:
+队列是 rsyslog 的核心。下图([来源](https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/7-Beta/html/System_Administrators_Guide/s1-working_with_queues_in_rsyslog.html)) 展示了rsyslog处理消息的流程:
 
 <!-- 来至[官方文档](http://www.rsyslog.com/doc/queues_analogy.html)的一幅图： -->
 <!-- ![dataflow](http://www.rsyslog.com/doc/dataflow.png) -->
@@ -355,6 +355,7 @@ Main Queue 的默认模式是 `FixedArray`，Action Queue 的默认模式是 `Di
 
 在没有配置 `$MainMsgQueueSize` 和 `$ActionQueueSize` 时，可以看到队列最大值分别是10000和1000。
 
+对于Action Queue, 可以看到默认是'Action 1'、'Action 2'...命名的，可以通过 `$ActionName <name>`来对Action Queue命名. 在文档中还没找到这个配置，不过在[mail list](http://lists.adiscon.net/pipermail/rsyslog/2012-May/029913.html)中看到了回答.
 
 更多的可以参考:
 
