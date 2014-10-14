@@ -73,7 +73,7 @@ analysis message section 输出格式:
 上面的一些tables中有`previous`，可以和前一次的做对比，这个数据是存在`~/.pylint.d/`, 由环境变量`PYLINTHOME`控制.
 
 
-## 错误开关控制 ##
+## 消息控制 ##
 
 1. 全局级:
 
