@@ -116,7 +116,7 @@ Pylint < 0.25 用:
     # pylint: disable-all
 
 
-一般针对一段代码关闭某个报警, 可以类似如下(摘自saltstack salt/states/pkg.py):
+一般针对一段代码关闭某个报警, 可以类似如下(摘自saltstack salt/states/pkg.py), 在需要disable的地方关闭指定msg，不需要disable的地方再enable重新开启:
 
     # The following imports are used by the namespaced win_pkg funcs
     # and need to be included in their globals.
