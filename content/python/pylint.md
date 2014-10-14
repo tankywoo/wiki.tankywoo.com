@@ -72,6 +72,78 @@ analysis message section 输出格式:
 
 上面的一些tables中有`previous`，可以和前一次的做对比，这个数据是存在`~/.pylint.d/`, 由环境变量`PYLINTHOME`控制.
 
+
+## 错误开关控制 ##
+
+1. 全局级:
+
+    通过在配置文件中disable或enable
+
+2. 模块级(module level):
+
+    在文件顶部以注释方式控制, eg:
+
+        #!/usr/bin/env python
+        # -*- coding: utf-8 -*-
+        """
+        Docstring...
+        """
+
+        # pylint: disable=wildcard-import, C0111
+        # pylint: enable=too-many-lines
+
+3. 代码块级、行级:
+
+    同上面模块级，也可以在代码块级和行级 disable 或 enable. eg:
+
+        # 代码块级
+        for i in range(1, 10):
+            # pylint: disable=mixed-indentation
+            print i
+
+        # 行级
+        print(1,2) # pylint: disable=C0326
+
+
+如上面的例子, 可以使用 message id, 也可以使用 symbolic name for message.
+
+在 Pylint 0.26.1 及以上版本，可在模块级忽略所有报警
+
+    # pylint: skip-file
+
+Pylint < 0.25 用:
+
+    # pylint: disable-all
+
+
+一般针对一段代码关闭某个报警, 可以类似如下(摘自saltstack salt/states/pkg.py):
+
+    # The following imports are used by the namespaced win_pkg funcs
+    # and need to be included in their globals.
+    # pylint: disable=W0611
+    try:
+        import msgpack
+    except ImportError:
+        import msgpack_pure as msgpack
+    from distutils.version import LooseVersion  # pylint: disable=E0611,F0401
+    # pylint: enable=W0611
+
+
+这是一个输出样例:
+
+    $ pylint test_pylint.py
+    ************* Module test_pylint
+    I: 10, 0: Locally disabling mixed-indentation (W0312) (locally-disabled)
+    I: 10, 0: Locally disabling bad-whitespace (C0326) (locally-disabled)
+    I: 19, 0: Locally disabling bad-whitespace (C0326) (locally-disabled)
+    W:  9, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+    W: 16, 0: Found indentation with tabs instead of spaces (mixed-indentation)
+    W:  3, 0: Unused import io (unused-import)
+
+注意MESSAGE TYPE是`I`.
+
+详细见文档 [Pylint Message Control](http://docs.pylint.org/faq.html#message-control)
+
 ## 经验 ##
 
 针对analysis message, 如果想要看详细的解释, 可以:
@@ -111,13 +183,11 @@ report tables太长了，如果不关心这个，可以用`-rn`关闭.
 
 ## 其它类似工具 ##
 
-@TODO, 待尝试.
-
-PyChecker ?
-[Pyflakes](https://pypi.python.org/pypi/pyflakes) 使用Vim插件, 对一些语法和运行时错误检查, 比较好用.
-[PEP8](https://pypi.python.org/pypi/pep8) 针对PEP8的一些检查.
-[Flake8](https://pypi.python.org/pypi/flake8) 是Pyflakes和PEP8的集合.
-[Syntastic](https://github.com/scrooloose/syntastic) 听说很强大?
+* [PyChecker](http://pychecker.sourceforge.net/) 是对代码错误做检查的工具, 它会运行代码去分析错误
+* [Pyflakes](https://pypi.python.org/pypi/pyflakes) 使用Vim插件, 对一些语法和运行时错误检查, 比较好用.
+* [PEP8](https://pypi.python.org/pypi/pep8) 针对PEP8的一些检查.
+* [Flake8](https://pypi.python.org/pypi/flake8) 是Pyflakes和PEP8的集合.
+* [Syntastic](https://github.com/scrooloose/syntastic) 听说很强大?
 
 讨论:
 
