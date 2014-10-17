@@ -89,6 +89,15 @@ What is `git fetch`? and what is the difference to `git pull`?
 
 [2.6 Git 基础 - 打标签](http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE)
 
+删除远程标签:
+
+	git push origin :tagname
+
+或
+
+	git push --delete origin tagname
+
+[参考](http://stackoverflow.com/a/5480292/1276501)
 
 ## Git 全局配置 ##
 
@@ -465,6 +474,13 @@ You can do `git add -p filename`, and it'll ask you what you want to stage. You 
 If the file is not in the repository yet, do first `git add -N filename`. Afterwards you can go on with `git add -p filename`.
 
 [Source](http://stackoverflow.com/a/1085191/1276501)
+
+## checkout 指定的 tag ##
+
+    git checkout tags/<tag_name>
+
+[参考](http://stackoverflow.com/questions/791959/download-a-specific-tag-with-git)
+
 
 ## Git资料 ##
 
