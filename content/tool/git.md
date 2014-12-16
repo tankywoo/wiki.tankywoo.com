@@ -277,6 +277,10 @@ Git 会使用设置的编辑器打开如下:
 
 			git rebase --continue
 
+如果要对first commit开始做rebase:
+
+	git rebase -i --root
+
 我设置的PS1的括号里是分支名，可以看到现在的分支是这个要修改的commit id:
 
 	TankyWoo@Mac::test-git/ (3243b09*) » git commit --amend --author="Tanky <noreply@tankywoo.com>"
