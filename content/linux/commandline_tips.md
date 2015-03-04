@@ -47,3 +47,15 @@ date: 2015-02-09 15:00
 [ref 1](http://blog.changecong.com/2012/10/rename-a-remote-branch-on-github/)
 [ref 2](http://www.benjaminlhaas.com/blog/locally-and-remotely-renaming-branch-git)
 [ref 3](http://stackoverflow.com/questions/1526794/rename-master-branch-for-both-local-and-remote-git-repositories)
+
+---
+
+git stash相关
+
+stash时包含untracked files(默认只有stage和index中的files):
+
+	git stash [--include-untracked|-u]
+
+stash pop后, 原先index中的files会恢复为staged, 如果要保持index, 则:
+
+	git stash [--keep-index|-k]
