@@ -59,3 +59,23 @@ stash时包含untracked files(默认只有stage和index中的files):
 stash pop后, 原先index中的files会恢复为staged, 如果要保持index, 则:
 
 	git stash [--keep-index|-k]
+
+---
+
+同时修改 author 和 committer
+
+比如提交后发现author和committer都错了.
+
+如果只是:
+
+	git commit --amend --author="username <useremail>"
+
+则只修改 author 信息, 如果要同时修改author和committer信息则:
+
+	git -c user.name="New Author Name" -c user.email=email@address.com commit --amend --reset-author
+
+如果修改了 `~/.gitconfig` 则可以直接:
+
+	git commit --amend --reset-author
+
+[ref](http://stackoverflow.com/a/1320317/1276501)
