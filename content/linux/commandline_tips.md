@@ -79,3 +79,25 @@ stash pop后, 原先index中的files会恢复为staged, 如果要保持index, �
 	git commit --amend --reset-author
 
 [ref](http://stackoverflow.com/a/1320317/1276501)
+
+---
+
+统计所有提交的用户及提交次数:
+
+	git shortlog -sn
+
+也可以加上相应的email:
+
+	git shortlog -sne
+
+[ref](http://blog.vogella.com/2013/02/26/git-how-to-determine-the-committers-or-authors-in-a-git-repository-by-lars-vogel/)
+
+---
+
+查看某次提交的author/committer:
+
+	git --no-pager show -s --format='author: %an <%ae> \ committer: %cn <%ce>' <commit_id>
+
+`--no-pager` 这个参数很赞！
+
+[ref](http://www.quora.com/Whats-the-simplest-git-command-to-get-a-commits-author-and-their-email-address-if-available)
