@@ -5,6 +5,8 @@ date: 2014-04-28 23:31
 
 [TOC]
 
+(First Edition, 2009)
+
 ## 3. Getting Started ##
 
 	# For a complete list of git subcommands
@@ -15,6 +17,12 @@ date: 2014-04-28 23:31
 	git <subcommand> --help
 
 double dash in command #todo# P19
+
+(P19) About `bare double dash` (`--`), in shell, it indicate the end of the command options; The same as in git, it seperate the option and the path.
+[ref 1](http://unix.stackexchange.com/questions/11376/what-does-double-dash-mean-also-known-as-bare-double-dash)
+[ref 2](http://unix.stackexchange.com/questions/52167/what-does-mean-in-linux-unix-command-line)
+[ref 3](http://stackoverflow.com/questions/1192180/deleting-a-badly-named-git-branch/1192194#1192194)
+[ref 4](http://stackoverflow.com/questions/13321458/meaning-of-git-checkout-double-dashes)
 
 `git show` : 
 
@@ -28,13 +36,15 @@ double dash in command #todo# P19
 
 	git show-branch --more=10
 
+---
+
 ## 4.Basic Git Concepts ##
 
 **NOTE**: This chapter is the most important section in this book.
 
 Within a repository, Git maintains two primary data structures, the `object store` and the `index`.
 
-At the heart of Git’s repository implementation is the object store. It contains your original data files and all the log messages, author information, dates, and other infor- mation required to rebuild any version or branch of the project.
+At the heart of Git’s repository implementation is the object store. It contains your original data files and all the log messages, author information, dates, and other information required to rebuild any version or branch of the project.
 
 ### Object Store ##
 
@@ -254,6 +264,8 @@ The tag object:
 	version 1.0 tag
 
 **NOTE**: In this section, most of the commands are the low-level comamnds. In real life, should not use this commands!
+
+---
 
 ## 5. File Management and the Index ##
 
