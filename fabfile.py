@@ -6,6 +6,7 @@ from __future__ import absolute_import
 import os
 import os.path
 from sys import exit
+import datetime
 from fabric.api import env, local, run
 from fabric.colors import blue, red
 import fabric.contrib.project as project
@@ -62,3 +63,23 @@ def p():
 def gp():
     g()
     p()
+
+def commit(commit_file=None, message=None):
+    '''Auto commit tracked changes to git
+    
+    Usage:
+        fab commit - commit all modified tracked files
+        fab commit:[commit_file=]'file1 file2 fil3' - commit specified files
+        fab commit:[commit_file=]'file1 file2 file3',[message=]'your commit message' - commit specified files with custom commit message
+        fab commit:message='your commit message' - commit all modified tracked files with custom commit message
+    '''
+    if not message:
+        message = 'Update {0}'.format(datetime.datetime.now()
+                                      .strftime("%Y-%m-%d %H:%M:%S"))
+    # add all tracked files
+    # TODO change . to content/ ?
+    if not commit_file:
+        commit_file = '-u .'
+
+    local("git add {0}".format(commit_file))
+    local("git commit -m '{0}'".format(message))
