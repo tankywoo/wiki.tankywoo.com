@@ -1,14 +1,24 @@
 /*  
-Theme Name: Simple
+Theme Name: YASimple
 Author: Tanky Woo<me@tankywoo.com>
 Author URI: http://www.wutianqi.com/
-Description: Default theme for simiki.
+Description: Yet another simple theme for simiki.
 Version: 0.1
 License: The MIT License (MIT)
 Tags: simple, single-columns, code, codehighlight, white, markdown
 */
 
 /* Global Configuration */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+html, body {
+	height: 100%;
+}
+
 /* IE6 ignores this and uses default size of 16pt */
 html>body { font-size: 15px; }
 
@@ -20,9 +30,10 @@ html {
 }
 
 body {
-    /* font-family: "Helvetica Neue", "Segoe UI", Arial, Sans-Serif; */
-	font-family: Monaco, 'Courier New', monospace;
+    font-family: "Helvetica Neue", "Segoe UI", Arial, Sans-Serif;
+    /* font-family: Monaco, 'Courier New', monospace; */
     line-height: 1.5em;
+	background-color: #95AFBA;
 }
 
 a { color: #1863a1; text-decoration: none; }
@@ -30,12 +41,17 @@ a:visited { color: #1863A1;; }
 a:hover { color: #a00; text-decoration: underline; }
 a:active { color: #1863a1; }
 
-p { margin: 0 0 1.5em 0; text-align: justify; }
+p {
+    /* margin: 0 0 1.5em 0; */
+    margin: 0 0 1em 0;
+    /* text-align: justify; */
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
     color: #111;
     line-height: 1em;
+	margin-bottom: 1em;
 }
 
 h1 { font-size: 2.0em; }
@@ -52,16 +68,24 @@ blockquote {
     border-left: 0.4em #eee solid;
 }
 
+/* Gradient transparent - color - transparent
+http://css-tricks.com/examples/hrs/
+*/
 hr {
-    border: 1px solid silver;
-    margin: 1em 0;
-    padding: 0;
+    border: 0px;
+    height: 2px;
+    margin: 15px 0;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));.
+    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));.
+    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));.
+    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
 }
 
 b, strong { font-weight: bold; }
 
 ul, ol {
-    margin: 1.5em 0;
+    /* margin: 1.5em 0; */
+    margin: 1em 0;
     padding-left: 1.5em;
     line-height: 1.5em;
 }
@@ -124,16 +148,19 @@ pre code {
 
 /* Custom Configuration */
 #container {
-    background: white;
     width: 50em;
     line-height: 1.5em;
-    margin: 1.5em auto 3em auto;
-    padding: 1.5em 2em;
+    margin: 0 auto 3em auto;
+    padding: 3em 2em 1.5em 2em;
+    background-color: #fbfffd;
+    border: 1px solid #ddd;
 }
 
+/*
 #container ul li a {
-	font-family: Monaco, 'Courier New', monospace;
+    font-family: Monaco, 'Courier New', monospace;
 }
+*/
 
 #wiki_title, #title {
     text-align: center;
@@ -254,6 +281,10 @@ table.hlcodetable {
     border: none;
 }
 
+.hlcode {
+    margin: 0 0 1em 0;
+}
+
 
 .category_item {
 	
@@ -269,6 +300,7 @@ table.hlcodetable {
 
 #container .category h2{
 	color: #aaa;
+    font-family: Monaco, "Helvetica Neue", "Segoe UI", Arial, Sans-Serif;
 }
 
 #nav {
