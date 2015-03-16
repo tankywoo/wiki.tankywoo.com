@@ -485,6 +485,20 @@ If the file is not in the repository yet, do first `git add -N filename`. Afterw
 
 [参考](http://stackoverflow.com/questions/791959/download-a-specific-tag-with-git)
 
+## git add的几个参数和通配符 ##
+
+* `git add .` stages new and modified, in Git 1.x, **without deleted**, in Git 2.x, **with deleted**
+* `git add -u` stages modified and deleted, **without new**
+* `git add -A` stages **All**
+* `git add *` stages new(except name begin with `dot`) and modified, **without deleted**
+
+这里得注意, `git add .` 在 Git 1.x 和 Git 2.0以后是不一样的.
+
+详细讨论见:
+
+* [Difference between “git add -A” and “git add .”](http://stackoverflow.com/questions/572549/difference-between-git-add-a-and-git-add/16162511#16162511)
+* [git add * (asterisk) vs git add . (period)](http://stackoverflow.com/questions/26042390/git-add-asterisk-vs-git-add-period)
+
 
 ## Git资料 ##
 
