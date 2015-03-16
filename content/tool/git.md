@@ -533,6 +533,13 @@ If the file is not in the repository yet, do first `git add -N filename`. Afterw
 
     {behind}\t{ahead}
 
+参考:
+
+* [git: programmatically know by how much the branch is ahead/behind a remote branch](http://stackoverflow.com/questions/2969214/git-programmatically-know-by-how-much-the-branch-is-ahead-behind-a-remote-branc)
+* [git ahead/behind info between master and branch?](http://stackoverflow.com/questions/20433867/git-ahead-behind-info-between-master-and-branch)
+* [git-branch-status](https://gist.github.com/vitalk/8639831)
+
+
 
 ## Git资料 ##
 
