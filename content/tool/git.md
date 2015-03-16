@@ -499,6 +499,40 @@ If the file is not in the repository yet, do first `git add -N filename`. Afterw
 * [Difference between “git add -A” and “git add .”](http://stackoverflow.com/questions/572549/difference-between-git-add-a-and-git-add/16162511#16162511)
 * [git add * (asterisk) vs git add . (period)](http://stackoverflow.com/questions/26042390/git-add-asterisk-vs-git-add-period)
 
+## 检查repo是否dirty ##
+
+    git status --porcelain
+
+关于git提示的状态, 见`man git-status`的 `[OUTPUT] -> [Short Format]` 一节
+
+参考:
+
+* [Checking for a dirty index or untracked files with Git](http://stackoverflow.com/questions/2657935/checking-for-a-dirty-index-or-untracked-files-with-git)
+* [How can I check in a bash script if my local git repo has changes](http://stackoverflow.com/questions/5143795/how-can-i-check-in-a-bash-script-if-my-local-git-repo-has-changes)
+* [How do I programmatically determine if there are uncommited changes?](http://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommited-changes)
+
+## 检查repo当前HEAD是否提示ahead或behind远程仓库分支 ##
+
+比如像这样的:
+
+    $ /opt/nlo/nginx# git status
+    # On branch master
+    # Your branch is ahead of 'origin/master' by 13 commits.
+    #
+    nothing to commit (working directory clean)
+
+使用:
+
+    git rev-list --left-right --count origin/master...master
+
+将master与远程仓库origin/master作比较.
+
+如果master的HEAD比origin/master新则报ahead, 否则behind.
+
+返回结果格式是:
+
+    {behind}\t{ahead}
+
 
 ## Git资料 ##
 
