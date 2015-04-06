@@ -22,7 +22,7 @@ date: 2014-06-14 15:00
 
 会生成一个`.coverage`的统计文件。然后可以配合其它子命令如`report`显示统计结果。
 
-选项`--branch`，见[文档](http://nedbatchelder.com/code/coverage/branch.html#branch)
+选项`--branch`, 增加分支覆盖率, 见[文档](http://nedbatchelder.com/code/coverage/branch.html#branch).
 
 清除统计数据：
 
@@ -49,3 +49,5 @@ coverage的配置文件默认是`.coveragerc`，放在项目根目录下就行�
 相关项目: [coveralls](https://github.com/coagulant/coveralls-python)
 
 [coveralls.io](https://github.com/coagulant/coveralls-python) 是一个在线显示代码覆盖率统计的服务。
+[Code coverage](http://en.wikipedia.org/wiki/Code_coverage)
+[代码覆盖率浅谈](http://www.cnblogs.com/coderzh/archive/2009/03/29/1424344.html)
