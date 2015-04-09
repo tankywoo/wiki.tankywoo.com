@@ -146,13 +146,11 @@ Vim把进入插入模式到退出形成一次修改, `i{insert something}<Esc>`,
 
 `:h ex-cmd-index` 查看完成的Ex命令列表
 
-表 5-1 TODO
-
-* `:[range]delete [x]`
-* `:[range]yank [x]`
-* `:[range]copy {address}`
-* `:[range]move {address}`
-* `:[range]normal {commands}`
+* `:[range]delete [x]`: 删除指定范围的行 [到寄存器x中]
+* `:[range]yank [x]`: 复制指定范围的行 [到寄存器x中]
+* `:[range]copy {address}`: 把指定范围内的行拷贝到 {address} 所指定的行之下
+* `:[range]move {address}`: 把指定范围内的行移动到 {address} 所指定的行之下
+* `:[range]normal {commands}`: 对指定范围内的没一行执行普通模式命令 {commands}
 
 很多Ex命令可以用`[range]`指定要操作的范围.可以在某一范围内的所有行执行操作.
 
@@ -174,3 +172,34 @@ Vim把进入插入模式到退出形成一次修改, `i{insert something}<Esc>`,
 * `'<`: 高亮选取的起始行
 * `'>`: 高亮选取的结束行
 * `%`: 整个文件 (`:1,$`的简写)
+
+复制, 使用`:copy` 或者 `:co` 或 `:t`. 如
+
+* `:6t.` 将第6行复制到当前行
+* `:t6` 将当前行复制到第6行下
+* `:t.` 同`yyp`
+* `:t$` 将当前行复制到文件末尾
+* `:'<,'>t0` 将高亮选中的行复制到文件开头
+
+快速跳会原来的位置 `C-o`
+
+> 普通模式命令适合在本地操作; Ex命令适合远距离操作
+
+`:normal` 配合 `.` 命令, 可以在多行完成相同的内容, 如:
+
+`A;<ESC>` -> `jVG` -> `:'<.'>normal .` 从当前行到文件末尾, 每行最后加一个分号
+
+更简单的方式: `.,$normal A;`
+
+`:%normal i//`所有行加上注释
+
+`.`命令无法重复由Vim命令行中做出的修改, 改为使用`@:`重复上次的Ex命令. 然后可以使用`@@`来重复操作
+
+在Ex命令自动补全时, 键入`<C-d>`会显示可用的补全列表, 如:
+
+	:col<C-d>
+	colder       colorscheme
+
+对于命令历史, `q:`打开Ex命令的历史记录窗口; `q\`打开查找命令的历史记录窗口
+
+在Ex命令窗口输入`:!{command}` 可以运行一次shell命令. 执行`:shell`可以启动一个交互的shell会话.
