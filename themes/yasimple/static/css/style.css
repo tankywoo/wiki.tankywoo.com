@@ -10,17 +10,17 @@ Tags: simple, single-columns, code, codehighlight, white, markdown
 
 /* Global Configuration */
 
-* {
-	margin: 0;
-	padding: 0;
+html, body {
+    margin: 0;
+    padding: 0;
 }
 
 html, body {
-	height: 100%;
+    height: 100%;
 }
 
 /* IE6 ignores this and uses default size of 16pt */
-html>body { font-size: 15px; }
+html>body { font-size: 16px; }
 
 html {
     font-size: 100%;
@@ -33,7 +33,7 @@ body {
     font-family: "Helvetica Neue", "Segoe UI", Arial, Sans-Serif;
     /* font-family: Monaco, 'Courier New', monospace; */
     line-height: 1.5em;
-	background-color: #95AFBA;
+    background-color: #95AFBA;
 }
 
 a { color: #1863a1; text-decoration: none; }
@@ -42,16 +42,13 @@ a:hover { color: #a00; text-decoration: underline; }
 a:active { color: #1863a1; }
 
 p {
-    /* margin: 0 0 1.5em 0; */
     margin: 0 0 1em 0;
-    /* text-align: justify; */
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
     color: #111;
-    line-height: 1em;
-	margin-bottom: 1em;
+    margin-bottom: 1em;
 }
 
 h1 { font-size: 2.0em; }
@@ -82,17 +79,6 @@ hr {
 }
 
 b, strong { font-weight: bold; }
-
-ul, ol {
-    /* margin: 1.5em 0; */
-    margin: 1em 0;
-    padding-left: 1.5em;
-    line-height: 1.5em;
-}
-
-ul li { list-style-type: square; }
-
-ul li p { margin: 0; }
 
 img {
     border: 0;
@@ -149,23 +135,27 @@ pre code {
 /* Custom Configuration */
 #container {
     width: 50em;
-    line-height: 1.5em;
+    /* line-height: 1.5em; */
     margin: 0 auto 3em auto;
     padding: 3em 2em 1.5em 2em;
     background-color: #fbfffd;
     border: 1px solid #ddd;
 }
 
-/*
-#container ul li a {
-    font-family: Monaco, 'Courier New', monospace;
+#container a{
+    color: #333;
+    border-bottom: 2px solid #e1e1e1;
+    text-decoration: none;
 }
-*/
+
+#container a:hover {
+    color: #555;
+    border-bottom: 2px solid #88ACDB;
+}
 
 #wiki_title, #title {
     text-align: center;
     font-size: 2em;
-    line-height: 1.5em;
     padding-bottom: 10px;
     margin: 20px 0;
 }
@@ -200,11 +190,11 @@ li.pagelist:before {
 .toc {
     margin: 0 0.5em;
     padding: 0.5em 1em;
-    border: 1px solid silver;
+    border: 1px dashed silver;
     background-color: #ecf5ff;
     float: right;
     display: block;
-    font-size: 90%;
+    font-size: 75%;
 }
 
 .toc > .toctitle {
@@ -216,6 +206,7 @@ li.pagelist:before {
 
 .toc ul {
     margin: 0;
+    padding-left: 1.5em;
 }
 
 /* Hackers */
@@ -287,19 +278,19 @@ table.hlcodetable {
 
 
 .category_item {
-	
+    
 }
 
 .category {
-	float: left;
-	width: 100px;
+    float: left;
+    width: 100px;
 }
 .category_list {
-	float: left;
+    float: left;
 }
 
 #container .category h2{
-	color: #aaa;
+    color: #aaa;
     font-family: Monaco, "Helvetica Neue", "Segoe UI", Arial, Sans-Serif;
 }
 
@@ -309,8 +300,3 @@ table.hlcodetable {
     top: 150px;
     border:0;
 }
-
-#nav ul{
-    margin-left: 20px;
-}
-#nav ul li { list-style-type: none; }
