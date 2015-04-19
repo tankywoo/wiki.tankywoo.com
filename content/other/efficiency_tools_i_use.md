@@ -58,3 +58,13 @@ FreeMind相对而言比较简洁和轻量级, 而且功能也都非常不错.
 <strike>整体还行吧, 对RSS阅读器要求不高</strike>  
 现在感觉feedly做的还是不错的. 当然, 也许还有更多优秀的rss阅读器, 还没去尝试.
 
+
+## 梯子 ##
+
+note: 以下链接用base64转码
+
+* [vpnso](aHR0cDovL3ZwbnNvLmNvbS8K) 用了两年, 可选列表很多, 买的 v?n 还带有chrome插件, 走socks代理.
+* [鱼摆摆](aHR0cHM6Ly95YmIxMDI0LmNvbS8K) 只能mac下用, 走的socks代理.
+* [红杏](aHR0cDovL2hvbnguaW4vaS9WVEpHLVlrV0doakMydURtCg==) 只能邀请注册, 所以url带尾巴. 只支持Chrome浏览器, 以插件形式使用. (未使用)
+* [Shadowsocks](aHR0cHM6Ly9zaGFkb3dzb2Nrcy5jb20vCg==) 用的shadowsocks. (未使用)
+* [熊猫翻滚](aHR0cHM6Ly93d3cucGFuZGFmYW4ub3JnLz9yPTIyNjAxCg==) 带尾巴. http(s)代理. (未使用)
