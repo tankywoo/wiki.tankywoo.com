@@ -101,3 +101,15 @@ stash pop后, 原先index中的files会恢复为staged, 如果要保持index, �
 `--no-pager` 这个参数很赞！
 
 [ref](http://www.quora.com/Whats-the-simplest-git-command-to-get-a-commits-author-and-their-email-address-if-available)
+
+---
+
+快速将一个cpu打满:
+
+    dd if=/dev/zero of=/dev/null
+
+或:
+
+    yes > /dev/null
+
+其它可见[参考](http://stackoverflow.com/questions/2925606/how-to-create-a-cpu-spike-with-a-bash-command)
