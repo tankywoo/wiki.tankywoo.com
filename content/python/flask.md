@@ -17,6 +17,16 @@ date: 2015-05-28 08:00
 
 [Miguel Grinberg](https://github.com/miguelgrinberg)的[博客](http://blog.miguelgrinberg.com/)内容很多, 上面的The Flask Mega-Tutorial就是其博客上的在线教程, Flask Web开发是他出的书, 有中文版.
 
+## Flask-SQLAlchemy ##
+
+逆序排序desc:
+
+	Blog.query.order_by(Blog.date.desc()).all()
+
+或者:
+
+	Blog.query.order_by(db.desc(Blog.date)).all()
+
 
 ## 部署 ##
 
