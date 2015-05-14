@@ -551,6 +551,12 @@ If the file is not in the repository yet, do first `git add -N filename`. Afterw
 
 [参考](http://stackoverflow.com/questions/6245570/how-to-get-current-branch-name-in-git)
 
+## 删除分支 ##
+
+远程分支被删除后(如Github在页面上删除分支), 本地删除追踪分支:
+
+    git fetch -p
+
 
 ## Git资料 ##
 
