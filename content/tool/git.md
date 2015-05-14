@@ -539,6 +539,17 @@ If the file is not in the repository yet, do first `git add -N filename`. Afterw
 * [git ahead/behind info between master and branch?](http://stackoverflow.com/questions/20433867/git-ahead-behind-info-between-master-and-branch)
 * [git-branch-status](https://gist.github.com/vitalk/8639831)
 
+## 获取当前分支名 ##
+
+在`Git 1.8`及以后:
+
+    $ git symbolic-ref --short HEAD
+
+`Git 1.7+`:
+
+    $ git rev-parse --abbrev-ref HEAD
+
+[参考](http://stackoverflow.com/questions/6245570/how-to-get-current-branch-name-in-git)
 
 
 ## Git资料 ##
