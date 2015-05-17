@@ -213,11 +213,11 @@ TODO
 
     commit a file%
 
-`author` vs `committer`(from [Pro Git](http://git-scm.com/book/ch2-3.html))
+`author` vs `committer`(引用 [Pro Git](http://git-scm.com/book/ch2-3.html))
 
 > The author is the person who originally wrote the patch, whereas the committer is the person who last applied the patch. So, if you send in a patch to a project and one of the core members applies the patch, both of you get credit — you as the author and the core member as the committer.
 
-A more detailed explanation see [this](http://stackoverflow.com/a/18754896/1276501)
+更详细的[解释](http://stackoverflow.com/a/18754896/1276501)
 
 打标签:
 
