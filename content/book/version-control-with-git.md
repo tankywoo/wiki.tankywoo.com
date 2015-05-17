@@ -5,9 +5,14 @@ date: 2014-04-28 23:31
 
 [TOC]
 
-(First Edition, 2009)
+* First Edition, 2009, 英文影印版
+* 第二版, 2015, 中文版
 
-## 3. Getting Started ##
+*注*: 在 [@e2c89f10](https://github.com/tankywoo/wiki.tankywoo.com/commit/e2c89f107421c1bc668185298946cc33d969e441?short_path=031a497#diff-031a497c22aeea7eabd1a48496833702) 这个提交及之前, 因为看的是影印版(看了3年才只看了8章...), 所以很多笔记都是英文的. 5月份第二版中文版出了, 立马买了一本, 所以后续会逐步改为中文笔记, 部分原话及术语保留英文.
+
+## 3. 起步 ##
+
+查看帮助:
 
 	# For a complete list of git subcommands
 	git help --all
@@ -16,15 +21,15 @@ date: 2014-04-28 23:31
 	git help <subcommand>
 	git <subcommand> --help
 
-double dash in command #todo# P19
+命令行中的`双破折号`(double dash):
 
-(P19) About `bare double dash` (`--`), in shell, it indicate the end of the command options; The same as in git, it seperate the option and the path.
+> About `bare double dash` (`--`), in shell, it indicate the end of the command options; The same as in git, it seperate the option and the path.
 [ref 1](http://unix.stackexchange.com/questions/11376/what-does-double-dash-mean-also-known-as-bare-double-dash)
 [ref 2](http://unix.stackexchange.com/questions/52167/what-does-mean-in-linux-unix-command-line)
 [ref 3](http://stackoverflow.com/questions/1192180/deleting-a-badly-named-git-branch/1192194#1192194)
 [ref 4](http://stackoverflow.com/questions/13321458/meaning-of-git-checkout-double-dashes)
 
-`git show` : 
+查看某个特定提交的详细信息 `git show`:
 
 	# show the details of the most recent commit
 	git show
@@ -32,209 +37,181 @@ double dash in command #todo# P19
 	# To see more detail about a particular commit
 	git show <commit number>
 
-`git show-branch` :
+查看所有分支的整体情况 `git show-branch`:
 
 	git show-branch --more=10
 
+关于更详细的, 可以看看[GitGuys](http://www.gitguys.com/topics/git-show-branch-to-see-branches-and-their-commits/?lang=zh)上的图解, 讲得很好.
+
 ---
 
-## 4.Basic Git Concepts ##
+## 4.基本的Git概念 ##
 
-**NOTE**: This chapter is the most important section in this book.
+**注意**: 这章太重要了, 字字都是珠玑. (真想把整篇都copy过来)
 
-Within a repository, Git maintains two primary data structures, the `object store` and the `index`.
+在版本库中, Git维护两个主要的数据结构: `对象库(object store)` 和 `索引(index)`. 所有这些版本库数据妇女放在工作目录根目录下的`.git`的隐藏目录中.
 
-At the heart of Git’s repository implementation is the object store. It contains your original data files and all the log messages, author information, dates, and other information required to rebuild any version or branch of the project.
+索引是*暂时*的信息, 对版本库来说是*私有*的, 并且可以在需要的时候按需求进行创建和修改.
 
-### Object Store ##
+对象库是git版本库实现的核心. 包含了原始数据文件和所有日志信息、作者信息、日期, 以及其它用来重建项目任意版本或分支的信息.
 
-Git places only four types of objects in the object store: `blob`, `tree`, `commit`, and `tag`.
+### 对象库(Object Store) ##
 
-* Blob : 
+Git对象库中的对象**只有**四种类型: 块(blog), 目录树(tree), 提交(commit)和标签(tag). 这四种原子对象构成Git高层数据结构的基础.
 
-    Each version of a file is represented as a blob. "Blob" is a contraction of "binary large object". A blob holds a file’s data but does not contain any metadata about the file or even its name.
+* `块 (Blob)` : 
 
-* Tree :
+    文件的每一个版本都表示未一个块(blob). blob 是`二进制大对象(binary large object)`的缩写. 一个blob保存一个文件的数据, 但不包含任何关于这个文件的元数据, 甚至没有文件名.
 
-    A tree object represents one level of directory information. It records blob identifiers, pathnames, and a bit of metadata for all the files in one directory.
+* `树 (Tree)` :
 
-* Commit :
+    一个目录树(tree)对象代表一层目录信息. 它记录blob标识符, 路径名和在一个目录下所有文件的一些元数据. 它可以递归引用其它目录树或子树对象, 从而建立一个包含文件和子目录的完整层次结构.
 
-    A commit object holds metadata for each change introduced into the repository, including the author, committer, commit date, and log message. Each commit points to a tree object that captures, in one complete snapshot, the state of the repository at the time the commit was performed. The initial commit, or root com- mit, has no parent.
+* `提交 (Commit)` :
 
-* Tag :
+    一个提交(commit)对象保存版本库中每一次变化的元数据, 包括作者、提交者、提交日期和日志消息. 每一个提交对象指向一个目录树对象, 这个目录树对象在一张完整的快照中捕获提交时版本库的状态.
 
-    A tag object assigns an arbitrary yet presumably human-readable name to a specific object, usually a commit.
+* `标签 (Tag)` :
 
-In the four objects, the `tag` is optional.
+    一个标签对象分配一个任意的且human readable的名字给一个特定对象, 通常是一个提交对象.
 
-### Index ###
+对象库会随着项目的开发一直变化和增长, 为了有效利用磁盘空间和网络带宽, Git把对象压缩并存储在`打包文件(pack file)`里, 这些文件也在对象库里.
 
-The index is a temporary and dynamic binary file, captures a version of the project’s overall structure at some moment in time.
 
-It records and retains changes, keeping them safe until ready to commit them.
+### 索引(Index) ###
 
-Index also called `stage area`.
+索引, 又称`暂存区(Stage)`, 是一个临时的、动态的二进制文件.
 
-### Content-Addressable Names ###
+    (master*) ⇒  file .git/index
+    .git/index: data
 
-Git object store is organized and implemented as as content-addressable storage system.
+它捕获项目在某个时刻的整体结构的一个版本.
 
-Each object in the object store has a unique name produced by applying SHA1 to the contents of the object, yielding an SHA1 hash value. SHA1 values are 160-bit values that are usually represented as a 40-digit hexadecimal number.
 
-### Git Tracks Content ###
+### 可寻址内容名称 ###
 
-**Git is a content tracking system**
+Git对象库被组织及实现成一个内容可寻址的存储系统. 对象库中每个对象都有一个唯一的名称, 这个名称是向对象的内容应用SHA1得到的`SHA1散列值`, SHA1值是一个160位的数, 通常表示为一个40位的十六进制数.
 
-Git’s object store is based on the hashed computation of the contents of its objects, not on the file or directory names from the user’s original file layout.
+### Git追踪内容 ###
 
-If two separate files have exactly the same content, whether in the same or different directories, Git stores a single copy of that content as a blob within the object store.
+Git不仅是一个VCS, 还是一个内容追踪系统(content tracking system). 主要表现为两个方式:
+
+* Git的对象库基于其对象内容的散列计算的值, 而不是基于用户的原始文件布局的文件名或目录的设置.
+
+    Git追踪的是内容而不是文件, 如果两个文件的内容完全一样, 无论是否在相同的目录, Git在对象库里只保存一份blob形式的内容副本.
+
+* 当文件从一个版本变到下一个版本时, Git的内部数据库有效地存储每个文件的每个版本, 而不是他们的差异.
+
+### 打包文件(pack file) ###
+
+TODO
+
+### 例子 ###
+
+以下例子使用的基本都是Git的底层命令, 在实际使用中, 有更简单的命令封装了这些底层命令, 不过通过底层命令, 可以更清晰的了解Git的工作流程.
+
+* `git cat-file`
+* `git write-tree`
+* `git commit-tree`
+* `git rev-parse`
+* `git ls-files`
+
+初始化的Git仓库:
 
 	# An initial git repo
-	TankyWoo@Mac::test/ (master) » find .git/objects
+	(master) ⇒ find .git/objects
 	.git/objects
 	.git/objects/info
 	.git/objects/pack
 
-Add a file a.txt which content is 'hello' to the index, the SHA1 value is ce013625030ba8dba906f756967f9e9ca394464a
+新建一个文件a.txt, 内容是 'hello', sha1值 ce013625030ba8dba906f756967f9e9ca394464a, 使用`git cat-file`查看散列的内容:
 
-	TankyWoo@Mac::test/ (master) » echo 'hello' > a.txt
-	TankyWoo@Mac::test/ (master*) » git add a.txt
-	TankyWoo@Mac::test/ (master*) » find .git/objects
+	(master) ⇒ echo 'hello' > a.txt
+	(master*) ⇒ git add a.txt
+	(master*) ⇒ find .git/objects
 	.git/objects
 	.git/objects/ce
 	.git/objects/ce/013625030ba8dba906f756967f9e9ca394464a
 	.git/objects/info
 	.git/objects/pack
-	TankyWoo@Mac::test/ (master*) » git cat-file -p ce013625030ba8dba906f756967f9e9ca394464a
+
+	(master*) ⇒ git cat-file -p ce013625030ba8dba906f756967f9e9ca394464a
 	hello
 
-Write this change to the tree object
+使用`git ls-files`查看staged信息:
 
-	TankyWoo@Mac::test/ (master*) » git write-tree
+    (master*) ⇒  git ls-files -s
+    100644 ce013625030ba8dba906f756967f9e9ca394464a 0       a.txt
+
+捕获索引状态并保存到一个树对象:
+
+	(master*) ⇒ git write-tree
 	2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
-	TankyWoo@Mac::test/ (master*) » git cat-file -p 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
+
+	(master*) ⇒ git cat-file -p 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
 	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
 
-Now add another file b.txt, which is the same content with a.txt
+现在增加文件b.txt, 内容和a.txt一样, 可以看到, 两个使用同一个blob:
 
-	TankyWoo@Mac::test/ (master*) » echo 'hello' > b.txt
-	TankyWoo@Mac::test/ (master*) » git add b.txt
-	TankyWoo@Mac::test/ (master*) » git write-tree
+	(master*) ⇒ echo 'hello' > b.txt
+	(master*) ⇒ git add b.txt
+
+	(master*) ⇒ git write-tree
 	b5b0cccf7401633f12e0fafc6b85731251b86850
-	TankyWoo@Mac::test/ (master*) » git cat-file -p b5b0cccf7401633f12e0fafc6b85731251b86850
+
+	(master*) ⇒ git cat-file -p b5b0cccf7401633f12e0fafc6b85731251b86850
 	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
 	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    b.txt
 
-a.txt and b.txt point to the same blob object.
+现在改变文件a.txt内容, b.txt还是指向原来的blob:
 
-Now change the content of a.txt file.
+	(master*) ⇒ echo 'world' >> a.txt
+	(master*) ⇒ git add a.txt
 
-	TankyWoo@Mac::test/ (master*) » echo 'world' >> a.txt
-	TankyWoo@Mac::test/ (master*) » git add a.txt
-	TankyWoo@Mac::test/ (master*) » git write-tree
+	(master*) ⇒ git write-tree
 	579c3877d5f450e34ea642b3a29d2d01dcf8e392
-	TankyWoo@Mac::test/ (master*) » git cat-file -p 579c3877d5f450e34ea642b3a29d2d01dcf8e392
+
+	(master*) ⇒ git cat-file -p 579c3877d5f450e34ea642b3a29d2d01dcf8e392
 	100644 blob 94954abda49de8615a048f8d2e64b5de848e27a1    a.txt
 	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    b.txt
 
-b.txt still point to the old blob, and a.txt point to the new blob
+添加一个子目录, 里面也放一个a.txt, 内容一样:
 
-### Pathname Versus Content ###
+    (master*) ⇒  mkdir subdir
+    (master*) ⇒  cp a.txt subdir/
+    (master*) ⇒  tree
+    .
+    ├── a.txt
+    └── subdir
+        └── a.txt
 
-Git’s physical data layout isn’t modeled after the user’s file directory structure. Instead, it has a completely different structure that can, nonetheless, reproduce the user’s orig- inal layout. Git’s internal structure is a more efficient data structure for its own internal operations and storage considerations.
+    1 directory, 2 files
+    (master*) ⇒  git add subdir/a.txt
 
-### Practise ###
+    (master*) ⇒  git ls-files -s
+    100644 ce013625030ba8dba906f756967f9e9ca394464a 0       a.txt
+    100644 ce013625030ba8dba906f756967f9e9ca394464a 0       subdir/a.txt
 
-Every object store under `.git/objects`:
+    (master*) ⇒  git write-tree
+    ec518d6bb3cabb8e88b5458cf18d862aa0514622
 
-	TankyWoo@Mac::test-git2/ (master*) » find .git/objects
-	.git/objects
-	.git/objects/3b
-	.git/objects/3b/18e512dba79e4c8300dd08aeb37f8e728b8dad
-	.git/objects/info
-	.git/objects/pack
+    (master*) ⇒  git cat-file -p ec518d6bb3cabb8e88b5458cf18d862aa0514622
+    100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
+    040000 tree 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1    subdir
 
-	TankyWoo@Mac::test-git2/ (master*) » git cat-file -p 3b18e512dba79e4c8300dd08aeb37f8e728b8dad
-	hello world
+可以看到, subdir这个tree对象的sha1 id和之前父目录是一样的.
 
-Git inserts a / after the first two digits to improve filesystem efficiency.
+现在a.txt的blob已经有了, 树对象也有了, 接着就是提交:
 
-Such as `.git/objects/3b/18e512dba79e4c8300dd08aeb37f8e728b8dad`, the hash id is `3b18e512dba79e4c8300dd08aeb37f8e728b8dad`
+    (master*) ⇒  echo -n 'commit a file' | git commit-tree ec518d6bb3cabb8e88b5458cf18d862aa0514622
+    7dc4ee9984a52278b3b67480feb712e36ea5a64c
 
-Use `git cat-file` to see the content of object store:
+    (master*) ⇒  git cat-file -p 7dc4ee9984a52278b3b67480feb712e36ea5a64c
+    tree ec518d6bb3cabb8e88b5458cf18d862aa0514622
+    author Tanky Woo <me@tankywoo.com> 1431832347 +0800
+    committer Tanky Woo <me@tankywoo.com> 1431832347 +0800
 
-	TankyWoo@Mac::test-git2/ (master*) » git cat-file -p 3b18e512dba79e4c8300dd08aeb37f8e728b8dad
-	hello world
-
-Tip:
-
-Use `git rev-parse` can parse short hash to completely hash:
-
-	TankyWoo@Mac::test-git2/ (master*) » git rev-parse 3b18
-	3b18e512dba79e4c8300dd08aeb37f8e728b8dad
-
-As mentioned before, Git tracks the pathnames of files through another kind of object called a `tree`.
-
-When you use git add, Git creates an object(blob) for the contents of each file you add(in .git/objects/), but it doesn’t create an object for your tree right away. Instead, it updates the index.
-
-The index is found in `.git/index` and keeps track of file pathnames and corre-sponding blobs.
-
-`git ls-files` can show information about files in the index and the working tree
-
-`git write-tree` create a tree object from current index by capturing a snapshot of its current information
-
-	TankyWoo@Mac::test/ (master*) » git ls-files -s
-	100644 ce013625030ba8dba906f756967f9e9ca394464a 0       a.txt
-
-	TankyWoo@Mac::test/ (master*) » git write-tree
-	2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
-
-### Tree Hierarchies ###
-
-	TankyWoo@Mac::test/ (master*) » tree .git/objects
-	.git/objects
-	├── 2e
-	│   └── 81171448eb9f2ee3821e3d447aa6b2fe3ddba1
-	├── ce
-	│   └── 013625030ba8dba906f756967f9e9ca394464a
-	├── info
-	└── pack
-
-The tree object `2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1`:
-
-	TankyWoo@Mac::test/ (master*) » git cat-file -p 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
-	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
-
-Create a sub directory, and copy a.txt in it:
-
-	TankyWoo@Mac::test/ (master*) » git add subdir/a.txt
-	TankyWoo@Mac::test/ (master*) » git write-tree
-	ec518d6bb3cabb8e88b5458cf18d862aa0514622
-
-In the new tree object, subdir object is a tree object, and point to `2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1`.
-which is the same as the top tree object.
-
-	TankyWoo@Mac::test/ (master*) » git cat-file -p ec518d6bb3cabb8e88b5458cf18d862aa0514622
-	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
-	040000 tree 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1    subdir
-
-The new tree for subdir contains only one file, a.txt, and that file contains the same old “hello” content. So the subdir tree is exactly the same as the older, top-level tree! And of course it has the same SHA1 object name as before.
-
-### Commits ###
-
-Use the low-level command `git commit-tree` to commit the tree object, and generate a commit object:
-
-	TankyWoo@Mac::test/ (master*) » echo -n 'Init site\n' | git commit-tree ec518d6bb3cabb8e88b5458cf18d862aa0514622
-	5c5e63c0ee9a9c51304f352ec0581704411003ad
-
-
-	TankyWoo@Mac::test/ (master*) » git cat-file -p 5c5e63c0ee9a9c51304f352ec0581704411003ad
-	tree ec518d6bb3cabb8e88b5458cf18d862aa0514622
-	author Tanky Woo <wtq1990@gmail.com> 1406774332 +0800
-	committer Tanky Woo <wtq1990@gmail.com> 1406774332 +0800
-
-	Init site
+    commit a file%
 
 `author` vs `committer`(from [Pro Git](http://git-scm.com/book/ch2-3.html))
 
@@ -242,28 +219,28 @@ Use the low-level command `git commit-tree` to commit the tree object, and gener
 
 A more detailed explanation see [this](http://stackoverflow.com/a/18754896/1276501)
 
-### Tag ###
+打标签:
 
-Create an annotated, unsigned tag:
+    (master*) ⇒  git tag -m 'add tag v1.0' v1.0 7dc4ee9984a52278b3b67480feb712e36ea5a64c
 
-	TankyWoo@Mac::test/ (master*) » git tag -m 'version 1.0 tag' v1.0 5c5e63c0ee9a9c51304f352ec0581704411003ad
+    (master*) ⇒  git rev-parse v1.0
+    76a2a639a517e26a6c79fdcd09c0a5ffec97e099
 
-Get the SHA1 id by tag name:
+    (master*) ⇒  git cat-file -p v1.0
+    object 7dc4ee9984a52278b3b67480feb712e36ea5a64c
+    type commit
+    tag v1.0
+    tagger Tanky Woo <me@tankywoo.com> 1431832535 +0800
 
-	TankyWoo@Mac::test/ (master*) » git rev-parse v1.0
-	606d5478f68648e14de7b204d5484e4b83b2a3a0
+    add tag v1.0
 
-The tag object:
+    (master*) ⇒  git cat-file -p 76a2a639a517e26a6c79fdcd09c0a5ffec97e099
+    object 7dc4ee9984a52278b3b67480feb712e36ea5a64c
+    type commit
+    tag v1.0
+    tagger Tanky Woo <me@tankywoo.com> 1431832535 +0800
 
-	TankyWoo@Mac::test/ (master*) » git cat-file -p 606d5478f68648e14de7b204d5484e4b83b2a3a0
-	object 5c5e63c0ee9a9c51304f352ec0581704411003ad
-	type commit
-	tag v1.0
-	tagger Tanky Woo <wtq1990@gmail.com> 1406811935 +0800
-
-	version 1.0 tag
-
-**NOTE**: In this section, most of the commands are the low-level comamnds. In real life, should not use this commands!
+    add tag v1.0
 
 ---
 
@@ -279,12 +256,12 @@ Git 的Index不存放任何文件的内容，它只简单的记录准备提交�
 
 `git ls-files --stage` 可以查看stage中的文件的`SHA1`值:
 
-	TankyWoo@Mac::git-test/ (master*) » git ls-files --stage
+	TankyWoo@Mac::git-test/ (master*) ⇒ git ls-files --stage
 	100644 8d0e41234f24b6da002d962a26c2495ea16a425f 0       fa
 
 `git hash-object`可以计算文件的`SHA1`值并输出:
 
-	TankyWoo@Mac::git-test/ (master*) » git hash-object fa
+	TankyWoo@Mac::git-test/ (master*) ⇒ git hash-object fa
 	8d0e41234f24b6da002d962a26c2495ea16a425f
 
 简单的说是文件fa已经在Index中了，本质是文件在`object store`中，Index指向它。
@@ -295,7 +272,7 @@ Git 的Index不存放任何文件的内容，它只简单的记录准备提交�
 
 对于被误删的文件，如果在Index中，如下:
 
-	TankyWoo@Mac::git-test/ (master*) » gst
+	TankyWoo@Mac::git-test/ (master*) ⇒ gst
 	# On branch master
 	# Changes to be committed:
 	#   (use "git reset HEAD <file>..." to unstage)
@@ -315,10 +292,10 @@ Git 的Index不存放任何文件的内容，它只简单的记录准备提交�
 
 Git 把文件fa改为fb，会在`object store`中保存原始的文件内容，然后把文件名(路径名path)重新关联到这个内容:
 
-	TankyWoo@Mac::git-test/ (master) » git ls-files --stage
+	TankyWoo@Mac::git-test/ (master) ⇒ git ls-files --stage
 	100644 15acaeb140c2805acdbb2d0dbdedeeea6bb73b06 0       fa
-	TankyWoo@Mac::git-test/ (master) » git mv fa fb
-	TankyWoo@Mac::git-test/ (master*) » git ls-files --stage
+	TankyWoo@Mac::git-test/ (master) ⇒ git mv fa fb
+	TankyWoo@Mac::git-test/ (master*) ⇒ git ls-files --stage
 	100644 15acaeb140c2805acdbb2d0dbdedeeea6bb73b06 0       fb
 
 把fa改为fb后，`SHA1`值并没变。
@@ -401,7 +378,7 @@ Local topic branch names, remote tracking branch names, and tag names are all re
 
 存放在`.git/refs` 目录下:
 
-    TankyWoo@Mac::simiki/ (master) » tree .git/refs
+    TankyWoo@Mac::simiki/ (master) ⇒ tree .git/refs
     .git/refs
     ├── heads
     │   ├── dev
@@ -417,7 +394,7 @@ Local topic branch names, remote tracking branch names, and tag names are all re
 
 master这个refs存放的就是master分支的最后一次commit id:
 
-    TankyWoo@Mac::simiki/ (master) » more .git/refs/heads/master
+    TankyWoo@Mac::simiki/ (master) ⇒ more .git/refs/heads/master
     569898602add495da34fb8684e39f60d26176a19
 
 tags记录的是最新的一个tag
@@ -426,7 +403,7 @@ tags记录的是最新的一个tag
 
 `HEAD`: `.git/HEAD`, 总是指向当前分支的最后一次提交, 当分支改变，HEAD也会变
 
-    TankyWoo@Mac::simiki/ (master) » more .git/HEAD
+    TankyWoo@Mac::simiki/ (master) ⇒ more .git/HEAD
     ref: refs/heads/master
 
 `ORIG_HEAD`: `.git/ORIG_HEAD`, 一些操作, 如`merge`或`reset`, 会记录操前的commit(HEAD). 作为一个保护措施，使操作可以回溯.
@@ -439,16 +416,16 @@ tags记录的是最新的一个tag
 
 `ORIG_HEAD` 存储的是之前某一个commit:
 
-    TankyWoo@Mac::test-git/ (master) » more .git/ORIG_HEAD
+    TankyWoo@Mac::test-git/ (master) ⇒ more .git/ORIG_HEAD
     015b5b99f5c9973e840f29c9f6e6b936c99b92a5
 
 做一次reset操作:
 
-    TankyWoo@Mac::test-git/ (master) » git reset --soft HEAD^
+    TankyWoo@Mac::test-git/ (master) ⇒ git reset --soft HEAD^
 
 查看`ORIG_HEAD`, 会指向之前的HEAD:
 
-    TankyWoo@Mac::test-git/ (master) » more .git/ORIG_HEAD
+    TankyWoo@Mac::test-git/ (master) ⇒ more .git/ORIG_HEAD
     d46546a5192b7e1c834947b612e3401a6f7729c7
 
 这样就可以回溯到reset之前的版本:
