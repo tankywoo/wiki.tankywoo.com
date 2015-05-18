@@ -557,6 +557,14 @@ If the file is not in the repository yet, do first `git add -N filename`. Afterw
 
     git fetch -p
 
+## Git本地设置某个远程库readonly ##
+
+如Github, Gitlab等可以在页面上设置某个用户的权限. 不过有时为了防止出问题, 在本地也可以设置.
+
+其实就是简单的将remote url的push地址重写为任意字符串.
+
+    $ git remote set-url --push origin 'do not push'
+
 
 ## Git资料 ##
 
