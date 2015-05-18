@@ -566,6 +566,39 @@ If the file is not in the repository yet, do first `git add -N filename`. Afterw
     $ git remote set-url --push origin 'do not push'
 
 
+## 关于 HEAD^ 和 HEAD~ 的区别 ##
+
+`HEAD^` 表示当前分支的第一个父分支的第一个点, 等同于 `HEAD^1`; `HEAD^2`表示第二个父分支的第一个点
+
+`HEAD~1` 表示当前分支的第一个父分支的第一个点, 等同于 `HEAD~1`, 效果也等同于 `HEAD^`; `HEAD~2`表示第一个父分支的第二个点.
+
+stackoverflow上这个[回答](http://stackoverflow.com/a/12527561/1276501)描述的很详细:
+
+    G   H   I   J
+     \ /     \ /
+      D   E   F
+       \  |  / \
+        \ | /   |
+         \|/    |
+          B     C
+           \   /
+            \ /
+             A
+    A =      = A^0
+    B = A^   = A^1     = A~1
+    C = A^2  = A^2
+    D = A^^  = A^1^1   = A~2
+    E = B^2  = A^^2
+    F = B^3  = A^^3
+    G = A^^^ = A^1^1^1 = A~3
+    H = D^2  = B^^2    = A^^^2  = A~2^2
+    I = F^   = B^3^    = A^^3^
+    J = F^2  = B^3^2   = A^^3^2
+
+其它讲解:
+
+* [head where are we where were we](http://www.gitguys.com/topics/head-where-are-we-where-were-we/?lang=zh)
+
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
