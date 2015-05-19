@@ -80,6 +80,10 @@ online server:
 
 还有`-c`参数用于修改请求的client ip, 但是我这里改了后有问题, 暂时未解决.
 
+另外还有个需要注意的地方, 因为tcpcopy的通信端口默认是`36524`, 所以如果有规则限制则要把这个端口做相应范围的开放
+
+    iptables -A INPUT -i eth1 -p tcp -s x.x.x.x/32 -m multiport --dports 36524 -j ACCEPT
+
 
 ## 参考 ##
 
