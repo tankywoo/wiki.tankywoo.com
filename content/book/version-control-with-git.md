@@ -563,6 +563,90 @@ fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
 则无法搜出这次提交.
 
 
+## 7. 分支 ##
+
+为了支持可扩展和分类组织, 可以创建一个带层次的分支名, 类似于Unix的路径名, 如
+
+    # fix bug的分支集
+    bug/pr-1
+    bug/pr-2
+
+    # 特性分支集
+    feature/smt-1
+    feature/smt-2
+
+这样也例子筛选分支:
+
+    $ git show-branch 'bug/*'
+
+分支名的一些限制:
+
+* 不能以斜线`/`结尾
+* 不能以减号`-`开头
+* 斜线分隔的分支名不能以点`.`开头, 如 feature/.new
+* 分支名任何地方不能包含两个连续的点`..`
+* 不能包含任何空格和空白字符
+* 不能包含在Git中有特殊含义的字符, 如`~`, `^`, `:`, `?`, `*`, `[`
+* ascii控制字符, 即小于`\040`的字符以及DEL符`\178`
+
+使用`git merge-base` 可以找到两个点的共同祖先, 如master和dev分支:
+
+    $ git merge-base master dev
+
+新建分支时, 默认是从当前分支的最近一个点衍生出新分支, 也可以指定分支或某个sha1 id:
+
+    $ git branch feature/new master
+    $ git branch feature/new 7a6a703b
+
+上面命令只新建, 不切换分支, `git checkout -b xxx`是新建且切换.
+
+`git show-branch` 和 `git branch`的参数类似, 支持`-r` (远程分支), `-a` (所有分支).
+
+关于`git show-branch`输出的解释, 之前几章多次用到这个命令, 这里终于有详细的解释了:
+
+    (master*) ⇒  git show-branch master dev category-index
+    * [master] Release v1.3
+     ! [dev] Merge branch 'project-tools' into dev
+      ! [category-index] Merge branch 'project-tools' into dev
+    ---
+     -- [dev] Merge branch 'project-tools' into dev
+     ++ [dev^2] Makefile add tox and covhtml section
+     ++ [dev^2^] Update Makefile clean section
+     ++ [dev^2~2] Add arguments for `nosetests` command
+     ++ [dev~10] rename class InitSite to Initiator and refactor
+     ++ [dev~11] rename initsite.py to initiator.py
+     -- [dev~12] Merge branch 'support-draft' into dev
+     ++ [dev~12^2] Add tester for draft
+     ++ [dev~13] Add tag after release
+    *++ [master] Release v1.3
+
+默认情况下(不带参数), 会显示所有的本地分支,  我这里为了方便, 只显示3个分支, 且删除了中间很多提交.
+
+输出被一排破折号分为两部分, 破折号长度与分支数有关.
+
+破折号上方显示分支名, 每个分支名一行:
+
+* 括号内是分支名
+* 分支名后面是此分支最近的一次提交信息
+* 分支名前面, `*` 表示当前分支; `!` 表示其它分支
+* 每个分支一列, 后面讲到
+
+破折号下面是提交信息:
+
+* 起始的`+`表示提交在一个分支中, `*`突出表示当前分支的提交, `-` 表示是一个合并
+* 中间显示的是每个sha1 id的相对引用, 这个在前面介绍过, 也可以用`--sha1-name`显示sha1 id.
+* 后面显示相应提交的commit message
+
+列表会显示到所有分支(活指定的所有分支)的公共祖先那个点, 也可以加`--more`来多显示一些commit.
+
+关于checkout切换分支有冲突的情况, 比如某个文件同一块地方在两个分支都有改变, 默认无法切换, 除非`-f`强制切换, 一般的解决方法:
+
+* git stash 暂存
+* git checkout -m 做一个合并
+
+试了下第二种方法, 比较麻烦, 一般习惯还是用stash
+
+
 ## 8. Diffs ##
 
 four fundamental comparisons:
