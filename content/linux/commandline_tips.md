@@ -113,3 +113,26 @@ stash pop后, 原先index中的files会恢复为staged, 如果要保持index, �
     yes > /dev/null
 
 其它可见[参考](http://stackoverflow.com/questions/2925606/how-to-create-a-cpu-spike-with-a-bash-command)
+
+---
+
+进制间转换:
+
+    # 十六进制 转 十进制
+    # 注意字母要 **大写**
+    $ echo 'ibase=16; FF' | bc
+    255
+
+    # 十进制 转 十六进制
+    $ echo 'obase=16; 32' | bc
+    20
+
+    # 十六进制 转 二进制
+    $ echo 'ibase=16; obase=2; F' | bc
+    1111
+
+    # 使用printf, 十六进制 转 十进制
+    $ printf "%d\n" 0xff
+    255
+
+参考 [ref1](http://www.cyberciti.biz/faq/linux-unix-convert-hex-to-decimal-number/), [ref2](http://www.linuxnix.com/2012/05/convert-binaryhex-oct-decimal-linuxunix.html)
