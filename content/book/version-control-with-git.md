@@ -682,3 +682,56 @@ search changes containing string with `-S`:
 	# search the past 50 commits to the master branch for changes containing string "octopus"
 	git diff -S "octopus" master~50
 
+
+## 15. 钩子 ##
+
+Git在操作如提交, 补丁等事件时, 可以通过钩子(hook)来触发一些脚本.
+
+大多数钩子分为两类:
+
+* 前置(pre), 在动作完成前调用
+* 后置(post), 在动作完成后调用
+
+如果钩子以非0状态退出(如 `exit 1`), 则表示执行失败, Git动作中止; 不过后置的状态无法影响Git操作的结果.
+
+谨慎的使用钩子:
+
+* 钩子会改变Git的行为
+* 钩子是本地的, 不随版本库一起提交到远端, 所以可能多个开发者的动作行为不一样
+* 钩子会影响动作的速度
+
+每个版本库新建的时候, 会默认提供一些钩子模板, 以`.sample`结尾, 状态是禁止的:
+
+	(master*) ⇒  tree .git/hooks
+	.git/hooks
+	├── applypatch-msg.sample
+	├── commit-msg.sample
+	├── post-update.sample
+	├── pre-applypatch.sample
+	├── pre-commit
+	├── pre-commit.sample
+	├── pre-push.sample
+	├── pre-rebase.sample
+	├── prepare-commit-msg.sample
+	└── update.sample
+
+如果要使一个钩子起作用, 必须保证:
+
+* 去掉 .sample 后缀
+* 拥有可执行权限
+
+也可以自己写钩子.
+
+因为钩子是针对特定动作的特定时刻起作用的, 所以钩子名(脚本名)需要为特定范围的名字, 可以见 `git help hooks` 查看可用的钩子.
+
+提交相关钩子:
+
+	pre-commit -> prepare-commit-msg -> commit-msg -> post-commit
+
+补丁相关钩子:
+
+	applypatch-msg -> pre-applypatch -> post-applypatch
+
+push相关钩子(Git服务端执行):
+
+	pre-receive -> update -> post-receive -> post-update
