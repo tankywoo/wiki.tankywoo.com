@@ -599,6 +599,18 @@ stackoverflow上这个[回答](http://stackoverflow.com/a/12527561/1276501)描�
 
 * [head where are we where were we](http://www.gitguys.com/topics/head-where-are-we-where-were-we/?lang=zh)
 
+
+## 查看两个分支的差异 ##
+
+遇到一个问题, 删除一个已合并分支时, 提示此分支没有完全合并:
+
+> error: The branch 'xxx' is not fully merged
+
+在so上发现一个给力的[回答](http://stackoverflow.com/a/7549118/1276501)
+
+    $ git log --graph --left-right --cherry-pick --oneline master...experiment
+
+
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
