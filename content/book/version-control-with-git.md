@@ -737,6 +737,92 @@ git diff 还可以限制路径:
 	git diff -S "octopus" master~50
 
 
+## 11. 储藏和引用日志 ##
+
+储藏(stash)是一个很常用的功能, 工作目录有一些修改时, 如:
+
+* 此时需要紧急修复一个bug, 可以stash储藏之前的修改, 然后开始修复bug
+* 需要临时切换分支去修改一些东西, 因为一些冲突导致无法切换过去, 也可以先stash起来
+* 需要pull更新本地, 但是有冲突导致pull失败, 可以stash起来, pull后在pop解决冲突
+
+直接执行`git stash`则储藏当前的修改, 默认是save子命令
+
+	⇒  git stash
+	Saved working directory and index state WIP on master: 7f63cf0 update master file
+	HEAD is now at 7f63cf0 update master file
+
+这里WIP是work in process的缩写
+
+stash的数据结构是一个`栈`, 即先进后出FILO(first in, last out), 相应的还原最近一个储藏则是:
+
+	$ git stash pop
+
+查看stash栈:
+
+	⇒  git stash list
+	stash@{0}: WIP on master: 7f63cf0 update master file
+	stash@{1}: WIP on master: 7965691 master
+
+这里储藏时是用的默认的信息, 指出了分支, 当前sha1 id.
+
+`stash@{0}`是储藏的编号, 根据FILO的原则, 0表示最新的一个储藏
+
+也可以手动输入信息:
+
+	⇒  git stash save 'do a stash'
+	Saved working directory and index state On master: do a stash
+	HEAD is now at 7965691 master
+	⇒  git --no-pager stash list
+	stash@{0}: On master: do a stash
+
+stash也是一个引用指针(`refs/stash`), 所以也可以使用这个引用来查看:
+
+	⇒  git show-branch stash
+	[stash] On master: do a stash
+
+另外, 要注意, git stash并不是把最近一次储藏替换当前文件, 而是会做一个合并的操作, 这个是非常智能的.
+
+git stash pop时, 如果成功, 则会删除相应储藏, 如果失败, 如产生冲突, 则会保留储藏.
+
+删除储藏, 默认删除最近一个, 也可以手动指定某个储藏:
+
+	$ git stash drop
+
+因为stash pop成功后会清掉, 可以使用apply只做应用还原, 但是不清理, 和drop一样, 也可以指定某个储藏:
+
+	$ git stash apply
+
+查看储藏的内容, 不加`-p`则只显示stat信息:
+
+	$ git stash show -p stash@{1}
+
+也可以
+
+	$ git show stash@{1}
+
+一些常用的选项:
+
+* `-u/--include-untracked`: 本地某个untracked的文件导致pull冲突失败时, 可以使用此选项把untracked文件也stash
+* `-p/--patch`: 选择部分储藏, 和git add -p一样
+* `-k/--keep-index`: 只储藏unstaged部分, 保留索引中的修改, 默认是全部都储藏
+* `--index`: pop的选项, 当储藏包括staged和unstaged部分时, pop会全还原未unstaged, 次选项会按照原来的格局恢复
+
+储藏是本地的操作, 所以储藏的object是不会提交到远程的
+
+储藏还有一个给力的功能, 转化为分支:
+
+	$ git stash branch <branch name> stash@{5}
+
+因为某个stash后可能有增加了很多大的修改, 这是可以单拉一个分支来处理.
+
+不过stash和branch还是要区别使用, stash更多是针对一个临时的操作, 最好不要积压太久, 随时保持储藏栈清理; 所以相应也不要过多的将stash转为一个branch. 至少至今为止我还没有做过这样的操作...
+
+引用日志(reflog) ???
+
+
+## 14. 补丁 ##
+
+
 ## 15. 钩子 ##
 
 Git在操作如提交, 补丁等事件时, 可以通过钩子(hook)来触发一些脚本.
