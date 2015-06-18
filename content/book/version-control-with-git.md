@@ -49,7 +49,7 @@ date: 2014-04-28 23:31
 
 **注意**: 这章太重要了, 字字都是珠玑. (真想把整篇都copy过来)
 
-在版本库中, Git维护两个主要的数据结构: `对象库(object store)` 和 `索引(index)`. 所有这些版本库数据妇女放在工作目录根目录下的`.git`的隐藏目录中.
+在版本库中, Git维护两个主要的数据结构: `对象库(object store)` 和 `索引(index)`. 所有这些版本库数据存放在工作目录根目录下的`.git`的隐藏目录中.
 
 索引是*暂时*的信息, 对版本库来说是*私有*的, 并且可以在需要的时候按需求进行创建和修改.
 
@@ -647,39 +647,93 @@ fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
 试了下第二种方法, 比较麻烦, 一般习惯还是用stash
 
 
-## 8. Diffs ##
+## 8. Diff ##
 
-four fundamental comparisons:
+Unix/Linux 中的 `diff` 命令:
 
-`git diff` : between working directory and the index.
+* `-u` 产生一个合并格式的差异(unified diff)
+* `-r` 遍历整个目录
+* `---` 表示原始文件, `+++` 表示新文件
+* `@@ -1,2 +1 @@`部分, -表示原始文件, 1表示第1行, 4表示连续4行, 即第1行开始连续4行; +表示新文件, 1表示第一行, 后面没有指定连续行表示默认的1行
 
-`git diff <commit>` : between working directory and the given commit.
+<!-- -->
 
-`git diff --cached <commit>` : between the staged changes in the index and the given commit. `--staged` is the new synonym of `--cached`.
+	$  diff -u -r dir1 dir2
+	diff -u -r dir1/fa dir2/fa
+	--- dir1/fa     2015-05-24 12:16:11.000000000 +0800
+	+++ dir2/fa     2015-05-24 12:15:54.000000000 +0800
+	@@ -1,2 +1 @@
+	-1-fa
+	-1-fa
+	+2-fa
+	diff -u -r dir1/sub_dir/fb dir2/sub_dir/fb
+	--- dir1/sub_dir/fb     2015-05-24 12:10:37.000000000 +0800
+	+++ dir2/sub_dir/fb     2015-05-24 12:11:02.000000000 +0800
+	@@ -1 +1 @@
+	-1-fb
+	+2-fb
 
-`git diff <commit1> <commit2>` : between the arbitrary two commits.
 
-Options:
+`git diff`的效果类似`diff -u -r dir1 dir2`
 
-`-M` : #todo#
+四种基本比较:
 
-> The --M option detects renames and generates a simplified output that simply re- cords the file rename rather than the complete removal and subsequent addition of the source file. If the rename is not a pure rename but also has some additional content changes, Git calls those out.
+* `git diff`: 工作目录和索引之间的差异
+* `git diff <commit>`: 工作目录与给定commit之间的差异
+* `git diff --cached <commit>`: 索引与给定提交之间的差异, 默认是HEAD. 1.6.1版本后可以用`--staged`代替`--cached`
+* `git diff <commit1> <commit2>` : 两个commit之间的差异
 
-`-w` or `--ignore-all-space`: compare without considering changes in whitespace as significant.
+还有一些常用的选项:
 
-`--stat` : show statistics about the difference between any two tree states.
+* `-M`: 针对重命名(rename, `git mv <file1> <file2>`), 只显示简单的结果, 而不是显示先删除再添加的内容
+* `-w/--ignore-all-space`: 忽略空白字符
+* `--stat`: 显示一个统计结果, 多少行发生变化, 添加多少, 删除多少
 
-git diff with Path Limiting:
+<!-- -->
 
-	# limit changes in specify directory
-	git diff some_directory
+    ⇒  git mv log.py log2.py
+    ⇒  git --no-pager diff --cached -M
+    diff --git a/simiki/log.py b/simiki/log2.py
+    similarity index 100%
+    rename from simiki/log.py
+    rename to simiki/log2.py
 
-	# limit changes in specify file
-	git diff some_file
+关于git diff中的提交范围, 和git log是不一样的, 首先明确两点:
 
-search changes containing string with `-S`:
+* git diff不关心文件的历史，也不关心分支
+* git log关注一个文件是如何变味另外一个(历史).
 
-	# search the past 50 commits to the master branch for changes containing string "octopus"
+另外以下两个是等价的:
+
+    $ git diff master..dev
+    $ git diff master dev
+
+如这个历史数:
+
+          A---B---C topic
+         /
+    D---E---F---G master
+
+    $ git diff master..topic    # A,B,C,F,G
+    $ git diff master...topic   # A,B,C
+
+这块网上有几篇讲得不错的:
+
+* [dots in diff](https://matthew-brett.github.io/pydagogue/git_diff_dots.html), [dots in log](https://matthew-brett.github.io/pydagogue/git_log_dots.html#git-log-dots) 不过这里有个错误, `git log master topic`和`git log master..topic`是不等价的
+* [Git "range" or "dot" syntax](https://wincent.com/wiki/Git_%22range%22_or_%22dot%22_syntax)
+* [What are the differences between double-dot “..” and triple-dot “…” in Git diff commit ranges?](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif) 一图胜千言
+
+git diff 还可以限制路径:
+
+	# 限制在某个目录下
+	git diff <some_directory>
+
+	# 现在在某个文件中
+	git diff <some_file>
+
+如`-S`在git log中, `git diff`也有-S参数:
+
+	# 在master分支最近50个提交中搜索包含指定字符串的变更
 	git diff -S "octopus" master~50
 
 
