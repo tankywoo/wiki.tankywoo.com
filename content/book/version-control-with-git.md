@@ -967,6 +967,92 @@ git stash pop时, 如果成功, 则会删除相应储藏, 如果失败, 如产�
 
 一篇不错的文章: [Git Tip of the Week: Reflogs](http://alblue.bandlem.com/2011/05/git-tip-of-week-reflogs.html)
 
+
+## 12. 远程版本库 ##
+
+远程版本库(remote)是一个引用或句柄, 通过文件系统或网络指向另外一个版本库. 可以使用远程版本库作为简称, 代替又长又复杂的Git URL.
+
+TODO
+
+* 远程追踪分支(remote-tracking branch)
+* 本地追踪分支
+
+Git版本库分为:
+
+* 裸(bare)版本库. 是分布式开发的权威焦点, 内容基本就是.git目录
+* 非裸(nonbare)版本库.用于日常开发的仓库
+
+在git clone时, 原始版本库的本地开发分支refs/heads/xxx, 会成为新克隆版本库的远程分支refs/remotes/xxx. 原始版本库的远程分支不会克隆过来.
+
+clone下来默认的远程版本库名称是origin, 可以通过`--origin`改为其它的.
+
+
+针对远程版本库的操作, 有常用的`git pull`, `git fetch`, `git push`, 还有`git remote`, `git ls-remote` 列出远程版本库的引用列表.(相对的 `git show-ref`显示本地的引用列表)
+
+关于`git remote`, 这个是我比较常用的一个命令, 介绍一下一些功能:
+
+最简单的查看远程仓库的URL:
+
+	$ git remote -v
+
+添加一个上游版本库(upstream repo):
+
+	$ git remote add upstream <git url>
+
+添加上游版本库后, 我想防止误操作把提交push到这个仓库, 可以修改push url:
+
+	$ git remote set-url --push origin 'do not pushing'
+
+查看远程版本库的详细内容(这个操作会访问远程仓库, 而不是直接基于本地配置):
+
+	$ git remote -v show origin
+	* remote origin
+	  Fetch URL: git@github.com:tankywoo/simiki.git
+	  Push  URL: git@github.com:tankywoo/simiki.git
+	  HEAD branch: master
+	  Remote branches:
+		dev              tracked
+		jinja-extensions tracked
+		master           tracked
+		project-tools    tracked
+	  Local branches configured for 'git pull':
+		dev              merges with remote dev
+		jinja-extensions merges with remote jinja-extensions
+		master           merges with remote master
+		project-tools    merges with remote project-tools
+	  Local refs configured for 'git push':
+		dev              pushes to dev              (up to date)
+		jinja-extensions pushes to jinja-extensions (up to date)
+		master           pushes to master           (up to date)
+		project-tools    pushes to project-tools    (up to date)
+
+虽然很多操作都可以直接修改`.git/config`, 但是就像修改/etc/sudoers使用visudo命令, 而不是直接vi /etc/sudoers一样, 命令的可靠性要大于手动.
+
+git支持的传输协议有本地文件系统,git原生协议,http/https协议,rsync协议等. 以前http/https协议效率很多, 不过在1.6.6版本后,效率已经和git原生协议的效率差不多了.
+
+查看`.git/config`, 可以看到fetch refspec配置, 默认是:
+
+	[remote "origin"]
+			url = git@github.com:tankywoo/simiki.git
+			fetch = +refs/heads/*:refs/remotes/origin/*
+
+refspec语法:
+
+	[+]source:destination
+
+source表示源引用, destination表示目标引用, 两者用冒号(:)分隔. 前面的加号(+)是可选的, 有加号表示不会在传输过程中进行正常的快进安全检查. 星号(`*`)表示通配符匹配
+
+git fetch 和 git push 都用到refspec, refspec的源和目标是依赖于执行的操作:
+
+	操作		源					目标
+	push		推送的本地引用		更新的远程引用
+	fetch		抓去的远程引用		更新的本地引用
+
+这里有个很多人都没注意到的地方, push 的对立面不是 pull, 而是 fetch. 很多人可能因为命令名以及上手就学的push/pull, 而在这里有了错误的认识.
+
+TODO
+
+
 ## 14. 补丁 ##
 
 
