@@ -1108,3 +1108,182 @@ Git在操作如提交, 补丁等事件时, 可以通过钩子(hook)来触发一�
 push相关钩子(Git服务端执行):
 
 	pre-receive -> update -> post-receive -> post-update
+
+
+## 19. 高级操作 ##
+
+`git filter-branch` 是一个通用的分支操作命令, 可以通过自定义命令来利用它操作不同的git对象, 从而重写分支上的提交.
+
+filter-branch命令会在版本库中的一个或多个分支执行一系列过滤器, 每个过滤器可以搭配一条自定义过滤器命令.
+
+和`rebase`, `reset`等类似, 改写历史的操作总是危险的, 所以最好不要在公共分支操作.
+
+另外, filter-branch完成后, 原先包含旧提交历史的引用会存在 `refs/original/`目录下, `refs/heads/` 存的是新的历史.
+
+在操作filter-branch之前, 要保证`refs/original/`目录是空的.
+
+如果确认新的历史OK后, 并确认旧的历史不在使用, 则可以删掉.git/refs/original(直接rm或`git update-ref -d refs/original/<branch>`)
+
+如果不删除此目录, 则在版本库中拥有新旧两套历史记录, 旧的历史会阻止垃圾回收(gc).
+
+如果不想显示删除此目录, 可以克隆一个新的版本库, 旧的历史存在旧的版本库作备份.
+
+关于filter-branch, 最佳实践是先克隆一个心版本库, 然后再执行过滤操作. 个人感觉这个操作的破坏性比rebase等还要强, 很容易导致整个历史脱离自己的预计, 这应该也是它专门提供一个original引用的原因.
+
+例子:
+
+在整个历史中删除某个文件. 一般而言某个文件可能不再用了, 也可能包含了敏感的信息, 需要删除这个文件, 如果只是简单的`git rm`, 只会在当前版本中删除, 但是在历史版本还是可以检出这个文件.
+
+使用`--tree-filter`可以实现这个功能:
+
+	# 4个commit, 其中 e7fc148 引入hello这个空文件
+	(master) $ git log --oneline
+	20124f8 add hello git to git.txt
+	e7fc148 add hello world to world.txt <v0.1>  # 在这块打了一个tag v0.1
+	5406b57 add hello
+	f1b0b42 first commit
+
+	# 使用--tree-filter可以看到每个版本的文件有哪些
+	(master) $ git filter-branch --tree-filter 'ls' master
+	Rewrite f1b0b42d0590f35f290e1c47b6e0fc12ed11267c (1/4)t.sh
+	Rewrite 5406b570273078b2193fc7b890f20a56b2e697c8 (2/4)hello    t.sh
+	Rewrite e7fc1486aea71618c719800e8fbe4fd58ffc29e9 (3/4)hello    t.sh   world.txt
+	Rewrite 20124f85c45e360dff4d05b5e9eb4f73132f066b (4/4)git.txt  hello  t.sh    world.txt
+
+	WARNING: Ref 'refs/heads/master' is unchanged
+
+	# 使用--tree-filter删除hello这个文件
+	(master) $ git filter-branch --tree-filter 'rm -f hello' master
+	Rewrite 20124f85c45e360dff4d05b5e9eb4f73132f066b (4/4)
+	Ref 'refs/heads/master' was rewritten
+
+	# 再次查看, 从第2个commit开始sha-1值都变了
+	(master) $ git log --oneline
+	891b0ec add hello git to git.txt
+	4fca41c add hello world to world.txt
+	cc1cc50 add hello
+	f1b0b42 first commit
+
+	# 当前工作目录下, hello这个文件没了
+	(master) $ ls
+	git.txt   t.sh   world.txt
+
+	# 再次尝试查看每个版本有哪些文件
+	(master) $ git filter-branch --tree-filter 'ls' master
+	Cannot create a new backup.
+	A previous backup already exists in refs/original/
+	Force overwriting the backup with -f
+
+	# 多了一个refs/original/
+	(master) $ tree .git/refs
+	.git/refs
+	├── heads
+	│   └── master
+	├── original
+	│   └── refs
+	│       └── heads
+	│           └── master
+	├── remotes
+	│   └── origin
+	│       └── HEAD
+	└── tags
+
+	7 directories, 3 files
+
+	# 存的老的master head
+	(master) $ more .git/refs/original/refs/heads/master
+	20124f85c45e360dff4d05b5e9eb4f73132f066b
+
+	# 存的新的master head
+	(master) $ more .git/refs/heads/master
+	891b0ece810d9d8dcbc34e8f023fb5713e6e4b32
+
+	# 如果把 .git/refs/heads/master改为老的sha-1, 这时就还是原来的历史了
+	(master*) $ git status
+	On branch master
+	Your branch is ahead of 'origin/master' by 2 commits.
+	  (use "git push" to publish your local commits)
+	Changes to be committed:
+	  (use "git reset HEAD <file>..." to unstage)
+			deleted:    hello
+
+
+	# 删除旧的引用
+	(master) $ git update-ref -d refs/original/refs/heads/master
+	(master) $ tree .git/refs
+	.git/refs
+	├── heads
+	│   └── master
+	├── original
+	│   └── refs
+	│       └── heads
+	├── remotes
+	│   └── origin
+	│       └── HEAD
+	└── tags
+
+	7 directories, 2 files
+
+	# 此时可以查看每个版本的文件了
+	(master) $ git filter-branch --tree-filter 'ls' master
+	Rewrite f1b0b42d0590f35f290e1c47b6e0fc12ed11267c (1/4)t.sh
+	Rewrite cc1cc501bd669ff44814ecd384f2dab7fc846cd9 (2/4)t.sh
+	Rewrite 4fca41c1d1237963cb62f639dac6b82e9bf2de04 (3/4)t.sh     world.txt
+	Rewrite 891b0ece810d9d8dcbc34e8f023fb5713e6e4b32 (4/4)git.txt  t.sh    world.txt
+
+	WARNING: Ref 'refs/heads/master' is unchanged
+
+不过这里有个问题, tag标签没有转过来:
+
+	# 但是之前打的tag v0.1 还是指向老的commit
+	(master) $ git rev-parse v0.1
+	e7fc1486aea71618c719800e8fbe4fd58ffc29e9
+
+在--tree-filter可以配合--tag-name-filter:
+
+	(master) $ git filter-branch --tree-filter 'rm -f hello' --tag-name-filter cat  master
+	Rewrite 20124f85c45e360dff4d05b5e9eb4f73132f066b (4/4)
+	Ref 'refs/heads/master' was rewritten
+	v0.1 -> v0.1 (e7fc1486aea71618c719800e8fbe4fd58ffc29e9 -> 4fca41c1d1237963cb62f639dac6b82e9bf2de04)
+
+另外, 如果某个文件改名过, 则上面的情况会漏掉改名前的版本, 可以通过之前提到过的`--follow`找到:
+
+	$ git log --name-only --follow --all -- file
+
+接着上面的例子, 使用`--msg-filter`把commit message的hello改为nothing, 当然这里会把最后三条都改掉, 仅仅当一个例子来使用, 正常情况下应该只改第2条, 用rebase合适些.
+
+	(master) $ git filter-branch --msg-filter 'sed -e "s/hello/nothing/"' master
+	Rewrite 891b0ece810d9d8dcbc34e8f023fb5713e6e4b32 (4/4)
+	Ref 'refs/heads/master' was rewritten
+
+	(master) $ git --no-pager log --oneline
+	f53bafc add nothing git to git.txt
+	e216bec add nothing world to world.txt
+	47e5bce add nothing
+	f1b0b42 first commit
+
+如果filter-branch需要在所有分支上操作, 则在命令最后加上`--all`
+
+最后, 来一个以前用过的例子, 修改提交者的name和email, 有时会遇到这个情况, 可能个人的两个开发环境配置的name不一样, 导致提交会出现多个昵称, 这时可以统一下, github help已经给出了脚本, 用的就是filter-branch的env-filter, 文档链接 [Changing author info](https://help.github.com/articles/changing-author-info/)
+
+	#!/bin/sh
+	 
+	git filter-branch --env-filter '
+
+	OLD_EMAIL="your-old-email@example.com"
+	CORRECT_NAME="Your Correct Name"
+	CORRECT_EMAIL="your-correct-email@example.com"
+
+	if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]
+	then
+		export GIT_COMMITTER_NAME="$CORRECT_NAME"
+		export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"
+	fi
+	if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]
+	then
+		export GIT_AUTHOR_NAME="$CORRECT_NAME"
+		export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"
+	fi
+	' --tag-name-filter cat -- --branches --tags
+
+更多的filter可以man, 暂时也就跟着书折腾了这几个filter.
