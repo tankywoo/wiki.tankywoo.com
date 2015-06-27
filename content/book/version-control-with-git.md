@@ -817,8 +817,155 @@ git stash pop时, 如果成功, 则会删除相应储藏, 如果失败, 如产�
 
 不过stash和branch还是要区别使用, stash更多是针对一个临时的操作, 最好不要积压太久, 随时保持储藏栈清理; 所以相应也不要过多的将stash转为一个branch. 至少至今为止我还没有做过这样的操作...
 
-引用日志(reflog) ???
+引用日志(reflog)
 
+有时, 一些危险的操作, 会导致本地丢失一些提交, 如没有push到远程仓库前误操作执行了git reset HEAD^.
+
+使用引用分支可以恢复丢失的提交.
+
+修改引用或更改分支头的Git操作都会记录引用日志:
+
+* 复制
+* 推送
+* 新提交
+* 修改/创建分支
+* rebase
+* reset
+* ...
+
+默认情况下, 引用日志在非裸版本库是弃用的, 在裸版本库(bare)中是禁用的. 可以通过如下开启:
+
+    $ git config core.logAllRefUpdates true
+
+查看引用日志:
+
+    $ git reflog [show]
+    7f63cf0 HEAD@{0}: reset: moving to HEAD@{1}
+    3dd62fb HEAD@{1}: merge mod: Fast-forward
+    7f63cf0 HEAD@{2}: checkout: moving from master to master
+    7f63cf0 HEAD@{3}: checkout: moving from master to master
+    7f63cf0 HEAD@{4}: checkout: moving from mod to master
+    3dd62fb HEAD@{5}: commit: update file in mod
+    ...
+    73ed934 HEAD@{12}: commit: dev
+    38d4a3d HEAD@{13}: checkout: moving from master to dev
+    38d4a3d HEAD@{14}: commit (initial): add file
+
+子命令show可有可无, 默认输出的引用是HEAD, 所以在上面也可以看到都是HEAD@{X}
+
+因为分支名也是引用, 所以后接分支名可以查看某个分支的引用日志
+
+    ⇒  git --no-pager reflog show master
+    3dd62fb master@{0}: reset: moving to ORIG_HEAD
+    7f63cf0 master@{1}: reset: moving to HEAD^
+
+或者:
+
+    ⇒  git --no-pager reflog show refs/heads/master
+    3dd62fb refs/heads/master@{0}: reset: moving to ORIG_HEAD
+    7f63cf0 refs/heads/master@{1}: reset: moving to HEAD^
+
+针对输出结果, 第一列的sha1 id和第二列的别名是对应的, 第三列只出相应的操作类型和操作内容
+
+`HEAD@{0}` 始终指向当前的HEAD, 这里可以看到`HEAD@{14}`是第一次提交
+
+例子:
+
+    ⇒  git --no-pager ll
+    * 3dd62fb - (HEAD, mod, master) update file in mod (17 hours ago) <Tanky Woo>
+    * 7f63cf0 - update master file (3 days ago) <Tanky Woo>
+    ...
+
+    ⇒  git --no-pager reflog | head -n 1
+    3dd62fb HEAD@{0}: checkout: moving from mod to master
+
+    (master) ⇒  git reset --hard HEAD^
+    HEAD is now at 7f63cf0 update master file
+
+    ⇒  git --no-pager reflog | head -n 2
+    7f63cf0 HEAD@{0}: reset: moving to HEAD^
+    3dd62fb HEAD@{1}: checkout: moving from mod to master
+
+现在本地执行了一次reset, 如果发现是误操作, 想要返回, 但是本地的修改没有推送到远程, 这是可以通过reflog撤回:
+
+    ⇒  git reset --hard HEAD@{1}
+    HEAD is now at 3dd62fb update file in mod
+
+表明要重置到老的HEAD版本.
+
+当然, 这种情形下还有一个方法, 使用`ORIG_HEAD`:
+
+    ⇒  git reset --hard ORIG_HEAD
+    HEAD is now at 3dd62fb update file in mod
+
+如`HEAD@{1}`, 如果使用形式`@{X}`, 则表示当前分支:
+
+    ⇒  git --no-pager show @{0}
+    commit 3dd62fb79377c7d0419ca12183db780489287731
+    Author: Tanky Woo <wtq1990@gmail.com>
+    Date:   Sat Jun 20 21:56:27 2015 +0800
+
+    ...
+
+    ⇒  git --no-pager reflog show @{0}
+    3dd62fb refs/heads/master@{0}: reset: moving to ORIG_HEAD
+    7f63cf0 refs/heads/master@{1}: reset: moving to HEAD^
+    ...
+
+另外, reflog的花括号内还可以指定时间限定符, 如:
+
+    TankyWoo $ /tmp/test/ (master) ⇒  git --no-pager reflog 'HEAD@{1 hours ago}'
+    3dd62fb HEAD@{Sat Jun 20 22:00:12 2015 +0800}: reset: moving to HEAD@{1}
+    3dd62fb HEAD@{Sat Jun 20 21:56:47 2015 +0800}: merge mod: Fast-forward
+    7f63cf0 HEAD@{Sat Jun 20 21:56:38 2015 +0800}: checkout: moving from master to master
+
+还支持如:
+
+* 2 days ago
+* 1 hour ago
+* 1 minute ago
+* yesterday
+* last saturday
+* 2015-01-01
+* ...
+
+这里注意以下是等价的:
+
+    $ git log 'HEAD@{2 days ago}'
+    $ git log HEAD@{2.days.ago}
+    $ git log HEAD@{2-days-ago}
+
+注意第一个的单引号, 否则shell报错.
+
+对于可达或不可达的引用日志, 都有一个默认的过期时限.
+
+也可以手动设置过期时间:
+
+    $ git reflog expire --expire='1 day ago' --all
+    $ git gc
+    Counting objects: 15, done.
+    Delta compression using up to 4 threads.
+    Compressing objects: 100% (4/4), done.
+    Writing objects: 100% (15/15), done.
+    Total 15 (delta 1), reused 15 (delta 1)
+
+还可以通过`git reflog delete`删除指定的条目
+
+内部细节:
+
+引用日志都是存储在 `.git/logs` 下
+
+    ⇒  tree .git/logs/
+    .git/logs/
+    ├── HEAD
+    └── refs
+        └── heads
+            ├── master
+            └── mod
+
+引用日志也是一个本地概念, 和stash一样, 是不会被推送到远程, 也不会在克隆时被复制下来.
+
+一篇不错的文章: [Git Tip of the Week: Reflogs](http://alblue.bandlem.com/2011/05/git-tip-of-week-reflogs.html)
 
 ## 14. 补丁 ##
 
