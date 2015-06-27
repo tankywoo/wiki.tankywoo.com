@@ -611,6 +611,24 @@ stackoverflow上这个[回答](http://stackoverflow.com/a/12527561/1276501)描�
     $ git log --graph --left-right --cherry-pick --oneline master...experiment
 
 
+## 查看某个commit在哪些release(tag)引进 ##
+
+之前考虑的是知道某个commit, 这时就知道它的提交时间, 然后找出release/tag在它之后即可, 也就是:
+
+	$ git log --tags --simplify-by-decoration --pretty="format:%ai %d"
+
+然后根据commit的提交时间找到从那个tag开始有.
+
+不过后来想了下, 这块有问题, 因为当前发布分支不一定merge了这个commit.
+
+后来搜到git tag有这个功能`--contains`选项:
+
+	$ git tag --contains <commit id>
+
+延伸下: 如果查看哪些分支包含某个指定commit id:
+
+	$ git branch --contains <commit id>
+
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
