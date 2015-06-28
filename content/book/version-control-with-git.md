@@ -1407,3 +1407,182 @@ filter-branch命令会在版本库中的一个或多个分支执行一系列过�
     dangling commit 39a6f59fd5b646b57c42bd6928d7c36066842891
 
 因为reflog会防止意外的丢失提前, 所以在上面未删除.git/logs时, fsck没有找到dangling对象.
+
+
+## 20. 提示、技巧和技术 ##
+
+垃圾回收(garbage collection), 在之前reflog expire时提到过.
+
+git会在下面情况下自动进行垃圾回收:
+
+* 版本库里有过多松散对象
+* 当推送到一个远程版本库时 (TODO ???实际测试没有清理)
+* 当一些命令引入许多松散对象 (如 filter-branch, rebase)
+* 当一些命令明确要求 (如 reflog expire)
+
+手动进行垃圾回收使用:
+
+	$ git gc
+
+当然, 如果要保留一些松散对象, 则要注意别被自动垃圾回收给干掉了.
+
+`git.auto`默认值是6700, 控制版本库允许存在的松散对象数量, 可以强制关闭掉:
+
+	$ git config --global gc.auto 0
+
+从上游rebase中恢复	**TODO**
+
+定制 Git 命令: 定义脚本, 脚本名以`git-`开头, 并保证有可执行权限, 然后把脚本放在`$PATH`路径下.
+
+如书上的例子:
+
+	$ echo $PATH | tr -s ':' '\n' | grep $HOME/bin
+	/Users/TankyWoo/bin
+
+	$  more ~/bin/git-top-check
+	#!/bin/bash
+
+	if [ -d ".git" ]; then
+			echo "This is a top level Git development repository."
+			exit 0
+	fi
+
+	echo "This is not a top level Git development repository."
+	exit -1
+
+	$ git top-check
+	This is a top level Git development repository.
+
+这个相对于`git config alias.xxx`就是可以定制逻辑复杂的脚本.
+
+比如把上面branch-filter --env-filter的脚本放在这块.
+
+Github上的[tj/git-extras](https://github.com/tj/git-extras) 包含了很多扩展的命令工具.
+
+快速查看变更:
+
+`git whatchanged`, 又一个给力的命令! 它的参数和git log基本一致, 如果输入`git whatchanged -h`可以看到提示是git log和git show的usage.
+
+例子:
+
+	# 抽取其中一部分作为例子
+	$ git whatchanged --oneline
+	12e3223 Fix Travis CI - Build #126
+	:100755 100755 52c844a... 486a651... M  simiki/cli.py
+	e477fa6 Disable logging output when unittest and refactor
+	:000000 100644 0000000... 0043f0c... A  tests/__init__.py
+	:100644 100644 6441aa8... a9ee8f0... M  tests/test_log.py
+	05584a3 Simplify generate argument
+	:100755 100755 405f776... 52c844a... M  simiki/cli.py
+	:100644 100644 2995ac3... e5fda56... M  simiki/utils.py
+	:100644 000000 7796986... 0000000... D  tests/attach/images/linux/opstools.png
+	:000000 100644 0000000... 7796986... A  tests/mywiki/attach/images/linux/opstools.png
+	:100644 100644 a0c3c56... 2e0ae86... M  tests/test_cli.py
+	a54174d move pages to a class variable
+	:100755 100755 d150c3a... 405f776... M  simiki/cli.py
+
+在上面例子里, 每个提交有两行.
+
+第一行是commit id 和 commit message
+
+第二行分别是 文件位模式(提交前和提交后), blob的sha-1 id(提交前和提交后), 状态字母, 更改后blob的路径
+
+还可以限制时间, 比如上周有哪些提交, 都修改了哪些文件:
+
+	$ git whatchanged --since='last week 00:00:00' --oneline
+
+还可以显示文件:
+
+	$ git whatchanged --since='last week 00:00:00' /path/to/file
+
+清理仓库工作目录:
+
+`git clean`用于清理仓库的工作目录, 比如一个Python的仓库, 中间经过执行、打包等操作, 会产生一些临时文件, 可以使用此命令删除(也可以自己写Makefile).
+
+git clean默认情况下不会删除`.gitignore`和`.git/info/exclude`指定的文件, 通过`-x`会将列表中的文件也删掉;
+
+如果不确定会删除哪些文件, 可以使用`-n/--dry-run`;
+
+默认只删除文件, 目录会保留, `-d`会将目录也删除.
+
+搜索版本库:
+
+之前提到过`git log -S <string>`用于搜索提交的变更历史中包含指定字符串的功能.
+
+`git grep`用于搜索历史记录上某个特定点的版本库内文件的内容. 默认情况下, 只搜索工作树上被追踪的文件.
+
+此命令支持传统grep命令的参数.
+
+之前用的grep就比较麻烦, 因为会搜到.git/目录下的信息.
+
+更新和删除ref:
+
+`git update-ref`可以用于更新引用、符号引用的值.
+
+	$ git rev-parse refs/heads/master
+	ba5ddbed95e2798d6862debe7ce434270ae392a9
+
+	$ git update-ref refs/heads/master 5406b57
+
+	$ git rev-parse refs/heads/master
+	5406b570273078b2193fc7b890f20a56b2e697c8
+
+	# 删除引用dev
+	$ git update-ref -d refs/heads/dev
+
+跟踪移动的文件: `--follow`选项, 在git log时提到过
+
+保留但不追踪文件:
+
+也是一个很常见的需求, 开发时, 某个文件可能需要做一些参数或其它地方调整, 但是不需要提交. 这时一是有diff, 看着不舒服, 二是没法直接add所有.
+
+`git update-index --assume-unchanged <file>` 可以将指定文件标记为不追踪. 如果有更改需要提交时, 先用`--no-assume-unchanged`改回来.
+
+	$ git diff file
+	diff --git a/file b/file
+	index 8768061..5329883 100644
+	--- a/file
+	+++ b/file
+	@@ -1 +1,2 @@
+	- bar
+	+foo bar
+
+	$ git update-index --assume-unchanged file
+
+	$ git status
+	On branch master
+	Your branch is up-to-date with 'origin/master'.
+	nothing to commit, working directory clean
+
+	$ git update-index --no-assume-unchanged file
+
+	$ git status
+	On branch master
+	Your branch is up-to-date with 'origin/master'.
+	Changes not staged for commit:
+	  (use "git add <file>..." to update what will be committed)
+	  (use "git checkout -- <file>..." to discard changes in working directory)
+
+			modified:   file
+
+	no changes added to commit (use "git add" and/or "git commit -a")
+
+重用已录制的解决方案:
+
+`git rerere`(reuse record resolution), 用于自动解决相同的合并或变基冲突操作.
+
+默认是关闭的, 开启选项:
+
+	$ git config --global rerere.enabled true
+
+该功能会在 `.git/rr-cache`目录下记录合并冲突的左右两侧, 如果把冲突解决了, 还会记录冲突的手动解决方案.
+
+但是rerere 属于本地的概念, 所以.rr-cache目录没法push到远程
+
+	$ tree .git/rr-cache
+	.git/rr-cache
+	└── 670909b9c4e71983c75c81b566c1ec1ba08d65b5
+		├── postimage
+		└── preimage
+
+比如我这里, 如果合并时有冲突, 会产生一个preimage, 记录冲突的diff; 如果我修复提交后, 会产生一个postimage, 记录解决冲突后的内容.
