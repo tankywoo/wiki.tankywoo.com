@@ -1287,3 +1287,123 @@ filter-branch命令会在版本库中的一个或多个分支执行一系列过�
 	' --tag-name-filter cat -- --branches --tags
 
 更多的filter可以man, 暂时也就跟着书折腾了这几个filter.
+
+`git rev-list` 和 git log 类似, 不过只输出sha-1 id. 并且两者的文档很多地方也是一样. 比如对输出范围的限制. 不过git log默认参数是HEAD, 而 rev-list必须指定commit id.
+
+> git log takes options applicable to the `git rev-list` command to control what is shown and how, and options applicable to the `git diff-*` commands to control how the changes each commit introduces are shown.
+
+例子, 找出2015-01-01之前的提交:
+
+    $ git rev-list --before="2015-01-01" master | wc -l
+         266
+
+    $ git rev-list --before="2014-01-01" master | wc -l
+          73
+
+    $ git rev-list -n 3 --before="2014-01-01" master
+    78f19370f4c67ca094565b9de6310917eaf85321
+    898309c61f5cea3ec2c52568ec8e0e4fed83a369
+    e0332b5dc692d4404b33596ff1a61ee430c36264
+
+    $ git --no-pager show 78f19370f4c67ca094565b9de6310917eaf85321
+    commit 78f19370f4c67ca094565b9de6310917eaf85321
+    Author: Tanky Woo <wtq1990@gmail.com>
+    Date:   Wed Dec 25 16:56:12 2013 +0800
+
+        add server for preview
+
+    diff --git a/simiki/server.py b/simiki/server.py
+    ...
+
+对于基于时间检出commit时, 需要注意:
+
+根据限制的精度, 会影响输出结果. 如果缺乏精确时间, 则相对的是当前时刻. 如上传入的2015-01-01, 默认时间点是当前的点09:00:00; 如果要限制在晚上23点, 则应该传入 2015-01-01 23:00:00. 所以包括yesterday都是这样, 会依赖当前时刻.
+
+和log一样, rev-list也可以限制路径:
+
+    $ git rev-list master -- setup.cfg
+    46ff8a318b09c2d915bda22d9c5d93541e719680
+    70a7e9e7e55e3c125e2c81682ef21d03fe0a09fe
+
+输出限制某个commit的某个文件, 这个功能也挺给力, 语法 `commit:path`
+
+    # 提交包含添加两个文件
+    $ git show --stat HEAD
+    commit c10e81d7414e7ea8055e1c36eeb6d0bb58c46c11
+    Author: Tanky Woo <wtq1990@gmail.com>
+    Date:   Sun Jun 28 09:48:34 2015 +0800
+
+        update git.txt and world.txt
+
+     git.txt   | 1 +
+     world.txt | 2 +-
+     2 files changed, 2 insertions(+), 1 deletion(-)
+
+    # 只输出git.txt的内容
+    $ git --no-pager show HEAD:git.txt
+    hello git
+    hello git.txt
+
+这里输出HEAD这个版本是, git.txt的内容. 书上说"需要该提交中确实包含了该文件", 这里说的有歧义, 应该说提交的tree blob有这个文件, 而不是这个提交中此文件必须有diff.
+
+关于数据块的交互式暂存, 也就是`git add -p`和`git stash -p`等, 输出提示已经很详细了.
+
+`git fsck` (file system check)可以帮助找回丢失的数据. 一些操作(如reset, rebase)会使一些对象失去和其它对象的连接, 从而脱离版本库的完整数据结构.
+
+这些对象叫做"不可及的"(unreachable) 或 "悬挂的"(dangling).
+
+如:
+
+    ⇒  git init
+    Initialized empty Git repository in /xxx/.git
+
+    $ echo 'foo' >> file
+    $ git add file
+    $ git ci -m 'add foo'
+    [master (root-commit) bfcce61] add foo
+     1 file changed, 1 insertion(+)
+     create mode 100644 file
+
+    $ echo 'bar' >> file
+    $ git ci -m 'add bar' file
+    [master 39a6f59] add bar
+     1 file changed, 1 insertion(+)
+
+    $ tree .git/objects
+    .git/objects
+    ├── 25
+    │   └── 7cc5642cb1a054f08cc83f2d943e56fd3ebe99
+    ├── 39
+    │   └── a6f59fd5b646b57c42bd6928d7c36066842891
+    ├── 3b
+    │   └── d1f0e29744a1f32b08d5650e62e2e62afb177c
+    ├── 41
+    │   └── 31fe4d33cd85da805ac9a6697c2251c913881c
+    ├── 4a
+    │   └── 1c03029e7407c0afe9fc0320b3258e188b115e
+    ├── bf
+    │   └── cce61b0e90cb1cb385a9b1650c2a27bce30275
+    ├── info
+    └── pack
+
+    $ git cat-file -p 39a6f59fd5b646b57c42bd6928d7c36066842891
+    tree 4131fe4d33cd85da805ac9a6697c2251c913881c
+    parent bfcce61b0e90cb1cb385a9b1650c2a27bce30275
+    author Tanky Woo <wtq1990@gmail.com> 1435458156 +0800
+    committer Tanky Woo <wtq1990@gmail.com> 1435458156 +0800
+
+    add bar
+
+    $ git reset --hard HEAD^
+    HEAD is now at bfcce61 add foo
+
+    $ git fsck
+    Checking object directories: 100% (256/256), done.
+
+    $ rm -rf .git/logs/
+
+    $ git fsck
+    Checking object directories: 100% (256/256), done.
+    dangling commit 39a6f59fd5b646b57c42bd6928d7c36066842891
+
+因为reflog会防止意外的丢失提前, 所以在上面未删除.git/logs时, fsck没有找到dangling对象.
