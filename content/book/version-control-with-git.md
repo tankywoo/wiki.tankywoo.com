@@ -1056,6 +1056,38 @@ git diff支持在这两个版本之间互相diff:
 
 	$ git checkout -m
 
+交叉合并(criss-cross merge), 是指修改在分支间来回合并.
+
+TODO 给出例子
+
+Degenerate merge(退化合并)(中文翻译真蛋疼, 还是原词好理解一些), 就是指merge后不引入一个合并提交:
+
+* 已经是最新的(already up-to-date)
+* 快进合并 (fast-forward)
+
+关于合并的策略, 用`-s`参数指定. 有5种(man git-merge, 见`MERGE STRATEGIES`一节):
+
+* resolve (解决)
+* recursive (递归)
+* octopusd (章鱼)
+* ours (我们的)
+* subtree (子树)
+
+resolve 曾经是Git的默认策略, 现已改为recursive. 处理针对两个分支合并的情况, 定义两个分支的共同祖先, 然后进行三路合并(3-way merge algorithm)
+
+recursive 是默认的策略. 和resolve类似, 也是针对两个分支合并的情况. 可以处理多个共同祖先的情况, 进行三路合并. 在Linux的开发历史上, 此策略证明会比resolve导致更少的冲突而没有故障. 此策略还有很多策略选项, 用`-X`来指定, 常用的有`ours`和`theirs`.
+
+octopusd 针对合并两个分支以上的情况. 当超过两个分支以上合并时, 这个是默认策略
+
+ours 可以合并任意数量的分支. 但它实际是丢弃了其它分支的修改, 只使用当前分支的修改. 结果是和当前HEAD一样, 只是会标记其它分支也是父提交. 注意这个和recursive的-X ours策略选项不一样.
+
+subtree 这个不理解 TODO
+
+关于策略ours和recuresive的策略选项ours, theirs, 在我之前的博客有总结到: [Git merge strategy - ours and theirs](http://blog.tankywoo.com/git/2014/05/20/git-merge-strategy-ours-and-theirs.html)
+
+用到现在, 策略这块基本就是用的默认策略, 其它复杂的情况还没用过, 也没有更多的体会...
+
+
 ## 11. 储藏和引用日志 ##
 
 储藏(stash)是一个很常用的功能, 工作目录有一些修改时, 如:
