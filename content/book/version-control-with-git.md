@@ -737,6 +737,325 @@ git diff 还可以限制路径:
 	git diff -S "octopus" master~50
 
 
+## 9. 合并 ##
+
+Git支持同时合并三个、四个或多个分支. 但是大多数情况下, 一次合并只结合两个分支.
+
+> 作为一般规则, 每次合并都从干净的工作目录和索引开始, 那么Git的操作会变得容易很多
+
+关于合并冲突的详解:
+
+配置好环境:
+
+	$ git show-branch
+	! [alt] one world
+	 * [master] all worlds
+	--
+	 * [master] all worlds
+	+  [alt] one world
+	+* [master^] init
+
+两个分支, 一个文件hello
+
+master分支和alt分支基于一个初始提交, 第二个提交分别是:
+
+master:
+
+	 hello
+	+worlds
+	+Yay!
+
+alt:
+
+	 hello
+	+world
+	+Yay!
+
+master上合并alt, 产生冲突:
+
+	$ git merge alt
+	Auto-merging hello
+	CONFLICT (content): Merge conflict in hello
+	Automatic merge failed; fix conflicts and then commit the result.
+
+	$ git status
+	On branch master
+	You have unmerged paths.
+	  (fix conflicts and run "git commit")
+
+	Unmerged paths:
+	  (use "git add <file>..." to mark resolution)
+
+			both modified:   hello
+
+	no changes added to commit (use "git add" and/or "git commit -a")
+
+	$ cat hello
+	hello
+	<<<<<<< HEAD
+	worlds
+	=======
+	world
+	>>>>>>> alt
+	Yay!
+
+现在hello这个文件的状态是`unmerged`. Git在处理合并冲突时, 会对冲突的文件标记为`冲突的(conflicted)`或`未合并的(unmerged)`.
+
+	$ git diff hello
+	diff --cc hello
+	index e63164d,562080a..0000000
+	--- a/hello
+	+++ b/hello
+	@@@ -1,3 -1,3 +1,7 @@@
+	  hello
+	++<<<<<<< HEAD
+	 +worlds
+	++=======
+	+ world
+	++>>>>>>> alt
+	  Yay!
+
+对于有冲突的文件,`git diff`会比较特殊, 之前说的默认情况下是比较当前工作目录与索引的差异, 这里显示的是两个服版本作的差异, 第一个是HEAD版本, 第二个是alt版本, 第二个又称`MERGE_HEAD`.
+
+另外这里的+-号不再是一列了, 而是两列, 第一列表示相对当前版本的修改, 第二列是相对另一个版本的修改. 这个输出有点类似`show-branch`的结果.
+
+	$ git diff HEAD
+	diff --git a/hello b/hello
+	index e63164d..1f2f61c 100644
+	--- a/hello
+	+++ b/hello
+	@@ -1,3 +1,7 @@
+	 hello
+	+<<<<<<< HEAD
+	 worlds
+	+=======
+	+world
+	+>>>>>>> alt
+	 Yay!
+
+	$ git diff --ours
+	* Unmerged path hello
+	diff --git a/hello b/hello
+	index e63164d..1f2f61c 100644
+	--- a/hello
+	+++ b/hello
+	@@ -1,3 +1,7 @@
+	 hello
+	+<<<<<<< HEAD
+	 worlds
+	+=======
+	+world
+	+>>>>>>> alt
+	 Yay!
+
+这种就是正常的HEAD和工作目录的diff. `git diff HEAD` 等价于 `git diff --ours`
+
+	$ git diff MERGE_HEAD
+	diff --git a/hello b/hello
+	index 562080a..1f2f61c 100644
+	--- a/hello
+	+++ b/hello
+	@@ -1,3 +1,7 @@
+	 hello
+	+<<<<<<< HEAD
+	+worlds
+	+=======
+	 world
+	+>>>>>>> alt
+	 Yay!
+
+	$ git diff --theirs
+	* Unmerged path hello
+	diff --git a/hello b/hello
+	index 562080a..1f2f61c 100644
+	--- a/hello
+	+++ b/hello
+	@@ -1,3 +1,7 @@
+	 hello
+	+<<<<<<< HEAD
+	+worlds
+	+=======
+	 world
+	+>>>>>>> alt
+	 Yay!
+
+`git diff MERGE_HEAD` 等价于 `git diff --theirs`
+
+	$ git diff $(git merge-base HEAD MERGE_HEAD)
+	diff --git a/hello b/hello
+	index ce01362..1f2f61c 100644
+	--- a/hello
+	+++ b/hello
+	@@ -1 +1,7 @@
+	 hello
+	+<<<<<<< HEAD
+	+worlds
+	+=======
+	+world
+	+>>>>>>> alt
+	+Yay!
+
+	$ git diff --base
+	* Unmerged path hello
+	diff --git a/hello b/hello
+	index ce01362..1f2f61c 100644
+	--- a/hello
+	+++ b/hello
+	@@ -1 +1,7 @@
+	 hello
+	+<<<<<<< HEAD
+	+worlds
+	+=======
+	+world
+	+>>>>>>> alt
+	+Yay!
+
+`merge-base`会显示两个版本的公共祖先. 上面两条命令也是等价
+
+接着做一些改动, 处理冲突, 删除三方合并标记线, 但是先不add, 还是保留unmerged状态:
+
+	$ more hello
+	hello
+	worlds xxx			# 随便添加些字符
+	Yay!
+	$ git diff
+	diff --cc hello
+	index e63164d,562080a..0000000
+	--- a/hello
+	+++ b/hello
+	@@@ -1,3 -1,3 +1,3 @@@
+	  hello
+	- worlds
+	 -world
+	++worlds xxx
+	  Yay!
+
+	$ more hello
+	hello
+	worlds  # 使用 --ours版本
+	Yay!
+	$ git diff
+	diff --cc hello
+	index e63164d,562080a..0000000
+	--- a/hello
+	+++ b/hello
+
+	$ more hello
+	hello
+	world  # 使用 --theirs版本
+	Yay!
+	$ git diff
+	diff --cc hello
+	index e63164d,562080a..0000000
+	--- a/hello
+	+++ b/hello
+
+后两者都没有diff, 这是git diff又一个特殊的地方: 对于有冲突的文件, git diff只显示真正有冲突的部分, 如果只有一边有变化, 这部分就不显示.
+
+	$ git add hello
+	$ git status
+	On branch master
+	All conflicts fixed but you are still merging.
+	  (use "git commit" to conclude merge)
+
+	Changes to be committed:
+
+			modified:   hello
+
+	$ git diff --cached
+	diff --git a/hello b/hello
+	index e63164d..562080a 100644
+	--- a/hello
+	+++ b/hello
+	@@ -1,3 +1,3 @@
+	 hello
+	-worlds
+	+world
+	 Yay!
+
+如果解决冲突并add后, 就可以看到实际diff了.
+
+在解决冲突的过程中, 可以使用git log快速找到变更的地方:
+
+	$ git log --merge --left-right -p
+	commit < 944b769511d84455382a53c947f262db97dcbb09
+	Author: Tanky Woo <wtq1990@gmail.com>
+	Date:   Tue Jun 30 22:11:42 2015 +0800
+
+		add master
+
+	diff --git a/hello b/hello
+	index ce01362..e63164d 100644
+	--- a/hello
+	+++ b/hello
+	@@ -1 +1,3 @@
+	 hello
+	+worlds
+	+Yay!
+
+	commit > 4e2d91547b64b9ee2f26de286175819502d8c262
+	Author: Tanky Woo <wtq1990@gmail.com>
+	Date:   Tue Jun 30 09:35:05 2015 +0800
+
+		one world
+
+	diff --git a/hello b/hello
+	index ce01362..562080a 100644
+	--- a/hello
+	+++ b/hello
+	@@ -1 +1,3 @@
+	 hello
+	+world
+	+Yay!
+
+`--merge`会使用`MERGE_HEAD`来找到两者的差异.
+
+`git ls-files -u` 可以查看工作树中未合并的文件:
+
+	$ git ls-files -u
+	100644 ce013625030ba8dba906f756967f9e9ca394464a 1       hello
+	100644 e63164d9518b1e6caf28f455ac86c8246f78ab70 2       hello
+	100644 562080a4c6518e1bf67a9f58a32a67bff72d4f00 3       hello
+
+分别是1. base, 2. ours, 3. theirs
+
+	$ git cat-file -p ce013625030ba8dba906f756967f9e9ca394464a
+	hello
+
+	$ git cat-file -p e63164d9518b1e6caf28f455ac86c8246f78ab70
+	hello
+	worlds
+	Yay!
+
+	$ git cat-file -p 562080a4c6518e1bf67a9f58a32a67bff72d4f00
+	hello
+	world
+	Yay!
+
+git diff支持在这两个版本之间互相diff:
+
+	$ git diff :1:hello :3:hello
+	diff --git a/:1:hello b/:3:hello
+	index ce01362..562080a 100644
+	--- a/:1:hello
+	+++ b/:3:hello
+	@@ -1 +1,3 @@
+	 hello
+	+world
+	+Yay!
+
+合并冲突的回退. 如果在冲突过程中想要回退, 可以:
+
+	$ git reset --hard HEAD
+
+如果在冲突解决后想到放弃, 回退(或终止), 可以:
+
+	$ git reset --hard ORIG_HEAD
+
+如果在解决冲突时解决方案失败, 比如弄得非常乱, 想重新回到冲突的原始状态, 重新解决, 可以:
+
+	$ git checkout -m
+
 ## 11. 储藏和引用日志 ##
 
 储藏(stash)是一个很常用的功能, 工作目录有一些修改时, 如:
