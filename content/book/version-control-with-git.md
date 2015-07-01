@@ -1470,6 +1470,9 @@ git fetch 和 git push 都用到refspec, refspec的源和目标是依赖于执�
 TODO
 
 
+## 13. 版本库管理(略) ##
+
+
 ## 14. 补丁 ##
 
 
@@ -1525,6 +1528,19 @@ Git在操作如提交, 补丁等事件时, 可以通过钩子(hook)来触发一�
 push相关钩子(Git服务端执行):
 
 	pre-receive -> update -> post-receive -> post-update
+
+
+## 16. 合并项目 ##
+
+TODO
+
+
+## 17. 子模块最佳实践 ##
+
+TODO
+
+
+## 18. 结合SVN版本库使用Git(略) ##
 
 
 ## 19. 高级操作 ##
@@ -2003,3 +2019,6 @@ git clean默认情况下不会删除`.gitignore`和`.git/info/exclude`指定的�
 		└── preimage
 
 比如我这里, 如果合并时有冲突, 会产生一个preimage, 记录冲突的diff; 如果我修复提交后, 会产生一个postimage, 记录解决冲突后的内容.
+
+
+## 21. Git 和 Github(略) ##
