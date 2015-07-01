@@ -277,7 +277,7 @@ Git 把文件分为三个大类: `已追踪(Tracked)`, `未追踪(Untracked)`和
 
 对于被误删的文件，如果在Index中，如下:
 
-	(master*) ⇒ gst
+	(master*) ⇒ git status
 	# On branch master
 	# Changes to be committed:
 	#   (use "git reset HEAD <file>..." to unstage)
@@ -350,7 +350,7 @@ Git可以通过显示引用(explicit ref)或隐式引用(implied ref)来表示�
 
 比如本地分支dev, 就是 refs/heads/dev 的缩写:
 
-    (category-index*) ⇒  git --no-pager show dev
+    (category-index*) ⇒  git show dev
     commit e31b74d259b83af0f69683b9b12a29ebb3946748
     Merge: 12e3223 5488c82
     Author: Tanky Woo <wtq1990@gmail.com>
@@ -358,7 +358,7 @@ Git可以通过显示引用(explicit ref)或隐式引用(implied ref)来表示�
 
         Merge branch 'project-tools' into dev
 
-    (category-index*) ⇒  git --no-pager show refs/heads/dev
+    (category-index*) ⇒  git show refs/heads/dev
     commit e31b74d259b83af0f69683b9b12a29ebb3946748
     Merge: 12e3223 5488c82
     Author: Tanky Woo <wtq1990@gmail.com>
@@ -479,7 +479,7 @@ SHA1 id是绝对提交名, 通过`~`和`^`则可以代表相对提交名.
 
 `git show` 还可以查看某个文件的blob内容:
 
-    (master*) ⇒  git --no-pager diff fa
+    (master*) ⇒  git diff fa
     diff --git a/fa b/fa
     index 89b24ec..7bba8c8 100644
     --- a/fa
@@ -488,7 +488,7 @@ SHA1 id是绝对提交名, 通过`~`和`^`则可以代表相对提交名.
      line 1
     +line 2
 
-    (master*) ⇒  git --no-pager show :fa
+    (master*) ⇒  git show :fa
     line 1
 
 fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
@@ -514,7 +514,7 @@ fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
     # master: init -> add fc
     # dev:    init -> add fb
 
-    (master) ⇒  git --no-pager log master...dev --oneline
+    (master) ⇒  git log master...dev --oneline
     52bdb27 add fc
     20d2444 add fb
 
@@ -692,7 +692,7 @@ Unix/Linux 中的 `diff` 命令:
 <!-- -->
 
     ⇒  git mv log.py log2.py
-    ⇒  git --no-pager diff --cached -M
+    ⇒  git diff --cached -M
     diff --git a/simiki/log.py b/simiki/log2.py
     similarity index 100%
     rename from simiki/log.py
@@ -1091,7 +1091,7 @@ stash的数据结构是一个`栈`, 即先进后出FILO(first in, last out), 相
 	⇒  git stash save 'do a stash'
 	Saved working directory and index state On master: do a stash
 	HEAD is now at 7965691 master
-	⇒  git --no-pager stash list
+	⇒  git stash list
 	stash@{0}: On master: do a stash
 
 stash也是一个引用指针(`refs/stash`), 所以也可以使用这个引用来查看:
@@ -1174,13 +1174,13 @@ git stash pop时, 如果成功, 则会删除相应储藏, 如果失败, 如产�
 
 因为分支名也是引用, 所以后接分支名可以查看某个分支的引用日志
 
-    ⇒  git --no-pager reflog show master
+    ⇒  git reflog show master
     3dd62fb master@{0}: reset: moving to ORIG_HEAD
     7f63cf0 master@{1}: reset: moving to HEAD^
 
 或者:
 
-    ⇒  git --no-pager reflog show refs/heads/master
+    ⇒  git reflog show refs/heads/master
     3dd62fb refs/heads/master@{0}: reset: moving to ORIG_HEAD
     7f63cf0 refs/heads/master@{1}: reset: moving to HEAD^
 
@@ -1190,18 +1190,18 @@ git stash pop时, 如果成功, 则会删除相应储藏, 如果失败, 如产�
 
 例子:
 
-    ⇒  git --no-pager ll
+    ⇒  git ll
     * 3dd62fb - (HEAD, mod, master) update file in mod (17 hours ago) <Tanky Woo>
     * 7f63cf0 - update master file (3 days ago) <Tanky Woo>
     ...
 
-    ⇒  git --no-pager reflog | head -n 1
+    ⇒  git reflog | head -n 1
     3dd62fb HEAD@{0}: checkout: moving from mod to master
 
     (master) ⇒  git reset --hard HEAD^
     HEAD is now at 7f63cf0 update master file
 
-    ⇒  git --no-pager reflog | head -n 2
+    ⇒  git reflog | head -n 2
     7f63cf0 HEAD@{0}: reset: moving to HEAD^
     3dd62fb HEAD@{1}: checkout: moving from mod to master
 
@@ -1219,21 +1219,21 @@ git stash pop时, 如果成功, 则会删除相应储藏, 如果失败, 如产�
 
 如`HEAD@{1}`, 如果使用形式`@{X}`, 则表示当前分支:
 
-    ⇒  git --no-pager show @{0}
+    ⇒  git show @{0}
     commit 3dd62fb79377c7d0419ca12183db780489287731
     Author: Tanky Woo <wtq1990@gmail.com>
     Date:   Sat Jun 20 21:56:27 2015 +0800
 
     ...
 
-    ⇒  git --no-pager reflog show @{0}
+    ⇒  git reflog show @{0}
     3dd62fb refs/heads/master@{0}: reset: moving to ORIG_HEAD
     7f63cf0 refs/heads/master@{1}: reset: moving to HEAD^
     ...
 
 另外, reflog的花括号内还可以指定时间限定符, 如:
 
-    TankyWoo $ /tmp/test/ (master) ⇒  git --no-pager reflog 'HEAD@{1 hours ago}'
+    TankyWoo $ /tmp/test/ (master) ⇒  git reflog 'HEAD@{1 hours ago}'
     3dd62fb HEAD@{Sat Jun 20 22:00:12 2015 +0800}: reset: moving to HEAD@{1}
     3dd62fb HEAD@{Sat Jun 20 21:56:47 2015 +0800}: merge mod: Fast-forward
     7f63cf0 HEAD@{Sat Jun 20 21:56:38 2015 +0800}: checkout: moving from master to master
@@ -1575,7 +1575,7 @@ filter-branch命令会在版本库中的一个或多个分支执行一系列过�
 	Rewrite 891b0ece810d9d8dcbc34e8f023fb5713e6e4b32 (4/4)
 	Ref 'refs/heads/master' was rewritten
 
-	(master) $ git --no-pager log --oneline
+	(master) $ git log --oneline
 	f53bafc add nothing git to git.txt
 	e216bec add nothing world to world.txt
 	47e5bce add nothing
@@ -1624,7 +1624,7 @@ filter-branch命令会在版本库中的一个或多个分支执行一系列过�
     898309c61f5cea3ec2c52568ec8e0e4fed83a369
     e0332b5dc692d4404b33596ff1a61ee430c36264
 
-    $ git --no-pager show 78f19370f4c67ca094565b9de6310917eaf85321
+    $ git show 78f19370f4c67ca094565b9de6310917eaf85321
     commit 78f19370f4c67ca094565b9de6310917eaf85321
     Author: Tanky Woo <wtq1990@gmail.com>
     Date:   Wed Dec 25 16:56:12 2013 +0800
@@ -1659,7 +1659,7 @@ filter-branch命令会在版本库中的一个或多个分支执行一系列过�
      2 files changed, 2 insertions(+), 1 deletion(-)
 
     # 只输出git.txt的内容
-    $ git --no-pager show HEAD:git.txt
+    $ git show HEAD:git.txt
     hello git
     hello git.txt
 
