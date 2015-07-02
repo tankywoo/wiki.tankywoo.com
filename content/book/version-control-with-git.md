@@ -1151,7 +1151,184 @@ cherry-pick还可以重建一系列提交, 比如一个分支的某两个提交�
 
 这是引入一个新的提交, 是master~3的逆修改, 添加的就删除, 删除的就添加.
 
+`rebase`(中文"变基", 很操蛋的翻译) 是用来改变一串提交以什么为基础.
 
+> Forward-port(向前移植) local commits to the updated upstream head
+
+常见的调用git rebase的两个命令(简化了来自man git-rebase的语法):
+
+	$ git rebase [-i | --interactive] [options] [--onto <newbase>] [<upstream> [<branch>]]
+	$ git rebase --continue | --skip | --abort | --edit-todo
+
+首先最常用的功能, 是保持当前开发分支相对另一个分支是最新的.
+
+比如一个多人协作的仓库, master分支是公共分支, 个人分支mydev, 如果mydev因一些事情耽搁几天, 这是master有了一些新提交, mydev需要用到, 可以将mydev移到master上最新的点分叉出来, 这样也可以保证分支图不会拉的太长, 简单步骤就是:
+
+	$ git checkout mydev
+	$ git rebase master
+
+或者:
+
+	$ git rebase master mydev
+
+这也是上面第一条命令的语法, 最少需要指定某个上游, 基于此上游迁移. 默认是对当前分支做迁移
+
+如, 原始的提交DAG图是:
+
+	(master) $ git log --graph --branches --all --decorate --oneline
+	* 00698e1 (HEAD, master) update master_file
+	* d07ac54 add master_file
+	| * 07e33e5 (mydev) update mydev_file
+	| * dceb4d8 add mydev_file
+	|/
+	* a8923b3 master 1
+	* 942c6af init
+
+现在我要将mydev分支移从d07ac54分叉, 作了rebase后:
+
+	(master) $ git rebase master~1 mydev
+	First, rewinding head to replay your work on top of it...
+	Applying: add mydev_file
+	Applying: update mydev_file
+
+	(mydev) $ git log --graph --branches --all --decorate --oneline
+	* 8756814 (HEAD, mydev) update mydev_file
+	* d88bae4 add mydev_file
+	| * 00698e1 (master) update master_file
+	|/
+	* d07ac54 add master_file
+	* a8923b3 master 1
+	* 942c6af init
+
+现在8756814 和d88bae4是mydev分支的两个提交, 和以前的sha-1 id不同了, 因为基于的历史树不一样.
+
+注意指定branch后, 执行rebase后会checkout到那个分支.
+
+通过`--onto`参数, 可以把一条分支上的开发线整个移到另一个分支:
+
+	(another_dev) $ git log --graph --branches --all --decorate --oneline
+	* 9b81f22 (HEAD, another_dev) update another_dev_file
+	* e32f75f add another_dev_file
+	| * 00698e1 (master) update master_file
+	| * d07ac54 add master_file
+	| | * 07e33e5 (mydev) update mydev_file
+	| |/
+	|/|
+	* | dceb4d8 add mydev_file
+	|/
+	* a8923b3 master 1
+	* 942c6af init
+
+	(another_dev) $ git rebase master
+	First, rewinding head to replay your work on top of it...
+	Applying: add mydev_file
+	Applying: add another_dev_file
+	Applying: update another_dev_file
+
+	(another_dev) $ git log --graph --branches='*dev' --all --decorate --oneline
+	* d632eb3 (HEAD, another_dev) update another_dev_file
+	* 824c829 add another_dev_file
+	* 98f4d44 add mydev_file
+	* 00698e1 (master) update master_file
+	* d07ac54 add master_file
+	| * 07e33e5 (mydev) update mydev_file
+	| * dceb4d8 add mydev_file
+	|/
+	* a8923b3 master 1
+	* 942c6af init
+
+经过常规的rebase后, 可以看到, 原先在mydev上的两个提交现在有了两次. 改为--onto方式:
+
+	(another_dev) $ git rebase --onto master mydev~1 another_dev
+	First, rewinding head to replay your work on top of it...
+	Applying: add another_dev_file
+	Applying: update another_dev_file
+
+	(another_dev) $ git --no-pager log --graph --branches='*dev' --all --decorate --oneline
+	* 6e661ce (HEAD, another_dev) update another_dev_file
+	* 870b906 add another_dev_file
+	* 00698e1 (master) update master_file
+	* d07ac54 add master_file
+	| * 07e33e5 (mydev) update mydev_file
+	| * dceb4d8 add mydev_file
+	|/
+	* a8923b3 master 1
+	* 942c6af init
+
+如果rebase过程中发生了冲突, 则需要用到最开始说的第二条命令了.
+
+遇到冲突时, rebase会在冲突的提交点挂起, 等待处理冲突
+
+* 冲突完成后, `git rebase --continue`恢复rebase
+* 如果不想要这个提交, 则可以`git rebase --skip`跳过这个提交
+* 如果不想进行rebase, 则`git rebase --abort`中止rebase
+
+`git rebase -i` 以交互式的方式处理指定范围的rebase操作, 常用于修改以前某次的提交.
+
+一般找到需要需要处理的某个点, 比如abcdef, 则:  TODO
+
+	$ git rebase -i abcdef~1
+
+此时会进入编辑器, 然后对每个commit 指定操作, 默认是pick, 显示如:
+
+	pick d07ac54 add master_file
+	pick 00698e1 update master_file
+
+	# Rebase a8923b3..00698e1 onto a8923b3 (2 command(s))
+	#
+	# Commands:
+	# p, pick = use commit
+	# r, reword = use commit, but edit the commit message
+	# e, edit = use commit, but stop for amending
+	# s, squash = use commit, but meld into previous commit
+	# f, fixup = like "squash", but discard this commit's log message
+	# x, exec = run command (the rest of the line) using shell
+	#
+	# These lines can be re-ordered; they are executed from top to bottom.
+	#
+	# If you remove a line here THAT COMMIT WILL BE LOST.
+	#
+	# However, if you remove everything, the rebase will be aborted.
+	#
+	# Note that empty commits are commented out
+
+提示内容非常详细, 如果要对某个commit进行指定操作, 则修改pick为其它即可, 可以用简写或全称, 如e 或 edit都是编辑修改
+
+* pick: 默认操作, 使用原来的commit, 没变化
+* record: 使用原来的commit, 但是修改提交日志
+* edit: 修改, 到指定点停下, 可以通过--amend修复
+* squash: 和前一次提交进行融合, 并将两次提交日志合在一起打开编辑器让用户编辑后确认
+* fixup: 和squash类似, 但是直接使用前一次提交的日志
+* exec: 指定shell命令.
+
+exec这个简单试了下, 不是基于某个commit id, 而是在预期的位置做一些shell操作, 如:
+
+	pick 8cc5fcb addxxx master_file
+	exec touch xxx
+	pick ac7a580 update master_file
+
+看了下官方的man手册, 在针对每个版本都做测试时非常有用, 如:
+
+	pick 5928aea one
+	exec make test
+	pick 04d0fda two
+	exec make test
+	pick ba46169 three
+	exec make test
+	pick f4593f9 four
+	exec make test
+
+另外, git rebase -i进入编辑器后的注释提示信息相当详细, 除了介绍上面的几个操作命令, 还有其它说明:
+
+* 可以重新排序, git rebase是从上至下执行的
+* 甚至可以删除某个commit, 这样这个提交点就会丢失
+* 如果编辑器里除了注释外的内容为空, 则中止rebase, 和 git rebase --abort 一样
+
+另外, rebase是把当前分支历史(带合并)线性化到了指定分支. 所以如果移动范围有合并提交, 默认会被线性化, 通过参数`-p/--preserve-merges`可以保留合并提交. 不然历史树就和以前有较大出入.
+
+rebase后, 如果后悔了, 可以:
+
+	$ git reset --hard ORIG_HEAD
 
 
 ## 11. 储藏和引用日志 ##
