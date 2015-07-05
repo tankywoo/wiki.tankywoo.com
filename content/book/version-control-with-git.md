@@ -1709,7 +1709,296 @@ push相关钩子(Git服务端执行):
 
 ## 16. 合并项目 ##
 
-TODO
+项目管理过程中经常会遇到需要将别的项目加入到自己项目中.
+
+比如某个网站开发, 需要用到一些前端的库. 最简单的方法就是将压缩包下载解压后放到本地指定目录, 升级的时候覆盖就行. 但是一是每次升级这些第三方库时, 还需要做一次无意义的提交, 如果频繁修改是很坑爹的; 另外就是升级也比较麻烦, 并且如果第三方依赖比较大, 也占用了很多无意义的空间.
+
+又比如一个项目的某个子目录是一些功能函数, 现在另一个项目也想用到. 以前用svn时, 是支持部分检出(partial checkout), 但是git是不支持的.
+
+针对上面的这类情况, 都可以考虑子模块(submodule), 说白了就是模块化, 一个模块负责好相应的功能, 其它需要用到它的都使用这个模块, 保证统一性; 并且使用了git的子模块, 对于升级维护都比较方便, 也不需要考虑太多第三方依赖库需要的空间问题.
+
+`git submodule`由两个独立功能组合:
+
+* gitlink
+* git submodule命令
+
+gitlink是一个从树对象(tree object)到一个提交对象(commit object)的链接. 之前介绍过git对象时, 一般情况下, 树对象指向的是一组blob对象和树对象. 所以这里是比较特殊的情况.
+
+现在有一个仓库目录git-main, 子目录git-sub, 分别是两个库:
+
+	git-main/ (master*) $ tree
+	.
+	├── git-sub
+	│   └── sub.txt
+	└── hello.txt
+
+	1 directory, 2 files
+
+	git-main/ (master*) $ git remote -v
+	origin  https://git.example.com/tankywoo/git-main.git (fetch)
+	origin  https://git.example.com/tankywoo/git-main.git (push)
+
+	git-main/ (master*) $ cd git-sub
+	git-main/git-sub/ (master) $ git remote -v
+	origin  https://git.example.com/tankywoo/git-sub.git (fetch)
+	origin  https://git.example.com/tankywoo/git-sub.git (push)
+
+	git-main/ (master*) $ gst
+	On branch master
+	Your branch is up-to-date with 'origin/master'.
+	Untracked files:
+	  (use "git add <file>..." to include in what will be committed)
+
+			git-sub/
+
+	nothing added to commit but untracked files present (use "git add" to track)
+
+现在将 git-sub 加入到 git-main库:
+
+	git-main/ (master*) $ git add git-sub
+
+	git-main/ (master*) $ gst
+	On branch master
+	Your branch is up-to-date with 'origin/master'.
+	Changes to be committed:
+	  (use "git reset HEAD <file>..." to unstage)
+
+			new file:   git-sub
+
+	git-main/ (master*) $ git ci -m 'import git-sub'
+	[master 36c4d6e] import git-sub
+	 1 file changed, 1 insertion(+)
+	 create mode 160000 git-sub
+
+	git-main/ (master) $ git ls-tree HEAD
+	160000 commit 1efb773d1740a7ad66e5b53bdf66f10c66440ce5  git-sub
+	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    hello.txt
+
+这里git-sub子目录是commit类型, 模式码是160000. 这是一个gitlink对象.
+
+注意: 通常情况下, `git add /path/to` 和 `git add /path/to/`(有无斜线结束符)是一样的. 但是在这里创建gitlink时, 两者是不一样的, 如果加了斜线结束符, 则不是创建gitlink, 而是把子目录下的所有文件都添加进来.
+
+	git-main/ (master) $ cp -r git-sub git-non-sub
+
+	git-main/ (master*) $ git add git-non-sub/
+
+	git-main/ (master*) $ gst
+	On branch master
+	Your branch is ahead of 'origin/master' by 1 commit.
+	  (use "git push" to publish your local commits)
+	Changes to be committed:
+	  (use "git reset HEAD <file>..." to unstage)
+
+			new file:   git-non-sub/sub.txt
+
+	git-main/ (master*) $ git ci -m 'import git-non-sub'
+	[master 249c085] import git-non-sub
+	 1 file changed, 1 insertion(+)
+	 create mode 100644 git-non-sub/sub.txt
+
+	git-main/ (master) $ git ls-tree HEAD
+	040000 tree 04756934bd18bee46b7978441ff47dfd695e6344    git-non-sub
+	160000 commit 1efb773d1740a7ad66e5b53bdf66f10c66440ce5  git-sub
+	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    hello.txt
+
+这里git-non-sub就是一个普通的树对象.
+
+git 将 gitlink当做一个简单的指针值或者其它版本库的引用. 绝大部分git操作(如clone)不会对gitlink解引用, 并作用在子模块版本库上.
+
+
+	git-main/ (master) $ tree
+	.
+	├── git-non-sub
+	│   └── sub.txt
+	├── git-sub
+	│   └── sub.txt
+	└── hello.txt
+
+	2 directories, 3 files
+
+	git-main/ (master) $ cd ..
+	 $ git clone git-main git-main2
+	Cloning into 'git-main2'...
+	done.
+	 $ cd git-main2
+
+	git-main2/ (master) $ tree
+	.
+	├── git-non-sub
+	│   └── sub.txt
+	├── git-sub
+	└── hello.txt
+
+	2 directories, 2 files
+
+	git-main2/ (master) $ cd git-sub
+	git-main2/git-sub/ (master) $ git remote -v
+	origin  /Users/TankyWoo/dev_env/git-submodule/git-main (fetch)
+	origin  /Users/TankyWoo/dev_env/git-submodule/git-main (push)
+
+继续在克隆出来的git-main2上测试:
+
+	git-main2/ (master) $ git ls-files --stage -- git-sub
+	160000 1efb773d1740a7ad66e5b53bdf66f10c66440ce5 0       git-sub
+
+	git-main2/ (master) $ rmdir git-sub
+	git-main2/ (master*) $ git clone https://git.example.com/tankywoo/git-sub.git git-sub
+	Cloning into 'git-sub'...
+	Username for 'https://git.example.com': tankywoo
+	Password for 'https://tankywoo@git.example.com':
+	remote: Counting objects: 3, done.
+	remote: Total 3 (delta 0), reused 0 (delta 0)
+	Unpacking objects: 100% (3/3), done.
+	Checking connectivity... done.
+
+	git-main2/ (master) $ cd git-sub
+	git-main2/git-sub/ (master) $ git checkout 1efb773
+	Note: checking out '1efb773'.
+
+	You are in 'detached HEAD' state. You can look around, make experimental
+	changes and commit them, and you can discard any commits you make in this
+	state without impacting any branches by performing another checkout.
+
+	If you want to create a new branch to retain commits you create, you may
+	do so (now or later) by using -b with the checkout command again. Example:
+
+	  git checkout -b new_branch_name
+
+	HEAD is now at 1efb773... init sub
+
+这个操作的原理和`git submodule update`类似, 只不过后者的实现更复杂一些.
+
+	git-main2/ (master) $ git submodule update
+	No submodule mapping found in .gitmodules for path 'git-sub'
+
+git submodule 首先需要一个基本的配置文件: 放在主库根目录下的`.gitmodules`文件.
+
+git submoduel 的前期操作 init 依赖这个 TODO
+
+可以手动或通过`git submodule add`创建这个文件(有点类似git remote add). 不过这里因为之前已经作了gitlink了, 所以这里只能手动创建这个文件:
+
+	git-main2/ (master*) $ cat .gitmodules
+	[submodule "git-sub"]
+			path = git-sub
+			url = https://git.example.com/tankywoo/git-sub.git
+
+接下来执行`git submodule init`将.gitmodules文件中的配置复制到.git/config中:
+
+	git-main2/ (master*) $ git submodule init
+	Submodule 'git-sub' (https://git.example.com/tankywoo/git-sub.git) registered for path 'git-sub'
+	git-main2/ (master*) $ cat .git/config
+	[core]
+			repositoryformatversion = 0
+			filemode = true
+			bare = false
+			logallrefupdates = true
+			ignorecase = true
+			precomposeunicode = true
+	[remote "origin"]
+			url = /Users/TankyWoo/dev_env/git-submodule/git-main
+			fetch = +refs/heads/*:refs/remotes/origin/*
+	[branch "master"]
+			remote = origin
+			merge = refs/heads/master
+	[submodule "git-sub"]
+			url = https://git.example.com/tankywoo/git-sub.git
+
+回到git-main, 提交.gitmodules, 在git-sub目录增加一个提交:
+
+	git-main/git-sub/ (master) $ echo 'new line' >> sub.txt
+	git-main/git-sub/ (master*) $ git ci -m 'add new line to sub.txt' sub.txt
+	[master 4102106] add new line to sub.txt
+	 1 file changed, 1 insertion(+)
+
+	git-main/git-sub/ (master) $ cd ..
+	git-main/ (master*) $ gst
+	On branch master
+	Your branch is up-to-date with 'origin/master'.
+	Changes not staged for commit:
+	  (use "git add <file>..." to update what will be committed)
+	  (use "git checkout -- <file>..." to discard changes in working directory)
+
+			modified:   git-sub (new commits)
+
+	no changes added to commit (use "git add" and/or "git commit -a")
+
+	git-main/ (master*) $ git submodule update
+	Submodule path 'git-sub': checked out '1efb773d1740a7ad66e5b53bdf66f10c66440ce5'
+
+因为子模块针对主库都是一个指针, 指向子模块的某一个版本.
+
+所以执行git submodule update时, 会更新到指定的版本. 这里是检出之前的一个版本, 这时可以把git-sub更新到新提交.
+
+	git-main/git-sub/ (1efb773) $ git checkout master
+	Previous HEAD position was 1efb773... init sub
+	Switched to branch 'master'
+	Your branch is up-to-date with 'origin/master'.
+
+	git-main/ (master*) $ gst
+	On branch master
+	Your branch is up-to-date with 'origin/master'.
+	Changes to be committed:
+	  (use "git reset HEAD <file>..." to unstage)
+
+			modified:   git-sub
+
+	git-main/ (master*) $ git ci -m 'update git-sub'
+	[master d052863] update git-sub
+	 1 file changed, 1 insertion(+), 1 deletion(-)
+
+可以看到, git-sub在主库的对象就是一个指针:
+
+	git-main/ (master) $ git ls-tree HEAD
+	100644 blob 9c7efd6f991c84837049b6ce41233281b54b12a6    .gitmodules
+	040000 tree 04756934bd18bee46b7978441ff47dfd695e6344    git-non-sub
+	160000 commit 4102106db336adbf5d0ad572b64b379ab5098abc  git-sub
+	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    hello.txt
+
+	git-main/ (master) $ cd git-sub
+	git-main/git-sub/ (master) $ git rev-parse master
+	4102106db336adbf5d0ad572b64b379ab5098abc
+
+解引用子模块:
+
+	git-main/ (master) $ git submodule deinit git-sub
+	Cleared directory 'git-sub'
+	Submodule 'git-sub' (https://git.example.com/tankywoo/git-sub.git) unregistered for path 'git-sub'
+	git-main/ (master) $ more .git/config
+	[core]
+			repositoryformatversion = 0
+			filemode = true
+			bare = false
+			logallrefupdates = true
+			ignorecase = true
+			precomposeunicode = true
+	[remote "origin"]
+			url = https://git.example.com/tankywoo/git-main.git
+			fetch = +refs/heads/*:refs/remotes/origin/*
+	[branch "master"]
+			remote = origin
+			merge = refs/heads/master
+
+`git submodule status`和 git status类似, 可以查看所有子模块的引用sha-1 id和脏状态
+
+之前提到, git submodle init会把.gitmodules的配置加到.git/config下, 关于这两个文件中针对子模块的配置:
+
+	# .gitmodules
+	[submodule "git-sub"]
+			path = git-sub
+			url = https://git.example.com/tankywoo/git-sub.git
+
+	# .git/config
+	[submodule "git-sub"]
+			url = https://git.example.com/tankywoo/git-sub.git
+
+TODO: 个人理解是这两个文件互相配合, 针对子模块的路径, 是由.gitmodules控制, 因为这个在.git/config中没有, 关于执行git submodule update的路径, 是由.git/config中的url控制.
+另外, 子模块的配置在 `.git/modules/<module-name>/config`中, 和.git/config类似, 那么这里的作用又是?
+
+
+TODO:
+
+* git pull -s subtree 导入子项目
+* git subtree vs git submodule 前者在去年就听过了, 一直没试过.
 
 
 ## 17. 子模块最佳实践 ##
@@ -1964,7 +2253,7 @@ filter-branch命令会在版本库中的一个或多个分支执行一系列过�
 
 如:
 
-    ⇒  git init
+    $ git init
     Initialized empty Git repository in /xxx/.git
 
     $ echo 'foo' >> file
