@@ -2001,9 +2001,8 @@ TODO:
 * git subtree vs git submodule 前者在去年就听过了, 一直没试过.
 
 
-## 17. 子模块最佳实践 ##
+## 17. 子模块最佳实践(略) ##
 
-TODO
 
 
 ## 18. 结合SVN版本库使用Git(略) ##
