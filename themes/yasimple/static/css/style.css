@@ -13,9 +13,6 @@ Tags: simple, single-columns, code, codehighlight, white, markdown
 html, body {
     margin: 0;
     padding: 0;
-}
-
-html, body {
     height: 100%;
 }
 
@@ -41,9 +38,7 @@ a:visited { color: #1863A1;; }
 a:hover { color: #a00; text-decoration: underline; }
 a:active { color: #1863a1; }
 
-p {
-    margin: 0 0 1em 0;
-}
+p { margin: 0 0 1em 0; }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
@@ -80,14 +75,6 @@ hr {
 
 b, strong { font-weight: bold; }
 
-#content img {
-    border: 0;
-    vertical-align: middle;
-    margin: 0 auto;
-    max-width: 720px;
-    display: block;
-}
-
 table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -103,9 +90,9 @@ td {
 /* Optimization for pre and code tag */
 pre, code { 
     /* font-family: Consolas, "DejaVu Sans Mono", "Lucida Console", Monaco, Andale Mono, "MS Gothic", monospace; */
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     font-size: 12px;
     color: #586e75;
-    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -138,14 +125,13 @@ pre code {
 /* Custom Configuration */
 #container {
     width: 50em;
-    /* line-height: 1.5em; */
     margin: 0 auto 3em auto;
     padding: 3em 2em 1.5em 2em;
     background-color: #fbfffd;
     border: 1px solid #ddd;
 }
 
-#container a{
+#container a {
     color: #333;
     border-bottom: 2px solid #e1e1e1;
     text-decoration: none;
@@ -165,9 +151,6 @@ pre code {
 
 #title {
     border-bottom: 1px dashed #eee;
-}
-
-#header {
 }
 
 #footer {
@@ -288,10 +271,6 @@ table.hlcodetable {
     color: #586e75;
 }
 
-.category_item {
-    
-}
-
 .category {
     float: left;
     width: 100px;
@@ -311,3 +290,12 @@ table.hlcodetable {
     top: 150px;
     border:0;
 }
+
+#content img {
+    border: 0;
+    vertical-align: middle;
+    margin: 0 auto;
+    max-width: 720px;
+    display: block;
+}
+
