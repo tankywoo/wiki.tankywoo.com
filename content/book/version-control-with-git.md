@@ -1824,7 +1824,7 @@ git format-patch 和 git log -p --pretty=email的输出基本一致, 前者多�
 
 生成master~2..master范围的补丁:
 
-    TankyWoo ~/dev_env/patch/repo-alt-merge (master) % git format-patch master~2..master
+    (master) % git format-patch master~2..master
     0001-X.patch
     0002-Y.patch
     0003-Z.patch
@@ -1930,8 +1930,271 @@ git am后会生成新的提交
 * [How do you take a git diff file, and apply it to a local branch that is a copy of the same repository?](http://stackoverflow.com/questions/12320863/how-do-you-take-a-git-diff-file-and-apply-it-to-a-local-branch-that-is-a-copy-o)
 * [How to apply `git diff` patch without Git installed?](http://stackoverflow.com/questions/3418277/how-to-apply-git-diff-patch-without-git-installed)
 
-关于复杂的情况, 如之前A-Z的情况, 中间有个分支alt从B点分出去: TODO
+关于复杂的情况, 如之前A-Z的情况, 中间有个分支alt从B点分出去, 再重复贴一次图:
 
+    (master) % git log --graph --oneline --decorate --all master
+    * bfad1bc (HEAD, master) F
+    *   1dd3011 Merge branch 'alt'
+    |\
+    | * fb5c9a0 (alt) Z
+    | * f67540b Y
+    | * b50d656 X
+    * | 50e7530 D
+    * | 1f0c2fd C
+    |/
+    * 2d1b9ed B
+    * d900590 A
+
+    (master) % git show-branch --more=10
+    ! [alt] Z
+     * [master] F
+    --
+     * [master] F
+    +* [alt] Z
+    +* [alt^] Y
+    +* [alt~2] X
+     * [master~2] D
+     * [master~3] C
+    +* [master~4] B
+    +* [master~5] A
+
+生成除A以外的patches:
+
+    (master) % git format-patch -o /tmp/patches master~5
+    /tmp/patches/0001-B.patch
+    /tmp/patches/0002-C.patch
+    /tmp/patches/0003-D.patch
+    /tmp/patches/0004-X.patch
+    /tmp/patches/0005-Y.patch
+    /tmp/patches/0006-Z.patch
+    /tmp/patches/0007-F.patch
+
+现在回到提交A, 然后应用这些patches:
+
+    (master) % git reset --hard HEAD~5
+    HEAD is now at d900590 A
+
+    (master) % git am /tmp/patches/*
+    Applying: B
+    Applying: C
+    Applying: D
+    Applying: X
+    error: patch failed: file:1
+    error: file: patch does not apply
+    Patch failed at 0004 X
+    The copy of the patch that failed is found in:
+       /path/to/myrepo/.git/rebase-apply/patch
+    When you have resolved this problem, run "git am --continue".
+    If you prefer to skip this patch, run "git am --skip" instead.
+    To restore the original branch and stop patching, run "git am --abort".
+
+    (master) % more .git/rebase-apply/patch
+    ---
+     file | 1 +
+     1 file changed, 1 insertion(+)
+
+    diff --git a/file b/file
+    index 35d242b..7f9826a 100644
+    --- a/file
+    +++ b/file
+    @@ -1,2 +1,3 @@
+     A
+     B
+    +X
+    --
+    2.3.5
+
+    (master) % git status
+    On branch master
+    You are in the middle of an am session.
+      (fix conflicts and then run "git am --continue")
+      (use "git am --skip" to skip this patch)
+      (use "git am --abort" to restore the original branch)
+
+    nothing to commit, working directory clean
+
+    (master) % git show-branch --more=4
+    ! [alt] Z
+     * [master] D
+    --
+     * [master] D
+     * [master^] C
+     * [master~2] B
+    +  [alt] Z
+    +  [alt^] Y
+    +  [alt~2] X
+    +  [alt~3] B
+    +* [master~3] A
+
+执行am失败了, 并且给了一些有用的提示操作. 不过这里失败了就是失败了, 没有类似合并冲突的解决的脏数据遗留下来.
+
+.git/rebase-apply/patch文件还保留了失败时修改的内容, 老版本git在.dotest目录下. 这个文件是要清理掉的, 不然后续执行am会报错.
+
+    The copy of the patch that failed is found in:
+       /path/to/myrepo/.git/rebase-apply/patch
+
+
+这时使用`-3/-3way`三路合并的方式来解决这个问题:
+
+    (master) % git reset --hard HEAD~3
+    HEAD is now at d900590 A
+
+    # 这里如果没清理 .git/rebase-apply/ 目录的话就会报错
+    (master) % git am -3 /tmp/patches/*
+    previous rebase directory /path/to/myrepo/.git/rebase-apply still exists but mbox given.
+
+    (master) % rm -rf .git/rebase-apply
+
+继续重新执行三路合并应用patch:
+
+    (master) % git am -3 /tmp/patches/*
+    Applying: B
+    Applying: C
+    Applying: D
+    Applying: X
+    Using index info to reconstruct a base tree...
+    M       file
+    Falling back to patching base and 3-way merge...
+    Auto-merging file
+    CONFLICT (content): Merge conflict in file
+    Failed to merge in the changes.
+    Patch failed at 0004 X
+    The copy of the patch that failed is found in:
+       /path/to/myrepo/.git/rebase-apply/patch
+    When you have resolved this problem, run "git am --continue".
+    If you prefer to skip this patch, run "git am --skip" instead.
+    To restore the original branch and stop patching, run "git am --abort".
+
+    (master*) % git status
+    On branch master
+    You are in the middle of an am session.
+      (fix conflicts and then run "git am --continue")
+      (use "git am --skip" to skip this patch)
+      (use "git am --abort" to restore the original branch)
+
+    Unmerged paths:
+      (use "git reset HEAD <file>..." to unstage)
+      (use "git add <file>..." to mark resolution)
+
+            both modified:   file
+
+    no changes added to commit (use "git add" and/or "git commit -a")
+
+这次和之前不一样, 虽然失败了, 但是给了一个机会来处理:
+
+    (master*) % vi file
+    (master*) % git add file
+    (master*) % git am --continue
+    Applying: X
+    Applying: Y
+    Using index info to reconstruct a base tree...
+    M       file
+    Falling back to patching base and 3-way merge...
+    Auto-merging file
+    Applying: Z
+    Using index info to reconstruct a base tree...
+    M       file
+    Falling back to patching base and 3-way merge...
+    Auto-merging file
+    Applying: F
+
+现在的结构图:
+
+    (master) % git show-branch --more=10
+    ! [alt] Z
+     * [master] F
+    --
+     * [master] F
+     * [master^] Z
+     * [master~2] Y
+     * [master~3] X
+     * [master~4] D
+     * [master~5] C
+     * [master~6] B
+    +  [alt] Z
+    +  [alt^] Y
+    +  [alt~2] X
+    +  [alt~3] B
+    +* [master~7] A
+
+
+    (master) % git --no-pager  log --graph --oneline --decorate --all
+    * b16dc1a (HEAD, master) F
+    * 79f431d Z
+    * 9642ba2 Y
+    * 816197e X
+    * 0d3f91b D
+    * b30ce22 C
+    * 7dd8d42 B
+    | * fb5c9a0 (alt) Z
+    | * f67540b Y
+    | * b50d656 X
+    | * 2d1b9ed B
+    |/
+    * d900590 A
+
+应用patch后的结构是线性的
+
+如果要想和原来的结构保持一致, 估计只能手动来处理之间的关系了:
+
+    # 当前停留在B点
+    (master) % git am /tmp/patches/0002-C.patch /tmp/patches/0003-D.patch
+    Applying: C
+    Applying: D
+
+    (master) % git show-branch --more=3
+    [master] D
+    [master^] C
+    [master~2] B
+    [master~3] A
+
+    (master) % git co -b alt master~2
+    Switched to a new branch 'alt'
+
+    (alt) % git am /tmp/patches/0004-X.patch /tmp/patches/0005-Y.patch /tmp/patches/0006-Z.patch
+    Applying: X
+    Applying: Y
+    Applying: Z
+
+    (alt) % git co master
+    Switched to branch 'master'
+
+    (master) % git show-branch --more=10
+    ! [alt] Z
+     * [master] D
+    --
+    +  [alt] Z
+    +  [alt^] Y
+    +  [alt~2] X
+     * [master] D
+     * [master^] C
+    +* [alt~3] B
+    +* [alt~4] A
+
+    (master) % git merge alt
+    Auto-merging file
+    CONFLICT (content): Merge conflict in file
+    Automatic merge failed; fix conflicts and then commit the result.
+
+    # ... 处理冲突 ...
+    (master*) % git ci
+    [master eab9bcf] Merge branch 'alt'
+
+    (master) % git am /tmp/patches/0007-F.patch
+    Applying: F
+
+    (master) % git show-branch --more=10
+    ! [alt] Z
+     * [master] F
+    --
+     * [master] F
+    +* [alt] Z
+    +* [alt^] Y
+    +* [alt~2] X
+     * [master~2] D
+     * [master~3] C
+    +* [master~4] B
+    +* [master~5] A
 
 ## 15. 钩子 ##
 
