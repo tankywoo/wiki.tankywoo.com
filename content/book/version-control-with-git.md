@@ -1652,6 +1652,286 @@ TODO
 
 ## 14. 补丁 ##
 
+虽然Git协议非常方便, 但是还是有些理由来使用补丁(patch)的: 1. 防火墙限制, 比如有些公司不允许做推送操作. 2. 将补丁发到公共邮箱(mailing list), 方便同行评审.
+
+关于补丁的一系列操作从生成补丁到发送补丁最后到应用补丁:
+
+* git format-path 生成email形式的补丁
+* git send-mail通过SMTP协议发送Git补丁
+* git am 应用补丁
+
+`git format-patch` 命令以邮件消息的形式生成一个补丁. 常用的生成方式(参数)有几种方式:
+
+* 特定提交数; 如-2, 表示生成2个patch
+* 提交范围; 如 master~4..master~2, 表示生成master~3, master~2这两个patch(不包括master~4), 和diff, log指定范围类似
+* 某次特定提交; 如master~1, 其实表示是范围master~1..HEAD
+
+git diff 是 git format-patch的核心, 不过还是有些区别, git diff 生成单个的差异合集, 而git format-match是为每个提交都生成单个patch; 二是git diff不带邮件头等信息.
+
+git format-patch 和 git log -p --pretty=email的输出基本一致, 前者多了一个--stats信息, 以及最后的Git版本号(这里是2.3.5):
+
+    (master) % git format-patch -1
+    0001-D.patch
+
+    (master*) % more 0001-D.patch
+    From 50e7530441d9836b8643e3a3134b9072c7763e60 Mon Sep 17 00:00:00 2001
+    From: Tanky Woo <wtq1990@gmail.com>
+    Date: Tue, 7 Jul 2015 07:45:38 +0800
+    Subject: [PATCH] D
+
+    ---
+     file | 1 +
+     1 file changed, 1 insertion(+)
+
+    diff --git a/file b/file
+    index b1e6722..8422d40 100644
+    --- a/file
+    +++ b/file
+    @@ -1,3 +1,4 @@
+     A
+     B
+     C
+    +D
+    --
+    2.3.5
+
+    (master*) % git log -p -1 --pretty=email
+    From 50e7530441d9836b8643e3a3134b9072c7763e60 Mon Sep 17 00:00:00 2001
+    From: Tanky Woo <wtq1990@gmail.com>
+    Date: Tue, 7 Jul 2015 07:45:38 +0800
+    Subject: [PATCH] D
+
+    diff --git a/file b/file
+    index b1e6722..8422d40 100644
+    --- a/file
+    +++ b/file
+    @@ -1,3 +1,4 @@
+     A
+     B
+     C
+    +D
+
+
+例子, 首先创造环境:
+
+    (master) % git init
+    (master) % echo A > file ; git add file ; git ci -mA
+    (master) % echo B >> file ; git ci -mB file
+    (master) % echo C >> file ; git ci -mC file
+    (master) % echo D >> file ; git ci -mD file
+
+    (master) % git log --graph --oneline --decorate master
+    * 50e7530 (HEAD, master) D
+    * 1f0c2fd C
+    * 2d1b9ed B
+    * d900590 A
+
+首先 -X 指定提交数:
+
+    (master*) % git format-patch -2
+    0001-C.patch
+    0002-D.patch
+
+    (master*) % git format-patch -3
+    0001-B.patch
+    0002-C.patch
+    0003-D.patch
+
+默认情况下, git为每个补丁生成单独的文件, 用一序列数字加上提交日志消息为其命令.
+
+指定提交范围:
+
+    (master) % git format-patch master~3..master~1
+    0001-B.patch
+    0002-C.patch
+
+指定某次提交:
+
+    (master*) % git format-patch master~3
+    0001-B.patch
+    0002-C.patch
+    0003-D.patch
+
+    # 如果要包含提交A, 即首次提交:
+    (master*) % git format-patch --root master~3
+    0001-A.patch
+
+    # 全部提交, 带上 --root 参数
+    (master*) % git format-patch --root master
+    0001-A.patch
+    0002-B.patch
+    0003-C.patch
+    0004-D.patch
+
+几种方式还可以互相配合:
+
+    (master*) % git format-patch --root master -2
+    0001-C.patch
+    0002-D.patch
+
+复杂的例子:
+
+    (master) % git checkout -b alt master~2
+    (alt) % echo X >> file ; git ci -mX file
+    (alt) % echo Y >> file ; git ci -mY file
+    (alt) % echo Z >> file ; git ci -mZ file
+
+    # 这里使用 --all 可以画出全部分支的ASCII图
+    (alt) % git log --graph --oneline --decorate --all master
+    * fb5c9a0 (HEAD, alt) Z
+    * f67540b Y
+    * b50d656 X
+    | * 50e7530 (master) D
+    | * 1f0c2fd C
+    |/
+    * 2d1b9ed B
+    * d900590 A
+
+接着合并alt分支, 处理冲突, 再增加一个新提交:
+
+    (alt) % git checkout master
+    (master) % git merge alt
+    # ... 处理冲突 ...
+    (master) % echo F >> file ; git ci -mF file
+
+现在的结构:
+
+    (master) % git log --graph --oneline --decorate --all master
+    * bfad1bc (HEAD, master) F
+    *   1dd3011 Merge branch 'alt'
+    |\
+    | * fb5c9a0 (alt) Z
+    | * f67540b Y
+    | * b50d656 X
+    * | 50e7530 D
+    * | 1f0c2fd C
+    |/
+    * 2d1b9ed B
+    * d900590 A
+
+    (master) % git show-branch --more=10
+    ! [alt] Z
+     * [master] F
+    --
+     * [master] F
+    +* [alt] Z
+    +* [alt^] Y
+    +* [alt~2] X
+     * [master~2] D
+     * [master~3] C
+    +* [master~4] B
+    +* [master~5] A
+
+生成master~2..master范围的补丁:
+
+    TankyWoo ~/dev_env/patch/repo-alt-merge (master) % git format-patch master~2..master
+    0001-X.patch
+    0002-Y.patch
+    0003-Z.patch
+    0004-F.patch
+
+注意: 合并提交本身是不会生成补丁.
+
+关于范围解析, TODO P250
+
+邮件补丁 TODO
+
+git有两条命令来应用补丁:
+
+* git am 高层命令
+* git apply 底层命令
+
+基础最开始的A-D的提交图, 增加一个新提交E, 设成patch:
+
+    (master) % echo E >> file ; git ci -mE file
+    (master) % git format-patch -1
+    0001-E.patch
+
+    (master) % git log --graph --oneline --decorate --all master
+    * 022cb18 (HEAD, master) E
+    * 50e7530 D
+    * 1f0c2fd C
+    * 2d1b9ed B
+    * d900590 A
+
+    # 重新构建A-D的提交历史, 或者直接reset撤回D
+
+    (master*) % more 0001-E.patch
+    From 022cb1861d3ae5a500c5152464cece0d3e0082b0 Mon Sep 17 00:00:00 2001
+    From: Tanky Woo <wtq1990@gmail.com>
+    Date: Tue, 7 Jul 2015 08:46:22 +0800
+    Subject: [PATCH] E
+
+    ---
+     file | 1 +
+     1 file changed, 1 insertion(+)
+
+    diff --git a/file b/file
+    index 8422d40..8fda00d 100644
+    --- a/file
+    +++ b/file
+    @@ -2,3 +2,4 @@ A
+     B
+     C
+     D
+    +E
+    --
+    2.3.5
+
+    (master*) % git am 0001-E.patch
+    Applying: E
+
+    commit b98a9b55f6952f21ea64b28a478e0936744f8039
+    Author: Tanky Woo <wtq1990@gmail.com>
+    Date:   Tue Jul 7 08:46:22 2015 +0800
+
+        E
+
+    diff --git a/file b/file
+    index 8422d40..8fda00d 100644
+    --- a/file
+    +++ b/file
+    @@ -2,3 +2,4 @@ A
+     B
+     C
+     D
+    +E
+
+git am后会生成新的提交
+
+如果使用 `git apply`, 则会把修改保留在工作目录, 但是不会提交:
+
+    (master*) % git reset --hard HEAD^
+    HEAD is now at 50e7530 D
+
+    (master*) % git apply 0001-E.patch
+
+    (master*) % git diff
+    diff --git a/file b/file
+    index 8422d40..8fda00d 100644
+    --- a/file
+    +++ b/file
+    @@ -2,3 +2,4 @@ A
+     B
+     C
+     D
+    +E
+
+有时在仓库里作了一些修改没有提交, 也可以用git diff生成一个patch文件, 然后传给别人, 对象可以直接应用上这个patch:
+
+    $ git apply patch.file
+
+在没有git的情况下, 可以使用`patch`命令:
+
+    $ patch -p1 < patch.file
+
+参考:
+
+* [How do you take a git diff file, and apply it to a local branch that is a copy of the same repository?](http://stackoverflow.com/questions/12320863/how-do-you-take-a-git-diff-file-and-apply-it-to-a-local-branch-that-is-a-copy-o)
+* [How to apply `git diff` patch without Git installed?](http://stackoverflow.com/questions/3418277/how-to-apply-git-diff-patch-without-git-installed)
+
+关于复杂的情况, 如之前A-Z的情况, 中间有个分支alt从B点分出去: TODO
+
 
 ## 15. 钩子 ##
 
