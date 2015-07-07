@@ -1,5 +1,5 @@
 ---
-title: "coverage - 代码覆盖测试"
+title: "coverage"
 date: 2014-06-14 15:00
 ---
 
