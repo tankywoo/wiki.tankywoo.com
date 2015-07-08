@@ -33,16 +33,15 @@ body {
     background-color: #95AFBA;
 }
 
-a { color: #1863a1; text-decoration: none; }
-a:visited { color: #1863A1;; }
-a:hover { color: #a00; text-decoration: underline; }
-a:active { color: #1863a1; }
+a { color: #1863A1; text-decoration: none; }
+a:visited { color: #1863A1; }
+a:hover { color: #A00; text-decoration: underline; }
+a:active { color: #1863A1; }
 
 p { margin: 0 0 1em 0; }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
-    color: #111;
     margin-bottom: 1em;
 }
 
@@ -56,8 +55,8 @@ h6 { font-size: 0.8em; }
 blockquote {
     color: #666;
     margin: 0;
-    padding-left: 3em;
-    border-left: 0.4em #eee solid;
+    padding-left: 1em;
+    border-left: 0.3em #eee solid;
 }
 
 /* Gradient transparent - color - transparent
@@ -67,9 +66,9 @@ hr {
     border: 0px;
     height: 2px;
     margin: 15px 0;
-    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));.
-    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));.
-    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));.
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
     background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
 }
 
@@ -79,7 +78,7 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
     margin-bottom: 1em;
-    border: 1px solid #ccc;
+    border: 1px solid #eee;
 }
 
 td {
@@ -92,7 +91,7 @@ pre, code {
     /* font-family: Consolas, "DejaVu Sans Mono", "Lucida Console", Monaco, Andale Mono, "MS Gothic", monospace; */
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     font-size: 12px;
-    color: #586e75;
+    color: #586E75;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -100,12 +99,13 @@ pre, code {
 }
 
 code {
-    background-color: #eee;
+    background-color: #EEE;
     margin: 0 2px;
     padding: 1px 3px;
 }
 
-pre { 
+pre {
+    /* border: 1px solid #eee; */
     padding: 8px 12px;
     white-space: pre;
     white-space: -moz-pre-wrap; /* Firefox */
@@ -119,7 +119,7 @@ pre code {
     border: 0px !important;
     padding: 0;
     color: #000;
-    background-color: #f8f8f8;
+    background-color: #F8F8F8;
 }
 
 /* Custom Configuration */
@@ -127,19 +127,26 @@ pre code {
     width: 50em;
     margin: 0 auto 3em auto;
     padding: 3em 2em 1.5em 2em;
-    background-color: #fbfffd;
-    border: 1px solid #ddd;
+    background-color: #FBFFFD;
+    border: 1px solid #eee;
 }
 
 #container a {
     color: #333;
-    border-bottom: 2px solid #e1e1e1;
     text-decoration: none;
 }
 
 #container a:hover {
-    color: #555;
+    color: #333;
     border-bottom: 2px solid #88ACDB;
+    /* border-bottom: 2px solid #e1e1e1; */
+}
+
+#nav {
+    position:fixed;
+    left:0;
+    top: 150px;
+    border:0;
 }
 
 #wiki_title, #title {
@@ -172,12 +179,32 @@ li.pagelist:before {
     content: "\0BB \020";
 }
 
+.category {
+    float: left;
+    width: 100px;
+}
+.category_list {
+    float: left;
+}
+
+#container .category h2{ color: #CCC; }
+
+#content h2 { color: #88ACDB; }
+
+#content img {
+    border: 0;
+    vertical-align: middle;
+    margin: 0 auto;
+    max-width: 720px;
+    display: block;
+}
+
 /* Table of Contents */
 .toc {
     margin: 0 0.5em;
     padding: 0.5em 1em;
     border: 1px dashed silver;
-    background-color: #ecf5ff;
+    background-color: #ECF5FF;
     float: right;
     display: block;
     font-size: 75%;
@@ -197,28 +224,29 @@ li.pagelist:before {
 
 /* Hackers */
 /* Hacker for codehilite */
-table.codehilitetable {
-    border-collapse: separate;
-    border: 1px solid #eee;
-    margin: 14px 0;
+.hlcodetable {
+    border: 0;
+    border-collapse: separate !important;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
 }
 
-.codehilitetable pre {
-    margin: 0;
-    border: 0 none;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
+.hlcodetable td { padding: 0; border: 0 none; margin: 0; }
+
+.hlcodetable .linenodiv {
+    border-right: 1px solid #ddd;
 }
 
-.codehilitetable td {
-    border: 0 none;
-    padding: 0;
-    margin: 0;
+.hlcodetable .linenodiv pre, .hlcodetable .hlcode pre { margin: 0; border: none; }
+
+.hlcode {
+    margin: 0 0 1em 0;
+    color: #586E75;
 }
+
+/* Pygments them, Punctuation and Name */
+.hlcode pre .p, .hlcode pre .n { color: #586E75; }
 
 /* Clear the float problem */
 .clearfix:after {
@@ -229,73 +257,3 @@ table.codehilitetable {
     display: block;
     height: 0;
 }
-
-
-table.hlcodetable {
-    border: 1px solid #eee;
-    border-collapse: separate !important;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-}
-
-.hlcodetable td {
-    padding: 0;
-    border: none;
-}
-
-.hlcodetable .linenodiv {
-    border-right: 1px solid #ccc;
-}
-
-.hlcodetable .linenodiv pre {
-    margin: 0;
-    border: none;
-}
-
-.hlcodetable .hlcode pre {
-    margin: 0;
-    border: none;
-}
-
-.hlcode {
-    margin: 0 0 1em 0;
-    color: #586e75;
-}
-
-.hlcode pre span {
-    font-size: 12px;
-}
-
-.hlcode pre .p, .hlcode pre .n {
-    color: #586e75;
-}
-
-.category {
-    float: left;
-    width: 100px;
-}
-.category_list {
-    float: left;
-}
-
-#container .category h2{
-    color: #aaa;
-    font-family: Monaco, "Helvetica Neue", "Segoe UI", Arial, Sans-Serif;
-}
-
-#nav {
-    position:fixed; 
-    left:0; 
-    top: 150px;
-    border:0;
-}
-
-#content img {
-    border: 0;
-    vertical-align: middle;
-    margin: 0 auto;
-    max-width: 720px;
-    display: block;
-}
-
