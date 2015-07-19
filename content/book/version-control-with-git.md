@@ -528,39 +528,86 @@ Git可以通过显示引用(explicit ref)或隐式引用(implied ref)来表示�
 
 引用(ref)是一个sha1散列值, 指向Git对象库中的对象.
 
-符号引用(symref) 是一个指向引用的引用(指针), 间接的指向git对象. 存放在`.git/`目录下.
+符号引用(symref) 是一个指向引用的引用(指针), 间接的指向git对象. 有点类似C语言里指针的指针? 和Linux的软链接(soft link)也有点类似?
 
 本地特性分支名, 远程跟踪分支名, 标签名都是引用.
 
-每一个符号引用都有一个以 refs/ 开始的明确名称, 并且都分层存储在版本库的`.git/refs/` 目录中. 基本分为三种:
+每一个<strike>符号</strike>引用都有一个以 refs/ 开始的明确名称, 并且都分层存储在版本库的`.git/refs/` 目录中. 基本分为三种:
 
 * refs/heads/<ref> 代表本地分支
 * refs/remotes/<ref> 代表远程跟踪分支
 * refs/tags/<ref> 代表标签
 
+**注**(2015-07-19更新):
+
+书上说:
+
+> Each symbolic ref has an explicit, full name that begins with refs/ and each is stored hierarchically within the repository in the .git/refs/ directory.
+
+我查了文档, 并且看了`git symbolic-ref`的man手册, 发现这里的解释是**错误**的
+
+首先, 关于master, 即 .git/refs/heads/master:
+
+	$ more .git/refs/heads/master
+	f35f166562045569095169d340fec0d16eaef73b
+
+存储的也是sha1 id, 所以它不是一个符号引用, 而只是一个引用.
+
+另外用`git symbolic-ref`也可以看到说这不是一个符号引用:
+
+	$ git symbolic-ref master
+	fatal: ref master is not a symbolic ref
+
+那么, 哪些是符号引用? 暂时只知道默认的有HEAD:
+
+	$ git symbolic-ref HEAD
+	refs/heads/master
+
+	$ more .git/HEAD
+	ref: refs/heads/master
+
+接着, 符号引用有什么特征? 还是`git symbolic-ref`的man手册, 写的很清楚:
+
+	A symbolic ref is a regular file that stores a string that begins with `ref: refs/`. For example, your .git/HEAD is a regular file whose contents is `ref: refs/heads/master`.
+
+很显然, HEAD符合这个特征.
+
+符号引用也可以自己创建, 还是用上面的命令:
+
+	$ git symbolic-ref TANKYWOO refs/heads/master
+	$ git rev-parse TANKYWOO
+	f35f166562045569095169d340fec0d16eaef73b
+	$ git rev-parse master
+	f35f166562045569095169d340fec0d16eaef73b
+	$ more .git/TANKYWOO
+	ref: refs/heads/master
+	$ git symbolic-ref TANKYWOO
+	refs/heads/master
+
+(2015-07-19更新 结束)
+
 比如本地分支dev, 就是 refs/heads/dev 的缩写:
 
-    (category-index*) $ git show dev
-    commit e31b74d259b83af0f69683b9b12a29ebb3946748
-    Merge: 12e3223 5488c82
-    Author: Tanky Woo <wtq1990@gmail.com>
-    Date:   Fri Apr 10 19:11:27 2015 +0800
+	$ git show dev
+	commit e31b74d259b83af0f69683b9b12a29ebb3946748
+	Merge: 12e3223 5488c82
+	Author: Tanky Woo <wtq1990@gmail.com>
+	Date:   Fri Apr 10 19:11:27 2015 +0800
 
-        Merge branch 'project-tools' into dev
+		Merge branch 'project-tools' into dev
 
-    (category-index*) $ git show refs/heads/dev
-    commit e31b74d259b83af0f69683b9b12a29ebb3946748
-    Merge: 12e3223 5488c82
-    Author: Tanky Woo <wtq1990@gmail.com>
-    Date:   Fri Apr 10 19:11:27 2015 +0800
+	$ git show refs/heads/dev
+	commit e31b74d259b83af0f69683b9b12a29ebb3946748
+	Merge: 12e3223 5488c82
+	Author: Tanky Woo <wtq1990@gmail.com>
+	Date:   Fri Apr 10 19:11:27 2015 +0800
 
-        Merge branch 'project-tools' into dev
+		Merge branch 'project-tools' into dev
 
-    (category-index*) $ more .git/refs/heads/dev
-    e31b74d259b83af0f69683b9b12a29ebb3946748
+	$ more .git/refs/heads/dev
+	e31b74d259b83af0f69683b9b12a29ebb3946748
 
-
-Git 有几个特殊符号引用:
+Git 有几个特殊<strike>符号</strike>引用(除了HEAD, 其余都不是符号引用):
 
 * `HEAD`
 * `ORIG_HEAD`
@@ -569,47 +616,49 @@ Git 有几个特殊符号引用:
 
 `HEAD`: `.git/HEAD`, 总是指向当前分支的最后一次提交, 当分支改变，HEAD也会变
 
-    (master) $ more .git/HEAD
-    ref: refs/heads/master
+	$ more .git/HEAD
+	ref: refs/heads/master
 
 `ORIG_HEAD`: `.git/ORIG_HEAD`, 一些操作, 如`merge`或`reset`, 会记录操前的commit(HEAD). 作为一个保护措施，使操作可以回溯.
 
-比如最近三个commits:
+比如最近三个commits 以及 此时的ORIG_HEAD(存储的是之前某一个的commit id):
 
-    * d46546a - (HEAD, master) update d (42 seconds ago) <Tanky Woo>
-    * 8ed2d79 - update f (76 seconds ago) <Tanky Woo>
-    * 75b09c2 - (tag: v0.1) Merge branch 'dev' (3 days ago) <Tanky Woo>
+	* d46546a - (HEAD, master) update d (42 seconds ago) <Tanky Woo>
+	* 8ed2d79 - update f (76 seconds ago) <Tanky Woo>
+	* 75b09c2 - (tag: v0.1) Merge branch 'dev' (3 days ago) <Tanky Woo>
 
-`ORIG_HEAD` 存储的是之前某一个commit:
-
-    (master) $ more .git/ORIG_HEAD
-    015b5b99f5c9973e840f29c9f6e6b936c99b92a5
+	$ more .git/ORIG_HEAD
+	015b5b99f5c9973e840f29c9f6e6b936c99b92a5
 
 做一次reset操作:
 
-    (master) $ git reset --soft HEAD^
+	$ git reset --soft HEAD^
 
 查看`ORIG_HEAD`, 会指向之前的HEAD:
 
-    (master) $ more .git/ORIG_HEAD
-    d46546a5192b7e1c834947b612e3401a6f7729c7
+	$ more .git/ORIG_HEAD
+	d46546a5192b7e1c834947b612e3401a6f7729c7
 
 这样就可以回溯到reset之前的版本:
 
-    git reset ORIG_HEAD
+	$ git reset ORIG_HEAD
 
-然后 `ORIG_HEAD` 又指向 8ed2d79 这个id
+然后 `ORIG_HEAD` 又指向 @8ed2d79 这个id
 
-`HEAD` vs `ORIG_HEAD` [HEAD and ORIG\_HEAD in Git](http://stackoverflow.com/questions/964876/head-and-orig-head-in-git)
+`HEAD` vs `ORIG_HEAD` [HEAD and ORIG_HEAD in Git](http://stackoverflow.com/questions/964876/head-and-orig-head-in-git)
 
-`FETCH_HEAD`: `.git/FETCH_HEAD`, 当使用远程库时, git fetch 命令将所有抓去分支的头记录到这个文件中, 是最近fetch的分支HEAD的简写.
+`FETCH_HEAD`: `.git/FETCH_HEAD`, 当使用远程库时, git fetch 命令将所有抓取分支的头记录到这个文件中, 是最近fetch的分支HEAD的简写.
+
+	$ git fetch origin
+	$ more .git/FETCH_HEAD
+	f35f166562045569095169d340fec0d16eaef73b                branch 'master' of https://example.com/tankywoo/git-test-symref
 
 `MERGE_HEAD`: 当一个合并操作正在进行时, 其它分支的头暂时记录在 `MERGE_HEAD` 中. 即是正在合并进HEAD的提交.
 
 `git symbolic-ref` 操作符号引用:
 
-    (master*) $ git symbolic-ref HEAD
-    refs/heads/master
+	(master*) $ git symbolic-ref HEAD
+	refs/heads/master
 
 详细可以参考[progit-9.3](http://git-scm.com/book/en/Git-Internals-Git-References)
 
@@ -622,37 +671,37 @@ sha1 id是绝对提交名, 通过`~`和`^`则可以代表相对提交名.
 
 例子:
 
-    *   75b09c2 - (HEAD, master) Merge branch 'dev' (4 seconds ago) <Tanky Woo>
-    |\
-    | * 0aab100 - (dev) Add d (26 seconds ago) <Tanky Woo>
-    | * 6a9379e - Add c (31 seconds ago) <Tanky Woo>
-    * | 015b5b9 - Add f (14 seconds ago) <Tanky Woo>
-    |/
-    * 545851d - Add b (59 seconds ago) <Tanky Woo>
-    * 1509ece - Add a (80 seconds ago) <Tanky Woo>
+	*   75b09c2 - (HEAD, master) Merge branch 'dev' (4 seconds ago) <Tanky Woo>
+	|\
+	| * 0aab100 - (dev) Add d (26 seconds ago) <Tanky Woo>
+	| * 6a9379e - Add c (31 seconds ago) <Tanky Woo>
+	* | 015b5b9 - Add f (14 seconds ago) <Tanky Woo>
+	|/
+	* 545851d - Add b (59 seconds ago) <Tanky Woo>
+	* 1509ece - Add a (80 seconds ago) <Tanky Woo>
 
 第一个父提交:
 
-    $ git log -1 --pretty=oneline --abbrev-commit -p master^1
-    015b5b9 Add f
+	$ git log -1 --pretty=oneline --abbrev-commit -p master^1
+	015b5b9 Add f
 
 第二个父提交, 这是从dev分支合并进master的分支:
 
 
-    $ git log -1 --pretty=oneline --abbrev-commit -p master^2
-    0aab100 Add d
+	$ git log -1 --pretty=oneline --abbrev-commit -p master^2
+	0aab100 Add d
 
 使用波浪号(~):
 
-    $ git log -1 --pretty=oneline --abbrev-commit -p master~1
-    015b5b9 Add f
+	$ git log -1 --pretty=oneline --abbrev-commit -p master~1
+	015b5b9 Add f
 
 `master^1` 等价于 `master~1`
 
 组合使用:
 
-    $ git log -1 --pretty=oneline --abbrev-commit -p master^2~1
-    6a9379e Add c
+	$ git log -1 --pretty=oneline --abbrev-commit -p master^2~1
+	6a9379e Add c
 
 
 ### 查看提交历史 ###
@@ -661,58 +710,64 @@ sha1 id是绝对提交名, 通过`~`和`^`则可以代表相对提交名.
 
 使用`-p/--patch` 可以查看提交的修改补丁:
 
-    $ git log -1 -p HEAD
+	$ git log -1 -p HEAD
 
 这个等价于:
 
-    $ git show HEAD
+	$ git show HEAD
 
 `git show` 还可以查看某个文件的blob内容:
 
-    (master*) $ git diff fa
-    diff --git a/fa b/fa
-    index 89b24ec..7bba8c8 100644
-    --- a/fa
-    +++ b/fa
-    @@ -1 +1,2 @@
-     line 1
-    +line 2
+	$ git diff fa
+	diff --git a/fa b/fa
+	index 89b24ec..7bba8c8 100644
+	--- a/fa
+	+++ b/fa
+	@@ -1 +1,2 @@
+	 line 1
+	+line 2
 
-    (master*) $ git show :fa
-    line 1
+	$ git show :fa
+	line 1
 
 fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
 
 还可以查看远程追踪分支中某文件的blob内容, 如:
 
-    $ git show origin/master:setup.py
+	$ git show origin/master:setup.py
 
 使用`git log <start>..<end>` **两个dot** 语法来查看某一段历史, 表示 "结束" 的提交可到达 且 "开始" 的提交不可到达的一组提交. 如:
 
-    $ git log master~12..master~10  # 查看master~11, master~10, 但是不包括 master~12
+	# 查看master~11, master~10, 但是不包括 master~12
+	$ git log master~12..master~10
+
+如图:
+
+
+![Figure 6-9. Interpreting ranges as set subtraction](http://tankywoo-wb.b0.upaiyun.com/git-6-9.png!small)
 
 实际也就是:
 
-    $ git log ^X Y
+	$ git log ^X Y
 
-**TODO** 这块看图6-9, 6-11, 6-12, 6-13
+**TODO** 这块看图6-11, 6-12, 6-13
 
 `<start>..<end>` 的范围表示集合的减法运算, 而 `<A>...<B>` **三个dot** 表示A和B的对称差(symmetric difference), 也就是 A或B可达 且又 不同时在 A和B的并集 中.
 
 比如 dev 是从master的init这个提交衍生出来的, 随后master和dev各增加一个提交:
 
-    # master: init -> add fc
-    # dev:    init -> add fb
+	# master: init -> add fc
+	# dev:	init -> add fb
 
-    (master) $ git log master...dev --oneline
-    52bdb27 add fc
-    20d2444 add fb
+	(master) $ git log master...dev --oneline
+	52bdb27 add fc
+	20d2444 add fb
 
 下面这个命令效果是一致(**TODO**):
 
-    (master) $ git rev-list --abbrev-commit master...dev --not $(git merge-base --all master dev)
-    52bdb27
-    20d2444
+	(master) $ git rev-list --abbrev-commit master...dev --not $(git merge-base --all master dev)
+	52bdb27
+	20d2444
 
 
 ### 查找提交 ###
@@ -721,24 +776,24 @@ fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
 
 `git blame` 用于查看一个文件中的没一行最后是最提交以及commit id:
 
-    $ git blame CHANGELOG.rst
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  11) v1.3 (2015-03-04)
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  12) ===================
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  13)
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  14) 1. Add `site.time` variable, the generated time.
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  15) 2. Improve encoding
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  16) 3. Add `--update-them` when generate to improve generation speed
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  17) 4. Fix #36, add attach directory to put attachments.
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  18) 5. Fix #33, only show color logging message on Linux/MacOS
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  19)
-    7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  20)
-    211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  21) v1.2.4 (2014-12-23)
-    211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  22) ===================
-    211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  23)
-    211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  24) * Fix #31 encode/decode problems
-    211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  25) * Fix image overflow in simple themes
-    211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  26)
-    211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  27)
+	$ git blame CHANGELOG.rst
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  11) v1.3 (2015-03-04)
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  12) ===================
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  13)
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  14) 1. Add `site.time` variable, the generated time.
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  15) 2. Improve encoding
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  16) 3. Add `--update-them` when generate to improve generation speed
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  17) 4. Fix #36, add attach directory to put attachments.
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  18) 5. Fix #33, only show color logging message on Linux/MacOS
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  19)
+	7a6a703b (Tanky Woo         2015-03-04 11:47:40 +0800  20)
+	211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  21) v1.2.4 (2014-12-23)
+	211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  22) ===================
+	211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  23)
+	211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  24) * Fix #31 encode/decode problems
+	211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  25) * Fix image overflow in simple themes
+	211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  26)
+	211a6669 (Tanky Woo         2014-12-23 12:35:59 +0800  27)
 
 `git log -S` 用于根据给定的关键字搜索出现在历史差异中的提交, 也成为pickaxe
 
@@ -746,9 +801,9 @@ fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
 
 如:
 
-    line 1      line 1
-    row  2   -> line 3
-    line 3      row  3
+	line 1       line 1
+	row  2   ->  line 3
+	line 3       row  3
 
 则无法搜出这次提交.
 
