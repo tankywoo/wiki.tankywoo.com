@@ -15,11 +15,11 @@ date: 2014-04-28 23:31
 查看帮助:
 
 	# For a complete list of git subcommands
-	git help --all
+	$ git help --all
 
 	# document for git subcommand
-	git help <subcommand>
-	git <subcommand> --help
+	$ git help <subcommand>
+	$ git <subcommand> --help
 
 命令行中的`双破折号`(double dash):
 
@@ -32,26 +32,26 @@ date: 2014-04-28 23:31
 查看某个特定提交的详细信息 `git show`:
 
 	# show the details of the most recent commit
-	git show
+	$ git show
 
 	# To see more detail about a particular commit
-	git show <commit number>
+	$ git show <commit number>
 
 查看所有分支的整体情况 `git show-branch`:
 
-	git show-branch --more=10
+	$ git show-branch --more=10
 
-关于更详细的, 可以看看[GitGuys](http://www.gitguys.com/topics/git-show-branch-to-see-branches-and-their-commits/?lang=zh)上的图解, 讲得很好.
+更详细的可以看看[GitGuys](http://www.gitguys.com/topics/git-show-branch-to-see-branches-and-their-commits/?lang=zh)上的图解.
 
 ---
 
 ## 4.基本的Git概念 ##
 
-**注意**: 这章太重要了, 字字都是珠玑. (真想把整篇都copy过来)
+**注意**: 这章太重要了, 字字都是珠玑, 真想把整篇都copy过来.
 
 在版本库中, Git维护两个主要的数据结构: `对象库(object store)` 和 `索引(index)`. 所有这些版本库数据存放在工作目录根目录下的`.git`的隐藏目录中.
 
-索引是*暂时*的信息, 对版本库来说是*私有*的, 并且可以在需要的时候按需求进行创建和修改.
+索引是**暂时**的信息, 对版本库来说是**私有**的, 并且可以在需要的时候按需求进行创建和修改.
 
 对象库是git版本库实现的核心. 包含了原始数据文件和所有日志信息、作者信息、日期, 以及其它用来重建项目任意版本或分支的信息.
 
@@ -61,7 +61,7 @@ Git对象库中的对象**只有**四种类型: 块(blog), 目录树(tree), 提�
 
 * `块 (Blob)` : 
 
-    文件的每一个版本都表示未一个块(blob). blob 是`二进制大对象(binary large object)`的缩写. 一个blob保存一个文件的数据, 但不包含任何关于这个文件的元数据, 甚至没有文件名.
+    文件的每一个版本都表示为一个块(blob). blob 是`二进制大对象(binary large object)`的缩写. 一个blob保存一个文件的数据, 但不包含任何关于这个文件的元数据, 甚至没有文件名.
 
 * `树 (Tree)` :
 
@@ -82,10 +82,15 @@ Git对象库中的对象**只有**四种类型: 块(blog), 目录树(tree), 提�
 
 索引, 又称`暂存区(Stage)`, 是一个临时的、动态的二进制文件.
 
-    (master*) ⇒  file .git/index
+    $ file .git/index
     .git/index: data
 
 它捕获项目在某个时刻的整体结构的一个版本.
+
+
+下面是一个简单的git object内部dag图, 经过两次的提交, 非常清晰(摘自书上图4-2):
+
+![Figure 4-2. Git objects after a second commit](http://tankywoo-wb.b0.upaiyun.com/git-4-2.png!small)
 
 
 ### 可寻址内容名称 ###
@@ -254,7 +259,7 @@ git 自动定期对仓库进行重新打包以节省空间. 也可以手工运�
 
 	$ git ls-tree master
 
-### 例子 ###
+### 底层命令例子 ###
 
 以下例子使用的基本都是Git的底层命令, 在实际使用中, 有更简单的命令封装了这些底层命令, 不过通过底层命令, 可以更清晰的了解Git的工作流程.
 
@@ -267,83 +272,83 @@ git 自动定期对仓库进行重新打包以节省空间. 也可以手工运�
 初始化的Git仓库:
 
 	# An initial git repo
-	(master) ⇒ find .git/objects
+	$ find .git/objects
 	.git/objects
 	.git/objects/info
 	.git/objects/pack
 
 新建一个文件a.txt, 内容是 'hello', sha1值 ce013625030ba8dba906f756967f9e9ca394464a, 使用`git cat-file`查看散列的内容:
 
-	(master) ⇒ echo 'hello' > a.txt
-	(master*) ⇒ git add a.txt
-	(master*) ⇒ find .git/objects
+	$ echo 'hello' > a.txt
+	$ git add a.txt
+	$ find .git/objects
 	.git/objects
 	.git/objects/ce
 	.git/objects/ce/013625030ba8dba906f756967f9e9ca394464a
 	.git/objects/info
 	.git/objects/pack
 
-	(master*) ⇒ git cat-file -p ce013625030ba8dba906f756967f9e9ca394464a
+	$ git cat-file -p ce013625030ba8dba906f756967f9e9ca394464a
 	hello
 
 使用`git ls-files`查看staged信息:
 
-    (master*) ⇒  git ls-files -s
+    $ git ls-files -s
     100644 ce013625030ba8dba906f756967f9e9ca394464a 0       a.txt
 
 捕获索引状态并保存到一个树对象:
 
-	(master*) ⇒ git write-tree
+	$ git write-tree
 	2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
 
-	(master*) ⇒ git cat-file -p 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
+	$ git cat-file -p 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1
 	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
 
 现在增加文件b.txt, 内容和a.txt一样, 可以看到, 两个使用同一个blob:
 
-	(master*) ⇒ echo 'hello' > b.txt
-	(master*) ⇒ git add b.txt
+	$ echo 'hello' > b.txt
+	$ git add b.txt
 
-	(master*) ⇒ git write-tree
+	$ git write-tree
 	b5b0cccf7401633f12e0fafc6b85731251b86850
 
-	(master*) ⇒ git cat-file -p b5b0cccf7401633f12e0fafc6b85731251b86850
+	$ git cat-file -p b5b0cccf7401633f12e0fafc6b85731251b86850
 	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
 	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    b.txt
 
 现在改变文件a.txt内容, b.txt还是指向原来的blob:
 
-	(master*) ⇒ echo 'world' >> a.txt
-	(master*) ⇒ git add a.txt
+	$ echo 'world' >> a.txt
+	$ git add a.txt
 
-	(master*) ⇒ git write-tree
+	$ git write-tree
 	579c3877d5f450e34ea642b3a29d2d01dcf8e392
 
-	(master*) ⇒ git cat-file -p 579c3877d5f450e34ea642b3a29d2d01dcf8e392
+	$ git cat-file -p 579c3877d5f450e34ea642b3a29d2d01dcf8e392
 	100644 blob 94954abda49de8615a048f8d2e64b5de848e27a1    a.txt
 	100644 blob ce013625030ba8dba906f756967f9e9ca394464a    b.txt
 
 添加一个子目录, 里面也放一个a.txt, 内容一样:
 
-    (master*) ⇒  mkdir subdir
-    (master*) ⇒  cp a.txt subdir/
-    (master*) ⇒  tree
+    $ mkdir subdir
+    $ cp a.txt subdir/
+    $ tree
     .
     ├── a.txt
     └── subdir
         └── a.txt
 
     1 directory, 2 files
-    (master*) ⇒  git add subdir/a.txt
+    $ git add subdir/a.txt
 
-    (master*) ⇒  git ls-files -s
+    $ git ls-files -s
     100644 ce013625030ba8dba906f756967f9e9ca394464a 0       a.txt
     100644 ce013625030ba8dba906f756967f9e9ca394464a 0       subdir/a.txt
 
-    (master*) ⇒  git write-tree
+    $ git write-tree
     ec518d6bb3cabb8e88b5458cf18d862aa0514622
 
-    (master*) ⇒  git cat-file -p ec518d6bb3cabb8e88b5458cf18d862aa0514622
+    $ git cat-file -p ec518d6bb3cabb8e88b5458cf18d862aa0514622
     100644 blob ce013625030ba8dba906f756967f9e9ca394464a    a.txt
     040000 tree 2e81171448eb9f2ee3821e3d447aa6b2fe3ddba1    subdir
 
@@ -351,10 +356,10 @@ git 自动定期对仓库进行重新打包以节省空间. 也可以手工运�
 
 现在a.txt的blob已经有了, 树对象也有了, 接着就是提交:
 
-    (master*) ⇒  echo -n 'commit a file' | git commit-tree ec518d6bb3cabb8e88b5458cf18d862aa0514622
+    $ echo -n 'commit a file' | git commit-tree ec518d6bb3cabb8e88b5458cf18d862aa0514622
     7dc4ee9984a52278b3b67480feb712e36ea5a64c
 
-    (master*) ⇒  git cat-file -p 7dc4ee9984a52278b3b67480feb712e36ea5a64c
+    $ git cat-file -p 7dc4ee9984a52278b3b67480feb712e36ea5a64c
     tree ec518d6bb3cabb8e88b5458cf18d862aa0514622
     author Tanky Woo <me@tankywoo.com> 1431832347 +0800
     committer Tanky Woo <me@tankywoo.com> 1431832347 +0800
@@ -369,12 +374,12 @@ git 自动定期对仓库进行重新打包以节省空间. 也可以手工运�
 
 打标签:
 
-    (master*) ⇒  git tag -m 'add tag v1.0' v1.0 7dc4ee9984a52278b3b67480feb712e36ea5a64c
+    $ git tag -m 'add tag v1.0' v1.0 7dc4ee9984a52278b3b67480feb712e36ea5a64c
 
-    (master*) ⇒  git rev-parse v1.0
+    $ git rev-parse v1.0
     76a2a639a517e26a6c79fdcd09c0a5ffec97e099
 
-    (master*) ⇒  git cat-file -p v1.0
+    $ git cat-file -p v1.0
     object 7dc4ee9984a52278b3b67480feb712e36ea5a64c
     type commit
     tag v1.0
@@ -382,7 +387,7 @@ git 自动定期对仓库进行重新打包以节省空间. 也可以手工运�
 
     add tag v1.0
 
-    (master*) ⇒  git cat-file -p 76a2a639a517e26a6c79fdcd09c0a5ffec97e099
+    $ git cat-file -p 76a2a639a517e26a6c79fdcd09c0a5ffec97e099
     object 7dc4ee9984a52278b3b67480feb712e36ea5a64c
     type commit
     tag v1.0
@@ -409,12 +414,12 @@ Git 把文件分为三个大类: `已追踪(Tracked)`, `未追踪(Untracked)`和
 
 `git ls-files --stage` 可以查看stage中的文件的`SHA1`值:
 
-	(master*) ⇒ git ls-files --stage  # 或 git ls-files -s
+	(master*) $ git ls-files --stage  # 或 git ls-files -s
 	100644 8d0e41234f24b6da002d962a26c2495ea16a425f 0       fa
 
 `git hash-object`可以计算文件的`SHA1`值并输出:
 
-	(master*) ⇒ git hash-object fa
+	(master*) $ git hash-object fa
 	8d0e41234f24b6da002d962a26c2495ea16a425f
 
 简单的说是文件fa已经在 索引(index) 中了，本质是文件在 对象库(object store) 中，Index指向它。
@@ -425,7 +430,7 @@ Git 把文件分为三个大类: `已追踪(Tracked)`, `未追踪(Untracked)`和
 
 对于被误删的文件，如果在Index中，如下:
 
-	(master*) ⇒ git status
+	(master*) $ git status
 	# On branch master
 	# Changes to be committed:
 	#   (use "git reset HEAD <file>..." to unstage)
@@ -445,11 +450,11 @@ Git 把文件分为三个大类: `已追踪(Tracked)`, `未追踪(Untracked)`和
 
 Git 把文件fa改为fb，会在`object store`中保存原始的文件内容，然后把文件名(路径名path)重新关联到这个内容:
 
-	(master) ⇒ git ls-files --stage
+	(master) $ git ls-files --stage
 	100644 15acaeb140c2805acdbb2d0dbdedeeea6bb73b06 0       fa
 
-	(master) ⇒ git mv fa fb
-	(master*) ⇒ git ls-files --stage
+	(master) $ git mv fa fb
+	(master*) $ git ls-files --stage
 	100644 15acaeb140c2805acdbb2d0dbdedeeea6bb73b06 0       fb
 
 把fa改为fb后，`SHA1`值并没变。
@@ -498,7 +503,7 @@ Git可以通过显示引用(explicit ref)或隐式引用(implied ref)来表示�
 
 比如本地分支dev, 就是 refs/heads/dev 的缩写:
 
-    (category-index*) ⇒  git show dev
+    (category-index*) $ git show dev
     commit e31b74d259b83af0f69683b9b12a29ebb3946748
     Merge: 12e3223 5488c82
     Author: Tanky Woo <wtq1990@gmail.com>
@@ -506,7 +511,7 @@ Git可以通过显示引用(explicit ref)或隐式引用(implied ref)来表示�
 
         Merge branch 'project-tools' into dev
 
-    (category-index*) ⇒  git show refs/heads/dev
+    (category-index*) $ git show refs/heads/dev
     commit e31b74d259b83af0f69683b9b12a29ebb3946748
     Merge: 12e3223 5488c82
     Author: Tanky Woo <wtq1990@gmail.com>
@@ -514,7 +519,7 @@ Git可以通过显示引用(explicit ref)或隐式引用(implied ref)来表示�
 
         Merge branch 'project-tools' into dev
 
-    (category-index*) ⇒  more .git/refs/heads/dev
+    (category-index*) $ more .git/refs/heads/dev
     e31b74d259b83af0f69683b9b12a29ebb3946748
 
 
@@ -527,7 +532,7 @@ Git 有几个特殊符号引用:
 
 `HEAD`: `.git/HEAD`, 总是指向当前分支的最后一次提交, 当分支改变，HEAD也会变
 
-    (master) ⇒ more .git/HEAD
+    (master) $ more .git/HEAD
     ref: refs/heads/master
 
 `ORIG_HEAD`: `.git/ORIG_HEAD`, 一些操作, 如`merge`或`reset`, 会记录操前的commit(HEAD). 作为一个保护措施，使操作可以回溯.
@@ -540,16 +545,16 @@ Git 有几个特殊符号引用:
 
 `ORIG_HEAD` 存储的是之前某一个commit:
 
-    (master) ⇒ more .git/ORIG_HEAD
+    (master) $ more .git/ORIG_HEAD
     015b5b99f5c9973e840f29c9f6e6b936c99b92a5
 
 做一次reset操作:
 
-    (master) ⇒ git reset --soft HEAD^
+    (master) $ git reset --soft HEAD^
 
 查看`ORIG_HEAD`, 会指向之前的HEAD:
 
-    (master) ⇒ more .git/ORIG_HEAD
+    (master) $ more .git/ORIG_HEAD
     d46546a5192b7e1c834947b612e3401a6f7729c7
 
 这样就可以回溯到reset之前的版本:
@@ -566,7 +571,7 @@ Git 有几个特殊符号引用:
 
 `git symbolic-ref` 操作符号引用:
 
-    (master*) ⇒  git symbolic-ref HEAD
+    (master*) $ git symbolic-ref HEAD
     refs/heads/master
 
 详细可以参考[progit-9.3](http://git-scm.com/book/en/Git-Internals-Git-References)
@@ -627,7 +632,7 @@ SHA1 id是绝对提交名, 通过`~`和`^`则可以代表相对提交名.
 
 `git show` 还可以查看某个文件的blob内容:
 
-    (master*) ⇒  git diff fa
+    (master*) $ git diff fa
     diff --git a/fa b/fa
     index 89b24ec..7bba8c8 100644
     --- a/fa
@@ -636,7 +641,7 @@ SHA1 id是绝对提交名, 通过`~`和`^`则可以代表相对提交名.
      line 1
     +line 2
 
-    (master*) ⇒  git show :fa
+    (master*) $ git show :fa
     line 1
 
 fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
@@ -662,13 +667,13 @@ fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
     # master: init -> add fc
     # dev:    init -> add fb
 
-    (master) ⇒  git log master...dev --oneline
+    (master) $ git log master...dev --oneline
     52bdb27 add fc
     20d2444 add fb
 
 下面这个命令效果是一致(**TODO**):
 
-    (master) ⇒  git rev-list --abbrev-commit master...dev --not $(git merge-base --all master dev)
+    (master) $ git rev-list --abbrev-commit master...dev --not $(git merge-base --all master dev)
     52bdb27
     20d2444
 
@@ -752,7 +757,7 @@ fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
 
 关于`git show-branch`输出的解释, 之前几章多次用到这个命令, 这里终于有详细的解释了:
 
-    (master*) ⇒  git show-branch master dev category-index
+    (master*) $ git show-branch master dev category-index
     * [master] Release v1.3
      ! [dev] Merge branch 'project-tools' into dev
       ! [category-index] Merge branch 'project-tools' into dev
@@ -806,7 +811,7 @@ Unix/Linux 中的 `diff` 命令:
 
 <!-- -->
 
-	$  diff -u -r dir1 dir2
+	$ diff -u -r dir1 dir2
 	diff -u -r dir1/fa dir2/fa
 	--- dir1/fa     2015-05-24 12:16:11.000000000 +0800
 	+++ dir2/fa     2015-05-24 12:15:54.000000000 +0800
@@ -839,8 +844,8 @@ Unix/Linux 中的 `diff` 命令:
 
 <!-- -->
 
-    ⇒  git mv log.py log2.py
-    ⇒  git diff --cached -M
+    $ git mv log.py log2.py
+    $ git diff --cached -M
     diff --git a/simiki/log.py b/simiki/log2.py
     similarity index 100%
     rename from simiki/log.py
@@ -1489,7 +1494,7 @@ rebase后, 如果后悔了, 可以:
 
 直接执行`git stash`则储藏当前的修改, 默认是save子命令
 
-	⇒  git stash
+	$ git stash
 	Saved working directory and index state WIP on master: 7f63cf0 update master file
 	HEAD is now at 7f63cf0 update master file
 
@@ -1501,7 +1506,7 @@ stash的数据结构是一个`栈`, 即先进后出FILO(first in, last out), 相
 
 查看stash栈:
 
-	⇒  git stash list
+	$ git stash list
 	stash@{0}: WIP on master: 7f63cf0 update master file
 	stash@{1}: WIP on master: 7965691 master
 
@@ -1511,15 +1516,15 @@ stash的数据结构是一个`栈`, 即先进后出FILO(first in, last out), 相
 
 也可以手动输入信息:
 
-	⇒  git stash save 'do a stash'
+	$ git stash save 'do a stash'
 	Saved working directory and index state On master: do a stash
 	HEAD is now at 7965691 master
-	⇒  git stash list
+	$ git stash list
 	stash@{0}: On master: do a stash
 
 stash也是一个引用指针(`refs/stash`), 所以也可以使用这个引用来查看:
 
-	⇒  git show-branch stash
+	$ git show-branch stash
 	[stash] On master: do a stash
 
 另外, 要注意, git stash并不是把最近一次储藏替换当前文件, 而是会做一个合并的操作, 这个是非常智能的.
@@ -1597,13 +1602,13 @@ git stash pop时, 如果成功, 则会删除相应储藏, 如果失败, 如产�
 
 因为分支名也是引用, 所以后接分支名可以查看某个分支的引用日志
 
-    ⇒  git reflog show master
+    $ git reflog show master
     3dd62fb master@{0}: reset: moving to ORIG_HEAD
     7f63cf0 master@{1}: reset: moving to HEAD^
 
 或者:
 
-    ⇒  git reflog show refs/heads/master
+    $ git reflog show refs/heads/master
     3dd62fb refs/heads/master@{0}: reset: moving to ORIG_HEAD
     7f63cf0 refs/heads/master@{1}: reset: moving to HEAD^
 
@@ -1613,50 +1618,50 @@ git stash pop时, 如果成功, 则会删除相应储藏, 如果失败, 如产�
 
 例子:
 
-    ⇒  git ll
+    $ git ll
     * 3dd62fb - (HEAD, mod, master) update file in mod (17 hours ago) <Tanky Woo>
     * 7f63cf0 - update master file (3 days ago) <Tanky Woo>
     ...
 
-    ⇒  git reflog | head -n 1
+    $ git reflog | head -n 1
     3dd62fb HEAD@{0}: checkout: moving from mod to master
 
-    (master) ⇒  git reset --hard HEAD^
+    (master) $ git reset --hard HEAD^
     HEAD is now at 7f63cf0 update master file
 
-    ⇒  git reflog | head -n 2
+    $ git reflog | head -n 2
     7f63cf0 HEAD@{0}: reset: moving to HEAD^
     3dd62fb HEAD@{1}: checkout: moving from mod to master
 
 现在本地执行了一次reset, 如果发现是误操作, 想要返回, 但是本地的修改没有推送到远程, 这是可以通过reflog撤回:
 
-    ⇒  git reset --hard HEAD@{1}
+    $ git reset --hard HEAD@{1}
     HEAD is now at 3dd62fb update file in mod
 
 表明要重置到老的HEAD版本.
 
 当然, 这种情形下还有一个方法, 使用`ORIG_HEAD`:
 
-    ⇒  git reset --hard ORIG_HEAD
+    $ git reset --hard ORIG_HEAD
     HEAD is now at 3dd62fb update file in mod
 
 如`HEAD@{1}`, 如果使用形式`@{X}`, 则表示当前分支:
 
-    ⇒  git show @{0}
+    $ git show @{0}
     commit 3dd62fb79377c7d0419ca12183db780489287731
     Author: Tanky Woo <wtq1990@gmail.com>
     Date:   Sat Jun 20 21:56:27 2015 +0800
 
     ...
 
-    ⇒  git reflog show @{0}
+    $ git reflog show @{0}
     3dd62fb refs/heads/master@{0}: reset: moving to ORIG_HEAD
     7f63cf0 refs/heads/master@{1}: reset: moving to HEAD^
     ...
 
 另外, reflog的花括号内还可以指定时间限定符, 如:
 
-    TankyWoo $ /tmp/test/ (master) ⇒  git reflog 'HEAD@{1 hours ago}'
+    TankyWoo $ /tmp/test/ (master) $ git reflog 'HEAD@{1 hours ago}'
     3dd62fb HEAD@{Sat Jun 20 22:00:12 2015 +0800}: reset: moving to HEAD@{1}
     3dd62fb HEAD@{Sat Jun 20 21:56:47 2015 +0800}: merge mod: Fast-forward
     7f63cf0 HEAD@{Sat Jun 20 21:56:38 2015 +0800}: checkout: moving from master to master
@@ -1697,7 +1702,7 @@ git stash pop时, 如果成功, 则会删除相应储藏, 如果失败, 如产�
 
 引用日志都是存储在 `.git/logs` 下
 
-    ⇒  tree .git/logs/
+    $ tree .git/logs/
     .git/logs/
     ├── HEAD
     └── refs
@@ -2363,7 +2368,7 @@ Git在操作如提交, 补丁等事件时, 可以通过钩子(hook)来触发一�
 
 每个版本库新建的时候, 会默认提供一些钩子模板, 以`.sample`结尾, 状态是禁止的:
 
-	(master*) ⇒  tree .git/hooks
+	(master*) $ tree .git/hooks
 	.git/hooks
 	├── applypatch-msg.sample
 	├── commit-msg.sample
@@ -3028,7 +3033,7 @@ git会在下面情况下自动进行垃圾回收:
 	$ echo $PATH | tr -s ':' '\n' | grep $HOME/bin
 	/Users/TankyWoo/bin
 
-	$  more ~/bin/git-top-check
+	$ more ~/bin/git-top-check
 	#!/bin/bash
 
 	if [ -d ".git" ]; then
