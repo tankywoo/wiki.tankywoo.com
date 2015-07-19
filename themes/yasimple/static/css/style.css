@@ -132,12 +132,12 @@ pre code {
 }
 
 #container a {
-    color: #333;
+    color: #666;
     text-decoration: none;
 }
 
 #container a:hover {
-    color: #333;
+    color: #666;
     border-bottom: 2px solid #88ACDB;
     /* border-bottom: 2px solid #e1e1e1; */
 }
