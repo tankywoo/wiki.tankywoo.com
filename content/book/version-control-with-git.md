@@ -104,7 +104,155 @@ Git不仅是一个VCS, 还是一个内容追踪系统(content tracking system). 
 
 ### 打包文件(pack file) ###
 
-TODO
+之前提到的, git 会存储每个文件的每一个版本.
+
+但是, 这个并不是绝对的, 比如一个大文件, 每次只修改其中一行, 那么, 经过多次修改后, 这个文件的各个blob会占用非常大的空间.
+
+实际上git不会这么笨的, git有一个有效的存储机制, 叫做 `打包文件(pack file)`.
+
+git 往磁盘保存对象时默认使用的格式叫松散对象 (loose object) 格式
+
+git 时不时地将这些对象打包至一个叫 packfile 的二进制文件以节省空间并提高效率.
+
+经过打包后, git会存储文件的最新版本, 其余的版本都以差异形式存储(`delta`)
+
+例子:
+
+	$ git init
+	$ echo 'hello' > hello.txt; git add hello.txt; git commit -m 'add hello.txt'
+
+	$ tree .git/objects
+	.git/objects
+	├── 0b
+	│   └── 9d7dbd4e9e2b8be42ebe043083937acd52fccf
+	├── aa
+	│   └── a96ced2d9a1c8e72c56b253a0e2fe78393feb7
+	├── ce
+	│   └── 013625030ba8dba906f756967f9e9ca394464a
+	├── info
+	└── pack
+
+	5 directories, 3 files
+
+	# 将Python自带的BaseHTTPServer.py加到仓库里
+	$ git add BaseHTTPServer.py; git commit -m 'add BaseHTTPServer.py'
+
+	$ wc -l BaseHTTPServer.py
+		 603 BaseHTTPServer.py
+
+	# mac os 下 du 没有 -b 参数
+	$ stat -f%z BaseHTTPServer.py
+	22461
+
+	$ tree .git/objects
+	.git/objects
+	├── 04
+	│   └── 0fc62ff827be04d5def454bfef3ef8c49ea488
+	├── 0b
+	│   └── 9d7dbd4e9e2b8be42ebe043083937acd52fccf
+	├── 25
+	│   └── fc7b5d264c24fed7f7a843fbe9ae3224a07de8
+	├── aa
+	│   └── a96ced2d9a1c8e72c56b253a0e2fe78393feb7
+	├── ce
+	│   └── 013625030ba8dba906f756967f9e9ca394464a
+	├── de
+	│   └── af2f960b83c76b38b0c494db91202c70886833
+	├── info
+	└── pack
+
+	8 directories, 6 files
+
+	# 找到blob id是 deaf2f960b83c76b38b0c494db91202c70886833
+	# 显示的大小是字节, 这个是经过压缩的大小
+	$ stat -f%z .git/objects/de/af2f960b83c76b38b0c494db91202c70886833
+	8569
+
+	# 添加一行
+	$ echo 'a new line' >> BaseHTTPServer.py; git commit -m 'add a new line' BaseHTTPServer.py
+
+	$ find .git/objects -type f
+	.git/objects/04/0fc62ff827be04d5def454bfef3ef8c49ea488
+	.git/objects/0b/9d7dbd4e9e2b8be42ebe043083937acd52fccf
+	.git/objects/25/fc7b5d264c24fed7f7a843fbe9ae3224a07de8
+	.git/objects/28/5fb1a7ab0bcfe01588ad548ac96187366e8c74
+	.git/objects/3b/119f80b81e4483b12812eb72ebb2df338adbc5
+	.git/objects/95/16bba0fea3fb039a6e028fb975bb35d158626f
+	.git/objects/aa/a96ced2d9a1c8e72c56b253a0e2fe78393feb7
+	.git/objects/ce/013625030ba8dba906f756967f9e9ca394464a
+	.git/objects/de/af2f960b83c76b38b0c494db91202c70886833
+
+	# 新的blob id是 9516bba0fea3fb039a6e028fb975bb35d158626f
+	$ stat -f%z .git/objects/95/16bba0fea3fb039a6e028fb975bb35d158626f
+	8575
+
+	$ git gc
+	Counting objects: 9, done.
+	Delta compression using up to 4 threads.
+	Compressing objects: 100% (7/7), done.
+	Writing objects: 100% (9/9), done.
+	Total 9 (delta 1), reused 0 (delta 0)
+
+	$ tree .git/objects
+	.git/objects
+	├── info
+	│   └── packs
+	└── pack
+		├── pack-dde2d3ff207bb65df9a3a3d2f4f6e088a18622ad.idx
+		└── pack-dde2d3ff207bb65df9a3a3d2f4f6e088a18622ad.pack
+
+	2 directories, 3 files
+
+	$ more .git/objects/info/packs
+	P pack-dde2d3ff207bb65df9a3a3d2f4f6e088a18622ad.pack
+
+	$ stat -f%z .git/objects/pack/pack-dde2d3ff207bb65df9a3a3d2f4f6e088a18622ad.idx
+	1324
+	$ stat -f%z .git/objects/pack/pack-dde2d3ff207bb65df9a3a3d2f4f6e088a18622ad.pack
+	8334
+
+	$ git verify-pack -v .git/objects/pack/pack-dde2d3ff207bb65df9a3a3d2f4f6e088a18622ad.idx
+	3b119f80b81e4483b12812eb72ebb2df338adbc5 commit 221 155 12
+	25fc7b5d264c24fed7f7a843fbe9ae3224a07de8 commit 228 163 167
+	0b9d7dbd4e9e2b8be42ebe043083937acd52fccf commit 172 125 330
+	9516bba0fea3fb039a6e028fb975bb35d158626f blob   22472 7596 455
+	ce013625030ba8dba906f756967f9e9ca394464a blob   6 15 8051
+	285fb1a7ab0bcfe01588ad548ac96187366e8c74 tree   82 90 8066
+	040fc62ff827be04d5def454bfef3ef8c49ea488 tree   82 90 8156
+	deaf2f960b83c76b38b0c494db91202c70886833 blob   9 20 8246 1 9516bba0fea3fb039a6e028fb975bb35d158626f
+	aaa96ced2d9a1c8e72c56b253a0e2fe78393feb7 tree   37 48 8266
+	non delta: 8 objects
+	chain length = 1: 1 object
+	.git/objects/pack/pack-dde2d3ff207bb65df9a3a3d2f4f6e088a18622ad.pack: ok
+
+`git verify-pack`是用于验证pack文件的, 查看man手册里输出格式说明:
+
+	When specifying the -v option the format used is:
+
+	   SHA-1 type size size-in-pack-file offset-in-packfile
+
+	for objects that are not deltified in the pack, and
+
+	   SHA-1 type size size-in-packfile offset-in-packfile depth base-SHA-1
+
+对比上面的输出, 可以看到, BaseHTTPServer.py的第一个版本就是 @deaf2f96, 它的base-SHA-1是 @9516bba0, 且 @deaf2f96 的大小只有9bytes, pack中的压缩后大小是20, 而新的blob在pack中的大小是22472字节. pack中的大小是7596
+
+第二个版本是完整保存文件内容的对象, 而第一个版本是以差异方式保存的, 这是因为大部分情况下需要快速访问文件的最新版本.
+
+git 自动定期对仓库进行重新打包以节省空间. 也可以手工运行 git gc 命令来这么做.
+
+参考:
+
+* Pro Git: Git Internals - Packfiles [zh](https://git-scm.com/book/zh/v1/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-Packfiles) | [en](https://git-scm.com/book/en/v2/Git-Internals-Packfiles)
+* Git Community Book [zh](http://gitbook.liuhui998.com/7_5.html) | [en](https://schacon.github.io/gitbook/7_the_packfile.html)
+
+另外, 在 pro git那一章还学到一个命令:
+
+	$ git cat-file -p master^{tree}
+
+和下面效果一样:
+
+	$ git ls-tree master
 
 ### 例子 ###
 
