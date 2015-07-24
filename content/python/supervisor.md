@@ -21,6 +21,8 @@ Supervisor是一个Python写的工具, 可以用系统的包管理器安装, 也
 
 	echo_supervisord_conf > /etc/supervisord.conf
 
+注: Ubuntu下, 默认配置在 `/etc/supervisor/`, 安装后就存在一些基本配置
+
 其中 `supervisord` 是一个守护进程, 用于控制服务的启动和相关的一些全局设置.
 
 > supervisord -- run a set of applications as daemons.
@@ -86,12 +88,47 @@ Supervisor是一个Python写的工具, 可以用系统的包管理器安装, 也
 	captcha2023: updated process group
 
 
-## 关于配置这块 ##
+## 配置文件 ##
 
 (**NOTE** 下面代码直接用Gist贴的，加载会很缓慢)
 
 <script src="https://gist.github.com/tankywoo/603cb17f49f8c3114b22.js"></script>
 
+配置文件更多参考: [Configuration File](http://supervisord.org/configuration.html)
+
+它的配置是Windows-INI格式(Python ConfigParser). 初始情况下可以先用 `echo_supervisord_conf` 输出后再根据需求编辑.
+
+首先注释使用分号 `;`, 并且如果注释是和配置项在同一行, 则分号前面必须有一个前置空格.
+
+不支持SHELL的环境变量, 如 `~` 和 `$HOME`, 可以用 `%(ENV_HOME)s` 替代.
+
+首先配置分为几大块(section):
+
+`unix_http_server` 和 `inet_http_server` 是配置supervisor的http server, 至少需要其一, supervisorctl管理时用到.
+
+`supervisord` 用于对守护进程的全局性配置, 有些配置可以在 `program` 块覆盖
+
+`supervisorctl` 用于supervisorctl管理supervisor服务的配置, 如serverurl 等, 这些也可以直接命令行指定参数, 比如如果在上面配置的是 `inet_http_server` , 则这里配置 `serverurl` 为相应路径后, 则直接使用 `supervisorctl` 命令即可, 否则要指定命令行参数.
+
+`program` 是最主要的配置部分. 关于这块, 首先要提到的是状态, 详细可参考 [Supervisor - Process States](http://supervisord.org/subprocess.html#process-states)
+
+![](http://supervisord.org/_images/subprocess-transitions.png)
+
+其中 `BACKOFF` 状态是启动时退出太快, 根据 `startretries` 达到重试次数后, 会进入到 `FATAL` 状态.
+
+如果状态在 `EXITED`, 如果配置了 `autorestart=false`, 则停留在此状态不再重启; 如果 `autorestart=true`, 则会一直重启; 如果 `autorestart=unexpected`, 则如果exitcode在 `exitcodes` 配置的列表里, 则不再重启, 否则重启
+
+如果状态在 `FATAL` , 则永远不会再自动重启.
+
+如果执行了 `supervisorctl stop` 命令, 则会进入 `STOP` 状态. 并且在 `stopwaitsecs` 秒后发送 `SIGKILL` 信号.
+
+另外观察到, 在 `startretries` 重试次数达到之前, 如果频繁在 `BACKOFF` 和 `STARTING` 或 `RUNNING` 状态之间切换, 则重启等待时间会逐步增大.
+
+`include` 块用于加载一些自定义配置, 一般 `/etc/supervisord.conf` 可以用于一些全局配置, 然后每个服务一个单独的 `program` 配置, 用include导入, 类似于nginx等配置.
+
+`group` 块用于把一些 `program` 分为一个组, 然后做一些基本配置.
+
+`rpcinterface` 用于自定义一些接口, 这个一般保持默认就行, 但是不能删除, 必须保留在配置文件中.
 
 ## 与daemontool对比 ##
 
