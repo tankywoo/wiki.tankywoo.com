@@ -148,6 +148,49 @@ Linux/Unix 都有默认的shell, 使用环境变量`$SHELL`可以查看当前的
 	% echo $y
 	foo
 
+特殊变量:
+
+具体看`man bash`的`Special Parameters`一节
+
+`$0`: 当前执行的脚本名. 和python里的sys.argv[0]一样
+`$X`: X是数字, 表示第几个参数, 比如脚本后接的第一个参数, 就是$1
+`$?`: 上一条命令的返回值
+`$$`: 当前shell pid
+`$#`: 传递给脚本或函数 参数的个数
+`$*`: 参数列表. 当有双引号阔起来时, 则是一个元素
+`$@`: 参数列表. 当有双引号阔起来时, 还是多个元素
+
+	% more foo.sh
+	#!/bin/bash
+
+	echo '$#: ' $#
+	echo '$1: ' $1
+	echo '$*: '$*
+	echo '$@: ' $@
+	echo 'for in "$*"'
+	for v in "$*"
+	do
+			echo $v
+	done
+	echo 'for in "$@"'
+	for v in "$@"
+	do
+			echo $v
+	done
+
+	% ./foo.sh one two three
+	$#:  3
+	$1:  one
+	$*: one two three
+	$@:  one two three
+	for in "$*"
+	one two three
+	for in "$@"
+	one
+	two
+	three
+
+
 引号:
 
 * read读入数据时，带有空格的数据不需要加引号
@@ -364,6 +407,86 @@ case 语句:
 		statement
 	}
 
+或者:
+
+	function function_name() {
+		statement
+	}
+
+关键字`function`可有可无
+
+函数里可以通过`return`语句返回结果或返回值
+
+函数也可以传参, 不过参数没有在圆括号里定义, 和特殊变量里一样, 直接通过`$X`, `$@`等获取
+
+
+数组:
+
+定义格式
+
+	array_name=(value1 value 2 value3 ...)
+
+或者
+
+	array_name[0]=xxx
+	array_name[1]=xxx
+	...
+
+例子:
+
+	% more foo.sh
+	#!/bin/bash
+
+	array=('one' 'two' 'three')
+
+	array[3]='four'
+
+	echo ${array[3]}  # 获取单个元素
+	echo ${array[*]}  # 获取整个数组
+	echo ${array[@]}  # 获取整个数组
+	echo ${#array[*]}  # 获取数组的长度
+	echo ${#array[@]}  # 获取数组的长度
+	echo ${#array[2]}  # 获取单个元素的长度
+
+	for v in "${array[*]}"
+	do
+			echo $v
+	done
+
+	for v in "${array[@]}"
+	do
+			echo $v
+	done
+	% ./foo.sh
+	four
+	one two three four
+	one two three four
+	4
+	4
+	5
+	one two three four
+	one
+	two
+	three
+	four
+
+其中`*`和`@`的关系和`$*`与`$@`一样.
+
+printf输出:
+
+和C语言的printf函数类似:
+
+	% more foo.sh
+	#!/bin/bash
+
+	printf "Hello %s %d\n" 'Shell' 1024
+	% ./foo.sh
+	Hello Shell 1024
+
+循环控制break和continue, 没啥好说...
+
+
+
 
 #### 命令 ####
 
@@ -415,23 +538,17 @@ $((...))
 x=$(($x+1))  
 
 
-### Special Parameters ###
-TODO vimwiki的转义怎么弄?
-
-The shell treats several parameters specially. These parameters may only be referenced; assignment to them is not allowed.
-
-`$*` : equivalent to "\$1c\$2c..", where c is the first character of the value of the `IFS` variable
-
-`$@` : `$@` is equivalent to "\$1" "\$2"
-
-`$#` : The number of the parameters
-
-`$?` : The exit status
-
-`$0` : The source file name
-
 
 ## 参考 ##
 
 * Linux程序设计
 * [Bash Manual](http://www.gnu.org/software/bash/manual/bashref.html)
+* [Shell脚本编程30分钟入门](https://github.com/qinjx/30min_guides/blob/master/shell.md) 入门小手册
+* [shell小教程](http://c.biancheng.net/cpp/view/6994.html) 和上一个内容基本一样, 不过多了一些实际例子
+* [Advanced Bash-Scripting Guide](http://www.tldp.org/LDP/abs/html/) 最经典的教程了?
+* [Linux Shell Scripting Tutorial](http://www.freeos.com/guides/lsst/) 还没看
+* [Bash scripting Tutorial](http://linuxconfig.org/bash-scripting-tutorial)
+* [Learning the shell](http://linuxcommand.org/learning_the_shell.php)
+* [Writing shell script](http://linuxcommand.org/writing_shell_scripts.php)
+* `man bash` 最根本的
+
