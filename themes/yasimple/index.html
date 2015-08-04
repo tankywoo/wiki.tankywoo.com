@@ -19,7 +19,7 @@
       <ul>
         {%- for page_file, page_metadata in pages.iteritems() %}
           {% if site.default_ext in page_file %}
-        <li class="pagelist"><a href="./{{ category_name }}/{{ page_metadata.name }}.html">{{ page_metadata.title }}</a></li>
+        <li class="pagelist"><a href="./{{ category_name }}/{{ page_metadata.name }}.html">{{ page_metadata.title }}</a>  {{ page_metadata.description }}</li>
           {% endif %}
         {%- endfor %}
       </ul>
