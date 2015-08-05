@@ -125,6 +125,10 @@ Linux/Unix 都有默认的shell, 使用环境变量`$SHELL`可以查看当前的
 * 在赋值时，等号两边不能有空格 eg. `var=abc`
 * 如果字符串里有空格，则必须用双引号把字符串括起来 `var="Hello World"`
 
+变量分为全局变量(环境变量)和局部变量:
+
+> Global variables or environment variables are available in all shells. --- [Bash Beginners Guide](http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_02.html)
+
 <!-- -->
 
 	% a=hello
@@ -293,13 +297,47 @@ Linux/Unix 都有默认的shell, 使用环境变量`$SHELL`可以查看当前的
 	&&		逻辑与
 	||	
 
+例子:
 
-支持模式匹配的字符比较: TODO
+	% more foo.sh
+	#!/bin/bash
+	x=10
+	echo $x
+	x=$(( $x + 1 ))
+	echo $x
+	(( x += 1 ))
+	echo $x
+
+	% ./foo.sh
+	10
+	11
+	12
+
+支持模式匹配的字符比较:
 
 	[[ expression ]]
 
+如:
 
-### 控制结构 ###
+	% more foo.sh
+	#!/bin/bash
+	foo='hello'
+	if [[ $foo =~ llo$ ]]; then
+		echo 'match'
+	else
+		echo 'not match'
+	fi
+
+	% ./foo.sh
+	match
+
+参考:
+
+* [bash regex match string](http://stackoverflow.com/questions/17420994/bash-regex-match-string)
+* [check if string match a regex in BASH Shell script](http://stackoverflow.com/questions/21112707/check-if-string-match-a-regex-in-bash-shell-script)
+
+
+控制结构
 
 if 判断:
 
@@ -472,7 +510,29 @@ case 语句:
 
 其中`*`和`@`的关系和`$*`与`$@`一样.
 
-printf输出:
+
+## 内置命令(shell builtin) ##
+
+内置的命令列表及解释都可以在`man 1 bash`中看到, 也可以通过`type`命令确定命令的类型:
+
+	% type echo
+	echo is a shell builtin
+
+`:` 命令, 之前已经用到了, 后可接参数, 没有任何作用, 相当于Python里的pass
+
+> : [arguments]
+> 
+>    No effect; the command does nothing beyond expanding arguments and performing any specified redirections.  A zero exit code is returned.
+
+`.`和`source`命令, 后接脚本文件名, 执行指定的脚本.
+
+> .  filename [arguments]
+> 
+> source filename [arguments]
+> 
+>    Read and execute commands from filename in the current shell environment and return the exit status of the last command executed from filename.
+
+`printf` 输出:
 
 和C语言的printf函数类似:
 
@@ -483,66 +543,139 @@ printf输出:
 	% ./foo.sh
 	Hello Shell 1024
 
-循环控制break和continue, 没啥好说...
+简单的输出还有`echo`命令
 
+循环控制 `break` 和 `continue`, 和C/Python等有点不同, 可以后接数字, 表示break/continue的层级, 默认是1, 多级退出一般用在多级循环; 类似于C里的goto配合break/continue.
 
+`eval` 对语句进行求值
 
+    % more foo.sh
+    #!/bin/bash
 
-#### 命令 ####
+    foo=10
 
-* `break`
-* `:`
-* `continue`
-* `.`
-* `echo`
-* `eval` 对语句进行求值
+    x=foo
+    echo $x
 
-		foo=10
-		x=foo #echo $y --> foo
-		y='$'$x
-		echo $y # --> $foo
+    y='$'$x
+    echo $y
 
-		eval y='$'$x
-		echo $y # --> 10
+    eval y='$'$x
+    echo $y
 
+	# 执行结果
+    % ./foo.sh
+    foo
+    $foo
+    10
 
-* exec
-* `exit n`
-* `export`
-* `expr`
+`expr` 把参数当作表达式来求值
 
-把参数当作表达式来求值
+	% more foo.sh
+	#!/bin/bash
+	x=5
 
-	eg.
 	x=`expr $x + 1`
-	x=$(expr $x + 1)
+	echo $x
+
+	x=$(expr $x+2)
+	echo $x
+
+	% ./foo.sh
+	6
+	6+2
+
+`exec` 后接命令, 用fork的子进程替换原来的父进程
+
+> exec [-cl] [-a name] [command [arguments]]
+> 
+>    If command is specified, it replaces the shell.  No new process is created.
+
+`exit n` 退出当前shell, 指定退出状态码
+
+`return` 函数退出并返回返回值
+
+`export` 和直接赋值变量的区别是export后, 子进程也可以使用这个变量
+
+> export [-fn] [name[=word]] ...
+> 
+> export -p
+> 
+>    The supplied names are marked for automatic export to the environment of subsequently executed commands.
+
+	% foo=100
+	% bash -c 'echo $foo'
+
+	% export foo
+	% bash -c 'echo $foo'
+	100
+
+[Defining a variable with or without export](http://stackoverflow.com/questions/1158091/defining-a-variable-with-or-without-export)
+
+`set` 当没接参数时, 输出所有shell的变量, 包括全局变量和局部变量; 如果接参数, 则是开启/关闭shell的属性.
+
+> set [--abefhkmnptuvxBCEHPT] [-o option-name] [arg ...]
+> 
+> set [+abefhkmnptuvxBCEHPT] [+o option-name] [arg ...]
+> 
+>    Without  options,  the  name  and  value  of each shell variable are displayed in a format that can be reused as input for setting or resetting the currently-set variables.  Read-only variables cannot be reset.  In posix mode, only shell variables are listed.  The output is sorted according to the current locale.  When options are specified, they set or unset shell attributes.
+
+% set -o 显示所有的set选项配置情况, on/off形式
+% set +o 显示所有的set选项配置情况, 命令形式
+
+参考:
+
+* [shell 下的 set 命令](https://www.zybuluo.com/haokuixi/note/23988)
+* [shell的set命令](http://segmentfault.com/a/1190000003005706)
+* [What do the bash-builtins 'set' and 'export' do?](http://unix.stackexchange.com/questions/71144/what-do-the-bash-builtins-set-and-export-do)
+
+`env`命令查看系统环境变量
+
+使用export后的变量会出现在这里, unset后则去掉
+
+`shift` 位置参数向左便宜
+
+> shift [n]
+> 
+>    The positional parameters from n+1 ... are renamed to $1 ....  Parameters represented by the numbers $# down to $#-n+1 are unset.
+
+	% more foo.sh
+	#!/bin/bash
+	echo $@
+	echo $1
+	shift
+	echo $1
+	shift
+	echo $1
+
+	% ./foo.sh one two
+	one two
+	one
+	two
+			  # <---- 空行, 因为参数为空了
 
 
-* `printf`
-* `return`
-* `set`
-* `shift`
-* `trap`
-* `unset`
-* `find` **
-* `grep` **
+`unset` 取消指定变量
 
-注：以下需要单独开一篇总结
-`find` `grep` `regex`
+注意, unset 命令不是对set命令做反操作!!!
 
+	% echo $foo
+	100
+	% unset foo
+	% echo $foo
 
-#### 补充 ####
+	%
 
-算数运算  
-$((...))  
-x=$(($x+1))  
-
+> unset [-fv] [name ...]
+> 
+>    For each name, remove the corresponding variable or function.
 
 
 ## 参考 ##
 
 * Linux程序设计
 * [Bash Manual](http://www.gnu.org/software/bash/manual/bashref.html)
+* [如何调试bash脚本](http://coolshell.cn/articles/1379.html)
 * [Shell脚本编程30分钟入门](https://github.com/qinjx/30min_guides/blob/master/shell.md) 入门小手册
 * [shell小教程](http://c.biancheng.net/cpp/view/6994.html) 和上一个内容基本一样, 不过多了一些实际例子
 * [Advanced Bash-Scripting Guide](http://www.tldp.org/LDP/abs/html/) 最经典的教程了?
