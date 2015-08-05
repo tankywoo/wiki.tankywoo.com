@@ -49,6 +49,13 @@ date: 2013-08-17 07:32
 	echo "Test Line 2" | sed 'i\Test Line 1'
 	echo "Test Line 2" | sed 'a\Test Line 1'
 
+指定在某行插入字符串:
+
+    # 在第5行插入hello world
+    % sed -i '5ihello world' FILE
+
+参考 [Insert a line at specific line number with sed or awk](http://stackoverflow.com/a/6537587/1276501)
+
 
 ## 修改 ##
 
