@@ -671,6 +671,50 @@ case 语句:
 >    For each name, remove the corresponding variable or function.
 
 
+## 补充 ##
+
+关于`true`和`false`:
+
+shell里没有boolean值, 不过有true和false这两个shell builtin命令:
+
+TankyWoo ~/dev_env/bash_learn % which true false
+true: shell built-in command
+false: shell built-in command
+
+既然是命令, 就不能用`[ ]`或`test`来判断, 直接使用:
+
+	#!/bin/bash
+	if true; then
+		echo 'True'
+	else
+		echo 'False'
+	fi
+
+或者:
+
+	TankyWoo ~/dev_env/bash_learn % true && echo $?
+	0
+	TankyWoo ~/dev_env/bash_learn % false && echo $?
+
+因为false, 所以后面不会输出echo $?
+
+一般情况下, 判断某个变量是true/false:
+
+	#!/bin/bash
+	flag=true
+	if [ "$flag" = false ]; then
+		echo 'False'
+	elif [ "$flag" = true ]; then
+		echo 'True'
+	else
+		echo 'Nothing'
+	fi
+
+具体讨论见:
+
+* [Bash if [ false ] ; returns true](http://stackoverflow.com/questions/19670061/bash-if-false-returns-true)
+* [How to declare and use boolean variables in shell script?](http://stackoverflow.com/questions/2953646/how-to-declare-and-use-boolean-variables-in-shell-script)
+
 ## 参考 ##
 
 * Linux程序设计
