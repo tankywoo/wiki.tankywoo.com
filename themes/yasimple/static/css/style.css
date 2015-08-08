@@ -45,12 +45,14 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1em;
 }
 
+/*
 h1 { font-size: 2.0em; }
 h2 { font-size: 1.6em; padding-bottom: 5px; overflow:hidden }
 h3 { font-size: 1.4em; }
 h4 { font-size: 1.2em; }
 h5 { font-size: 1.0em; }
 h6 { font-size: 0.8em; }
+*/
 
 blockquote {
     color: #666;
@@ -124,7 +126,9 @@ pre code {
 
 /* Custom Configuration */
 #container {
-    width: 50em;
+    /* width: 50em; */
+    width: 60%;
+    max-width: 960px;
     margin: 0 auto 3em auto;
     padding: 3em 2em 1.5em 2em;
     background-color: #FBFFFD;

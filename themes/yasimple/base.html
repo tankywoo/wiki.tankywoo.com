@@ -3,6 +3,8 @@
     <head>
         <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/style.css">
         <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/reset_typo.css">
         <title>{% block title %}{% endblock %}</title>
         <meta name="keywords" content="{{ site.keywords }}"/>
         <meta name="description" content="{{ site.description }}"/>
@@ -20,7 +22,7 @@
             </ul>
         </div>
         -->
-        <div id="container">
+        <div id="container" class="typo">
             {% block container %}
             {% endblock %}
         </div>
