@@ -19,3 +19,9 @@ hr {
   padding: 0;
   margin: 0 2px;
 }
+
+table.hlcodetable td {
+  padding: 0;
+  border: 0 none;
+  margin: 0;
+}

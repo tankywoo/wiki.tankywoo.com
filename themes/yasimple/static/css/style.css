@@ -245,8 +245,21 @@ li.pagelist:before {
 .hlcodetable .linenodiv pre, .hlcodetable .hlcode pre { margin: 0; border: none; }
 
 .hlcode {
-    margin: 0 0 1em 0;
+    /* margin: 0 0 1em 0; */
+    margin: 0;
     color: #586E75;
+}
+
+table.hlcodetable {
+    border: 1px solid #ddd;
+}
+
+.hlcode, table.hlcodetable {
+    margin: 0;
+}
+
+.hlcodetable .linenos {
+    width: 5%;
 }
 
 /* Pygments them, Punctuation and Name */
