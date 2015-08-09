@@ -4,7 +4,7 @@ date: 2013-08-17 07:32
 ---
 
 
-[.vimrc](https://github.com/tankywoo/linux-autoconfig/blob/master/.vimrc)
+配置见[dotfiles](https://github.com/tankywoo/dotfiles)
 
 
 ## 快捷键 ##
@@ -93,8 +93,14 @@ date: 2013-08-17 07:32
 
 ### 自动补全 ###
 
-	Ctrl+n Ctrl+p
-	Ctrl+x Ctrl+?{....}
+目前使用[jedi-vim](https://github.com/davidhalter/jedi-vim)插件
+
+有什么omni(智能补全?), 自动补全啥的, 没去研究.
+
+* [Are there any autocompletion plugins for vim?](http://superuser.com/a/841048/251495)
+* [vi/vim使用进阶: 智能补全](http://easwy.com/blog/archives/advanced-vim-skills-omin-complete/)
+* [vi/vim使用进阶: 自动补全](http://easwy.com/blog/archives/advanced-vim-skills-auto-complete/)
+
 
 ### 左右分割打开help文档 ###
 
@@ -128,9 +134,23 @@ Replace:
 
 	%s/,/\r/g
 
+
+### 关于.vimrc和plugin的加载 ###
+
+具体见`:help --noplugin`:
+
+	--noplugin      Skip loading plugins.  Resets the 'loadplugins' option.
+					{not in Vi}
+					Note that the |-u| argument may also disable loading plugins:
+							argument        load vimrc files        load plugins
+							(nothing)               yes                 yes
+							-u NONE                 no                  no
+							-u NORC                 no                  yes
+							--noplugin              yes                 no
+
 参考:
 
 * [How to replace a character for a newline in Vim?] (http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim)
 * [Why is \r a newline for Vim?](http://stackoverflow.com/questions/71417/why-is-r-a-newline-for-vim)
 * [How can I add a string to the end of each line in Vim?](http://stackoverflow.com/questions/594448/how-can-i-add-a-string-to-the-end-of-each-line-in-vim)
-
+* [VIM参考手册](http://vimcdoc.sourceforge.net/doc/)
