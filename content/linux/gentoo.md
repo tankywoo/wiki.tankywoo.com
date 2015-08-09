@@ -3,6 +3,9 @@ title: "Gentoo"
 date: 2014-08-30 16:29
 ---
 
+
+### gentoo grub升级了 ###
+
 world file: `/var/lib/portage/world`
 
 example:
