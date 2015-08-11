@@ -9,6 +9,24 @@ IPMI(Intelligent Platform Management Interface) 智慧平台管理工具.
 
 工具是ipmitool.
 
+---
+
+首先在启动机器时, Dell一般是`Ctrl-E`进入IPMI配置:
+
+![IPMI-1](http://tankywoo-wb.b0.upaiyun.com/ipmi-1.png)
+
+配置`IPMI Over LAN`为`On`, 这块暂时没找到如何通过ipmitool来管理, 看到这个[帖子](http://serverfault.com/questions/676145/how-to-disable-ipmi-over-lan-using-ipmitool), 有时间再研究下.
+
+![IPMI-2](http://tankywoo-wb.b0.upaiyun.com/ipmi-2.png)
+
+另外, Common Settings中, NIC Selection设置为`Shared with Failover LOM2`, 这块涉及到网卡的使用, 因为配置的ip是内网, 和第一块网卡绑定, 如果配错了也不通. 之前遇到有时是LOM1, 通过插拔网线可以切换过去.
+
+最后进入BIOS, 设置Serial Communication:
+
+![IPMI-3](http://tankywoo-wb.b0.upaiyun.com/ipmi-3.png)
+
+---
+
 远程的话, 最常用的就是:
 
 	$ ipmitool -H X.X.X.X -U root -P XXXX -I [lan|lanplus|open] power [on|off|reset|soft|status]
@@ -127,3 +145,5 @@ open是默认的, 基于本地的操作可以不写.
 
 * [Configuring IPMI under Linux using ipmitool](https://www.thomas-krenn.com/en/wiki/Configuring_IPMI_under_Linux_using_ipmitool)
 * [ipmitool - utility for controlling IPMI-enabled devices](http://netkiller.github.io/monitoring/ipmitool.html)
+* [IPMI SOL – Inexpensive Remote Console](http://www.alleft.com/sysadmin/ipmi-sol-inexpensive-remote-console/)
+* [Managing Dell PowerEdge Servers Using IPMItool](http://www.dell.com/downloads/global/power/ps4q04-20040204-murphy.pdf)
