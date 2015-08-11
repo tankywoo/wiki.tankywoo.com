@@ -75,6 +75,12 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
 
 	$ echo 'Hello World' | mutt -s 'Hi, Just a test!' xxx@xx.com
 
+`w` 可以更改邮件的状态, 有:
+
+* N: 新邮件
+* O: 老邮件, 但未读
+* r: 已读
+* D: 将删除
 
 ## 参考资料 ##
 
@@ -82,3 +88,4 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
 * [msmtp官方文档:Using msmtp with Mutt](http://msmtp.sourceforge.net/doc/mutt+msmtp.txt)
 * [Arch - Mutt](https://wiki.archlinux.org/index.php/Mutt)
 * [使用mutt作为email客户端](http://www.jianshu.com/p/bebbf2db2cd8)
+* [Mutt cheat sheet](http://sheet.shiar.nl/mutt)
