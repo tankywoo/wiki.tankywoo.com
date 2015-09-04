@@ -1,0 +1,3 @@
+[submodule "themes/yasimple"]
+	path = themes/yasimple
+	url = git@github.com:tankywoo/yasimple.git
