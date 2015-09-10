@@ -11,25 +11,22 @@ Stream EDitor, 流编辑器
 
 	sed options script file
 
-	* -e script
-	* -f file
-	* -n
-
+	* -e script 可以指定多个-e(后面举例)
+	* -f file 从文件读取sed规则
+	* -n 只输出匹配的行
 
 ## 替换(substitute) ##
 
 	s/pattern/replacement/flag
 
-	* 数字	表明新文本将替换第几处模式匹配的地方
-	* g		所有匹配的都替换
-	* p		原来的内容也打印出来
-	* w file将替换的结果写到文件中
-
-
+	* 数字	    表明新文本将替换第几处模式匹配的地方
+	* g		    所有匹配的都替换
+	* p		    原来的内容也打印出来
+	* w file    将替换的结果写到文件中
 
 ## 限制行数 ##
 
-	* 数字	指定行数
+	* 数字			指定行数
 	* 数字1,数字2	限定范围
 	* $表示结尾行
 	*
@@ -37,13 +34,12 @@ Stream EDitor, 流编辑器
 	* /pattern/command 
 	* eg. $ sed '/tankywoo/s/bash/csh/' /etc/passwd
 
-
 ## 删除行 ##
 
 	sed 'd' mydata		#删除全部
 	sed '1d' mydata		#删除第一行
-	这个同样也可以用于上面的模式匹配
 
+这个同样也可以用于上面的模式匹配
 
 ## 插入和附加 ##
 
