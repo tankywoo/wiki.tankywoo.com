@@ -7,8 +7,8 @@ Msmtp + Mutt 搭建邮件客户端
 
 首先得了解MUA，MTA的概念 (可参考鸟哥私房菜服务器篇)
 
-* MUA(Mail User Agent): 主要用于接收、阅读、撰写邮件. 如thunderbird, 以为web的gmail, 或者简单的基于文本的mutt等.
-* MTA(Mail Transfer Agent): 基于SMTP协议, 主要用于邮件的转发，如Postfix，Sendmail, msmtp
+* MUA(Mail User Agent): 主要用于接收、阅读、撰写邮件. 如thunderbird, 以为web的gmail, 或者简单的基于文本的mutt, mail命令(`mailx`)等.
+* MTA(Mail Transfer Agent): 基于SMTP协议, 主要用于邮件的转发，如Postfix，Exim4, Sendmail, msmtp
 * MDA(Mail Delivery Agent): 在邮件经过N个MTA达到目标的邮件服务器(local MTA)时, MDA将邮件放到相应的目录下.
 * Mailbox: 信箱, linux下一般存在/var/spool/mail下
 
