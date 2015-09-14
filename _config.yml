@@ -4,3 +4,11 @@ keywords: wiki, makrdown, linux, python, cpp, ops, simiki
 description: "Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."
 author: Tanky Woo
 theme: yasimple
+
+
+##### Deploy #####
+deploy:
+  - type: rsync
+    user: root
+    host: 192.81.133.96
+    dir: /opt/wiki.tankywoo.com/output
