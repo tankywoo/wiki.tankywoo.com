@@ -46,4 +46,8 @@ date: 2014-01-25 15:08
 * [Byword](http://bywordapp.com/) 没试过
 * [Mou](http://mouapp.com/) 国人开发的，写技术文档不错
 
+## 阅读器
 
+* [Calibre](http://calibre-ebook.com/) 主要用于mobi转为epub, 平板上多看不支持mobi, 图灵社区买的书只有pdf和mobi. 转换参考这篇[文章](http://osxdaily.com/2010/08/12/convert-to-epub/). Mac下Kindle没看直接看mobi.
+* [Clearview](http://www.canoejoy.com/) 听说简洁, 支持mobi, epub.
+* [更多选择](http://www.makeuseof.com/tag/7-ebook-readers-mac-compared/)
