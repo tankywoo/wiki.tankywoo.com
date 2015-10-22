@@ -1,8 +1,10 @@
 ---
 title: "tmux"
 date: 2013-10-16 16:24
+update: 2015-10-22 14:22
 ---
 
+[TOC]
 
 # TMUX - terminal multiplexer #
 
@@ -236,3 +238,38 @@ tmux attach-session -d -t 'tankywoo'
 * [使用tmux](https://wiki.freebsdchina.org/software/t/tmux)
 * [Using tmux](http://510x.se/notes/posts/Using_tmux/)
 * [Practical Tmux](https://mutelight.org/practical-tmux)
+
+---
+
+# Tmuxinator #
+
+[Tmuxinator](https://github.com/tmuxinator/tmuxinator) 是一个用Ruby写的管理tmux会话(session)的工具.
+
+上面针对tmux, 可以写脚本来创建希望的布局, 但是比较麻烦.
+
+而tmuxinator使用yaml来配置布局, 简单的配置就可以生成复杂的会话布局.
+
+基本前提是安装tmux, 配置了`$EDITOR`和`$SHELL`. 可以通过doctor子命令来检查:
+
+    $ tmuxinator doctor
+    Checking if tmux is installed ==> Yes
+    Checking if $EDITOR is set ==> Yes
+    Checking if $SHELL is set ==> Yes
+
+使用`new`子命令会使用配置的`$EDITOR`来创建并打开一个yaml会话配置. 默认保存在`~/.tmuxinator/`下.
+
+因为的tmux设置了`set -g base-index 1`, 所以需要也设置pane-base-index:
+
+    setw -g pane-base-index 1
+
+否则创建pane报错:
+
+    $ mux start sample
+    can't find pane: 1
+    arranging in: main-vertical
+    can't find pane: 1
+    [exited]
+
+我设置pane-base-index后, 还是报错, 找了半天, 才发现是因为还有另外一个tmux在运行, tmux server不会重新加载pane-base-index, 需要全部退出后才行. 也可以用`bind-key q`来确认起始的pane index.
+
+关于completion脚本, 我用的zsh, 直接配置上tmuxinator的plugin, 和官方提供的completion基本类似.
