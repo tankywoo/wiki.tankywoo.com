@@ -82,6 +82,21 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
 * r: 已读
 * D: 将删除
 
+关于 tmux下mutt没有重绘窗口的问题, 见我之前的[博客](http://blog.tankywoo.com/2015/10/24/tmux-mutt-not-redraw-problem.html)
+
+关于邮件中的搜索, 有两种: `search` (按`/`) 和 `limit` (按`l`, 字母), 网上说后者比前者更强大, 不过暂时没感觉出来.
+
+对于包含body content中的搜索, 模式是: `/~b xxx` 或者 `l~b xxx`, 前者是定位到第一个匹配的, 按`n`到第二个匹配; 而 limit搜索相当于filter, 只显示匹配的邮件, 如果想回到所有列表, 则`lall` (注意这里的/或者l都是上面提到的进入search/limit模式)
+
+模式见文档 [mutt regex](http://www.mutt.org/doc/manual/manual-4.html#ss4.2)
+
+另外在search时, 按`\`可以toggle关键词高亮.
+
+参考:
+
+* [Search for mail content with mutt](http://unix.stackexchange.com/questions/91046/search-for-mail-content-with-mutt)
+* [mutt Pattern matching with regular expressions](http://mutt.blackfish.org.uk/searching/)
+
 ## 参考资料 ##
 
 * [Gentoo文档:Mutt电子邮件快速入门指南](http://www.gentoo.org/doc/zh_cn/guide-to-mutt.xml?style=printable)
