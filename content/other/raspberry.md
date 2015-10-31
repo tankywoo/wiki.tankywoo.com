@@ -85,6 +85,14 @@ Win下好像使用的是win32diskimager这个工具.
 * [How can I resize my / (root) partition?](http://raspberrypi.stackexchange.com/questions/499/how-can-i-resize-my-root-partition)
 * [USING THE FULL SPACE ON YOUR SD CARD IN THE RASPBERRY PI](http://blog.retep.org/2012/06/19/using-the-full-space-on-your-sd-card/)
 
+## Raspbian vim支持python ##
+
+`apt-get`安装好vim后, 通过`vim --version`可以看到是不支持python扩展的.
+
+不需要卸载自己编辑, 直接安装 `vim-nox` 即可:
+
+    apt-get install vim-nox
+
 ## 其它 ##
 
 * [树莓派实验室](http://shumeipai.nxez.com/)
