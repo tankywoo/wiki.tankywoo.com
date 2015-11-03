@@ -3,6 +3,10 @@ title: "stunnel"
 date: 2015-08-03 11:00
 ---
 
+[TOC]
+
+## 简介 ##
+
 [stunnel](https://www.stunnel.org/index.html) 是一个自由的跨平台软件, 用于提供全局的TLS/SSL服务. 针对本身无法进行TLS或SSL通信的客户端及服务器, Stunnel可提供安全的加密连接. --- 引自[维基百科](https://zh.wikipedia.org/wiki/Stunnel)
 
 stunnel 是一个c/s结构. 在不可信的网络环境里(如公网), 通过stunnel 的server 和 client之间建立安全的加密隧道, 然后两边的网络服务之间通信就可以通过这个安全隧道来通信.
@@ -23,7 +27,7 @@ stunnel 是一个c/s结构. 在不可信的网络环境里(如公网), 通过stu
 
 redis client连接stunnel client的listen端口, 最终就和redis server通信.
 
----
+## 配置 ##
 
 配置的样例:
 
@@ -88,9 +92,9 @@ stunnel client (ubuntu 环境):
 
 更详细的配置可以参考[stunnel config](https://www.stunnel.org/config_unix.html)
 
----
+## 其它 ##
 
-其它:
+### 加密 ###
 
 如果想配置加密算法为不加密, 可以两边都加上:
 
@@ -102,6 +106,56 @@ stunnel client (ubuntu 环境):
 
 * [stunnel faq](http://www.onsight.com/faq/stunnel/stunnel-faq-1.html)
 * [Turning off compression and encryption](http://osdir.com/ml/network.stunnel.user/2003-12/msg00058.html)
+
+
+### CentOS6相关 ###
+
+stunnel(版本4.29)在CentOS6下, 没有启动脚本(`rpm -ql stunnel` 可以查看相关的安装文件列表). 网上找了下, 下面几个脚本大同大异:
+
+* [Installing Stunnel client on CentOS 6.6](https://randomcentos.wordpress.com/2015/04/21/installing-stunnel-client-on-centos-6-6/)
+* [how create a service for installed STUNNEL on CentOS 5.10](http://stackoverflow.com/questions/23545797/how-create-a-service-for-installed-stunnel-on-centos-5-10)
+* [Stunnel init script for RHEL / CentOS](http://www.riccardoriva.info/blog/?p=1047)
+* [duritong/puppet-stunnel](https://github.com/duritong/puppet-stunnel/blob/master/files/CentOS/stunnel.init)
+
+另外简单的就是不使用sys-v init脚本, 直接使用upstarts脚本管理服务:
+
+    # stunnel
+    #
+    start on stopped rc RUNLEVEL=[2345]
+
+    stop on runlevel [!2345]
+
+    respawn
+    exec /usr/bin/stunnel /etc/stunnel/*.conf
+
+    pre-start script
+      if ! [ -d /var/run/stunnel ]; then
+        install -d -o nobody -g nobody /var/run/stunnel
+      fi
+    end script
+
+关于pid目录的文件. 因为stunnel自身没有在启动时去创建`/var/run/stunnel` 这个目录. 所以需要在服务管理脚本中做处理.
+
+上面的init脚本借鉴了ubuntu下的/etc/init.d/stunnel, 在`pre-start`区做了处理. 具体可以看看upstart的手册.
+
+加入开机启动, 删除/etc/init/stunnel.override文件. 具体可以看看[这篇回答](http://askubuntu.com/questions/19320/how-to-enable-or-disable-services), 非常详细.
+
+FIPS_mode_set:fingerprint does not match 问题:
+
+> openssl-fips是符合FIPS标准的Openssl.
+> 联邦信息处理标准（Federal Information Processing Standards，FIPS）是一套描述文件处理、加密算法和其他信息技术标准（在非军用政府机构和与这些机构合作的政府承包商和供应商中应用的标准）的标准。
+
+这里可以关闭fips, 详见[官方文档](https://www.stunnel.org/static/stunnel.html), 配置文件中加上:
+
+    fips = no
+
+文档说5.0版本后默认no, 不过在ubuntu下stunnel4.42, 这个就是关闭的. centos下stunnel4.29是默认开启.
+
+参考:
+
+* [OpenSSL基础知识](http://www.cnblogs.com/274914765qq/p/4513362.html)
+* [Stunnel refuses to work after update](http://www.vcloudnine.de/stunnel-refuses-to-work-after-update/)
+* [[stunnel-users] FIPS_mode_set:fingerprint does not match](https://www.stunnel.org/pipermail/stunnel-users/2012-March/003608.html)
 
 ---
 
