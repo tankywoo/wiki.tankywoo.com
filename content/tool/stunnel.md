@@ -90,6 +90,8 @@ stunnel client (ubuntu 环境):
 
 这时, redis client 连接本地stunnel client的7379端口就可以了.
 
+`stunnel -version` 可以看到一些默认的配置等信息.
+
 更详细的配置可以参考[stunnel config](https://www.stunnel.org/config_unix.html)
 
 ## 其它 ##
