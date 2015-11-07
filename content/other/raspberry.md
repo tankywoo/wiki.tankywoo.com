@@ -44,7 +44,7 @@ Win下好像使用的是win32diskimager这个工具.
 
 更多的源列表见官方 [Raspbian Mirrors](https://www.raspbian.org/RaspbianMirrors)
 
-## 初始扩容 ##
+## 初始扩容/新建分区 ##
 
 刚安装好后, 默认的根分区才3.9G:
 
@@ -80,10 +80,13 @@ Win下好像使用的是win32diskimager这个工具.
 
 因为根分区是ext4, 支持在线(online)扩容, 如不支持, 则需要reboot后再做resize2fs操作.
 
+初始只有两个分区, 个人习惯是将`/home`单独挂载到一个分区. 新增分区和Linux一样, 磁盘设备名是`/dev/mmcblk0`, 直接fdisk创建, partprobe同步分区.
+
 详细步骤可以参考:
 
 * [How can I resize my / (root) partition?](http://raspberrypi.stackexchange.com/questions/499/how-can-i-resize-my-root-partition)
 * [USING THE FULL SPACE ON YOUR SD CARD IN THE RASPBERRY PI](http://blog.retep.org/2012/06/19/using-the-full-space-on-your-sd-card/)
+* [Creating a seperate home partition (Raspberry Pi)](https://mike632t.wordpress.com/2014/02/10/resizing-partitions/)
 
 ## Raspbian vim支持python ##
 
@@ -92,6 +95,47 @@ Win下好像使用的是win32diskimager这个工具.
 不需要卸载自己编辑, 直接安装 `vim-nox` 即可:
 
     apt-get install vim-nox
+
+## 加密分区 ##
+
+其实这个不是树莓派相关的内容, 不过刚在树莓派下试了, 顺便就先记录在这里.
+
+以前经常手动安装ubuntu server时, 在分区这块记得好像是可以选择加密分区(好像centos 7安装时也遇到了), 不过都没有去尝试过. 现在树莓派作为一个备份机器, 有些重要数据是需要放在加密区, 于是搜了下.
+
+首先安装 `cryptsetup` 包. 然后fdisk新建一个分区.
+
+然后使用cryptsetup组件初始化待加密分区(注意这个会擦除重写分区, 如有资料需注意备份):
+
+    # 这里的加密使用的是密码
+    $ cryptsetup --verbose --verify-passphrase luksFormat /dev/mmcblk0p3
+
+输入YES确认, 并输入密码. ok后需要打开加密分区, 映射到系统/var/mapper/下作为一个新的设备:
+
+    # cryptsetup luksOpen <device> <name>
+    $ cryptsetup luksOpen /dev/mmcblk0p3 mydisk
+
+name是映射到/dev/mapper/下的设备名, 可以任意写
+
+也可以使用open命令:
+
+    $ cryptsetup open /dev/mmcblk0p3 mydisk
+
+这时, fdisk -l 查看会看到多了一个新的磁盘.
+
+第一次需要格式化这个磁盘, 不需要再分区, 直接格式化/新建文件系统整个磁盘即可:
+
+    $ mke2fs -t ext4 /dev/mapper/mydisk
+
+以后就不需要再建文件系统了, 直接mount挂载即可.
+
+    $ mount /dev/mapper/mydisk /mnt/test/
+
+还可以配置开机自动挂载, 这块就没去研究了, 还是先手动挂吧.
+
+参考:
+
+* [How to create an encrypted disk partition on Linux](http://xmodulo.com/how-to-create-encrypted-disk-partition-on-linux.html)
+* [HowTo: Linux Hard Disk Encryption With LUKS [cryptsetup Command]](http://www.cyberciti.biz/hardware/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/)
 
 ## 其它 ##
 
