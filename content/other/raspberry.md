@@ -137,6 +137,35 @@ name是映射到/dev/mapper/下的设备名, 可以任意写
 * [How to create an encrypted disk partition on Linux](http://xmodulo.com/how-to-create-encrypted-disk-partition-on-linux.html)
 * [HowTo: Linux Hard Disk Encryption With LUKS [cryptsetup Command]](http://www.cyberciti.biz/hardware/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/)
 
+## 禁止X Windows开机启动 ##
+
+因为都是ssh直接登录, 也不需要桌面的支持, 所以完全没必要开机启动(`lightdm`)
+
+最简单的关闭方式是使用raspbian提供的`raspi-config`命令, 选择3 Boot Options, 然后选择B1 Console  Text console, requiring user to login
+
+看了下它的脚本内容:
+
+    $ view `which raspi-config`
+    ...
+    if [ -e /etc/init.d/lightdm ]; then
+      if [ $SYSTEMD -eq 1 ]; then
+        systemctl set-default multi-user.target
+        ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
+      else
+        update-rc.d lightdm disable 2
+        sed /etc/inittab -i -e "s/1:2345:respawn:\/bin\/login -f pi tty1 <\/dev\/tty1 >\/dev\/tty1 2>&1/1:2345:respawn:\/sbin\/getty --noclear 38400 tty1/"
+      fi
+    fi
+    ;;
+    ...
+
+因为基于debian7, 使用的是systemd, 所以直接用systemctl管理即可. 当然后向兼容, 也可以通过upstarts来管理:
+
+    $ update-rc.d lightdm stop
+
+甚至remove也可以. 最后重启确认.
+
+
 ## 其它 ##
 
 * [树莓派实验室](http://shumeipai.nxez.com/)
