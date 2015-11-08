@@ -1,9 +1,12 @@
 ---
 title: "Email相关"
 date: 2013-08-17 07:36
+description: "Mutt / Msmtp/ Exim"
 ---
 
-Msmtp + Mutt 搭建邮件客户端
+[TOC]
+
+## 基础 ##
 
 首先得了解MUA，MTA的概念 (可参考鸟哥私房菜服务器篇)
 
@@ -23,7 +26,7 @@ Msmtp + Mutt 搭建邮件客户端
 * [Mail Server Components – MTA , MDA & MUA](http://www.nextstep4it.com/mail-server-components-mta-mda-mua/)
 * [How email works (MTA, MDA, MUA)](http://ccm.net/contents/116-how-email-works-mta-mda-mua)
 
-<!-- -->
+POP3 / IMAP / SMTP:
 
 * POP3(Post Office Protocol 3): 用于邮件访问. 标准端口995(SSL)和110(非SSL)
 * IMAP(Internet Mail Access Protocol): 交互式邮件存取协议. 用于邮件访问. 标准端口993(SSL)和143(非SSL)
@@ -57,6 +60,9 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
 
 然后随便输入一些字符，按Ctrl+D退出，查看收件人邮箱是否有邮件
 
+参考:
+
+* [msmtp官方文档:Using msmtp with Mutt](http://msmtp.sourceforge.net/doc/mutt+msmtp.txt)
 
 ## mutt ##
 
@@ -96,11 +102,40 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
 
 * [Search for mail content with mutt](http://unix.stackexchange.com/questions/91046/search-for-mail-content-with-mutt)
 * [mutt Pattern matching with regular expressions](http://mutt.blackfish.org.uk/searching/)
-
-## 参考资料 ##
-
 * [Gentoo文档:Mutt电子邮件快速入门指南](http://www.gentoo.org/doc/zh_cn/guide-to-mutt.xml?style=printable)
-* [msmtp官方文档:Using msmtp with Mutt](http://msmtp.sourceforge.net/doc/mutt+msmtp.txt)
 * [Arch - Mutt](https://wiki.archlinux.org/index.php/Mutt)
 * [使用mutt作为email客户端](http://www.jianshu.com/p/bebbf2db2cd8)
 * [Mutt cheat sheet](http://sheet.shiar.nl/mutt)
+
+## Exim ##
+
+常用命令:
+
+    # 输出邮件队列(queue)中的邮件数
+    exim -bpc
+
+    # 输出邮件队列中的邮件信息(time queued, size, message-id, sender, recipient)
+    exim -bp
+
+    # 输出邮件队列的摘要(count, volume, oldest, newest, domain, and totals)
+    exim -bp | exiqsumm
+
+    # exim当前状态
+    exiwhat
+
+    # 输出exim配置信息
+    exim -bP
+
+    # 删除邮件队列中指定的邮件
+    exim -Mrm <message-id>
+
+    # 删除邮件队列中所有的邮件(几种方法都行, 暂未全部尝试 XXX)
+    exim -bp | exiqgrep -i | xargs exim -Mrm
+    exiqgrep -i|xargs exim -Mrm
+    exim -bp | awk '/^ *[0-9]+[mhd]/{print "exim -Mrm " $3}' | bash
+
+参考:
+
+* [Exim Cheatsheet](http://bradthemad.org/tech/notes/exim_cheatsheet.php)
+* [Exim Remove All messages From the Mail Queue](http://www.cyberciti.biz/faq/exim-remove-all-messages-from-the-mail-queue/)
+* [Quick way to remove all emails from the mail queue](http://crybit.com/remove-all-emails-from-queue/)
