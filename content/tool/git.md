@@ -629,6 +629,60 @@ stackoverflow上这个[回答](http://stackoverflow.com/a/12527561/1276501)描�
 
 	$ git branch --contains <commit id>
 
+## Git subtree ##
+
+对`submodule`的使用应该是非常熟悉了. 听过subtree这个东西有1、2年了, 一直没时间去了解, 前阵子简单了解过, 今晚又看了下文档和一些博客并尝试了(2015-11-11, 好吧, 双十一, 刚剁手完~~~), 也算大致有了一个了解认识.
+
+首先说一下, 国内很多博客人云亦云, 都没什么实践场景, 就跟着别人说: submodule太复杂, 不好用, 应该用subtree. 这个是相当坑爹的.
+
+然后放几个链接, 技术上就不详细说明:
+
+* man git-subtree
+* [git subtrees: a tutorial](https://medium.com/@v/git-subtrees-a-tutorial-6ff568381844) 很好的入门资料, 详细的例子
+* [Alternatives To Git Submodule: Git Subtree](https://www.atlassian.com/git/articles/alternatives-to-git-submodule-git-subtree/)
+* [Git submodule 还是 Git Subtree](http://blog.zlxstar.me/blog/2014/07/18/git-submodule-vs-git-subtree/) 评价还算中肯
+* [使用GIT SUBTREE集成项目到子目录](http://aoxuis.me/post/2013-08-06-git-subtree) 里面提到的一些链接文章可以看看
+
+简单说下使用(merge和split还没去尝试):
+
+    git subtree add   -P <prefix> <repository> <ref>
+    git subtree pull  -P <prefix> <repository> <ref>
+    git subtree push  -P <prefix> <repository> <ref>
+
+subtree add命令将一个项目拉到本地作为一个子目录, 这个和submodule类似. prefix执行子目录名.
+
+子仓库独立更新, 主仓库使用subtree pull命令下拉作更新, 会产生一个merge commit
+
+主仓库下子目录的仓库作了更新, 可以使用subtree push将修改推到子仓库
+
+子仓库可以修改并提交, 这个提交是在主仓库历史可以直接git log看到的(不同于submodule)
+
+因为每次都要敲repository, 可以把这个用git remote增加一个remote alias.
+
+建议:
+
+* subtree pull建议加上`--squash`, 将子仓库的多个提交合并为一个提交merge到主仓库, 否则会增加一堆commit.
+* 主仓库的修改和子仓库的修改分开提交, 主库和子库互相pull/push时会比较混乱
+
+实例:
+
+* [Deploying a subfolder to GitHub Pages](https://gist.github.com/cobyism/4730490) Jekyll可以用到的一个例子.
+
+感受:
+
+* 至少目前来说, 我还是喜欢submodule
+* 说submodule麻烦是因为不了解, 有人说需要.gitmodule配置文件, 我觉得这个的优点之一就是简化文件, 不然每次都要敲prefix, repository很麻烦不是?
+* subtree导致历史看起来比较脏, 对于submodule, 主库一个逻辑提交可以直接包含子库的相应commit id即可
+* subtree对于一些小项目比较合适
+* subtree依赖使用团队的规范约束, 否则历史容易乱.
+
+当然, 上面也只是我了解一些皮毛的感受, 希望后续有机会能更多的去实践.
+
+另外, submodule的教程:
+
+* [Git Submodule使用完整教程](http://www.kafeitu.me/git/2012/03/27/git-submodule.html)
+
+
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
