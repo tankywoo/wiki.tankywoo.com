@@ -1,6 +1,7 @@
 ---
 title: "tcpdump"
 date: 2013-09-06 10:24
+update: 2015-11-14 16:00
 ---
 
 TODO
@@ -79,6 +80,23 @@ http://www.alexonlinux.com/tcpdump-for-dummies
 http://www.carnal0wnage.com/papers/TCPdumpBasics.pdf
 http://science.hamptonu.edu/compsci/docs/iac/packet_sniffing.pdf
 http://www.danielmiessler.com/study/tcpdump/
+
+
+## ipv6 ##
+
+for tcp ipv6
+
+    sudo tcpdump -p -i any tcp and port 8000 and ip6
+
+for tcp ipv4 or ipv6:
+
+    sudo tcpdump -p -i any tcp and port 8000 and '(ip or ip6)'
+
+for icmp ipv6
+
+    sudo tcpdump -p -i any icmp6
+
+
 
 
 = History =

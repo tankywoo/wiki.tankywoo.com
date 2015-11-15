@@ -1,8 +1,10 @@
 ---
 title: "curl"
 date: 2013-08-17 07:32
+update: 2015-11-14 16:00
 ---
 
+[TOC]
 
 ## Argument ##
 
@@ -24,6 +26,14 @@ date: 2013-08-17 07:32
 	# get the HTTP-header only
 	curl -I http://wiki.wutianqi.com/index.html
 
+
+## IPv6 ##
+
+curl ipv6 localhost:8000, 注意要加`-g`和`-6`, url要用方括号(bracket):
+
+    curl -g -6 'http://[::1]:8000'
+
+参考: [How can I use curl with ::1 for ipv6 based loopback?](http://superuser.com/a/885757/251495)
 
 ## Read More ##
 

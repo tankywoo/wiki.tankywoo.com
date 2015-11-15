@@ -3,6 +3,7 @@ title: "Shell"
 date: 2013-08-17 07:23
 ---
 
+[TOC]
 
 shell是一个作为用户与Linux系统间接口的程序，它允许用户向操作系统输入需要执行的命令
 
@@ -714,6 +715,14 @@ false: shell built-in command
 
 * [Bash if [ false ] ; returns true](http://stackoverflow.com/questions/19670061/bash-if-false-returns-true)
 * [How to declare and use boolean variables in shell script?](http://stackoverflow.com/questions/2953646/how-to-declare-and-use-boolean-variables-in-shell-script)
+
+生成一个range, 如1到10:
+
+    echo `seq 1 10`
+
+或者:
+
+    echo {1..10}
 
 ## 参考 ##
 
