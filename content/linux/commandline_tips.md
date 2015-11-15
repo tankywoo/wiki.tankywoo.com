@@ -136,3 +136,12 @@ stash pop后, 原先index中的files会恢复为staged, 如果要保持index, �
     255
 
 参考 [ref1](http://www.cyberciti.biz/faq/linux-unix-convert-hex-to-decimal-number/), [ref2](http://www.linuxnix.com/2012/05/convert-binaryhex-oct-decimal-linuxunix.html)
+
+---
+
+`du` human-readable output by size:
+
+    du -h | sort -h
+    du --human-readable | sort --human-numeric-sort
+
+参考 [ref1](http://www.cyberciti.biz/faq/how-do-i-sort-du-h-output-by-size-under-linux/)

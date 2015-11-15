@@ -683,6 +683,19 @@ subtree add命令将一个项目拉到本地作为一个子目录, 这个和subm
 * [Git Submodule使用完整教程](http://www.kafeitu.me/git/2012/03/27/git-submodule.html)
 
 
+## git diff 相关 ##
+
+关于 `git diff A..B` 和 `git diff A...B`:
+
+![git diff help](http://tankywoo-wb.b0.upaiyun.com/git-diff-help.png) [图片来源](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif)
+
+参考:
+
+* [What are the differences between double-dot “..” and triple-dot “…” in Git diff commit ranges?](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif)
+* [git diff doesn't show enough](http://stackoverflow.com/questions/5256249/git-diff-doesnt-show-enough/5257065#5257065)
+* [What are the differences between double-dot “..” and triple-dot “…” in Git commit ranges?](http://stackoverflow.com/questions/462974/what-are-the-differences-between-double-dot-and-triple-dot-in-git-com)
+
+
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
