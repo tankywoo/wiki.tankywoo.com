@@ -138,4 +138,23 @@ example:
 参考:
 
 * [@world versus world...what's the difference?](https://forums.gentoo.org/viewtopic-t-899878-start-0.html)
-* [World set (Portage)](https://wiki.gentoo.org/wiki/World_set_(Portage))
+* [World set (Portage)](https://wiki.gentoo.org/wiki/World_set\_(Portage))
+
+## 升级后更新系统配置文件 ##
+
+初试, 所以了解的不是很全.
+
+一般`emerge --sync`或者`eix-sync`更新portage树后, 会有这种提示:
+
+    * IMPORTANT: 9 config files in '/etc' need updating.
+    * See the CONFIGURATION FILES section of the emerge
+    * man page to learn how to update config files.
+
+    * IMPORTANT: 18 news items need reading for repository 'gentoo'.
+    * Use eselect news read to view new items.
+
+提示已经很清楚了, 看`man emerge`的`CONFIGURATION FILES`一节.
+
+根据`CONFIG_PROTECT`的配置, 默认比如`/etc/`下的配置文件, 当软件更新时, 相应的配置是不会覆盖当前的, 而在本地生成一个`._cfg000_*`的文件, 为更新后的默认配置.
+
+通过`dispatch-conf`可以来处理这些情况, 可以丢弃新的配置文件, 或者合并两者等等.
