@@ -158,3 +158,260 @@ example:
 根据`CONFIG_PROTECT`的配置, 默认比如`/etc/`下的配置文件, 当软件更新时, 相应的配置是不会覆盖当前的, 而在本地生成一个`._cfg000_*`的文件, 为更新后的默认配置.
 
 通过`dispatch-conf`可以来处理这些情况, 可以丢弃新的配置文件, 或者合并两者等等.
+
+参考: [Portage附加工具](https://gentoo-handbook.lugons.org/doc/zh_cn/handbook/handbook-arm.xml?part=3&chap=4)
+
+## dependency graph slot conflict ##
+
+如下:
+
+    $ emerge -auv dev-python/pygments
+
+    These are the packages that would be merged, in order:
+
+    Calculating dependencies... done!
+    ...
+
+    Total: 4 packages (2 upgrades, 2 new), Size of downloads: 4,387 KiB
+
+    !!! Multiple package instances within a single package slot have been pulled
+    !!! into the dependency graph, resulting in a slot conflict:
+
+    dev-python/setuptools:0
+
+      (dev-python/setuptools-18.4:0/0::gentoo, ebuild scheduled for merge) pulled in by         # <--- 依赖新版本
+    ...
+    target_pypy(-),-python_single_target_pypy3(-)] required by (dev-python/pygments-2.0.2-r1:0/0::gentoo, ebuild scheduled for merge)
+
+    ...
+    target_pypy(-),-python_single_target_pypy3(-)] required by (dev-python/certifi-2015.9.6.2:0/0::gentoo, ebuild scheduled for merge)
+
+
+      (dev-python/setuptools-2.2:0/0::gentoo, installed) pulled in by                           # <--- 依赖老版本
+    ...
+    _python3_3(-),-python_single_target_pypy(-)] required by (dev-python/pip-1.4.1:0/0::gentoo, installed)
+
+    ...
+    _python3_3(-),-python_single_target_python3_4(-),-python_single_target_pypy(-)] required by (dev-python/logilab-common-0.61.0:0/0::gentoo, installed)
+
+    ...
+    python_single_target_python3_3(-),-python_single_target_python3_4(-),-python_single_target_pypy(-)] required by (dev-python/meld3-1.0.0:0/0::gentoo, installed)
+
+解决:
+
+把老的版本以及相应依赖同时升级:
+
+    $ emerge -avu dev-python/setuptools dev-python/pip dev-python/logilab-common dev-python/pygments
+
+参考: [Gentoo - Troubleshooting](https://wiki.gentoo.org/wiki/Troubleshooting#Dependency_graph_slot_conflicts)
+
+## Perl相关 ##
+
+好像perl-core和virtual/xxx合并了, 很多perl的依赖, 可以执行`perl-cleaner -v --modules`重新编译一些较老的库.
+
+期间会遇到一些提示, 说明卡在哪, 处理掉相应的包, 然后重新执行perl-cleaner.
+
+都是一些perl-core的包, 安装相应的virtual/perl-xxx包, 然后`emerge -C`清理掉这些包, 直到perl-cleaner可以执行.
+
+    $ emerge --depclean -pv
+    ...
+    Calculating dependencies... done!
+     * Dependencies could not be completely resolved due to
+     * the following required packages not being installed:
+     *
+     *   dev-lang/perl:0/0=[-build(-)] pulled in by:
+     *     dev-perl/Net-SMTP-SSL-1.10.0-r1
+     *
+     *   dev-lang/perl:0/0=[-build(-)] pulled in by:
+     *     dev-perl/PlRPC-0.202.0-r2
+     *
+     *   dev-haskell/old-locale:= pulled in by:
+     *     dev-haskell/data-default-instances-old-locale-0.0.1
+     *
+     *   sys-block/thin-provisioning-tools pulled in by:
+     *     sys-fs/lvm2-2.02.97-r1
+     *
+    ...
+     *   dev-lang/perl[-build] pulled in by:
+     *     dev-perl/Locale-gettext-1.50.0
+     *
+     *   dev-lang/perl:0/0=[-build(-)] pulled in by:
+     *     dev-perl/Authen-SASL-2.160.0-r1
+    ...
+
+    $ perl-cleaner -v --modules
+
+参考: [gentoo forums](https://forums.gentoo.org/viewtopic-t-987896.html)
+
+## 编译报错 ##
+
+升级pip/lxml时遇到编译报错.
+
+    >>> Failed to emerge dev-python/lxml-3.4.4, Log file:
+
+    >>>  '/var/tmp/portage/dev-python/lxml-3.4.4/temp/build.log'
+
+     * Messages for package dev-python/lxml-3.4.4:
+
+     * ERROR: dev-python/lxml-3.4.4::gentoo failed (compile phase):
+     *   (no error message)
+     *
+     * Call stack:
+     *     ebuild.sh, line   93:  Called src_compile
+     *   environment, line 3878:  Called distutils-r1_src_compile
+     *   environment, line 1036:  Called _distutils-r1_run_foreach_impl 'python_compile'
+     *   environment, line  315:  Called python_foreach_impl 'distutils-r1_run_phase' 'python_compile'
+     *   environment, line 3339:  Called multibuild_foreach_variant '_python_multibuild_wrapper' 'distutils-r1_run_phase' 'python_compile'
+     *   environment, line 2447:  Called _multibuild_run '_python_multibuild_wrapper' 'distutils-r1_run_phase' 'python_compile'
+     *   environment, line 2445:  Called _python_multibuild_wrapper 'distutils-r1_run_phase' 'python_compile'
+     *   environment, line  635:  Called distutils-r1_run_phase 'python_compile'
+     *   environment, line 1029:  Called python_compile
+     *   environment, line 2947:  Called distutils-r1_python_compile
+     *   environment, line  908:  Called esetup.py 'build'
+     *   environment, line 1518:  Called die
+     * The specific snippet of code:
+     *       "${@}" || die
+     *
+     * If you need support, post the output of `emerge --info '=dev-python/lxml-3.4.4::gentoo'`,
+     * the complete build log and the output of `emerge -pqv '=dev-python/lxml-3.4.4::gentoo'`.
+     * The complete build log is located at '/var/tmp/portage/dev-python/lxml-3.4.4/temp/build.log'.
+     * The ebuild environment file is located at '/var/tmp/portage/dev-python/lxml-3.4.4/temp/environment'.
+     * Working directory: '/var/tmp/portage/dev-python/lxml-3.4.4/work/lxml-3.4.4-python2_7'
+     * S: '/var/tmp/portage/dev-python/lxml-3.4.4/work/lxml-3.4.4'
+
+可以选择直接删掉或者`emerge -C`先清理掉这些包, 然后重新安装.
+
+    rm -r /usr/lib64/python2.7/site-packages/pip*
+
+参考: [dev-python/pip fail to emerge](https://forums.gentoo.org/viewtopic-p-7842512.html?sid=933da6a4a2d0e85f87614965a7e3d34d)
+
+## dev-python/python-exec 问题 ##
+
+有bug被移除的是`dev-python/python-exec`, 保留的是`dev-lang/python-exec`.
+
+注意清理时不要把`dev-lang/python-exec`给卸载了, 否则emerge就用不了了.
+
+首先查看`dev-python/python-exec`的依赖有哪些, 逐步清理, 该升级的升级, 该移除的移除
+
+    emerge --verbose --depclean =dev-python/python-exec-10000.1
+
+升级相应的包
+
+    emerge --oneshot <packages used python-exec>
+
+或者移除
+
+    emerge -C <packages used python-exec>
+
+直到可以清理`emerge --verbose --depclean =dev-python/python-exec-10000.1`
+
+参考: [masking & removal of dev-python/python.exec-10000.1](https://forums.gentoo.org/viewtopic-p-7512702.html)
+
+    $ emerge --verbose --depclean "=dev-python/python-exec-10000.1"
+
+    Calculating dependencies... done!
+      dev-python/python-exec-10000.1 pulled in by:
+        app-portage/layman-2.0.0 requires dev-python/python-exec:0/0=[python_targets_python2_7(-),-python_single_target_python2_6(-),-python_single_target_python2_7(-),-python_single_target_pypy2_0(-)]
+        dev-python/beautifulsoup-4.1.3-r1 requires dev-python/python-exec[python_targets_python2_7(-),python_targets_python3_2(-),-python_single_target_python2_6(-),-python_single_target_python2_7(-),-python_single_target_python3_1(-),-python_single_target_python3_2(-),-python_single_target_python3_3(-)]
+        dev-python/imaging-1.1.7-r2 requires dev-python/python-exec[python_targets_python2_7(-),-python_single_target_python2_5(-),-python_single_target_python2_6(-),-python_single_target_python2_7(-)]
+        dev-python/lxml-3.0.1 requires dev-python/python-exec[python_targets_python2_7(-),python_targets_python3_2(-),-python_single_target_python2_6(-),-python_single_target_python2_7(-),-python_single_target_python3_1(-),-python_single_target_python3_2(-),-python_single_target_python3_3(-)]
+        dev-python/markdown-2.2.1-r1 requires dev-python/python-exec[python_targets_python2_7(-),python_targets_python3_2(-),-python_single_target_python2_6(-),-python_single_target_python2_7(-),-python_single_target_python3_1(-),-python_single_target_python3_2(-),-python_single_target_pypy1_9(-),-python_single_target_pypy2_0(-)]
+        dev-python/markdown2-2.1.0-r1 requires dev-python/python-exec[python_targets_python2_7(-),-python_single_target_python2_5(-),-python_single_target_python2_6(-),-python_single_target_python2_7(-),-python_single_target_pypy1_9(-),-python_single_target_pypy2_0(-)]
+        dev-python/psycopg-2.4.6-r1 requires dev-python/python-exec[python_targets_python2_7(-),python_targets_python3_2(-),-python_single_target_python2_5(-),-python_single_target_python2_6(-),-python_single_target_python2_7(-),-python_single_target_python3_1(-),-python_single_target_python3_2(-)]
+        virtual/python-argparse-1 requires dev-python/python-exec[python_targets_python2_7(-),python_targets_python3_2(-),-python_single_target_python2_5(-),-python_single_target_python2_6(-),-python_single_target_python2_7(-),-python_single_target_python3_1(-),-python_single_target_python3_2(-),-python_single_target_python3_3(-),-python_single_tar
+    get_pypy1_9(-),-python_single_target_pypy2_0(-)]
+
+    >>> No packages selected for removal by depclean
+    Packages installed:   612
+    Packages in world:    189
+    Packages in system:   44
+    Required packages:    612
+    Number removed:       0
+
+    $ emerge --verbose --depclean "=dev-python/python-exec-10000.1"
+
+    Calculating dependencies... done!
+    >>> Calculating removal order...
+
+     dev-python/python-exec
+        selected: 10000.1
+       protected: none
+         omitted: 10000.2
+
+    All selected packages: =dev-python/python-exec-10000.1
+
+    >>> 'Selected' packages are slated for removal.
+    >>> 'Protected' and 'omitted' packages will not be removed.
+
+    >>> Waiting 5 seconds before starting...
+    >>> (Control-C to abort)...
+    >>> Unmerging in: 5 4 3 2 1
+    >>> Unmerging (1 of 1) dev-python/python-exec-10000.1...
+    ...
+
+有些甚至可能是已经被移除的, 都可以清理掉, 如遇到的这个:
+
+    (dev-db/sqlite-3.8.10.2:3/3::gentoo, ebuild scheduled for merge) conflicts with
+      >=dev-db/sqlite-3.3.8:3[extensions] required by (dev-lang/python-3.2.3-r2:3.2/3.2::gentoo, installed)
+                              ^^^^^^^^^^
+      >=dev-db/sqlite-3.3.8:3[extensions] required by (dev-python/pysqlite-2.6.3:2/2::gentoo, installed)
+                            ^^^^^^^^^^
+
+其中dev-lang/python-3.2.3-r2已经从portage中移除了, 所以可以先检查没有依赖就删掉`emerge --verbose --depclean "=dev-lang/python-3.2.3-r2"`
+
+## 卸载python2.6 ##
+
+python2.6在gentoo下已经从portage中移除.
+
+    $ emerge -av @preserved-rebuild
+
+     * IMPORTANT: 18 news items need reading for repository 'gentoo'.
+     * Use eselect news read to view new items.
+
+
+     * IMPORTANT: 4 config files in '/etc/portage' need updating.
+     * See the CONFIGURATION FILES section of the emerge
+     * man page to learn how to update config files.
+
+    These are the packages that would be merged, in order:
+
+    Calculating dependencies... done!
+
+    emerge: there are no ebuilds to satisfy "dev-lang/python:2.6".
+    (dependency required by "@preserved-rebuild" [argument])
+
+同上面, 清理掉:
+
+    emerge --verbose --depclean "=dev-lang/python2.6.8-r1"
+
+具体版本号可以通过`emerge -c -pv "dev-lang/python"`看到.
+
+## gcc 升级 ##
+
+gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的版本.
+
+    # 查看当前配置的版本的profile, 此处因为老的被卸载, 所以报错
+    # 并且也显示了可配置的列表
+    $ gcc-config -c
+     * gcc-config: Active gcc profile is invalid!
+
+     [1] x86_64-pc-linux-gnu-4.9.3
+
+    # 查看可选的版本的profile, 此处因为老的被卸载, 所以报错
+    $ gcc-config -l
+     * gcc-config: Active gcc profile is invalid!
+
+     [1] x86_64-pc-linux-gnu-4.9.3
+
+    # 配置到相应版本
+    $ gcc-config x86_64-pc-linux-gnu-4.9.3
+     * Switching native-compiler to x86_64-pc-linux-gnu-4.9.3 ...
+    >>> Regenerating /etc/ld.so.cache...                                                                                                                                   [ ok ]
+
+     * If you intend to use the gcc from the new profile in an already
+     * running shell, please remember to do:
+
+     *   . /etc/profile
+
+    $ gcc-config -c
+    x86_64-pc-linux-gnu-4.9.3
