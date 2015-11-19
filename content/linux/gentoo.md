@@ -415,3 +415,15 @@ gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的�
 
     $ gcc-config -c
     x86_64-pc-linux-gnu-4.9.3
+
+## 卸载X11相关 ##
+
+还未操作, 先记录:  [How to remove X11](https://forums.gentoo.org/viewtopic-p-6667611.html)
+
+## 其它资源 ##
+
+* [emerge 中文手册](http://www.jinbuguo.com/gentoo/emerge.html)
+* [gentoo 日常维护命令备忘](https://javran.wordpress.com/2011/02/18/gentoo-commands/)
+* [Gentoo Quick Guide](http://www.tamabc.com/article/60785.html)
+* [Gentoo Troubleshooting](https://wiki.gentoo.org/wiki/Troubleshooting)
+* [Portage入门](https://gentoo-handbook.lugons.org/doc/zh_cn/handbook/handbook-x86.xml?part=2&chap=1&style=printable)
