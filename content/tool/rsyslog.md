@@ -3,6 +3,8 @@ title: "rsyslog"
 date: 2013-08-22 23:48
 ---
 
+[TOC]
+
 > RSYSLOG is the rocket-fast system for log processing.
 
 本地Rsyslog版本: `7.4.4`
@@ -363,6 +365,17 @@ Main Queue 的默认模式是 `FixedArray`，Action Queue 的默认模式是 `Di
 * [使用impstats](http://www.rsyslog.com/how-to-use-impstats/)
 * [Main Queue输出术语](http://www.rsyslog.com/rsyslog-statistic-counter-queues/)
 
+## 实践 ##
+
+遇到一个kernel的报错, 一直在刷日志, 现在要把包含这条报错信息的内核日志丢弃:
+
+    :msg, contains, "message want to be dropped" ~
+
+或者更详细的:
+
+    if $syslogfacility-text == 'kern' and ($msg contains 'message want to be dropped') then ~
+
+参考: [Discarding unwanted messages](http://www.rsyslog.com/discarding-unwanted-messages/)
 
 # 更多资料 #
 * [rsyslog研究](http://www.cnblogs.com/tobeseeker/archive/2013/03/10/2953250.html)
