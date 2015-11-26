@@ -98,6 +98,16 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
 
 另外在search时, 按`\`可以toggle关键词高亮.
 
+删除指定日期的所有邮件:
+
+	# 删除2015年12月1号的邮件
+	l~d 01/12/2015
+	^D
+
+	# 删除2015/12/01 - 2015/12/06内的所有邮件
+	l~d 01/12/2015+5d
+	^D
+
 参考:
 
 * [Search for mail content with mutt](http://unix.stackexchange.com/questions/91046/search-for-mail-content-with-mutt)
@@ -106,6 +116,7 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
 * [Arch - Mutt](https://wiki.archlinux.org/index.php/Mutt)
 * [使用mutt作为email客户端](http://www.jianshu.com/p/bebbf2db2cd8)
 * [Mutt cheat sheet](http://sheet.shiar.nl/mutt)
+* [Mutt: limit or search by date](http://promberger.info/linux/2009/07/23/mutt-limit-or-search-by-date/)
 
 ## Exim ##
 
