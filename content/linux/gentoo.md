@@ -416,9 +416,32 @@ gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的�
     $ gcc-config -c
     x86_64-pc-linux-gnu-4.9.3
 
+
 ## 卸载X11相关 ##
 
 还未操作, 先记录:  [How to remove X11](https://forums.gentoo.org/viewtopic-p-6667611.html)
+
+
+## 清理 /usr/portage/{distfiles,packages} ##
+
+默认情况下, 源文件在`/usr/portage/distfiles`目录, 二进制文件在`/usr/portage/packages`. 这些都可以删除.
+
+不过保留下来以后可以方便的降级.
+
+使用`eclean`命令可以方便的删除过时/废弃的文件. 而保留有用的.
+
+	$ eclean [global-option] ... <action> [action-option] ...
+	$ eclean-dist [global-option, distfiles-option] ...
+	$ eclean-pkg [global-option, packages-option] ...
+
+`eclean distfiles`等价于`eclean-dist`
+
+参考:
+
+* [Gentoolkit](https://wiki.gentoo.org/wiki/Gentoolkit)
+* [eclean](https://wiki.gentoo.org/wiki/Eclean)
+* [Gentoo FAQ: Source tarballs are collecting in /usr/portage/distfiles/. Is it safe to delete these files?](https://wiki.gentoo.org/wiki/FAQ#Source_tarballs_are_collecting_in_.2Fusr.2Fportage.2Fdistfiles.2F._Is_it_safe_to_delete_these_files.3F)
+
 
 ## 其它资源 ##
 
