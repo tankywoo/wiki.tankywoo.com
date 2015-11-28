@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>markdown - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » markdown
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="markdown">MarkDown</h2>
+<h2 id="about">About</h2>
+<p><a href="http://daringfireball.net/projects/markdown/">Markdown</a> is written by <a href="http://daringfireball.net/projects/markdown/">Perl</a><br />
+And there are some implementation by other languages, such as <a href="http://freewisdom.org/projects/python-markdown/">Python</a>, in Gentoo, it is <code>dev-python/markdown</code></p>
+<h2 id="syntax">Syntax</h2>
+<ul>
+<li><a href="http://daringfireball.net/projects/markdown/syntax">Official Doc</a></li>
+<li><a href="http://wowubuntu.com/markdown">Markdown 语法说明</a></li>
+<li><a href="https://reader.mx/p/6529">献给写作者的 Markdown 新手指南</a></li>
+<li><a href="http://liufeiyu.cn/markdown/2012/12/28/markdown-learning.html">Markdown语法示例</a></li>
+</ul>
+<h2 id="markdown-in-vim">Markdown in VIM</h2>
+<ul>
+<li><a href="http://www.vim.org/scripts/script.php?script_id=2882">offical-Markdown</a></li>
+<li><a href="https://github.com/plasticboy/vim-markdown">plasticboy/vim-markdown</a></li>
+<li><a href="https://github.com/hallison/vim-markdown/tree/changes">hallison/vim-markdown</a></li>
+</ul>
+<h2 id="css">CSS</h2>
+<ul>
+<li><a href="https://github.com/gcollazo/mou-theme-github2">Mou Theme</a></li>
+<li><a href="http://uedsky.com/static/css/markdown-github.css">markdown-github.css</a></li>
+<li><a href="https://github.com/mrcoles/markdown-css">markdown-css</a></li>
+<li><a href="http://kevinburke.bitbucket.org/markdowncss">markdowncss</a></li>
+</ul>
+<h2 id="_1">遇到的问题</h2>
+<h3 id="code">code标签里使用`</h3>
+<p>在md语法里, 反引号(backtick quotes) 本身就是来定义一个 <code>&lt;code&gt;</code> 标签, 如果还需要使用它, 可以使用多个反引号来括住.</p>
+<p><a href="http://daringfireball.net/projects/markdown/syntax#code">官方文档</a> 里给出的样例:</p>
+<div class="hlcode"><pre><span class="k">To</span> <span class="nb">include</span> <span class="nx">a</span> <span class="nb">literal</span> <span class="nx">backtick</span> <span class="nx">character</span> <span class="nx">within</span> <span class="nx">a</span> <span class="nb">code</span> <span class="nx">span</span><span class="p">,</span> <span class="nx">you</span> <span class="nx">can</span> <span class="nx">use</span> <span class="nb">multiple</span> <span class="nx">backticks</span> <span class="nx">as</span> <span class="nx">the</span> <span class="nx">opening</span> <span class="ow">and</span> <span class="nx">closing</span> <span class="nx">delimiters</span><span class="p">:</span>
+<span class="sb">``</span><span class="nx">There</span> <span class="nx">is</span> <span class="nx">a</span> <span class="nb">literal</span> <span class="nx">backtick</span> <span class="p">(</span><span class="sb">`) here.``</span>
+
+<span class="sb">which will produce this:</span>
+<span class="sb">&lt;p&gt;&lt;code&gt;There is a literal backtick (`</span><span class="p">)</span> <span class="nx">here.</span><span class="o">&lt;/</span><span class="nb">code</span><span class="o">&gt;&lt;/</span><span class="nx">p</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>PS: vimwiki好像没解决方法...</p>
+<h3 id="_2">支持表格</h3>
+<p>原生的md是不支持表格的, 但是很多第三方实现都已经支持了.</p>
+<p>比如md的py实现 <a href="https://github.com/trentm/python-markdown2">python-markdown2</a> 就可以实现. 可以参考 <a href="https://github.com/trentm/python-markdown2/wiki/wiki-tables">官方wiki</a></p>
+<h3 id="pre">分隔两个pre</h3>
+<p>在md里, 使用 <code>Tab</code> 或 <code>4个空格</code> 来生成 <code>&lt;pre&gt;</code> 标签.<br />
+但是就算中间有空行, 也依然会被放在同一个 pre 里.  </p>
+<p>在list列表(ul)里, 如果紧接着pre, 则必须要空两个tab才行.</p>
+<p>可以使用 html 的注释 <code>&lt;!-- comment --&gt;</code> 来分隔两个 pre</p>
+<p>参考: <a href="http://meta.stackoverflow.com/questions/152358/separating-consecutive-code-blocks">Separating consecutive code blocks</a></p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

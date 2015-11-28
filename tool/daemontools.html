@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>daemontools - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » daemontools
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>daemontools is a collection of tools for managing UNIX services.</p>
+<p>它用于监控服务的运行状态, 如果服务退出, 则会自动重启服务, 以保证服务的正常运行.</p>
+<h2 id="_1">使用</h2>
+<h3 id="gentoo">Gentoo</h3>
+<p>emerge 安装 <code>sys-process/daemontools</code> 后, 它自动在 <code>/分区</code> 下新建一个 <code>/service</code> 目录. </p>
+<p><code>svscan</code> 服务会对这个目录下的子目录作检测, 如果子目录里有 <code>run</code> sh脚本, 则会使用 <code>supervise</code> 启动它.</p>
+<p>注意 run 脚本要加上 <strong>可执行</strong> 权限.</p>
+<p>所以只需要把要管理的服务在 <code>/service</code> 下, 把 svscan 加入到启动项, 就可以了.</p>
+<p>参考: <a href="http://cr.yp.to/daemontools/faq/create.html">Service creation</a></p>
+<p>daemontools 还有一些工具, 如 <code>svc</code>, <code>svstat</code> 等</p>
+<p><code>svc</code> 用于控制单个服务的 up, down, pause, continue, hangup 等:</p>
+<div class="hlcode"><pre><span class="n">svc</span> <span class="o">-</span><span class="n">h</span> <span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">yourdaemon</span><span class="o">:</span> <span class="n">sends</span> <span class="n">HUP</span> 
+<span class="n">svc</span> <span class="o">-</span><span class="n">t</span> <span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">yourdaemon</span><span class="o">:</span> <span class="n">sends</span> <span class="n">TERM</span><span class="p">,</span> <span class="n">and</span> <span class="n">automatically</span> <span class="n">restarts</span> <span class="n">the</span> <span class="n">daemon</span> <span class="n">after</span> <span class="n">it</span> <span class="n">dies</span> 
+<span class="n">svc</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">yourdaemon</span><span class="o">:</span> <span class="n">sends</span> <span class="n">TERM</span><span class="p">,</span> <span class="n">and</span> <span class="n">leaves</span> <span class="n">the</span> <span class="n">service</span> <span class="n">down</span> 
+<span class="n">svc</span> <span class="o">-</span><span class="n">u</span> <span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">yourdaemon</span><span class="o">:</span> <span class="n">brings</span> <span class="n">the</span> <span class="n">service</span> <span class="n">back</span> <span class="n">up</span> 
+<span class="n">svc</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">yourdaemon</span><span class="o">:</span> <span class="n">runs</span> <span class="n">the</span> <span class="n">service</span> <span class="n">once</span>
+</pre></div>
+
+
+<p><code>svstat</code> 用于查看某个服务的状态, 比如:</p>
+<div class="hlcode"><pre><span class="err">»</span> <span class="n">sudo</span> <span class="n">svstat</span> <span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">test</span>
+<span class="o">/</span><span class="n">service</span><span class="o">/</span><span class="n">test</span><span class="o">:</span> <span class="n">up</span> <span class="p">(</span><span class="n">pid</span> <span class="mi">1541</span><span class="p">)</span> <span class="mi">1</span> <span class="n">seconds</span>
+</pre></div>
+
+
+<h3 id="ubuntu">Ubuntu</h3>
+<p><strike>安装了 daemontools, 发现并没有自动新建 <code>/service</code> 目录, 也没有启动脚本...</strike></p>
+<p>ubuntu 有个 <code>daemontools-run</code> 程序, 我原先是把服务放在自己新建的 /service 下的, 安装后, 它会建立 <code>/etc/service</code> 这个目录, 并把 /service 的内容 mv 过去, 然后 <code>ln -s</code> 建一个软连接到 /service, 如果开始没有新建 /service 目录, 则不会做软连接.</p>
+<p>装好 daemontools-run 后, 还会创建启动脚本 <code>/etc/init/svscan.conf</code>.</p>
+<p>可参考:</p>
+<ul>
+<li><a href="http://isotope11.com/blog/manage-your-services-with-daemontools">Manage your services with Daemontools</a></li>
+<li><a href="http://cr.yp.to/daemontools/start.html">How to start daemontools</a></li>
+</ul>
+<p>网上找了两个启动脚本:</p>
+<ul>
+<li><a href="https://gist.github.com/gregory80/563598">Configuring Daemontools for Ubuntu 10</a></li>
+<li><a href="https://blog.darmasoft.net/2011/06/24/chkconfig-compatible-daemontools-init-script.html">chkconfig-compatible init script for daemontools / svscan</a></li>
+</ul>
+<h2 id="_2">参考链接</h2>
+<ul>
+<li><a href="http://cr.yp.to/daemontools.html">官方网站</a> (官网里的资料都非常有用)</li>
+<li><a href="http://isotope11.com/blog/manage-your-services-with-daemontools">Manage your services with Daemontools</a></li>
+<li><a href="http://idaemon.net/post-797.html">使用daemontools确保指定进程的运行</a></li>
+<li><a href="http://blog.teksol.info/pages/daemontools/tutorial">Daemontools: Tutorial</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

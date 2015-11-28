@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>mitmproxy - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » mitmproxy
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">简介</a></li>
+<li><a href="#mitmproxy">mitmproxy</a></li>
+<li><a href="#mitmdump">mitmdump</a></li>
+<li><a href="#_2">其它选择?</a></li>
+</ul>
+</div>
+<h2 id="_1">简介</h2>
+<p><a href="http://mitmproxy.org/">mitmproxy</a> 是一个HTTP抓包命令行工具集. 包含<code>mitmproxy</code>和<code>mitmdump</code></p>
+<ul>
+<li>mitmproxy: 交互式的, http包代理, 分析, 修改等.</li>
+<li>mitmdump: 非交互式的. 轻量级的tcpdump for http.</li>
+</ul>
+<p>mitmproxy工具集是用Python写的, 直接pip安装:</p>
+<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">mitmproxy</span>
+</pre></div>
+
+
+<p><a href="http://docs.mitmproxy.org/en/stable/">文档</a></p>
+<p><img alt="mitmproxy screenshot" src="http://mitmproxy.org/images/mitmproxy.png" /></p>
+<h2 id="mitmproxy">mitmproxy</h2>
+<blockquote>
+<p>An interactive console program that allows traffic flows to be intercepted, inspected, modified and replayed.</p>
+<p>An interactive, SSL-capable man-in-the-middle proxy for HTTP with a console interface.</p>
+</blockquote>
+<p><a href="http://docs.mitmproxy.org/en/stable/mitmproxy.html">详细文档</a> 非常详细, 截图介绍了交互窗口各区域的说明.</p>
+<p>执行<code>mitmproxy</code>命令默认进入交互式终端, 监控 <code>0.0.0.0:8080</code>, 这些都可以写入配置文件或者用命令行参数覆盖.</p>
+<p>测试可以本地用<code>python -m SimpleHTTPServer</code>起一个http server, 然后<code>curl --proxy http://localhost:8080 http://example.com</code>来经过mitmproxy代理访问网站. 或者浏览器设置一个proxy.</p>
+<p>mitmproxy交互界面支持鼠标点击到某个请求展开, 也可以使用上下移动到指定的请求并按Enter展开; Tab或左右用于在展开后的Request, Response, Detail之间切换.</p>
+<p>具体可以按<code>?</code>问号在请求列表(Flow List)页面或请求(Flow View)页面查看帮助.</p>
+<h2 id="mitmdump">mitmdump</h2>
+<blockquote>
+<p>Think tcpdump for HTTP - the same functionality as mitmproxy without the frills.</p>
+<p>Command-line version of mitmproxy. Think tcpdump for HTTP.</p>
+</blockquote>
+<p><a href="http://docs.mitmproxy.org/en/stable/mitmdump.html">详细文档</a></p>
+<p>未研究 TODO</p>
+<h2 id="_2">其它选择?</h2>
+<ul>
+<li><a href="https://www.v2ex.com/t/219374">Mac 下 Http 协议抓包工具哪款比较好呢</a></li>
+<li><a href="https://www.v2ex.com/t/233892">Mac 下抓 http 请求的工具求推荐</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Practical Vim - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#book">book</a> » Practical Vim
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#dot">第一章 .(dot)命令</a></li>
+<li><a href="#normal-mode">第二章 普通模式(Normal Mode)</a></li>
+<li><a href="#insert-mode">第三章 插入模式(Insert Mode)</a></li>
+<li><a href="#virtual-mode">第四章 可视模式(Virtual Mode)</a></li>
+<li><a href="#_1">第五章 命令行模式</a></li>
+<li><a href="#_2">第六章 管理多个文件</a></li>
+</ul>
+</div>
+<h2 id="dot">第一章 .(dot)命令</h2>
+<blockquote>
+<p><code>.</code> 命令可以重复上次的修改</p>
+</blockquote>
+<p>Vim把进入插入模式到退出形成一次修改, <code>i{insert something}&lt;Esc&gt;</code>, 在插入模式中移动光标会重置修改状态</p>
+<p><code>&gt;G</code> 增加从当前行到文档末尾的缩进层级</p>
+<p><code>A</code> 在当前行的结尾添加内容(等价<code>$a</code>), 类似还有:</p>
+<ul>
+<li><code>C</code> = <code>c$</code></li>
+<li><code>s</code> = <code>cl</code></li>
+<li><code>S</code> = <code>^c</code></li>
+<li><code>I</code> = <code>^i</code> </li>
+</ul>
+<p>查找:</p>
+<ul>
+<li><code>f{char}</code> 行内查找下一处指定字符出现的位置, 使用<code>;</code> 重复上次查找, 使用<code>,</code>回退</li>
+<li><code>F{char}</code> 行内查找上一个指定字符</li>
+<li><code>/{pattern}</code> 和 <code>?{pattern}</code> 分别是文档中查找下/上一处匹配, 重复是<code>n</code>, 回退是<code>N</code></li>
+</ul>
+<h2 id="normal-mode">第二章 普通模式(Normal Mode)</h2>
+<blockquote>
+<p>如果在插入模式使用了上下左右光标键，会产生一个新的撤销块 (P16)</p>
+<p>构造一个可重复的撤销块 (配合 点<code>.</code>操作符使用)</p>
+</blockquote>
+<p>这里要注意什么是<code>一次修改</code>. <code>u</code>会撤销最后一次修改.</p>
+<p><a href="http://vimgolf.com/">http://vimgolf.com/</a> 尽量用最少的按键次数实现一个操作, 一个有趣的网站</p>
+<p><code>db</code>反向删除, 从光标开始位置到单词开头的内容(不包括光标下的字符)
+<code>dw</code>正向删除, 从光标开始位置到下一个单词前(包括光标下的字符)
+<code>daw</code> 反向删除, 从光标位置开始到前一个单词后(包括光标下的字符)</p>
+<p>简单的算数运算:</p>
+<blockquote>
+<p><code>&lt;C-a&gt;</code> 和 <code>&lt;C-x&gt;</code> 会把当前光标之上或之后的数值加1/减1
+<code>count&lt;C-a&gt;</code> 会把数值加上 [count]</p>
+</blockquote>
+<p>这个依然可以配合点操作符</p>
+<p><code>cW</code> 从当前光标删除一个单词.</p>
+<blockquote>
+<p>能够重复，就别用次数</p>
+</blockquote>
+<p>之前的如<code>dw</code>, 都可以配合上次数, 如<code>2dw</code>, <code>d2w</code></p>
+<p><code>操作符 + 动作命令 = 操作</code></p>
+<p>如<code>{d:操作符}{w:动作}</code>删除单词. "w" 是词移动命令。实际上，"d" 命令后面可以跟任何 "动作" (motion) 命令，它会删除从当前位置到光标移动到的目标位置的全部内容. <a href="http://vimcdoc.sourceforge.net/doc/usr_04.html#04.1">refer</a></p>
+<p>常用操作符:</p>
+<ul>
+<li><code>c</code>: 修改</li>
+<li><code>d</code>: 删除</li>
+<li><code>y</code>: 复制到寄存器</li>
+<li><code>g~</code>: 反转大小写</li>
+<li><code>gu</code>: 转换为小写</li>
+<li><code>gU</code>: 转换为大写</li>
+<li><code>&gt;</code>: 增加缩进</li>
+<li><code>&lt;</code>: 减小缩进</li>
+<li><code>=</code>: 自动缩进</li>
+</ul>
+<p>当操作符连续调用两次, 会作用于当前行. 如 <code>dd</code>, <code>&gt;&gt;</code>, <code>gUgU</code>或简写<code>gUU</code></p>
+<h2 id="insert-mode">第三章 插入模式(Insert Mode)</h2>
+<p>在插入模式中更正错误，如果出错的位置在单词开头，删除整个单词再重新输入比退格键要快.</p>
+<ul>
+<li><code>&lt;C-h&gt;</code> 删除前一个字符(类似退格键)</li>
+<li><code>&lt;C-w&gt;</code> 删除前一个单词</li>
+<li>
+<p><code>&lt;C-u&gt;</code> 删至行首</p>
+</li>
+<li>
+<p><code>&lt;C-[&gt;</code> 和<code>&lt;Esc&gt;</code> 类似，也是切换到普通模式</p>
+</li>
+<li><code>&lt;C-o&gt;</code> 切换到 <code>插入-普通模式</code>, 是普通模式的一个特例, 进入此模式，执行一个普通模式命令后，会自动切换回插入模式.</li>
+</ul>
+<p><code>zz</code> 命令可以重绘窗口，使当前行在窗口居中.</p>
+<p>使用<code>&lt;C-o&gt;</code>配合<code>zz</code>(即<code>&lt;C-o&gt;zz</code>)可以方便的在插入模式写代码时，让当前行从末尾移到屏幕中央.</p>
+<p><code>K</code> 查看光标下单词的手册页
+<code>J</code> 把当前行和下一行连接在一起</p>
+<p>@todo 寄存器 tip 15, P 28</p>
+<p>在插入模式中, 使用<code>&lt;C-r&gt;=</code>可以使用寄存器做运算.</p>
+<div class="hlcode"><pre><span class="nt">&lt;i&gt;&lt;C</span><span class="na">-r</span><span class="nt">&gt;</span>=(40+60)*5 + 500/10<span class="nt">&lt;CR&gt;</span>
+</pre></div>
+
+
+<p><code>C-v{code}</code>, 其中{code}是要插入的字符编码</p>
+<div class="hlcode"><pre><span class="cp"># 输入A</span>
+<span class="o">&lt;</span><span class="n">C</span><span class="o">-</span><span class="n">v</span><span class="o">&gt;</span><span class="mo">065</span>
+
+<span class="cp"># 输入一个unicode,</span>
+<span class="cp"># :h i_CTRL-V _digit</span>
+<span class="o">&lt;</span><span class="n">C</span><span class="o">-</span><span class="n">v</span><span class="o">&gt;</span><span class="n">u00bf</span>
+</pre></div>
+
+
+<p>光标移到字符上，使用<code>ga</code>可以查看它的编码.</p>
+<p><code>&lt;C-k&gt;{char1}{char2}</code> 二合字母(digraph)可以打出一些特殊字符</p>
+<div class="hlcode"><pre><span class="cp"># 字符 «</span>
+<span class="o">&lt;</span><span class="n">C</span><span class="o">-</span><span class="n">k</span><span class="o">&gt;&lt;&lt;</span>
+</pre></div>
+
+
+<p>@todo tip 19 P33, 虚拟替换模式</p>
+<h2 id="virtual-mode">第四章 可视模式(Virtual Mode)</h2>
+<p>可视模式有三种:</p>
+<ul>
+<li>字符文本</li>
+<li>行文本</li>
+<li>块文本</li>
+</ul>
+<p><code>viw</code>高亮选择当前光标下的单词, 然后使用<code>c</code>修改所选内容, 这样会删掉单词并进入插入模式.</p>
+<ul>
+<li><code>v</code>: 激活面向字符的可视模式</li>
+<li><code>V</code>: 面向行</li>
+<li><code>C-v</code>: 面向列块</li>
+<li><code>gv</code>: 重选上次的高亮选区</li>
+<li><code>o</code>: 切换高亮选取的活动端</li>
+</ul>
+<p>高亮选取的范围由两个端点界定, 其中一个固定, 一个岁光标移动. <code>o</code>可修改固定端点. (P37)</p>
+<p>在可视模式下, dot(<code>.</code>)操作符一般对行操作有用.</p>
+<p>可视模式一般使用一次性的操作, 如果是重复操作, 最好使用操作符命令.</p>
+<p>可视模式配合一些动作命令也很强大:</p>
+<ul>
+<li><code>Vr-</code>: 将一行全部替换为减号</li>
+<li><code>&lt;C-v&gt;jje</code> 和 <code>&lt;C-v&gt;jj$</code>: P44 和 P45的例子</li>
+</ul>
+<h2 id="_1">第五章 命令行模式</h2>
+<p>按<code>:</code>进入命令行模式, 在命令行模式下执行的命令又称<code>Ex命令</code>. (源至ex行编辑器, vi先祖)</p>
+<p><code>:h ex-cmd-index</code> 查看完成的Ex命令列表</p>
+<ul>
+<li><code>:[range]delete [x]</code>: 删除指定范围的行 [到寄存器x中]</li>
+<li><code>:[range]yank [x]</code>: 复制指定范围的行 [到寄存器x中]</li>
+<li><code>:[range]copy {address}</code>: 把指定范围内的行拷贝到 {address} 所指定的行之下</li>
+<li><code>:[range]move {address}</code>: 把指定范围内的行移动到 {address} 所指定的行之下</li>
+<li><code>:[range]normal {commands}</code>: 对指定范围内的没一行执行普通模式命令 {commands}</li>
+</ul>
+<p>很多Ex命令可以用<code>[range]</code>指定要操作的范围.可以在某一范围内的所有行执行操作.</p>
+<p><code>:print</code> 命令(简写<code>:p</code>)用于在命令行显示指定行的内容</p>
+<p>比如<code>:2p</code>移动到第二行并显示内容; <code>:2,5p</code>显示第2~5行的内容; <code>:.,$p</code>显示当前行到最后一行的内容; <code>%p</code>显示所有内容</p>
+<p>使用<code>VG</code>高亮选取后按<code>:</code>进入命令行模式, 会自动填充<code>:'&lt;,'&gt;</code>, 这个也是Ex命令</p>
+<p>用模式指定范围, 用偏移对地址进行修正. TODO</p>
+<p><code>[range]</code>定义的范围语法可以是行号、位置标记、查找模式、偏移:</p>
+<ul>
+<li><code>1</code>: 文件第一行</li>
+<li><code>0</code>: 虚拟行, 文件第一行上方</li>
+<li><code>$</code>: 文件最后一行</li>
+<li><code>.</code>: 光标所在行</li>
+<li><code>'m</code>: 包含位置标记m的行</li>
+<li><code>'&lt;</code>: 高亮选取的起始行</li>
+<li><code>'&gt;</code>: 高亮选取的结束行</li>
+<li><code>%</code>: 整个文件 (<code>:1,$</code>的简写)</li>
+</ul>
+<p>复制, 使用<code>:copy</code> 或者 <code>:co</code> 或 <code>:t</code>. 如</p>
+<ul>
+<li><code>:6t.</code> 将第6行复制到当前行</li>
+<li><code>:t6</code> 将当前行复制到第6行下</li>
+<li><code>:t.</code> 同<code>yyp</code></li>
+<li><code>:t$</code> 将当前行复制到文件末尾</li>
+<li><code>:'&lt;,'&gt;t0</code> 将高亮选中的行复制到文件开头</li>
+</ul>
+<p>快速跳会原来的位置 <code>C-o</code></p>
+<blockquote>
+<p>普通模式命令适合在本地操作; Ex命令适合远距离操作</p>
+</blockquote>
+<p><code>:normal</code> 配合 <code>.</code> 命令, 可以在多行完成相同的内容, 如:</p>
+<p><code>A;&lt;ESC&gt;</code> -&gt; <code>jVG</code> -&gt; <code>:'&lt;.'&gt;normal .</code> 从当前行到文件末尾, 每行最后加一个分号</p>
+<p>更简单的方式: <code>.,$normal A;</code></p>
+<p><code>:%normal i//</code>所有行加上注释</p>
+<p><code>.</code>命令无法重复由Vim命令行中做出的修改, 改为使用<code>@:</code>重复上次的Ex命令. 然后可以使用<code>@@</code>来重复操作</p>
+<p>在Ex命令自动补全时, 键入<code>&lt;C-d&gt;</code>会显示可用的补全列表, 如:</p>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">col</span><span class="o">&lt;</span><span class="n">C</span><span class="o">-</span><span class="n">d</span><span class="o">&gt;</span>
+<span class="n">colder</span>       <span class="n">colorscheme</span>
+</pre></div>
+
+
+<p>对于命令历史, <code>q:</code>打开Ex命令的历史记录窗口; <code>q\</code>打开查找命令的历史记录窗口</p>
+<p>在Ex命令窗口输入<code>:!{command}</code> 可以运行一次shell命令. 执行<code>:shell</code>可以启动一个交互的shell会话.</p>
+<h2 id="_2">第六章 管理多个文件</h2>
+<blockquote>
+<p>我们所编辑的只是文件在内存中的映像, 也就是Vim的"缓冲区"</p>
+</blockquote>
+<p>如果vim同时打开多个文件, 会把这些文件都加到缓存区, 但只有一个是激活的.</p>
+<p>使用<code>:ls</code>可以查看缓冲区列表:</p>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">ls</span>
+  <span class="mi">1</span> <span class="o">%</span><span class="n">a</span>   <span class="s">&quot;a.txt&quot;</span>                        <span class="n">line</span> <span class="mi">1</span>
+  <span class="mi">2</span>      <span class="s">&quot;b.txt&quot;</span>                        <span class="n">line</span> <span class="mi">0</span>
+</pre></div>
+
+
+<p>使用<code>:bnext</code>可以切换到下一个缓冲区:</p>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">ls</span>
+  <span class="mi">1</span> <span class="err">#</span>    <span class="s">&quot;a.txt&quot;</span>                        <span class="n">line</span> <span class="mi">1</span>
+  <span class="mi">2</span> <span class="o">%</span><span class="n">a</span>   <span class="s">&quot;b.txt&quot;</span>                        <span class="n">line</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p>其中<code>%</code>表示当前窗口中可见的缓冲区, <code>a</code>表示active, <code>#</code>表示轮转文件, 也就是切换过来的前一个缓冲区. <code>&lt;C-^&gt;</code>可以在两者间快速切换.</p>
+<ul>
+<li><code>:bprev</code>: 切换到前一个缓冲区</li>
+<li><code>:bnext</code>: 切换到下一个缓冲区</li>
+<li><code>:bfirst</code>: 切换到第一个缓冲区</li>
+<li><code>:blast</code>: 切换到最后一个缓冲区</li>
+<li><code>:b N</code>: 切换到第N个缓冲区</li>
+</ul>
+<p>这里<code>b</code>表示<code>buffer</code>简写</p>
+<p>如果缓冲区有修改, 则<code>:ls</code>会显示<code>+</code>:</p>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">ls</span>
+  <span class="mi">1</span> <span class="err">#</span>    <span class="s">&quot;a.txt&quot;</span>                        <span class="n">line</span> <span class="mi">1</span>
+  <span class="mi">2</span> <span class="o">%</span><span class="n">a</span> <span class="o">+</span> <span class="s">&quot;b.txt&quot;</span>                        <span class="n">line</span> <span class="mi">18</span>
+</pre></div>
+
+
+<p>此时如果要切换缓冲区, 需要加<code>!</code>强制执行, 如<code>:bnext!</code>, 此时当前缓存冲会被标记为隐藏缓冲区(<code>h</code>):</p>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">ls</span>
+  <span class="mi">1</span> <span class="o">%</span><span class="n">a</span>   <span class="s">&quot;a.txt&quot;</span>                        <span class="n">line</span> <span class="mi">1</span>
+  <span class="mi">2</span> <span class="err">#</span><span class="n">h</span> <span class="o">+</span> <span class="s">&quot;b.txt&quot;</span>                        <span class="n">line</span> <span class="mi">18</span>
+</pre></div>
+
+
+<p><code>:args</code>类似<code>:ls</code>, 不过显示的比较简陋.</p>
+<p>分割窗口:</p>
+<ul>
+<li><code>&lt;C-w&gt;s</code>: 水平分割</li>
+<li><code>&lt;C-w&gt;v</code>: 垂直分割</li>
+</ul>
+<p>排列窗口:</p>
+<ul>
+<li><code>&lt;C-w&gt;=</code> 等高、等宽</li>
+<li><code>&lt;C-w&gt;_</code> 最大化活动窗口高度</li>
+<li><code>&lt;C-w&gt;|</code> 最大化活动窗口宽度</li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

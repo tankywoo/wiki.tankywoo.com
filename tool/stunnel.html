@@ -1,0 +1,213 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>stunnel - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » stunnel
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">简介</a></li>
+<li><a href="#_2">配置</a></li>
+<li><a href="#_3">其它</a><ul>
+<li><a href="#_4">加密</a></li>
+<li><a href="#centos6">CentOS6相关</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="_1">简介</h2>
+<p><a href="https://www.stunnel.org/index.html">stunnel</a> 是一个自由的跨平台软件, 用于提供全局的TLS/SSL服务. 针对本身无法进行TLS或SSL通信的客户端及服务器, Stunnel可提供安全的加密连接. --- 引自<a href="https://zh.wikipedia.org/wiki/Stunnel">维基百科</a></p>
+<p>stunnel 是一个c/s结构. 在不可信的网络环境里(如公网), 通过stunnel 的server 和 client之间建立安全的加密隧道, 然后两边的网络服务之间通信就可以通过这个安全隧道来通信.</p>
+<p>比如redis主从环境, redis自身是没有提供安全的通信接口的, 所以这块需要配合stunnel来做:</p>
+<p><img alt="redis stunnel" src="http://tankywoo-wb.b0.upaiyun.com/redis-stunnel.png" /></p>
+<p>(图片摘自<a href="https://www.packtpub.com/books/content/using-redis-hostile-environment-advanced">USING REDIS IN A HOSTILE ENVIRONMENT</a>)</p>
+<p>以上图为例, redis client和server是跨公网的不可信环境, 如果两者需要通信, 则需要配合一个安全的通信隧道, 如stunnel.</p>
+<p>加上stunnel后, 相当于redis client/server 都隐藏在后端.</p>
+<p>在redis server端, 部署stunnel server, 一端连接redis server, 另一端对公网开放(listen)一个安全的加密隧道端口.</p>
+<p>在redis client端, 部署stunnel client, 一端链接 stunnel server, 另一端对内开放(listen)一个安全的加密隧道端口.</p>
+<p>redis client连接stunnel client的listen端口, 最终就和redis server通信.</p>
+<h2 id="_2">配置</h2>
+<p>配置的样例:</p>
+<p>stunnel server (gentoo 环境):</p>
+<div class="hlcode"><pre><span class="n">setuid</span> <span class="o">=</span> <span class="n">stunnel</span>
+<span class="n">setgid</span> <span class="o">=</span> <span class="n">stunnel</span>
+<span class="n">pid</span> <span class="o">=</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">stunnel</span><span class="o">/</span><span class="n">stunnel</span><span class="p">.</span><span class="n">pid</span>
+
+<span class="p">;</span> <span class="n">Some</span> <span class="n">performance</span> <span class="n">tunings</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="n">l</span><span class="o">:</span><span class="n">TCP_NODELAY</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="n">r</span><span class="o">:</span><span class="n">TCP_NODELAY</span><span class="o">=</span><span class="mi">1</span>
+
+<span class="p">;</span> <span class="n">The</span> <span class="n">following</span> <span class="n">options</span> <span class="n">provide</span> <span class="n">additional</span> <span class="n">security</span> <span class="n">at</span> <span class="n">some</span> <span class="n">performance</span> <span class="n">penalty</span>
+<span class="p">;</span> <span class="n">Default</span> <span class="n">ECDH</span><span class="o">/</span><span class="n">DH</span> <span class="n">parameters</span> <span class="n">are</span> <span class="n">strong</span><span class="o">/</span><span class="n">conservative</span><span class="p">,</span> <span class="n">so</span> <span class="n">it</span> <span class="n">is</span> <span class="n">quite</span> <span class="n">safe</span> <span class="n">to</span>
+<span class="p">;</span> <span class="n">comment</span> <span class="n">out</span> <span class="n">these</span> <span class="n">lines</span> <span class="n">in</span> <span class="n">order</span> <span class="n">to</span> <span class="n">get</span> <span class="n">a</span> <span class="n">performance</span> <span class="n">boost</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">SINGLE_ECDH_USE</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">SINGLE_DH_USE</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="n">NO_SSLv2</span>
+<span class="n">compression</span> <span class="o">=</span> <span class="n">zlib</span>
+<span class="n">debug</span> <span class="o">=</span> <span class="n">notice</span>
+
+<span class="n">CAfile</span> <span class="o">=</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">ca</span><span class="p">.</span><span class="n">pem</span>
+<span class="n">cert</span> <span class="o">=</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">stunnel</span><span class="p">.</span><span class="n">pem</span>
+<span class="n">CRLfile</span> <span class="o">=</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">crl</span><span class="p">.</span><span class="n">pem</span>
+<span class="n">verify</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="p">[</span><span class="n">redis</span><span class="p">]</span>
+<span class="n">connect</span> <span class="o">=</span> <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">6379</span>
+<span class="n">accept</span> <span class="o">=</span> <span class="mi">7379</span>
+</pre></div>
+
+
+<p>stunnel client (ubuntu 环境):</p>
+<div class="hlcode"><pre><span class="n">setuid</span> <span class="o">=</span> <span class="n">stunnel4</span>
+<span class="n">setgid</span> <span class="o">=</span> <span class="n">stunnel4</span>
+<span class="n">pid</span> <span class="o">=</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">stunnel4</span><span class="o">/</span><span class="n">stunnel4</span><span class="p">.</span><span class="n">pid</span>
+
+<span class="p">;</span> <span class="n">Some</span> <span class="n">performance</span> <span class="n">tunings</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="n">l</span><span class="o">:</span><span class="n">TCP_NODELAY</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="n">r</span><span class="o">:</span><span class="n">TCP_NODELAY</span><span class="o">=</span><span class="mi">1</span>
+
+<span class="p">;</span> <span class="n">The</span> <span class="n">following</span> <span class="n">options</span> <span class="n">provide</span> <span class="n">additional</span> <span class="n">security</span> <span class="n">at</span> <span class="n">some</span> <span class="n">performance</span> <span class="n">penalty</span>
+<span class="p">;</span> <span class="n">Default</span> <span class="n">ECDH</span><span class="o">/</span><span class="n">DH</span> <span class="n">parameters</span> <span class="n">are</span> <span class="n">strong</span><span class="o">/</span><span class="n">conservative</span><span class="p">,</span> <span class="n">so</span> <span class="n">it</span> <span class="n">is</span> <span class="n">quite</span> <span class="n">safe</span> <span class="n">to</span>
+<span class="p">;</span> <span class="n">comment</span> <span class="n">out</span> <span class="n">these</span> <span class="n">lines</span> <span class="n">in</span> <span class="n">order</span> <span class="n">to</span> <span class="n">get</span> <span class="n">a</span> <span class="n">performance</span> <span class="n">boost</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">SINGLE_ECDH_USE</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">SINGLE_DH_USE</span>
+
+<span class="n">options</span> <span class="o">=</span> <span class="n">NO_SSLv2</span>
+<span class="n">compression</span> <span class="o">=</span> <span class="n">zlib</span>
+<span class="n">debug</span> <span class="o">=</span> <span class="n">notice</span>
+
+<span class="n">cert</span> <span class="o">=</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">client</span><span class="p">.</span><span class="n">pem</span>
+<span class="n">CAfile</span> <span class="o">=</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">ca</span><span class="p">.</span><span class="n">pem</span>
+
+<span class="p">[</span><span class="n">redis</span><span class="p">]</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">connect</span> <span class="o">=</span> <span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="o">:</span><span class="mi">7379</span>     <span class="p">;</span> <span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span> <span class="err">是</span> <span class="n">stunnel</span> <span class="n">server</span><span class="err">的公网</span><span class="n">ip</span>
+<span class="n">accept</span> <span class="o">=</span> <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">7379</span>
+</pre></div>
+
+
+<p>这时, redis client 连接本地stunnel client的7379端口就可以了.</p>
+<p><code>stunnel -version</code> 可以看到一些默认的配置等信息.</p>
+<p>更详细的配置可以参考<a href="https://www.stunnel.org/config_unix.html">stunnel config</a></p>
+<h2 id="_3">其它</h2>
+<h3 id="_4">加密</h3>
+<p>如果想配置加密算法为不加密, 可以两边都加上:</p>
+<div class="hlcode"><pre><span class="n">ciphers</span> <span class="o">=</span> <span class="n">eNULL</span>
+</pre></div>
+
+
+<p>抓包确认是明文传输.</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://www.onsight.com/faq/stunnel/stunnel-faq-1.html">stunnel faq</a></li>
+<li><a href="http://osdir.com/ml/network.stunnel.user/2003-12/msg00058.html">Turning off compression and encryption</a></li>
+</ul>
+<h3 id="centos6">CentOS6相关</h3>
+<p>stunnel(版本4.29)在CentOS6下, 没有启动脚本(<code>rpm -ql stunnel</code> 可以查看相关的安装文件列表). 网上找了下, 下面几个脚本大同大异:</p>
+<ul>
+<li><a href="https://randomcentos.wordpress.com/2015/04/21/installing-stunnel-client-on-centos-6-6/">Installing Stunnel client on CentOS 6.6</a></li>
+<li><a href="http://stackoverflow.com/questions/23545797/how-create-a-service-for-installed-stunnel-on-centos-5-10">how create a service for installed STUNNEL on CentOS 5.10</a></li>
+<li><a href="http://www.riccardoriva.info/blog/?p=1047">Stunnel init script for RHEL / CentOS</a></li>
+<li><a href="https://github.com/duritong/puppet-stunnel/blob/master/files/CentOS/stunnel.init">duritong/puppet-stunnel</a></li>
+</ul>
+<p>另外简单的就是不使用sys-v init脚本, 直接使用upstarts脚本管理服务:</p>
+<div class="hlcode"><pre><span class="cp"># stunnel</span>
+<span class="cp">#</span>
+<span class="n">start</span> <span class="n">on</span> <span class="n">stopped</span> <span class="n">rc</span> <span class="n">RUNLEVEL</span><span class="o">=</span><span class="p">[</span><span class="mi">2345</span><span class="p">]</span>
+
+<span class="n">stop</span> <span class="n">on</span> <span class="n">runlevel</span> <span class="p">[</span><span class="o">!</span><span class="mi">2345</span><span class="p">]</span>
+
+<span class="n">respawn</span>
+<span class="n">exec</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">stunnel</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">stunnel</span><span class="o">/*</span><span class="p">.</span><span class="n">conf</span>
+
+<span class="n">pre</span><span class="o">-</span><span class="n">start</span> <span class="n">script</span>
+  <span class="k">if</span> <span class="o">!</span> <span class="p">[</span> <span class="o">-</span><span class="n">d</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">stunnel</span> <span class="p">];</span> <span class="n">then</span>
+    <span class="n">install</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">o</span> <span class="n">nobody</span> <span class="o">-</span><span class="n">g</span> <span class="n">nobody</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">stunnel</span>
+  <span class="n">fi</span>
+<span class="n">end</span> <span class="n">script</span>
+</pre></div>
+
+
+<p>关于pid目录的文件. 因为stunnel自身没有在启动时去创建<code>/var/run/stunnel</code> 这个目录. 所以需要在服务管理脚本中做处理.</p>
+<p>上面的init脚本借鉴了ubuntu下的/etc/init.d/stunnel, 在<code>pre-start</code>区做了处理. 具体可以看看upstart的手册.</p>
+<p>加入开机启动, 删除/etc/init/stunnel.override文件. 具体可以看看<a href="http://askubuntu.com/questions/19320/how-to-enable-or-disable-services">这篇回答</a>, 非常详细.</p>
+<p>FIPS_mode_set:fingerprint does not match 问题:</p>
+<blockquote>
+<p>openssl-fips是符合FIPS标准的Openssl.
+联邦信息处理标准（Federal Information Processing Standards，FIPS）是一套描述文件处理、加密算法和其他信息技术标准（在非军用政府机构和与这些机构合作的政府承包商和供应商中应用的标准）的标准。</p>
+</blockquote>
+<p>这里可以关闭fips, 详见<a href="https://www.stunnel.org/static/stunnel.html">官方文档</a>, 配置文件中加上:</p>
+<div class="hlcode"><pre><span class="n">fips</span> <span class="o">=</span> <span class="n">no</span>
+</pre></div>
+
+
+<p>文档说5.0版本后默认no, 不过在ubuntu下stunnel4.42, 这个就是关闭的. centos下stunnel4.29是默认开启.</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://www.cnblogs.com/274914765qq/p/4513362.html">OpenSSL基础知识</a></li>
+<li><a href="http://www.vcloudnine.de/stunnel-refuses-to-work-after-update/">Stunnel refuses to work after update</a></li>
+<li><a href="https://www.stunnel.org/pipermail/stunnel-users/2012-March/003608.html">[stunnel-users] FIPS_mode_set:fingerprint does not match</a></li>
+</ul>
+<hr />
+<p>参考资料:</p>
+<ul>
+<li><a href="https://www.packtpub.com/books/content/using-redis-hostile-environment-advanced">USING REDIS IN A HOSTILE ENVIRONMENT</a> 讲解很详细</li>
+<li><a href="http://bencane.com/2014/02/18/sending-redis-traffic-through-an-ssl-tunnel-with-stunnel/">Sending redis traffic through an SSL tunnel with stunnel</a> 讲解很详细</li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-an-ssl-tunnel-using-stunnel-on-ubuntu">How To Set Up an SSL Tunnel Using Stunnel on Ubuntu</a></li>
+<li><a href="http://stephenmeehan.com/2014/04/redis-over-ssl/">Redis over SSL</a></li>
+<li><a href="http://redis.io/topics/security">Redis Security</a></li>
+<li><a href="http://redis.io/topics/encryption">Redis Encryption</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>tig - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » tig
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <blockquote>
+<p>Tig is an ncurses-based text-mode interface for git. It functions mainly as a Git repository browser, but can also assist in staging changes for commit at chunk level and act as a pager for output from various Git commands.</p>
+</blockquote>
+<p><a href="http://jonas.nitro.dk/tig/">Tig</a> 官网的介绍.</p>
+<p><code>Tig</code> 使用 <code>vi</code> 的快捷键模式, 加上和 <code>Git</code> 的完美配合, 非常强大.</p>
+<p>现在才知道这个工具挺惭愧的, 而且这么优秀的工具, 在国内外的Giter中, 知道也并不是很多, 感觉有点匪夷所思.</p>
+<h2 id="pager-mode">Pager Mode</h2>
+<p>使用 git 的命令, 标准输出使用管道(pipe)重定向到stdin流给tig, 则 tig 可以调用其 pager mode 来显示.</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">show</span> <span class="o">|</span> <span class="n">tig</span>
+</pre></div>
+
+
+<h2 id="_1">更多资料</h2>
+<ul>
+<li><a href="http://jonas.nitro.dk/tig/">Tig 官网</a></li>
+<li><a href="http://jonas.nitro.dk/tig/manual.html">Tig 官网手册</a></li>
+<li><a href="https://github.com/jonas/tig">Tig Github</a></li>
+<li><a href="http://blogs.atlassian.com/2013/05/git-tig/">git? tig!</a></li>
+<li><a href="http://ericjmritz.wordpress.com/2013/05/16/using-tig-a-text-interface-for-git/">Using Tig: A Text Interface for Git</a></li>
+<li><a href="http://gitready.com/advanced/2009/07/31/tig-the-ncurses-front-end-to-git.html">tig, the ncurses front-end to Git</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

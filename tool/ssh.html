@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>ssh - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » ssh
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>我们老大上次提到了一句话非常好，他说他每安装一个工具，都要 <code>equery files toolname</code> 来查看这个工具到底会带有多少小工具.<br />
+就像我没有执行 equery 查询，我也不会发现，原来 ssh 自带了这么多好用的工具！</p>
+<ul>
+<li>/usr/bin/scp</li>
+<li>/usr/bin/sftp</li>
+<li>/usr/bin/slogin</li>
+<li>/usr/bin/ssh</li>
+<li>/usr/bin/ssh-add</li>
+<li>/usr/bin/ssh-agent</li>
+<li>/usr/bin/ssh-copy-id</li>
+<li>/usr/bin/ssh-keygen</li>
+<li>/usr/bin/ssh-keyscan</li>
+</ul>
+<h3 id="rtfm">RTFM</h3>
+<div class="hlcode"><pre><span class="n">man</span> <span class="n">ssh</span>
+<span class="n">man</span> <span class="n">sshd</span>
+<span class="n">man</span> <span class="n">ssh_config</span>
+<span class="n">man</span> <span class="n">sshd_config</span>
+</pre></div>
+
+
+<h2 id="ssh-config">关于ssh config</h2>
+<p>ssh_config 有两个文件：<code>~/.ssh/config</code> 和 <code>/etc/ssh/config</code></p>
+<div class="hlcode"><pre><span class="n">config</span><span class="err">文件的格式：</span>
+
+<span class="err">空行和#开头的是注释文件</span>
+<span class="err">用</span><span class="n">Host</span><span class="err">指定特定的主机，</span><span class="o">*</span><span class="err">表示默认的</span>
+<span class="err">具体可以参考</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">config</span><span class="err">样例</span>
+
+<span class="err">比如可能有多个私钥文件，其中对于所有网站，要用私钥</span><span class="n">A</span><span class="err">。而对于某一个网站，必须用私钥</span><span class="n">B</span>
+<span class="err">则可以配置：</span>
+<span class="n">Host</span> <span class="n">xxx</span>
+    <span class="n">IdentityFile</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">tankywoo</span>     <span class="err">#</span> <span class="n">tankywoo</span><span class="err">就是私钥文件</span>
+
+<span class="n">Host</span> <span class="n">name</span><span class="err">还可以用匹配，具体可以</span><span class="n">man</span> <span class="n">ssh_config</span>
+</pre></div>
+
+
+<h2 id="ssh-agent">ssh-agent</h2>
+<p>ssh-agent 是一个ssh私钥的认证代理工具，类似于 windows 下的 <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">Pageant</a></p>
+<p>这类 authentication agent 适合于特别多私钥需要管理，或者私钥有密码等情况</p>
+<p>思想是 ssh-agent 启动一个会话(X-session/login session)，然后其他程序在这个会话里使用ssh时，都会通过使用agent的环境变量自动加载私钥来认证</p>
+<p>ssh-agent 后可以接一些参数和命令，一般接shell名称就可以启动一个新的加载ssh-agent环境变量的会话，如:</p>
+<div class="hlcode"><pre><span class="n">ssh</span><span class="o">-</span><span class="n">agent</span> <span class="n">zsh</span>
+</pre></div>
+
+
+<p>然后就可以用ssh-add加载私钥了，加载后可以用 <code>ssh-add -l</code> 查看当前会话加载了哪些私钥。</p>
+<p>通过 ssh-agent 启动一个会话，然后用 <code>ssh-add</code> 加载私钥，以后使用ssh就无需关心私钥的事情了。</p>
+<h2 id="github-error-key-already-in-use">Github: 'Error: Key already in use' 问题</h2>
+<p>2013-07-28 补充:</p>
+<p>今天在给 Github 上的一个 repo 添加公钥时, 提示 <code>Error: Key already in use</code></p>
+<p><strong>TODO</strong> 我是记得这个 公钥 给同一个账户下的另外一个 repo 添加过, 但是没想到居然会冲突, 看来要么加成<code>全局公钥</code>, 要么一个公钥只能指定到一个 <strong>特定</strong> repo</p>
+<p>搜到 <a href="https://help.github.com/articles/error-key-already-in-use">官方的Help</a> 有讲到这个问题:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">T</span> <span class="o">-</span><span class="n">i</span> <span class="o">~/</span><span class="p">.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span>
+<span class="cp"># Connect to github.com using a specific ssh key</span>
+<span class="cp"># Hi username! You&#39;ve successfully authenticated, but GitHub does not</span>
+<span class="cp"># provide shell access.</span>
+</pre></div>
+
+
+<p>通过 <code>-i</code> 指定 密钥, 然后通过输出的 <code>username</code> 可以知道是哪个 repo 在使用这个密钥.</p>
+<h2 id="ssh">ssh卡住如何退出</h2>
+<p>2013-09-13 补充:</p>
+<p>有时因为网络或其他原因, ssh远程登录其他机器时, 会卡住, 但是又没有自动退出, ctrl-c 也没用.</p>
+<p>其实 <code>man ssh</code> 里已经讲了解决方法了.</p>
+<p>查看 <code>ESCAPE CHARACTERS</code> 这一块:</p>
+<div class="hlcode"><pre><span class="o">~</span><span class="p">.</span>      <span class="n">Disconnect</span><span class="p">.</span>
+</pre></div>
+
+
+<h2 id="_1">其它</h2>
+<p>获取公钥的fingerprint, 比如将公钥加到github后台, 会有一个fingerprint id, 有时在不通帐号添加的公钥都是用的同一个邮箱名, 不知道对应的是哪个公钥, 本地对公钥:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">lf</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">key</span><span class="p">.</span><span class="n">pub</span>
+</pre></div>
+
+
+<p>如果有一个私钥, 可以重新生成找到公钥:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">y</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">ssh</span><span class="o">/</span><span class="n">key</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

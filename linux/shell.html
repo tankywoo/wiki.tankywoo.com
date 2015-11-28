@@ -1,0 +1,827 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Shell - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#linux">linux</a> » Shell
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">基本</a></li>
+<li><a href="#_2">脚本</a></li>
+<li><a href="#shell">Shell语法</a></li>
+<li><a href="#shell-builtin">内置命令(shell builtin)</a></li>
+<li><a href="#_3">补充</a></li>
+<li><a href="#_4">参考</a></li>
+</ul>
+</div>
+<p>shell是一个作为用户与Linux系统间接口的程序，它允许用户向操作系统输入需要执行的命令</p>
+<blockquote>
+<p>In computing, a shell is a user interface for access to an operating system's services. --- <a href="https://en.wikipedia.org/wiki/Shell_(computing)">维基百科</a></p>
+</blockquote>
+<p>shell的实现比较多, 如常见内置的sh, bash, 以及强大的zsh</p>
+<p>Linux/Unix 都有默认的shell, 使用环境变量<code>$SHELL</code>可以查看当前的默认shell:</p>
+<div class="hlcode"><pre><span class="c">% echo $SHELL</span>
+<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">zsh</span>
+</pre></div>
+
+
+<p>以shell控制结构为框架, 使用shell内置命令(shell builtin)或其它命令编写的脚本叫shell脚本.</p>
+<h2 id="_1">基本</h2>
+<p>重定向</p>
+<div class="hlcode"><pre><span class="mi">0</span>   <span class="err">标准输入</span> <span class="o">&lt;</span>  <span class="o">&lt;&lt;</span>
+<span class="mi">1</span>   <span class="err">标准输出</span> <span class="o">&gt;</span>  <span class="o">&gt;&gt;</span>
+<span class="mi">2</span>   <span class="err">错误输出</span> <span class="mi">2</span><span class="o">&gt;</span> <span class="mi">2</span><span class="o">&gt;&gt;</span>
+
+<span class="o">&lt;</span><span class="err">是输出，</span> <span class="o">&lt;&lt;</span><span class="err">是以附加的方式输出</span>
+<span class="o">%</span> <span class="o">&gt;&amp;</span> <span class="n">kill</span> <span class="o">-</span><span class="mi">9</span> <span class="mi">1234</span> <span class="o">&gt;</span><span class="n">killouterr</span><span class="p">.</span><span class="n">txt</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+
+<span class="o">%</span> <span class="n">cat</span> <span class="n">foo</span>
+<span class="n">hello</span>
+<span class="o">%</span> <span class="n">cat</span> <span class="n">bar</span>
+<span class="n">world</span>
+<span class="o">%</span> <span class="n">cat</span> <span class="n">foo</span> <span class="o">&gt;&gt;</span> <span class="n">bar</span>
+<span class="o">%</span> <span class="n">cat</span> <span class="n">bar</span>
+<span class="n">world</span>
+<span class="n">hello</span>
+</pre></div>
+
+
+<p>管道用操作符 <code>|</code></p>
+<h2 id="_2">脚本</h2>
+<p>格式:</p>
+<p>第一行指定执行shell的文件, 成为shell bang, 一般是</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+</pre></div>
+</td></tr></table>
+
+<p>或</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/sh</span>
+</pre></div>
+</td></tr></table>
+
+<p>运行时加<code>-x</code>是line-by-line的方式执行脚本, 每行都会输出</p>
+<div class="hlcode"><pre><span class="c">% bash -x /path/to/script</span>
+</pre></div>
+
+
+<p>注释用井号符(<code>#</code>)</p>
+<p>多行注释每行前面都要加上#</p>
+<p>不过也有一些trick可以实现多行注释:</p>
+<p>使用<a href="https://en.wikipedia.org/wiki/Here_document">HERE Document</a></p>
+<p>基本格式:</p>
+<div class="hlcode"><pre><span class="n">cmd</span> <span class="o">&lt;&lt;</span> <span class="n">delimiter</span>
+  <span class="n">Here</span> <span class="n">Document</span> <span class="n">Content</span>
+<span class="n">delimiter</span>
+</pre></div>
+
+
+<p>如:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">&#39;</span><span class="n">xxx</span><span class="err">&#39;</span>
+
+<span class="o">&lt;&lt;</span><span class="n">COMMENT</span>
+<span class="err">这是一段很长的说明</span>
+<span class="err">用来测试多行注释</span>
+<span class="n">By</span> <span class="n">Tanky</span> <span class="n">Woo</span>
+<span class="n">COMMENT</span>
+
+<span class="n">echo</span> <span class="err">&#39;</span><span class="n">xxx</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>这种方式经常用到在shell命令行下写多行到文件:</p>
+<div class="hlcode"><pre><span class="c">% cat &lt;&lt; EOF &gt; test.txt</span>
+<span class="n">heredoc</span><span class="o">&gt;</span> <span class="n">hello</span><span class="p">,</span> <span class="n">my</span> <span class="n">name</span> <span class="n">is</span> <span class="n">Tanky</span> <span class="n">Woo</span>
+<span class="n">heredoc</span><span class="o">&gt;</span> <span class="n">this</span> <span class="n">is</span> <span class="n">here</span> <span class="n">document</span>
+<span class="n">heredoc</span><span class="o">&gt;</span> <span class="k">for</span> <span class="n">testing</span>
+<span class="n">heredoc</span><span class="o">&gt;</span> <span class="n">EOF</span>
+
+<span class="c">% more test.txt</span>
+<span class="n">hello</span><span class="p">,</span> <span class="n">my</span> <span class="n">name</span> <span class="n">is</span> <span class="n">Tanky</span> <span class="n">Woo</span>
+<span class="n">this</span> <span class="n">is</span> <span class="n">here</span> <span class="n">document</span>
+<span class="k">for</span> <span class="n">testing</span>
+</pre></div>
+
+
+<p>另一种方法就是:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">&#39;</span><span class="n">xxx</span><span class="err">&#39;</span>
+
+<span class="o">:</span> <span class="err">&#39;</span>
+<span class="err">这是一段很长的说明</span>
+<span class="err">用来测试多行注释</span>
+<span class="n">By</span> <span class="n">Tanky</span> <span class="n">Woo</span>
+<span class="err">&#39;</span>
+
+<span class="n">echo</span> <span class="err">&#39;</span><span class="n">xxx</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>参考:</p>
+<ul>
+<li><a href="http://www.cyberciti.biz/faq/bash-comment-out-multiple-line-code/">Shell Script Put Multiple Line Comment</a></li>
+<li><a href="http://stackoverflow.com/questions/1444367/commenting-out-a-set-of-lines-in-a-shell-script">Commenting out a set of lines in a shell script</a></li>
+</ul>
+<h2 id="shell">Shell语法</h2>
+<p>变量:</p>
+<ul>
+<li>变量不需要提前声明</li>
+<li>变量名区分大小写</li>
+<li>创建变量时通过直接赋值给变量 eg. var=abc</li>
+<li>访问变量时需要在变量名前加一个$符号 eg. <code>echo $var</code> 或 <code>echo ${var}</code></li>
+<li>在赋值时，等号两边不能有空格 eg. <code>var=abc</code></li>
+<li>如果字符串里有空格，则必须用双引号把字符串括起来 <code>var="Hello World"</code></li>
+</ul>
+<p>变量分为全局变量(环境变量)和局部变量:</p>
+<blockquote>
+<p>Global variables or environment variables are available in all shells. --- <a href="http://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_02.html">Bash Beginners Guide</a></p>
+</blockquote>
+<!-- -->
+
+<div class="hlcode"><pre><span class="c">% a=hello</span>
+<span class="c">% echo $a</span>
+<span class="n">hello</span>
+<span class="c">% b=a</span>
+<span class="c">% echo $b</span>
+<span class="n">a</span>
+<span class="c">% b=world</span>
+<span class="c">% echo $b</span>
+<span class="n">world</span>
+<span class="c">% echo $a</span>
+<span class="n">hello</span>
+</pre></div>
+
+
+<p>可以将命令的结果赋值给变量:</p>
+<div class="hlcode"><pre><span class="c">% x=&#39;foo&#39;</span>
+<span class="c">% echo $x</span>
+<span class="n">foo</span>
+<span class="c">% y=`echo $x`</span>
+<span class="c">% echo $y</span>
+<span class="n">foo</span>
+</pre></div>
+
+
+<p>特殊变量:</p>
+<p>具体看<code>man bash</code>的<code>Special Parameters</code>一节</p>
+<p><code>$0</code>: 当前执行的脚本名. 和python里的sys.argv[0]一样
+<code>$X</code>: X是数字, 表示第几个参数, 比如脚本后接的第一个参数, 就是$1
+<code>$?</code>: 上一条命令的返回值
+<code>$$</code>: 当前shell pid
+<code>$#</code>: 传递给脚本或函数 参数的个数
+<code>$*</code>: 参数列表. 当有双引号阔起来时, 则是一个元素
+<code>$@</code>: 参数列表. 当有双引号阔起来时, 还是多个元素</p>
+<div class="hlcode"><pre><span class="c">% more foo.sh</span>
+#!<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+
+<span class="n">echo</span> <span class="s">&#39;$#: &#39;</span> $#
+<span class="n">echo</span> <span class="s">&#39;$1: &#39;</span> $<span class="mi">1</span>
+<span class="n">echo</span> <span class="s">&#39;$*: &#39;</span>$<span class="o">*</span>
+<span class="n">echo</span> <span class="s">&#39;$@: &#39;</span> $<span class="p">@</span>
+<span class="n">echo</span> <span class="s">&#39;for in &quot;$*&quot;&#39;</span>
+<span class="k">for</span> <span class="n">v</span> <span class="n">in</span> &quot;$<span class="o">*</span>&quot;
+<span class="n">do</span>
+        <span class="n">echo</span> $<span class="n">v</span>
+<span class="n">done</span>
+<span class="n">echo</span> <span class="s">&#39;for in &quot;$@&quot;&#39;</span>
+<span class="k">for</span> <span class="n">v</span> <span class="n">in</span> &quot;$<span class="p">@</span>&quot;
+<span class="n">do</span>
+        <span class="n">echo</span> $<span class="n">v</span>
+<span class="n">done</span>
+
+<span class="c">% ./foo.sh one two three</span>
+$#<span class="p">:</span>  <span class="mi">3</span>
+$<span class="mi">1</span><span class="p">:</span>  <span class="n">one</span>
+$<span class="o">*</span><span class="p">:</span> <span class="n">one</span> <span class="n">two</span> <span class="n">three</span>
+$<span class="p">@:</span>  <span class="n">one</span> <span class="n">two</span> <span class="n">three</span>
+<span class="k">for</span> <span class="n">in</span> &quot;$<span class="o">*</span>&quot;
+<span class="n">one</span> <span class="n">two</span> <span class="n">three</span>
+<span class="k">for</span> <span class="n">in</span> &quot;$<span class="p">@</span>&quot;
+<span class="n">one</span>
+<span class="n">two</span>
+<span class="n">three</span>
+</pre></div>
+
+
+<p>引号:</p>
+<ul>
+<li>read读入数据时，带有空格的数据不需要加引号</li>
+<li>对于变量$var，如果放在双引号""中，则会替换为其值</li>
+<li>如果放在单引号''中，则不会发生替换</li>
+<li>还可以在$前面加上'\'符号取消其转义行为</li>
+</ul>
+<!-- -->
+
+<div class="hlcode"><pre><span class="c">% read var</span>
+<span class="n">Tanky</span> <span class="n">Woo</span>
+<span class="c">% echo $var</span>
+<span class="n">Tanky</span> <span class="n">Woo</span>
+
+<span class="n">var</span><span class="p">=</span>&quot;<span class="n">Tanky</span> <span class="n">Woo</span>&quot;
+<span class="n">echo</span> $<span class="n">var</span>     # <span class="n">Tanky</span> <span class="n">Woo</span>
+<span class="n">echo</span> &quot;$<span class="n">var</span>&quot;   # <span class="n">Tanky</span> <span class="n">Woo</span>
+<span class="n">echo</span> <span class="s">&#39;$var&#39;</span>   # $<span class="n">var</span>
+<span class="n">echo</span> <span class="o">\</span>$<span class="n">var</span>    $<span class="n">var</span>
+</pre></div>
+
+
+<p>变量的一些基本操作:</p>
+<p>这个和Python调用format的变量格式类似</p>
+<div class="hlcode"><pre><span class="c">% more foo.sh</span>
+#!<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+
+<span class="n">bar</span><span class="p">=</span>&quot;<span class="n">hello</span><span class="p">,</span> <span class="n">world</span>&quot;
+
+<span class="n">echo</span> $<span class="p">{</span>#<span class="n">bar</span><span class="p">}</span>    # 取字符串长度
+<span class="n">echo</span> $<span class="p">{</span><span class="n">bar</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">}</span> # 提取字符串<span class="p">,</span> <span class="n">index</span>从<span class="mi">0</span>开始<span class="p">,</span> 注意包括第<span class="mi">4</span>个
+
+<span class="c">% ./foo.sh</span>
+<span class="mi">12</span>
+<span class="n">ello</span>
+</pre></div>
+
+
+<p>条件:</p>
+<p><code>test</code> 或 <code>[</code> 命令</p>
+<div class="hlcode"><pre><span class="k">if</span> <span class="n">test</span> <span class="o">-</span><span class="n">f</span> <span class="n">file</span><span class="p">.</span><span class="n">c</span> <span class="p">;</span> <span class="n">then</span>
+    <span class="p">...</span>
+<span class="n">fi</span>
+
+<span class="err">或</span>
+
+<span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">f</span> <span class="n">file</span><span class="p">.</span><span class="n">c</span> <span class="p">]</span>
+    <span class="p">...</span>
+<span class="n">fi</span>
+</pre></div>
+
+
+<p>字符串比较:</p>
+<div class="hlcode"><pre><span class="n">str1</span> <span class="o">=</span> <span class="n">str2</span>
+<span class="n">str1</span> <span class="o">!=</span> <span class="n">str2</span>
+<span class="n">str1</span> <span class="o">&gt;</span> <span class="n">str2</span>
+<span class="n">str1</span> <span class="o">&lt;</span> <span class="n">str2</span>
+<span class="o">-</span><span class="n">n</span> <span class="n">str</span>  <span class="err">如果字符串不为空则为</span><span class="n">True</span>
+<span class="o">-</span><span class="n">z</span> <span class="n">str</span>  <span class="err">如果字符串为</span><span class="n">null</span><span class="err">，则结果为真</span>
+</pre></div>
+
+
+<p>算数比较:</p>
+<div class="hlcode"><pre><span class="n">exp1</span> <span class="o">-</span><span class="n">eq</span> <span class="n">exp2</span>   <span class="o">==</span>
+<span class="n">exp1</span> <span class="o">-</span><span class="n">ne</span> <span class="n">exp2</span>   <span class="o">!=</span>
+<span class="n">exp1</span> <span class="o">-</span><span class="n">gt</span> <span class="n">exp2</span>   <span class="o">&gt;</span>
+<span class="n">exp1</span> <span class="o">-</span><span class="n">ge</span> <span class="n">exp2</span>   <span class="o">&gt;=</span>
+<span class="n">exp1</span> <span class="o">-</span><span class="n">lt</span> <span class="n">exp2</span>   <span class="o">&lt;</span>
+<span class="n">exp1</span> <span class="o">-</span><span class="n">le</span> <span class="n">exp2</span>   <span class="o">&lt;=</span>
+<span class="o">!</span><span class="n">exp</span>            <span class="err">如果</span><span class="n">exp</span><span class="err">为假则返回真</span>
+</pre></div>
+
+
+<p>文件条件测试:</p>
+<div class="hlcode"><pre><span class="o">-</span><span class="n">d</span> <span class="n">file</span>    <span class="n">directory</span>
+<span class="o">-</span><span class="n">e</span> <span class="n">file</span>    <span class="n">exist</span>
+<span class="o">-</span><span class="n">f</span> <span class="n">file</span>    <span class="n">common</span> <span class="n">file</span>
+<span class="o">-</span><span class="n">g</span> <span class="n">file</span>    <span class="n">set</span><span class="o">-</span><span class="n">group</span><span class="o">-</span><span class="n">id</span> <span class="o">???</span>
+<span class="o">-</span><span class="n">r</span> <span class="n">file</span>    <span class="n">readable</span>
+<span class="o">-</span><span class="n">s</span> <span class="n">file</span>    <span class="n">file</span> <span class="n">space</span> <span class="n">is</span> <span class="n">not</span> <span class="mi">0</span>
+<span class="o">-</span><span class="n">u</span> <span class="n">file</span>    <span class="n">set</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="n">id</span> <span class="o">???</span>
+<span class="o">-</span><span class="n">w</span> <span class="n">file</span>    <span class="n">writeable</span>
+<span class="o">-</span><span class="n">x</span> <span class="n">file</span>    <span class="n">executeable</span>
+</pre></div>
+
+
+<p>高级数学运算:</p>
+<div class="hlcode"><pre><span class="p">((</span> <span class="n">expression</span> <span class="p">))</span>
+</pre></div>
+
+
+<p>可以使用高级数学特性</p>
+<div class="hlcode"><pre><span class="n">var</span><span class="o">++</span> <span class="o">/</span> <span class="n">var</span><span class="o">--</span> <span class="o">/</span> <span class="o">++</span><span class="n">var</span> <span class="o">/</span> <span class="o">--</span><span class="n">var</span>  <span class="err">前</span><span class="o">/</span><span class="err">后</span> <span class="err">自增</span><span class="o">/</span><span class="err">自减</span>
+<span class="o">+=</span> <span class="o">/</span> <span class="o">-=</span> 
+<span class="o">!</span>       <span class="err">逻辑求反</span>
+<span class="o">~</span>       <span class="err">位求反</span>
+<span class="o">**</span>      <span class="err">幂运算</span>
+<span class="o">&lt;&lt;</span>      <span class="err">左移位</span>
+<span class="o">&gt;&gt;</span>
+<span class="o">&amp;</span>       <span class="err">按位与</span>
+<span class="o">|</span>
+<span class="o">&amp;&amp;</span>      <span class="err">逻辑与</span>
+<span class="o">||</span>
+</pre></div>
+
+
+<p>例子:</p>
+<div class="hlcode"><pre><span class="c">% more foo.sh</span>
+#!<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="n">x</span><span class="p">=</span><span class="mi">10</span>
+<span class="n">echo</span> $<span class="n">x</span>
+<span class="n">x</span><span class="p">=</span>$<span class="p">((</span> $<span class="n">x</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">))</span>
+<span class="n">echo</span> $<span class="n">x</span>
+<span class="p">((</span> <span class="n">x</span> <span class="o">+</span><span class="p">=</span> <span class="mi">1</span> <span class="p">))</span>
+<span class="n">echo</span> $<span class="n">x</span>
+
+<span class="c">% ./foo.sh</span>
+<span class="mi">10</span>
+<span class="mi">11</span>
+<span class="mi">12</span>
+</pre></div>
+
+
+<p>支持模式匹配的字符比较:</p>
+<div class="hlcode"><pre><span class="p">[[</span> <span class="n">expression</span> <span class="p">]]</span>
+</pre></div>
+
+
+<p>如:</p>
+<div class="hlcode"><pre><span class="c">% more foo.sh</span>
+#!<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="n">foo</span><span class="p">=</span><span class="s">&#39;hello&#39;</span>
+<span class="k">if</span> <span class="p">[[</span> $<span class="n">foo</span> <span class="p">=</span><span class="o">~</span> <span class="n">llo</span>$ <span class="p">]];</span> <span class="n">then</span>
+    <span class="n">echo</span> <span class="s">&#39;match&#39;</span>
+<span class="k">else</span>
+    <span class="n">echo</span> <span class="s">&#39;not match&#39;</span>
+<span class="n">fi</span>
+
+<span class="c">% ./foo.sh</span>
+<span class="n">match</span>
+</pre></div>
+
+
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/17420994/bash-regex-match-string">bash regex match string</a></li>
+<li><a href="http://stackoverflow.com/questions/21112707/check-if-string-match-a-regex-in-bash-shell-script">check if string match a regex in BASH Shell script</a></li>
+</ul>
+<p>控制结构</p>
+<p>if 判断:</p>
+<div class="hlcode"><pre><span class="k">if</span> <span class="n">condition</span>
+<span class="n">then</span>
+    <span class="n">statement</span>
+<span class="n">elif</span> <span class="n">condition</span><span class="p">;</span> <span class="n">then</span>
+    <span class="n">statement</span>
+<span class="k">else</span>
+    <span class="n">statement</span>
+<span class="n">fi</span>
+</pre></div>
+
+
+<p>for 循环:</p>
+<div class="hlcode"><pre><span class="k">for</span> <span class="n">var</span> <span class="n">in</span> <span class="n">item1</span> <span class="n">item2</span>
+<span class="k">do</span>
+    <span class="n">statement</span>
+<span class="n">done</span>
+</pre></div>
+
+
+<p>如循环一个序列:</p>
+<div class="hlcode"><pre><span class="k">for</span> <span class="n">var</span> <span class="n">in</span> <span class="p">{</span><span class="mf">1..5</span><span class="p">}</span>
+<span class="k">do</span>
+    <span class="n">echo</span> <span class="err">$</span><span class="n">var</span>
+<span class="n">done</span>
+</pre></div>
+
+
+<p><a href="http://www.cyberciti.biz/faq/bash-for-loop/">Bash For Loop Examples</a></p>
+<p>C语言风格的for循环:</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+
+<span class="k">for</span> <span class="o">((</span> <span class="nv">i</span><span class="o">=</span>1; i&lt;<span class="o">=</span>5; ++i <span class="o">))</span>
+<span class="k">do</span>
+<span class="k">        </span><span class="nb">echo</span> <span class="nv">$i</span>
+<span class="k">done</span>
+</pre></div>
+</td></tr></table>
+
+<p>while 循环:</p>
+<div class="hlcode"><pre><span class="k">while</span> <span class="n">condition</span>
+<span class="k">do</span>
+    <span class="n">statenment</span>
+<span class="n">done</span>
+</pre></div>
+
+
+<p>无限循环(这里又用到了<code>:</code>shell builtin命令):</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+
+<span class="k">while</span> :
+<span class="k">do</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;hello&#39;</span>
+    sleep 1
+<span class="k">done</span>
+</pre></div>
+</td></tr></table>
+
+<p>也可以:</p>
+<div class="hlcode"><pre><span class="k">while</span> <span class="nb">true</span>
+</pre></div>
+
+
+<p>或者</p>
+<div class="hlcode"><pre><span class="k">for</span> <span class="p">((</span> <span class="p">;</span> <span class="p">;</span> <span class="p">))</span>
+</pre></div>
+
+
+<p>until 循环:</p>
+<div class="hlcode"><pre><span class="n">until</span> <span class="n">condition</span>
+<span class="k">do</span>
+    <span class="n">statenment</span>
+<span class="n">done</span>
+</pre></div>
+
+
+<p>case 语句:</p>
+<div class="hlcode"><pre><span class="k">case</span> <span class="n">var</span> <span class="n">in</span>
+    <span class="n">passtern</span> <span class="p">[</span><span class="o">|</span> <span class="n">pattern</span><span class="p">]...</span> <span class="p">)</span> <span class="n">statement1</span><span class="p">;;</span>
+    <span class="n">passtern</span> <span class="p">[</span><span class="o">|</span> <span class="n">pattern</span><span class="p">]...</span> <span class="p">)</span> <span class="n">statement2</span><span class="p">;;</span>
+    <span class="p">...</span>
+<span class="n">esac</span>
+</pre></div>
+
+
+<p>如:</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/sh</span>
+<span class="c"># case statement</span>
+<span class="nb">echo</span> <span class="s2">&quot;Please answer yes or no&quot;</span>
+<span class="nb">read </span>ans
+<span class="k">case</span> <span class="s2">&quot;$ans&quot;</span> in
+    yes | y | Yes | YES <span class="o">)</span>   <span class="nb">echo</span> <span class="s2">&quot;yes&quot;</span>;;
+    no  | n | No  | NO  <span class="o">)</span>   <span class="nb">echo</span> <span class="s2">&quot;no&quot;</span>;;
+    * <span class="o">)</span>                     <span class="nb">echo</span> <span class="s2">&quot;not match&quot;</span>;;
+<span class="k">esac</span>
+
+<span class="nb">exit </span>0
+</pre></div>
+</td></tr></table>
+
+<p>逻辑条件 与(<code>&amp;&amp;</code>) 和 或(<code>||</code>):</p>
+<div class="hlcode"><pre><span class="n">con1</span> <span class="o">&amp;&amp;</span> <span class="n">con2</span> <span class="o">&amp;&amp;</span> <span class="n">con3</span>
+<span class="n">con1</span> <span class="o">||</span> <span class="n">con2</span> <span class="o">||</span> <span class="n">con3</span>
+</pre></div>
+
+
+<p>函数:</p>
+<div class="hlcode"><pre><span class="nx">function_name</span><span class="p">(){</span>
+    <span class="nx">statement</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>或者:</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">function_name</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">statement</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>关键字<code>function</code>可有可无</p>
+<p>函数里可以通过<code>return</code>语句返回结果或返回值</p>
+<p>函数也可以传参, 不过参数没有在圆括号里定义, 和特殊变量里一样, 直接通过<code>$X</code>, <code>$@</code>等获取</p>
+<p>数组:</p>
+<p>定义格式</p>
+<div class="hlcode"><pre><span class="n">array_name</span><span class="o">=</span><span class="p">(</span><span class="n">value1</span> <span class="n">value</span> <span class="mi">2</span> <span class="n">value3</span> <span class="p">...)</span>
+</pre></div>
+
+
+<p>或者</p>
+<div class="hlcode"><pre><span class="n">array_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span>
+<span class="n">array_name</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">xxx</span>
+<span class="p">...</span>
+</pre></div>
+
+
+<p>例子:</p>
+<div class="hlcode"><pre><span class="c">% more foo.sh</span>
+#!<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+
+<span class="n">array</span><span class="p">=(</span><span class="s">&#39;one&#39;</span> <span class="s">&#39;two&#39;</span> <span class="s">&#39;three&#39;</span><span class="p">)</span>
+
+<span class="n">array</span><span class="p">[</span><span class="mi">3</span><span class="p">]=</span><span class="s">&#39;four&#39;</span>
+
+<span class="n">echo</span> $<span class="p">{</span><span class="n">array</span><span class="p">[</span><span class="mi">3</span><span class="p">]}</span>  # 获取单个元素
+<span class="n">echo</span> $<span class="p">{</span><span class="n">array</span><span class="p">[</span><span class="o">*</span><span class="p">]}</span>  # 获取整个数组
+<span class="n">echo</span> $<span class="p">{</span><span class="n">array</span><span class="p">[@]}</span>  # 获取整个数组
+<span class="n">echo</span> $<span class="p">{</span>#<span class="n">array</span><span class="p">[</span><span class="o">*</span><span class="p">]}</span>  # 获取数组的长度
+<span class="n">echo</span> $<span class="p">{</span>#<span class="n">array</span><span class="p">[@]}</span>  # 获取数组的长度
+<span class="n">echo</span> $<span class="p">{</span>#<span class="n">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]}</span>  # 获取单个元素的长度
+
+<span class="k">for</span> <span class="n">v</span> <span class="n">in</span> &quot;$<span class="p">{</span><span class="n">array</span><span class="p">[</span><span class="o">*</span><span class="p">]}</span>&quot;
+<span class="n">do</span>
+        <span class="n">echo</span> $<span class="n">v</span>
+<span class="n">done</span>
+
+<span class="k">for</span> <span class="n">v</span> <span class="n">in</span> &quot;$<span class="p">{</span><span class="n">array</span><span class="p">[@]}</span>&quot;
+<span class="n">do</span>
+        <span class="n">echo</span> $<span class="n">v</span>
+<span class="n">done</span>
+<span class="c">% ./foo.sh</span>
+<span class="n">four</span>
+<span class="n">one</span> <span class="n">two</span> <span class="n">three</span> <span class="n">four</span>
+<span class="n">one</span> <span class="n">two</span> <span class="n">three</span> <span class="n">four</span>
+<span class="mi">4</span>
+<span class="mi">4</span>
+<span class="mi">5</span>
+<span class="n">one</span> <span class="n">two</span> <span class="n">three</span> <span class="n">four</span>
+<span class="n">one</span>
+<span class="n">two</span>
+<span class="n">three</span>
+<span class="n">four</span>
+</pre></div>
+
+
+<p>其中<code>*</code>和<code>@</code>的关系和<code>$*</code>与<code>$@</code>一样.</p>
+<h2 id="shell-builtin">内置命令(shell builtin)</h2>
+<p>内置的命令列表及解释都可以在<code>man 1 bash</code>中看到, 也可以通过<code>type</code>命令确定命令的类型:</p>
+<div class="hlcode"><pre><span class="c">% type echo</span>
+<span class="n">echo</span> <span class="n">is</span> <span class="n">a</span> <span class="n">shell</span> <span class="n">builtin</span>
+</pre></div>
+
+
+<p><code>:</code> 命令, 之前已经用到了, 后可接参数, 没有任何作用, 相当于Python里的pass</p>
+<blockquote>
+<p>: [arguments]</p>
+<p>No effect; the command does nothing beyond expanding arguments and performing any specified redirections.  A zero exit code is returned.</p>
+</blockquote>
+<p><code>.</code>和<code>source</code>命令, 后接脚本文件名, 执行指定的脚本.</p>
+<blockquote>
+<p>.  filename [arguments]</p>
+<p>source filename [arguments]</p>
+<p>Read and execute commands from filename in the current shell environment and return the exit status of the last command executed from filename.</p>
+</blockquote>
+<p><code>printf</code> 输出:</p>
+<p>和C语言的printf函数类似:</p>
+<div class="hlcode"><pre><span class="c">% more foo.sh</span>
+#!<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+
+<span class="n">printf</span> &quot;<span class="n">Hello</span> <span class="c">%s %d\n&quot; &#39;Shell&#39; 1024</span>
+<span class="c">% ./foo.sh</span>
+<span class="n">Hello</span> <span class="n">Shell</span> <span class="mi">1024</span>
+</pre></div>
+
+
+<p>简单的输出还有<code>echo</code>命令</p>
+<p>循环控制 <code>break</code> 和 <code>continue</code>, 和C/Python等有点不同, 可以后接数字, 表示break/continue的层级, 默认是1, 多级退出一般用在多级循环; 类似于C里的goto配合break/continue.</p>
+<p><code>eval</code> 对语句进行求值</p>
+<div class="hlcode"><pre><span class="c">% more foo.sh</span>
+#!<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+
+<span class="n">foo</span><span class="p">=</span><span class="mi">10</span>
+
+<span class="n">x</span><span class="p">=</span><span class="n">foo</span>
+<span class="n">echo</span> $<span class="n">x</span>
+
+<span class="n">y</span><span class="p">=</span><span class="s">&#39;$&#39;</span>$<span class="n">x</span>
+<span class="n">echo</span> $<span class="n">y</span>
+
+<span class="n">eval</span> <span class="n">y</span><span class="p">=</span><span class="s">&#39;$&#39;</span>$<span class="n">x</span>
+<span class="n">echo</span> $<span class="n">y</span>
+
+# 执行结果
+<span class="c">% ./foo.sh</span>
+<span class="n">foo</span>
+$<span class="n">foo</span>
+<span class="mi">10</span>
+</pre></div>
+
+
+<p><code>expr</code> 把参数当作表达式来求值</p>
+<div class="hlcode"><pre><span class="c">% more foo.sh</span>
+#!<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="n">x</span><span class="p">=</span><span class="mi">5</span>
+
+<span class="n">x</span><span class="p">=</span>`<span class="n">expr</span> $<span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>`
+<span class="n">echo</span> $<span class="n">x</span>
+
+<span class="n">x</span><span class="p">=</span>$<span class="p">(</span><span class="n">expr</span> $<span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">echo</span> $<span class="n">x</span>
+
+<span class="c">% ./foo.sh</span>
+<span class="mi">6</span>
+<span class="mi">6</span><span class="o">+</span><span class="mi">2</span>
+</pre></div>
+
+
+<p><code>exec</code> 后接命令, 用fork的子进程替换原来的父进程</p>
+<blockquote>
+<p>exec [-cl] [-a name] [command [arguments]]</p>
+<p>If command is specified, it replaces the shell.  No new process is created.</p>
+</blockquote>
+<p><code>exit n</code> 退出当前shell, 指定退出状态码</p>
+<p><code>return</code> 函数退出并返回返回值</p>
+<p><code>export</code> 和直接赋值变量的区别是export后, 子进程也可以使用这个变量</p>
+<blockquote>
+<p>export [-fn] [name[=word]] ...</p>
+<p>export -p</p>
+<p>The supplied names are marked for automatic export to the environment of subsequently executed commands.</p>
+</blockquote>
+<div class="hlcode"><pre><span class="c">% foo=100</span>
+<span class="c">% bash -c &#39;echo $foo&#39;</span>
+
+<span class="c">% export foo</span>
+<span class="c">% bash -c &#39;echo $foo&#39;</span>
+<span class="mi">100</span>
+</pre></div>
+
+
+<p><a href="http://stackoverflow.com/questions/1158091/defining-a-variable-with-or-without-export">Defining a variable with or without export</a></p>
+<p><code>set</code> 当没接参数时, 输出所有shell的变量, 包括全局变量和局部变量; 如果接参数, 则是开启/关闭shell的属性.</p>
+<blockquote>
+<p>set [--abefhkmnptuvxBCEHPT] [-o option-name] [arg ...]</p>
+<p>set [+abefhkmnptuvxBCEHPT] [+o option-name] [arg ...]</p>
+<p>Without  options,  the  name  and  value  of each shell variable are displayed in a format that can be reused as input for setting or resetting the currently-set variables.  Read-only variables cannot be reset.  In posix mode, only shell variables are listed.  The output is sorted according to the current locale.  When options are specified, they set or unset shell attributes.</p>
+</blockquote>
+<p>% set -o 显示所有的set选项配置情况, on/off形式
+% set +o 显示所有的set选项配置情况, 命令形式</p>
+<p>参考:</p>
+<ul>
+<li><a href="https://www.zybuluo.com/haokuixi/note/23988">shell 下的 set 命令</a></li>
+<li><a href="http://segmentfault.com/a/1190000003005706">shell的set命令</a></li>
+<li><a href="http://unix.stackexchange.com/questions/71144/what-do-the-bash-builtins-set-and-export-do">What do the bash-builtins 'set' and 'export' do?</a></li>
+</ul>
+<p><code>env</code>命令查看系统环境变量</p>
+<p>使用export后的变量会出现在这里, unset后则去掉</p>
+<p><code>shift</code> 位置参数向左便宜</p>
+<blockquote>
+<p>shift [n]</p>
+<p>The positional parameters from n+1 ... are renamed to $1 ....  Parameters represented by the numbers $# down to $#-n+1 are unset.</p>
+</blockquote>
+<div class="hlcode"><pre><span class="o">% more foo.sh</span>
+<span class="o">#!/bin/bash</span>
+<span class="o">echo $@</span>
+<span class="o">echo $1</span>
+<span class="o">shift</span>
+<span class="o">echo $1</span>
+<span class="o">shift</span>
+<span class="o">echo $1</span>
+
+<span class="o">%</span> .<span class="o">/</span>foo.sh one two
+one two
+one
+two
+          <span class="c1"># &lt;---- 空行, 因为参数为空了</span>
+</pre></div>
+
+
+<p><code>unset</code> 取消指定变量</p>
+<p>注意, unset 命令不是对set命令做反操作!!!</p>
+<div class="hlcode"><pre><span class="c">% echo $foo</span>
+<span class="mi">100</span>
+<span class="c">% unset foo</span>
+<span class="c">% echo $foo</span>
+
+<span class="c">%</span>
+</pre></div>
+
+
+<blockquote>
+<p>unset [-fv] [name ...]</p>
+<p>For each name, remove the corresponding variable or function.</p>
+</blockquote>
+<h2 id="_3">补充</h2>
+<p>关于<code>true</code>和<code>false</code>:</p>
+<p>shell里没有boolean值, 不过有true和false这两个shell builtin命令:</p>
+<p>TankyWoo ~/dev_env/bash_learn % which true false
+true: shell built-in command
+false: shell built-in command</p>
+<p>既然是命令, 就不能用<code>[ ]</code>或<code>test</code>来判断, 直接使用:</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<span class="k">if </span><span class="nb">true</span>; <span class="k">then</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;True&#39;</span>
+<span class="k">else</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;False&#39;</span>
+<span class="k">fi</span>
+</pre></div>
+</td></tr></table>
+
+<p>或者:</p>
+<div class="hlcode"><pre><span class="n">TankyWoo</span> <span class="o">~/</span><span class="n">dev_env</span><span class="o">/</span><span class="n">bash_learn</span> <span class="o">%</span> <span class="nb">true</span> <span class="o">&amp;&amp;</span> <span class="n">echo</span> <span class="err">$</span><span class="o">?</span>
+<span class="mi">0</span>
+<span class="n">TankyWoo</span> <span class="o">~/</span><span class="n">dev_env</span><span class="o">/</span><span class="n">bash_learn</span> <span class="o">%</span> <span class="nb">false</span> <span class="o">&amp;&amp;</span> <span class="n">echo</span> <span class="err">$</span><span class="o">?</span>
+</pre></div>
+
+
+<p>因为false, 所以后面不会输出echo $?</p>
+<p>一般情况下, 判断某个变量是true/false:</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<span class="nv">flag</span><span class="o">=</span><span class="nb">true</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$flag&quot;</span> <span class="o">=</span> <span class="nb">false</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;False&#39;</span>
+<span class="k">elif</span> <span class="o">[</span> <span class="s2">&quot;$flag&quot;</span> <span class="o">=</span> <span class="nb">true</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;True&#39;</span>
+<span class="k">else</span>
+<span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;Nothing&#39;</span>
+<span class="k">fi</span>
+</pre></div>
+</td></tr></table>
+
+<p>具体讨论见:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/19670061/bash-if-false-returns-true">Bash if [ false ] ; returns true</a></li>
+<li><a href="http://stackoverflow.com/questions/2953646/how-to-declare-and-use-boolean-variables-in-shell-script">How to declare and use boolean variables in shell script?</a></li>
+</ul>
+<p>生成一个range, 如1到10:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">`</span><span class="n">seq</span> <span class="mi">1</span> <span class="mi">10</span><span class="err">`</span>
+</pre></div>
+
+
+<p>或者:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="p">{</span><span class="mf">1..10</span><span class="p">}</span>
+</pre></div>
+
+
+<h2 id="_4">参考</h2>
+<ul>
+<li>Linux程序设计</li>
+<li><a href="http://www.gnu.org/software/bash/manual/bashref.html">Bash Manual</a></li>
+<li><a href="http://coolshell.cn/articles/1379.html">如何调试bash脚本</a></li>
+<li><a href="https://github.com/qinjx/30min_guides/blob/master/shell.md">Shell脚本编程30分钟入门</a> 入门小手册</li>
+<li><a href="http://c.biancheng.net/cpp/view/6994.html">shell小教程</a> 和上一个内容基本一样, 不过多了一些实际例子</li>
+<li><a href="http://www.tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide</a> 最经典的教程了?</li>
+<li><a href="http://www.freeos.com/guides/lsst/">Linux Shell Scripting Tutorial</a> 还没看</li>
+<li><a href="http://linuxconfig.org/bash-scripting-tutorial">Bash scripting Tutorial</a></li>
+<li><a href="http://linuxcommand.org/learning_the_shell.php">Learning the shell</a></li>
+<li><a href="http://linuxcommand.org/writing_shell_scripts.php">Writing shell script</a></li>
+<li><code>man bash</code> 最根本的</li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

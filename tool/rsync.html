@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>rsync - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » rsync
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="rsync">rsync</h2>
+<p>rsync - a fast, versatile, remote (and local) file-copying tool</p>
+<p>广泛用于<code>备份(backup)</code>和<code>镜像(mirror)</code></p>
+<p>支持本地或远程复制, 有<code>shell</code>和<code>rsync daemon</code>两种方式</p>
+<ul>
+<li>remote shell<ul>
+<li>via ssh or rsh</li>
+<li>the source or destination path contains a single colon (:) separator after a host specification</li>
+</ul>
+</li>
+<li>rsync daemon<ul>
+<li>via TCP</li>
+<li>the source or destination path contains a double colon (::) separator after a  host  specification</li>
+<li>OR  when  an rsync://  URL  is  specified</li>
+</ul>
+</li>
+</ul>
+<h2 id="_1">使用方式</h2>
+<div class="hlcode"><pre><span class="n">Local</span><span class="o">:</span>
+    <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
+
+<span class="n">Access</span> <span class="n">via</span> <span class="n">remote</span> <span class="n">shell</span><span class="o">:</span>
+    <span class="n">Pull</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">:</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
+    <span class="n">Push</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">:</span><span class="n">DEST</span>
+
+<span class="n">Access</span> <span class="n">via</span> <span class="n">rsync</span> <span class="n">daemon</span><span class="o">:</span>
+    <span class="n">Pull</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">::</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
+    <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
+    <span class="n">Push</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">::</span><span class="n">DEST</span>
+    <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">DEST</span>
+
+<span class="n">Usages</span> <span class="k">with</span> <span class="n">just</span> <span class="n">one</span> <span class="n">SRC</span> <span class="n">arg</span> <span class="n">and</span> <span class="n">no</span> <span class="n">DEST</span> <span class="n">arg</span> <span class="n">will</span> <span class="n">list</span> <span class="n">the</span> <span class="n">source</span> <span class="n">files</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">copying</span><span class="o">.</span>
+</pre></div>
+
+
+<h3 id="_2">本地同步</h3>
+<div class="hlcode"><pre><span class="n">rsync</span> <span class="p">[</span><span class="n">OPTION</span><span class="p">...]</span> <span class="n">SRC</span><span class="p">...</span> <span class="p">[</span><span class="n">DEST</span><span class="p">]</span>
+</pre></div>
+
+
+<h3 id="remote-shell">remote shell方式 远程同步</h3>
+<p>使用一个冒号<code>:</code>分隔主机和目录</p>
+<div class="hlcode"><pre><span class="n">Pull</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">:</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
+<span class="n">Push</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">:</span><span class="n">DEST</span>
+</pre></div>
+
+
+<p>可以使用<code>ssh</code>或<code>rsh</code>方式传输</p>
+<p>举例:</p>
+<div class="hlcode"><pre><span class="cp"># 使用ssh方式, 端口为1234. 传输主机tankywoo的/data目录到本地的/tmp/backup下</span>
+<span class="n">rsync</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">ssh</span> <span class="o">-</span><span class="n">p</span> <span class="mi">1234</span><span class="err">&#39;</span> <span class="n">root</span><span class="err">@</span><span class="n">tankywoo</span><span class="o">:/</span><span class="n">data</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">backup</span><span class="o">/</span>
+</pre></div>
+
+
+<h3 id="rsync-daemon">rsync daemon方式 远程同步</h3>
+<p>有两种方式:</p>
+<ul>
+<li>使用两个冒号<code>::</code>分隔主机和目录</li>
+<li>主机前加上<code>rsync://</code>, 后面直接使用<code>/</code>分隔主机和目录, 和目录结构一样</li>
+</ul>
+<!-- comment -->
+
+<div class="hlcode"><pre><span class="n">Pull</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">::</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
+<span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
+<span class="n">Push</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">::</span><span class="n">DEST</span>
+<span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">DEST</span>
+</pre></div>
+
+
+<h2 id="_3">常用参数</h2>
+<ul>
+<li><code>-a</code> - archive mode; 相当于 <code>-rlptgoD</code></li>
+<li><code>-r</code> - 递归. 和<code>cp</code>的 -r 参数一样</li>
+<li><code>-l</code> - 复制软链接</li>
+<li><code>-p</code> - 保持权限不变</li>
+<li><code>-t</code> - 保持修改时间不变</li>
+<li><code>-g</code> - 保持group组不变</li>
+<li><code>-o</code> - 保持owner不变</li>
+<li><code>-D</code> - 等价于<code>--devices --specials</code>, 分别是同步设备文件和特殊文件</li>
+<li><code>-b</code> - backup. 配合<code>--backup-dir</code>来用.</li>
+<li><code>-n</code> - 这个非常有用. 在同步前可以先测试来查看会由哪些变化, 但不实际修改. 类似gentoo emerge时的<code>-pv</code></li>
+<li><code>-v</code> - 更详细的输出信息</li>
+<li><code>-h</code> - 以human-readable的方式输出数字格式</li>
+<li><code>-H</code> - 复制硬链接</li>
+<li><code>-E</code> - 保持可执行权限一致</li>
+<li><code>-X</code> - preserve extended attributes <strong>TODO</strong></li>
+<li><code>-A</code> - 保持ACL</li>
+<li><code>--delete</code> - 删除src没有, 但dest存在的文件. 这是mirror方式需要的, 保持两边所有文件一致.</li>
+<li><code>--stats</code> - 输出文件传输的状态</li>
+<li><code>--progress</code> - 输出文件传输的进度</li>
+<li><code>--exclude-from</code> - 从文件里读取排除在外的文件或目录</li>
+<li><code>--numeric-ids</code> - 不映射uid/gid到user/group的名字</li>
+</ul>
+<p>常用的mirror同步命令:</p>
+<div class="hlcode"><pre><span class="n">rsync</span> <span class="o">-</span><span class="n">hvaHEXA</span> <span class="o">--</span><span class="n">delete</span> <span class="o">--</span><span class="n">stats</span> <span class="o">--</span><span class="n">progress</span> <span class="o">--</span><span class="n">numeric</span><span class="o">-</span><span class="n">ids</span> <span class="o">--</span><span class="n">exclude</span><span class="o">-</span><span class="n">from</span><span class="o">=/</span><span class="n">root</span><span class="o">/</span><span class="n">filter_file</span> <span class="n">tankywoo</span><span class="o">::</span><span class="n">wiki</span> <span class="o">/</span><span class="n">data</span>
+</pre></div>
+
+
+<h2 id="_4">资料</h2>
+<ul>
+<li><a href="http://www.howtocn.org/rsync">howtocn - rsync</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

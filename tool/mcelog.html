@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>mcelog - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » mcelog
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>MCE - Machine Check Exception(Error)</p>
+<p><a href="http://www.cyberciti.biz/tips/linux-server-predicting-hardware-failure.html">解释1</a>:</p>
+<blockquote>
+<p>MCE is nothing but feature of AMD / Intel 64 bit systems which is used to detect an unrecoverable hardware problem. MCE can detect:</p>
+<ul>
+<li>Communication error between CPU and motherboard.</li>
+<li>Memory error - ECC problems.</li>
+<li>CPU cache errors and so on.</li>
+</ul>
+<p>Program such mcelog decodes machine check events (hardware errors) on x86-64 machines running a 64-bit Linux kernel.</p>
+</blockquote>
+<p>mcelog 是 X86架构上(32bit and 64bit) 的 Linux 系统上用来检查硬件错误，特别是内存和CPU错误的工具。</p>
+<p><a href="http://www.mcelog.org/README.html">官方介绍</a>:</p>
+<blockquote>
+<p>mcelog is the user space backend for logging machine check errors reported by the hardware to the kernel. 
+The kernel does the immediate actions (like killing processes etc.) and mcelog decodes the errors and manages various other advanced error responses like offlining memory, CPUs or triggering events.</p>
+</blockquote>
+<p>要了解mcelog，首先应该了解下官方列出的一些<a href="http://www.mcelog.org/glossary.html">术语</a></p>
+<h2 id="_1">安装</h2>
+<p>Gentoo 上安装比较简单, emerge就能在官方源里搜到:</p>
+<div class="hlcode"><pre><span class="o">*</span>  <span class="n">app</span><span class="o">-</span><span class="n">admin</span><span class="o">/</span><span class="n">mcelog</span>
+      <span class="n">Latest</span> <span class="n">version</span> <span class="n">available</span><span class="o">:</span> <span class="mf">1.0</span><span class="n">_pre3_p20130621</span><span class="o">-</span><span class="n">r1</span>
+      <span class="n">Latest</span> <span class="n">version</span> <span class="n">installed</span><span class="o">:</span> <span class="p">[</span> <span class="n">Not</span> <span class="n">Installed</span> <span class="p">]</span>
+      <span class="n">Size</span> <span class="n">of</span> <span class="n">files</span><span class="o">:</span> <span class="mi">280</span> <span class="n">kB</span>
+      <span class="nl">Homepage:</span>      <span class="n">http</span><span class="o">:</span><span class="c1">//mcelog.org/</span>
+      <span class="nl">Description:</span>   <span class="n">A</span> <span class="n">tool</span> <span class="n">to</span> <span class="n">log</span> <span class="n">and</span> <span class="n">decode</span> <span class="n">Machine</span> <span class="n">Check</span> <span class="n">Exceptions</span>
+      <span class="nl">License:</span>       <span class="n">GPL</span><span class="o">-</span><span class="mi">2</span>
+</pre></div>
+
+
+<p>其它发行版需要具体参考<a href="http://www.mcelog.org/installation.html">官方安装说明</a></p>
+<p>安装后启动mcelog服务。</p>
+<p>启动后可以通过相关命令检查守护进程是否正常执行: <strong>TODO</strong></p>
+<div class="hlcode"><pre><span class="n">mcelog</span> <span class="o">--</span><span class="n">client</span>
+</pre></div>
+
+
+<p>如果没有任何输出，表示当前状态是良好的。</p>
+<p>默认的配置里，mcelog是使用daemon运行的，可以把它加入开机启动项。</p>
+<p>mcelog 安装的主要文件(配置和程序)有:</p>
+<div class="hlcode"><pre><span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">local</span><span class="o">::</span><span class="n">mcelog</span><span class="o">/</span> <span class="err">»</span> <span class="n">sudo</span> <span class="n">equery</span> <span class="n">files</span> <span class="n">mcelog</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">cron</span><span class="p">.</span><span class="n">daily</span><span class="o">/</span><span class="n">mcelog</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">mcelog</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">logrotate</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">mcelog</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">mcelog</span><span class="o">/</span><span class="n">cache</span><span class="o">-</span><span class="n">error</span><span class="o">-</span><span class="n">trigger</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">mcelog</span><span class="o">/</span><span class="n">dimm</span><span class="o">-</span><span class="n">error</span><span class="o">-</span><span class="n">trigger</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">mcelog</span><span class="o">/</span><span class="n">mcelog</span><span class="p">.</span><span class="n">conf</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">mcelog</span><span class="o">/</span><span class="n">page</span><span class="o">-</span><span class="n">error</span><span class="o">-</span><span class="n">trigger</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">mcelog</span><span class="o">/</span><span class="n">socket</span><span class="o">-</span><span class="n">memory</span><span class="o">-</span><span class="n">error</span><span class="o">-</span><span class="n">trigger</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">mcelog</span><span class="p">.</span><span class="n">service</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">mcelog</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">mcelog</span><span class="o">-</span><span class="mf">1.0</span><span class="n">_pre3_p20130621</span><span class="o">-</span><span class="n">r1</span><span class="o">/</span><span class="n">README</span><span class="p">.</span><span class="n">bz2</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">mcelog</span><span class="o">-</span><span class="mf">1.0</span><span class="n">_pre3_p20130621</span><span class="o">-</span><span class="n">r1</span><span class="o">/</span><span class="n">lk10</span><span class="o">-</span><span class="n">mcelog</span><span class="p">.</span><span class="n">pdf</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">mcelog</span><span class="o">-</span><span class="mf">1.0</span><span class="n">_pre3_p20130621</span><span class="o">-</span><span class="n">r1</span><span class="o">/</span><span class="n">mce</span><span class="p">.</span><span class="n">pdf</span>
+</pre></div>
+
+
+<h2 id="mcelog">mcelog 运行方式</h2>
+<p>分三种方式: <code>cronjob</code>, <code>trigger</code>, <code>daemon</code>。</p>
+<p>推荐使用 daemon 方式运行。</p>
+<p>cronjob 方式是通过 cron程序定时检查，这样会导致一些错误被延时汇报, mcelog也无法保存一些扩展的状态。</p>
+<blockquote>
+<p>trigger is a newer method where the kernel runs mcelog on a error. This is configured with echo /usr/sbin/mcelog &gt; /sys/devices/system/machinecheck/machinecheck0/trigger This is faster, but still doesn't allow mcelog to keep state, and has relatively high overhead for each error because a program has to be initialized from scratch.</p>
+</blockquote>
+<p>trigger 是一种新的方式，通过配置:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">mcelog</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">devices</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">machinecheck</span><span class="o">/</span><span class="n">machinecheck0</span><span class="o">/</span><span class="n">trigger</span>
+</pre></div>
+
+
+<p>这种方式更快，但是仍然也无法保存状态，且因为每次错误都需要初始化，所以开销大。</p>
+<h2 id="_2">配置</h2>
+<p>可以参考官方的<a href="http://www.mcelog.org/config.html">配置介绍</a>。</p>
+<p>大部分可以使用默认的选项，下面列出一些需要修改(开启)的:</p>
+<div class="hlcode"><pre><span class="cp"># 修改cpu类型，可以通过 mcelog --help 看到支持的合法类型选项</span>
+<span class="n">cpu</span> <span class="o">=</span> <span class="n">type</span>
+
+<span class="cp"># 使用daemon方式运行</span>
+<span class="n">daemon</span> <span class="o">=</span> <span class="n">yes</span>
+
+<span class="cp"># cpu主频，可以通过 cat /proc/cpuinfo 输出的 `cpu MHz` 看到</span>
+<span class="n">cpuhz</span> <span class="o">=</span> <span class="mf">1800.00</span>
+
+<span class="cp"># 配置是否写入syslog</span>
+<span class="n">syslog</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">syslog</span><span class="o">-</span><span class="n">error</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">no</span><span class="o">-</span><span class="n">syslog</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">logfile</span> <span class="o">=</span> <span class="n">filename</span>
+
+<span class="cp"># server 区域可以配置读取mcelog socket的权限，建议使用 root 权限。</span>
+<span class="n">client</span><span class="o">-</span><span class="n">user</span> <span class="o">=</span> <span class="n">yes</span>
+</pre></div>
+
+
+<h2 id="_3">命令行参数选项</h2>
+<p>具体可以 man mcelog</p>
+<div class="hlcode"><pre><span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">local</span><span class="o">::~/</span> <span class="err">»</span> <span class="n">sudo</span> <span class="n">mcelog</span> <span class="o">--</span><span class="n">help</span>
+<span class="nl">mcelog:</span> <span class="n">unrecognized</span> <span class="n">option</span> <span class="err">&#39;</span><span class="o">--</span><span class="n">help</span><span class="err">&#39;</span>
+<span class="nl">Usage:</span>
+  <span class="n">mcelog</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>  <span class="p">[</span><span class="n">mcelogdevice</span><span class="p">]</span>
+<span class="n">Decode</span> <span class="n">machine</span> <span class="n">check</span> <span class="n">error</span> <span class="n">records</span> <span class="n">from</span> <span class="n">current</span> <span class="n">kernel</span><span class="p">.</span>
+  <span class="n">mcelog</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="o">--</span><span class="n">daemon</span>
+<span class="n">Run</span> <span class="n">mcelog</span> <span class="n">in</span> <span class="n">daemon</span> <span class="n">mode</span><span class="p">,</span> <span class="n">waiting</span> <span class="k">for</span> <span class="n">errors</span> <span class="n">from</span> <span class="n">the</span> <span class="n">kernel</span><span class="p">.</span>
+  <span class="n">mcelog</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="o">--</span><span class="n">client</span>
+<span class="n">Query</span> <span class="n">a</span> <span class="n">currently</span> <span class="n">running</span> <span class="n">mcelog</span> <span class="n">daemon</span> <span class="k">for</span> <span class="n">errors</span>
+  <span class="n">mcelog</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="o">--</span><span class="n">ascii</span> <span class="o">&lt;</span> <span class="n">log</span>
+  <span class="n">mcelog</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="o">--</span><span class="n">ascii</span> <span class="o">--</span><span class="n">file</span> <span class="n">log</span>
+<span class="n">Decode</span> <span class="n">machine</span> <span class="n">check</span> <span class="n">ASCII</span> <span class="n">output</span> <span class="n">from</span> <span class="n">kernel</span> <span class="n">logs</span>
+<span class="nl">Options:</span>
+<span class="o">--</span><span class="n">cpu</span> <span class="n">CPU</span>           <span class="n">Set</span> <span class="n">CPU</span> <span class="n">type</span> <span class="n">CPU</span> <span class="n">to</span> <span class="n">decode</span> <span class="p">(</span><span class="n">see</span> <span class="n">below</span> <span class="k">for</span> <span class="n">valid</span> <span class="n">types</span><span class="p">)</span>
+<span class="o">--</span><span class="n">cpumhz</span> <span class="n">MHZ</span>        <span class="n">Set</span> <span class="n">CPU</span> <span class="n">Mhz</span> <span class="n">to</span> <span class="n">decode</span> <span class="n">time</span> <span class="p">(</span><span class="n">output</span> <span class="n">unreliable</span><span class="p">,</span> <span class="n">not</span> <span class="n">needed</span> <span class="n">on</span> <span class="n">new</span> <span class="n">kernels</span><span class="p">)</span>
+<span class="o">--</span><span class="n">raw</span>                <span class="p">(</span><span class="n">with</span> <span class="o">--</span><span class="n">ascii</span><span class="p">)</span> <span class="n">Dump</span> <span class="n">in</span> <span class="n">raw</span> <span class="n">ASCII</span> <span class="n">format</span> <span class="k">for</span> <span class="n">machine</span> <span class="n">processing</span>
+<span class="o">--</span><span class="n">daemon</span>            <span class="n">Run</span> <span class="n">in</span> <span class="n">background</span> <span class="n">waiting</span> <span class="k">for</span> <span class="n">events</span> <span class="p">(</span><span class="n">needs</span> <span class="n">newer</span> <span class="n">kernel</span><span class="p">)</span>
+<span class="o">--</span><span class="n">ignorenodev</span>       <span class="n">Exit</span> <span class="n">silently</span> <span class="n">when</span> <span class="n">the</span> <span class="n">device</span> <span class="n">cannot</span> <span class="n">be</span> <span class="n">opened</span>
+<span class="o">--</span><span class="n">file</span> <span class="n">filename</span>     <span class="n">With</span> <span class="o">--</span><span class="n">ascii</span> <span class="n">read</span> <span class="n">machine</span> <span class="n">check</span> <span class="n">log</span> <span class="n">from</span> <span class="n">filename</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">stdin</span>
+<span class="o">--</span><span class="n">syslog</span>            <span class="n">Log</span> <span class="n">decoded</span> <span class="n">machine</span> <span class="n">checks</span> <span class="n">in</span> <span class="n">syslog</span> <span class="p">(</span><span class="k">default</span> <span class="n">stdout</span> <span class="n">or</span> <span class="n">syslog</span> <span class="k">for</span> <span class="n">daemon</span><span class="p">)</span>
+<span class="o">--</span><span class="n">syslog</span><span class="o">-</span><span class="n">error</span>       <span class="n">Log</span> <span class="n">decoded</span> <span class="n">machine</span> <span class="n">checks</span> <span class="n">in</span> <span class="n">syslog</span> <span class="n">with</span> <span class="n">error</span> <span class="n">level</span>
+<span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">syslog</span>         <span class="n">Never</span> <span class="n">log</span> <span class="n">anything</span> <span class="n">to</span> <span class="n">syslog</span>
+<span class="o">--</span><span class="n">logfile</span> <span class="n">filename</span>  <span class="n">Append</span> <span class="n">log</span> <span class="n">output</span> <span class="n">to</span> <span class="n">logfile</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">stdout</span>
+<span class="o">--</span><span class="n">dmi</span>               <span class="n">Use</span> <span class="n">SMBIOS</span> <span class="n">information</span> <span class="n">to</span> <span class="n">decode</span> <span class="n">DIMMs</span> <span class="p">(</span><span class="n">needs</span> <span class="n">root</span><span class="p">)</span>
+<span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">dmi</span>            <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">use</span> <span class="n">SMBIOS</span> <span class="n">information</span>
+<span class="o">--</span><span class="n">dmi</span><span class="o">-</span><span class="n">verbose</span>       <span class="n">Dump</span> <span class="n">SMBIOS</span> <span class="n">information</span> <span class="p">(</span><span class="k">for</span> <span class="n">debugging</span><span class="p">)</span>
+<span class="o">--</span><span class="n">filter</span>            <span class="n">Inhibit</span> <span class="n">known</span> <span class="n">bogus</span> <span class="n">events</span> <span class="p">(</span><span class="k">default</span> <span class="n">on</span><span class="p">)</span>
+<span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">filter</span>         <span class="n">Don</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">inhibit</span> <span class="n">known</span> <span class="n">broken</span> <span class="n">events</span>
+<span class="o">--</span><span class="n">config</span><span class="o">-</span><span class="n">file</span> <span class="n">filename</span> <span class="n">Read</span> <span class="n">config</span> <span class="n">information</span> <span class="n">from</span> <span class="n">config</span> <span class="n">file</span> <span class="n">instead</span> <span class="n">of</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">mcelog</span><span class="o">/</span><span class="n">mcelog</span><span class="p">.</span><span class="n">conf</span>
+<span class="o">--</span><span class="n">foreground</span>        <span class="n">Keep</span> <span class="n">in</span> <span class="n">foreground</span> <span class="p">(</span><span class="k">for</span> <span class="n">debugging</span><span class="p">)</span>
+<span class="o">--</span><span class="n">num</span><span class="o">-</span><span class="n">errors</span> <span class="n">N</span>      <span class="n">Only</span> <span class="n">process</span> <span class="n">N</span> <span class="n">errors</span> <span class="p">(</span><span class="k">for</span> <span class="n">testing</span><span class="p">)</span>
+<span class="o">--</span><span class="n">pidfile</span> <span class="n">file</span>       <span class="n">Write</span> <span class="n">pid</span> <span class="n">of</span> <span class="n">daemon</span> <span class="n">into</span> <span class="n">file</span>
+<span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">imc</span><span class="o">-</span><span class="n">log</span>         <span class="n">Disable</span> <span class="n">extended</span> <span class="n">iMC</span> <span class="n">logging</span>
+<span class="n">Valid</span> <span class="n">CPUs</span><span class="o">:</span> <span class="n">generic</span> <span class="n">p6old</span> <span class="n">core2</span> <span class="n">k8</span> <span class="n">p4</span> <span class="n">dunnington</span> <span class="n">xeon74xx</span> <span class="n">xeon7400</span> <span class="n">xeon5500</span> <span class="n">xeon5200</span> <span class="n">xeon5000</span> <span class="n">xeon5100</span> <span class="n">xeon3100</span> <span class="n">xeon3200</span> <span class="n">core_i7</span> <span class="n">core_i5</span> <span class="n">core_i3</span> <span class="n">nehalem</span> <span class="n">westmere</span> <span class="n">xeon71xx</span> <span class="n">xeon7100</span> <span class="n">tulsa</span> <span class="n">intel</span> <span class="n">xeon75xx</span> <span class="n">xeon7500</span> <span class="n">xeon7200</span> <span class="n">xeon7100</span> <span class="n">sandybridge</span> <span class="n">sandybridge</span><span class="o">-</span><span class="n">ep</span> <span class="n">ivybridge</span> <span class="n">ivybridge</span><span class="o">-</span><span class="n">ep</span> <span class="n">ivybridge</span><span class="o">-</span><span class="n">ex</span> <span class="n">haswell</span>
+</pre></div>
+
+
+<p><code>mcelog --client</code> 相当于一个mcelog客户端，用来从mcelog进程查询信息</p>
+<p>下面的选项都可以通过mcelog的配置文件进行配置。建议直接在配置文件中配置，其中还有一些配置是参数选项中没有的。</p>
+<p>最下面是合法的cpu类型，在--cpu配置时使用</p>
+<p>下面可以从指定文件中读取内核日志进行解码输出:</p>
+<div class="hlcode"><pre><span class="cp"># Decode machine check ASCII output from kernel logs</span>
+<span class="n">mcelog</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="o">--</span><span class="n">ascii</span> <span class="o">&lt;</span> <span class="n">log</span>
+</pre></div>
+
+
+<p>比如在 mcelog 项目源码中的 input/ 目录中有一些samples可以直接使用:</p>
+<div class="hlcode"><pre><span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">local</span><span class="o">::</span><span class="n">input</span><span class="o">/</span> <span class="p">(</span><span class="n">master</span><span class="o">*</span><span class="p">)</span> <span class="err">»</span> <span class="n">cat</span> <span class="n">dimm0</span>
+<span class="cp"># dimm0, channel0 corrected error</span>
+<span class="n">CPU</span> <span class="mi">0</span> <span class="mi">2</span>
+<span class="n">PROCESSOR</span> <span class="mi">0</span><span class="o">:</span><span class="mh">0x106a0</span>
+<span class="n">STATUS</span> <span class="mh">0x8800000000000080</span>
+<span class="n">MISC</span> <span class="mi">0</span>
+
+<span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">local</span><span class="o">::</span><span class="n">input</span><span class="o">/</span> <span class="p">(</span><span class="n">master</span><span class="o">*</span><span class="p">)</span> <span class="err">»</span> <span class="n">sudo</span> <span class="n">mcelog</span> <span class="o">--</span><span class="n">ascii</span> <span class="o">&lt;</span> <span class="n">dimm0</span>
+<span class="cp"># dimm0, channel0 corrected error</span>
+<span class="n">Hardware</span> <span class="n">event</span><span class="p">.</span> <span class="n">This</span> <span class="n">is</span> <span class="n">not</span> <span class="n">a</span> <span class="n">software</span> <span class="n">error</span><span class="p">.</span>
+<span class="n">CPU</span> <span class="mi">0</span> <span class="n">BANK</span> <span class="mi">2</span>
+<span class="n">MISC</span> <span class="mi">0</span>
+<span class="n">MCG</span> <span class="n">status</span><span class="o">:</span>
+<span class="n">MCi</span> <span class="n">status</span><span class="o">:</span>
+<span class="n">Corrected</span> <span class="n">error</span>
+<span class="n">MCi_MISC</span> <span class="k">register</span> <span class="n">valid</span>
+<span class="nl">MCA:</span> <span class="n">MEMORY</span> <span class="n">CONTROLLER</span> <span class="n">GEN_CHANNEL0_ERR</span>
+<span class="nl">Transaction:</span> <span class="n">Generic</span> <span class="n">undefined</span> <span class="n">request</span>
+<span class="n">Memory</span> <span class="n">corrected</span> <span class="n">error</span> <span class="n">count</span> <span class="p">(</span><span class="n">CORE_ERR_CNT</span><span class="p">)</span><span class="o">:</span> <span class="mi">0</span>
+<span class="n">Memory</span> <span class="n">transaction</span> <span class="n">Tracker</span> <span class="n">ID</span> <span class="p">(</span><span class="n">RTId</span><span class="p">)</span><span class="o">:</span> <span class="mi">0</span>
+<span class="n">Memory</span> <span class="n">DIMM</span> <span class="n">ID</span> <span class="n">of</span> <span class="n">error</span><span class="o">:</span> <span class="mi">0</span>
+<span class="n">Memory</span> <span class="n">channel</span> <span class="n">ID</span> <span class="n">of</span> <span class="n">error</span><span class="o">:</span> <span class="mi">0</span>
+<span class="n">Memory</span> <span class="n">ECC</span> <span class="n">syndrome</span><span class="o">:</span> <span class="mi">0</span>
+<span class="n">STATUS</span> <span class="mi">8800000000000080</span> <span class="n">MCGSTATUS</span> <span class="mi">0</span>
+<span class="n">CPUID</span> <span class="n">Vendor</span> <span class="n">Intel</span> <span class="n">Family</span> <span class="mi">6</span> <span class="n">Model</span> <span class="mi">26</span>
+</pre></div>
+
+
+<h2 id="_4">一些依赖</h2>
+<p>检查 <code>/dev/mcelog</code> 是否存在，如果没有，通过 <code>mknod /dev/mcelog c 10 227</code> 创建。</p>
+<p>内核版本: 32bit(since 2.6.30), 64bit(since 2.6)</p>
+<p>内核配置需要开启 <code>CONFIG_X86_MCE</code> 选项:</p>
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">ubuntu_test</span><span class="o">:/</span><span class="n">boot</span><span class="err">#</span> <span class="n">grep</span> <span class="err">&#39;</span><span class="n">MCE</span><span class="err">&#39;</span> <span class="o">/</span><span class="n">boot</span><span class="o">/</span><span class="n">config</span><span class="o">-</span><span class="err">`</span><span class="n">uname</span> <span class="o">-</span><span class="n">r</span><span class="err">`</span>
+<span class="n">CONFIG_X86_MCE</span><span class="o">=</span><span class="n">y</span>
+</pre></div>
+
+
+<h3 id="_5">相关资源</h3>
+<ul>
+<li><a href="https://github.com/andikleen/mcelog">mcelog 主页</a></li>
+<li><a href="https://github.com/andikleen/mcelog">mcelog 项目源码</a></li>
+<li>man mcelog - 首选文档</li>
+<li>lk10-mcelog.pdf - mcelog 处理的错误简介</li>
+<li>mce.pdf - 比较老的文档，介绍的是mcelog第一个发行版</li>
+<li>mcelog --help</li>
+<li><a href="http://www.halobates.de/mcelog-lk10-pres.pdf">mcelog-lk10-pres.pdf</a></li>
+<li><a href="http://blog.casparant.com/posts/some-misc-items-of-mce.html">mce的一些零散记录</a></li>
+<li><a href="http://www.flatws.cn/article/program/linux/2011-05-04/23961.html">Linux系统无法ping通，导致需要重启系统</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

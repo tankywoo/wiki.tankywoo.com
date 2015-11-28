@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>树莓派 Raspberry - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#other">other</a> » 树莓派 Raspberry
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">安装镜像</a></li>
+<li><a href="#_2">初始账户密码</a></li>
+<li><a href="#_3">镜像源</a></li>
+<li><a href="#_4">初始扩容/新建分区</a></li>
+<li><a href="#raspbian-vimpython">Raspbian vim支持python</a></li>
+<li><a href="#_5">加密分区</a></li>
+<li><a href="#x-windows">禁止X Windows开机启动</a></li>
+<li><a href="#_6">其它</a></li>
+</ul>
+</div>
+<p><a href="https://www.raspberrypi.org/">树莓派</a>是一款基于arm架构的微型单片机电脑.</p>
+<p>目前(2015-10-30)手头上使用的是几年前的1代B版, 700MHz CPU, 512M Ram. 刚换了一个<a href="http://item.jd.com/679773.html">SanDisk 32G Class 10 Micro SD卡</a>, 带卡托. 感觉速度上比原来的金士顿16G Class 10 SD卡有一些提升.</p>
+<p>最开始装的Gentoo, 那叫一个无奈啊...</p>
+<p>然后装的基于Debian6的Raspbian wheezy</p>
+<p>最近刚换上基于Debian7的<a href="https://www.raspberrypi.org/downloads/raspbian/">Raspbian Jessie</a></p>
+<h2 id="_1">安装镜像</h2>
+<p>下载的Raspbian Jessie, zip包1.2G, 解压后是一个4.1G的img文件. Linux下使用<code>dd</code>直接写入SD卡. 不需要分区:</p>
+<div class="hlcode"><pre><span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">local</span> <span class="o">~</span> <span class="o">%</span> <span class="n">sudo</span> <span class="n">dd</span> <span class="k">if</span><span class="o">=</span><span class="mi">2015</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">24</span><span class="o">-</span><span class="n">raspbian</span><span class="o">-</span><span class="n">jessie</span><span class="p">.</span><span class="n">img</span> <span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdb</span>
+<span class="mi">8448000</span><span class="o">+</span><span class="mi">0</span> <span class="n">records</span> <span class="n">in</span>
+<span class="mi">8448000</span><span class="o">+</span><span class="mi">0</span> <span class="n">records</span> <span class="n">out</span>
+<span class="mi">4325376000</span> <span class="n">bytes</span> <span class="p">(</span><span class="mf">4.3</span> <span class="n">GB</span><span class="p">)</span> <span class="n">copied</span><span class="p">,</span> <span class="mf">899.617</span> <span class="n">s</span><span class="p">,</span> <span class="mf">4.8</span> <span class="n">MB</span><span class="o">/</span><span class="n">s</span>
+</pre></div>
+
+
+<p>Win下好像使用的是win32diskimager这个工具.</p>
+<h2 id="_2">初始账户密码</h2>
+<div class="hlcode"><pre><span class="n">pi</span> <span class="o">/</span> <span class="n">raspberry</span>
+</pre></div>
+
+
+<p>一定要改掉!!!</p>
+<h2 id="_3">镜像源</h2>
+<p>找了一圈, 发现国内 <a href="http://mirrors.tuna.tsinghua.edu.cn/help/#raspbian">清华mirror</a> 支持Jessie.</p>
+<div class="hlcode"><pre><span class="k">deb</span> <span class="s">http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/</span> <span class="kp">jessie</span> <span class="kp">main</span> <span class="kp">non-free</span> <span class="kp">contrib</span>
+<span class="k">deb-src</span> <span class="s">http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/</span> <span class="kp">jessie</span> <span class="kp">main</span> <span class="kp">non-free</span> <span class="kp">contrib</span>
+</pre></div>
+
+
+<p>更多的源列表见官方 <a href="https://www.raspbian.org/RaspbianMirrors">Raspbian Mirrors</a></p>
+<h2 id="_4">初始扩容/新建分区</h2>
+<p>刚安装好后, 默认的根分区才3.9G:</p>
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">raspberrypi</span><span class="o">:~</span><span class="err">#</span> <span class="n">df</span> <span class="o">-</span><span class="n">lh</span>
+<span class="n">Filesystem</span>      <span class="n">Size</span>  <span class="n">Used</span> <span class="n">Avail</span> <span class="n">Use</span><span class="o">%</span> <span class="n">Mounted</span> <span class="n">on</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">root</span>        <span class="mf">3.9</span><span class="n">G</span>  <span class="mf">3.1</span><span class="n">G</span>  <span class="mi">491</span><span class="n">M</span>  <span class="mi">87</span><span class="o">%</span> <span class="o">/</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p1</span>   <span class="mi">56</span><span class="n">M</span>   <span class="mi">20</span><span class="n">M</span>   <span class="mi">37</span><span class="n">M</span>   <span class="mi">36</span><span class="o">%</span> <span class="o">/</span><span class="n">boot</span>
+<span class="p">...</span>
+
+<span class="n">root</span><span class="err">@</span><span class="n">raspberrypi</span><span class="o">:~</span><span class="err">#</span> <span class="n">fdisk</span> <span class="o">-</span><span class="n">l</span>
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0</span><span class="o">:</span> <span class="mf">29.7</span> <span class="n">GiB</span><span class="p">,</span> <span class="mi">31914983424</span> <span class="n">bytes</span><span class="p">,</span> <span class="mi">62333952</span> <span class="n">sectors</span>
+<span class="nl">Units:</span> <span class="n">sectors</span> <span class="n">of</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">512</span> <span class="o">=</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Sector</span> <span class="n">size</span> <span class="p">(</span><span class="n">logical</span><span class="o">/</span><span class="n">physical</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">size</span> <span class="p">(</span><span class="n">minimum</span><span class="o">/</span><span class="n">optimal</span><span class="p">)</span><span class="o">:</span> <span class="mi">512</span> <span class="n">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="n">bytes</span>
+<span class="n">Disklabel</span> <span class="n">type</span><span class="o">:</span> <span class="n">dos</span>
+<span class="n">Disk</span> <span class="n">identifier</span><span class="o">:</span> <span class="mh">0xba2edfb9</span>
+
+<span class="n">Device</span>         <span class="n">Boot</span>  <span class="n">Start</span>     <span class="n">End</span> <span class="n">Sectors</span> <span class="n">Size</span> <span class="n">Id</span> <span class="n">Type</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p1</span>        <span class="mi">8192</span>  <span class="mi">122879</span>  <span class="mi">114688</span>  <span class="mi">56</span><span class="n">M</span>  <span class="n">c</span> <span class="n">W95</span> <span class="n">FAT32</span> <span class="p">(</span><span class="n">LBA</span><span class="p">)</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p2</span>      <span class="mi">122880</span> <span class="mi">8447999</span> <span class="mi">8325120</span>   <span class="mi">4</span><span class="n">G</span> <span class="mi">83</span> <span class="n">Linux</span>
+</pre></div>
+
+
+<p>初始就两个分区. 一个boot, 一个根分区. 需要扩容根分区.</p>
+<div class="hlcode"><pre><span class="n">fdisk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0</span>
+</pre></div>
+
+
+<p>记住分区2的起始扇区号, 按<code>d</code>删除分区2. 然后<code>n</code>重建分区, 起始需要和之前一致. 我这里配置的是分配25G空间 <code>+25G</code>. 然后<code>w</code>保存分区修改.</p>
+<p><code>partprobe</code>更新分区表, 然后<code>resize2fs</code>做online扩容:</p>
+<div class="hlcode"><pre><span class="n">resize2fs</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p2</span>
+</pre></div>
+
+
+<p>最后reboot.</p>
+<p>因为根分区是ext4, 支持在线(online)扩容, 如不支持, 则需要reboot后再做resize2fs操作.</p>
+<p>初始只有两个分区, 个人习惯是将<code>/home</code>单独挂载到一个分区. 新增分区和Linux一样, 磁盘设备名是<code>/dev/mmcblk0</code>, 直接fdisk创建, partprobe同步分区.</p>
+<p>详细步骤可以参考:</p>
+<ul>
+<li><a href="http://raspberrypi.stackexchange.com/questions/499/how-can-i-resize-my-root-partition">How can I resize my / (root) partition?</a></li>
+<li><a href="http://blog.retep.org/2012/06/19/using-the-full-space-on-your-sd-card/">USING THE FULL SPACE ON YOUR SD CARD IN THE RASPBERRY PI</a></li>
+<li><a href="https://mike632t.wordpress.com/2014/02/10/resizing-partitions/">Creating a seperate home partition (Raspberry Pi)</a></li>
+</ul>
+<h2 id="raspbian-vimpython">Raspbian vim支持python</h2>
+<p><code>apt-get</code>安装好vim后, 通过<code>vim --version</code>可以看到是不支持python扩展的.</p>
+<p>不需要卸载自己编辑, 直接安装 <code>vim-nox</code> 即可:</p>
+<div class="hlcode"><pre><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">vim</span><span class="o">-</span><span class="n">nox</span>
+</pre></div>
+
+
+<h2 id="_5">加密分区</h2>
+<p>其实这个不是树莓派相关的内容, 不过刚在树莓派下试了, 顺便就先记录在这里.</p>
+<p>以前经常手动安装ubuntu server时, 在分区这块记得好像是可以选择加密分区(好像centos 7安装时也遇到了), 不过都没有去尝试过. 现在树莓派作为一个备份机器, 有些重要数据是需要放在加密区, 于是搜了下.</p>
+<p>首先安装 <code>cryptsetup</code> 包. 然后fdisk新建一个分区.</p>
+<p>然后使用cryptsetup组件初始化待加密分区(注意这个会擦除重写分区, 如有资料需注意备份):</p>
+<div class="hlcode"><pre><span class="cp"># 这里的加密使用的是密码</span>
+<span class="err">$</span> <span class="n">cryptsetup</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">verify</span><span class="o">-</span><span class="n">passphrase</span> <span class="n">luksFormat</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p3</span>
+</pre></div>
+
+
+<p>输入YES确认, 并输入密码. ok后需要打开加密分区, 映射到系统/var/mapper/下作为一个新的设备:</p>
+<div class="hlcode"><pre><span class="err">#</span> <span class="nx">cryptsetup</span> <span class="nx">luksOpen</span> <span class="o">&lt;</span><span class="nx">device</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nb">name</span><span class="o">&gt;</span>
+<span class="err">$</span> <span class="nx">cryptsetup</span> <span class="nx">luksOpen</span> <span class="p">/</span><span class="nx">dev</span><span class="p">/</span><span class="nx">mmcblk0p3</span> <span class="nx">mydisk</span>
+</pre></div>
+
+
+<p>name是映射到/dev/mapper/下的设备名, 可以任意写</p>
+<p>也可以使用open命令:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">cryptsetup</span> <span class="n">open</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mmcblk0p3</span> <span class="n">mydisk</span>
+</pre></div>
+
+
+<p>这时, fdisk -l 查看会看到多了一个新的磁盘.</p>
+<p>第一次需要格式化这个磁盘, 不需要再分区, 直接格式化/新建文件系统整个磁盘即可:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">mke2fs</span> <span class="o">-</span><span class="n">t</span> <span class="n">ext4</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">mydisk</span>
+</pre></div>
+
+
+<p>以后就不需要再建文件系统了, 直接mount挂载即可.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">mount</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">mapper</span><span class="o">/</span><span class="n">mydisk</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">test</span><span class="o">/</span>
+</pre></div>
+
+
+<p>还可以配置开机自动挂载, 这块就没去研究了, 还是先手动挂吧.</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://xmodulo.com/how-to-create-encrypted-disk-partition-on-linux.html">How to create an encrypted disk partition on Linux</a></li>
+<li><a href="http://www.cyberciti.biz/hardware/howto-linux-hard-disk-encryption-with-luks-cryptsetup-command/">HowTo: Linux Hard Disk Encryption With LUKS [cryptsetup Command]</a></li>
+</ul>
+<h2 id="x-windows">禁止X Windows开机启动</h2>
+<p>因为都是ssh直接登录, 也不需要桌面的支持, 所以完全没必要开机启动(<code>lightdm</code>)</p>
+<p>最简单的关闭方式是使用raspbian提供的<code>raspi-config</code>命令, 选择3 Boot Options, 然后选择B1 Console  Text console, requiring user to login</p>
+<p>看了下它的脚本内容:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">view</span> <span class="err">`</span><span class="n">which</span> <span class="n">raspi</span><span class="o">-</span><span class="n">config</span><span class="err">`</span>
+<span class="p">...</span>
+<span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">e</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">lightdm</span> <span class="p">];</span> <span class="n">then</span>
+  <span class="k">if</span> <span class="p">[</span> <span class="err">$</span><span class="n">SYSTEMD</span> <span class="o">-</span><span class="n">eq</span> <span class="mi">1</span> <span class="p">];</span> <span class="n">then</span>
+    <span class="n">systemctl</span> <span class="n">set</span><span class="o">-</span><span class="k">default</span> <span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="p">.</span><span class="n">target</span>
+    <span class="n">ln</span> <span class="o">-</span><span class="n">fs</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">getty</span><span class="err">@</span><span class="p">.</span><span class="n">service</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">getty</span><span class="p">.</span><span class="n">target</span><span class="p">.</span><span class="n">wants</span><span class="o">/</span><span class="n">getty</span><span class="err">@</span><span class="n">tty1</span><span class="p">.</span><span class="n">service</span>
+  <span class="k">else</span>
+    <span class="n">update</span><span class="o">-</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span> <span class="n">lightdm</span> <span class="n">disable</span> <span class="mi">2</span>
+    <span class="n">sed</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">inittab</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">e</span> <span class="s">&quot;s/1:2345:respawn:\/bin\/login -f pi tty1 &lt;\/dev\/tty1 &gt;\/dev\/tty1 2&gt;&amp;1/1:2345:respawn:\/sbin\/getty --noclear 38400 tty1/&quot;</span>
+  <span class="n">fi</span>
+<span class="n">fi</span>
+<span class="p">;;</span>
+<span class="p">...</span>
+</pre></div>
+
+
+<p>因为基于debian7, 使用的是systemd, 所以直接用systemctl管理即可. 当然后向兼容, 也可以通过upstarts来管理:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">update</span><span class="o">-</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span> <span class="n">lightdm</span> <span class="n">stop</span>
+</pre></div>
+
+
+<p>甚至remove也可以. 最后重启确认.</p>
+<h2 id="_6">其它</h2>
+<ul>
+<li><a href="http://shumeipai.nxez.com/">树莓派实验室</a></li>
+<li><a href="https://wwssllabcd.github.io/blog/2013/01/31/how-to-setup-raspberry-pi/#安裝_OS">Raspberry Pi 安裝心得、教學、簡介</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

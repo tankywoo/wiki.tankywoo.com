@@ -1,0 +1,366 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>sed - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » sed
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>使用的是gnu sed, mac 下默认是bsd sed, mac下可以<code>brew install gnu-sed</code></p>
+<p>Stream EDitor, 流编辑器</p>
+<h2 id="_1">格式</h2>
+<div class="hlcode"><pre><span class="n">sed</span> <span class="n">options</span> <span class="n">script</span> <span class="n">file</span>
+
+<span class="o">*</span> <span class="o">-</span><span class="n">e</span> <span class="n">script</span> <span class="err">可以指定多个</span><span class="o">-</span><span class="n">e</span><span class="p">(</span><span class="err">后面举例</span><span class="p">)</span>
+<span class="o">*</span> <span class="o">-</span><span class="n">f</span> <span class="n">file</span> <span class="err">从文件读取</span><span class="n">sed</span><span class="err">规则</span>
+<span class="o">*</span> <span class="o">-</span><span class="n">n</span> <span class="err">只输出匹配的行</span>
+</pre></div>
+
+
+<h2 id="substitute">替换(substitute)</h2>
+<div class="hlcode"><pre><span class="n">s</span><span class="o">/</span><span class="n">pattern</span><span class="o">/</span><span class="n">replacement</span><span class="o">/</span><span class="n">flag</span>
+
+<span class="o">*</span> <span class="err">数字</span>        <span class="err">表明新文本将替换第几处模式匹配的地方</span>
+<span class="o">*</span> <span class="n">g</span>         <span class="err">所有匹配的都替换</span>
+<span class="o">*</span> <span class="n">p</span>         <span class="err">原来的内容也打印出来</span>
+<span class="o">*</span> <span class="n">w</span> <span class="n">file</span>    <span class="err">将替换的结果写到文件中</span>
+</pre></div>
+
+
+<h2 id="_2">限制行数</h2>
+<div class="hlcode"><pre><span class="o">*</span> <span class="err">数字</span>            <span class="err">指定行数</span>
+<span class="o">*</span> <span class="err">数字</span><span class="mi">1</span><span class="p">,</span><span class="err">数字</span><span class="mi">2</span>   <span class="err">限定范围</span>
+<span class="o">*</span> <span class="err">$表示结尾行</span>
+<span class="o">*</span>
+<span class="o">*</span> <span class="err">其实还可以使用文本模式过滤器</span>
+<span class="o">*</span> <span class="o">/</span><span class="n">pattern</span><span class="o">/</span><span class="n">command</span> 
+<span class="o">*</span> <span class="n">eg</span><span class="p">.</span> <span class="err">$</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">tankywoo</span><span class="o">/</span><span class="n">s</span><span class="o">/</span><span class="n">bash</span><span class="o">/</span><span class="n">csh</span><span class="o">/</span><span class="err">&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+</pre></div>
+
+
+<h2 id="_3">删除行</h2>
+<div class="hlcode"><pre><span class="n">sed</span> <span class="sc">&#39;d&#39;</span> <span class="n">mydata</span>      <span class="err">#删除全部</span>
+<span class="n">sed</span> <span class="err">&#39;</span><span class="mi">1</span><span class="n">d</span><span class="err">&#39;</span> <span class="n">mydata</span>     <span class="err">#删除第一行</span>
+</pre></div>
+
+
+<p>这个同样也可以用于上面的模式匹配</p>
+<h2 id="_4">插入和附加</h2>
+<div class="hlcode"><pre><span class="err">插入</span><span class="n">i</span><span class="err">会在指定行前插入一个新行</span>
+<span class="err">插入</span><span class="n">a</span><span class="err">会在指定行后插入一个新行</span>
+<span class="n">echo</span> <span class="s">&quot;Test Line 2&quot;</span> <span class="o">|</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="n">i</span><span class="err">\</span><span class="n">Test</span> <span class="n">Line</span> <span class="mi">1</span><span class="err">&#39;</span>
+<span class="n">echo</span> <span class="s">&quot;Test Line 2&quot;</span> <span class="o">|</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="n">a</span><span class="err">\</span><span class="n">Test</span> <span class="n">Line</span> <span class="mi">1</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>指定在某行插入字符串:</p>
+<div class="hlcode"><pre><span class="cp"># 在第5行插入hello world</span>
+<span class="o">%</span> <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="err">&#39;</span><span class="mi">5</span><span class="n">ihello</span> <span class="n">world</span><span class="err">&#39;</span> <span class="kt">FILE</span>
+</pre></div>
+
+
+<p>参考 <a href="http://stackoverflow.com/a/6537587/1276501">Insert a line at specific line number with sed or awk</a></p>
+<h2 id="_5">修改</h2>
+<div class="hlcode"><pre><span class="err">字符</span><span class="n">c</span><span class="err">是修改指定行的整行内容</span>
+<span class="n">sed</span> <span class="err">&#39;</span><span class="mi">3</span><span class="n">c</span><span class="err">\&#39;</span>       <span class="err">#修改第三行</span>
+</pre></div>
+
+
+<h2 id="_6">转换</h2>
+<div class="hlcode"><pre><span class="err">字符</span><span class="n">y</span><span class="err">是进行单个字符映射的转换，且是全局的</span>
+<span class="n">sed</span> <span class="err">&#39;</span><span class="n">y</span><span class="o">/</span><span class="n">abc</span><span class="o">/</span><span class="mi">123</span><span class="err">&#39;</span> <span class="n">mydata</span>
+<span class="err">会将所有的</span><span class="n">a</span><span class="err">转换成</span><span class="mi">1</span><span class="err">，</span><span class="n">b</span><span class="err">转换成</span><span class="mi">2</span><span class="err">，</span><span class="n">c</span><span class="err">转换成</span><span class="mi">3</span>
+</pre></div>
+
+
+<h2 id="_7">打印</h2>
+<div class="hlcode"><pre><span class="o">*</span> <span class="n">p</span> <span class="err">打印问本行</span>
+<span class="o">*</span> <span class="err">#</span> <span class="err">打印行号</span>
+<span class="o">*</span> <span class="n">l</span> <span class="err">列出行</span>
+</pre></div>
+
+
+<h2 id="_8">文件操作</h2>
+<div class="hlcode"><pre><span class="o">*</span> <span class="n">w</span> <span class="err">写入文件</span>
+<span class="o">*</span> <span class="n">r</span> <span class="err">读入文件</span>
+</pre></div>
+
+
+<hr />
+<p>(以下内容参考 Software Design 03期的sed详解及用法)</p>
+<p>源文件:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">more</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaabbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">aaabbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/&#39;&quot;</span>
+</pre></div>
+
+
+<p>简单的替换:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">bbb</span><span class="o">/</span><span class="n">eee</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaaeeecccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">aaaeeecccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/&#39;&quot;</span>
+</pre></div>
+
+
+<p>第一行前半部分的bbb被替换了, 后半部分没有; 第二行替换了;</p>
+<p>因为sed是流编辑器, 以行为处理单元, 默认一行处理一次;</p>
+<p>这里的<code>-e</code>没什么用, 可以不写.</p>
+<p>可以加上<code>g</code>标志, 表示全局作用:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">bbb</span><span class="o">/</span><span class="n">eee</span><span class="o">/</span><span class="n">g</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaaeeecccddd</span> <span class="n">aaaeeecccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">aaaeeecccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+</pre></div>
+
+
+<p>也可以在指定行上操作, 如只在第一行:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="mi">1</span><span class="n">s</span><span class="o">/</span><span class="n">bbb</span><span class="o">/</span><span class="n">eee</span><span class="o">/</span><span class="n">g</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaaeeecccddd</span> <span class="n">aaaeeecccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">aaabbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+</pre></div>
+
+
+<p>sed的基本格式:</p>
+<div class="hlcode"><pre><span class="n">sed</span> <span class="p">[</span><span class="err">选项</span><span class="p">,</span> <span class="err">如</span><span class="o">-</span><span class="n">e</span><span class="p">]</span> <span class="err">&#39;</span><span class="p">[</span><span class="err">开始行</span><span class="p">,</span><span class="err">结束行</span><span class="p">]</span><span class="err">命令</span><span class="o">/</span><span class="err">查找字符串</span><span class="o">/</span><span class="err">替换字符串</span><span class="o">/</span><span class="p">[</span><span class="err">标志</span><span class="p">,</span> <span class="err">如</span><span class="n">g</span><span class="p">]</span><span class="err">&#39;</span> <span class="err">输出文本</span> <span class="p">[</span><span class="o">&gt;</span> <span class="err">输出文本</span><span class="p">]</span>
+</pre></div>
+
+
+<p>关于命令, 除了s(替换), 还有:</p>
+<ul>
+<li>d (删除)</li>
+<li>p (打印)</li>
+<li>y (替换一个字符)</li>
+<li>w (写文件)</li>
+<li>n TODO</li>
+</ul>
+<p>标志除了g(global全局), 还有:</p>
+<ul>
+<li>p (print 打印)</li>
+<li>w (write 输出文件)</li>
+</ul>
+<p>可以同时指定多个标志</p>
+<p>sed的默认分隔符是`/', 可以替换为其它字符. 比如替换路径时, 因为用反斜杠转义比较麻烦, 可以改分隔符:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">!/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span><span class="o">!/</span><span class="n">bin</span><span class="o">/</span><span class="n">zsh</span><span class="o">!</span><span class="err">&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+</pre></div>
+
+
+<p>替换字符串中, <code>&amp;</code>表示匹配的字符串:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">bbb</span><span class="o">/+&amp;+/</span><span class="n">g</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaa</span><span class="o">+</span><span class="n">bbb</span><span class="o">+</span><span class="n">cccddd</span> <span class="n">aaa</span><span class="o">+</span><span class="n">bbb</span><span class="o">+</span><span class="n">cccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">aaa</span><span class="o">+</span><span class="n">bbb</span><span class="o">+</span><span class="n">cccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="p">.</span><span class="err">*/</span><span class="n">output</span><span class="o">:</span> <span class="o">&amp;/</span><span class="n">g</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="nl">output:</span> <span class="n">aaabbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="nl">output:</span> <span class="n">AAABBBCCCDDD</span> <span class="n">aaabbbcccddd</span>
+<span class="nl">output:</span> <span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+</pre></div>
+
+
+<p>p标志会打印替换的行(替换后的内容), 可以配合-n只输出替换的行:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">aaa</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEbbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEbbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">aaa</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span><span class="n">p</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEbbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">EEEbbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEbbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEbbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">aaa</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span><span class="n">p</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEbbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEbbbcccddd</span>
+</pre></div>
+
+
+<p>w标志后接输出文件, 只写入替换的行; w命令输出包括不匹配的行:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">aaa</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span><span class="n">w</span> <span class="n">output</span><span class="p">.</span><span class="n">txt</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEbbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEbbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="err">$</span> <span class="n">more</span> <span class="n">output</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEbbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEbbbcccddd</span>
+
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">aaa</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span><span class="err">&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">w</span> <span class="n">output</span><span class="p">.</span><span class="n">txt</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEbbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEbbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="err">$</span> <span class="n">more</span> <span class="n">output</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEbbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEbbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+</pre></div>
+
+
+<p>y 命令替换1个字符, 可以同时替换多个字符(和s命令不一样, y会替换一行中所有匹配的, 不需要g标志):</p>
+<div class="hlcode"><pre><span class="cp"># a -&gt; E</span>
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">y</span><span class="o">/</span><span class="n">a</span><span class="o">/</span><span class="n">E</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEbbbcccddd</span> <span class="n">EEEbbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEbbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="cp"># a -&gt; E; b -&gt; F</span>
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">y</span><span class="o">/</span><span class="n">ab</span><span class="o">/</span><span class="n">EF</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEFFFcccddd</span> <span class="n">EEEFFFcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEFFFcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+</pre></div>
+
+
+<p>d 命令删除, 可以指定行或全部:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="mi">2</span><span class="n">d</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaabbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="n">d</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="cp"># 输出空</span>
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="sc">&#39;d&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<p>地址(限制行数):</p>
+<ul>
+<li>默认未指定则是所有数据</li>
+<li>3: 第3行</li>
+<li>20,$: 从第20行到最后一行</li>
+<li>10,5: 第10行; 如果结束行比开始行小, 则只有开始行</li>
+<li>/^[0-9]/ : 所有以数字开头的行</li>
+<li>15,/Z$/ : 从第15行到以Z结束的行为止</li>
+<li>5,10! : 第第5行到除第10行以外的行(5-9, 11-最后一行)</li>
+</ul>
+<p>例子:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">more</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">abcd</span>
+<span class="mi">1234</span>
+<span class="mi">1</span><span class="n">aff</span>
+<span class="n">cd23</span>
+
+<span class="err">$</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="o">/^</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">/</span><span class="n">s</span><span class="o">/</span><span class="p">.</span><span class="err">*/</span><span class="n">output</span><span class="o">:</span> <span class="o">&amp;/</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">abcd</span>
+<span class="nl">output:</span> <span class="mi">1234</span>
+<span class="nl">output:</span> <span class="mi">1</span><span class="n">aff</span>
+<span class="n">cd23</span>
+</pre></div>
+
+
+<p>执行多个命令. 这里就是<code>-e</code>的用处了; 还可以用<code>;</code>分割:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="mi">2</span><span class="n">d</span><span class="err">&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="err">&#39;</span><span class="n">s</span><span class="o">/</span><span class="n">bbb</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaaEEEcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="err">$</span> <span class="n">sed</span> <span class="err">&#39;</span><span class="mi">2</span><span class="n">d</span><span class="p">;</span><span class="n">s</span><span class="o">/</span><span class="n">bbb</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaaEEEcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+</pre></div>
+
+
+<p>关于写文件, 除了之前用到的重定向标准输出, w命令/标志, 还可以用<code>-i</code>直接写源文件本身.</p>
+<p>在-i可接一个后缀表示先备份替换前的源文件, 再直接写入源文件:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">i</span><span class="p">.</span><span class="n">bak</span> <span class="err">&#39;</span><span class="mi">2</span><span class="n">d</span><span class="p">;</span><span class="n">s</span><span class="o">/</span><span class="n">bbb</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span><span class="err">&#39;</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+
+<span class="err">$</span> <span class="n">more</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaaEEEcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+
+<span class="err">$</span> <span class="n">more</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span><span class="p">.</span><span class="n">bak</span>
+<span class="n">aaabbbcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">aaabbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+</pre></div>
+
+
+<p>注意, 一般情况下, sed的替换规则用单引号, 除非想使用一些自定义或环境变量.</p>
+<p>可以把sed的替换命令写入文件, 使用<code>-f</code>选项读取.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">more</span> <span class="n">sample</span><span class="p">.</span><span class="n">sed</span>
+<span class="mi">2</span><span class="n">d</span>
+<span class="n">s</span><span class="o">/</span><span class="n">bbb</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span>
+
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">f</span> <span class="n">sample</span><span class="p">.</span><span class="n">sed</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">aaaEEEcccddd</span> <span class="n">aaabbbcccddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+</pre></div>
+
+
+<p>可以用花括号<code>{}</code>对命令进行组合:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">more</span> <span class="n">sample</span><span class="p">.</span><span class="n">sed</span>
+<span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">{</span>
+        <span class="n">s</span><span class="o">/</span><span class="n">aaa</span><span class="o">/</span><span class="n">EEE</span><span class="o">/</span><span class="n">g</span>
+        <span class="n">y</span><span class="o">/</span><span class="n">abc</span><span class="o">/</span><span class="n">XYZ</span><span class="o">/</span>
+<span class="p">}</span>
+
+<span class="err">$</span> <span class="n">sed</span> <span class="o">-</span><span class="n">f</span> <span class="n">sample</span><span class="p">.</span><span class="n">sed</span> <span class="n">input</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">EEEYYYZZZddd</span> <span class="n">EEEYYYZZZddd</span>
+<span class="n">AAABBBCCCDDD</span> <span class="n">EEEYYYZZZddd</span>
+<span class="mi">1234567890</span><span class="o">!?</span> <span class="o">!</span><span class="s">&quot;#$%&amp;&#39;()?/</span>
+</pre></div>
+
+
+<h2 id="_9">资料</h2>
+<ul>
+<li><a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?sed">man手册</a></li>
+<li><a href="http://sed.sourceforge.net/sed1line_zh-CN.html">sed</a></li>
+<li><a href="http://www.grymoire.com/Unix/Sed.html">sed</a></li>
+<li><a href="">Software Design 03 - sed详解及用法</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

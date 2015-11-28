@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>whois - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » whois
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">简介</a></li>
+<li><a href="#_2">术语</a></li>
+<li><a href="#_3">使用</a></li>
+</ul>
+</div>
+<h2 id="_1">简介</h2>
+<p><a href="https://en.wikipedia.org/wiki/WHOIS" title="whois">whois</a> 是一个基于tcp的query/response协议, 使用端口43, 用于查询域名的相关信息.</p>
+<p>本地Gentoo上使用的whois客户端是 Debian GNU/Linux whois 5.1.5</p>
+<blockquote>
+<p>whois searches for an object in a RFC 3912 database.</p>
+<p>This version of the whois client tries to guess the right server to ask for the specified object. If no guess can be made it will connect to whois.networksolutions.com for NIC handles or whois.arin.net for IPv4 addresses and network names.</p>
+</blockquote>
+<p>图片阐述了域名注册各部分的职能, 来源 <a href="http://whois.icann.org/en/domain-name-registration-process">Domain Name Registration Process</a>:</p>
+<p><img alt="domain registry process" src="http://tankywoo-wb.b0.upaiyun.com/Registry-Process-Large-FINALgif" /></p>
+<h2 id="_2">术语</h2>
+<p><a href="https://en.wikipedia.org/wiki/Top-level_domain" title="Top-level domain">TLD</a>: Top-level domain. 顶级域名, 如.com, .net, .org等.</p>
+<p><a href="https://en.wikipedia.org/wiki/Domain_name_registry" title="NIC">NIC</a> 相关:</p>
+<p><code>domain name registry</code>, 域名注册局 是一个维护所有顶级域名域名及相关注册信息的数据库.</p>
+<blockquote>
+<p>A domain name registry is a database of all domain names and the associated registrant information in the top level domains of the Domain Name System (DNS) of the Internet that allow third party entities to request administrative control of a domain name. Most registries operate on the top-level and second-level of the DNS.</p>
+</blockquote>
+<p><code>registry operator</code> 注册操作者, 即NIC(Network Information Centre, 网络信息中心), 维护了域名的数据, 生成包含域名/ip对应关系的zone文件.</p>
+<blockquote>
+<p>A registry operator, sometimes called a network information center (NIC) maintains all administrative data of the domain and generates a zone file which contains the addresses of the nameservers for each domain.</p>
+</blockquote>
+<p>每一个registry都是一个组织, 管理相关域名的注册.</p>
+<p><a href="https://en.wikipedia.org/wiki/Domain_name_registrar" title="Domain name registrar">Domain name registrar</a> 域名注册商. 是一个商业实体或组织, 它们由互联网名称与数字地址分配机构(ICANN)或者一个国家性的国家代码顶级域名(ccTLD)域名注册局委派, 以在指定的域名注册数据库中管理互联网域名, 向公众提供此类服务.</p>
+<blockquote>
+<p>is an organization or commercial entity that manages the reservation of Internet domain names. A domain name registrar must be accredited by a generic top-level domain (gTLD) registry and/or a country code top-level domain (ccTLD) registry.</p>
+</blockquote>
+<p><a href="https://en.wikipedia.org/wiki/NIC_handle" title="NIC handle">NIC handle</a>:</p>
+<blockquote>
+<p>is a unique alphanumeric character sequence that represents an entry in the databases maintained by Network Information Centres. When a new domain name is registered with a domain name registrar, a NIC handle is assigned by the registrar to the particular set of information associated with that domain name (such as who registered it and a contact e-mail address). Once a domain name has been registered, its NIC handle can be used to search for that record in the database.</p>
+</blockquote>
+<p><a href="https://en.wikipedia.org/wiki/ICANN" title="ICANN">ICANN</a> (The Internet Corporation for Assigned Names and Numbers) 互联网名称与数字地址分配机构. 是一个集合了全球网络界商业、技术及学术各领域专家的非营利性国际组织，负责在全球范围内对互联网唯一标识符系统及其安全稳定的运营进行协调, 包括互联网协议(IP)地址的空间分配、协议标识符的指派、通用顶级域名(gTLD)以及国家和地区顶级域名(ccTLD)系统的管理、以及根服务器系统的管理. 这些服务最初是在美国政府合同下由 互联网号码分配当局(Internet Assigned Numbers Authority, IANA) 以及其它一些组织提供. 现在, ICANN行使IANA的职能.</p>
+<p>Referral URL: TODO</p>
+<h2 id="_3">使用</h2>
+<p><code>--verbose</code>可以看到更详细的查询相关信息.</p>
+<p>比如查询我的域名:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">whois</span> <span class="o">--</span><span class="n">verbose</span> <span class="n">tankywoo</span><span class="p">.</span><span class="n">com</span>
+<span class="n">Using</span> <span class="n">server</span> <span class="n">whois</span><span class="p">.</span><span class="n">verisign</span><span class="o">-</span><span class="n">grs</span><span class="p">.</span><span class="n">com</span><span class="p">.</span>                <span class="err">#</span> <span class="n">look</span> <span class="n">here</span> <span class="mi">1</span>
+
+<span class="n">Whois</span> <span class="n">Server</span> <span class="n">Version</span> <span class="mf">2.0</span>
+
+<span class="n">Domain</span> <span class="n">names</span> <span class="n">in</span> <span class="n">the</span> <span class="p">.</span><span class="n">com</span> <span class="n">and</span> <span class="p">.</span><span class="n">net</span> <span class="n">domains</span> <span class="n">can</span> <span class="n">now</span> <span class="n">be</span> <span class="n">registered</span>
+<span class="n">with</span> <span class="n">many</span> <span class="n">different</span> <span class="n">competing</span> <span class="n">registrars</span><span class="p">.</span> <span class="n">Go</span> <span class="n">to</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.internic.net</span>
+<span class="k">for</span> <span class="n">detailed</span> <span class="n">information</span><span class="p">.</span>
+
+   <span class="n">Domain</span> <span class="n">Name</span><span class="o">:</span> <span class="n">TANKYWOO</span><span class="p">.</span><span class="n">COM</span>
+   <span class="nl">Registrar:</span> <span class="n">ENOM</span><span class="p">,</span> <span class="n">INC</span><span class="p">.</span>
+   <span class="n">Sponsoring</span> <span class="n">Registrar</span> <span class="n">IANA</span> <span class="n">ID</span><span class="o">:</span> <span class="mi">48</span>
+   <span class="n">Whois</span> <span class="n">Server</span><span class="o">:</span> <span class="n">whois</span><span class="p">.</span><span class="n">enom</span><span class="p">.</span><span class="n">com</span>
+   <span class="n">Referral</span> <span class="n">URL</span><span class="o">:</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.enom.com</span>
+   <span class="p">...</span>
+   <span class="n">Creation</span> <span class="n">Date</span><span class="o">:</span> <span class="mo">06</span><span class="o">-</span><span class="n">dec</span><span class="o">-</span><span class="mi">2010</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Last</span> <span class="n">update</span> <span class="n">of</span> <span class="n">whois</span> <span class="n">database</span><span class="o">:</span> <span class="n">Sun</span><span class="p">,</span> <span class="mo">01</span> <span class="n">Nov</span> <span class="mi">2015</span> <span class="mo">06</span><span class="o">:</span><span class="mi">24</span><span class="o">:</span><span class="mi">11</span> <span class="n">GMT</span> <span class="o">&lt;&lt;&lt;</span>
+
+<span class="n">For</span> <span class="n">more</span> <span class="n">information</span> <span class="n">on</span> <span class="n">Whois</span> <span class="n">status</span> <span class="n">codes</span><span class="p">,</span> <span class="n">please</span> <span class="n">visit</span>
+<span class="nl">https:</span><span class="c1">//www.icann.org/resources/pages/epp-status-codes-2014-06-16-en.</span>
+<span class="n">Using</span> <span class="n">server</span> <span class="n">whois</span><span class="p">.</span><span class="n">enom</span><span class="p">.</span><span class="n">com</span><span class="p">.</span>                        <span class="err">#</span> <span class="n">look</span> <span class="n">here</span> <span class="mi">2</span>
+<span class="n">Query</span> <span class="n">string</span><span class="o">:</span> <span class="s">&quot;tankywoo.com&quot;</span>
+
+<span class="n">Domain</span> <span class="n">Name</span><span class="o">:</span> <span class="n">TANKYWOO</span><span class="p">.</span><span class="n">COM</span>
+<span class="n">Registrar</span> <span class="n">WHOIS</span> <span class="n">Server</span><span class="o">:</span> <span class="n">whois</span><span class="p">.</span><span class="n">enom</span><span class="p">.</span><span class="n">com</span>
+<span class="n">Registrar</span> <span class="n">URL</span><span class="o">:</span> <span class="n">www</span><span class="p">.</span><span class="n">enom</span><span class="p">.</span><span class="n">com</span>
+<span class="p">...</span>
+<span class="nl">Registrar:</span> <span class="n">ENOM</span><span class="p">,</span> <span class="n">INC</span><span class="p">.</span>
+<span class="nl">Reseller:</span> <span class="n">NAMECHEAP</span><span class="p">.</span><span class="n">COM</span>
+<span class="n">Registrant</span> <span class="n">Name</span><span class="o">:</span> <span class="n">WHOISGUARD</span> <span class="n">PROTECTED</span>
+<span class="n">Registrant</span> <span class="n">Organization</span><span class="o">:</span> <span class="n">WHOISGUARD</span><span class="p">,</span> <span class="n">INC</span><span class="p">.</span>
+<span class="n">Registrant</span> <span class="n">Street</span><span class="o">:</span> <span class="n">P</span><span class="p">.</span><span class="n">O</span><span class="p">.</span> <span class="n">BOX</span> <span class="mi">0823</span><span class="o">-</span><span class="mo">03411</span>
+<span class="n">Registrant</span> <span class="n">City</span><span class="o">:</span> <span class="n">PANAMA</span>
+<span class="p">...</span>
+</pre></div>
+
+
+<p>这里先查询whois.verisign-grs.com这个whois server. verisign是一个registry operator, 负责操作.com和.net的注册. 在本地使用的whois实现里, 维护了一个tld_serv_list列表, 对每个顶级域首先使用相应的whois server来查询, 获取代理的whois server, 再在这个whois server中查询获取更详细的信息. 如上所示, 进而查询的whois server是whois.enom.com.</p>
+<p>另外, 有些域名直接查询registry opeartor(nic) 即可获取详细信息, 如.me</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

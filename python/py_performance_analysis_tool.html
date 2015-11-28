@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Python Performance Analysis Tool - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#python">python</a> » Python Performance Analysis Tool
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>Python 性能分析工具</p>
+<h2 id="timeit">timeit</h2>
+<p>timeit 模块提供了简单的接口来测量小段代码的执行时间.</p>
+<div class="hlcode"><pre><span class="n">import</span> <span class="n">timeit</span>
+
+<span class="n">print</span> <span class="err">&#39;</span><span class="n">timeit</span><span class="p">.</span><span class="n">timeit</span><span class="o">:</span><span class="err">&#39;</span>
+<span class="n">timeit</span><span class="p">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">stmt</span><span class="o">=</span><span class="s">&quot;print &#39;main statement&#39;&quot;</span><span class="p">,</span> <span class="n">setup</span><span class="o">=</span><span class="s">&quot;print &#39;setup&#39;&quot;</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">timeit</span><span class="p">.</span><span class="n">Timer</span><span class="p">(</span><span class="s">&quot;print &#39;main statement&#39;&quot;</span><span class="p">,</span> <span class="s">&quot;print &#39;setup&#39;&quot;</span><span class="p">)</span>
+
+<span class="n">print</span> <span class="err">&#39;</span><span class="o">----------</span><span class="err">&#39;</span>
+<span class="n">print</span> <span class="err">&#39;</span><span class="n">timeit</span><span class="p">.</span><span class="n">Timer</span><span class="p">.</span><span class="n">timeit</span><span class="o">:</span><span class="err">&#39;</span>
+<span class="n">print</span> <span class="n">t</span><span class="p">.</span><span class="n">timeit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">print</span> <span class="err">&#39;</span><span class="o">----------</span><span class="err">&#39;</span>
+<span class="n">print</span> <span class="err">&#39;</span><span class="n">timeit</span><span class="p">.</span><span class="n">Timer</span><span class="p">.</span><span class="n">repeat</span><span class="o">:</span><span class="err">&#39;</span>
+<span class="n">print</span> <span class="n">t</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+
+<p>timeit可以简单的直接调用<code>timeit</code>/<code>repeat</code>函数, repeat就是重复调用timeit N次.</p>
+<p>看源码就知道, timeit()实际就是:</p>
+<div class="hlcode"><pre><span class="n">Timer</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">setup</span><span class="p">,</span> <span class="n">timer</span><span class="p">).</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+</pre></div>
+
+
+<p>timeit的Timer类接口分别是一个要执行的语句和初始化语句, timeit成员函数提供一个反复执行语句的次数(默认1000000次)和重复执行timeit的次数.</p>
+<p>也支持命令行参数:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="nx">python</span> <span class="na">-m</span> <span class="nx">timeit</span> <span class="na">-n</span> <span class="o">&lt;</span><span class="nx">number</span><span class="o">&gt;</span> <span class="na">-r</span> <span class="o">&lt;</span><span class="nb">repeat</span><span class="o">&gt;</span> <span class="na">-s</span> <span class="o">&lt;</span><span class="nx">setup</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nb">statement</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<blockquote>
+<p>If -n is not given, a suitable number of loops is calculated by trying successive powers of 10 until the total time is at least 0.2 seconds.</p>
+</blockquote>
+<p>如果没有设置-n, 则会以10倍数尝试，直到总耗时超过0.2s</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">timeit</span>  <span class="o">-</span><span class="n">r</span> <span class="mi">2</span> <span class="o">-</span><span class="n">s</span> <span class="s">&quot;print &#39;setup&#39;&quot;</span> <span class="n">pass</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">100000</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">1000000</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">10000000</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">100000000</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">100000000</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="n">repeat</span><span class="p">(</span><span class="n">None</span><span class="p">,</span> <span class="mi">100000000</span><span class="p">)</span>
+<span class="n">setup</span>
+<span class="mi">100000000</span> <span class="n">loops</span><span class="p">,</span> <span class="n">best</span> <span class="n">of</span> <span class="mi">2</span><span class="o">:</span> <span class="mf">0.0145</span> <span class="n">usec</span> <span class="n">per</span> <span class="n">loop</span>
+</pre></div>
+
+
+<p>后面的pass语句可以不写，默认就是pass. repeat(None, xxx)这个是我在源码里添加的调试语句, 可以看出没有指定-n时的情况. -r没指定默认是3次, 这里指定了2次, 所以最后是best of 2.</p>
+<p>更多:</p>
+<ul>
+<li><a href="https://pymotw.com/2/timeit/">timeit – Time the execution of small bits of Python code</a></li>
+<li><a href="http://www.blog.pythonlibrary.org/2014/01/30/how-to-time-small-pieces-of-python-code-with-timeit/">How to Time Small Pieces of Python Code with timeit</a></li>
+</ul>
+<h2 id="profile">profile</h2>
+<p>TODO</p>
+<h2 id="pstats">pstats</h2>
+<p>TODO</p>
+<hr />
+<p>http://www.marinamele.com/7-tips-to-time-python-scripts-and-control-memory-and-cpu-usage</p>
+<p>http://www.huyng.com/posts/python-performance-analysis/</p>
+<p>https://www.ibm.com/developerworks/cn/linux/l-cn-python-optim/</p>
+<p>http://blog.csdn.net/gzlaiyonghao/article/details/2120147</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

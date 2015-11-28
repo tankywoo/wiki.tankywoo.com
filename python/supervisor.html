@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Supervisord - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#python">python</a> » Supervisord
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <blockquote>
+<p><a href="http://supervisord.org/">Supervisor</a> is a client/server system that allows its users to monitor and control a number of processes on UNIX-like operating systems.</p>
+</blockquote>
+<p>Supervisor是一个Python写的工具, 可以用系统的包管理器安装, 也可以通过<code>pip</code>或<code>easy_install</code>安装.</p>
+<p>当前测试的版本是<code>3.1.3</code>. 安装后有几个工具:</p>
+<div class="hlcode"><pre><span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">local</span><span class="o">::~/</span> <span class="err">»</span> <span class="n">equery</span> <span class="n">files</span> <span class="n">supervisor</span> <span class="o">|</span> <span class="n">grep</span> <span class="err">&#39;</span><span class="n">bin</span><span class="err">\</span><span class="o">/</span><span class="err">&#39;</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">echo_supervisord_conf</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">pidproxy</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">supervisorctl</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">supervisord</span>
+</pre></div>
+
+
+<p><code>echo_supervisord_conf</code> 是一个自动生成默认配置的工具, 没有任何参数选项, 输出是/dev/stdout.</p>
+<p>因为supervisor默认使用的配置在<code>/etc/supervisord.conf</code>, 可以重定向默认配置到这，然后根据具体需求修改:</p>
+<div class="hlcode"><pre><span class="n">echo_supervisord_conf</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisord</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<p>注: Ubuntu下, 默认配置在 <code>/etc/supervisor/</code>, 安装后就存在一些基本配置</p>
+<p>其中 <code>supervisord</code> 是一个守护进程, 用于控制服务的启动和相关的一些全局设置.</p>
+<blockquote>
+<p>supervisord -- run a set of applications as daemons.</p>
+</blockquote>
+<p><code>supervisorctl</code> 控制由supervisord运行的程序.</p>
+<blockquote>
+<p>supervisorctl -- control applications run by supervisord from the cmd line.</p>
+</blockquote>
+<p>直接运行程序进入交互式命令行模式，调试服务非常方便(实际运行中两条命令间并没有空行, 此为查看方便):</p>
+<div class="hlcode"><pre><span class="err">#</span> <span class="err">进入交互式模式</span><span class="p">,</span> <span class="err">会提示当前管理的服务状态</span>
+<span class="err">$</span> <span class="nx">supervisorctl</span>
+<span class="nx">captcha2022</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">18356</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">17</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">16</span>
+<span class="nx">captcha2023</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">13961</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">17</span><span class="p">:</span><span class="mi">40</span>
+
+<span class="err">#</span> <span class="err">查看可用的命令</span>
+<span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nx">help</span>
+
+<span class="nb">default</span> <span class="nx">commands</span> <span class="p">(</span><span class="k">type</span> <span class="nx">help</span> <span class="o">&lt;</span><span class="nx">topic</span><span class="o">&gt;</span><span class="p">):</span>
+<span class="o">=====================================</span>
+<span class="nb">add</span>    <span class="nb">clear</span>  <span class="nx">fg</span>        <span class="nb">open</span>  <span class="nb">quit</span>    <span class="nb">remove</span>  <span class="nb">restart</span>   <span class="nb">start</span>   <span class="nb">stop</span>  <span class="nx">update</span>
+<span class="nx">avail</span>  <span class="nx">exit</span>   <span class="nx">maintail</span>  <span class="nb">pid</span>   <span class="nx">reload</span>  <span class="nx">reread</span>  <span class="nx">shutdown</span>  <span class="nb">status</span>  <span class="nx">tail</span>  <span class="nb">version</span>
+
+<span class="err">#</span> <span class="nx">help</span> <span class="o">&lt;</span><span class="nx">cmd</span><span class="o">&gt;</span> <span class="err">可以查看相关命令的用法</span>
+<span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nx">help</span> <span class="nb">status</span>
+<span class="nb">status</span> <span class="o">&lt;</span><span class="nb">name</span><span class="o">&gt;</span>           <span class="nb">Get</span> <span class="nb">status</span> <span class="nb">for</span> <span class="nx">a</span> <span class="nx">single</span> <span class="nb">process</span>
+<span class="nb">status</span> <span class="o">&lt;</span><span class="nx">gname</span><span class="o">&gt;</span><span class="p">:</span><span class="o">*</span>        <span class="nb">Get</span> <span class="nb">status</span> <span class="nb">for</span> <span class="kc">all</span> <span class="n">processes</span> <span class="k">in</span> <span class="nx">a</span> <span class="k">group</span>
+<span class="nb">status</span> <span class="o">&lt;</span><span class="nb">name</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nb">name</span><span class="o">&gt;</span>    <span class="nb">Get</span> <span class="nb">status</span> <span class="nb">for</span> <span class="nb">multiple</span> <span class="nb">named</span> <span class="nx">processes</span>
+<span class="nb">status</span>                  <span class="nb">Get</span> <span class="kc">all</span> <span class="nb">process</span> <span class="nb">status</span> <span class="nx">info</span>
+
+<span class="err">#</span> <span class="nb">status</span> <span class="err">命令查看当前管理的服务状态</span><span class="p">,</span> <span class="err">确认服务是正常运行的</span><span class="nb">RUNNING</span><span class="err">状态</span>
+<span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nb">status</span>
+<span class="nx">captcha2022</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">18356</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">17</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">20</span>
+<span class="nx">captcha2023</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">13961</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">17</span><span class="p">:</span><span class="mi">44</span>
+
+<span class="err">#</span> <span class="err">修改配置后</span><span class="p">,</span> <span class="err">执行</span> <span class="nx">update</span> <span class="err">命令更新状态</span><span class="p">,</span> <span class="err">非常方便</span>
+<span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nx">update</span>
+<span class="nx">captcha2023</span><span class="p">:</span> <span class="nx">stopped</span>
+<span class="nx">captcha2023</span><span class="p">:</span> <span class="nx">updated</span> <span class="nb">process</span> <span class="k">group</span>
+
+<span class="err">#</span> <span class="nx">update</span><span class="err">后再次确认服务状态</span>
+<span class="nx">supervisor</span><span class="o">&gt;</span> <span class="nb">status</span>
+<span class="nx">captcha2022</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">18356</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mi">03</span>
+<span class="nx">captcha2023</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">16872</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">03</span>
+
+<span class="nx">supervisor</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>当然，也可以直接在SHELL终端执行命令:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="nx">supervisorctl</span> <span class="nx">help</span>
+
+<span class="nb">default</span> <span class="nx">commands</span> <span class="p">(</span><span class="k">type</span> <span class="nx">help</span> <span class="o">&lt;</span><span class="nx">topic</span><span class="o">&gt;</span><span class="p">):</span>
+<span class="o">=====================================</span>
+<span class="nb">add</span>    <span class="nb">clear</span>  <span class="nx">fg</span>        <span class="nb">open</span>  <span class="nb">quit</span>    <span class="nb">remove</span>  <span class="nb">restart</span>   <span class="nb">start</span>   <span class="nb">stop</span>  <span class="nx">update</span>
+<span class="nx">avail</span>  <span class="nx">exit</span>   <span class="nx">maintail</span>  <span class="nb">pid</span>   <span class="nx">reload</span>  <span class="nx">reread</span>  <span class="nx">shutdown</span>  <span class="nb">status</span>  <span class="nx">tail</span>  <span class="nb">version</span>
+
+<span class="err">$</span> <span class="nx">supervisorctl</span> <span class="nb">status</span>
+<span class="nx">captcha2022</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">18356</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">17</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mi">56</span>
+<span class="nx">captcha2023</span>                      <span class="nb">RUNNING</span>   <span class="nb">pid</span> <span class="mi">16872</span><span class="p">,</span> <span class="nx">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">56</span>
+
+<span class="err">$</span> <span class="nx">supervisorctl</span> <span class="nx">update</span>
+<span class="nx">captcha2023</span><span class="p">:</span> <span class="nx">stopped</span>
+<span class="nx">captcha2023</span><span class="p">:</span> <span class="nx">updated</span> <span class="nb">process</span> <span class="k">group</span>
+</pre></div>
+
+
+<h2 id="_1">配置文件</h2>
+<p>(<strong>NOTE</strong> 下面代码直接用Gist贴的，加载会很缓慢)</p>
+<script src="https://gist.github.com/tankywoo/603cb17f49f8c3114b22.js"></script>
+
+<p>配置文件更多参考: <a href="http://supervisord.org/configuration.html">Configuration File</a></p>
+<p>它的配置是Windows-INI格式(Python ConfigParser). 初始情况下可以先用 <code>echo_supervisord_conf</code> 输出后再根据需求编辑.</p>
+<p>首先注释使用分号 <code>;</code>, 并且如果注释是和配置项在同一行, 则分号前面必须有一个前置空格.</p>
+<p>不支持SHELL的环境变量, 如 <code>~</code> 和 <code>$HOME</code>, 可以用 <code>%(ENV_HOME)s</code> 替代.</p>
+<p>首先配置分为几大块(section):</p>
+<p><code>unix_http_server</code> 和 <code>inet_http_server</code> 是配置supervisor的http server, 至少需要其一, supervisorctl管理时用到.</p>
+<p><code>supervisord</code> 用于对守护进程的全局性配置, 有些配置可以在 <code>program</code> 块覆盖</p>
+<p><code>supervisorctl</code> 用于supervisorctl管理supervisor服务的配置, 如serverurl 等, 这些也可以直接命令行指定参数, 比如如果在上面配置的是 <code>inet_http_server</code> , 则这里配置 <code>serverurl</code> 为相应路径后, 则直接使用 <code>supervisorctl</code> 命令即可, 否则要指定命令行参数.</p>
+<p><code>program</code> 是最主要的配置部分. 关于这块, 首先要提到的是状态, 详细可参考 <a href="http://supervisord.org/subprocess.html#process-states">Supervisor - Process States</a></p>
+<p><img alt="" src="http://supervisord.org/_images/subprocess-transitions.png" /></p>
+<p>其中 <code>BACKOFF</code> 状态是启动时退出太快, 根据 <code>startretries</code> 达到重试次数后, 会进入到 <code>FATAL</code> 状态.</p>
+<p>如果状态在 <code>EXITED</code>, 如果配置了 <code>autorestart=false</code>, 则停留在此状态不再重启; 如果 <code>autorestart=true</code>, 则会一直重启; 如果 <code>autorestart=unexpected</code>, 则如果exitcode在 <code>exitcodes</code> 配置的列表里, 则不再重启, 否则重启</p>
+<p>如果状态在 <code>FATAL</code> , 则永远不会再自动重启.</p>
+<p>如果执行了 <code>supervisorctl stop</code> 命令, 则会进入 <code>STOP</code> 状态. 并且在 <code>stopwaitsecs</code> 秒后发送 <code>SIGKILL</code> 信号.</p>
+<p>另外观察到, 在 <code>startretries</code> 重试次数达到之前, 如果频繁在 <code>BACKOFF</code> 和 <code>STARTING</code> 或 <code>RUNNING</code> 状态之间切换, 则重启等待时间会逐步增大.</p>
+<p><code>include</code> 块用于加载一些自定义配置, 一般 <code>/etc/supervisord.conf</code> 可以用于一些全局配置, 然后每个服务一个单独的 <code>program</code> 配置, 用include导入, 类似于nginx等配置.</p>
+<p><code>group</code> 块用于把一些 <code>program</code> 分为一个组, 然后做一些基本配置.</p>
+<p><code>rpcinterface</code> 用于自定义一些接口, 这个一般保持默认就行, 但是不能删除, 必须保留在配置文件中.</p>
+<h2 id="daemontool">与daemontool对比</h2>
+<ul>
+<li><a href="http://www.quora.com/Server-Monitoring/How-does-supervisord-compare-to-daemontools">Server Monitoring: How does supervisord compare to daemontools?</a></li>
+<li><a href="https://news.ycombinator.com/item?id=1368855">Ask HN: keeping services up and running?</a></li>
+</ul>
+<p>Tornado配合Supervisor非常好用，尝试用daemontools对一个Tornado程序开多个端口，必须每个端口一个目录，没有Supervisor直观和方便, 且用户权限上后者也比较方便.</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

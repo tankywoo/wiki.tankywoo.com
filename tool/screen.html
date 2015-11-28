@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>screen - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » screen
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="screenrc">.screenrc</h2>
+<p><code>info screen "String Escapes"</code>  </p>
+<ul>
+<li><a href="http://superuser.com/questions/31047/how-do-i-change-the-colors-in-the-hardstatus-line-in-gnu-screen">How do I change the colors in the hardstatus line in GNU Screen?</a></li>
+<li><a href="http://unix.stackexchange.com/questions/28430/screen-status-bar-to-display-current-directory-for-zsh-bash-shell">Screen status bar to display current directory for zsh/bash shell</a></li>
+<li><a href="http://serverfault.com/questions/3740/what-are-useful-screenrc-settings">What are useful .screenrc settings?</a></li>
+<li><a href="http://unix.stackexchange.com/questions/62842/how-can-i-change-screens-hardstatus-color-based-on-the-logged-in-user">How can I change screen's hardstatus color based on the logged in user?</a></li>
+</ul>
+<h2 id="tricks">Tricks</h2>
+<h3 id="screen">同步显示同一个screen</h3>
+<p>A打开一个screen, B可以登录这个screen,同步显示A的操作;B也可以在上面操作.</p>
+<div class="hlcode"><pre><span class="n">A</span> <span class="err">打开一个叫</span><span class="n">tankywoo</span><span class="err">的会话</span>
+<span class="n">screen</span> <span class="o">-</span><span class="n">S</span> <span class="n">tankywoo</span>
+<span class="n">B</span> <span class="err">使用`</span><span class="o">-</span><span class="n">x</span><span class="err">`参数登入这个会话</span>
+<span class="n">screen</span> <span class="o">-</span><span class="n">x</span> <span class="n">tankywoo</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

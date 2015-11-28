@@ -1,0 +1,331 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Python 进程/线程 - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#python">python</a> » Python 进程/线程
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="python">Python的伪多线程</h2>
+<p>TODO</p>
+<p>相关讨论:</p>
+<ul>
+<li><a href="http://bbs.chinaunix.net/thread-1264893-1-1.html">py的多线程是伪线程吗?</a></li>
+<li><a href="http://mail.python.org/pipermail/python-3000/2007-May/007414.html">[Python-3000] the future of the GIL</a></li>
+<li><a href="http://bbs.csdn.net/topics/390226723">Python多线程的问题</a></li>
+</ul>
+<h2 id="_1">相关的模块</h2>
+<ul>
+<li>thread</li>
+<li>threading</li>
+<li>Queue</li>
+<li>multiprocessing</li>
+</ul>
+<h3 id="queue">Queue</h3>
+<p>Queue模块主要有三种队列实现</p>
+<ul>
+<li>Queue(FIFO)</li>
+<li>LifoQueue</li>
+<li>PriorityQueue</li>
+</ul>
+<p>Queue是线程同步的</p>
+<h3 id="threading">threading</h3>
+<p>PyMOTW <a href="http://www.doughellmann.com/PyMOTW/threading/index.html">Manege concurrent threads</a></p>
+<p>在看上面链接的第一个代码时，遇到了一个<code>print</code>和<code>sys.stdout.write</code>的问题<br />
+具体见 TODO</p>
+<p>最简单的threading配合Queue的Example</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="c"># wutq@2013-02-18</span>
+<span class="c"># Python参考手册 P363</span>
+
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">Queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+
+<span class="k">class</span> <span class="nc">WorkThread</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c">#在队列上设置一个标志，使线程在处理完毕后关闭</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">print</span> <span class="n">item</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+        <span class="k">return</span>
+
+<span class="n">w</span> <span class="o">=</span> <span class="n">WorkThread</span><span class="p">()</span>
+<span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">w</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;world&quot;</span><span class="p">)</span>
+<span class="n">w</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</td></tr></table>
+
+<p>在StackOverflow上也找到一篇帖子: <a href="http://stackoverflow.com/questions/2846653/python-multithreading-for-dummies">python multithreading for dummies</a>
+里面也提到了</p>
+<div class="hlcode"><pre><span class="n">CPython</span> <span class="n">can</span> <span class="n">use</span> <span class="n">threads</span> <span class="n">only</span> <span class="k">for</span> <span class="o">*</span><span class="n">I</span><span class="err">\</span><span class="n">O</span> <span class="n">waits</span><span class="o">*</span> <span class="n">due</span> <span class="n">to</span> <span class="o">*</span><span class="n">GIL</span><span class="o">*</span><span class="p">.</span> 
+<span class="n">If</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">benefit</span> <span class="n">from</span> <span class="n">multiple</span> <span class="n">cores</span> <span class="k">for</span> <span class="n">CPU</span><span class="o">-</span><span class="n">bound</span> <span class="n">tasks</span><span class="p">,</span> <span class="n">use</span> <span class="o">*</span><span class="n">mutliprocessing</span><span class="o">*</span>
+</pre></div>
+
+
+<h2 id="_2">线程池</h2>
+<p>线程池概念</p>
+<div class="hlcode"><pre><span class="err">所谓的线程池就是完成一种任务的一组线程</span>
+<span class="err">一般情况下是首先初始化一定数量的工作线程，并把任务提交给空闲的线程</span>
+<span class="err">当线程都处于忙的状态的时候，则重新生成新的工作线程</span>
+<span class="err">当空闲线程较多的时候则停止一部分线程</span>
+<span class="err">这些要看具体的调度算法。</span>
+<span class="err">但是线程不能滥用，因为并不是线程越多就会带来更好的性能</span>
+</pre></div>
+
+
+<p>参考:</p>
+<ul>
+<li><a href="http://bbs.csdn.net/topics/50024963">线程池概念讨论</a></li>
+<li><a href="http://blog.chinaunix.net/uid-26983585-id-3336491.html">线程池的概念及Linux 怎么设计一个简单的线程池</a></li>
+</ul>
+<p>一个不错的Example</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">Queue</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="k">class</span> <span class="nc">WorkManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_num</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">thread_num</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">work_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__init_work_queue</span><span class="p">(</span><span class="n">work_num</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__init_thread_pool</span><span class="p">(</span><span class="n">thread_num</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init_work_queue</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">jobs_num</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化工作队列&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">jobs_num</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_job</span><span class="p">(</span><span class="n">do_job</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init_thread_pool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">thread_num</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;初始化线程&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">thread_num</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Work</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">work_queue</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">add_job</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;添加一项工作入队&quot;&quot;&quot;</span>
+        <span class="c">#任务入队，Queue内部实现了同步机制</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">work_queue</span><span class="o">.</span><span class="n">put</span><span class="p">((</span><span class="n">func</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">check_queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;检查剩余队列任务&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_queue</span><span class="o">.</span><span class="n">qsize</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">wait_allcomplete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;等待所有线程运行完毕&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">isAlive</span><span class="p">():</span><span class="n">item</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="k">class</span> <span class="nc">Work</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_queue</span><span class="p">):</span>
+        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">work_queue</span> <span class="o">=</span> <span class="n">work_queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c">#任务异步出队，Queue内部实现了同步机制</span>
+                <span class="n">do</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">work_queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">block</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                <span class="n">do</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">work_queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span><span class="c">#通知系统任务完成</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span><span class="n">e</span><span class="p">:</span>
+                <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                <span class="k">break</span>
+
+<span class="c">#具体要做的任务</span>
+<span class="k">def</span> <span class="nf">do_job</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="c">#print args</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="c">#模拟处理时间</span>
+    <span class="c">#print threading.current_thread(), list(args)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">thread_num</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;Thread Num: </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">thread_num</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">work_manager</span> <span class="o">=</span>  <span class="n">WorkManager</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="n">thread_num</span><span class="p">)</span>
+        <span class="n">work_manager</span><span class="o">.</span><span class="n">wait_allcomplete</span><span class="p">()</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">print</span> <span class="s">&quot;cost all time: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>来源: http://www.open-open.com/home/space-5679-do-blog-id-3247.html</p>
+<p>略做了一点修改</p>
+<p>网上关于线程池不错的文章:
+<em> <a href="http://www.the5fire.net/python-thread-pool.html">python线程池</a>
+</em> <a href="http://www.handaoliang.com/a/20071102/184706.html">python线程池的实现</a>
+* <a href="http://www.chrisarndt.de/projects/threadpool/">python threadpool第三方模块</a></p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>nc - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » nc
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="netcat">netcat</h2>
+<p>TCP/IP swiss army knife</p>
+<p>装的是 <code>net-analyzer/netcat6</code>, 这个是增强版, 支持IPv6.</p>
+<p>见过的有三个版本: <code>net-analyzer/netcat6</code>, <code>net-analyzer/netcat</code>, <code>net-analyzer/gnu-netcat</code>. 不同的版本参数上也会有些差异, 好像是第三个实现版本在监听端口时不需要指定<code>-p</code>参数.</p>
+<h3 id="argument">Argument</h3>
+<p><code>-l</code> : 监听模式</p>
+<p><code>-s</code> : 指定本地的地址. 默认是全部, 可以是本地环回地址, 或者指定某一个绑定的具体ip地址</p>
+<p><code>-p</code> : 指定本地开启的端口</p>
+<p><code>-u</code> : 连接模式设置为udp, 默认是tcp</p>
+<p><code>-v/-vv</code> : 更详细的输出内容</p>
+<p><code>-e, --exec=CMD</code> : 连接后执行命令. 这个看起来很牛逼, 还没试过. <strong>TODO</strong></p>
+<h3 id="example">Example</h3>
+<p>传输文件:</p>
+<div class="hlcode"><pre><span class="cp"># Server端</span>
+<span class="o">&gt;&gt;</span> <span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="n">p</span> <span class="mi">9999</span> <span class="o">&lt;</span> <span class="n">getfile</span><span class="p">.</span><span class="n">txt</span>
+
+<span class="cp"># Client端</span>
+<span class="err">$</span> <span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="mi">9999</span> <span class="o">&gt;</span> <span class="n">sendfile</span><span class="p">.</span><span class="n">txt</span>
+</pre></div>
+
+
+<!-- comment -->
+
+<p>扫描端口( <strong>NOTE</strong>: 这个好像是gnu-netcat版才有的功能 ):</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">nc</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">z</span> <span class="n">localhost</span> <span class="mi">20</span><span class="o">-</span><span class="mi">100</span>
+<span class="o">&gt;&gt;</span>
+<span class="n">localhost</span> <span class="p">[</span><span class="mf">127.0.0.1</span><span class="p">]</span> <span class="mi">80</span> <span class="p">(</span><span class="n">http</span><span class="p">)</span> <span class="n">open</span>
+<span class="n">localhost</span> <span class="p">[</span><span class="mf">127.0.0.1</span><span class="p">]</span> <span class="mi">22</span> <span class="p">(</span><span class="n">ssh</span><span class="p">)</span> <span class="n">open</span>
+</pre></div>
+
+
+<!-- comment -->
+
+<p>假设本机内网ip是192.168.1.99, 开启一个针对此ip的udp端口:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">nc</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="n">s</span> <span class="mf">192.168.1.99</span> <span class="o">-</span><span class="n">p</span> <span class="mi">1234</span> <span class="o">-</span><span class="n">u</span>
+</pre></div>
+
+
+<p>使用 <code>netstat -uanp</code> 就可以看到此端口, 显示的Program name是nc</p>
+<p>我在写snmp扫描端口的代码时, 因为要调试查看端口获取是否准确, 就用到了nc, 包括区分tcp/udp, 区分wan/lan等, 非常牛逼.</p>
+<h2 id="read-more">Read More</h2>
+<ul>
+<li><a href="http://www.thegeekstuff.com/2012/04/nc-command-examples/">8 Practical Linux Netcat NC Command Examples</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

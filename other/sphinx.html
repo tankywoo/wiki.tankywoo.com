@@ -1,0 +1,176 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Sphinx - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#other">other</a> » Sphinx
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">初始化文档项目</a></li>
+<li><a href="#_2">主题</a></li>
+</ul>
+</div>
+<p><a href="http://sphinx-doc.org/">Sphinx</a>是一个Python文档构建工具, 使用的标记语言是<a href="http://docutils.sourceforge.net/rst.html">reStructuredText</a>.</p>
+<p>安装:</p>
+<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="n">Sphinx</span>
+</pre></div>
+
+
+<p>当前版本: <code>Sphinx 1.3.1</code></p>
+<h2 id="_1">初始化文档项目</h2>
+<p>使用自带的 <code>sphinx-quickstart</code> 命令快速构建文档项目, 相当于傻瓜式的安装指引, 把一些主要的配置根据个人定义写入<code>conf.py</code>.</p>
+<p>其中:</p>
+<div class="hlcode"><pre><span class="n">You</span> <span class="n">have</span> <span class="n">two</span> <span class="n">options</span> <span class="k">for</span> <span class="n">placing</span> <span class="n">the</span> <span class="n">build</span> <span class="n">directory</span> <span class="k">for</span> <span class="n">Sphinx</span> <span class="n">output</span><span class="p">.</span>
+<span class="n">Either</span><span class="p">,</span> <span class="n">you</span> <span class="n">use</span> <span class="n">a</span> <span class="n">directory</span> <span class="s">&quot;_build&quot;</span> <span class="n">within</span> <span class="n">the</span> <span class="n">root</span> <span class="n">path</span><span class="p">,</span> <span class="n">or</span> <span class="n">you</span> <span class="n">separate</span>
+<span class="s">&quot;source&quot;</span> <span class="n">and</span> <span class="s">&quot;build&quot;</span> <span class="n">directories</span> <span class="n">within</span> <span class="n">the</span> <span class="n">root</span> <span class="n">path</span><span class="p">.</span>
+<span class="o">&gt;</span> <span class="n">Separate</span> <span class="n">source</span> <span class="n">and</span> <span class="n">build</span> <span class="n">directories</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">:</span>
+</pre></div>
+
+
+<p>这一步是选择文档的结构, 默认no是把源文件直接放在根目录下, 生成文件放在根目录下的<code>_build</code>目录:</p>
+<div class="hlcode"><pre><span class="err">$</span>  <span class="n">tree</span>
+<span class="p">.</span>
+<span class="err">├──</span> <span class="n">Makefile</span>
+<span class="err">├──</span> <span class="n">_build</span>
+<span class="err">├──</span> <span class="n">_static</span>
+<span class="err">├──</span> <span class="n">_templates</span>
+<span class="err">├──</span> <span class="n">conf</span><span class="p">.</span><span class="n">py</span>
+<span class="err">└──</span> <span class="n">index</span><span class="p">.</span><span class="n">rst</span>
+</pre></div>
+
+
+<p>yes是把源文件和生成文件分两个目录存放:</p>
+<div class="hlcode"><pre><span class="err">$</span>  <span class="n">tree</span>
+<span class="p">.</span>
+<span class="err">├──</span> <span class="n">Makefile</span>
+<span class="err">├──</span> <span class="n">build</span>
+<span class="err">└──</span> <span class="n">source</span>
+    <span class="err">├──</span> <span class="n">_static</span>
+    <span class="err">├──</span> <span class="n">_templates</span>
+    <span class="err">├──</span> <span class="n">conf</span><span class="p">.</span><span class="n">py</span>
+    <span class="err">└──</span> <span class="n">index</span><span class="p">.</span><span class="n">rst</span>
+</pre></div>
+
+
+<!-- -->
+
+<div class="hlcode"><pre><span class="n">Inside</span> <span class="n">the</span> <span class="n">root</span> <span class="n">directory</span><span class="p">,</span> <span class="n">two</span> <span class="n">more</span> <span class="n">directories</span> <span class="n">will</span> <span class="n">be</span> <span class="n">created</span><span class="p">;</span> <span class="s">&quot;_templates&quot;</span>
+<span class="k">for</span> <span class="n">custom</span> <span class="n">HTML</span> <span class="n">templates</span> <span class="n">and</span> <span class="s">&quot;_static&quot;</span> <span class="k">for</span> <span class="n">custom</span> <span class="n">stylesheets</span> <span class="n">and</span> <span class="n">other</span> <span class="k">static</span>
+<span class="n">files</span><span class="p">.</span> <span class="n">You</span> <span class="n">can</span> <span class="n">enter</span> <span class="n">another</span> <span class="n">prefix</span> <span class="p">(</span><span class="n">such</span> <span class="n">as</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="n">to</span> <span class="n">replace</span> <span class="n">the</span> <span class="n">underscore</span><span class="p">.</span>
+<span class="o">&gt;</span> <span class="n">Name</span> <span class="n">prefix</span> <span class="k">for</span> <span class="n">templates</span> <span class="n">and</span> <span class="k">static</span> <span class="n">dir</span> <span class="p">[</span><span class="n">_</span><span class="p">]</span><span class="o">:</span>
+</pre></div>
+
+
+<ul>
+<li><code>_templates</code> 用于存放自定义HTML模板文件</li>
+<li>
+<p><code>_static</code> 用于存放静态文件, 如css文件等</p>
+<p>Sphinx has the notion of a "version" and a "release" for the
+software. Each version can have multiple releases. For example, for
+Python the version is something like 2.5 or 3.0, while the release is
+something like 2.5.1 or 3.0a1.  If you don't need this dual structure,
+just set both to the same value.</p>
+<blockquote>
+<p>Project version: 0.1
+Project release [0.1]:</p>
+</blockquote>
+</li>
+</ul>
+<p>TODO 这块应该有作用, 考虑下应用场景.</p>
+<div class="hlcode"><pre><span class="n">If</span> <span class="n">the</span> <span class="n">documents</span> <span class="n">are</span> <span class="n">to</span> <span class="n">be</span> <span class="n">written</span> <span class="n">in</span> <span class="n">a</span> <span class="n">language</span> <span class="n">other</span> <span class="n">than</span> <span class="n">English</span><span class="p">,</span>
+<span class="n">you</span> <span class="n">can</span> <span class="n">select</span> <span class="n">a</span> <span class="n">language</span> <span class="n">here</span> <span class="n">by</span> <span class="n">its</span> <span class="n">language</span> <span class="n">code</span><span class="p">.</span> <span class="n">Sphinx</span> <span class="n">will</span> <span class="n">then</span>
+<span class="n">translate</span> <span class="n">text</span> <span class="n">that</span> <span class="n">it</span> <span class="n">generates</span> <span class="n">into</span> <span class="n">that</span> <span class="n">language</span><span class="p">.</span>
+
+<span class="n">For</span> <span class="n">a</span> <span class="n">list</span> <span class="n">of</span> <span class="n">supported</span> <span class="n">codes</span><span class="p">,</span> <span class="n">see</span>
+<span class="nl">http:</span><span class="c1">//sphinx-doc.org/config.html#confval-language.</span>
+<span class="o">&gt;</span> <span class="n">Project</span> <span class="n">language</span> <span class="p">[</span><span class="n">en</span><span class="p">]</span><span class="o">:</span> <span class="n">zh_CN</span>
+</pre></div>
+
+
+<p>国际化的配置, 这里我选择了<code>zh_CN</code> 简体中文</p>
+<p>Sphinx的 <a href="http://sphinx-doc.org/tutorial.html">Overview Tutorial</a>, 国内有翻译的<a href="http://www.pythondoc.com/sphinx/tutorial.html">中文版</a> 或者 <a href="http://zh-sphinx-doc.readthedocs.org/en/latest/tutorial.html">中文版2</a></p>
+<div class="hlcode"><pre><span class="n">One</span> <span class="n">document</span> <span class="n">is</span> <span class="n">special</span> <span class="n">in</span> <span class="n">that</span> <span class="n">it</span> <span class="n">is</span> <span class="n">considered</span> <span class="n">the</span> <span class="n">top</span> <span class="n">node</span> <span class="n">of</span> <span class="n">the</span>
+<span class="s">&quot;contents tree&quot;</span><span class="p">,</span> <span class="n">that</span> <span class="n">is</span><span class="p">,</span> <span class="n">it</span> <span class="n">is</span> <span class="n">the</span> <span class="n">root</span> <span class="n">of</span> <span class="n">the</span> <span class="n">hierarchical</span> <span class="n">structure</span>
+<span class="n">of</span> <span class="n">the</span> <span class="n">documents</span><span class="p">.</span> <span class="n">Normally</span><span class="p">,</span> <span class="n">this</span> <span class="n">is</span> <span class="s">&quot;index&quot;</span><span class="p">,</span> <span class="n">but</span> <span class="k">if</span> <span class="n">your</span> <span class="s">&quot;index&quot;</span>
+<span class="n">document</span> <span class="n">is</span> <span class="n">a</span> <span class="n">custom</span> <span class="n">template</span><span class="p">,</span> <span class="n">you</span> <span class="n">can</span> <span class="n">also</span> <span class="n">set</span> <span class="n">this</span> <span class="n">to</span> <span class="n">another</span> <span class="n">filename</span><span class="p">.</span>
+<span class="o">&gt;</span> <span class="n">Name</span> <span class="n">of</span> <span class="n">your</span> <span class="n">master</span> <span class="n">document</span> <span class="p">(</span><span class="n">without</span> <span class="n">suffix</span><span class="p">)</span> <span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">:</span>
+</pre></div>
+
+
+<p>索引文件, 默认是 <code>./index</code></p>
+<div class="hlcode"><pre><span class="n">A</span> <span class="n">Makefile</span> <span class="n">and</span> <span class="n">a</span> <span class="n">Windows</span> <span class="n">command</span> <span class="n">file</span> <span class="n">can</span> <span class="n">be</span> <span class="n">generated</span> <span class="k">for</span> <span class="n">you</span> <span class="n">so</span> <span class="n">that</span> <span class="n">you</span>
+<span class="n">only</span> <span class="n">have</span> <span class="n">to</span> <span class="n">run</span> <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="err">`</span><span class="n">make</span> <span class="n">html</span><span class="err">&#39;</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">invoking</span> <span class="n">sphinx</span><span class="o">-</span><span class="n">build</span>
+<span class="n">directly</span><span class="p">.</span>
+<span class="o">&gt;</span> <span class="n">Create</span> <span class="n">Makefile</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">:</span>
+<span class="o">&gt;</span> <span class="n">Create</span> <span class="n">Windows</span> <span class="n">command</span> <span class="n">file</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">:</span>
+</pre></div>
+
+
+<p>Sphinx提供了Unix/Linux下的Makefile和Windows下的make.bat, 用于封装了一些常用的命令</p>
+<hr />
+<h2 id="_2">主题</h2>
+<p>官方提供了一些<a href="http://sphinx-doc.org/theming.html">内置主题</a>可以选择.</p>
+<p>直接修改<code>conf.py</code>的<code>html_theme</code>的选项.</p>
+<p>部分主题有一些可定制的选项, 参考文档即可.</p>
+<hr />
+<p>文档:</p>
+<ol>
+<li>Overview Tutorial <a href="http://sphinx-doc.org/tutorial.html">官方</a> | <a href="http://www.pythondoc.com/sphinx/tutorial.html">中文1</a> | <a href="http://zh-sphinx-doc.readthedocs.org/en/latest/tutorial.html">中文2</a></li>
+<li><a href="http://qixinglu.com/post/note_tools_restructuredtext_sphinx.html">文档与笔记利器 reStructuredText 和 Sphinx</a></li>
+<li><a href="http://docutils.sourceforge.net/docs/user/rst/quickstart.html">A ReStructuredText Primer</a></li>
+<li><a href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">Quick reStructuredText</a></li>
+<li><a href="http://www.cnblogs.com/youxin/p/3597229.html">Markdown和reStructuredText语法比较</a></li>
+<li><a href="https://github.com/windfire-cd/note/blob/master/rst_mkd/rst_mkd.rst">Markdown And RestructuredText</a></li>
+</ol>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

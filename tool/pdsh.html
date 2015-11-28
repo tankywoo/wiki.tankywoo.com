@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>pdsh - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » pdsh
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p><a href="https://code.google.com/p/pdsh/">Pdsh</a>(Parallel Distributed Shell) </p>
+<blockquote>
+<p>Pdsh is a high-performance, parallel remote shell utility. It uses a sliding window of threads to execute remote commands, conserving socket resources while allowing some connections to timeout if needed. It was originally written as a replacement for IBM's DSH on clusters at LLNL.</p>
+<p>The core functionality of pdsh is supplemented by many available dynamically loadable modules. The modules may implement a new connection protocol, target host filtering (e.g. removing hosts that are "down" from the target host list) and/or other host selection options (e.g. -a selects all hosts from a config file).</p>
+<p>The pdsh distribution also contains a parallel remote copy utility (pdcp - copy from local host to a group of remote hosts in parallel), reverse parallel remote copy (rpdcp, copy from a group of hosts to localhost in parallel), and a script dshbak for formatting and demultiplexing pdsh output.</p>
+</blockquote>
+<p>常用参数:</p>
+<p><code>-w TARGETS,...</code> : 指定主机列表, 以逗号分隔(中间不能有空格).</p>
+<p><code>-x host,host,...</code> : 排除指定主机</p>
+<p><code>-l user</code> : 指定登录用户</p>
+<p>配置主机组:</p>
+<blockquote>
+<p>dshgroup module options
+The dshgroup module allows pdsh to use dsh (or Dancer's shell) style group files from /etc/dsh/group/ or ~/.dsh/group/.</p>
+<p>-g groupname,...
+Target nodes in dsh group file "groupname" found in either ~/.dsh/group/groupname or /etc/dsh/group/groupname.</p>
+<p>-X groupname,...
+Exclude nodes in dsh group file "groupname."</p>
+</blockquote>
+<p>将主机组列表文件放在 <code>/etc/dsh/group/</code> 或 <code>~/.dsh/group/</code> 下, 主机组名就是文件名, 主机一行一个.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">more</span> <span class="o">~/</span><span class="p">.</span><span class="n">dsh</span><span class="o">/</span><span class="n">group</span><span class="o">/</span><span class="n">myhosts</span>
+<span class="mf">192.168.1.12</span>
+<span class="mf">192.168.1.13</span>
+<span class="err">$</span> <span class="n">pdsh</span> <span class="o">-</span><span class="n">g</span> <span class="n">myhosts</span> <span class="o">-</span><span class="n">l</span> <span class="n">root</span> <span class="n">uptime</span>
+<span class="mf">192.168.1.13</span><span class="o">:</span>  <span class="mi">10</span><span class="o">:</span><span class="mi">47</span><span class="o">:</span><span class="mi">12</span> <span class="n">up</span> <span class="mi">38</span> <span class="n">days</span><span class="p">,</span> <span class="mi">14</span><span class="o">:</span><span class="mi">37</span><span class="p">,</span>  <span class="mi">0</span> <span class="n">users</span><span class="p">,</span>  <span class="n">load</span> <span class="n">average</span><span class="o">:</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.05</span>
+<span class="mf">192.168.1.12</span><span class="o">:</span>  <span class="mi">10</span><span class="o">:</span><span class="mi">47</span><span class="o">:</span><span class="mi">12</span> <span class="n">up</span> <span class="mi">10</span> <span class="n">days</span><span class="p">,</span> <span class="mi">23</span><span class="o">:</span><span class="mi">53</span><span class="p">,</span>  <span class="mi">5</span> <span class="n">users</span><span class="p">,</span>  <span class="n">load</span> <span class="n">average</span><span class="o">:</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.26</span><span class="p">,</span> <span class="mf">0.28</span>
+</pre></div>
+
+
+<p>因为pdsh需要配置好公私钥后才可以使用，而配置了公私钥后，如果从未登录过某台机器，第一次登录时默认交互式的确认Yes或No来将ECDSA签名写入<code>~/.ssh/known_hosts</code>文件. 这是如果用pdsh执行命令会失败. 可以通过批量执行<code>ssh -o StrictHostKeyChecking=no</code>来将这个签名写入文件, 并执行命令.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">pdsh</span> <span class="o">-</span><span class="n">R</span> <span class="n">exec</span> <span class="o">-</span><span class="n">g</span> <span class="n">myhosts</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">o</span> <span class="n">StrictHostKeyChecking</span><span class="o">=</span><span class="n">no</span> <span class="o">-</span><span class="n">l</span> <span class="n">root</span> <span class="o">%</span><span class="n">h</span> <span class="n">uptime</span>
+<span class="nl">host1:</span> <span class="n">Warning</span><span class="o">:</span> <span class="n">Permanently</span> <span class="n">added</span> <span class="err">&#39;</span><span class="n">host1</span><span class="p">,</span><span class="mf">192.168.1.12</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">ECDSA</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="n">list</span> <span class="n">of</span> <span class="n">known</span> <span class="n">hosts</span><span class="p">.</span>
+<span class="nl">host2:</span> <span class="n">Warning</span><span class="o">:</span> <span class="n">Permanently</span> <span class="n">added</span> <span class="err">&#39;</span><span class="n">host2</span><span class="p">,</span><span class="mf">192.168.1.13</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">ECDSA</span><span class="p">)</span> <span class="n">to</span> <span class="n">the</span> <span class="n">list</span> <span class="n">of</span> <span class="n">known</span> <span class="n">hosts</span><span class="p">.</span>
+<span class="nl">host1:</span>  <span class="mi">10</span><span class="o">:</span><span class="mi">34</span><span class="o">:</span><span class="mo">01</span> <span class="n">up</span> <span class="mi">38</span> <span class="n">days</span><span class="p">,</span> <span class="mi">14</span><span class="o">:</span><span class="mi">24</span><span class="p">,</span>  <span class="mi">0</span> <span class="n">users</span><span class="p">,</span>  <span class="n">load</span> <span class="n">average</span><span class="o">:</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.05</span>
+<span class="nl">host2:</span>  <span class="mi">10</span><span class="o">:</span><span class="mi">34</span><span class="o">:</span><span class="mo">02</span> <span class="n">up</span> <span class="mi">10</span> <span class="n">days</span><span class="p">,</span> <span class="mi">23</span><span class="o">:</span><span class="mi">40</span><span class="p">,</span>  <span class="mi">5</span> <span class="n">users</span><span class="p">,</span>  <span class="n">load</span> <span class="n">average</span><span class="o">:</span> <span class="mf">0.12</span><span class="p">,</span> <span class="mf">0.22</span><span class="p">,</span> <span class="mf">0.25</span>
+</pre></div>
+
+
+<p>注意这里的 <code>-l root</code> 是 ssh 的参数选项, 不是 pdsh 的.</p>
+<h3 id="dshbak">dshbak</h3>
+<p>dshbak 是 pdsh 的一个配套工具, 用于格式化输出结果.</p>
+<p>一般使用 <code>dshbak -c</code> 将输出结果归类, 相同结果不会重复输出, 方便查看差异结果:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">pdsh</span> <span class="o">-</span><span class="n">g</span> <span class="n">myhosts</span> <span class="o">-</span><span class="n">l</span> <span class="n">root</span> <span class="n">whoami</span> <span class="o">|</span> <span class="n">dshbak</span> <span class="o">-</span><span class="n">c</span>
+<span class="o">----------------</span>
+<span class="mf">192.168.1</span><span class="p">.[</span><span class="mi">12</span><span class="o">-</span><span class="mi">13</span><span class="p">]</span>
+<span class="o">----------------</span>
+<span class="n">root</span>
+</pre></div>
+
+
+<h3 id="pdcp">pdcp</h3>
+<p>pdcp 是一个批量传输的工具，也是pdsh工具集中的一个，还有一个反向的<code>rpdcp</code></p>
+<p>比如要传一个目录到/home目录下:</p>
+<div class="hlcode"><pre><span class="n">pdcp</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">l</span> <span class="n">root</span> <span class="o">-</span><span class="n">g</span> <span class="n">myhosts</span> <span class="o">/</span><span class="n">dir</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

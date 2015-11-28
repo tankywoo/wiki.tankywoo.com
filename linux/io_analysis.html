@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>IO Analysis - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#linux">linux</a> » IO Analysis
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>了解这个, 首先要对系统的基本原理比较了解.</p>
+<p>另外, 这个是基于平时排查问题积累的, 后期会逐步完善和修正</p>
+<hr />
+<p>Linux Wait IO 问题:</p>
+<blockquote>
+<p>Wait IO problem can be caused by several reasons, the basic road-map to find out is which process is "eating" your CPU first and then determine why. The main cause are those background processes with "D" status code which means "Uninterruptiable sleep". But the those processes with "D+" which means "Uninterruptible sleep foreground process" will generally not cause the serious problem as those background processes. In this example, the cause of Wait IO is the File System Journal, so the configuration of file system is the cause of the problem.   -- 摘自<a href="http://www.chileoffshore.com/en/interesting-articles/126-linux-wait-io-problem">Linux Wait IO Problem</a></p>
+</blockquote>
+<p>确认负载(load):</p>
+<p>最简单的就是<code>w</code>或者<code>uptime</code>, 前者已经包含了后者的输出</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">uptime</span>
+ <span class="mo">03</span><span class="o">:</span><span class="mi">14</span><span class="o">:</span><span class="mi">34</span> <span class="n">up</span> <span class="mi">4</span> <span class="n">days</span><span class="p">,</span> <span class="mi">12</span><span class="o">:</span><span class="mi">08</span><span class="p">,</span>  <span class="mi">1</span> <span class="n">user</span><span class="p">,</span>  <span class="n">load</span> <span class="n">average</span><span class="o">:</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span>
+
+<span class="err">$</span> <span class="n">w</span>
+ <span class="mo">03</span><span class="o">:</span><span class="mi">14</span><span class="o">:</span><span class="mi">34</span> <span class="n">up</span> <span class="mi">4</span> <span class="n">days</span><span class="p">,</span> <span class="mi">12</span><span class="o">:</span><span class="mi">08</span><span class="p">,</span>  <span class="mi">1</span> <span class="n">user</span><span class="p">,</span>  <span class="n">load</span> <span class="n">average</span><span class="o">:</span> <span class="mf">0.00</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span>
+<span class="n">USER</span>     <span class="n">TTY</span>        <span class="n">LOGIN</span><span class="err">@</span>   <span class="n">IDLE</span>   <span class="n">JCPU</span>   <span class="n">PCPU</span> <span class="n">WHAT</span>
+<span class="n">tankywoo</span> <span class="n">pts</span><span class="o">/</span><span class="mi">1</span>     <span class="n">Mon08</span>    <span class="mf">0.00</span><span class="n">s</span>  <span class="mf">0.41</span><span class="n">s</span>  <span class="mf">0.00</span><span class="n">s</span> <span class="n">tmux</span> <span class="o">-</span><span class="mi">2</span>
+</pre></div>
+
+
+<p>其次, 通过top等命令查看cpu的状态, 如us/sy/wa等</p>
+<p>vmstat(Report virtual memory statistics) 用来输出ram, swap, io, cpu等信息.</p>
+<p>最简单的就是后可接delay(输出间隔)和count(输出次数), 没有count则无限输出, 都没有则输出一次</p>
+<p>另外vmstat不需要特殊权限</p>
+<div class="hlcode"><pre> <span class="err">$</span> <span class="n">vmstat</span> <span class="mi">1</span> <span class="mi">3</span>
+<span class="n">procs</span> <span class="o">-----------</span><span class="n">memory</span><span class="o">----------</span> <span class="o">---</span><span class="n">swap</span><span class="o">--</span> <span class="o">-----</span><span class="n">io</span><span class="o">----</span> <span class="o">-</span><span class="n">system</span><span class="o">--</span> <span class="o">----</span><span class="n">cpu</span><span class="o">----</span>
+ <span class="n">r</span>  <span class="n">b</span>   <span class="n">swpd</span>   <span class="n">free</span>   <span class="n">buff</span>  <span class="n">cache</span>   <span class="n">si</span>   <span class="n">so</span>    <span class="n">bi</span>    <span class="n">bo</span>   <span class="n">in</span>   <span class="n">cs</span> <span class="n">us</span> <span class="n">sy</span> <span class="n">id</span> <span class="n">wa</span>
+ <span class="mi">0</span>  <span class="mi">0</span>      <span class="mi">0</span> <span class="mi">197628</span> <span class="mi">270232</span> <span class="mi">245340</span>    <span class="mi">0</span>    <span class="mi">0</span>     <span class="mi">1</span>    <span class="mi">26</span>   <span class="mi">32</span>   <span class="mi">47</span>  <span class="mi">0</span>  <span class="mi">0</span> <span class="mi">100</span>  <span class="mi">0</span>
+ <span class="mi">0</span>  <span class="mi">0</span>      <span class="mi">0</span> <span class="mi">197628</span> <span class="mi">270232</span> <span class="mi">245340</span>    <span class="mi">0</span>    <span class="mi">0</span>     <span class="mi">0</span>    <span class="mi">40</span>   <span class="mi">51</span>   <span class="mi">71</span>  <span class="mi">0</span>  <span class="mi">0</span> <span class="mi">99</span>  <span class="mi">1</span>
+ <span class="mi">0</span>  <span class="mi">0</span>      <span class="mi">0</span> <span class="mi">197628</span> <span class="mi">270232</span> <span class="mi">245340</span>    <span class="mi">0</span>    <span class="mi">0</span>     <span class="mi">0</span>     <span class="mi">0</span>   <span class="mi">37</span>   <span class="mi">53</span>  <span class="mi">1</span>  <span class="mi">0</span> <span class="mi">99</span>  <span class="mi">0</span>
+</pre></div>
+
+
+<p>更复杂的专门看io的命令 iostat (Report Central Processing Unit (CPU) statistics and input/output statistics for devices and partitions); 输出cpu和io的信息.</p>
+<p>默认输出基本的信息, <code>-c</code>只输出cpu信息, <code>-d</code>只输出硬盘信息, <code>-x</code>输出扩展信息</p>
+<p>和vmstat一样, 最后接delay和count</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">iostat</span> <span class="o">-</span><span class="n">x</span> <span class="mi">1</span> <span class="mi">2</span>
+<span class="n">Linux</span> <span class="mf">3.7.10</span><span class="o">-</span><span class="n">gentoo</span><span class="o">-</span><span class="n">r1</span><span class="o">-</span><span class="n">ks</span> <span class="p">(</span><span class="n">gentoo</span><span class="o">-</span><span class="n">local</span><span class="p">)</span>        <span class="mi">08</span><span class="o">/</span><span class="mo">06</span><span class="o">/</span><span class="mi">2015</span>      <span class="n">_x86_64_</span>        <span class="p">(</span><span class="mi">1</span> <span class="n">CPU</span><span class="p">)</span>
+
+<span class="n">avg</span><span class="o">-</span><span class="n">cpu</span><span class="o">:</span>  <span class="o">%</span><span class="n">user</span>   <span class="o">%</span><span class="n">nice</span> <span class="o">%</span><span class="n">system</span> <span class="o">%</span><span class="n">iowait</span>  <span class="o">%</span><span class="n">steal</span>   <span class="o">%</span><span class="n">idle</span>
+           <span class="mf">0.15</span>    <span class="mf">0.00</span>    <span class="mf">0.17</span>    <span class="mf">0.05</span>    <span class="mf">0.00</span>   <span class="mf">99.63</span>
+
+<span class="nl">Device:</span>         <span class="n">rrqm</span><span class="o">/</span><span class="n">s</span>   <span class="n">wrqm</span><span class="o">/</span><span class="n">s</span>     <span class="n">r</span><span class="o">/</span><span class="n">s</span>     <span class="n">w</span><span class="o">/</span><span class="n">s</span>    <span class="n">rkB</span><span class="o">/</span><span class="n">s</span>    <span class="n">wkB</span><span class="o">/</span><span class="n">s</span> <span class="n">avgrq</span><span class="o">-</span><span class="n">sz</span> <span class="n">avgqu</span><span class="o">-</span><span class="n">sz</span>   <span class="n">await</span> <span class="n">r_await</span> <span class="n">w_await</span>  <span class="n">svctm</span>  <span class="o">%</span><span class="n">util</span>
+<span class="n">sda</span>               <span class="mf">0.00</span>     <span class="mf">2.35</span>    <span class="mf">0.15</span>    <span class="mf">0.73</span>     <span class="mf">0.92</span>    <span class="mf">25.64</span>    <span class="mf">60.44</span>     <span class="mf">0.01</span>    <span class="mf">7.69</span>    <span class="mf">0.37</span>    <span class="mf">9.23</span>   <span class="mf">0.96</span>   <span class="mf">0.08</span>
+<span class="n">dm</span><span class="o">-</span><span class="mi">0</span>              <span class="mf">0.00</span>     <span class="mf">0.00</span>    <span class="mf">0.00</span>    <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">8.00</span>     <span class="mf">0.00</span>    <span class="mf">0.04</span>    <span class="mf">0.04</span>    <span class="mf">0.00</span>   <span class="mf">0.04</span>   <span class="mf">0.00</span>
+
+<span class="n">avg</span><span class="o">-</span><span class="n">cpu</span><span class="o">:</span>  <span class="o">%</span><span class="n">user</span>   <span class="o">%</span><span class="n">nice</span> <span class="o">%</span><span class="n">system</span> <span class="o">%</span><span class="n">iowait</span>  <span class="o">%</span><span class="n">steal</span>   <span class="o">%</span><span class="n">idle</span>
+           <span class="mf">0.99</span>    <span class="mf">0.00</span>    <span class="mf">0.99</span>    <span class="mf">0.00</span>    <span class="mf">0.00</span>   <span class="mf">98.02</span>
+
+<span class="nl">Device:</span>         <span class="n">rrqm</span><span class="o">/</span><span class="n">s</span>   <span class="n">wrqm</span><span class="o">/</span><span class="n">s</span>     <span class="n">r</span><span class="o">/</span><span class="n">s</span>     <span class="n">w</span><span class="o">/</span><span class="n">s</span>    <span class="n">rkB</span><span class="o">/</span><span class="n">s</span>    <span class="n">wkB</span><span class="o">/</span><span class="n">s</span> <span class="n">avgrq</span><span class="o">-</span><span class="n">sz</span> <span class="n">avgqu</span><span class="o">-</span><span class="n">sz</span>   <span class="n">await</span> <span class="n">r_await</span> <span class="n">w_await</span>  <span class="n">svctm</span>  <span class="o">%</span><span class="n">util</span>
+<span class="n">sda</span>               <span class="mf">0.00</span>     <span class="mf">0.99</span>    <span class="mf">0.00</span>    <span class="mf">1.98</span>     <span class="mf">0.00</span>    <span class="mf">11.88</span>    <span class="mf">12.00</span>     <span class="mf">0.00</span>    <span class="mf">0.50</span>    <span class="mf">0.00</span>    <span class="mf">0.50</span>   <span class="mf">0.50</span>   <span class="mf">0.10</span>
+<span class="n">dm</span><span class="o">-</span><span class="mi">0</span>              <span class="mf">0.00</span>     <span class="mf">0.00</span>    <span class="mf">0.00</span>    <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>    <span class="mf">0.00</span>    <span class="mf">0.00</span>    <span class="mf">0.00</span>   <span class="mf">0.00</span>   <span class="mf">0.00</span>
+</pre></div>
+
+
+<p>类似top, io也有相关的命令 iotop</p>
+<p>参数也和top类似</p>
+<div class="hlcode"><pre><span class="n">Total</span> <span class="n">DISK</span> <span class="n">READ</span> <span class="o">:</span>       <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span> <span class="o">|</span> <span class="n">Total</span> <span class="n">DISK</span> <span class="n">WRITE</span> <span class="o">:</span>       <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span>
+<span class="n">Actual</span> <span class="n">DISK</span> <span class="n">READ</span><span class="o">:</span>       <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span> <span class="o">|</span> <span class="n">Actual</span> <span class="n">DISK</span> <span class="n">WRITE</span><span class="o">:</span>       <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span>
+  <span class="n">TID</span>  <span class="n">PRIO</span>  <span class="n">USER</span>     <span class="n">DISK</span> <span class="n">READ</span>  <span class="n">DISK</span> <span class="n">WRITE</span>  <span class="n">SWAPIN</span>     <span class="n">IO</span><span class="o">&gt;</span>    <span class="n">COMMAND</span>
+    <span class="mi">1</span> <span class="n">be</span><span class="o">/</span><span class="mi">4</span> <span class="n">root</span>        <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span>    <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span>  <span class="mf">0.00</span> <span class="o">%</span>  <span class="mf">0.00</span> <span class="o">%</span> <span class="n">init</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="mi">2</span> <span class="n">be</span><span class="o">/</span><span class="mi">4</span> <span class="n">root</span>        <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span>    <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span>  <span class="mf">0.00</span> <span class="o">%</span>  <span class="mf">0.00</span> <span class="o">%</span> <span class="p">[</span><span class="n">kthreadd</span><span class="p">]</span>
+<span class="mi">22022</span> <span class="n">be</span><span class="o">/</span><span class="mi">4</span> <span class="n">root</span>        <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span>    <span class="mf">0.00</span> <span class="n">B</span><span class="o">/</span><span class="n">s</span>  <span class="mf">0.00</span> <span class="o">%</span>  <span class="mf">0.00</span> <span class="o">%</span> <span class="n">sshd</span><span class="o">:</span> <span class="n">tankywoo</span>
+<span class="p">...</span>
+</pre></div>
+
+
+<p>另外, <code>man ps</code>可以看到进程状态的解释:</p>
+<div class="hlcode"><pre><span class="n">PROCESS</span> <span class="n">STATE</span> <span class="n">CODES</span>
+  <span class="n">Here</span> <span class="n">are</span> <span class="n">the</span> <span class="n">different</span> <span class="n">values</span> <span class="n">that</span> <span class="n">the</span> <span class="n">s</span><span class="p">,</span> <span class="n">stat</span> <span class="n">and</span> <span class="n">state</span> <span class="n">output</span> <span class="n">specifiers</span> <span class="p">(</span><span class="n">header</span> <span class="s">&quot;STAT&quot;</span> <span class="n">or</span> <span class="s">&quot;S&quot;</span><span class="p">)</span> <span class="n">will</span> <span class="n">display</span> <span class="n">to</span> <span class="n">describe</span> <span class="n">the</span> <span class="n">state</span> <span class="n">of</span> <span class="n">a</span> <span class="n">process</span><span class="o">:</span>
+
+    <span class="n">D</span>    <span class="n">uninterruptible</span> <span class="n">sleep</span> <span class="p">(</span><span class="n">usually</span> <span class="n">IO</span><span class="p">)</span>
+    <span class="n">R</span>    <span class="n">running</span> <span class="n">or</span> <span class="n">runnable</span> <span class="p">(</span><span class="n">on</span> <span class="n">run</span> <span class="n">queue</span><span class="p">)</span>
+    <span class="n">S</span>    <span class="n">interruptible</span> <span class="n">sleep</span> <span class="p">(</span><span class="n">waiting</span> <span class="k">for</span> <span class="n">an</span> <span class="n">event</span> <span class="n">to</span> <span class="n">complete</span><span class="p">)</span>
+    <span class="n">T</span>    <span class="n">stopped</span><span class="p">,</span> <span class="n">either</span> <span class="n">by</span> <span class="n">a</span> <span class="n">job</span> <span class="n">control</span> <span class="n">signal</span> <span class="n">or</span> <span class="n">because</span> <span class="n">it</span> <span class="n">is</span> <span class="n">being</span> <span class="n">traced</span>
+    <span class="n">W</span>    <span class="n">paging</span> <span class="p">(</span><span class="n">not</span> <span class="n">valid</span> <span class="n">since</span> <span class="n">the</span> <span class="mf">2.6</span><span class="p">.</span><span class="n">xx</span> <span class="n">kernel</span><span class="p">)</span>
+    <span class="n">X</span>    <span class="n">dead</span> <span class="p">(</span><span class="n">should</span> <span class="n">never</span> <span class="n">be</span> <span class="n">seen</span><span class="p">)</span>
+    <span class="n">Z</span>    <span class="n">defunct</span> <span class="p">(</span><span class="s">&quot;zombie&quot;</span><span class="p">)</span> <span class="n">process</span><span class="p">,</span> <span class="n">terminated</span> <span class="n">but</span> <span class="n">not</span> <span class="n">reaped</span> <span class="n">by</span> <span class="n">its</span> <span class="n">parent</span>
+</pre></div>
+
+
+<p>查看进程状态是否有<code>D</code>, 表示进程在等待IO</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="k">while</span> <span class="nb">true</span><span class="p">;</span> <span class="k">do</span> <span class="n">date</span><span class="p">;</span> <span class="n">ps</span> <span class="n">auxf</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">&#39;</span><span class="p">{</span><span class="k">if</span><span class="p">(</span><span class="err">$</span><span class="mi">8</span><span class="o">==</span><span class="s">&quot;S&quot;</span><span class="p">)</span> <span class="n">print</span> <span class="err">$</span><span class="mi">0</span><span class="p">;}</span><span class="err">&#39;</span><span class="p">;</span> <span class="n">sleep</span> <span class="mi">1</span><span class="p">;</span> <span class="n">done</span>
+</pre></div>
+
+
+<p>或者:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="k">for</span> <span class="n">x</span> <span class="n">in</span> <span class="err">`</span><span class="n">seq</span> <span class="mi">1</span> <span class="mi">1</span> <span class="mi">10</span><span class="err">`</span><span class="p">;</span> <span class="k">do</span> <span class="n">ps</span> <span class="o">-</span><span class="n">eo</span> <span class="n">state</span><span class="p">,</span><span class="n">pid</span><span class="p">,</span><span class="n">cmd</span> <span class="o">|</span> <span class="n">grep</span> <span class="s">&quot;^D&quot;</span><span class="p">;</span> <span class="n">echo</span> <span class="s">&quot;----&quot;</span><span class="p">;</span> <span class="n">sleep</span> <span class="mi">1</span><span class="p">;</span> <span class="n">done</span>
+</pre></div>
+
+
+<p>还有一个比较强大的工具<a href="http://dag.wiee.rs/home-made/dstat/">dstat</a>, 集合了vmstat, iostat, ifstat等工具的功能, 并且输出是颜色高亮</p>
+<p>其实工具都只是表层, 最底层的还是读取/proc下的文件, 具体在每个工具的man手册都有介绍.</p>
+<hr />
+<p>其它:</p>
+<p>找到cpu占用率最高的进程</p>
+<p>一个是通过 <a href="./top.html">top/htop/atop</a> 来查看.</p>
+<p>另外可以通过ps:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ps</span> <span class="o">-</span><span class="n">auxf</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">nr</span> <span class="o">-</span><span class="n">k</span> <span class="mi">3</span> <span class="o">|</span> <span class="n">head</span> <span class="o">-</span><span class="mi">3</span>
+</pre></div>
+
+
+<p>sort命令非常强大, 参数支持很多类别的排序, 具体可以man手册</p>
+<p>比如内存使用率排序:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ps</span> <span class="o">-</span><span class="n">auxf</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">nr</span> <span class="o">-</span><span class="n">k</span> <span class="mi">4</span> <span class="o">|</span> <span class="n">head</span> <span class="o">-</span><span class="mi">3</span>
+</pre></div>
+
+
+<p>另外, 可以看看相同名称进程的数量:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ps</span> <span class="n">aux</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">11</span><span class="p">}</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">|</span> <span class="n">uniq</span> <span class="o">-</span><span class="n">c</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">nk1</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="n">n5</span>
+</pre></div>
+
+
+<p>或者某个用户在运行的进程数:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ps</span> <span class="n">aux</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">1</span><span class="p">}</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">|</span> <span class="n">uniq</span> <span class="o">-</span><span class="n">c</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">nk1</span> <span class="o">|</span> <span class="n">tail</span> <span class="o">-</span><span class="n">n5</span>
+</pre></div>
+
+
+<hr />
+<p>参考资料:</p>
+<ul>
+<li><a href="http://bencane.com/2012/08/06/troubleshooting-high-io-wait-in-linux/">Troubleshooting High I/O Wait in Linux</a></li>
+<li><a href="http://www.tummy.com/articles/isolating-heavy-load/">Isolating Linux High System Load</a></li>
+<li><a href="http://www.linuxjournal.com/magazine/hack-and-linux-troubleshooting-part-i-high-load?page=0,0">Hack and / - Linux Troubleshooting, Part I: High Load</a></li>
+<li><a href="https://martincarstenbach.wordpress.com/2013/06/25/troubleshooting-high-load-average-on-linux/">Troubleshooting high load average on Linux</a></li>
+<li><a href="http://www.chileoffshore.com/en/interesting-articles/126-linux-wait-io-problem">Linux Wait IO Problem</a></li>
+<li><a href="http://stackoverflow.com/questions/666783/how-to-find-out-which-process-is-consuming-wait-cpu-i-e-i-o-blocked">How to find out which process is consuming “wait CPU” (i.e. I/O blocked)</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

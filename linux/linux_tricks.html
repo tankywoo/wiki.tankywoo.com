@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Linux Tricks - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#linux">linux</a> » Linux Tricks
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <ul>
+<li>
+<p>查看现在使用的是哪一个shell  </p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">$</span><span class="mi">0</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>修改login shell  </p>
+<div class="hlcode"><pre><span class="n">chsh</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>快速返回到上一个目录</p>
+<p>有时候移到一个目录, 想直接返回去</p>
+<div class="hlcode"><pre><span class="n">cd</span> <span class="o">-</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>关于export C  </p>
+<p>建议在脚本开始处加上<code>export C</code>，且如果man手册乱码，也可以:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">export</span> <span class="n">C</span> <span class="n">man</span> <span class="n">xxx</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>查看本机最常用的10条命令  </p>
+<div class="hlcode"><pre><span class="n">history</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">a</span><span class="p">[</span><span class="err">$</span><span class="mi">2</span><span class="p">]</span><span class="o">++</span><span class="p">}</span><span class="n">END</span><span class="p">{</span><span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="n">in</span> <span class="n">a</span><span class="p">){</span><span class="n">print</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="s">&quot; &quot;</span> <span class="n">i</span><span class="p">}}</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">rn</span> <span class="o">|</span> <span class="n">head</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>获取一个字符串的长度  </p>
+<p>三种方法:</p>
+<div class="hlcode"><pre>len `expr length <span class="nv">$str</span>`
+echo <span class="cp">${</span><span class="nb">str</span><span class="cp">}</span> | wc -L
+echo <span class="cp">${</span><span class="nb">str</span><span class="cp">}</span> # 推荐
+</pre></div>
+
+
+</li>
+<li>
+<p>统计当前目录下（包括子目录）以.py结尾文件的个数及总代码行数  </p>
+<p>文件个数: </p>
+<div class="hlcode"><pre><span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">name</span> <span class="s">&quot;*.py&quot;</span> <span class="o">|</span> <span class="n">wc</span> <span class="o">-</span><span class="n">l</span>
+</pre></div>
+
+
+<p>单个文件代码行数及总行数: </p>
+<div class="hlcode"><pre><span class="n">find</span> <span class="p">.</span> <span class="o">-</span><span class="n">name</span> <span class="s">&quot;*.py&quot;</span> <span class="o">|</span> <span class="n">xargs</span> <span class="n">wc</span> <span class="o">-</span><span class="n">l</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>输出错误重定向  </p>
+<div class="hlcode"><pre><span class="n">ls</span> <span class="mi">1</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+<span class="n">ls</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>Show number of connections per remote IP  </p>
+<div class="hlcode"><pre><span class="n">netstat</span> <span class="o">-</span><span class="n">antu</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">&#39;$</span><span class="mi">5</span> <span class="o">~</span> <span class="o">/</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">:/</span><span class="p">{</span><span class="n">split</span><span class="p">(</span><span class="err">$</span><span class="mi">5</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">);</span> <span class="n">ips</span><span class="p">[</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">++</span><span class="p">}</span> <span class="n">END</span> <span class="p">{</span><span class="k">for</span> <span class="p">(</span><span class="n">ip</span> <span class="n">in</span> <span class="n">ips</span><span class="p">)</span> <span class="n">print</span> <span class="n">ips</span><span class="p">[</span><span class="n">ip</span><span class="p">],</span> <span class="n">ip</span> <span class="o">|</span> <span class="s">&quot;sort -k1 -nr&quot;</span><span class="p">}</span><span class="err">&#39;</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>以root身份执行上一条命令  </p>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="o">!!</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>开启一个Web服务器(传输)  </p>
+<div class="hlcode"><pre><span class="cp"># -m 表示找到模块, 执行相应的.py文件</span>
+<span class="cp"># SimpleHTTPServer 是一个 Http Server 模块</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">SimpleHTTPServer</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>vim里强制保存  </p>
+<p>有时候, 一些文件编辑后, 才发现只有root可写</p>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">w</span> <span class="o">!</span><span class="n">sudo</span> <span class="n">tee</span> <span class="o">%</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>替换上条命令的关键字并执行  </p>
+<div class="hlcode"><pre><span class="cp"># 将上一条命令的pint换成traceroute</span>
+<span class="o">^</span><span class="n">ping</span><span class="o">^</span><span class="n">traceroute</span><span class="o">^</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>复制一个备份文件  </p>
+<p>有时候, 为了测试, 为防止意外, 可能需要把 filename 在备份一个 filename.bak</p>
+<div class="hlcode"><pre><span class="n">cp</span> <span class="n">filename</span><span class="p">{,.</span><span class="n">bak</span><span class="p">}</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>搜索最近一条符合关键字的命令  </p>
+<p>比如上面执行过命令是ping wutianqi.com, 想再执行, 可以</p>
+<div class="hlcode"><pre><span class="cp"># p是关键字, 也可以 pi, pin, ping都行</span>
+<span class="o">!</span><span class="n">p</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>给远程机器添加公钥认证</p>
+<div class="hlcode"><pre><span class="n">ssh</span><span class="o">-</span><span class="n">copy</span><span class="o">-</span><span class="n">id</span> <span class="n">user</span><span class="err">@</span><span class="n">host</span>
+</pre></div>
+
+
+<p>很多人喜欢生成公私钥后, 用scp传过去, 再登录上去设置。
+其实完全没必要, ssh-copy-id会自动把公钥添加到~/.ssh/authorized_keys末尾。
+如果 ssh-add -L 里面有内容，会优先使用里面的公钥; 其次，可以用 -i 指定要添加的公钥，最后会用默认的 ~/.ssh/id_rsa.pub</p>
+</li>
+<li>
+<p>把 Linux 桌面录制为视频  </p>
+<p><em>TODO</em> 这个命令先记录一下, 还没尝试</p>
+<div class="hlcode"><pre><span class="n">ffmpeg</span> <span class="o">-</span><span class="n">f</span> <span class="n">x11grab</span> <span class="o">-</span><span class="n">s</span> <span class="n">wxga</span> <span class="o">-</span><span class="n">r</span> <span class="mi">25</span> <span class="o">-</span><span class="n">i</span> <span class="o">:</span><span class="mf">0.0</span> <span class="o">-</span><span class="n">sameq</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">out</span><span class="p">.</span><span class="n">mpg</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>快速清空arp缓存表</p>
+<div class="hlcode"><pre><span class="k">for</span> <span class="n">a</span> <span class="n">in</span> <span class="err">`</span><span class="n">arp</span> <span class="o">|</span> <span class="n">grep</span> <span class="s">&quot;eth1&quot;</span> <span class="o">|</span> <span class="n">cut</span> <span class="o">-</span><span class="n">d</span> <span class="s">&quot; &quot;</span> <span class="o">-</span><span class="n">f1</span><span class="err">`</span><span class="p">;</span> <span class="k">do</span> <span class="n">arp</span> <span class="o">-</span><span class="n">d</span> <span class="err">$</span><span class="n">a</span><span class="p">;</span> <span class="n">done</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>检查硬盘是HDD还是SSD</p>
+<p>方法1:</p>
+<div class="hlcode"><pre><span class="n">cat</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">block</span><span class="o">/</span><span class="n">sda</span><span class="o">/</span><span class="n">queue</span><span class="o">/</span><span class="n">rotational</span>
+</pre></div>
+
+
+<p>输出<code>1</code>则是HDD, 输出<code>0</code>则是SSD</p>
+<p>方法2:</p>
+<p>安装<code>smartmontools</code>工具，使用<code>smartctl</code>命令查看信息。</p>
+<div class="hlcode"><pre><span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">local</span><span class="o">::~/</span> <span class="err">»</span> <span class="n">sudo</span> <span class="n">smartctl</span> <span class="o">-</span><span class="n">a</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda</span>
+<span class="n">smartctl</span> <span class="mf">6.1</span> <span class="mi">2013</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">16</span> <span class="n">r3800</span> <span class="p">[</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="mf">3.7.10</span><span class="o">-</span><span class="n">gentoo</span><span class="o">-</span><span class="n">r1</span><span class="o">-</span><span class="n">ks</span><span class="p">]</span> <span class="p">(</span><span class="n">local</span> <span class="n">build</span><span class="p">)</span>
+<span class="n">Copyright</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="mi">2002</span><span class="o">-</span><span class="mi">13</span><span class="p">,</span> <span class="n">Bruce</span> <span class="n">Allen</span><span class="p">,</span> <span class="n">Christian</span> <span class="n">Franke</span><span class="p">,</span> <span class="n">www</span><span class="p">.</span><span class="n">smartmontools</span><span class="p">.</span><span class="n">org</span>
+
+<span class="o">===</span> <span class="n">START</span> <span class="n">OF</span> <span class="n">INFORMATION</span> <span class="n">SECTION</span> <span class="o">===</span>
+<span class="n">Device</span> <span class="n">Model</span><span class="o">:</span>     <span class="n">gentoo</span><span class="o">-</span><span class="mi">0</span> <span class="n">SSD</span>
+<span class="n">Serial</span> <span class="n">Number</span><span class="o">:</span>    <span class="mi">36</span><span class="n">CBA5PYHBJMH4MDR0YY</span>
+<span class="n">Firmware</span> <span class="n">Version</span><span class="o">:</span> <span class="n">F</span><span class="mf">.9</span><span class="n">AGAJ4</span>
+<span class="n">User</span> <span class="n">Capacity</span><span class="o">:</span>    <span class="mi">34</span><span class="p">,</span><span class="mi">359</span><span class="p">,</span><span class="mi">738</span><span class="p">,</span><span class="mi">368</span> <span class="n">bytes</span> <span class="p">[</span><span class="mf">34.3</span> <span class="n">GB</span><span class="p">]</span>
+<span class="n">Sector</span> <span class="n">Sizes</span><span class="o">:</span>     <span class="mi">512</span> <span class="n">bytes</span> <span class="n">logical</span><span class="p">,</span> <span class="mi">4096</span> <span class="n">bytes</span> <span class="n">physical</span>
+<span class="n">Rotation</span> <span class="n">Rate</span><span class="o">:</span>    <span class="n">Solid</span> <span class="n">State</span> <span class="n">Device</span>
+<span class="n">Device</span> <span class="n">is</span><span class="o">:</span>        <span class="n">Not</span> <span class="n">in</span> <span class="n">smartctl</span> <span class="n">database</span> <span class="p">[</span><span class="k">for</span> <span class="n">details</span> <span class="n">use</span><span class="o">:</span> <span class="o">-</span><span class="n">P</span> <span class="n">showall</span><span class="p">]</span>
+<span class="n">ATA</span> <span class="n">Version</span> <span class="n">is</span><span class="o">:</span>   <span class="n">ATA8</span><span class="o">-</span><span class="n">ACS</span><span class="p">,</span> <span class="n">ATA</span><span class="o">/</span><span class="n">ATAPI</span><span class="o">-</span><span class="mi">5</span> <span class="n">T13</span><span class="o">/</span><span class="mi">1321</span><span class="n">D</span> <span class="n">revision</span> <span class="mi">1</span>
+<span class="n">SATA</span> <span class="n">Version</span> <span class="n">is</span><span class="o">:</span>  <span class="n">SATA</span> <span class="mf">2.6</span><span class="p">,</span> <span class="mf">3.0</span> <span class="n">Gb</span><span class="o">/</span><span class="n">s</span>
+<span class="n">Local</span> <span class="n">Time</span> <span class="n">is</span><span class="o">:</span>    <span class="n">Mon</span> <span class="n">Jun</span> <span class="mi">23</span> <span class="mi">23</span><span class="o">:</span><span class="mi">31</span><span class="o">:</span><span class="mi">46</span> <span class="mi">2014</span> <span class="n">CST</span>
+<span class="n">SMART</span> <span class="n">support</span> <span class="n">is</span><span class="o">:</span> <span class="n">Unavailable</span> <span class="o">-</span> <span class="n">device</span> <span class="n">lacks</span> <span class="n">SMART</span> <span class="n">capability</span><span class="p">.</span>
+
+<span class="n">A</span> <span class="n">mandatory</span> <span class="n">SMART</span> <span class="n">command</span> <span class="n">failed</span><span class="o">:</span> <span class="n">exiting</span><span class="p">.</span> <span class="n">To</span> <span class="k">continue</span><span class="p">,</span> <span class="n">add</span> <span class="n">one</span> <span class="n">or</span> <span class="n">more</span> <span class="err">&#39;</span><span class="o">-</span><span class="n">T</span> <span class="n">permissive</span><span class="err">&#39;</span> <span class="n">options</span><span class="p">.</span>
+</pre></div>
+
+
+<p>其中<code>Rotation Rate:    Solid State Device</code> 显示了是HDD还是SSD</p>
+<ul>
+<li><a href="http://linuxg.net/how-to-find-out-if-a-drive-is-a-ssd-or-an-hdd/">How to Find Out if a Drive is a SSD or an HDD</a></li>
+<li><a href="http://stackoverflow.com/questions/908188/is-there-any-way-of-detecting-if-a-drive-is-a-ssd">How to know if a disk is an SSD or an HDD</a></li>
+<li><a href="http://stackoverflow.com/questions/908188/is-there-any-way-of-detecting-if-a-drive-is-a-ssd">http://linuxg.net/how-to-find-out-if-a-drive-is-a-ssd-or-an-hdd/</a></li>
+</ul>
+</li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

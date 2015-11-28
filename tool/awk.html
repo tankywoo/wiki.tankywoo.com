@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>awk - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » awk
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="_1">格式</h2>
+<div class="hlcode"><pre><span class="n">gawk</span> <span class="n">options</span> <span class="n">program</span> <span class="n">file</span>
+
+<span class="nl">Options:</span>
+<span class="o">*</span> <span class="o">-</span><span class="n">F</span> <span class="n">fs</span>
+<span class="o">*</span> <span class="o">-</span><span class="n">f</span> <span class="n">file</span>
+<span class="o">*</span> <span class="o">-</span><span class="n">v</span> <span class="n">var</span><span class="o">=</span><span class="n">value</span>
+<span class="o">*</span> <span class="o">-</span><span class="n">mf</span> <span class="n">N</span>
+<span class="o">*</span> <span class="o">-</span><span class="n">mr</span> <span class="n">N</span>
+<span class="o">*</span> <span class="o">-</span><span class="n">W</span> <span class="n">keyword</span>
+</pre></div>
+
+
+<h2 id="_2">*</h2>
+<div class="hlcode"><pre><span class="n">gawk</span><span class="err">程序用一对花括号来定义</span>
+<span class="n">gawk</span><span class="err">默认的字段分隔符是任意的空白字符</span>
+<span class="err">$</span><span class="mi">0</span><span class="err">、$</span><span class="mi">1</span><span class="err">、$</span><span class="mf">2.</span><span class="p">..</span><span class="err">的含义</span>
+<span class="n">gawk</span><span class="err">变成语言允许将多条命令组合成一个正常的程序，用冒号分开</span>
+<span class="err">在处理数据前运行脚本使用</span><span class="n">BEGIN</span>
+<span class="err">在处理数据后运行脚本使用</span><span class="n">END</span>
+</pre></div>
+
+
+<h2 id="example">Example</h2>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">gawk</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="s">&quot;Hello, TankyWoo&quot;</span><span class="p">}</span><span class="err">&#39;</span>
+
+<span class="err">$</span> <span class="n">gawk</span> <span class="o">-</span><span class="n">F</span><span class="o">:</span> <span class="err">&#39;</span><span class="p">{</span><span class="n">print</span> <span class="err">$</span><span class="mi">1</span><span class="p">}</span><span class="err">&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+
+<span class="err">$</span> <span class="n">echo</span> <span class="s">&quot;My name is TankyWoo&quot;</span> <span class="o">|</span> <span class="n">gawk</span> <span class="err">&#39;</span><span class="p">{</span><span class="err">$</span><span class="mi">4</span><span class="o">=</span><span class="s">&quot;TK&quot;</span><span class="p">;</span> <span class="n">print</span> <span class="err">$</span><span class="mi">0</span><span class="p">}</span><span class="err">&#39;</span>
+
+<span class="err">$</span> <span class="n">cat</span> <span class="n">myscript</span>
+<span class="p">{</span> <span class="n">print</span> <span class="err">$</span><span class="mi">1</span> <span class="s">&quot;&#39;s home dir is &quot;</span> <span class="err">$</span><span class="mi">6</span> <span class="p">}</span>
+<span class="err">$</span> <span class="n">gawk</span> <span class="o">-</span><span class="n">F</span><span class="o">:</span> <span class="o">-</span><span class="n">f</span> <span class="n">myscript</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">passwd</span>
+
+<span class="err">$</span> <span class="n">gawk</span> <span class="err">&#39;</span><span class="n">BEGIN</span> <span class="p">{</span><span class="n">print</span> <span class="s">&quot;Hello World&quot;</span><span class="p">}</span><span class="err">&#39;</span>
+
+<span class="err">$</span> <span class="n">cat</span> <span class="n">mydata</span>
+<span class="n">Line</span> <span class="mi">1</span>
+<span class="n">Line</span> <span class="mi">2</span>
+<span class="n">Line</span> <span class="mi">3</span>
+<span class="err">$</span> <span class="n">gawk</span> <span class="err">&#39;</span><span class="n">BEGIN</span> <span class="p">{</span> <span class="n">print</span> <span class="s">&quot;The data fileL&quot;</span><span class="p">}</span> <span class="p">{</span> <span class="n">print</span> <span class="err">$</span><span class="mi">0</span> <span class="p">}</span><span class="err">&#39;</span> <span class="n">mydata</span>
+
+<span class="n">p</span>
+<span class="err">$</span> <span class="n">gawk</span> <span class="err">&#39;</span><span class="n">BEGIN</span> <span class="p">{</span> <span class="n">print</span> <span class="s">&quot;The data fileL&quot;</span><span class="p">}</span> <span class="p">{</span> <span class="n">print</span> <span class="err">$</span><span class="mi">0</span> <span class="p">}</span>\
+        <span class="n">END</span> <span class="p">{</span> <span class="n">print</span> <span class="s">&quot;End of File&quot;</span><span class="p">}</span><span class="err">&#39;</span> <span class="n">mydata</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

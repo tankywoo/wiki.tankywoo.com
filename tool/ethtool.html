@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>ethtool - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » ethtool
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>用来查询网卡信息</p>
+<p>直接接网卡名:</p>
+<div class="hlcode"><pre><span class="mi">19</span><span class="o">:</span><span class="mi">36</span> <span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">gs</span> <span class="sr">/home/tankywoo/</span><span class="n">wiki</span>
+<span class="o">%</span> <span class="n">sudo</span> <span class="n">ethtool</span> <span class="n">enp2s1</span>
+<span class="n">Settings</span> <span class="k">for</span> <span class="n">enp2s1</span><span class="o">:</span>
+        <span class="n">Supported</span> <span class="n">ports</span><span class="o">:</span> <span class="o">[</span> <span class="n">TP</span> <span class="o">]</span>
+        <span class="n">Supported</span> <span class="n">link</span> <span class="n">modes</span><span class="o">:</span>   <span class="mi">10</span><span class="n">baseT</span><span class="sr">/Half 10baseT/</span><span class="n">Full</span>
+                                <span class="mi">100</span><span class="n">baseT</span><span class="sr">/Half 100baseT/</span><span class="n">Full</span>
+                                <span class="mi">1000</span><span class="n">baseT</span><span class="o">/</span><span class="n">Full</span>
+        <span class="n">Supported</span> <span class="n">pause</span> <span class="n">frame</span> <span class="n">use</span><span class="o">:</span> <span class="n">No</span>
+        <span class="n">Supports</span> <span class="n">auto</span><span class="o">-</span><span class="n">negotiation</span><span class="o">:</span> <span class="n">Yes</span>
+        <span class="n">Advertised</span> <span class="n">link</span> <span class="n">modes</span><span class="o">:</span>  <span class="mi">10</span><span class="n">baseT</span><span class="sr">/Half 10baseT/</span><span class="n">Full</span>
+                                <span class="mi">100</span><span class="n">baseT</span><span class="sr">/Half 100baseT/</span><span class="n">Full</span>
+                                <span class="mi">1000</span><span class="n">baseT</span><span class="o">/</span><span class="n">Full</span>
+        <span class="n">Advertised</span> <span class="n">pause</span> <span class="n">frame</span> <span class="n">use</span><span class="o">:</span> <span class="n">No</span>
+        <span class="n">Advertised</span> <span class="n">auto</span><span class="o">-</span><span class="n">negotiation</span><span class="o">:</span> <span class="n">Yes</span>
+        <span class="n">Speed</span><span class="o">:</span> <span class="mi">1000</span><span class="n">Mb</span><span class="o">/</span><span class="n">s</span>
+        <span class="n">Duplex</span><span class="o">:</span> <span class="n">Full</span>
+        <span class="n">Port</span><span class="o">:</span> <span class="n">Twisted</span> <span class="n">Pair</span>
+        <span class="n">PHYAD</span><span class="o">:</span> <span class="mi">0</span>
+        <span class="n">Transceiver</span><span class="o">:</span> <span class="kd">internal</span>
+        <span class="n">Auto</span><span class="o">-</span><span class="n">negotiation</span><span class="o">:</span> <span class="n">on</span>
+        <span class="n">MDI</span><span class="o">-</span><span class="n">X</span><span class="o">:</span> <span class="n">off</span>
+        <span class="n">Supports</span> <span class="n">Wake</span><span class="o">-</span><span class="n">on</span><span class="o">:</span> <span class="n">d</span>
+        <span class="n">Wake</span><span class="o">-</span><span class="n">on</span><span class="o">:</span> <span class="n">d</span>
+        <span class="n">Current</span> <span class="n">message</span> <span class="n">level</span><span class="o">:</span> <span class="mh">0x00000007</span> <span class="o">(</span><span class="mi">7</span><span class="o">)</span>
+                               <span class="n">drv</span> <span class="n">probe</span> <span class="n">link</span>
+        <span class="n">Link</span> <span class="n">detected</span><span class="o">:</span> <span class="n">yes</span>
+</pre></div>
+
+
+<p><code>Link detected</code> <strike>可用来检测网线是否连接</strike>。在这里被坑过，之前一直错误的理解为链路连接正常，即插上线就是yes，其实这里是指网卡是否up。</p>
+<p>就算插上线，但是网卡没有启动，依然是no。</p>
+<p>这个<a href="http://stackoverflow.com/a/808595/1276501">回答</a>中@Jamie Kitson的评论也提到了这点。</p>
+<p><code>-i</code> 参数可以查看网卡驱动类型:</p>
+<div class="hlcode"><pre><span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">local</span><span class="o">::~/</span> <span class="err">»</span> <span class="n">sudo</span> <span class="n">ethtool</span> <span class="o">-</span><span class="n">i</span> <span class="n">enp0s5</span>
+<span class="nl">driver:</span> <span class="n">e1000</span>
+<span class="nl">version:</span> <span class="mf">7.3.21</span><span class="o">-</span><span class="n">k8</span><span class="o">-</span><span class="n">NAPI</span>
+<span class="n">firmware</span><span class="o">-</span><span class="n">version</span><span class="o">:</span>
+<span class="n">bus</span><span class="o">-</span><span class="n">info</span><span class="o">:</span> <span class="mo">0000</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mf">05.0</span>
+<span class="n">supports</span><span class="o">-</span><span class="n">statistics</span><span class="o">:</span> <span class="n">yes</span>
+<span class="n">supports</span><span class="o">-</span><span class="n">test</span><span class="o">:</span> <span class="n">yes</span>
+<span class="n">supports</span><span class="o">-</span><span class="n">eeprom</span><span class="o">-</span><span class="n">access</span><span class="o">:</span> <span class="n">yes</span>
+<span class="n">supports</span><span class="o">-</span><span class="k">register</span><span class="o">-</span><span class="n">dump</span><span class="o">:</span> <span class="n">yes</span>
+<span class="n">supports</span><span class="o">-</span><span class="n">priv</span><span class="o">-</span><span class="n">flags</span><span class="o">:</span> <span class="n">no</span>
+</pre></div>
+
+
+<ul>
+<li><a href="http://www.thegeekstuff.com/2010/10/ethtool-command/">9 Linux ethtool Examples to Manipulate Ethernet Card (NIC Card)</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

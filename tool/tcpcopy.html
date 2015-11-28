@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>TCPCopy - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » TCPCopy
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">架构原理</a></li>
+<li><a href="#_2">例子</a></li>
+<li><a href="#_3">参考</a></li>
+</ul>
+</div>
+<p><a href="https://github.com/session-replay-tools/tcpcopy">TCPCopy</a> 线上流量复制工具.</p>
+<p>Github上的README讲的非常详细.</p>
+<h2 id="_1">架构原理</h2>
+<p>当前版本是v1.0, 架构原理图:</p>
+<p><img alt="Architecture Advance" src="https://raw.githubusercontent.com/wangbin579/auxiliary/master/images/advanced_archicture.GIF" /></p>
+<p>以前的架构是(网上一些博客还是基于这个架构):</p>
+<p><img alt="Architecture Traditional" src="https://raw.githubusercontent.com/wangbin579/auxiliary/master/images/traditional_archicture.GIF" /></p>
+<p>(图片来源<a href="https://github.com/wangbin579/auxiliary">wangbin579/auxiliary</a>)</p>
+<p>以新架构为例，主要分三个部分:</p>
+<ul>
+<li>online server</li>
+<li>target server</li>
+<li>assistant server</li>
+</ul>
+<p>两个工具:</p>
+<ul>
+<li>tcpcopy. 在online server上运行, 主要负责在截取实时请求</li>
+<li>intercept. 在assistant server上运行, 主要负责一些辅助的工作, 如将回应包信息传回给tcpcopy</li>
+</ul>
+<p>测试程序在target server上运行</p>
+<p>大致流程:</p>
+<ul>
+<li>tcpcopy在网络层(network layer)截取请求, 复制一份进行相应处理, 然后发给target server</li>
+<li>target server处理复制过来请求, 然后将相应信息返回给assistant server</li>
+<li>intercept收到传过来的包, 处理相应头, 然后传回给tcpcopy</li>
+</ul>
+<p>target server唯一要做的就是保证有路由可以让包发送到assistant server</p>
+<p>几点注意的地方:</p>
+<ul>
+<li><code>ip_forward</code> should not be set on the assistant server</li>
+</ul>
+<p>遇到的问题:</p>
+<p>在编译安装intercept时, 遇到错误:</p>
+<div class="hlcode"><pre><span class="n">checking</span> <span class="k">for</span> <span class="n">pcap</span><span class="p">.</span><span class="n">h</span> <span class="err">…</span> <span class="n">not</span> <span class="n">found</span>
+</pre></div>
+
+
+<p>需要先安装:</p>
+<div class="hlcode"><pre> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libpcap0</span><span class="mf">.8</span><span class="o">-</span><span class="n">dev</span>
+</pre></div>
+
+
+<h2 id="_2">例子</h2>
+<p>服务器A(1.1.1.1)是线上机器, 服务器B(2.2.2.2)是测试机器, 需要将A的80端口流量复制到B的80端口</p>
+<p>根据新架构, 将assistant server和target server放在一台机器上就行, 其实也就是在assistant server上部署web server来处理请求, 然后返回给自身的intercept.</p>
+<p>assistant server/target server:</p>
+<div class="hlcode"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">intercept</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">intercept</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">intercept</span><span class="p">.</span><span class="n">log</span> <span class="o">-</span><span class="n">b</span> <span class="mf">2.2.2.2</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth1</span> <span class="o">-</span><span class="n">F</span> <span class="err">&#39;</span><span class="n">tcp</span> <span class="n">and</span> <span class="n">src</span> <span class="n">port</span> <span class="mi">80</span><span class="err">&#39;</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+
+
+<ul>
+<li><code>-i</code> 指定监听的网卡</li>
+<li><code>-b</code> 指定网卡上的地址, 默认是全部地址, 这里我指定地址是因为机器有多ip</li>
+</ul>
+<p>这里有一点需要注意, intercept默认监听的端口是<code>36524</code>, 所以相应的防火墙需要对这个端口打开.</p>
+<p>online server:</p>
+<div class="hlcode"><pre><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">tcpcopy</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">tcpcopy</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">tcpcopy</span><span class="p">.</span><span class="n">log</span> <span class="o">-</span><span class="n">x</span> <span class="mi">80</span><span class="o">-</span><span class="mf">2.2.2.2</span><span class="o">:</span><span class="mi">80</span> <span class="o">-</span><span class="n">s</span> <span class="mf">2.2.2.2</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+
+
+<ul>
+<li><code>-x</code> 语法格式<code>localServerPort-targetServerIP:targetServerPort</code></li>
+<li><code>-s</code> intercept server的地址</li>
+</ul>
+<p>还有<code>-c</code>参数用于修改请求的client ip, 但是我这里改了后有问题, 暂时未解决.</p>
+<p>另外还有个需要注意的地方, 因为tcpcopy的通信端口默认是<code>36524</code>, 所以如果有规则限制则要把这个端口做相应范围的开放</p>
+<div class="hlcode"><pre><span class="n">iptables</span> <span class="o">-</span><span class="n">A</span> <span class="n">INPUT</span> <span class="o">-</span><span class="n">i</span> <span class="n">eth1</span> <span class="o">-</span><span class="n">p</span> <span class="n">tcp</span> <span class="o">-</span><span class="n">s</span> <span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">x</span><span class="o">/</span><span class="mi">32</span> <span class="o">-</span><span class="n">m</span> <span class="n">multiport</span> <span class="o">--</span><span class="n">dports</span> <span class="mi">36524</span> <span class="o">-</span><span class="n">j</span> <span class="n">ACCEPT</span>
+</pre></div>
+
+
+<h2 id="_3">参考</h2>
+<ul>
+<li><a href="http://jqlblue.github.io/2014/01/08/use-tcpcopy-test-online/">使用tcpcopy导入线上流量进行功能和压力测试</a></li>
+<li><a href="http://navyaijm.blog.51cto.com/4647068/1340809">初试tcpcopy</a></li>
+<li><a href="http://www.cnblogs.com/chenny7/p/3912515.html">TCPCopy 应用</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

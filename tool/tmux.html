@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>tmux - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » tmux
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#tmux-terminal-multiplexer">TMUX - terminal multiplexer</a><ul>
+<li><a href="#_1">快捷键</a><ul>
+<li><a href="#_2">基本操作</a></li>
+<li><a href="#session">session 操作</a></li>
+<li><a href="#window">window 操作</a></li>
+<li><a href="#pane">pane 操作</a></li>
+</ul>
+</li>
+<li><a href="#_3">配置文件</a></li>
+<li><a href="#tmux">脚本化tmux</a></li>
+<li><a href="#_4">技巧</a><ul>
+<li><a href="#_5">批量操作</a></li>
+<li><a href="#session_1">在不同大小的屏幕打开一个session</a></li>
+</ul>
+</li>
+<li><a href="#-tmux-powerline">扩展 - tmux powerline</a></li>
+<li><a href="#_6">其他资料</a></li>
+</ul>
+</li>
+<li><a href="#tmuxinator">Tmuxinator</a></li>
+</ul>
+</div>
+<h1 id="tmux-terminal-multiplexer">TMUX - terminal multiplexer</h1>
+<p>前序: <a href="http://www.wutianqi.com/?p=3676">布道 Tmux</a></p>
+<p>三个术语:</p>
+<ul>
+<li>session: 管理多个window的会话</li>
+<li>window: 一个window就是整个屏幕</li>
+<li>pane: 一个window可以被横向或纵向分割为多个pane, 也就是俗称的分屏</li>
+</ul>
+<p>tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是<code>C-b</code>, 如果习惯了screen的<code>C-a</code>, 可以修改prefix, 以下都用<code>C-b</code>表示前缀</p>
+<h2 id="_1">快捷键</h2>
+<h3 id="_2">基本操作</h3>
+<ul>
+<li><code>C-b :</code> 进入tmux的命令行模式</li>
+<li><code>C-b ?</code> 显示所有的bind-key</li>
+<li><code>C-b [</code> 进入复制模式</li>
+<li><code>C-b ]</code> 进入粘贴模式</li>
+</ul>
+<p>如果有设置 <code>setw -g mode-keys vi</code> 的话，可按 vi 的按键模式操作。移动至待复制的文本处，按一下空格，结合 vi 移动命令开始选择，选好后按回车确认.</p>
+<h3 id="session">session 操作</h3>
+<ul>
+<li><code>C-b d</code> deattch当前的session</li>
+<li><code>C-b C-z</code> 挂起当前的session</li>
+<li><code>tmux attach [-t sessionname]</code> 恢复session</li>
+<li><code>C-b $</code> 可以重命名当前的session</li>
+<li><code>tmux ls</code> 显示tmux的所有session</li>
+</ul>
+<h3 id="window">window 操作</h3>
+<ul>
+<li><code>C-b c</code> 可以新建一个新的window</li>
+<li><code>C-b &amp;</code> 关闭当前的window</li>
+<li><code>C-b ,</code> 可以重命名当前的window</li>
+<li><code>C-b p</code> 切换到前一个window</li>
+<li><code>C-b n</code> 切换到后一个window</li>
+<li><code>C-b l</code> 切换到上一次的window</li>
+<li><code>C-b number</code> 切换到指定编号的window, 默认从0开始</li>
+<li><code>C-b w</code> 显示当前会话的window, 可以通过上下选择来切换</li>
+<li><code>tmux neww -n tmux</code> 新建一个window, 名称是tmux</li>
+</ul>
+<h3 id="pane">pane 操作</h3>
+<ul>
+<li><code>C-b "</code> 将当前window横向分割为两个pane</li>
+<li><code>C-b %</code> 将当前window纵向分割为两个pane</li>
+<li><code>C-b 方向键</code> 在当前window里移动到其他pane</li>
+<li><code>C-b o</code> 切换到下一个pane</li>
+<li><code>C-b Alt+方向键</code> 调整pane的大小</li>
+<li><code>C-b q</code> 显示pane的编号</li>
+<li><code>C-b x</code> 关闭当前的pane, 会有确认提示. 也可以直接C-d</li>
+<li><code>C-b {</code> 把当前的pane移到左边</li>
+<li><code>C-b }</code> 把当前的pane移到右边</li>
+<li><code>C-b z</code> 把当前pane最大化/恢复. 感谢 yanyaoer 和 陈兴明Mingo 两位同学, tmux 升级到 1.8 后有这个特性了.</li>
+<li><code>C-b Space</code> 切换到下一个布局(这个布局应该是系统默认的一些)</li>
+</ul>
+<h2 id="_3">配置文件</h2>
+<p>以下配置更新会有延迟, 最新配置见我的 <a href="https://github.com/tankywoo/dotfiles">dotfiles</a></p>
+<div class="hlcode"><pre><span class="nb">set</span> -g default-terminal <span class="s2">&quot;screen-256color&quot;</span>   <span class="c"># use 256 colors</span>
+<span class="nb">set</span> -g display-time 5000                    <span class="c"># status line messages display</span>
+<span class="nb">set</span> -g status-utf8 on                       <span class="c"># enable utf-8</span>
+<span class="nb">set</span> -g <span class="nb">history</span>-limit 100000                 <span class="c"># scrollback buffer n lines</span>
+setw -g mode-keys vi                        <span class="c"># use vi mode</span>
+
+<span class="c"># start window indexing at one instead of zero</span>
+<span class="nb">set</span> -g base-index 1
+
+<span class="c"># set the prefix key and some key bindings to match GNU Screen</span>
+<span class="nb">set</span> -g prefix C-a
+unbind-key C-b
+<span class="nb">bind</span>-key C-a send-prefix
+
+<span class="c"># key bindings for horizontal and vertical panes</span>
+unbind %
+<span class="nb">bind</span> | split-window -h
+unbind <span class="s1">&#39;&quot;&#39;</span>
+<span class="nb">bind</span> - split-window -v
+
+<span class="c"># enable window titles</span>
+<span class="c">#set -g set-titles on</span>
+
+<span class="c"># window title string (uses statusbar variables)</span>
+<span class="nb">set</span> -g <span class="nb">set</span>-titles-string <span class="s1">&#39;#T&#39;</span>
+
+<span class="c"># status bar with load and time</span>
+<span class="nb">set</span> -g status-bg <span class="s1">&#39;#4e4e4e&#39;</span>
+<span class="nb">set</span> -g status-fg <span class="s1">&#39;#bbbbbb&#39;</span>
+<span class="nb">set</span> -g status-left-fg <span class="s1">&#39;#55ff55&#39;</span>
+<span class="nb">set</span> -g status-left-bg <span class="s1">&#39;#555555&#39;</span>
+<span class="nb">set</span> -g status-right-fg <span class="s1">&#39;#55ff55&#39;</span>
+<span class="nb">set</span> -g status-right-bg <span class="s1">&#39;#555555&#39;</span>
+<span class="nb">set</span> -g status-left-length 90
+<span class="nb">set</span> -g status-right-length 90
+<span class="nb">set</span> -g status-left <span class="s1">&#39;[#(whoami)]&#39;</span>
+<span class="nb">set</span> -g status-right <span class="s1">&#39;[#(date +&quot; %m-%d %H:%M &quot;)]&#39;</span>
+<span class="nb">set</span> -g status-justify <span class="s2">&quot;centre&quot;</span>
+<span class="nb">set</span> -g window-status-format <span class="s1">&#39;#I #W&#39;</span>
+<span class="nb">set</span> -g window-status-current-format <span class="s1">&#39; #I #W &#39;</span>
+setw -g window-status-current-bg <span class="s1">&#39;#B3D9D9&#39;</span>
+setw -g window-status-current-fg <span class="s1">&#39;#DDDDFF&#39;</span>
+
+<span class="c"># pane border colors</span>
+<span class="nb">set</span> -g pane-active-border-fg <span class="s1">&#39;#55ff55&#39;</span>
+<span class="nb">set</span> -g pane-border-fg <span class="s1">&#39;#555555&#39;</span>
+
+<span class="c"># bind to reload config</span>
+<span class="nb">bind </span>r <span class="nb">source</span>-file ~/.tmux.conf
+
+<span class="c"># add window to session</span>
+new -s tankywoo -n tankywoo
+neww -n ops-dev
+selectw -t 1
+
+<span class="c"># scripting tmux</span>
+<span class="nb">bind </span>T <span class="nb">source</span>-file ~/.tmux/tanky
+</pre></div>
+
+
+<h2 id="tmux">脚本化tmux</h2>
+<p><strong> 脚本化是 Tmux 的一大亮点 </strong></p>
+<p>脚本化可以让我们自己定义一些脚本, 来构造自己的tmux布局</p>
+<p>比如我写了一个分割三个pane的小脚本放在 ~/.tmux/tanky 里:</p>
+<div class="hlcode"><pre><span class="k">select</span>-pane -t 0
+split-window -h -p 60
+<span class="k">select</span>-pane -t 1
+split-window -v -p 25
+send-keys -t 0 <span class="s1">&#39;ipython&#39;</span> C-m
+<span class="c"># The C-m at the end is interpreted by Tmux as the enter key.</span>
+<span class="k">select</span>-pane -t 1
+</pre></div>
+
+
+<p>google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 <code>C-m</code> 是干嘛的, 查看绑定键也没找到<br />
+后来在<a href="http://spin.atomicobject.com/2013/04/11/tmux-key-binding-scripting/">An Introduction to Scripting Tmux Key Bindings</a>上看到了解释.</p>
+<blockquote>
+<p>The C-m at the end is interpreted by Tmux as the enter key.</p>
+</blockquote>
+<p>在 ~/.tmux.conf 里绑定快捷键: bind T source-file ~/.tmux/tanky</p>
+<p>这样, 就可以通过快捷键 C-b S-t 一键初始化一个如下图的布局.
+<img alt="Script Tmux" src="http://tankywoo-wb.b0.upaiyun.com/tmux_new.png" /></p>
+<p>另外, 还可以直接写shell脚本, 然后运行, 比如:</p>
+<div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># Tanky Woo@2013-06-19 10:51:15</span>
+<span class="c"># About:</span>
+
+tmux start-server
+
+<span class="k">if</span> ! <span class="k">$(</span>tmux has-session -t <span class="s1">&#39;tankywoo&#39;</span><span class="k">)</span>; <span class="k">then</span>
+<span class="k">        </span>tmux new-session -d -s <span class="s1">&#39;tankywoo&#39;</span> -n <span class="s1">&#39;tankywoo&#39;</span> <span class="c"># -d *</span>
+        tmux <span class="k">select</span>-window -t <span class="s1">&#39;tankywoo&#39;</span>
+        tmux split-window -h -p 60
+        tmux <span class="k">select</span>-pane -t 1
+        tmux split-window -v -p 25
+        tmux send-keys -t 0 <span class="s1">&#39;ipython&#39;</span> C-m
+        <span class="c"># The C-m at the end is interpreted by Tmux as the enter key.</span>
+
+        tmux new-window -n <span class="s1">&#39;ops-dev&#39;</span>
+
+        tmux <span class="k">select</span>-window -t <span class="s1">&#39;tankywoo&#39;</span>
+        tmux <span class="k">select</span>-pane -t 1
+<span class="k">fi</span>
+
+tmux attach-session -d -t <span class="s1">&#39;tankywoo&#39;</span>
+</pre></div>
+
+
+<p>下面这几个链接不错</p>
+<ul>
+<li><a href="http://amjith.blogspot.com/2011/08/scripting-tmux-layouts.html">Scripting Tmux Layouts</a></li>
+<li><a href="http://blog.htbaa.com/news/tmux-scripting">TMUX SCRIPTING</a></li>
+<li><a href="http://toastdriven.com/blog/2009/oct/09/scripting-tmux/">Scripting tmux</a></li>
+</ul>
+<h2 id="_4">技巧</h2>
+<h3 id="_5">批量操作</h3>
+<p>当需要在多个机器执行相同操作时, 可以考虑用<code>pdsh</code>等内容分发的工具, 而tmux也有它的一种强悍的方式. 在一个windows里打开多个pane, 每个pane登录一台服务器, 设置windows的选项, 在其中一个pane上操作时, 其它pane都会复制相同的操作.</p>
+<p>在tmux的命令行里, 使用选项<code>set synchronize-panes on</code>即可.</p>
+<h3 id="session_1">在不同大小的屏幕打开一个session</h3>
+<p><strong> TODO </strong></p>
+<p>比如在一个较小的桌面打开一个session, 然后又在一个较大的桌面也打开这个session:</p>
+<div class="hlcode"><pre><span class="n">tmux</span> <span class="n">attach</span> <span class="o">-</span><span class="n">t</span> <span class="n">session</span><span class="o">-</span><span class="n">name</span>
+</pre></div>
+
+
+<p>则会发现在较大的桌面上, 也只会显示和小桌面同样大小的窗口, 其余部分被密密麻麻的小点扩充.</p>
+<p>解决方法之一是:</p>
+<div class="hlcode"><pre><span class="n">tmux</span> <span class="n">attach</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">t</span> <span class="n">session</span><span class="o">-</span><span class="n">name</span>
+</pre></div>
+
+
+<p>即先强制 <code>detach</code> 掉小桌面的session, 然后再在较大桌面打开session.</p>
+<p>另外, 看到很多帖子说可以设置:</p>
+<div class="hlcode"><pre><span class="n">setw</span> <span class="o">-</span><span class="n">g</span> <span class="n">aggressive</span><span class="o">-</span><span class="n">resize</span> <span class="n">on</span>
+</pre></div>
+
+
+<p>但是我设置后还是没有成功.</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://unix.stackexchange.com/questions/24274/attach-to-different-windows-in-session">Attach to different windows in session</a></li>
+<li><a href="http://superuser.com/questions/300251/maximize-window-in-tmux">Maximize window in tmux</a></li>
+<li><a href="https://mutelight.org/practical-tmux">Practical Tmux</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Tmux">Archlinux - Tmux</a></li>
+</ul>
+<h2 id="-tmux-powerline">扩展 - tmux powerline</h2>
+<ul>
+<li><a href="https://github.com/erikw/tmux-powerline">tmux-powerline项目</a> 官方说此项目现在只做维护, 不更新</li>
+<li><a href="https://github.com/Lokaltog/powerline">powerline项目</a> 这个是最新项目</li>
+</ul>
+<h2 id="_6">其他资料</h2>
+<ul>
+<li><a href="http://www.dayid.org/os/notes/tm.html">screen and tmux</a> screen和tmux的操作对比</li>
+<li><a href="https://wiki.archlinux.org/index.php/Tmux">Tmux - ArchWIKI</a> 对tmux介绍的非常详细</li>
+<li><a href="http://blog.hawkhost.com/2010/06/28/tmux-the-terminal-multiplexer/">TMUX – The Terminal Multiplexer (Part 1)</a></li>
+<li><a href="https://wiki.freebsdchina.org/software/t/tmux">使用tmux</a></li>
+<li><a href="http://510x.se/notes/posts/Using_tmux/">Using tmux</a></li>
+<li><a href="https://mutelight.org/practical-tmux">Practical Tmux</a></li>
+</ul>
+<hr />
+<h1 id="tmuxinator">Tmuxinator</h1>
+<p><a href="https://github.com/tmuxinator/tmuxinator">Tmuxinator</a> 是一个用Ruby写的管理tmux会话(session)的工具.</p>
+<p>上面针对tmux, 可以写脚本来创建希望的布局, 但是比较麻烦.</p>
+<p>而tmuxinator使用yaml来配置布局, 简单的配置就可以生成复杂的会话布局.</p>
+<p>基本前提是安装tmux, 配置了<code>$EDITOR</code>和<code>$SHELL</code>. 可以通过doctor子命令来检查:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">tmuxinator</span> <span class="n">doctor</span>
+<span class="n">Checking</span> <span class="k">if</span> <span class="n">tmux</span> <span class="n">is</span> <span class="n">installed</span> <span class="o">==&gt;</span> <span class="n">Yes</span>
+<span class="n">Checking</span> <span class="k">if</span> <span class="err">$</span><span class="n">EDITOR</span> <span class="n">is</span> <span class="n">set</span> <span class="o">==&gt;</span> <span class="n">Yes</span>
+<span class="n">Checking</span> <span class="k">if</span> <span class="err">$</span><span class="n">SHELL</span> <span class="n">is</span> <span class="n">set</span> <span class="o">==&gt;</span> <span class="n">Yes</span>
+</pre></div>
+
+
+<p>使用<code>new</code>子命令会使用配置的<code>$EDITOR</code>来创建并打开一个yaml会话配置. 默认保存在<code>~/.tmuxinator/</code>下.</p>
+<p>因为的tmux设置了<code>set -g base-index 1</code>, 所以需要也设置pane-base-index:</p>
+<div class="hlcode"><pre><span class="n">setw</span> <span class="o">-</span><span class="n">g</span> <span class="n">pane</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">index</span> <span class="mi">1</span>
+</pre></div>
+
+
+<p>否则创建pane报错:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">mux</span> <span class="n">start</span> <span class="n">sample</span>
+<span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">find</span> <span class="n">pane</span><span class="o">:</span> <span class="mi">1</span>
+<span class="n">arranging</span> <span class="n">in</span><span class="o">:</span> <span class="n">main</span><span class="o">-</span><span class="n">vertical</span>
+<span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">find</span> <span class="n">pane</span><span class="o">:</span> <span class="mi">1</span>
+<span class="p">[</span><span class="n">exited</span><span class="p">]</span>
+</pre></div>
+
+
+<p>我设置pane-base-index后, 还是报错, 找了半天, 才发现是因为还有另外一个tmux在运行, tmux server不会重新加载pane-base-index, 需要全部退出后才行. 也可以用<code>bind-key q</code>来确认起始的pane index.</p>
+<p>关于completion脚本, 我用的zsh, 直接配置上tmuxinator的plugin, 和官方提供的completion基本类似.</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>rsyslog - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » rsyslog
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">配置</a><ul>
+<li><a href="#_2">基本语法</a></li>
+<li><a href="#modules">模块(Modules)</a></li>
+<li><a href="#templates">Templates</a></li>
+<li><a href="#filter-conditions">Filter Conditions</a></li>
+</ul>
+</li>
+<li><a href="#rsyslog-queue">Rsyslog Queue</a><ul>
+<li><a href="#direct-queues">Direct Queues</a></li>
+<li><a href="#disk-queues">Disk Queues</a></li>
+<li><a href="#in-memory-queues">In-Memory Queues</a></li>
+<li><a href="#disk-assisted-queues">Disk-Assisted Queues</a></li>
+<li><a href="#_3">关于队列的配置</a></li>
+<li><a href="#impstats">impstats 模块</a></li>
+</ul>
+</li>
+<li><a href="#_4">实践</a></li>
+<li><a href="#_5">更多资料</a><ul>
+<li><a href="#_6">官方资料</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<blockquote>
+<p>RSYSLOG is the rocket-fast system for log processing.</p>
+</blockquote>
+<p>本地Rsyslog版本: <code>7.4.4</code></p>
+<h2 id="_1">配置</h2>
+<h3 id="_2">基本语法</h3>
+<p>Rsyslog 现在支持三种配置语法格式:</p>
+<ul>
+<li>sysklogd</li>
+<li>legacy rsyslog</li>
+<li>RainerScript</li>
+</ul>
+<p>sysklogd 是老的简单格式，一些新的语法特性不支持。legacy rsyslog 是以dollar符($)开头的语法，在v6及以上的版本还在支持，一些插件和特性可能只在此语法下支持。RainnerScript是最新的语法。</p>
+<p>老的语法格式(<code>sysklogd</code> &amp; <code>legacy rsyslog</code>)是以行为单位。新的语法格式(<code>RainnerScript</code>)可以分割多行。</p>
+<p>注释有两种语法:</p>
+<ul>
+<li>井号符 <code>#</code></li>
+<li>C-style <code>/* .. */</code></li>
+</ul>
+<p>执行顺序: 指令在rsyslog.conf文件中是<strong>从上到下</strong>的顺序执行的。</p>
+<h3 id="modules">模块(Modules)</h3>
+<p>Rsyslog 使用 <code>$ModLoad</code> 指令加载模块。常用的模块类型是 Input Modules 和 Output Modules。</p>
+<p>输入模块(Input Modules) 用于从多个来源收集(读取)消息，比如tcp/udp, 文本等。</p>
+<table border="1">
+<tr><th>模块</th><th>作用</th></tr>
+<tr><td>imfile</td><td>input module for text files</td></tr>
+<tr><td>imrelp</td><td>RELP input module</td></tr>
+<tr><td>imudp</td><td>udp syslog message input</td></tr>
+<tr><td>imtcp</td><td>input plugin for tcp syslog</td></tr>
+<tr><td>imptcp</td><td>input plugin for plain tcp syslog (no TLS but faster)</td></tr>
+<tr><td>immark</td><td>support for mark messages</td></tr>
+<tr><td>imklog</td><td>kernel logging</td></tr>
+<tr><td>imuxsock</td><td>unix sockets, including the system log socket</td></tr>
+<tr><td>impstats</td><td>provides periodic statistics of rsyslog internal counters</td></tr>
+</table>
+
+<p>输出模块(Output Modules)处理消息。通过它，可以格式化消息以及传递消息到不通的目标(target)。</p>
+<table border="1">
+<tr><th>模块</th><th>作用</th></tr>
+<tr><td>omfile</td><td>file output module</td></tr>
+<tr><td>omfwd</td><td>????????</td></tr>
+<tr><td>ompipe</td><td>named pipe output module</td></tr>
+<tr><td>omrelp</td><td>RELP output module</td></tr>
+<tr><td>ommysql</td><td>output module for MySQL</td></tr>
+<tr><td>omprog</td><td>permits sending messages to a program for custom processing</td></tr>
+<tr><td>omuxsock</td><td>output module Unix domain sockets</td></tr>
+</table>
+
+<p>还有其它类型的模块, 可以参考<a href="http://www.rsyslog.com/doc/rsyslog_conf_modules.html">官方模块文档</a></p>
+<p>简单的消息工作流:</p>
+<p><img alt="Module Workflow" src="http://www.rsyslog.com/doc/module_workflow.png" /></p>
+<p>消息从 Input Modules 接收，然后传递给 Parser Modules，最终传递给 Output Module。</p>
+<h3 id="templates">Templates</h3>
+<p>模板是 rsyslog 一个重要的属性，它可以控制日志的格式，支持类似<code>template()</code>语句的基于string或plugin的模板</p>
+<p>legacy 格式使用 <code>$template</code> 的语法，不过这个在以后要移除，所以最好使用新格式 <code>template()</code>:</p>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">template</span> <span class="n">name</span><span class="p">,</span> <span class="n">param</span><span class="p">[,</span> <span class="n">options</span><span class="p">]</span>
+</pre></div>
+
+
+<p>name 是模板的名称，param 指定模板内容，options 用来设置模板选项。TODO</p>
+<p>基于string的模板:</p>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">template</span> <span class="n">strtpl</span><span class="p">,</span><span class="s">&quot;PRI: %pri%, MSG: %msg%</span><span class="se">\n</span><span class="s">&quot;</span>
+</pre></div>
+
+
+<p>基于plugin的模板:</p>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">template</span> <span class="n">plugintpl</span><span class="p">,</span><span class="o">=</span><span class="n">myplugin</span>
+</pre></div>
+
+
+<p>举个例子:</p>
+<div class="hlcode"><pre><span class="nv">$template</span> <span class="nx">MyTemplateName</span><span class="p">,</span><span class="s2">&quot;Text %property% some more text</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="o">&lt;</span><span class="nx">options</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>模板指令定义一个模板 MyTemplateName，模板的格式是引号阔起来的，其中<code>百分号%</code>标记的是<code>property</code>，可以获取rsyslog的消息内容，更多参考 <a href="http://www.rsyslog.com/doc/property_replacer.html">property replacer</a></p>
+<h3 id="filter-conditions">Filter Conditions</h3>
+<p>Rsyslog 提供三种格式的过滤条件语法:</p>
+<ul>
+<li>RainerScript-based filters</li>
+<li>"traditional" severity and facility based selectors : 基于严重程度和设施的选择器</li>
+<li>property-based filters : 基于属性的过滤器</li>
+</ul>
+<p>选择器(Selectors):</p>
+<p>选择器是过滤syslog消息的传统方法。它使用rsyslog的原始语法，效率高，适合针对优先级(priority)和设施(facility)的过滤。</p>
+<p>选择器由两部分组成, 一个facility和一个priority, 中间用句号(<code>.</code>)分隔。priority和facility都忽略大小写，并且可以用十进制数字代替，不过不建议这么做。可以通过 <code>man 3 syslog</code>更详细的了解这两部分。</p>
+<p>Facility 用来指定哪个程序发送的日志消息，可以让配置通过不同的消息来源做不通的处理。</p>
+<ul>
+<li>auth</li>
+<li>authpriv</li>
+<li>cron</li>
+<li>daemon</li>
+<li>kern</li>
+<li>lpr</li>
+<li>mail</li>
+<li>mark</li>
+<li>news</li>
+<li>security (same as auth)</li>
+<li>syslog</li>
+<li>user</li>
+<li>uucp</li>
+<li>local0 - local7</li>
+</ul>
+<p>priority 列表: 
+debug
+info
+notice
+warning
+warn (same as warning)
+err
+error (same as err)
+crit, alert
+emerg
+panic (same as emerg)</p>
+<p>error, warn, panic已经过时，不应该再使用。</p>
+<p>星号符(<code>*</code>)可以表示所有facility或所有priority。 
+关键词none表示为指定级别的。</p>
+<p>一个priority可以指定多个facilities, 使用逗号(<code>,</code>)分隔。(priority不能这么做)</p>
+<p>在一个action下配置多个selectors，使用分号(<code>;</code>)分隔。</p>
+<p>priority前面加等于号(<code>=</code>)表示仅选择当前级别的。</p>
+<p>priority前面加感叹号(<code>!</code>)表示排除该级别的。 <strong>TODO 测试</strong> 测试失败，不能用?</p>
+<p>如果要同时使用感叹号和等于号，感叹号应该在等于号之前。</p>
+<p>举例:</p>
+<p>TODO</p>
+<p>Property-Based Filters:</p>
+<p>可以过滤任何属性，例如 HOSTNAME、msg等。支持的属性见<a href="http://www.rsyslog.com/doc/property_replacer.html">The Property Replacer</a></p>
+<p>property-based filter必须使用冒号(<code>:</code>)开头。</p>
+<p>语法:</p>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">property</span><span class="p">,</span> <span class="p">[</span><span class="o">!</span><span class="p">]</span><span class="n">compare</span><span class="o">-</span><span class="n">operation</span><span class="p">,</span> <span class="s">&quot;value&quot;</span>
+</pre></div>
+
+
+<p>value 是用来比较的值，必须用引号括起来。</p>
+<p>注意 property和compare-operation是大小写敏感的。</p>
+<p>compare-operation 有:</p>
+<p>contains : property 包含指定 value
+isequal : property 和指定 value 相等
+startswith : 以 value 起始的property
+regex
+ereregex</p>
+<h2 id="rsyslog-queue">Rsyslog Queue</h2>
+<p>队列是 rsyslog 的核心。下图(<a href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/7-Beta/html/System_Administrators_Guide/s1-working_with_queues_in_rsyslog.html">来源</a>) 展示了rsyslog处理消息的流程:</p>
+<!-- 来至[官方文档](http://www.rsyslog.com/doc/queues_analogy.html)的一幅图： -->
+
+<!-- ![dataflow](http://www.rsyslog.com/doc/dataflow.png) -->
+
+<p><img alt="message flow" src="http://tankywoo-wb.b0.upaiyun.com/rsyslog_message_flow.png" /></p>
+<p>队列分为 <code>Main Queue</code> 和 <code>Action Queue</code>，Main Queue 只有一个，Action Queue 有多个，每一个 Action 前面都有一个 Action Queue。Main Queue 的配置一般以<code>MainMsg</code>开头，Action Queue的配置以<code>Action</code>开头，两者的配置基本相同。</p>
+<p>队列的模式有<code>Direct</code>, <code>Disk</code>, <code>In-Memory</code>, <code>Disk-Assisted Memory</code>四种，最后一种后面都简称DA，这种队列模式是Disk 和 In-Memory的结合体。其中 In-Memory 又包括 <code>FixedArray</code> 和 <code>LinkedList</code>两种模式。</p>
+<h3 id="direct-queues">Direct Queues</h3>
+<p>实际上是一个 <code>non-queuing</code> queue。它直接把消息从 producer 传递给 customer。</p>
+<p>这种模式适合简单的把日志写入本地, 效率非常高。</p>
+<p>所以 Action Queue 的默认模式就是 Direct Queues。</p>
+<h3 id="disk-queues">Disk Queues</h3>
+<p>这种对了使用硬盘当做缓存，因为没有使用内存，所以缓存速度最慢，但是可靠性最高，一般用于数据非常重要的情景下。</p>
+<p>缓存文件存在指定的目录下，文件名是 <code>队列名.7位数字</code>，从 <code>0000001</code>开始，当一个文件达到限制的最大大小，会继续新建文件，文件名加一。</p>
+<h3 id="in-memory-queues">In-Memory Queues</h3>
+<p>这种队列是最常使用的队列，它分为 <code>FixedArray</code> 和 <code>LinkedList</code> 两种。它们使用内存作为缓存，所以效率非常高，但是相对的它们的可靠性没有Disk Queue好。</p>
+<p>FixedArray 是预分配固定大小的队列，也是Main Queue的默认模式。它针对的是队列日志相对较小的情况，拥有很好的性能。</p>
+<p>LinkedList 是动态分配大小的队列，适合队列日志很大的情况。</p>
+<p>官方建议这两者间优先选择 LinkedList。</p>
+<h3 id="disk-assisted-queues">Disk-Assisted Queues</h3>
+<p>它集成了In-Memory 和 Disk 这两种队列的优点。</p>
+<p>如果一个In-Memory Queue定义了队列名(通过 <code>$&lt;object&gt;QueueFileName</code>)，它自动就变成 <code>Disk-Assisted</code>(DA)模式。</p>
+<p>DA队列实际是两个队列，一个普通的memory队列 (called the "primary queue")和一个disk队列(called the "DA queue")。当达到一定条件后，DA队列就会被激活。</p>
+<h3 id="_3">关于队列的配置</h3>
+<p>因为 MainMsgQueue 和 ActionQueue 的配置基本一样(除了有些默认值可能不同)， 所以这里以MainMsgQueue 为例:</p>
+<ul>
+<li><code>$MainMsgQueueType [FixedArray/LinkedList/Direct/Disk]</code></li>
+<li><code>$MainMsgQueueFileName &lt;name&gt;</code> 针对disk queue的配置，定义队列名，存储队列数据时用的文件名就是这个名称</li>
+<li><code>MainMsgQueueCheckpointInterval &lt;number&gt;</code> 针对disk queue的配置，单位条数，设置在检查点写入相关信息，增加可靠性，但是会降低性能</li>
+<li><code>$MainMsgQueueDequeueBatchSize &lt;number&gt;</code> [default 32] 设置多少条队列作为一个batch一起出队，针对一个日志量很大的系统，可以考虑把这个值调高来增加性能，不过要结合可使用内存考虑实际情况</li>
+</ul>
+<p>对于DA队列，最有特点就是队列阈值的设置了。主要包括这几个配置:</p>
+<ul>
+<li><code>$MainMsgQueueSize</code> 设置队列的最大大小</li>
+<li><code>$MainMsgQueueDiscardMark &lt;number&gt;</code> [default 9750] 配合下面的 <code>$MainMsgQueueDiscardSeverity</code>，超过这个watermark后，不重要的日志都会丢弃，包括新进来和已经在队列里的</li>
+<li><code>$MainMsgQueueDiscardSeverity &lt;severity&gt;</code> [default 4 (warning)] 0-Emergency, 1-Alert, 2-Critical, 3-Error, 4-Warning, 5-Notice, 6-Informational, 7-Debug</li>
+<li><code>$MainMsgQueueHighWaterMark &lt;number&gt;</code> [default 8000] 设置 high watermark</li>
+<li><code>$MainMsgQueueLowWaterMark &lt;number&gt;</code> [default 2000] 设置 low watermark</li>
+<li><code>$MainMsgQueueMaxFileSize &lt;size_nbr&gt;</code> [default 1m] 针对disk情况下，单个文件的最大大小</li>
+<li><code>$MainMsgQueueMaxDiskSpace</code> 控制占用硬盘总空间大小</li>
+</ul>
+<p>DA 对于阈值处理的逻辑比较有意思，并不是单纯的内存满了就开始使用硬盘。首先，有 <code>low watermark</code> 和 <code>high watermark</code> 这两个概念。</p>
+<p>如果队列大小达到 high watermark，队列开始写数据到disk
+如果队列大小降到 low watermark，停止写入disk(直到再次达到 high watermark); 或者 disk queue 队列为空(即da队列里的数据处理完)，这两种情况都会进入in-memory 模式</p>
+<p>关于终止队列的一些处理配置:</p>
+<ul>
+<li><code>$MainMsgQueueTimeoutEnqueue</code> [number is timeout in ms (1000ms is 1sec!), default 2000, 0 means indefinite] 当队列或硬盘满了，在这个超时时间后新来的日志，设置0可以直接丢弃掉</li>
+<li><code>$MainMsgQueueTimeoutShutdown &lt;number&gt;</code> [number is timeout in ms (1000ms is 1sec!), default 0 (indefinite)] 当队列关闭时，还有数据在进入队列，rsyslog会尽可能在这个timeout周期内处理掉这些数据</li>
+<li><code>$MainMsgQueueTimeoutActionCompletion &lt;number&gt;</code> [number is timeout in ms (1000ms is 1sec!), default 1000, 0 means immediate!] 配置需要多久来处理完当前的数据</li>
+<li><code>$MainMsgQueueSaveOnShutdown  [**on**/off]</code> 针对disk queue的配置，当运行中的队列关闭时，会先把队列中的数据存在硬盘中</li>
+<li><code>$MainMsgQueueDequeueSlowdown &lt;number&gt;</code> [number is timeout in microseconds (1000000us is 1sec!), default 0 (no delay). Simple rate-limiting!] 简单的出队速度限制，单位微秒</li>
+<li><code>$MainMsgQueueImmediateShutdown [on/off]</code> 弃用的选项</li>
+</ul>
+<p>当配置的队列大小或硬盘空间满了以后，rsyslogd 会限制数据submitter。配置 <code>$MainMsgQueueTimeoutEnqueue</code> 后，当超过这个时间后新来的日志会被丢弃；设置0为直接丢弃。</p>
+<p><code>$MainMsgQueueTimeoutShutdown</code>、<code>$MainMsgQueueTimeoutActionCompletion</code> 和 <code>$MainMsgQueueSaveOnShutdown</code> 是在队列终止后可以做的一系列措施。</p>
+<p>关于队列的worker thread:</p>
+<ul>
+<li><code>$MainMsgQueueWorkerThreadMinumumMessages &lt;number&gt;</code> [default 100]</li>
+<li><code>$MainMsgQueueWorkerThreads &lt;number&gt;</code> [num worker threads, default 1, recommended 1]</li>
+<li><code>$MainMsgQueueWorkerTimeoutThreadShutdown &lt;number&gt;</code> [number is timeout in ms (1000ms is 1sec!), default 60000 (1 minute)]</li>
+</ul>
+<p>每个队列(direct queue除外)都有一个工作线程池(worker thread pool).
+初始时，是没有worker thread的，当有消息来是，会自动启动一个.
+<code>$MainMsgQueueWorkerThreadMinumumMessages</code> 配置一个worker thread处理的消息大小，
+<code>$MainMsgQueueWorkerThreads</code> 配置work thread的上限值。</p>
+<p>比如设置一个worker thread的最小处理消息大小是100个，当小于100个是，只有一个worker，当超过100个，小于200个时，会有两个worker...</p>
+<p>以上配置要注意<code>单位</code>, <code>默认值</code>，Main Queue 和 Action Queue 可能有些配置的默认值不一样。</p>
+<p>另外所有指明<code>针对disk</code>的配置，都是包括 disk queue 和 DA queue.</p>
+<p>更多配置参考<a href="http://www.rsyslog.com/doc/rsyslog_conf_global.html">这里</a></p>
+<p>在一般情况下，大部分的配置都可以直接使用默认的配置，这里给出一份Action使用DA队列的配置:</p>
+<div class="hlcode"><pre><span class="cp"># 这两个是全局的 </span>
+<span class="err">$</span><span class="n">ActionResumeRetryCount</span>                  <span class="mi">3</span>
+<span class="err">$</span><span class="n">ActionResumeInterval</span>                    <span class="mi">10</span>
+<span class="cp"># 以下是每个ActionQueue自己的配置</span>
+<span class="err">$</span><span class="n">ActionQueueType</span>                         <span class="n">LinkedList</span>
+<span class="err">$</span><span class="n">ActionQueueFileName</span>                     <span class="n">da_queue</span>
+<span class="err">$</span><span class="n">ActionQueueMaxFileSize</span>                  <span class="mi">100</span><span class="n">M</span>         <span class="err">#</span> <span class="err">设置单个</span><span class="n">disk</span><span class="err">文件的大小</span>
+<span class="err">$</span><span class="n">ActionQueueMaxDiskSpace</span>                 <span class="mi">10</span><span class="n">G</span>          <span class="err">#</span> <span class="err">设置最大占用空间</span>
+<span class="err">$</span><span class="n">ActionQueueDisacdSeverity</span>               <span class="mi">3</span>            <span class="err">#</span> <span class="err">设置忽略的等级</span>
+<span class="err">$</span><span class="n">ActionQueueLowWaterMark</span>                 <span class="mi">5000</span>         <span class="err">#</span> <span class="err">默认是</span><span class="mi">2000</span>
+<span class="err">$</span><span class="n">ActionQueueHighWatermark</span>                <span class="mi">15000</span>        <span class="err">#</span> <span class="err">默认是</span><span class="mi">8000</span>
+<span class="err">$</span><span class="n">ActionQueueDiscardMark</span>                  <span class="mi">30000</span>        <span class="err">#</span> <span class="err">默认是</span><span class="mi">9750</span>
+<span class="err">$</span><span class="n">ActionQueueSize</span>                         <span class="mi">80000</span>        <span class="err">#</span> <span class="err">文档没写，测试发现默认是</span><span class="mi">1000</span>
+<span class="err">$</span><span class="n">ActionQueueSaveOnShutdown</span>               <span class="n">on</span>
+
+<span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="err">@</span><span class="n">log</span><span class="o">-</span><span class="n">center</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="mi">514</span>
+</pre></div>
+
+
+<hr />
+<p>Main Queue 的默认模式是 <code>FixedArray</code>，Action Queue 的默认模式是 <code>Direct</code></p>
+<p>关于Rsyslog Queue的官方文档:</p>
+<ul>
+<li><a href="http://www.rsyslog.com/doc/queues.html">Understanding rsyslog Queues</a></li>
+<li><a href="http://www.rsyslog.com/doc/queues_analogy.html">Turning Lanes and Rsyslog Queues - an Analogy</a></li>
+</ul>
+<h3 id="impstats">impstats 模块</h3>
+<p>队列的相关统计信息可以使用输出模块 <code>impstats</code> 来查看。参考配置:</p>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">ModLoad</span> <span class="n">impstats</span>
+<span class="err">$</span><span class="n">PStatInterval</span> <span class="mi">5</span>
+<span class="err">$</span><span class="n">PStatSeverity</span> <span class="mi">7</span>
+
+<span class="n">syslog</span><span class="p">.</span><span class="o">=</span><span class="n">debug</span>  <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">rsyslog</span><span class="o">-</span><span class="n">stats</span>
+<span class="o">&amp;~</span>
+</pre></div>
+
+
+<p>样例表示每5s(默认是300s)生成一个统计信息，日志等级是7及以上(默认是6)，日志写入/var/log/rsyslog-stats后丢弃。</p>
+<p>这里我配置为DA类型，通过 impstats 模块观察:</p>
+<div class="hlcode"><pre><span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span><span class="mf">16.744660</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">imuxsock</span><span class="o">:</span> <span class="n">submitted</span><span class="o">=</span><span class="mi">3086634</span> <span class="n">ratelimit</span><span class="p">.</span><span class="n">discarded</span><span class="o">=</span><span class="mi">0</span> <span class="n">ratelimit</span><span class="p">.</span><span class="n">numratelimiters</span><span class="o">=</span><span class="mi">0</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span><span class="mf">16.744712</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">action</span> <span class="mi">1</span> <span class="n">queue</span><span class="p">[</span><span class="n">DA</span><span class="p">]</span><span class="o">:</span> <span class="n">size</span><span class="o">=</span><span class="mi">138176</span> <span class="n">enqueued</span><span class="o">=</span><span class="mi">138176</span> <span class="n">full</span><span class="o">=</span><span class="mi">0</span> <span class="n">maxqsize</span><span class="o">=</span><span class="mi">138176</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span><span class="mf">16.744720</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">action</span> <span class="mi">1</span> <span class="n">queue</span><span class="o">:</span> <span class="n">size</span><span class="o">=</span><span class="mi">13808</span> <span class="n">enqueued</span><span class="o">=</span><span class="mi">151976</span> <span class="n">full</span><span class="o">=</span><span class="mi">0</span> <span class="n">maxqsize</span><span class="o">=</span><span class="mi">20009</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span><span class="mf">16.744727</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">main</span> <span class="n">Q</span><span class="p">[</span><span class="n">DA</span><span class="p">]</span><span class="o">:</span> <span class="n">size</span><span class="o">=</span><span class="mi">0</span> <span class="n">enqueued</span><span class="o">=</span><span class="mi">0</span> <span class="n">full</span><span class="o">=</span><span class="mi">0</span> <span class="n">maxqsize</span><span class="o">=</span><span class="mi">0</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">51</span><span class="o">:</span><span class="mf">16.744732</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">main</span> <span class="n">Q</span><span class="o">:</span> <span class="n">size</span><span class="o">=</span><span class="mi">4</span> <span class="n">enqueued</span><span class="o">=</span><span class="mi">3087045</span> <span class="n">full</span><span class="o">=</span><span class="mi">0</span> <span class="n">maxqsize</span><span class="o">=</span><span class="mi">261</span>
+</pre></div>
+
+
+<p>可以看到，action queue使用了da队列，因为默认的 <code>$WorkDirectory /var/spool/rsyslog</code>，在 /var/spool/rsyslog 下可以看到存储的日志:</p>
+<div class="hlcode"><pre><span class="n">root</span><span class="err">@</span><span class="n">localhost</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">rsyslog</span><span class="err">#</span> <span class="n">ll</span>
+<span class="n">total</span> <span class="mi">160384</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">2</span> <span class="n">syslog</span> <span class="n">adm</span>        <span class="mi">36864</span> <span class="n">Mar</span> <span class="mi">14</span> <span class="mi">17</span><span class="o">:</span><span class="mi">50</span> <span class="p">.</span><span class="o">/</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">7</span> <span class="n">root</span>   <span class="n">root</span>        <span class="mi">4096</span> <span class="n">Oct</span> <span class="mi">29</span> <span class="mi">13</span><span class="o">:</span><span class="mi">27</span> <span class="p">..</span><span class="o">/</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-------</span> <span class="mi">1</span> <span class="n">syslog</span> <span class="n">syslog</span> <span class="mi">100000283</span> <span class="n">Mar</span> <span class="mi">14</span> <span class="mi">17</span><span class="o">:</span><span class="mi">50</span> <span class="n">fwdacq</span><span class="mf">.00000001</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-------</span> <span class="mi">1</span> <span class="n">syslog</span> <span class="n">syslog</span>  <span class="mi">50443050</span> <span class="n">Mar</span> <span class="mi">14</span> <span class="mi">17</span><span class="o">:</span><span class="mi">52</span> <span class="n">fwdacq</span><span class="mf">.00000002</span>
+
+<span class="n">root</span><span class="err">@</span><span class="n">localhost</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">spool</span><span class="o">/</span><span class="n">rsyslog</span><span class="err">#</span> <span class="n">du</span> <span class="o">-</span><span class="n">sh</span> <span class="o">*</span>
+<span class="mi">96</span><span class="n">M</span>     <span class="n">fwdacq</span><span class="mf">.00000001</span>
+<span class="mi">49</span><span class="n">M</span>     <span class="n">fwdacq</span><span class="mf">.00000002</span>
+</pre></div>
+
+
+<p>存储文件默认是用<code>队列名.7位数字</code>以递增方式命名的，因为定义了存储文件的最大值是100M，所以可以看到第一个是96M，再存储就存不了了，进而新建第二个文件存储。</p>
+<div class="hlcode"><pre><span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">27</span><span class="o">:</span><span class="mf">07.485964</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">imuxsock</span><span class="o">:</span> <span class="n">submitted</span><span class="o">=</span><span class="mi">32005</span> <span class="n">ratelimit</span><span class="p">.</span><span class="n">discarded</span><span class="o">=</span><span class="mi">0</span> <span class="n">ratelimit</span><span class="p">.</span><span class="n">numratelimiters</span><span class="o">=</span><span class="mi">0</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">27</span><span class="o">:</span><span class="mf">08.090574</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">action</span> <span class="mi">1</span> <span class="n">queue</span><span class="p">[</span><span class="n">DA</span><span class="p">]</span><span class="o">:</span> <span class="n">size</span><span class="o">=</span><span class="mi">0</span> <span class="n">enqueued</span><span class="o">=</span><span class="mi">0</span> <span class="n">full</span><span class="o">=</span><span class="mi">0</span> <span class="n">maxqsize</span><span class="o">=</span><span class="mi">0</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">27</span><span class="o">:</span><span class="mf">08.090590</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">action</span> <span class="mi">1</span> <span class="n">queue</span><span class="o">:</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span> <span class="n">enqueued</span><span class="o">=</span><span class="mi">1065</span> <span class="n">full</span><span class="o">=</span><span class="mi">65</span> <span class="n">maxqsize</span><span class="o">=</span><span class="mi">1000</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">27</span><span class="o">:</span><span class="mf">08.090598</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">main</span> <span class="n">Q</span><span class="p">[</span><span class="n">DA</span><span class="p">]</span><span class="o">:</span> <span class="n">size</span><span class="o">=</span><span class="mi">0</span> <span class="n">enqueued</span><span class="o">=</span><span class="mi">0</span> <span class="n">full</span><span class="o">=</span><span class="mi">0</span> <span class="n">maxqsize</span><span class="o">=</span><span class="mi">0</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mo">03</span><span class="o">-</span><span class="mi">14</span><span class="n">T17</span><span class="o">:</span><span class="mi">27</span><span class="o">:</span><span class="mf">08.090604</span><span class="o">+</span><span class="mi">08</span><span class="o">:</span><span class="mo">00</span> <span class="n">localhost</span> <span class="n">rsyslogd</span><span class="o">-</span><span class="n">pstats</span><span class="o">:</span> <span class="n">main</span> <span class="n">Q</span><span class="o">:</span> <span class="n">size</span><span class="o">=</span><span class="mi">9940</span> <span class="n">enqueued</span><span class="o">=</span><span class="mi">32042</span> <span class="n">full</span><span class="o">=</span><span class="mi">18</span> <span class="n">maxqsize</span><span class="o">=</span><span class="mi">10000</span>
+</pre></div>
+
+
+<p>在没有配置 <code>$MainMsgQueueSize</code> 和 <code>$ActionQueueSize</code> 时，可以看到队列最大值分别是10000和1000。</p>
+<p>对于Action Queue, 可以看到默认是'Action 1'、'Action 2'...命名的，可以通过 <code>$ActionName &lt;name&gt;</code>来对Action Queue命名. 在文档中还没找到这个配置，不过在<a href="http://lists.adiscon.net/pipermail/rsyslog/2012-May/029913.html">mail list</a>中看到了回答.</p>
+<p>更多的可以参考:</p>
+<ul>
+<li><a href="http://www.rsyslog.com/doc/impstats.html">impstats配置讲解</a></li>
+<li><a href="http://www.rsyslog.com/how-to-use-impstats/">使用impstats</a></li>
+<li><a href="http://www.rsyslog.com/rsyslog-statistic-counter-queues/">Main Queue输出术语</a></li>
+</ul>
+<h2 id="_4">实践</h2>
+<p>遇到一个kernel的报错, 一直在刷日志, 现在要把包含这条报错信息的内核日志丢弃:</p>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">msg</span><span class="p">,</span> <span class="n">contains</span><span class="p">,</span> <span class="s">&quot;message want to be dropped&quot;</span> <span class="o">~</span>
+</pre></div>
+
+
+<p>或者更详细的:</p>
+<div class="hlcode"><pre><span class="k">if</span> <span class="err">$</span><span class="n">syslogfacility</span><span class="o">-</span><span class="n">text</span> <span class="o">==</span> <span class="err">&#39;</span><span class="n">kern</span><span class="err">&#39;</span> <span class="n">and</span> <span class="p">(</span><span class="err">$</span><span class="n">msg</span> <span class="n">contains</span> <span class="err">&#39;</span><span class="n">message</span> <span class="n">want</span> <span class="n">to</span> <span class="n">be</span> <span class="n">dropped</span><span class="err">&#39;</span><span class="p">)</span> <span class="n">then</span> <span class="o">~</span>
+</pre></div>
+
+
+<p>参考: <a href="http://www.rsyslog.com/discarding-unwanted-messages/">Discarding unwanted messages</a></p>
+<h1 id="_5">更多资料</h1>
+<ul>
+<li><a href="http://www.cnblogs.com/tobeseeker/archive/2013/03/10/2953250.html">rsyslog研究</a></li>
+<li><a href="http://dmyz.org/archives/394">用rsyslog处理日志</a></li>
+<li><a href="http://www.litrin.net/2012/08/27/rsyslogd%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8/">rsyslogd服务的配置和使用</a></li>
+<li><a href="http://opkeep.com/system/linux/rsyslog-install.html">安装rsyslog</a></li>
+<li><a href="http://www.lampbo.org/others/opensource/rsyslog-config-file-detail.html">Rsyslog配置文件详解-转载</a></li>
+</ul>
+<h2 id="_6">官方资料</h2>
+<ul>
+<li><a href="http://www.rsyslog.com/doc/rsyslog_conf_basic_structure.html">Basic rsyslog.conf Structure</a></li>
+<li><a href="http://www.rsyslog.com/doc/rsyslog_conf_templates.html">Templates</a></li>
+<li><a href="http://www.rsyslog.com/doc/rsyslog_conf_filter.html">Filter Conditions</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

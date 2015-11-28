@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>mount - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » mount
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>mount, 用于挂载分区到文件系统</p>
+<p><code>/etc/fstab</code> 是启动时读取的挂载列表, 挂载后的结果是存储在 <code>/proc/mounts</code> 里. 所以如果proc没有被挂载上, 则 <code>fdisk -l</code> 是看不到任何东西的.</p>
+<p>具体可看/etc/fstab的注释和<code>man fstab</code></p>
+<p><code>/etc/mtab</code> 是正在挂载的文件</p>
+<h2 id="_1">常用操作</h2>
+<h3 id="_2">挂载分区</h3>
+<div class="hlcode"><pre><span class="n">mount</span> <span class="o">-</span><span class="n">t</span> <span class="n">type</span> <span class="n">device</span> <span class="n">dir</span>
+</pre></div>
+
+
+<p>把 device 指定挂载格式挂载到 dir 上</p>
+<h3 id="_3">查看已挂载分区</h3>
+<div class="hlcode"><pre><span class="n">mount</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span> <span class="n">type</span><span class="p">]</span>
+</pre></div>
+
+
+<p>可以列出挂载列表中指定的类型</p>
+<h3 id="_4">重新挂载</h3>
+<div class="hlcode"><pre><span class="n">mount</span> <span class="o">-</span><span class="n">o</span> <span class="n">remount</span><span class="p">,</span><span class="n">rw</span> <span class="n">device</span> <span class="n">dir</span>
+</pre></div>
+
+
+<p>最近遇到一个问题, fstab里都是以 <code>label</code> 挂载的, 但是 device 只用了uuid, 没有设置 label, 导致启动后挂载的权限是 ro, 最后在修改文件时一直无法保存, 还以为设置了 chattr, 后来才发现是这个地方导致的. 设置了 label 后, 重新挂载并设置 rw 权限就可以了.</p>
+<h3 id="bind">bind方式挂载</h3>
+<div class="hlcode"><pre><span class="n">mount</span> <span class="o">--</span><span class="n">bind</span> <span class="n">olddir</span> <span class="n">newdir</span>
+</pre></div>
+
+
+<p>bind方式可以把一个已被挂载的目录再挂载到其他目录下</p>
+<p>比如我的 /dev/sda5 已经挂载到 /home 目录下, 我可以把 /home 再挂载到 /mnt/home 下:</p>
+<div class="hlcode"><pre><span class="n">mount</span> <span class="o">--</span><span class="n">bind</span> <span class="o">/</span><span class="n">home</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span>
+<span class="err">结果如下</span><span class="o">:</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda5</span> <span class="n">on</span> <span class="o">/</span><span class="n">home</span> <span class="n">type</span> <span class="n">ext4</span> <span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">noatime</span><span class="p">)</span>
+<span class="o">/</span><span class="n">home</span> <span class="n">on</span> <span class="o">/</span><span class="n">mnt</span><span class="o">/</span><span class="n">home</span> <span class="n">type</span> <span class="n">none</span> <span class="p">(</span><span class="n">rw</span><span class="p">,</span><span class="n">bind</span><span class="p">)</span>
+</pre></div>
+
+
+<p>在挂载一个 livecd 来安装系统时(比如gentoo安装, 或rynsc安装linux), 就是先挂载根目录等, 然后以bind方式挂载 <code>sys</code>, <code>dev</code>, <code>proc</code>.</p>
+<h2 id="_5">参考</h2>
+<ul>
+<li><a href="http://www.brunolinux.com/02-The_Terminal/Fstab_and_Mtab.html">fstab and mtab</a></li>
+<li><a href="http://www.thegeekstuff.com/2013/01/mount-umount-examples/">How to Mount and Unmount Filesystem / Partition in Linux</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

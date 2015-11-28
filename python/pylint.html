@@ -1,0 +1,239 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Pylint - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#python">python</a> » Pylint
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p><a href="http://www.pylint.org">Pylint</a>:</p>
+<ul>
+<li>检查代码规范, 参考<a href="http://legacy.python.org/dev/peps/pep-0008/">PEP8</a></li>
+<li>错误检查, 如模块是否导入等</li>
+<li>自定义配置，根据个人习惯可以选择性的修改一些规范或忽略错误等</li>
+<li>给予一些可以重构的提示</li>
+<li>有配套的编辑器/IDE插件</li>
+<li>...</li>
+</ul>
+<p>pylint 的 <code>--help</code> 有简单的帮助，<code>--long-help</code> 或 man手册以及<a href="http://docs.pylint.org/">官方文档</a>有更详细的解释.</p>
+<p>官方的入门教程 <a href="http://docs.pylint.org/tutorial.html">Pylint Tutorial</a></p>
+<h2 id="_1">配置文件</h2>
+<p>默认没有配置文件, pylint会使用默认的配置.</p>
+<p>通过<code>--generate-rcfile</code>生成一份简单的配置文件，然后在这基础上进行自定义修改.</p>
+<p>通过<code>--rcfile</code>指定配置文件，如果没有指定，则会查找<code>~/.pylintrc</code>和<code>/etc/pylintrc</code></p>
+<p><strong>TODO</strong> 自定义配置并托管到.dotfiles</p>
+<h2 id="_2">原生的结果输出分析</h2>
+<p>analysis message section 输出格式:</p>
+<div class="hlcode"><pre><span class="n">MESSAGE_TYPE</span><span class="o">:</span> <span class="n">LINE_NUM</span><span class="o">:[</span><span class="n">OBJECT</span><span class="o">:]</span> <span class="n">MESSAGE</span>
+</pre></div>
+
+
+<p>其中<code>MESSAGE_TYPE</code>的解释:</p>
+<div class="hlcode"><pre><span class="o">*</span> <span class="p">(</span><span class="n">C</span><span class="p">)</span> <span class="n">convention</span><span class="p">,</span> <span class="k">for</span> <span class="n">programming</span> <span class="n">standard</span> <span class="n">violation</span>
+<span class="o">*</span> <span class="p">(</span><span class="n">R</span><span class="p">)</span> <span class="n">refactor</span><span class="p">,</span> <span class="k">for</span> <span class="n">bad</span> <span class="n">code</span> <span class="n">smell</span>
+<span class="o">*</span> <span class="p">(</span><span class="n">W</span><span class="p">)</span> <span class="n">warning</span><span class="p">,</span> <span class="k">for</span> <span class="n">python</span> <span class="n">specific</span> <span class="n">problems</span>
+<span class="o">*</span> <span class="p">(</span><span class="n">E</span><span class="p">)</span> <span class="n">error</span><span class="p">,</span> <span class="k">for</span> <span class="n">probable</span> <span class="n">bugs</span> <span class="n">in</span> <span class="n">the</span> <span class="n">code</span>
+<span class="o">*</span> <span class="p">(</span><span class="n">F</span><span class="p">)</span> <span class="n">fatal</span><span class="p">,</span> <span class="k">if</span> <span class="n">an</span> <span class="n">error</span> <span class="n">occurred</span> <span class="n">which</span> <span class="n">prevented</span> <span class="n">pylint</span> <span class="n">from</span> <span class="n">doing</span> <span class="n">further</span> <span class="n">processing</span><span class="p">.</span>
+</pre></div>
+
+
+<p>样例:</p>
+<div class="hlcode"><pre><span class="nx">tankywoo</span><span class="err">@</span><span class="nx">gentoo</span><span class="o">-</span><span class="nx">local</span><span class="o">::</span><span class="nx">simiki</span><span class="o">/</span> <span class="p">(</span><span class="nx">master</span><span class="p">)</span> <span class="err">»</span> <span class="nx">pylint</span> <span class="nx">simiki</span><span class="o">/</span><span class="nx">utils</span><span class="p">.</span><span class="nx">py</span>
+<span class="nx">No</span> <span class="nx">config</span> <span class="nx">file</span> <span class="nx">found</span><span class="p">,</span> <span class="nx">using</span> <span class="k">default</span> <span class="nx">configuration</span>
+<span class="o">*************</span> <span class="nx">Module</span> <span class="nx">simiki</span><span class="p">.</span><span class="nx">utils</span>
+<span class="nx">W</span><span class="o">:</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="nx">TODO</span><span class="o">:</span> <span class="nx">OSError</span><span class="o">:</span> <span class="cp">[</span><span class="nx">Errno</span> <span class="mi">17</span><span class="cp">]</span> <span class="nx">File</span> <span class="nx">exists</span><span class="o">:</span> <span class="s1">&#39;/home/tankywoo/simiki/html/css&#39;</span> <span class="p">(</span><span class="nx">fixme</span><span class="p">)</span>
+<span class="nx">C</span><span class="o">:</span>  <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="nx">Missing</span> <span class="nx">module</span> <span class="nx">docstring</span> <span class="p">(</span><span class="nx">missing</span><span class="o">-</span><span class="nx">docstring</span><span class="p">)</span>
+<span class="nx">C</span><span class="o">:</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="nx">Invalid</span> <span class="nx">constant</span> <span class="nx">name</span> <span class="s2">&quot;logger&quot;</span> <span class="p">(</span><span class="nx">invalid</span><span class="o">-</span><span class="nx">name</span><span class="p">)</span>
+<span class="nx">C</span><span class="o">:</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="nx">Missing</span> <span class="kd">function</span> <span class="nx">docstring</span> <span class="p">(</span><span class="nx">missing</span><span class="o">-</span><span class="nx">docstring</span><span class="p">)</span>
+<span class="nx">C</span><span class="o">:</span> <span class="mi">59</span><span class="p">,</span> <span class="mi">8</span><span class="o">:</span> <span class="nx">Invalid</span> <span class="nx">variable</span> <span class="nx">name</span> <span class="s2">&quot;s&quot;</span> <span class="p">(</span><span class="nx">invalid</span><span class="o">-</span><span class="nx">name</span><span class="p">)</span>
+<span class="nx">C</span><span class="o">:</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">8</span><span class="o">:</span> <span class="nx">Invalid</span> <span class="nx">variable</span> <span class="nx">name</span> <span class="s2">&quot;p&quot;</span> <span class="p">(</span><span class="nx">invalid</span><span class="o">-</span><span class="nx">name</span><span class="p">)</span>
+<span class="nx">C</span><span class="o">:</span> <span class="mi">73</span><span class="p">,</span><span class="mi">12</span><span class="o">:</span> <span class="nx">Invalid</span> <span class="nx">variable</span> <span class="nx">name</span> <span class="s2">&quot;fp&quot;</span> <span class="p">(</span><span class="nx">invalid</span><span class="o">-</span><span class="nx">name</span><span class="p">)</span>
+<span class="nx">W</span><span class="o">:</span> <span class="mi">78</span><span class="p">,</span><span class="mi">19</span><span class="o">:</span> <span class="nx">Catching</span> <span class="nx">too</span> <span class="nx">general</span> <span class="nx">exception</span> <span class="nx">Exception</span> <span class="p">(</span><span class="nx">broad</span><span class="o">-</span><span class="nx">except</span><span class="p">)</span>
+<span class="nx">W</span><span class="o">:</span> <span class="mi">77</span><span class="p">,</span><span class="mi">16</span><span class="o">:</span> <span class="nx">Specify</span> <span class="nx">string</span> <span class="nx">format</span> <span class="nx">arguments</span> <span class="nx">as</span> <span class="nx">logging</span> <span class="kd">function</span> <span class="nx">parameters</span> <span class="p">(</span><span class="nx">logging</span><span class="o">-</span><span class="nx">not</span><span class="o">-</span><span class="nx">lazy</span><span class="p">)</span>
+</pre></div>
+
+
+<p>接下来是一些分析报表:</p>
+<p><code>Duplication</code>表显示了是否有重复的行，根据这个指标可以判断是否有可以抽离出来的部分，进行重构。这里有个key叫<code>nb duplicated lines</code>, 看了下源码，还是没找到这个<code>nb</code>是什么意思.</p>
+<p><code>Messages by category</code> 对上面的analysis message进行汇总，列出R, W, E, C的分别有多少.</p>
+<p><code>Messages</code> 根据 msg id进行汇总</p>
+<p><code>Global evaluation</code> 是对检查的代码进行评分，满分10分</p>
+<p><code>Raw metrics</code> 分析代码中的实际行数、文档字符串、注释、空行等分别有多少行，百分比是多少</p>
+<p><code>Statistics by type</code> 分析有多少个module, class, method, function</p>
+<p>上面的一些tables中有<code>previous</code>，可以和前一次的做对比，这个数据是存在<code>~/.pylint.d/</code>, 由环境变量<code>PYLINTHOME</code>控制.</p>
+<h2 id="_3">消息控制</h2>
+<ol>
+<li>
+<p>全局级:</p>
+<p>通过在配置文件中disable或enable</p>
+</li>
+<li>
+<p>模块级(module level):</p>
+<p>在文件顶部以注释方式控制, eg:</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Docstring...</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c"># pylint: disable=wildcard-import, C0111</span>
+<span class="c"># pylint: enable=too-many-lines</span>
+</pre></div>
+</td></tr></table>
+
+</li>
+<li>
+<p>代码块级、行级:</p>
+<p>同上面模块级，也可以在代码块级和行级 disable 或 enable. eg:</p>
+<div class="hlcode"><pre><span class="cp"># 代码块级</span>
+<span class="k">for</span> <span class="n">i</span> <span class="n">in</span> <span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="o">:</span>
+    <span class="err">#</span> <span class="n">pylint</span><span class="o">:</span> <span class="n">disable</span><span class="o">=</span><span class="n">mixed</span><span class="o">-</span><span class="n">indentation</span>
+    <span class="n">print</span> <span class="n">i</span>
+
+<span class="cp"># 行级</span>
+<span class="n">print</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="err">#</span> <span class="n">pylint</span><span class="o">:</span> <span class="n">disable</span><span class="o">=</span><span class="n">C0326</span>
+</pre></div>
+
+
+</li>
+</ol>
+<p>如上面的例子, 可以使用 message id, 也可以使用 symbolic name for message.</p>
+<p>在 Pylint 0.26.1 及以上版本，可在模块级忽略所有报警</p>
+<div class="hlcode"><pre><span class="c"># pylint: skip-file</span>
+</pre></div>
+
+
+<p>Pylint &lt; 0.25 用:</p>
+<div class="hlcode"><pre><span class="c"># pylint: disable-all</span>
+</pre></div>
+
+
+<p>一般针对一段代码关闭某个报警, 可以类似如下(摘自saltstack salt/states/pkg.py), 在需要disable的地方关闭指定msg，不需要disable的地方再enable重新开启:</p>
+<div class="hlcode"><pre><span class="cp"># The following imports are used by the namespaced win_pkg funcs</span>
+<span class="cp"># and need to be included in their globals.</span>
+<span class="cp"># pylint: disable=W0611</span>
+<span class="nl">try:</span>
+    <span class="n">import</span> <span class="n">msgpack</span>
+<span class="n">except</span> <span class="n">ImportError</span><span class="o">:</span>
+    <span class="n">import</span> <span class="n">msgpack_pure</span> <span class="n">as</span> <span class="n">msgpack</span>
+<span class="n">from</span> <span class="n">distutils</span><span class="p">.</span><span class="n">version</span> <span class="n">import</span> <span class="n">LooseVersion</span>  <span class="err">#</span> <span class="n">pylint</span><span class="o">:</span> <span class="n">disable</span><span class="o">=</span><span class="n">E0611</span><span class="p">,</span><span class="n">F0401</span>
+<span class="cp"># pylint: enable=W0611</span>
+</pre></div>
+
+
+<p>这是一个输出样例:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">pylint</span> <span class="n">test_pylint</span><span class="p">.</span><span class="n">py</span>
+<span class="o">*************</span> <span class="n">Module</span> <span class="n">test_pylint</span>
+<span class="nl">I:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="n">Locally</span> <span class="n">disabling</span> <span class="n">mixed</span><span class="o">-</span><span class="n">indentation</span> <span class="p">(</span><span class="n">W0312</span><span class="p">)</span> <span class="p">(</span><span class="n">locally</span><span class="o">-</span><span class="n">disabled</span><span class="p">)</span>
+<span class="nl">I:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="n">Locally</span> <span class="n">disabling</span> <span class="n">bad</span><span class="o">-</span><span class="n">whitespace</span> <span class="p">(</span><span class="n">C0326</span><span class="p">)</span> <span class="p">(</span><span class="n">locally</span><span class="o">-</span><span class="n">disabled</span><span class="p">)</span>
+<span class="nl">I:</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="n">Locally</span> <span class="n">disabling</span> <span class="n">bad</span><span class="o">-</span><span class="n">whitespace</span> <span class="p">(</span><span class="n">C0326</span><span class="p">)</span> <span class="p">(</span><span class="n">locally</span><span class="o">-</span><span class="n">disabled</span><span class="p">)</span>
+<span class="nl">W:</span>  <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="n">Found</span> <span class="n">indentation</span> <span class="n">with</span> <span class="n">tabs</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">spaces</span> <span class="p">(</span><span class="n">mixed</span><span class="o">-</span><span class="n">indentation</span><span class="p">)</span>
+<span class="nl">W:</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="n">Found</span> <span class="n">indentation</span> <span class="n">with</span> <span class="n">tabs</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">spaces</span> <span class="p">(</span><span class="n">mixed</span><span class="o">-</span><span class="n">indentation</span><span class="p">)</span>
+<span class="nl">W:</span>  <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="o">:</span> <span class="n">Unused</span> <span class="n">import</span> <span class="n">io</span> <span class="p">(</span><span class="n">unused</span><span class="o">-</span><span class="n">import</span><span class="p">)</span>
+</pre></div>
+
+
+<p>注意MESSAGE TYPE是<code>I</code>.</p>
+<p>详细见文档 <a href="http://docs.pylint.org/faq.html#message-control">Pylint Message Control</a></p>
+<h2 id="_4">经验</h2>
+<p>针对analysis message, 如果想要看详细的解释, 可以:</p>
+<div class="hlcode"><pre><span class="n">pylint</span> <span class="o">--</span><span class="n">help</span><span class="o">-</span><span class="n">msg</span><span class="o">=</span><span class="p">[</span><span class="err">方括号里的短语</span><span class="p">]</span>
+</pre></div>
+
+
+<p>如:</p>
+<div class="hlcode"><pre><span class="nx">tankywoo</span><span class="err">@</span><span class="nx">gentoo</span><span class="o">-</span><span class="nx">local</span><span class="o">::</span><span class="nx">simiki</span><span class="o">/</span> <span class="p">(</span><span class="nx">master</span><span class="p">)</span> <span class="err">»</span> <span class="nx">pylint</span> <span class="nx">simiki</span><span class="o">/</span><span class="nx">utils</span><span class="p">.</span><span class="nx">py</span> <span class="o">--</span><span class="nx">help</span><span class="o">-</span><span class="nx">msg</span><span class="o">=</span><span class="nx">missing</span><span class="o">-</span><span class="nx">docstring</span>
+<span class="nx">No</span> <span class="nx">config</span> <span class="nx">file</span> <span class="nx">found</span><span class="p">,</span> <span class="nx">using</span> <span class="k">default</span> <span class="nx">configuration</span>
+<span class="o">:</span><span class="nx">missing</span><span class="o">-</span><span class="nx">docstring</span> <span class="p">(</span><span class="nx">C0111</span><span class="p">)</span><span class="o">:</span> <span class="o">*</span><span class="nx">Missing</span> <span class="o">%</span><span class="nx">s</span> <span class="nx">docstring</span><span class="o">*</span>
+  <span class="nx">Used</span> <span class="nx">when</span> <span class="nx">a</span> <span class="nx">module</span><span class="p">,</span> <span class="kd">function</span><span class="p">,</span> <span class="kr">class</span> <span class="nx">or</span> <span class="nx">method</span> <span class="nx">has</span> <span class="nx">no</span> <span class="nx">docstring</span><span class="p">.</span><span class="nx">Some</span> <span class="nx">special</span>
+  <span class="nx">methods</span> <span class="nx">like</span> <span class="nx">__init__</span> <span class="nx">doesn</span><span class="err">&#39;</span><span class="nx">t</span> <span class="nx">necessary</span> <span class="nx">require</span> <span class="nx">a</span> <span class="nx">docstring</span><span class="p">.</span> <span class="nx">This</span> <span class="nx">message</span>
+  <span class="nx">belongs</span> <span class="nx">to</span> <span class="nx">the</span> <span class="nx">basic</span> <span class="nx">checker</span><span class="p">.</span>
+</pre></div>
+
+
+<p>也可以在<a href="http://pylint-messages.wikidot.com/all-messages">这个页面</a> 找到对应的MSG ID以及详细的说明.</p>
+<p>对于<code>--include-ids</code>这个选项，可以输出MSG ID, 不过新版本不让用了...</p>
+<p>report tables太长了，如果不关心这个，可以用<code>-rn</code>关闭.</p>
+<p><code>--output-format</code> 指定输出的格式, 默认是text, 可选:</p>
+<ul>
+<li>text</li>
+<li>parseable 可解析的格式, 这种方式已被弃用</li>
+<li>colorized 终端高亮显示</li>
+<li>msvs (visual studio) 已被弃用</li>
+<li>html 输出为html, 可重定向保存然后浏览器打开</li>
+</ul>
+<p><code>--msg-template</code> 可以修改输出信息的模板，默认见上面提到的. 可参考<a href="http://docs.pylint.org/output.html">页面</a></p>
+<p>@TODO:</p>
+<p>如果导入的第三方模块都是在<code>virtualenv</code>中安装，则<code>pylint</code>也应该在virtualenv中安装。</p>
+<p>如果pylint是全局安装, 虽然进入了virtualenv, <code>sys.path</code>也有virtualenv安装模块的路径，但是依然会报Warning, 提示模块找不到.</p>
+<h2 id="_5">其它类似工具</h2>
+<ul>
+<li><a href="http://pychecker.sourceforge.net/">PyChecker</a> 是对代码错误做检查的工具, 它会运行代码去分析错误</li>
+<li><a href="https://pypi.python.org/pypi/pyflakes">Pyflakes</a> 使用Vim插件, 对一些语法和运行时错误检查, 比较好用.</li>
+<li><a href="https://pypi.python.org/pypi/pep8">PEP8</a> 针对PEP8的一些检查.</li>
+<li><a href="https://pypi.python.org/pypi/flake8">Flake8</a> 是Pyflakes和PEP8的集合.</li>
+<li><a href="https://github.com/scrooloose/syntastic">Syntastic</a> 听说很强大?</li>
+</ul>
+<p>讨论:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/1428872/pylint-pychecker-or-pyflakes">PyLint, PyChecker or PyFlakes?</a></li>
+<li><a href="http://doughellmann.com/2008/03/01/static-code-analizers-for-python.html">Static Code Analizers for Python</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

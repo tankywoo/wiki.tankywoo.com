@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>curl - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » curl
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#argument">Argument</a></li>
+<li><a href="#example">Example</a></li>
+<li><a href="#ipv6">IPv6</a></li>
+<li><a href="#read-more">Read More</a></li>
+</ul>
+</div>
+<h2 id="argument">Argument</h2>
+<ul>
+<li><code>-o</code> - output to file</li>
+<li><code>-O</code> - output to file named the same with the remote name</li>
+<li><code>-i</code> - Include the HTTP-header in the output</li>
+<li><code>-I</code> - only get the HTTP-header</li>
+<li><code>-u</code></li>
+</ul>
+<h2 id="example">Example</h2>
+<div class="hlcode"><pre><span class="cp"># get the file source and output to the STDOUT</span>
+<span class="n">curl</span> <span class="n">http</span><span class="o">:</span><span class="c1">//wiki.wutianqi.com/index.html</span>
+
+<span class="cp"># download the file</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="n">myindex</span><span class="p">.</span><span class="n">html</span> <span class="n">http</span><span class="o">:</span><span class="c1">//wiki.wutianqi.com/index.html</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">O</span> <span class="n">http</span><span class="o">:</span><span class="c1">//wiki.wutianqi.com/index.html</span>
+
+<span class="cp"># get the HTTP-header only</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">I</span> <span class="n">http</span><span class="o">:</span><span class="c1">//wiki.wutianqi.com/index.html</span>
+</pre></div>
+
+
+<h2 id="ipv6">IPv6</h2>
+<p>curl ipv6 localhost:8000, 注意要加<code>-g</code>和<code>-6</code>, url要用方括号(bracket):</p>
+<div class="hlcode"><pre><span class="n">curl</span> <span class="o">-</span><span class="n">g</span> <span class="o">-</span><span class="mi">6</span> <span class="err">&#39;</span><span class="n">http</span><span class="o">:</span><span class="c1">//[::1]:8000&#39;</span>
+</pre></div>
+
+
+<p>参考: <a href="http://superuser.com/a/885757/251495">How can I use curl with ::1 for ipv6 based loopback?</a></p>
+<h2 id="read-more">Read More</h2>
+<ul>
+<li><a href="http://www.thegeekstuff.com/2012/04/curl-examples/">15 Practical Linux cURL Command Examples</a></li>
+<li><a href="http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage">curl tutorial with examples of usage</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/09/curl.html">curl网站开发指南</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

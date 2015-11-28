@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Bash Shortcuts - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#linux">linux</a> » Bash Shortcuts
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="ctrl">Ctrl</h2>
+<p><code>Ctrl + a</code>  -  Jump to the start of the line # 如果使用screen，C-a可能会被占用，请使用C-a a</p>
+<p><code>Ctrl + e</code>  -  Jump to the end of the line</p>
+<p><code>Ctrl + k</code>  -  Delete from cursor to EOL # 从cursor处(包括光标)直接删除到行尾，很管用的命令</p>
+<p><code>Ctrl + u</code>  -  Delete backward from cursor # 从cursor处(不包括光标)直接前面所有，适合输错密码时用</p>
+<p><code>Ctrl + w</code>  -  Delete a word</p>
+<p><code>Ctrl + c</code>  -  Terminate the command</p>
+<p><code>Ctrl + d</code>  -  Delete char under the cursor</p>
+<p><code>Ctrl + b</code>  -  Move back a char</p>
+<p><code>Ctrl + f</code>  -  Move forward a char</p>
+<p><code>Ctrl + r</code>  -  Search the history backwards</p>
+<p><code>Ctrl + R</code>  -  Search the history with multi occurrence # ???还不明白这个和C-r的区别</p>
+<p><code>Ctrl + l</code>  -  Clear the screen</p>
+<p><code>Ctrl + z</code>  -  Suspend/Stop the command</p>
+<h1 id="bash-mode">Bash Mode</h1>
+<p><em>TODO</em> 待具体研究</p>
+<p><code>set -o</code>        List all the modes</p>
+<p>默认情况下，emacs mode是on，而vi mode是off，可以通过<code>set -o vi</code>改为vi mode</p>
+<h1 id="read-more">Read More</h1>
+<ul>
+<li><a href="http://www.aboutlinux.info/2005/08/bash-shell-shortcuts.html">Bash Shortcuts</a></li>
+<li><a href="http://dbanotes.net/tech-memo/shell_shortcut.html">Bash Shell 快捷键的学习使用</a> (此文是参考上文)</li>
+<li><a href="http://www.skorks.com/2009/09/bash-shortcuts-for-maximum-productivity/">Bash Shortcuts For Maximum Productivity</a></li>
+<li><a href="http://linuxtoy.org/archives/bash-shortcuts.html">让你提升命令行效率的 Bash 快捷键</a></li>
+<li><a href="http://www.bigsmoke.us/readline/shortcuts">Readline shortcuts</a></li>
+<li><a href="http://www.huangwei.me/blog/2010/10/27/bash_shortcuts_mindmap/">Bash快捷键的思维导图</a></li>
+<li><a href="http://ahei.info/bash.htm">高效操作Bash</a></li>
+<li><a href="http://blog.longwin.com.tw/2006/09/bash_hot_key_2006/">Bash Shell 快速鍵列表</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

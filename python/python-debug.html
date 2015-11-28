@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Python Debug - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#python">python</a> » Python Debug
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="pdb-the-python-debug">PDB (The Python Debug)</h2>
+<p>Python自带的调试器, 常用的几种调用方法:</p>
+<p>命令行调用模块:</p>
+<div class="hlcode"><pre><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pdb</span> <span class="n">myscript</span><span class="p">.</span><span class="n">py</span>
+</pre></div>
+
+
+<p>如果代码异常退出, pdb会自动进入<code>post-mortem debugging</code></p>
+<p>交互模式下:</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">pdb</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">import</span> <span class="n">mymodules</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">pdb</span><span class="p">.</span><span class="n">run</span><span class="p">(</span><span class="err">&#39;</span><span class="n">mymodules</span><span class="p">.</span><span class="n">test</span><span class="p">()</span><span class="err">&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>临时插入断点:</p>
+<div class="hlcode"><pre><span class="n">import</span> <span class="n">pdb</span>
+<span class="n">pdb</span><span class="p">.</span><span class="n">set_trace</span><span class="p">()</span>
+</pre></div>
+
+
+<p>检查一个崩溃的代码:</p>
+<div class="hlcode"><pre><span class="o">&gt;&gt;&gt;</span> <span class="k">import</span> <span class="nx">pdb</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">import</span> <span class="nx">test_pdb</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">test_pdb.fun</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;hello pdb&#39;</span><span class="p">)</span>
+<span class="nx">Traceback</span> <span class="p">(</span><span class="nx">most</span> <span class="nx">recent</span> <span class="nb">call</span> <span class="nb">last</span><span class="p">):</span>
+  <span class="nb">File</span> <span class="s2">&quot;&lt;stdin&gt;&quot;</span><span class="p">,</span> <span class="nb">line</span> <span class="mi">1</span><span class="p">,</span> <span class="k">in</span> <span class="o">&lt;</span><span class="nx">module</span><span class="o">&gt;</span>
+  <span class="nb">File</span> <span class="s2">&quot;test_pdb.py&quot;</span><span class="p">,</span> <span class="nb">line</span> <span class="mi">9</span><span class="p">,</span> <span class="k">in</span> <span class="nx">fun</span>
+    <span class="nx">print</span><span class="p">(</span><span class="mi">2</span><span class="p">/</span><span class="nx">0</span><span class="p">)</span>
+<span class="nx">ZeroDivisionError</span><span class="p">:</span> <span class="kt">integer</span> <span class="nx">division</span> <span class="ow">or</span> <span class="nx">modulo</span> <span class="k">by</span> <span class="nx">zero</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nx">pdb.pm</span><span class="p">()</span>
+<span class="o">&gt;</span> <span class="p">/</span><span class="nx">Users</span><span class="p">/</span><span class="nx">TankyWoo</span><span class="p">/</span><span class="nx">dev_env</span><span class="p">/</span><span class="nb">debug</span><span class="p">/</span><span class="nx">test_pdb.py</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="nx">fun</span><span class="p">()</span>
+<span class="o">-&gt;</span> <span class="nx">print</span><span class="p">(</span><span class="mi">2</span><span class="p">/</span><span class="nx">0</span><span class="p">)</span>
+<span class="p">(</span><span class="nx">Pdb</span><span class="p">)</span> <span class="nx">a</span>
+<span class="n">var1</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">var2</span> <span class="o">=</span> <span class="nx">hello</span> <span class="nx">pdb</span>
+<span class="p">(</span><span class="nx">Pdb</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>pdb.pm()</code> 会根据<code>sys.last_traceback</code>寻找最近一次的traceback对象, 并进入<code>post-mortem debugging</code>.</p>
+<p><code>pdb.post_mortem([traceback])和</code>pdb.pm()`类似，但是需要把traceback作为参数, 为空则认为是当前处理的exception.</p>
+<p><code>post-mortem debugging</code>: 事后调式, 如果程序发生异常, 不会退出程序, 而是保存之前的环境并进入调式模式. 不需要设置断点, 可以方便的到异常代码，进行调试.</p>
+<p>关于debug时的交互式命令, 按<code>h(elp)</code>会列出所有命令, 有些命令是同一个, 只是一个全称、一个简称. <code>h(elp) command</code>可以查看命令的详细说明.</p>
+<ul>
+<li><code>c</code>/<code>cont</code>/<code>continue</code>: 执行代码, 直到一个断点处. 在post-mortem debugging下, 会自动停在异常代码处.</li>
+<li><code>a</code>/<code>args</code>: 打印当前函数的参数值</li>
+<li><code>l</code>/<code>list</code>: 列出当前调试行前后共11行代码, 也可以指定起始、终止的代码行数</li>
+<li><code>n</code>/<code>next</code>: 在当前函数内逐行执行</li>
+<li><code>s</code>/<code>step</code>: 逐行执行, 如果调用其它函数, 会进入相应函数</li>
+<li><code>b</code>/<code>break</code>: 设置断点, 后接行号(1开始)或函数名, 不接则显示所有的断点</li>
+<li><code>cl</code>/<code>clear</code>: 清除断点, 后者 文件名:行号 或者 断点号, 都可以通过<code>b</code>看到</li>
+<li>... TODO</li>
+</ul>
+<p>推荐文档:</p>
+<ul>
+<li><a href="https://docs.python.org/2/library/pdb.html">pdb官方文档</a></li>
+<li><a href="http://pymotw.com/2/pdb/">PyMOTW - pdb</a></li>
+<li><a href="http://blog.jobbole.com/51062/?replytocom=42831">常用的 Python 调试工具</a></li>
+</ul>
+<p>知乎的这个<a href="http://www.zhihu.com/question/21572891">帖子</a>和<a href="http://blog.jobbole.com/52171/">像老大一样调试Python</a>还推荐到了<code>pudb</code>和<code>ipdb</code>.</p>
+<p>这两个都是非常强大好用的调试工具.</p>
+<p><a href="https://pypi.python.org/pypi/pudb"><code>pudb</code></a> 风格上类似vi, 多窗口操作, 方便一边看代码, 一遍调试, 还可以执行调用相关的交互解释器, 这些都可以通过<code>Ctrl-P</code>配置. UI上感觉像当年用过的Turbo C.</p>
+<p><a href="https://pypi.python.org/pypi/ipdb"><code>ipdb</code></a>更像是<code>pdb</code>的加强版, ipython和pdb的结合体, 可以直接取代pdb来使用.</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

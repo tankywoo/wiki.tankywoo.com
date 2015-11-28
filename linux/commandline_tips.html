@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>CommandLine Tips - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#linux">linux</a> » CommandLine Tips
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p><code>git rebase</code> 保持合并的分支和时间:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">rebase</span> <span class="o">-</span><span class="n">p</span> <span class="o">--</span><span class="n">ignore</span><span class="o">-</span><span class="n">date</span> <span class="o">-</span><span class="n">i</span> <span class="err">$</span><span class="n">COMMIT_ID</span>
+</pre></div>
+
+
+<p><a href="http://stackoverflow.com/questions/10016707/git-rebase-branch-with-merged-children">ref 1</a>
+<a href="http://stackoverflow.com/questions/2973996/git-rebase-without-changing-commit-timestamps">ref 2</a></p>
+<hr />
+<p>本地构建pip install的开发环境:</p>
+<p>开发python package, 为了模拟pip install后的环境, 可以在开发过程中随时测试, 不需要手动构建软链接，使用:</p>
+<div class="hlcode"><pre><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="err">$</span><span class="n">PACKAGE</span><span class="o">/</span>
+</pre></div>
+
+
+<p>会在python package目录下新建一个<code>*.egg-link</code>文件, 文件内容是包的路径.</p>
+<p><a href="http://stackoverflow.com/questions/7926060/python-package-install-using-pip-to-source-doesnt-create-a-symlink">ref 1</a>
+<a href="https://docs.djangoproject.com/en/1.7/topics/install/">ref 2</a></p>
+<hr />
+<p>重命名Git分支(Rename Git Branch):</p>
+<p>本地分支(local branch):</p>
+<div class="hlcode"><pre><span class="nx">git</span> <span class="nx">branch</span> <span class="na">-m</span> <span class="o">&lt;</span><span class="nx">oldname</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">newname</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>如果要重命名当前分支, 直接:</p>
+<div class="hlcode"><pre><span class="nx">git</span> <span class="nx">branch</span> <span class="na">-m</span> <span class="o">&lt;</span><span class="nx">newname</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p><a href="http://stackoverflow.com/questions/6591213/rename-local-git-branch">ref 1</a></p>
+<p>远程分支(remote branch):</p>
+<p>没有一个直接的方法可以重命名远程分支, 需要先删除远程分支, 然后本地将重命名后的分支推送到远程:</p>
+<div class="hlcode"><pre><span class="nx">git</span> <span class="nb">push</span> <span class="nx">origin</span> <span class="p">:</span><span class="o">&lt;</span><span class="nx">oldname</span><span class="o">&gt;</span>
+<span class="nx">git</span> <span class="nb">push</span> <span class="na">-u</span> <span class="nx">origin</span> <span class="o">&lt;</span><span class="nx">newname</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p><a href="http://blog.changecong.com/2012/10/rename-a-remote-branch-on-github/">ref 1</a>
+<a href="http://www.benjaminlhaas.com/blog/locally-and-remotely-renaming-branch-git">ref 2</a>
+<a href="http://stackoverflow.com/questions/1526794/rename-master-branch-for-both-local-and-remote-git-repositories">ref 3</a></p>
+<hr />
+<p>git stash相关</p>
+<p>stash时包含untracked files(默认只有stage和index中的files):</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">stash</span> <span class="p">[</span><span class="o">--</span><span class="n">include</span><span class="o">-</span><span class="n">untracked</span><span class="o">|-</span><span class="n">u</span><span class="p">]</span>
+</pre></div>
+
+
+<p>stash pop后, 原先index中的files会恢复为staged, 如果要保持index, 则:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">stash</span> <span class="p">[</span><span class="o">--</span><span class="n">keep</span><span class="o">-</span><span class="n">index</span><span class="o">|-</span><span class="n">k</span><span class="p">]</span>
+</pre></div>
+
+
+<hr />
+<p>同时修改 author 和 committer</p>
+<p>比如提交后发现author和committer都错了.</p>
+<p>如果只是:</p>
+<div class="hlcode"><pre><span class="nx">git</span> <span class="nx">commit</span> <span class="o">--</span><span class="nx">amend</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s2">&quot;username &lt;useremail&gt;&quot;</span>
+</pre></div>
+
+
+<p>则只修改 author 信息, 如果要同时修改author和committer信息则:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="o">-</span><span class="n">c</span> <span class="n">user</span><span class="p">.</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;New Author Name&quot;</span> <span class="o">-</span><span class="n">c</span> <span class="n">user</span><span class="p">.</span><span class="n">email</span><span class="o">=</span><span class="n">email</span><span class="err">@</span><span class="n">address</span><span class="p">.</span><span class="n">com</span> <span class="n">commit</span> <span class="o">--</span><span class="n">amend</span> <span class="o">--</span><span class="n">reset</span><span class="o">-</span><span class="n">author</span>
+</pre></div>
+
+
+<p>如果修改了 <code>~/.gitconfig</code> 则可以直接:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">commit</span> <span class="o">--</span><span class="n">amend</span> <span class="o">--</span><span class="n">reset</span><span class="o">-</span><span class="n">author</span>
+</pre></div>
+
+
+<p><a href="http://stackoverflow.com/a/1320317/1276501">ref</a></p>
+<hr />
+<p>统计所有提交的用户及提交次数:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">shortlog</span> <span class="o">-</span><span class="n">sn</span>
+</pre></div>
+
+
+<p>也可以加上相应的email:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">shortlog</span> <span class="o">-</span><span class="n">sne</span>
+</pre></div>
+
+
+<p><a href="http://blog.vogella.com/2013/02/26/git-how-to-determine-the-committers-or-authors-in-a-git-repository-by-lars-vogel/">ref</a></p>
+<hr />
+<p>查看某次提交的author/committer:</p>
+<div class="hlcode"><pre><span class="nx">git</span> <span class="o">--</span><span class="nx">no</span><span class="na">-pager</span> <span class="nx">show</span> <span class="na">-s</span> <span class="o">--</span><span class="n">format</span><span class="o">=</span><span class="s1">&#39;author: %an &lt;%ae&gt; \ committer: %cn &lt;%ce&gt;&#39;</span> <span class="o">&lt;</span><span class="nx">commit_id</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p><code>--no-pager</code> 这个参数很赞！</p>
+<p><a href="http://www.quora.com/Whats-the-simplest-git-command-to-get-a-commits-author-and-their-email-address-if-available">ref</a></p>
+<hr />
+<p>快速将一个cpu打满:</p>
+<div class="hlcode"><pre><span class="n">dd</span> <span class="k">if</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">zero</span> <span class="n">of</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+</pre></div>
+
+
+<p>或:</p>
+<div class="hlcode"><pre><span class="n">yes</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+</pre></div>
+
+
+<p>其它可见<a href="http://stackoverflow.com/questions/2925606/how-to-create-a-cpu-spike-with-a-bash-command">参考</a></p>
+<hr />
+<p>进制间转换:</p>
+<div class="hlcode"><pre><span class="cp"># 十六进制 转 十进制</span>
+<span class="cp"># 注意字母要 **大写**</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">ibase</span><span class="o">=</span><span class="mi">16</span><span class="p">;</span> <span class="n">FF</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">bc</span>
+<span class="mi">255</span>
+
+<span class="cp"># 十进制 转 十六进制</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">obase</span><span class="o">=</span><span class="mi">16</span><span class="p">;</span> <span class="mi">32</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">bc</span>
+<span class="mi">20</span>
+
+<span class="cp"># 十六进制 转 二进制</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">ibase</span><span class="o">=</span><span class="mi">16</span><span class="p">;</span> <span class="n">obase</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span> <span class="n">F</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">bc</span>
+<span class="mi">1111</span>
+
+<span class="cp"># 使用printf, 十六进制 转 十进制</span>
+<span class="err">$</span> <span class="n">printf</span> <span class="s">&quot;%d</span><span class="se">\n</span><span class="s">&quot;</span> <span class="mh">0xff</span>
+<span class="mi">255</span>
+</pre></div>
+
+
+<p>参考 <a href="http://www.cyberciti.biz/faq/linux-unix-convert-hex-to-decimal-number/">ref1</a>, <a href="http://www.linuxnix.com/2012/05/convert-binaryhex-oct-decimal-linuxunix.html">ref2</a></p>
+<hr />
+<p><code>du</code> human-readable output by size:</p>
+<div class="hlcode"><pre><span class="n">du</span> <span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">h</span>
+<span class="n">du</span> <span class="o">--</span><span class="n">human</span><span class="o">-</span><span class="n">readable</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">--</span><span class="n">human</span><span class="o">-</span><span class="n">numeric</span><span class="o">-</span><span class="n">sort</span>
+</pre></div>
+
+
+<p>参考 <a href="http://www.cyberciti.biz/faq/how-do-i-sort-du-h-output-by-size-under-linux/">ref1</a></p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

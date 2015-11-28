@@ -1,0 +1,493 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Gentoo - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#linux">linux</a> » Gentoo
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#gentoo-grub">gentoo grub升级了</a></li>
+<li><a href="#gentoo">Gentoo 升级相关</a></li>
+<li><a href="#world-world">world 和 @world</a></li>
+<li><a href="#_1">升级后更新系统配置文件</a></li>
+<li><a href="#dependency-graph-slot-conflict">dependency graph slot conflict</a></li>
+<li><a href="#perl">Perl相关</a></li>
+<li><a href="#_2">编译报错</a></li>
+<li><a href="#dev-pythonpython-exec">dev-python/python-exec 问题</a></li>
+<li><a href="#python26">卸载python2.6</a></li>
+<li><a href="#gcc">gcc 升级</a></li>
+<li><a href="#x11">卸载X11相关</a></li>
+<li><a href="#_3">其它资源</a></li>
+</ul>
+</div>
+<h2 id="gentoo-grub">gentoo grub升级了</h2>
+<p>world file: <code>/var/lib/portage/world</code></p>
+<p>example:</p>
+<div class="hlcode"><pre><span class="mi">2013</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">14</span><span class="o">-</span><span class="nx">grub2</span><span class="o">-</span><span class="nx">migration</span>
+  <span class="nx">Title</span>                     <span class="nx">GRUB2</span> <span class="nx">migration</span>
+
+<span class="nx">A</span> <span class="nx">newer</span> <span class="nx">version</span> <span class="nx">of</span> <span class="nx">GRUB</span> <span class="p">(</span><span class="nx">sys</span><span class="o">-</span><span class="nx">boot</span><span class="o">/</span><span class="nx">grub</span><span class="p">)</span> <span class="nx">is</span> <span class="nx">now</span> <span class="nx">stable</span><span class="p">.</span> <span class="nx">There</span> <span class="nx">are</span> <span class="nx">now</span>
+<span class="nx">two</span> <span class="nx">available</span> <span class="nx">slots</span><span class="o">:</span>
+
+<span class="nx">sys</span><span class="o">-</span><span class="nx">boot</span><span class="o">/</span><span class="nx">grub</span><span class="o">:</span><span class="mi">0</span> <span class="o">-</span> <span class="nx">Known</span> <span class="nx">as</span> <span class="s2">&quot;GRUB Legacy&quot;</span>
+<span class="nx">sys</span><span class="o">-</span><span class="nx">boot</span><span class="o">/</span><span class="nx">grub</span><span class="o">:</span><span class="mi">2</span> <span class="o">-</span> <span class="nx">Known</span> <span class="nx">as</span> <span class="s2">&quot;GRUB2&quot;</span>
+
+<span class="nx">GRUB2</span> <span class="nx">uses</span> <span class="nx">a</span> <span class="nx">different</span> <span class="nx">configuration</span> <span class="nx">format</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">requires</span> <span class="nx">a</span> <span class="nx">manual</span>
+<span class="nx">migration</span> <span class="nx">before</span> <span class="nx">your</span> <span class="nx">system</span> <span class="nx">will</span> <span class="nx">actually</span> <span class="nx">use</span> <span class="nx">it</span><span class="p">.</span> <span class="nx">A</span> <span class="nx">guide</span> <span class="cp">[</span><span class="mi">1</span><span class="cp">]</span> <span class="nx">is</span>
+<span class="nx">available</span> <span class="nx">on</span> <span class="nx">the</span> <span class="nx">gentoo</span><span class="p">.</span><span class="nx">org</span> <span class="nx">website</span><span class="p">,</span> <span class="nx">and</span> <span class="nx">the</span> <span class="nx">Gentoo</span> <span class="nx">wiki</span> <span class="cp">[</span><span class="mi">2</span><span class="cp">][</span><span class="mi">3</span><span class="cp">]</span> <span class="nx">has</span>
+<span class="nx">additional</span> <span class="nx">information</span><span class="p">.</span>
+
+<span class="nx">If</span> <span class="nx">you</span> <span class="nx">would</span> <span class="nx">prefer</span> <span class="nx">not</span> <span class="nx">to</span> <span class="nx">migrate</span> <span class="nx">at</span> <span class="k">this</span> <span class="nx">time</span><span class="p">,</span> <span class="nx">you</span> <span class="k">do</span> <span class="nx">not</span> <span class="nx">need</span> <span class="nx">to</span>
+<span class="nx">take</span> <span class="nx">any</span> <span class="nx">action</span><span class="o">:</span> <span class="nx">GRUB</span> <span class="nx">Legacy</span> <span class="nx">will</span> <span class="nx">remain</span> <span class="nx">functional</span> <span class="k">in</span> <span class="err">/boot. To</span>
+<span class="nx">prevent</span> <span class="nx">any</span> <span class="nx">associated</span> <span class="nx">files</span> <span class="p">(</span><span class="nx">documentation</span><span class="p">)</span> <span class="nx">from</span> <span class="nx">being</span> <span class="nx">removed</span><span class="p">,</span> <span class="nx">add</span>
+<span class="nx">sys</span><span class="o">-</span><span class="nx">boot</span><span class="o">/</span><span class="nx">grub</span><span class="o">:</span><span class="mi">0</span> <span class="nx">to</span> <span class="nx">your</span> <span class="nx">world</span> <span class="nx">file</span><span class="p">.</span> <span class="nx">For</span> <span class="nx">example</span><span class="o">:</span>
+
+<span class="nx">emerge</span> <span class="o">--</span><span class="nx">noreplace</span> <span class="nx">sys</span><span class="o">-</span><span class="nx">boot</span><span class="o">/</span><span class="nx">grub</span><span class="o">:</span><span class="mi">0</span>
+
+<span class="nx">References</span><span class="o">:</span>
+
+<span class="cp">[</span><span class="mi">1</span><span class="cp">]</span> <span class="nx">http</span><span class="o">:</span><span class="c1">//www.gentoo.org/doc/en/grub2-migration.xml</span>
+<span class="cp">[</span><span class="mi">2</span><span class="cp">]</span> <span class="nx">https</span><span class="o">:</span><span class="c1">//wiki.gentoo.org/wiki/GRUB2_Quick_Start</span>
+<span class="cp">[</span><span class="mi">3</span><span class="cp">]</span> <span class="nx">https</span><span class="o">:</span><span class="c1">//wiki.gentoo.org/wiki/GRUB2</span>
+</pre></div>
+
+
+<h2 id="gentoo">Gentoo 升级相关</h2>
+<p>更新portage树</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">emerge</span> <span class="o">--</span><span class="n">sync</span> <span class="err">或者</span> <span class="n">eix</span><span class="o">-</span><span class="n">sync</span>
+</pre></div>
+
+
+<p>更新eix缓存:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">eix</span><span class="o">-</span><span class="n">update</span>
+<span class="n">Reading</span> <span class="n">Portage</span> <span class="n">settings</span> <span class="p">..</span>
+<span class="n">Building</span> <span class="n">database</span> <span class="p">(</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">eix</span><span class="o">/</span><span class="n">portage</span><span class="p">.</span><span class="n">eix</span><span class="p">)</span> <span class="p">..</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="s">&quot;gentoo&quot;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span> <span class="p">(</span><span class="n">cache</span><span class="o">:</span> <span class="n">metadata</span><span class="o">-</span><span class="n">md5</span><span class="o">-</span><span class="n">or</span><span class="o">-</span><span class="n">flat</span><span class="p">)</span>
+     <span class="n">Reading</span> <span class="n">category</span> <span class="mi">161</span><span class="o">|</span><span class="mi">161</span> <span class="p">(</span><span class="mi">100</span><span class="o">%</span><span class="p">)</span> <span class="n">Finished</span>
+<span class="n">Applying</span> <span class="n">masks</span> <span class="p">..</span>
+<span class="n">Calculating</span> <span class="n">hash</span> <span class="n">tables</span> <span class="p">..</span>
+<span class="n">Writing</span> <span class="n">database</span> <span class="n">file</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="n">eix</span><span class="o">/</span><span class="n">portage</span><span class="p">.</span><span class="n">eix</span> <span class="p">..</span>
+<span class="n">Database</span> <span class="n">contains</span> <span class="mi">18239</span> <span class="n">packages</span> <span class="n">in</span> <span class="mi">161</span> <span class="n">categories</span><span class="p">.</span>
+</pre></div>
+
+
+<p>升级python/portage</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">sudo</span> <span class="n">emerge</span> <span class="o">-</span><span class="n">auv</span> <span class="n">python</span> <span class="n">portage</span>
+</pre></div>
+
+
+<p>升级完python后:</p>
+<blockquote>
+<p>python-updater -- Find &amp; rebuild packages broken due to a Python upgrade</p>
+</blockquote>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">python</span><span class="o">-</span><span class="n">updater</span> <span class="o">-</span><span class="n">p</span> <span class="o">-</span><span class="n">v</span>
+ <span class="o">*</span> <span class="n">Starting</span> <span class="n">Python</span> <span class="n">Updater</span><span class="p">...</span>
+ <span class="o">*</span> <span class="n">Main</span> <span class="n">active</span> <span class="n">version</span> <span class="n">of</span> <span class="n">Python</span><span class="o">:</span>    <span class="mf">2.7</span>
+ <span class="o">*</span> <span class="n">Active</span> <span class="n">version</span> <span class="n">of</span> <span class="n">Python</span> <span class="mi">2</span><span class="o">:</span>       <span class="mf">2.7</span>
+ <span class="o">*</span> <span class="n">Active</span> <span class="n">version</span> <span class="n">of</span> <span class="n">Python</span> <span class="mi">3</span><span class="o">:</span>       <span class="mf">3.3</span>
+ <span class="o">*</span> <span class="n">Globally</span> <span class="n">supported</span> <span class="n">Python</span> <span class="n">ABIs</span> <span class="n">in</span> <span class="n">installed</span> <span class="n">repositories</span><span class="o">:</span>
+ <span class="o">*</span>   <span class="n">gentoo</span><span class="o">:</span>                         <span class="mf">2.4</span> <span class="mf">2.5</span> <span class="mf">2.6</span> <span class="mf">2.7</span> <span class="mf">3.1</span> <span class="mf">3.2</span> <span class="mf">3.3</span> <span class="mf">2.5</span><span class="o">-</span><span class="n">jython</span> <span class="mf">2.7</span><span class="o">-</span><span class="n">jython</span> <span class="mf">2.7</span><span class="o">-</span><span class="n">pypy</span><span class="o">-</span><span class="mf">1.7</span> <span class="mf">2.7</span><span class="o">-</span><span class="n">pypy</span><span class="o">-</span><span class="mf">1.8</span> <span class="mf">2.7</span><span class="o">-</span><span class="n">pypy</span><span class="o">-</span><span class="mf">1.9</span> <span class="mf">2.7</span><span class="o">-</span><span class="n">pypy</span><span class="o">-</span><span class="mf">2.0</span>
+ <span class="o">*</span> <span class="n">Check</span> <span class="s">&quot;manual&quot;</span> <span class="n">enabled</span><span class="p">.</span>
+ <span class="o">*</span> <span class="n">Check</span> <span class="s">&quot;need_rebuild&quot;</span> <span class="n">enabled</span><span class="p">.</span>
+ <span class="o">*</span> <span class="n">Check</span> <span class="s">&quot;pylibdir&quot;</span> <span class="n">enabled</span><span class="p">.</span>
+ <span class="o">*</span> <span class="n">Check</span> <span class="s">&quot;PYTHON_ABIS&quot;</span> <span class="n">enabled</span><span class="p">.</span>
+ <span class="o">*</span> <span class="n">Check</span> <span class="s">&quot;shared_linking&quot;</span> <span class="n">enabled</span><span class="p">.</span>
+ <span class="o">*</span> <span class="n">Check</span> <span class="s">&quot;static_linking&quot;</span> <span class="n">enabled</span><span class="p">.</span>
+ <span class="o">*</span>   <span class="n">Adding</span> <span class="n">to</span> <span class="n">list</span><span class="o">:</span> <span class="n">app</span><span class="o">-</span><span class="n">admin</span><span class="o">/</span><span class="n">webapp</span><span class="o">-</span><span class="n">config</span><span class="o">:</span><span class="mi">0</span>
+ <span class="o">*</span>     <span class="n">check</span><span class="o">:</span> <span class="n">PYTHON_ABIS</span> <span class="p">[</span> <span class="n">Previous</span> <span class="n">Python</span> <span class="n">ABIs</span><span class="o">:</span> <span class="mf">2.7</span><span class="p">,</span> <span class="n">new</span> <span class="n">Python</span> <span class="n">ABIs</span><span class="o">:</span> <span class="mf">2.7</span> <span class="mf">3.3</span> <span class="p">]</span>
+ <span class="o">*</span>   <span class="n">Adding</span> <span class="n">to</span> <span class="n">list</span><span class="o">:</span> <span class="n">app</span><span class="o">-</span><span class="n">portage</span><span class="o">/</span><span class="n">gentoolkit</span><span class="o">:</span><span class="mi">0</span>
+ <span class="o">*</span>     <span class="n">check</span><span class="o">:</span> <span class="n">PYTHON_ABIS</span> <span class="p">[</span> <span class="n">Previous</span> <span class="n">Python</span> <span class="n">ABIs</span><span class="o">:</span> <span class="mf">2.7</span> <span class="mf">3.2</span><span class="p">,</span> <span class="n">new</span> <span class="n">Python</span> <span class="n">ABIs</span><span class="o">:</span> <span class="mf">2.7</span> <span class="mf">3.3</span> <span class="p">]</span>
+<span class="p">...</span>
+<span class="o">*</span>   <span class="n">Adding</span> <span class="n">to</span> <span class="n">list</span><span class="o">:</span> <span class="n">www</span><span class="o">-</span><span class="n">servers</span><span class="o">/</span><span class="n">tornado</span><span class="o">:</span><span class="mi">0</span>
+ <span class="o">*</span>     <span class="n">check</span><span class="o">:</span> <span class="n">PYTHON_ABIS</span> <span class="p">[</span> <span class="n">Previous</span> <span class="n">Python</span> <span class="n">ABIs</span><span class="o">:</span> <span class="mf">2.7</span> <span class="mf">3.2</span><span class="p">,</span> <span class="n">new</span> <span class="n">Python</span> <span class="n">ABIs</span><span class="o">:</span> <span class="mf">2.7</span> <span class="mf">3.3</span> <span class="p">]</span>
+ <span class="o">*</span>   <span class="n">Adding</span> <span class="n">to</span> <span class="n">list</span><span class="o">:</span> <span class="n">www</span><span class="o">-</span><span class="n">servers</span><span class="o">/</span><span class="n">uwsgi</span><span class="o">:</span><span class="mi">0</span>
+ <span class="o">*</span>     <span class="n">check</span><span class="o">:</span> <span class="n">PYTHON_ABIS</span> <span class="p">[</span> <span class="n">Previous</span> <span class="n">Python</span> <span class="n">ABIs</span><span class="o">:</span> <span class="mf">2.7</span> <span class="mf">3.2</span><span class="p">,</span> <span class="n">new</span> <span class="n">Python</span> <span class="n">ABIs</span><span class="o">:</span> <span class="mf">2.7</span> <span class="mf">3.3</span> <span class="p">]</span>
+ <span class="o">*</span> <span class="n">emerge</span> <span class="o">-</span><span class="n">Dv1</span> <span class="o">--</span><span class="n">keep</span><span class="o">-</span><span class="n">going</span> <span class="o">-</span><span class="n">p</span> <span class="n">app</span><span class="o">-</span><span class="n">admin</span><span class="o">/</span><span class="n">webapp</span><span class="o">-</span><span class="n">config</span><span class="o">:</span><span class="mi">0</span> <span class="n">app</span><span class="o">-</span><span class="n">portage</span><span class="o">/</span><span class="n">gentoolkit</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">bpython</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">chardet</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">feedparser</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">html2text</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">ipy</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">pep8</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">pyflakes</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">pymongo</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">pysqlite</span><span class="o">:</span><span class="mi">2</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">virtualenv</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">util</span><span class="o">/</span><span class="n">scons</span><span class="o">:</span><span class="mi">0</span> <span class="n">dev</span><span class="o">-</span><span class="n">vcs</span><span class="o">/</span><span class="n">subversion</span><span class="o">:</span><span class="mi">0</span> <span class="n">net</span><span class="o">-</span><span class="n">analyzer</span><span class="o">/</span><span class="n">rrdtool</span><span class="o">:</span><span class="mi">0</span> <span class="n">net</span><span class="o">-</span><span class="n">dns</span><span class="o">/</span><span class="n">bind</span><span class="o">:</span><span class="mi">0</span> <span class="n">net</span><span class="o">-</span><span class="n">misc</span><span class="o">/</span><span class="n">dropbox</span><span class="o">:</span><span class="mi">0</span> <span class="n">sys</span><span class="o">-</span><span class="n">libs</span><span class="o">/</span><span class="n">libcap</span><span class="o">-</span><span class="n">ng</span><span class="o">:</span><span class="mi">0</span> <span class="n">www</span><span class="o">-</span><span class="n">servers</span><span class="o">/</span><span class="n">tornado</span><span class="o">:</span><span class="mi">0</span> <span class="n">www</span><span class="o">-</span><span class="n">servers</span><span class="o">/</span><span class="n">uwsgi</span><span class="o">:</span><span class="mi">0</span>
+
+<span class="n">These</span> <span class="n">are</span> <span class="n">the</span> <span class="n">packages</span> <span class="n">that</span> <span class="n">would</span> <span class="n">be</span> <span class="n">merged</span><span class="p">,</span> <span class="n">in</span> <span class="n">order</span><span class="o">:</span>
+
+<span class="n">Calculating</span> <span class="n">dependencies</span><span class="p">...</span> <span class="n">done</span><span class="o">!</span>
+
+<span class="nl">emerge:</span> <span class="n">there</span> <span class="n">are</span> <span class="n">no</span> <span class="n">ebuilds</span> <span class="n">to</span> <span class="n">satisfy</span> <span class="s">&quot;dev-python/pysqlite:2&quot;</span><span class="p">.</span>
+
+ <span class="o">*</span> <span class="n">IMPORTANT</span><span class="o">:</span> <span class="mi">19</span> <span class="n">news</span> <span class="n">items</span> <span class="n">need</span> <span class="n">reading</span> <span class="k">for</span> <span class="n">repository</span> <span class="err">&#39;</span><span class="n">gentoo</span><span class="err">&#39;</span><span class="p">.</span>
+ <span class="o">*</span> <span class="n">Use</span> <span class="n">eselect</span> <span class="n">news</span> <span class="n">read</span> <span class="n">to</span> <span class="n">view</span> <span class="n">new</span> <span class="n">items</span><span class="p">.</span>
+</pre></div>
+
+
+<p>清除孤立的包, 需要在升级系统之后, 否则报错:</p>
+<div class="hlcode"><pre> <span class="o">*</span> <span class="n">Have</span> <span class="n">you</span> <span class="n">forgotten</span> <span class="n">to</span> <span class="k">do</span> <span class="n">a</span> <span class="n">complete</span> <span class="n">update</span> <span class="n">prior</span> <span class="n">to</span> <span class="n">depclean</span><span class="o">?</span> <span class="n">The</span>
+ <span class="o">*</span> <span class="n">most</span> <span class="n">comprehensive</span> <span class="n">command</span> <span class="k">for</span> <span class="n">this</span> <span class="n">purpose</span> <span class="n">is</span> <span class="n">as</span> <span class="n">follows</span><span class="o">:</span>
+ <span class="o">*</span>
+ <span class="o">*</span>   <span class="n">emerge</span> <span class="o">--</span><span class="n">update</span> <span class="o">--</span><span class="n">newuse</span> <span class="o">--</span><span class="n">deep</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">bdeps</span><span class="o">=</span><span class="n">y</span> <span class="err">@</span><span class="n">world</span>
+ <span class="o">*</span>
+ <span class="o">*</span> <span class="n">Note</span> <span class="n">that</span> <span class="n">the</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">bdeps</span><span class="o">=</span><span class="n">y</span> <span class="n">option</span> <span class="n">is</span> <span class="n">not</span> <span class="n">required</span> <span class="n">in</span> <span class="n">many</span>
+ <span class="o">*</span> <span class="n">situations</span><span class="p">.</span> <span class="n">Refer</span> <span class="n">to</span> <span class="n">the</span> <span class="n">emerge</span> <span class="n">manual</span> <span class="n">page</span> <span class="p">(</span><span class="n">run</span> <span class="err">`</span><span class="n">man</span> <span class="n">emerge</span><span class="err">`</span><span class="p">)</span>
+ <span class="o">*</span> <span class="k">for</span> <span class="n">more</span> <span class="n">information</span> <span class="n">about</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">bdeps</span><span class="p">.</span>
+
+<span class="err">$</span> <span class="n">emerge</span> <span class="o">-</span><span class="n">avuDN</span> <span class="err">@</span><span class="n">world</span>
+</pre></div>
+
+
+<p>清除不需要(孤立)的包:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">emerge</span> <span class="o">-</span><span class="n">av</span> <span class="o">--</span><span class="n">depclean</span>
+</pre></div>
+
+
+<p>检查系统包的依赖关系是否都ok:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">revdep</span><span class="o">-</span><span class="n">rebuild</span>
+</pre></div>
+
+
+<p>更新系统配置文件:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">dispatch</span><span class="o">-</span><span class="n">conf</span>
+</pre></div>
+
+
+<ul>
+<li><a href="http://blog.chinaunix.net/uid-8874157-id-3763893.html">Gentoo系统全面升级记录</a></li>
+<li><a href="http://serverfault.com/questions/9936/optimal-procedure-to-upgrade-gentoo-linux">Optimal procedure to upgrade Gentoo Linux?</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Gentoo_Cheat_Sheet">Gentoo Cheat Sheet</a></li>
+<li><a href="http://www.gentoo-cn.info/article/new-portage-plug-in-sync-system/">sys-apps/portage-2.2.16 发布，支持多种同步方式</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Project:Portage/Sync">Portage/Sync</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Upgrading_GCC/zh-cn">升级GCC</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Kernel/Upgrade/zh-cn">内核/升级</a></li>
+</ul>
+<h2 id="world-world">world 和 @world</h2>
+<blockquote>
+<p>@ indicates a package set. In portage-2.1 there are only @world and @system. In portage-2.2 there are more (emerge --list-sets). In both cases world and system are aliases for the correspnding sets, which means there is no difference. Other sets don't have such aliases.</p>
+</blockquote>
+<p>参考:</p>
+<ul>
+<li><a href="https://forums.gentoo.org/viewtopic-t-899878-start-0.html">@world versus world...what's the difference?</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/World_set_(Portage)">World set (Portage)</a></li>
+</ul>
+<h2 id="_1">升级后更新系统配置文件</h2>
+<p>初试, 所以了解的不是很全.</p>
+<p>一般<code>emerge --sync</code>或者<code>eix-sync</code>更新portage树后, 会有这种提示:</p>
+<div class="hlcode"><pre><span class="o">*</span> <span class="n">IMPORTANT</span><span class="o">:</span> <span class="mi">9</span> <span class="n">config</span> <span class="n">files</span> <span class="n">in</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">etc</span><span class="err">&#39;</span> <span class="n">need</span> <span class="n">updating</span><span class="p">.</span>
+<span class="o">*</span> <span class="n">See</span> <span class="n">the</span> <span class="n">CONFIGURATION</span> <span class="n">FILES</span> <span class="n">section</span> <span class="n">of</span> <span class="n">the</span> <span class="n">emerge</span>
+<span class="o">*</span> <span class="n">man</span> <span class="n">page</span> <span class="n">to</span> <span class="n">learn</span> <span class="n">how</span> <span class="n">to</span> <span class="n">update</span> <span class="n">config</span> <span class="n">files</span><span class="p">.</span>
+
+<span class="o">*</span> <span class="n">IMPORTANT</span><span class="o">:</span> <span class="mi">18</span> <span class="n">news</span> <span class="n">items</span> <span class="n">need</span> <span class="n">reading</span> <span class="k">for</span> <span class="n">repository</span> <span class="err">&#39;</span><span class="n">gentoo</span><span class="err">&#39;</span><span class="p">.</span>
+<span class="o">*</span> <span class="n">Use</span> <span class="n">eselect</span> <span class="n">news</span> <span class="n">read</span> <span class="n">to</span> <span class="n">view</span> <span class="n">new</span> <span class="n">items</span><span class="p">.</span>
+</pre></div>
+
+
+<p>提示已经很清楚了, 看<code>man emerge</code>的<code>CONFIGURATION FILES</code>一节.</p>
+<p>根据<code>CONFIG_PROTECT</code>的配置, 默认比如<code>/etc/</code>下的配置文件, 当软件更新时, 相应的配置是不会覆盖当前的, 而在本地生成一个<code>._cfg000_*</code>的文件, 为更新后的默认配置.</p>
+<p>通过<code>dispatch-conf</code>可以来处理这些情况, 可以丢弃新的配置文件, 或者合并两者等等.</p>
+<p>参考: <a href="https://gentoo-handbook.lugons.org/doc/zh_cn/handbook/handbook-arm.xml?part=3&amp;chap=4">Portage附加工具</a></p>
+<h2 id="dependency-graph-slot-conflict">dependency graph slot conflict</h2>
+<p>如下:</p>
+<div class="hlcode"><pre><span class="o">$</span> emerge <span class="o">-</span>auv dev<span class="o">-</span>python<span class="o">/</span>pygments
+
+These are the packages that would be merged<span class="p">,</span> <span class="kr">in</span> order<span class="o">:</span>
+
+Calculating dependencies... done<span class="o">!</span>
+<span class="kc">...</span>
+
+Total<span class="o">:</span> <span class="m">4</span> packages <span class="p">(</span><span class="m">2</span> upgrades<span class="p">,</span> <span class="m">2</span> new<span class="p">),</span> Size of downloads<span class="o">:</span> <span class="m">4</span><span class="p">,</span><span class="m">387</span> KiB
+
+<span class="o">!!!</span> Multiple package instances within a single package slot have been pulled
+<span class="o">!!!</span> into the dependency graph<span class="p">,</span> resulting <span class="kr">in</span> a slot conflict<span class="o">:</span>
+
+dev<span class="o">-</span>python<span class="o">/</span>setuptools<span class="o">:</span><span class="m">0</span>
+
+  <span class="p">(</span>dev<span class="o">-</span>python<span class="o">/</span>setuptools<span class="m">-18.4</span><span class="o">:</span><span class="m">0</span><span class="o">/</span><span class="m">0</span><span class="o">::</span>gentoo<span class="p">,</span> ebuild scheduled <span class="kr">for</span> merge<span class="p">)</span> pulled <span class="kr">in</span> by         <span class="c1"># &lt;--- 依赖新版本</span>
+<span class="kc">...</span>
+target_pypy<span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span>python_single_target_pypy3<span class="p">(</span><span class="o">-</span><span class="p">)]</span> required by <span class="p">(</span>dev<span class="o">-</span>python<span class="o">/</span>pygments<span class="m">-2.0.2</span><span class="o">-</span>r1<span class="o">:</span><span class="m">0</span><span class="o">/</span><span class="m">0</span><span class="o">::</span>gentoo<span class="p">,</span> ebuild scheduled <span class="kr">for</span> merge<span class="p">)</span>
+
+<span class="kc">...</span>
+target_pypy<span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span>python_single_target_pypy3<span class="p">(</span><span class="o">-</span><span class="p">)]</span> required by <span class="p">(</span>dev<span class="o">-</span>python<span class="o">/</span>certifi<span class="m">-2015.9.6.2</span><span class="o">:</span><span class="m">0</span><span class="o">/</span><span class="m">0</span><span class="o">::</span>gentoo<span class="p">,</span> ebuild scheduled <span class="kr">for</span> merge<span class="p">)</span>
+
+
+  <span class="p">(</span>dev<span class="o">-</span>python<span class="o">/</span>setuptools<span class="m">-2.2</span><span class="o">:</span><span class="m">0</span><span class="o">/</span><span class="m">0</span><span class="o">::</span>gentoo<span class="p">,</span> installed<span class="p">)</span> pulled <span class="kr">in</span> by                           <span class="c1"># &lt;--- 依赖老版本</span>
+<span class="kc">...</span>
+_python3_3<span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span>python_single_target_pypy<span class="p">(</span><span class="o">-</span><span class="p">)]</span> required by <span class="p">(</span>dev<span class="o">-</span>python<span class="o">/</span>pip<span class="m">-1.4.1</span><span class="o">:</span><span class="m">0</span><span class="o">/</span><span class="m">0</span><span class="o">::</span>gentoo<span class="p">,</span> installed<span class="p">)</span>
+
+<span class="kc">...</span>
+_python3_3<span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span>python_single_target_python3_4<span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span>python_single_target_pypy<span class="p">(</span><span class="o">-</span><span class="p">)]</span> required by <span class="p">(</span>dev<span class="o">-</span>python<span class="o">/</span>logilab<span class="o">-</span>common<span class="m">-0.61.0</span><span class="o">:</span><span class="m">0</span><span class="o">/</span><span class="m">0</span><span class="o">::</span>gentoo<span class="p">,</span> installed<span class="p">)</span>
+
+<span class="kc">...</span>
+python_single_target_python3_3<span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span>python_single_target_python3_4<span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span>python_single_target_pypy<span class="p">(</span><span class="o">-</span><span class="p">)]</span> required by <span class="p">(</span>dev<span class="o">-</span>python<span class="o">/</span>meld3<span class="m">-1.0.0</span><span class="o">:</span><span class="m">0</span><span class="o">/</span><span class="m">0</span><span class="o">::</span>gentoo<span class="p">,</span> installed<span class="p">)</span>
+</pre></div>
+
+
+<p>解决:</p>
+<p>把老的版本以及相应依赖同时升级:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">emerge</span> <span class="o">-</span><span class="n">avu</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">setuptools</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">pip</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">logilab</span><span class="o">-</span><span class="n">common</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">pygments</span>
+</pre></div>
+
+
+<p>参考: <a href="https://wiki.gentoo.org/wiki/Troubleshooting#Dependency_graph_slot_conflicts">Gentoo - Troubleshooting</a></p>
+<h2 id="perl">Perl相关</h2>
+<p>好像perl-core和virtual/xxx合并了, 很多perl的依赖, 可以执行<code>perl-cleaner -v --modules</code>重新编译一些较老的库.</p>
+<p>期间会遇到一些提示, 说明卡在哪, 处理掉相应的包, 然后重新执行perl-cleaner.</p>
+<p>都是一些perl-core的包, 安装相应的virtual/perl-xxx包, 然后<code>emerge -C</code>清理掉这些包, 直到perl-cleaner可以执行.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">emerge</span> <span class="o">--</span><span class="n">depclean</span> <span class="o">-</span><span class="n">pv</span>
+<span class="p">...</span>
+<span class="n">Calculating</span> <span class="n">dependencies</span><span class="p">...</span> <span class="n">done</span><span class="o">!</span>
+ <span class="o">*</span> <span class="n">Dependencies</span> <span class="n">could</span> <span class="n">not</span> <span class="n">be</span> <span class="n">completely</span> <span class="n">resolved</span> <span class="n">due</span> <span class="n">to</span>
+ <span class="o">*</span> <span class="n">the</span> <span class="n">following</span> <span class="n">required</span> <span class="n">packages</span> <span class="n">not</span> <span class="n">being</span> <span class="n">installed</span><span class="o">:</span>
+ <span class="o">*</span>
+ <span class="o">*</span>   <span class="n">dev</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">perl</span><span class="o">:</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="n">build</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span> <span class="n">pulled</span> <span class="n">in</span> <span class="n">by</span><span class="o">:</span>
+ <span class="o">*</span>     <span class="n">dev</span><span class="o">-</span><span class="n">perl</span><span class="o">/</span><span class="n">Net</span><span class="o">-</span><span class="n">SMTP</span><span class="o">-</span><span class="n">SSL</span><span class="o">-</span><span class="mf">1.10.0</span><span class="o">-</span><span class="n">r1</span>
+ <span class="o">*</span>
+ <span class="o">*</span>   <span class="n">dev</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">perl</span><span class="o">:</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="n">build</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span> <span class="n">pulled</span> <span class="n">in</span> <span class="n">by</span><span class="o">:</span>
+ <span class="o">*</span>     <span class="n">dev</span><span class="o">-</span><span class="n">perl</span><span class="o">/</span><span class="n">PlRPC</span><span class="o">-</span><span class="mf">0.202.0</span><span class="o">-</span><span class="n">r2</span>
+ <span class="o">*</span>
+ <span class="o">*</span>   <span class="n">dev</span><span class="o">-</span><span class="n">haskell</span><span class="o">/</span><span class="n">old</span><span class="o">-</span><span class="n">locale</span><span class="o">:=</span> <span class="n">pulled</span> <span class="n">in</span> <span class="n">by</span><span class="o">:</span>
+ <span class="o">*</span>     <span class="n">dev</span><span class="o">-</span><span class="n">haskell</span><span class="o">/</span><span class="n">data</span><span class="o">-</span><span class="k">default</span><span class="o">-</span><span class="n">instances</span><span class="o">-</span><span class="n">old</span><span class="o">-</span><span class="n">locale</span><span class="o">-</span><span class="mf">0.0.1</span>
+ <span class="o">*</span>
+ <span class="o">*</span>   <span class="n">sys</span><span class="o">-</span><span class="n">block</span><span class="o">/</span><span class="n">thin</span><span class="o">-</span><span class="n">provisioning</span><span class="o">-</span><span class="n">tools</span> <span class="n">pulled</span> <span class="n">in</span> <span class="n">by</span><span class="o">:</span>
+ <span class="o">*</span>     <span class="n">sys</span><span class="o">-</span><span class="n">fs</span><span class="o">/</span><span class="n">lvm2</span><span class="o">-</span><span class="mf">2.02.97</span><span class="o">-</span><span class="n">r1</span>
+ <span class="o">*</span>
+<span class="p">...</span>
+ <span class="o">*</span>   <span class="n">dev</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">perl</span><span class="p">[</span><span class="o">-</span><span class="n">build</span><span class="p">]</span> <span class="n">pulled</span> <span class="n">in</span> <span class="n">by</span><span class="o">:</span>
+ <span class="o">*</span>     <span class="n">dev</span><span class="o">-</span><span class="n">perl</span><span class="o">/</span><span class="n">Locale</span><span class="o">-</span><span class="n">gettext</span><span class="o">-</span><span class="mf">1.50.0</span>
+ <span class="o">*</span>
+ <span class="o">*</span>   <span class="n">dev</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">perl</span><span class="o">:</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="n">build</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span> <span class="n">pulled</span> <span class="n">in</span> <span class="n">by</span><span class="o">:</span>
+ <span class="o">*</span>     <span class="n">dev</span><span class="o">-</span><span class="n">perl</span><span class="o">/</span><span class="n">Authen</span><span class="o">-</span><span class="n">SASL</span><span class="o">-</span><span class="mf">2.160.0</span><span class="o">-</span><span class="n">r1</span>
+<span class="p">...</span>
+
+<span class="err">$</span> <span class="n">perl</span><span class="o">-</span><span class="n">cleaner</span> <span class="o">-</span><span class="n">v</span> <span class="o">--</span><span class="n">modules</span>
+</pre></div>
+
+
+<p>参考: <a href="https://forums.gentoo.org/viewtopic-t-987896.html">gentoo forums</a></p>
+<h2 id="_2">编译报错</h2>
+<p>升级pip/lxml时遇到编译报错.</p>
+<div class="hlcode"><pre>&gt;&gt;&gt; Failed to emerge dev-python/lxml-3.4.4, Log file:
+
+&gt;&gt;&gt;  &#39;/var/tmp/portage/dev-python/lxml-3.4.4/temp/build.log&#39;
+
+ * Messages for package dev-python/lxml-3.4.4:
+
+ * ERROR: dev-python/lxml-3.4.4::gentoo failed (compile phase):
+ *   (no error message)
+ *
+ * Call stack:
+ *     ebuild.sh, line   93:  Called src_compile
+ *   environment, line 3878:  Called distutils-r1_src_compile
+ *   environment, line 1036:  Called _distutils-r1_run_foreach_impl &#39;python_compile&#39;
+ *   environment, line  315:  Called python_foreach_impl &#39;distutils-r1_run_phase&#39; &#39;python_compile&#39;
+ *   environment, line 3339:  Called multibuild_foreach_variant &#39;_python_multibuild_wrapper&#39; &#39;distutils-r1_run_phase&#39; &#39;python_compile&#39;
+ *   environment, line 2447:  Called _multibuild_run &#39;_python_multibuild_wrapper&#39; &#39;distutils-r1_run_phase&#39; &#39;python_compile&#39;
+ *   environment, line 2445:  Called _python_multibuild_wrapper &#39;distutils-r1_run_phase&#39; &#39;python_compile&#39;
+ *   environment, line  635:  Called distutils-r1_run_phase &#39;python_compile&#39;
+ *   environment, line 1029:  Called python_compile
+ *   environment, line 2947:  Called distutils-r1_python_compile
+ *   environment, line  908:  Called esetup.py &#39;build&#39;
+ *   environment, line 1518:  Called die
+ * The specific snippet of code:
+ *       &quot;<span class="cp">${</span><span class="err">@</span><span class="cp">}</span>&quot; || die
+ *
+ * If you need support, post the output of `emerge --info &#39;=dev-python/lxml-3.4.4::gentoo&#39;`,
+ * the complete build log and the output of `emerge -pqv &#39;=dev-python/lxml-3.4.4::gentoo&#39;`.
+ * The complete build log is located at &#39;/var/tmp/portage/dev-python/lxml-3.4.4/temp/build.log&#39;.
+ * The ebuild environment file is located at &#39;/var/tmp/portage/dev-python/lxml-3.4.4/temp/environment&#39;.
+ * Working directory: &#39;/var/tmp/portage/dev-python/lxml-3.4.4/work/lxml-3.4.4-python2_7&#39;
+ * S: &#39;/var/tmp/portage/dev-python/lxml-3.4.4/work/lxml-3.4.4&#39;
+</pre></div>
+
+
+<p>可以选择直接删掉或者<code>emerge -C</code>先清理掉这些包, 然后重新安装.</p>
+<div class="hlcode"><pre><span class="n">rm</span> <span class="o">-</span><span class="n">r</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pip</span><span class="o">*</span>
+</pre></div>
+
+
+<p>参考: <a href="https://forums.gentoo.org/viewtopic-p-7842512.html?sid=933da6a4a2d0e85f87614965a7e3d34d">dev-python/pip fail to emerge</a></p>
+<h2 id="dev-pythonpython-exec">dev-python/python-exec 问题</h2>
+<p>有bug被移除的是<code>dev-python/python-exec</code>, 保留的是<code>dev-lang/python-exec</code>.</p>
+<p>注意清理时不要把<code>dev-lang/python-exec</code>给卸载了, 否则emerge就用不了了.</p>
+<p>首先查看<code>dev-python/python-exec</code>的依赖有哪些, 逐步清理, 该升级的升级, 该移除的移除</p>
+<div class="hlcode"><pre><span class="n">emerge</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">depclean</span> <span class="o">=</span><span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="o">-</span><span class="mf">10000.1</span>
+</pre></div>
+
+
+<p>升级相应的包</p>
+<div class="hlcode"><pre><span class="n">emerge</span> <span class="o">--</span><span class="n">oneshot</span> <span class="o">&lt;</span><span class="n">packages</span> <span class="n">used</span> <span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>或者移除</p>
+<div class="hlcode"><pre><span class="n">emerge</span> <span class="o">-</span><span class="n">C</span> <span class="o">&lt;</span><span class="n">packages</span> <span class="n">used</span> <span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>直到可以清理<code>emerge --verbose --depclean =dev-python/python-exec-10000.1</code></p>
+<p>参考: <a href="https://forums.gentoo.org/viewtopic-p-7512702.html">masking &amp; removal of dev-python/python.exec-10000.1</a></p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">emerge</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">depclean</span> <span class="s">&quot;=dev-python/python-exec-10000.1&quot;</span>
+
+<span class="n">Calculating</span> <span class="n">dependencies</span><span class="p">...</span> <span class="n">done</span><span class="o">!</span>
+  <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="o">-</span><span class="mf">10000.1</span> <span class="n">pulled</span> <span class="n">in</span> <span class="n">by</span><span class="o">:</span>
+    <span class="n">app</span><span class="o">-</span><span class="n">portage</span><span class="o">/</span><span class="n">layman</span><span class="o">-</span><span class="mf">2.0.0</span> <span class="n">requires</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="o">:</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">=</span><span class="p">[</span><span class="n">python_targets_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_6</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_pypy2_0</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span>
+    <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">beautifulsoup</span><span class="o">-</span><span class="mf">4.1.3</span><span class="o">-</span><span class="n">r1</span> <span class="n">requires</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="p">[</span><span class="n">python_targets_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="n">python_targets_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_6</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_1</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_3</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span>
+    <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">imaging</span><span class="o">-</span><span class="mf">1.1.7</span><span class="o">-</span><span class="n">r2</span> <span class="n">requires</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="p">[</span><span class="n">python_targets_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_5</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_6</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span>
+    <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">lxml</span><span class="o">-</span><span class="mf">3.0.1</span> <span class="n">requires</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="p">[</span><span class="n">python_targets_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="n">python_targets_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_6</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_1</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_3</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span>
+    <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">markdown</span><span class="o">-</span><span class="mf">2.2.1</span><span class="o">-</span><span class="n">r1</span> <span class="n">requires</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="p">[</span><span class="n">python_targets_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="n">python_targets_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_6</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_1</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_pypy1_9</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_pypy2_0</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span>
+    <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">markdown2</span><span class="o">-</span><span class="mf">2.1.0</span><span class="o">-</span><span class="n">r1</span> <span class="n">requires</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="p">[</span><span class="n">python_targets_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_5</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_6</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_pypy1_9</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_pypy2_0</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span>
+    <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">psycopg</span><span class="o">-</span><span class="mf">2.4.6</span><span class="o">-</span><span class="n">r1</span> <span class="n">requires</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="p">[</span><span class="n">python_targets_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="n">python_targets_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_5</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_6</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_1</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span>
+    <span class="n">virtual</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">argparse</span><span class="o">-</span><span class="mi">1</span> <span class="n">requires</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="p">[</span><span class="n">python_targets_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="n">python_targets_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_5</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_6</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python2_7</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_1</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_2</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_python3_3</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_tar</span>
+<span class="n">get_pypy1_9</span><span class="p">(</span><span class="o">-</span><span class="p">),</span><span class="o">-</span><span class="n">python_single_target_pypy2_0</span><span class="p">(</span><span class="o">-</span><span class="p">)]</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">No</span> <span class="n">packages</span> <span class="n">selected</span> <span class="k">for</span> <span class="n">removal</span> <span class="n">by</span> <span class="n">depclean</span>
+<span class="n">Packages</span> <span class="n">installed</span><span class="o">:</span>   <span class="mi">612</span>
+<span class="n">Packages</span> <span class="n">in</span> <span class="n">world</span><span class="o">:</span>    <span class="mi">189</span>
+<span class="n">Packages</span> <span class="n">in</span> <span class="n">system</span><span class="o">:</span>   <span class="mi">44</span>
+<span class="n">Required</span> <span class="n">packages</span><span class="o">:</span>    <span class="mi">612</span>
+<span class="n">Number</span> <span class="n">removed</span><span class="o">:</span>       <span class="mi">0</span>
+
+<span class="err">$</span> <span class="n">emerge</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">depclean</span> <span class="s">&quot;=dev-python/python-exec-10000.1&quot;</span>
+
+<span class="n">Calculating</span> <span class="n">dependencies</span><span class="p">...</span> <span class="n">done</span><span class="o">!</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Calculating</span> <span class="n">removal</span> <span class="n">order</span><span class="p">...</span>
+
+ <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span>
+    <span class="nl">selected:</span> <span class="mf">10000.1</span>
+   <span class="nl">protected:</span> <span class="n">none</span>
+     <span class="nl">omitted:</span> <span class="mf">10000.2</span>
+
+<span class="n">All</span> <span class="n">selected</span> <span class="n">packages</span><span class="o">:</span> <span class="o">=</span><span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="o">-</span><span class="mf">10000.1</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="err">&#39;</span><span class="n">Selected</span><span class="err">&#39;</span> <span class="n">packages</span> <span class="n">are</span> <span class="n">slated</span> <span class="k">for</span> <span class="n">removal</span><span class="p">.</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="err">&#39;</span><span class="n">Protected</span><span class="err">&#39;</span> <span class="n">and</span> <span class="err">&#39;</span><span class="n">omitted</span><span class="err">&#39;</span> <span class="n">packages</span> <span class="n">will</span> <span class="n">not</span> <span class="n">be</span> <span class="n">removed</span><span class="p">.</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Waiting</span> <span class="mi">5</span> <span class="n">seconds</span> <span class="n">before</span> <span class="n">starting</span><span class="p">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="p">(</span><span class="n">Control</span><span class="o">-</span><span class="n">C</span> <span class="n">to</span> <span class="n">abort</span><span class="p">)...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Unmerging</span> <span class="n">in</span><span class="o">:</span> <span class="mi">5</span> <span class="mi">4</span> <span class="mi">3</span> <span class="mi">2</span> <span class="mi">1</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Unmerging</span> <span class="p">(</span><span class="mi">1</span> <span class="n">of</span> <span class="mi">1</span><span class="p">)</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="o">-</span><span class="mf">10000.1</span><span class="p">...</span>
+<span class="p">...</span>
+</pre></div>
+
+
+<p>有些甚至可能是已经被移除的, 都可以清理掉, 如遇到的这个:</p>
+<div class="hlcode"><pre><span class="p">(</span><span class="n">dev</span><span class="o">-</span><span class="n">db</span><span class="o">/</span><span class="n">sqlite</span><span class="o">-</span><span class="mf">3.8.10.2</span><span class="o">:</span><span class="mi">3</span><span class="o">/</span><span class="mi">3</span><span class="o">::</span><span class="n">gentoo</span><span class="p">,</span> <span class="n">ebuild</span> <span class="n">scheduled</span> <span class="k">for</span> <span class="n">merge</span><span class="p">)</span> <span class="n">conflicts</span> <span class="n">with</span>
+  <span class="o">&gt;=</span><span class="n">dev</span><span class="o">-</span><span class="n">db</span><span class="o">/</span><span class="n">sqlite</span><span class="o">-</span><span class="mf">3.3.8</span><span class="o">:</span><span class="mi">3</span><span class="p">[</span><span class="n">extensions</span><span class="p">]</span> <span class="n">required</span> <span class="n">by</span> <span class="p">(</span><span class="n">dev</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="mf">3.2.3</span><span class="o">-</span><span class="n">r2</span><span class="o">:</span><span class="mf">3.2</span><span class="o">/</span><span class="mf">3.2</span><span class="o">::</span><span class="n">gentoo</span><span class="p">,</span> <span class="n">installed</span><span class="p">)</span>
+                          <span class="o">^^^^^^^^^^</span>
+  <span class="o">&gt;=</span><span class="n">dev</span><span class="o">-</span><span class="n">db</span><span class="o">/</span><span class="n">sqlite</span><span class="o">-</span><span class="mf">3.3.8</span><span class="o">:</span><span class="mi">3</span><span class="p">[</span><span class="n">extensions</span><span class="p">]</span> <span class="n">required</span> <span class="n">by</span> <span class="p">(</span><span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">pysqlite</span><span class="o">-</span><span class="mf">2.6.3</span><span class="o">:</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">::</span><span class="n">gentoo</span><span class="p">,</span> <span class="n">installed</span><span class="p">)</span>
+                        <span class="o">^^^^^^^^^^</span>
+</pre></div>
+
+
+<p>其中dev-lang/python-3.2.3-r2已经从portage中移除了, 所以可以先检查没有依赖就删掉<code>emerge --verbose --depclean "=dev-lang/python-3.2.3-r2"</code></p>
+<h2 id="python26">卸载python2.6</h2>
+<p>python2.6在gentoo下已经从portage中移除.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">emerge</span> <span class="o">-</span><span class="n">av</span> <span class="err">@</span><span class="n">preserved</span><span class="o">-</span><span class="n">rebuild</span>
+
+ <span class="o">*</span> <span class="n">IMPORTANT</span><span class="o">:</span> <span class="mi">18</span> <span class="n">news</span> <span class="n">items</span> <span class="n">need</span> <span class="n">reading</span> <span class="k">for</span> <span class="n">repository</span> <span class="err">&#39;</span><span class="n">gentoo</span><span class="err">&#39;</span><span class="p">.</span>
+ <span class="o">*</span> <span class="n">Use</span> <span class="n">eselect</span> <span class="n">news</span> <span class="n">read</span> <span class="n">to</span> <span class="n">view</span> <span class="n">new</span> <span class="n">items</span><span class="p">.</span>
+
+
+ <span class="o">*</span> <span class="n">IMPORTANT</span><span class="o">:</span> <span class="mi">4</span> <span class="n">config</span> <span class="n">files</span> <span class="n">in</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">portage</span><span class="err">&#39;</span> <span class="n">need</span> <span class="n">updating</span><span class="p">.</span>
+ <span class="o">*</span> <span class="n">See</span> <span class="n">the</span> <span class="n">CONFIGURATION</span> <span class="n">FILES</span> <span class="n">section</span> <span class="n">of</span> <span class="n">the</span> <span class="n">emerge</span>
+ <span class="o">*</span> <span class="n">man</span> <span class="n">page</span> <span class="n">to</span> <span class="n">learn</span> <span class="n">how</span> <span class="n">to</span> <span class="n">update</span> <span class="n">config</span> <span class="n">files</span><span class="p">.</span>
+
+<span class="n">These</span> <span class="n">are</span> <span class="n">the</span> <span class="n">packages</span> <span class="n">that</span> <span class="n">would</span> <span class="n">be</span> <span class="n">merged</span><span class="p">,</span> <span class="n">in</span> <span class="n">order</span><span class="o">:</span>
+
+<span class="n">Calculating</span> <span class="n">dependencies</span><span class="p">...</span> <span class="n">done</span><span class="o">!</span>
+
+<span class="nl">emerge:</span> <span class="n">there</span> <span class="n">are</span> <span class="n">no</span> <span class="n">ebuilds</span> <span class="n">to</span> <span class="n">satisfy</span> <span class="s">&quot;dev-lang/python:2.6&quot;</span><span class="p">.</span>
+<span class="p">(</span><span class="n">dependency</span> <span class="n">required</span> <span class="n">by</span> <span class="s">&quot;@preserved-rebuild&quot;</span> <span class="p">[</span><span class="n">argument</span><span class="p">])</span>
+</pre></div>
+
+
+<p>同上面, 清理掉:</p>
+<div class="hlcode"><pre><span class="n">emerge</span> <span class="o">--</span><span class="n">verbose</span> <span class="o">--</span><span class="n">depclean</span> <span class="s">&quot;=dev-lang/python2.6.8-r1&quot;</span>
+</pre></div>
+
+
+<p>具体版本号可以通过<code>emerge -c -pv "dev-lang/python"</code>看到.</p>
+<h2 id="gcc">gcc 升级</h2>
+<p>gcc升级后, 如果老版本被卸载, 需要运行<code>gcc-config</code>配置到新的版本.</p>
+<div class="hlcode"><pre><span class="cp"># 查看当前配置的版本的profile, 此处因为老的被卸载, 所以报错</span>
+<span class="cp"># 并且也显示了可配置的列表</span>
+<span class="err">$</span> <span class="n">gcc</span><span class="o">-</span><span class="n">config</span> <span class="o">-</span><span class="n">c</span>
+ <span class="o">*</span> <span class="n">gcc</span><span class="o">-</span><span class="n">config</span><span class="o">:</span> <span class="n">Active</span> <span class="n">gcc</span> <span class="n">profile</span> <span class="n">is</span> <span class="n">invalid</span><span class="o">!</span>
+
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">x86_64</span><span class="o">-</span><span class="n">pc</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">-</span><span class="mf">4.9.3</span>
+
+<span class="cp"># 查看可选的版本的profile, 此处因为老的被卸载, 所以报错</span>
+<span class="err">$</span> <span class="n">gcc</span><span class="o">-</span><span class="n">config</span> <span class="o">-</span><span class="n">l</span>
+ <span class="o">*</span> <span class="n">gcc</span><span class="o">-</span><span class="n">config</span><span class="o">:</span> <span class="n">Active</span> <span class="n">gcc</span> <span class="n">profile</span> <span class="n">is</span> <span class="n">invalid</span><span class="o">!</span>
+
+ <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="n">x86_64</span><span class="o">-</span><span class="n">pc</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">-</span><span class="mf">4.9.3</span>
+
+<span class="cp"># 配置到相应版本</span>
+<span class="err">$</span> <span class="n">gcc</span><span class="o">-</span><span class="n">config</span> <span class="n">x86_64</span><span class="o">-</span><span class="n">pc</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">-</span><span class="mf">4.9.3</span>
+ <span class="o">*</span> <span class="n">Switching</span> <span class="n">native</span><span class="o">-</span><span class="n">compiler</span> <span class="n">to</span> <span class="n">x86_64</span><span class="o">-</span><span class="n">pc</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">-</span><span class="mf">4.9.3</span> <span class="p">...</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Regenerating</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">ld</span><span class="p">.</span><span class="n">so</span><span class="p">.</span><span class="n">cache</span><span class="p">...</span>                                                                                                                                   <span class="p">[</span> <span class="n">ok</span> <span class="p">]</span>
+
+ <span class="o">*</span> <span class="n">If</span> <span class="n">you</span> <span class="n">intend</span> <span class="n">to</span> <span class="n">use</span> <span class="n">the</span> <span class="n">gcc</span> <span class="n">from</span> <span class="n">the</span> <span class="n">new</span> <span class="n">profile</span> <span class="n">in</span> <span class="n">an</span> <span class="n">already</span>
+ <span class="o">*</span> <span class="n">running</span> <span class="n">shell</span><span class="p">,</span> <span class="n">please</span> <span class="n">remember</span> <span class="n">to</span> <span class="k">do</span><span class="o">:</span>
+
+ <span class="o">*</span>   <span class="p">.</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+
+<span class="err">$</span> <span class="n">gcc</span><span class="o">-</span><span class="n">config</span> <span class="o">-</span><span class="n">c</span>
+<span class="n">x86_64</span><span class="o">-</span><span class="n">pc</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">-</span><span class="mf">4.9.3</span>
+</pre></div>
+
+
+<h2 id="x11">卸载X11相关</h2>
+<p>还未操作, 先记录:  <a href="https://forums.gentoo.org/viewtopic-p-6667611.html">How to remove X11</a></p>
+<h2 id="_3">其它资源</h2>
+<ul>
+<li><a href="http://www.jinbuguo.com/gentoo/emerge.html">emerge 中文手册</a></li>
+<li><a href="https://javran.wordpress.com/2011/02/18/gentoo-commands/">gentoo 日常维护命令备忘</a></li>
+<li><a href="http://www.tamabc.com/article/60785.html">Gentoo Quick Guide</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Troubleshooting">Gentoo Troubleshooting</a></li>
+<li><a href="https://gentoo-handbook.lugons.org/doc/zh_cn/handbook/handbook-x86.xml?part=2&amp;chap=1&amp;style=printable">Portage入门</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

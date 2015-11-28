@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>SaltStack - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » SaltStack
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <ul>
+<li><a href="http://www.saltstack.com/">官网</a></li>
+<li><a href="http://docs.saltstack.com/">官方文档</a></li>
+<li><a href="https://github.com/saltstack/salt">Github</a></li>
+</ul>
+<h2 id="_1">安装</h2>
+<p>参考 <a href="http://docs.saltstack.com/topics/installation/index.html">doc - Installation</a>。</p>
+<p>部分常用系统支持使用 <a href="https://github.com/saltstack/salt-bootstrap">salt-bootstrip</a> 脚本快速安装, 每个平台也有专门的安装教程, 见 <a href="http://docs.saltstack.com/topics/installation/index.html#platform-specific-installation-instructions">PLATFORM-SPECIFIC INSTALLATION INSTRUCTIONS</a></p>
+<h2 id="_2">遇到的问题</h2>
+<h3 id="id">修改主机名后, 默认id不变</h3>
+<p>按照文档说的, 在客户端没有配置 id 的时候, 通过 socket.getfqdn() -&gt; hostname 的顺序定义 id。但是我修改主机名并重启机器后，通过 salt-key -L 看未接受主机，还是原来的主机名。</p>
+<p>后来发现，在 /etc/salt/ 下有一个 <code>minion_id</code> 文件，里面保存的是原来的文件名。</p>
+<p>猜测：在客户端初始化时是通过上面说的顺便获取一个默认id，然后存储在此文件中，如果 /etc/salt/minion 里定义了 id，则使用这个id，如果未定义，则使用 <code>/etc/salt/minion_id</code> 里存储的id。那么，如果修改了主机名，又没有定义id，那么就应该手动修改这个文件。</p>
+<h2 id="_3">资料</h2>
+<ul>
+<li><a href="http://www.vpsee.com/2013/08/a-system-configuration-management-and-orchestration-tool-saltstack/">系统自动化配置和管理工具 SaltStack</a></li>
+<li><a href="http://www.groovyq.net/node/727">使用saltstack批量管理服务器</a></li>
+<li><a href="http://wiki.saltstack.cn/docs">SaltStack中国用户组wiki</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

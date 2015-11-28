@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>nmap - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » nmap
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p><a href="http://nmap.org/man/zh/">官方文档中文版</a></p>
+<div class="hlcode"><pre><span class="n">nmap</span> <span class="mf">173.252.192</span><span class="p">.</span><span class="o">*</span>
+<span class="err">可以检测</span><span class="mi">1</span><span class="err">～</span><span class="mi">254</span><span class="err">中有多少机器存活，当然也有可能机器什么端口都没开，但是存活</span>
+
+<span class="n">nmap</span> <span class="o">-</span><span class="n">A</span> <span class="o">-</span><span class="n">T5</span> <span class="n">localhost</span>
+<span class="o">-</span><span class="n">A</span><span class="o">:</span> <span class="n">to</span> <span class="n">enable</span> <span class="n">OS</span> <span class="n">and</span> <span class="n">version</span> <span class="n">detection</span>
+<span class="o">-</span><span class="n">T5</span><span class="o">:</span> <span class="o">-</span><span class="n">T</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">-</span><span class="mi">5</span><span class="o">&gt;:</span> <span class="n">Set</span> <span class="n">timing</span> <span class="n">template</span> <span class="p">(</span><span class="n">higher</span> <span class="n">is</span> <span class="n">faster</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Nmap支持CIDR风格：</p>
+<div class="hlcode"><pre><span class="n">host</span><span class="o">/</span><span class="n">numbit</span>
+<span class="n">eg</span><span class="p">.</span>
+<span class="n">nmap</span> <span class="mf">192.168.1.1</span><span class="o">/</span><span class="mi">24</span>
+<span class="err">将会扫描</span><span class="mf">192.168.1</span><span class="p">.</span><span class="mf">.0</span> <span class="o">~</span> <span class="mf">192.168.1.255</span>
+</pre></div>
+
+
+<p>Nmap还支持这种格式扫描：</p>
+<div class="hlcode"><pre><span class="n">nmap</span> <span class="mf">192.168.1</span><span class="o">-</span><span class="mf">2.100</span><span class="o">-</span><span class="mi">120</span>
+<span class="err">将会扫描</span><span class="mf">192.168.1.100</span><span class="err">～</span><span class="mf">192.168.1.120</span> <span class="err">和</span> <span class="mf">192.168.2.100</span><span class="err">～</span><span class="mf">192.168.2.120</span>
+<span class="n">nmap</span> <span class="mf">192.168.1.1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span>
+<span class="err">将会扫描</span><span class="mf">192.168.1.1</span><span class="err">、</span><span class="mf">192.168.1.3</span><span class="err">、</span><span class="mf">192.168.1.5</span><span class="err">这三个</span>
+</pre></div>
+
+
+<p>Ping扫描</p>
+<div class="hlcode"><pre><span class="o">-</span><span class="n">sL</span> <span class="err">列表扫描</span>
+<span class="o">-</span><span class="n">sP</span> <span class="n">Ping</span><span class="err">扫描</span>
+<span class="o">-</span><span class="n">P0</span> <span class="err">无</span><span class="n">Ping</span>
+<span class="o">-</span><span class="n">PS</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

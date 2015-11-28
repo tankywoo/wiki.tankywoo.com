@@ -1,0 +1,191 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>ipmi - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » ipmi
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>IPMI(Intelligent Platform Management Interface) 智慧平台管理工具.</p>
+<p>一般用于操作系统重启, 监控硬件如温度等.</p>
+<p>工具是ipmitool.</p>
+<hr />
+<p>首先在启动机器时, Dell一般是<code>Ctrl-E</code>进入IPMI配置:</p>
+<p><img alt="IPMI-1" src="http://tankywoo-wb.b0.upaiyun.com/ipmi-1.png" /></p>
+<p>配置<code>IPMI Over LAN</code>为<code>On</code>, 这块暂时没找到如何通过ipmitool来管理, 看到这个<a href="http://serverfault.com/questions/676145/how-to-disable-ipmi-over-lan-using-ipmitool">帖子</a>, 有时间再研究下.</p>
+<p><img alt="IPMI-2" src="http://tankywoo-wb.b0.upaiyun.com/ipmi-2.png" /></p>
+<p>另外, Common Settings中, NIC Selection设置为<code>Shared with Failover LOM2</code>, 这块涉及到网卡的使用, 因为配置的ip是内网, 和第一块网卡绑定, 如果配错了也不通. 之前遇到有时是LOM1, 通过插拔网线可以切换过去.</p>
+<p>最后进入BIOS, 设置Serial Communication:</p>
+<p><img alt="IPMI-3" src="http://tankywoo-wb.b0.upaiyun.com/ipmi-3.png" /></p>
+<hr />
+<p>远程的话, 最常用的就是:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ipmitool</span> <span class="o">-</span><span class="n">H</span> <span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span> <span class="o">-</span><span class="n">U</span> <span class="n">root</span> <span class="o">-</span><span class="n">P</span> <span class="n">XXXX</span> <span class="o">-</span><span class="n">I</span> <span class="p">[</span><span class="n">lan</span><span class="o">|</span><span class="n">lanplus</span><span class="o">|</span><span class="n">open</span><span class="p">]</span> <span class="n">power</span> <span class="p">[</span><span class="n">on</span><span class="o">|</span><span class="n">off</span><span class="o">|</span><span class="n">reset</span><span class="o">|</span><span class="n">soft</span><span class="o">|</span><span class="n">status</span><span class="p">]</span>
+</pre></div>
+
+
+<p>其中lan/lanplus分别是v1.5/v2.0的标准, 具体看主板的IPMI支持了.</p>
+<p>open是默认的, 基于本地的操作可以不写.</p>
+<p>因为IPMI是基于主板硬件上的, 所以即时服务器关机, 只要ipmi ip可通, 且插电, 就可以远程控制开机</p>
+<p>下面记录一些本机上的命令操作. 环境Ubuntu 12.04.</p>
+<p>首先查看是否支持IPMI:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">dmidecode</span> <span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">C</span> <span class="mi">5</span> <span class="n">IPMI</span>
+<span class="p">...</span>
+
+<span class="n">Handle</span> <span class="mh">0x2600</span><span class="p">,</span> <span class="n">DMI</span> <span class="n">type</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">18</span> <span class="n">bytes</span>
+<span class="n">IPMI</span> <span class="n">Device</span> <span class="n">Information</span>
+        <span class="n">Interface</span> <span class="n">Type</span><span class="o">:</span> <span class="n">KCS</span> <span class="p">(</span><span class="n">Keyboard</span> <span class="n">Control</span> <span class="n">Style</span><span class="p">)</span>
+        <span class="n">Specification</span> <span class="n">Version</span><span class="o">:</span> <span class="mf">2.0</span>
+        <span class="n">I2C</span> <span class="n">Slave</span> <span class="n">Address</span><span class="o">:</span> <span class="mh">0x10</span>
+        <span class="n">NV</span> <span class="n">Storage</span> <span class="n">Device</span><span class="o">:</span> <span class="n">Not</span> <span class="n">Present</span>
+        <span class="n">Base</span> <span class="n">Address</span><span class="o">:</span> <span class="mh">0x0000000000000</span><span class="n">XXX</span> <span class="p">(</span><span class="n">I</span><span class="o">/</span><span class="n">O</span><span class="p">)</span>
+</pre></div>
+
+
+<p>加载指定模块:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">lsmod</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">ipmi</span>
+<span class="n">ipmi_ssif</span>              <span class="mi">16256</span>  <span class="mi">0</span>
+<span class="n">ipmi_devintf</span>            <span class="mi">8500</span>  <span class="mi">0</span>
+<span class="n">ipmi_si</span>                <span class="mi">47731</span>  <span class="mi">0</span>
+<span class="n">ipmi_msghandler</span>        <span class="mi">40979</span>  <span class="mi">3</span> <span class="n">ipmi_ssif</span><span class="p">,</span><span class="n">ipmi_devintf</span><span class="p">,</span><span class="n">ipmi_si</span>
+</pre></div>
+
+
+<p>命令:</p>
+<div class="hlcode"><pre><span class="cp"># 查看本机的ipmi 通道1(channel)配置</span>
+<span class="cp"># -I open 可有可无</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="o">-</span><span class="n">I</span> <span class="n">open</span> <span class="n">lan</span> <span class="n">print</span> <span class="mi">1</span>
+<span class="n">Set</span> <span class="n">in</span> <span class="n">Progress</span>         <span class="o">:</span> <span class="n">Set</span> <span class="n">Complete</span>
+<span class="n">Auth</span> <span class="n">Type</span> <span class="n">Support</span>       <span class="o">:</span> <span class="n">NONE</span> <span class="n">MD2</span> <span class="n">MD5</span> <span class="n">PASSWORD</span>
+<span class="n">Auth</span> <span class="n">Type</span> <span class="n">Enable</span>        <span class="o">:</span> <span class="n">Callback</span> <span class="o">:</span> <span class="n">MD2</span> <span class="n">MD5</span>
+                        <span class="o">:</span> <span class="n">User</span>     <span class="o">:</span> <span class="n">MD2</span> <span class="n">MD5</span>
+                        <span class="o">:</span> <span class="n">Operator</span> <span class="o">:</span> <span class="n">MD2</span> <span class="n">MD5</span>
+                        <span class="o">:</span> <span class="n">Admin</span>    <span class="o">:</span> <span class="n">MD2</span> <span class="n">MD5</span>
+                        <span class="o">:</span> <span class="n">OEM</span>      <span class="o">:</span>
+<span class="n">IP</span> <span class="n">Address</span> <span class="n">Source</span>       <span class="o">:</span> <span class="n">Static</span> <span class="n">Address</span>
+<span class="n">IP</span> <span class="n">Address</span>              <span class="o">:</span> <span class="mf">192.168.0.100</span>
+<span class="n">Subnet</span> <span class="n">Mask</span>             <span class="o">:</span> <span class="mf">255.255.255.0</span>
+<span class="n">MAC</span> <span class="n">Address</span>             <span class="o">:</span> <span class="mi">78</span><span class="o">:</span><span class="mi">2</span><span class="n">b</span><span class="o">:</span><span class="n">cb</span><span class="o">:</span><span class="mi">8</span><span class="n">e</span><span class="o">:</span><span class="n">ab</span><span class="o">:</span><span class="mi">90</span>
+<span class="n">SNMP</span> <span class="n">Community</span> <span class="n">String</span>   <span class="o">:</span> <span class="n">public</span>
+<span class="n">IP</span> <span class="n">Header</span>               <span class="o">:</span> <span class="n">TTL</span><span class="o">=</span><span class="mh">0x40</span> <span class="n">Flags</span><span class="o">=</span><span class="mh">0x40</span> <span class="n">Precedence</span><span class="o">=</span><span class="mh">0x00</span> <span class="n">TOS</span><span class="o">=</span><span class="mh">0x10</span>
+<span class="n">Default</span> <span class="n">Gateway</span> <span class="n">IP</span>      <span class="o">:</span> <span class="mf">192.168.0.1</span>
+<span class="n">Default</span> <span class="n">Gateway</span> <span class="n">MAC</span>     <span class="o">:</span> <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span>
+<span class="n">Backup</span> <span class="n">Gateway</span> <span class="n">IP</span>       <span class="o">:</span> <span class="mf">0.0.0.0</span>
+<span class="n">Backup</span> <span class="n">Gateway</span> <span class="n">MAC</span>      <span class="o">:</span> <span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span><span class="o">:</span><span class="mo">00</span>
+<span class="mf">802.1</span><span class="n">q</span> <span class="n">VLAN</span> <span class="n">ID</span>          <span class="o">:</span> <span class="n">Disabled</span>
+<span class="mf">802.1</span><span class="n">q</span> <span class="n">VLAN</span> <span class="n">Priority</span>    <span class="o">:</span> <span class="mi">0</span>
+<span class="n">RMCP</span><span class="o">+</span> <span class="n">Cipher</span> <span class="n">Suites</span>     <span class="o">:</span> <span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">11</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">14</span>
+<span class="n">Cipher</span> <span class="n">Suite</span> <span class="n">Priv</span> <span class="n">Max</span>   <span class="o">:</span> <span class="n">aaaaaaaaaaaaaaa</span>
+                        <span class="o">:</span>     <span class="n">X</span><span class="o">=</span><span class="n">Cipher</span> <span class="n">Suite</span> <span class="n">Unused</span>
+                        <span class="o">:</span>     <span class="n">c</span><span class="o">=</span><span class="n">CALLBACK</span>
+                        <span class="o">:</span>     <span class="n">u</span><span class="o">=</span><span class="n">USER</span>
+                        <span class="o">:</span>     <span class="n">o</span><span class="o">=</span><span class="n">OPERATOR</span>
+                        <span class="o">:</span>     <span class="n">a</span><span class="o">=</span><span class="n">ADMIN</span>
+                        <span class="o">:</span>     <span class="n">O</span><span class="o">=</span><span class="n">OEM</span>
+
+<span class="cp"># 设置ipmi ip为静态ip</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">lan</span> <span class="n">set</span> <span class="mi">1</span> <span class="n">ipsrc</span> <span class="k">static</span>
+
+<span class="cp"># 设置ipmi ip</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">lan</span> <span class="n">set</span> <span class="mi">1</span> <span class="n">ipaddr</span> <span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span>
+
+<span class="cp"># 设置ipmi掩码</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">lan</span> <span class="n">set</span> <span class="mi">1</span> <span class="n">netmask</span> <span class="mf">255.255.255.0</span>
+
+<span class="cp"># 设置ipmi默认网关</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">lan</span> <span class="n">set</span> <span class="mi">1</span> <span class="n">defgw</span> <span class="n">ipaddr</span> <span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span><span class="p">.</span><span class="n">X</span>
+
+<span class="cp"># 查看ipmi的用户列表</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">user</span> <span class="n">list</span> <span class="mi">1</span>
+<span class="n">ID</span>  <span class="n">Name</span>             <span class="n">Callin</span>  <span class="n">Link</span> <span class="n">Auth</span>  <span class="n">IPMI</span> <span class="n">Msg</span>   <span class="n">Channel</span> <span class="n">Priv</span> <span class="n">Limit</span>
+<span class="mi">2</span>   <span class="n">root</span>             <span class="nb">true</span>    <span class="nb">true</span>       <span class="nb">true</span>       <span class="n">ADMINISTRATOR</span>
+<span class="mi">3</span>   <span class="n">tankywoo</span>         <span class="nb">true</span>    <span class="nb">true</span>       <span class="nb">true</span>       <span class="n">ADMINISTRATOR</span>
+
+<span class="cp"># 对指定用户设置密码</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">user</span> <span class="n">set</span> <span class="n">password</span> <span class="mi">2</span> <span class="n">XXXX</span>
+
+<span class="cp"># 新建用户</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">user</span> <span class="n">set</span> <span class="n">name</span> <span class="mi">3</span> <span class="n">tankywoo</span>
+
+<span class="cp"># 给用户设置权限</span>
+<span class="cp"># 其中privilege可以运行ipmitool channel查看数字所代表的等级</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">channel</span> <span class="n">setaccess</span> <span class="mi">1</span> <span class="mi">3</span> <span class="n">link</span><span class="o">=</span><span class="n">on</span> <span class="n">ipmi</span><span class="o">=</span><span class="n">on</span> <span class="n">callin</span><span class="o">=</span><span class="n">on</span> <span class="n">privilege</span><span class="o">=</span><span class="mi">4</span>
+
+<span class="cp"># 开启用户</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">user</span> <span class="n">enable</span> <span class="mi">3</span>
+
+<span class="cp"># 查看指定通道的指定用户权限</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">channel</span> <span class="n">getaccess</span> <span class="mi">1</span> <span class="mi">3</span>
+<span class="n">Maximum</span> <span class="n">User</span> <span class="n">IDs</span>     <span class="o">:</span> <span class="mi">10</span>
+<span class="n">Enabled</span> <span class="n">User</span> <span class="n">IDs</span>     <span class="o">:</span> <span class="mi">2</span>
+
+<span class="n">User</span> <span class="n">ID</span>              <span class="o">:</span> <span class="mi">3</span>
+<span class="n">User</span> <span class="n">Name</span>            <span class="o">:</span> <span class="n">tankywoo</span>
+<span class="n">Fixed</span> <span class="n">Name</span>           <span class="o">:</span> <span class="n">No</span>
+<span class="n">Access</span> <span class="n">Available</span>     <span class="o">:</span> <span class="n">call</span><span class="o">-</span><span class="n">in</span> <span class="o">/</span> <span class="n">callback</span>
+<span class="n">Link</span> <span class="n">Authentication</span>  <span class="o">:</span> <span class="n">enabled</span>
+<span class="n">IPMI</span> <span class="n">Messaging</span>       <span class="o">:</span> <span class="n">enabled</span>
+<span class="n">Privilege</span> <span class="n">Level</span>      <span class="o">:</span> <span class="n">ADMINISTRATOR</span>
+
+<span class="cp"># 修改认证方式</span>
+<span class="err">$</span> <span class="n">ipmitool</span> <span class="n">lan</span> <span class="n">set</span> <span class="mi">1</span> <span class="n">auth</span> <span class="n">USER</span> <span class="n">MD5</span><span class="p">,</span><span class="n">MD2</span>
+</pre></div>
+
+
+<h2 id="_1">参考</h2>
+<ul>
+<li><a href="https://www.thomas-krenn.com/en/wiki/Configuring_IPMI_under_Linux_using_ipmitool">Configuring IPMI under Linux using ipmitool</a></li>
+<li><a href="http://netkiller.github.io/monitoring/ipmitool.html">ipmitool - utility for controlling IPMI-enabled devices</a></li>
+<li><a href="http://www.alleft.com/sysadmin/ipmi-sol-inexpensive-remote-console/">IPMI SOL – Inexpensive Remote Console</a></li>
+<li><a href="http://www.dell.com/downloads/global/power/ps4q04-20040204-murphy.pdf">Managing Dell PowerEdge Servers Using IPMItool</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

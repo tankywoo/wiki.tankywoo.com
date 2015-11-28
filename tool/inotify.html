@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>inotify - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » inotify
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <p>Inotify是一种文件变化通知机制, Linux内核从 2.6.13 开始引入.</p>
+<h2 id="_1">内核支持</h2>
+<p>在使用前, 需要先检查内核是否开启了inotify的支持:</p>
+<div class="hlcode"><pre><span class="c"># /path/to/kernel_config 是内核的配置文件</span>
+<span class="c"># 比如在gentoo下, 是 `/usr/src/linux/.config` 这个文件</span>
+grep INOTIFY_USER /path/to/kernel_config
+</pre></div>
+
+
+<p>如果显示 <code>CONFIG_INOTIFY_USER=y</code> 则表示内核的配置里已开启支持.</p>
+<p>然后看看 <code>/proc/sys/fs/inotify</code> 目录:</p>
+<div class="hlcode"><pre>9:50 root@gentoo-jl /root
+% ll /proc/sys/fs/inotify
+total 0
+dr-xr-xr-x 1 root root 0 Aug 18 07:07 .
+dr-xr-xr-x 1 root root 0 Aug 18 06:42 ..
+-rw-r--r-- 1 root root 0 Aug 18 07:07 max_queued_events
+-rw-r--r-- 1 root root 0 Aug 18 07:07 max_user_instances
+-rw-r--r-- 1 root root 0 Aug 18 07:07 max_user_watches
+</pre></div>
+
+
+<p>确保有这三个文件.</p>
+<blockquote>
+<p>/proc/sys/fs/inotify/max_queued_events<br />
+默认值: 16384 该文件中的值为调用inotify_init时分配给inotify instance中可排队的event的数目的最大值，超出这个值得事件被丢弃，但会触发IN_Q_OVERFLOW事件<br />
+The value in this file is used when an application calls inotify_init(2) to set an upper limit on the number of events that can be queued to the corresponding inotify instance. Events in excess of this limit are dropped, but an IN_Q_OVERFLOW event is always generated.  </p>
+<p>/proc/sys/fs/inotify/max_user_instances<br />
+默认值: 128 指定了每一个real user ID可创建的inotify instatnces的数量上限<br />
+This specifies an upper limit on the number of inotify instances that can be created per real user ID.  </p>
+<p>/proc/sys/fs/inotify/max_user_watches<br />
+默认值: 8192 指定了每个inotify instance相关联的watches的上限<br />
+This specifies a limit on the number of watches that can be associated with each inotify instance.  </p>
+</blockquote>
+<p>参考 <a href="http://www.linuxinsight.com/proc_sys_fs_inotify.html">LinuxInsight</a></p>
+<p>可以通过 <code>echo</code> 或 <code>sysctl</code> 更改这些值. </p>
+<ul>
+<li><a href="http://forums.slimdevices.com/showthread.php?78939-SbS-7-6-inotify-What-are-max_user_watches">参考1</a></li>
+<li><a href="http://askubuntu.com/questions/148171/dropbox-error-echo-100000-sudo-tee-proc-sys-fs-inotify-max-user-watches">参考2</a></li>
+</ul>
+<p>注意: max_queued_events 是 Inotify 管理的队列的最大长度，文件系统变化越频繁，这个值就应该越大 </p>
+<p>如果你在日志中看到Event Queue Overflow，说明max_queued_events太小需要调整参数后再次使用.</p>
+<h2 id="inotify-tools">inotify-tools</h2>
+<p>包含两个工具:</p>
+<ul>
+<li>inotifywait : wait for changes to files using inotify</li>
+<li>inotifywatch : gather filesystem access statistics using inotify</li>
+</ul>
+<h2 id="pyinotify">pyinotify</h2>
+<p><a href="https://github.com/seb-m/pyinotify">pyinotify</a> 是一个 Python 的模块, 用于监控文件系统变化, 它基于 Linux Kernel 的 inotify 特性.</p>
+<p>安装好 pyinotify 后, 可以测试一下:</p>
+<div class="hlcode"><pre>python -m pyinotify -v /my-dir-to-watch
+</pre></div>
+
+
+<p>可以把 pyinotify 模块当一个脚本来执行. 然后 cd 到 /my-dir-to-watch, 就会看见监控窗口有一系列的事件日志显示.</p>
+<p>pyinotify 的 <a href="https://github.com/seb-m/pyinotify/wiki">wiki</a> 讲的非常详细.</p>
+<p>还有一些 inotify 的<code>坑</code>, pyinotify 的作者已经列举了这些常见的问题: <a href="https://github.com/seb-m/pyinotify/wiki/Frequently-Asked-Questions">Frequently Asked Questions</a></p>
+<h2 id="_2">参考资料</h2>
+<ul>
+<li><a href="http://www.infoq.com/cn/articles/inotify-linux-file-system-event-monitoring">Inotify: 高效、实时的Linux文件系统事件监控框架</a></li>
+<li><a href="http://github.com/seb-m/pyinotify/wiki">pyinotify wiki</a></li>
+<li><a href="http://www.ibm.com/developerworks/cn/linux/l-inotify/">IBM - 用 inotify 监控 Linux 文件系统事件</a></li>
+<li><a href="http://www.517sou.net/Article/367.aspx">inotify+rsync实现触发式文件同步</a></li>
+<li><a href="http://www.51know.info/system_security/inotify.html">linux inotify 监控文件系统事件</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

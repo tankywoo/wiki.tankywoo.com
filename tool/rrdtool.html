@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>rrdtool - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » rrdtool
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="rrdtool">RRDtool</h2>
+<h2 id="_1">简介</h2>
+<p>RRDtool(Round Robin Database Tool)</p>
+<p>效果图</p>
+<h2 id="_2">安装</h2>
+<p>参考: <a href="http://bbs.chinaunix.net/thread-2150417-1-1.html">RRDtool简体中文教程(ChinaUnix)</a></p>
+<h2 id="rrd">新建RRD</h2>
+<p><a href="http://oss.oetiker.ch/rrdtool/doc/rrdcreate.en.html">Offical Doc - rrdcreate</a></p>
+<div class="hlcode"><pre><span class="n">rrdtool</span> <span class="n">create</span> <span class="n">filename</span> <span class="p">[</span><span class="o">--</span><span class="n">start</span><span class="o">|-</span><span class="n">b</span> <span class="n">start</span> <span class="n">time</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">step</span><span class="o">|-</span><span class="n">s</span> <span class="n">step</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">overwrite</span><span class="p">]</span> \
+        <span class="p">[</span><span class="n">DS</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="o">:</span><span class="n">DST</span><span class="o">:</span><span class="n">dst</span> <span class="n">arguments</span><span class="p">]</span> \
+        <span class="p">[</span><span class="n">RRA</span><span class="o">:</span><span class="n">CF</span><span class="o">:</span><span class="n">cf</span> <span class="n">arguments</span><span class="p">]</span>
+
+<span class="o">*</span> <span class="n">filename</span>
+<span class="n">rrd</span><span class="err">的名称</span><span class="p">.</span> <span class="err">默认以</span><span class="p">.</span><span class="n">rrd</span><span class="err">结尾</span>
+
+<span class="o">*</span> <span class="o">--</span><span class="n">start</span>
+<span class="err">设置</span><span class="n">rrd</span><span class="err">的起始时间</span><span class="p">,</span> <span class="n">rrd</span><span class="err">不接收比这个时间靠前的数据</span><span class="p">.</span> <span class="err">默认是当前时间前</span><span class="mi">10</span><span class="n">s</span>
+
+<span class="o">*</span> <span class="o">--</span><span class="n">step</span>
+<span class="err">设置时间步长</span><span class="p">.</span> <span class="err">默认是</span><span class="mi">300</span><span class="n">s</span>
+</pre></div>
+
+
+<h3 id="ds">DS</h3>
+<p>DS - Data Source</p>
+<p>一个RRD可以接受多个DS. 比如入口流量和出口流量分别作为各作为一个DS存在一个RRD里.</p>
+<ul>
+<li><code>ds-name</code>: DS的名称, 长度为1~19个字符(Note)</li>
+<li><code>DST</code>: Data Source Type, DS的类型, 有GAUGE, COUNTER, DERIVE, ABSOLUTE, COMPUTE<div class="hlcode"><pre><span class="n">DS</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="o">:</span><span class="n">GAUGE</span> <span class="o">|</span> <span class="n">COUNTER</span> <span class="o">|</span> <span class="n">DERIVE</span> <span class="o">|</span> <span class="n">ABSOLUTE</span><span class="o">:</span><span class="n">heartbeat</span><span class="o">:</span><span class="n">min</span><span class="o">:</span><span class="n">max</span>
+<span class="n">DS</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="o">:</span><span class="n">COMPUTE</span><span class="o">:</span><span class="n">rpn</span><span class="o">-</span><span class="n">expression</span>
+
+<span class="o">*</span> <span class="n">GAUGE</span><span class="o">:</span> <span class="err">直接把值存入</span><span class="n">RRD</span>
+<span class="o">*</span> <span class="n">COUNTER</span><span class="o">:</span> <span class="err">用于记录持续增长的计数器</span><span class="o">.</span> <span class="err">适合一个率的计算，如流量增长率</span><span class="o">.</span>
+<span class="o">*</span> <span class="n">DERIVE</span><span class="o">:</span> <span class="err">和</span><span class="n">COUNTER</span><span class="err">类似</span><span class="o">.</span> <span class="err">但是可以计算增长或减少的率</span><span class="o">.</span>
+<span class="o">*</span> <span class="n">ABSOLUTE</span><span class="o">:</span> <span class="err">它假设每次前一个</span><span class="n">interval</span><span class="err">的值都是</span><span class="mi">0</span><span class="o">,</span> <span class="err">再计算平均值</span><span class="o">.</span> <span class="o">(</span><span class="err">没用过</span><span class="o">)</span>
+<span class="o">*</span> <span class="n">COMPUTE</span><span class="o">:</span> <span class="err">引用其他</span><span class="n">RRD</span><span class="err">中的</span><span class="n">DS</span><span class="err">来计算某个值</span><span class="o">.</span> <span class="o">(</span><span class="err">没用过</span><span class="o">)</span>
+
+<span class="err">`</span><span class="n">heartbeat</span><span class="err">`</span><span class="o">:</span> <span class="err">心跳</span><span class="o">.</span> <span class="err">定义两次更新间最大的秒数</span><span class="o">.</span> <span class="err">长于这个时间未获取到数据的</span><span class="o">,</span> <span class="err">则为</span> <span class="n">Unknown</span>
+<span class="err">`</span><span class="n">min</span><span class="err">`</span><span class="o">,</span><span class="err">`</span><span class="n">max</span><span class="err">`</span><span class="o">:</span> <span class="err">定义期望数据的范围</span><span class="o">.</span> <span class="err">如果超出其中，则会被当作`</span><span class="n">UNKNOWN</span><span class="err">`</span><span class="o">.</span> <span class="err">如果不知道或不关心这个，可以设置为`</span><span class="n">U</span><span class="err">`</span>
+<span class="err">`</span><span class="n">rpn</span><span class="o">-</span><span class="n">expression</span><span class="err">`</span><span class="o">:</span> <span class="err">逆波兰表达式</span>
+</pre></div>
+
+
+</li>
+</ul>
+<h3 id="rra">RRA</h3>
+<p>RRA - Round Robin Archives</p>
+<p>RRD的目的就是把数据存入RRA中. 一个RRA由许多数据值组成.</p>
+<p>CF: Consolidation Function. 有AVERAGE, MIN, MAX, LAST类型.</p>
+<p>在新建RRD的时候, 定义了step(一个interval的时间, 比如一分钟就是60s), 每个step都会有一个PDP(Primary Data Point).</p>
+<p>在RRA中的steps表示这个RRA的CDP(Consolidation Data Point)使用上面的几个step, 比如要一分钟获取一个就写1</p>
+<p>然后RRA会根据CF来计算PDP, 最后合并出CDP.</p>
+<p>详细的RRA定义:</p>
+<div class="hlcode"><pre><span class="n">RRA</span><span class="o">:</span><span class="n">AVERAGE</span> <span class="o">|</span> <span class="n">MIN</span> <span class="o">|</span> <span class="n">MAX</span> <span class="o">|</span> <span class="n">LAST</span><span class="o">:</span><span class="n">xff</span><span class="o">:</span><span class="n">steps</span><span class="o">:</span><span class="n">rows</span>
+
+<span class="n">xff</span> <span class="o">-</span> <span class="err">是一个比例值</span><span class="o">,</span> <span class="err">表示一个</span><span class="n">CDP</span><span class="err">中有超过</span><span class="n">xff</span><span class="err">的</span><span class="n">PDP</span><span class="err">为空值</span><span class="o">,</span> <span class="err">则这个值就回</span><span class="n">UNKNOWN</span>
+<span class="n">steps</span> <span class="o">-</span> <span class="err">上面提到了</span><span class="o">,</span> <span class="err">定义这个</span><span class="n">RRA</span><span class="err">使用几个</span><span class="n">step</span>
+<span class="n">rows</span> <span class="o">-</span> <span class="err">表示记录的</span><span class="n">CDP</span><span class="err">的个数</span><span class="o">,</span> <span class="err">比如上面选择一分钟一个</span><span class="n">CDP</span><span class="o">,</span> <span class="err">要记录</span><span class="mi">1</span><span class="err">小时</span><span class="o">,</span> <span class="n">row</span><span class="err">就是</span><span class="mi">60</span>
+</pre></div>
+
+
+<p>例子:</p>
+<div class="hlcode"><pre><span class="mi">11</span><span class="o">:</span><span class="mi">06</span> <span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">gs</span> <span class="sr">/home/tankywoo/</span><span class="n">rrd</span>
+<span class="o">%</span> <span class="n">rrdtool</span> <span class="n">create</span> <span class="n">test</span><span class="o">.</span><span class="na">rrd</span> <span class="o">-</span><span class="n">s</span> <span class="mi">60</span> <span class="o">\</span>
+<span class="o">&gt;</span> <span class="n">DS</span><span class="o">:</span><span class="n">testds</span><span class="o">:</span><span class="n">GAUGE</span><span class="o">:</span><span class="mi">120</span><span class="o">:</span><span class="mi">0</span><span class="o">:</span><span class="n">U</span> <span class="o">\</span>
+<span class="o">&gt;</span> <span class="n">RRA</span><span class="o">:</span><span class="n">AVERAGE</span><span class="o">:</span><span class="mf">0.5</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">60</span> <span class="o">\</span>
+<span class="o">&gt;</span> <span class="n">RRA</span><span class="o">:</span><span class="n">AVERAGE</span><span class="o">:</span><span class="mf">0.5</span><span class="o">:</span><span class="mi">1</span><span class="o">:</span><span class="mi">1440</span>
+
+<span class="mi">11</span><span class="o">:</span><span class="mi">06</span> <span class="n">tankywoo</span><span class="err">@</span><span class="n">gentoo</span><span class="o">-</span><span class="n">gs</span> <span class="sr">/home/tankywoo/</span><span class="n">rrd</span>
+<span class="o">%</span> <span class="n">rrdtool</span> <span class="n">info</span> <span class="n">test</span><span class="o">.</span><span class="na">rrd</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;test.rrd&quot;</span>
+<span class="n">rrd_version</span> <span class="o">=</span> <span class="s2">&quot;0003&quot;</span>
+<span class="n">step</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">last_update</span> <span class="o">=</span> <span class="mi">1370142396</span>
+<span class="n">header_size</span> <span class="o">=</span> <span class="mi">792</span>
+<span class="n">ds</span><span class="o">[</span><span class="n">testds</span><span class="o">].</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">ds</span><span class="o">[</span><span class="n">testds</span><span class="o">].</span><span class="n">type</span> <span class="o">=</span> <span class="s2">&quot;GAUGE&quot;</span>
+<span class="n">ds</span><span class="o">[</span><span class="n">testds</span><span class="o">].</span><span class="n">minimal_heartbeat</span> <span class="o">=</span> <span class="mi">120</span>
+<span class="n">ds</span><span class="o">[</span><span class="n">testds</span><span class="o">].</span><span class="n">min</span> <span class="o">=</span> <span class="mf">0.0000000000</span><span class="n">e</span><span class="o">+</span><span class="mi">00</span>
+<span class="n">ds</span><span class="o">[</span><span class="n">testds</span><span class="o">].</span><span class="n">max</span> <span class="o">=</span> <span class="kc">NaN</span>
+<span class="n">ds</span><span class="o">[</span><span class="n">testds</span><span class="o">].</span><span class="n">last_ds</span> <span class="o">=</span> <span class="s2">&quot;U&quot;</span>
+<span class="n">ds</span><span class="o">[</span><span class="n">testds</span><span class="o">].</span><span class="n">value</span> <span class="o">=</span> <span class="mf">0.0000000000</span><span class="n">e</span><span class="o">+</span><span class="mi">00</span>
+<span class="n">ds</span><span class="o">[</span><span class="n">testds</span><span class="o">].</span><span class="n">unknown_sec</span> <span class="o">=</span> <span class="mi">36</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">cf</span> <span class="o">=</span> <span class="s2">&quot;AVERAGE&quot;</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">rows</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">cur_row</span> <span class="o">=</span> <span class="mi">51</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">pdp_per_row</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">xff</span> <span class="o">=</span> <span class="mf">5.0000000000</span><span class="n">e</span><span class="o">-</span><span class="mi">01</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">cdp_prep</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">value</span> <span class="o">=</span> <span class="kc">NaN</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">cdp_prep</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">unknown_datapoints</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">cf</span> <span class="o">=</span> <span class="s2">&quot;AVERAGE&quot;</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">rows</span> <span class="o">=</span> <span class="mi">1440</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">cur_row</span> <span class="o">=</span> <span class="mi">339</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">pdp_per_row</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">xff</span> <span class="o">=</span> <span class="mf">5.0000000000</span><span class="n">e</span><span class="o">-</span><span class="mi">01</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">cdp_prep</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">value</span> <span class="o">=</span> <span class="kc">NaN</span>
+<span class="n">rra</span><span class="o">[</span><span class="mi">1</span><span class="o">].</span><span class="n">cdp_prep</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">unknown_datapoints</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+
+
+<h2 id="rrd_1">更新RRD</h2>
+<p><a href="http://oss.oetiker.ch/rrdtool/doc/rrdupdate.en.html">Offical Doc - rrdupdate</a></p>
+<div class="hlcode"><pre><span class="n">rrdtool</span> <span class="p">{</span><span class="n">update</span> <span class="o">|</span> <span class="n">updatev</span><span class="p">}</span> <span class="n">filename</span>
+        <span class="p">[</span><span class="o">--</span><span class="n">template</span><span class="o">|-</span><span class="n">t</span> <span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="p">[</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="p">]...]</span>
+        <span class="p">[</span><span class="o">--</span><span class="n">daemon</span> <span class="n">address</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="p">]</span>
+        <span class="n">N</span><span class="o">|</span><span class="n">timestamp</span><span class="o">:</span><span class="n">value</span><span class="p">[</span><span class="o">:</span><span class="n">value</span><span class="p">...]</span>
+        <span class="n">at</span><span class="o">-</span><span class="n">timestamp</span><span class="err">@</span><span class="n">value</span><span class="p">[</span><span class="o">:</span><span class="n">value</span><span class="p">...]</span>
+        <span class="p">[</span><span class="n">timestamp</span><span class="o">:</span><span class="n">value</span><span class="p">[</span><span class="o">:</span><span class="n">value</span><span class="p">...]</span> <span class="p">...]</span>
+</pre></div>
+
+
+<p><code>updatev</code> : 是 <code>update</code> 的 verbose版, 会描述返回信息.</p>
+<p><code>--template|-t ds-name[:ds-name]...</code> : <br />
+默认情况下, update希望数据是按DS定义的顺序来更新的. 但是有可能会弄错顺序, 导致传入的数据错误.<br />
+template函数允许指定更新DS的顺序  </p>
+<p><code>N|timestamp:value[:value...]</code> :<br />
+更新DS的数据要有一个指定的时间戳. 如果使用 <code>N</code>, 则使用当前时间.<br />
+如果时间是负数, 则使当前时间减去指定的时间. 此时要用 <code>--</code> 来分隔选项和数据, 否则数据会被当作参数传进去.<br />
+如果使用 <code>@</code> 代替 <code>:</code>, 则限定结束时间.<br />
+<em>TODO</em></p>
+<div class="hlcode"><pre><span class="cp"># 下面写了一个 Python 传入随机数据来更新 RRD</span>
+<span class="cp"># 我放到 crontab 里面每分钟调用一次</span>
+
+<span class="cp">#!/usr/bin/env python</span>
+<span class="cp"># -*- coding: utf-8 -*-</span>
+
+<span class="n">import</span> <span class="n">rrdtool</span>
+<span class="n">import</span> <span class="n">random</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">rrdtool</span><span class="p">.</span><span class="n">updatev</span><span class="p">(</span><span class="err">&#39;</span><span class="n">test</span><span class="p">.</span><span class="n">rrd</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">N</span><span class="o">:%</span><span class="n">d</span><span class="err">&#39;</span> <span class="o">%</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+
+
+<h2 id="_3">画图</h2>
+<p><a href="http://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html">Offical Doc - rrdgraph</a></p>
+<div class="hlcode"><pre><span class="n">rrdtool</span> <span class="n">graph</span><span class="o">|</span><span class="n">graphv</span> <span class="n">filename</span> <span class="p">[</span><span class="n">option</span> <span class="p">...]</span> 
+        <span class="p">[</span><span class="n">data</span> <span class="n">definition</span> <span class="p">...]</span> 
+        <span class="p">[</span><span class="n">data</span> <span class="n">calculation</span> <span class="p">...]</span> 
+        <span class="p">[</span><span class="n">variable</span> <span class="n">definition</span> <span class="p">...]</span> 
+        <span class="p">[</span><span class="n">graph</span> <span class="n">element</span> <span class="p">...]</span> 
+        <span class="p">[</span><span class="n">print</span> <span class="n">element</span> <span class="p">...]</span>
+
+<span class="cp"># 其中以下三个分别是data definition, data calculation, variable definition的格式</span>
+<span class="nl">DEF:</span><span class="n">vname</span><span class="o">=</span><span class="n">rrdfile</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="o">:</span><span class="n">CF</span><span class="p">[</span><span class="o">:</span><span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="p">][</span><span class="o">:</span><span class="n">start</span><span class="o">=</span><span class="n">time</span><span class="p">][</span><span class="o">:</span><span class="n">end</span><span class="o">=</span><span class="n">time</span><span class="p">]</span>
+
+<span class="nl">CDEF:</span><span class="n">vname</span><span class="o">=</span><span class="n">RPN</span> <span class="n">expression</span>
+
+<span class="nl">VDEF:</span><span class="n">vname</span><span class="o">=</span><span class="n">RPN</span> <span class="n">expression</span>
+</pre></div>
+
+
+<p>rrdtool graph 需要数据提供以画图. 它并不局限于单个RRD, 可以收集多个rrd的数据画图.<br />
+从 RRA 里 fetch 出来数据, 然后合并(consolidated)它们, 所以图上一个像素一个数据点(data point).<br />
+有时数据的格式并不是我们想要的. 在合并数据后, 强大的 <code>RPN</code> 命令集可以实现它们.  </p>
+<p><code>graphv</code> 与 <code>graph</code> 的关系类似 <code>updatev</code> 和 <code>update</code>. 可以获取相信的画图信息.</p>
+<h3 id="options">options的一些参数</h3>
+<p><code>[-s|--start time] [-e|--end time] [-S|--step seconds]</code> :<br />
+设置了画图的起始时间和结束时间, 一般使用结束时间减去需要监控的时间段范围就行.</p>
+<p><code>[-t|--title string] [-v|--vertical-label string]</code> :<br />
+分别是: 图片顶部的横坐标label 和 左边纵坐标的label</p>
+<p><code>[-w|--width pixels] [-h|--height pixels] [-j|--only-graph] [-D|--full-size-mode]</code> :<br />
+设置图片的宽度和高度
+--only-graph 和  --full-size-mode
+<em>TODO</em></p>
+<p><code>[-u|--upper-limit value] [-l|--lower-limit value] [-r|--rigid]</code> :<br />
+可以限制上限值和下限值</p>
+<div class="hlcode"><pre><span class="n">DEF</span><span class="o">:</span><span class="n">vname</span><span class="o">=</span><span class="n">rrdfile</span><span class="o">:</span><span class="n">ds</span><span class="o">-</span><span class="n">name</span><span class="o">:</span><span class="n">CF</span><span class="o">[:</span><span class="n">step</span><span class="o">=</span><span class="n">step</span><span class="o">][:</span><span class="n">start</span><span class="o">=</span><span class="n">time</span><span class="o">][:</span><span class="n">end</span><span class="o">=</span><span class="n">time</span><span class="o">]</span>
+<span class="n">DEF</span><span class="err">是画图的定义</span><span class="o">,</span> <span class="err">一般至少需要一个</span><span class="n">DEF</span><span class="o">,</span> <span class="err">用来定义使用的</span><span class="n">DS</span><span class="o">,</span> <span class="err">使用的</span><span class="n">CF</span><span class="err">函数</span><span class="o">,</span> <span class="err">步长等</span>
+
+<span class="n">CDEF</span><span class="o">:</span><span class="n">vname</span><span class="o">=</span><span class="n">RPN</span> <span class="n">expression</span>
+<span class="err">前面提到的</span><span class="o">,</span> <span class="err">可能</span><span class="n">DEF</span><span class="err">获取的值在格式上无法满足需求</span><span class="o">,</span> <span class="err">这时可以使用</span><span class="n">CDEF</span><span class="err">用逆波兰表达式来生成需要的变量</span><span class="o">.</span> <span class="err">比如求网络流量单位是</span><span class="n">bit</span><span class="o">,</span> <span class="err">就可以用</span><span class="n">CDEF</span><span class="err">定义乘以</span><span class="mi">8</span><span class="o">.</span>
+
+<span class="n">VDEF</span><span class="o">:</span><span class="n">vname</span><span class="o">=</span><span class="n">RPN</span> <span class="n">expression</span>
+</pre></div>
+
+
+<p>在上面更新RRD的代码里增加画图代码:</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">rrdtool</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">rrdtool</span><span class="o">.</span><span class="n">updatev</span><span class="p">(</span><span class="s">&#39;test.rrd&#39;</span><span class="p">,</span> <span class="s">&#39;N:</span><span class="si">%d</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">v</span><span class="p">)</span>
+
+<span class="n">now</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
+<span class="n">onehour</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">now</span> <span class="o">-</span> <span class="mi">3600</span><span class="p">)</span>
+<span class="n">ret</span> <span class="o">=</span> <span class="n">rrdtool</span><span class="o">.</span><span class="n">graphv</span><span class="p">(</span><span class="s">&#39;test.png&#39;</span><span class="p">,</span>
+        <span class="s">&#39;--start&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">onehour</span><span class="p">),</span>
+        <span class="s">&#39;DEF:v=test.rrd:testds:AVERAGE&#39;</span><span class="p">,</span>
+        <span class="s">&#39;AREA:v#00008B&#39;</span><span class="p">,</span>
+        <span class="s">&#39;-w 400 -h 100&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table>
+
+<p>效果图:<br />
+<img alt="效果图" src="http://tankywoo-wb.b0.upaiyun.com/rrd1.png" /></p>
+<h2 id="_4">资料</h2>
+<ul>
+<li><a href="http://oss.oetiker.ch/rrdtool/tut/">RRDtool Tutorail(Offical)</a></li>
+<li><a href="http://oss.oetiker.ch/rrdtool/doc/index.en.html">RRDtool Documentation(Offical)</a></li>
+<li><a href="http://bbs.chinaunix.net/thread-2150417-1-1.html">RRDtool简体中文教程(ChinaUnix)</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

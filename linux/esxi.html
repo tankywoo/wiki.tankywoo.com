@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>ESXi 5.x 命令行操作 - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#linux">linux</a> » ESXi 5.x 命令行操作
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="_1">网络</h2>
+<p>很多命令的 <code>-h</code> 都包含了详细的例子</p>
+<p><code>esxcli network</code>:</p>
+<p>这是一个命令集, 包含了很多子命令</p>
+<ul>
+<li><code>esxcli network nic list</code> 查看网卡信息</li>
+<li><code>esxcli network ip route ipv4 list</code> 查看路由(ipv4)</li>
+<li><code>esxcli network ip dns server list</code> 查看 dns</li>
+<li><code>esxcli network ip interface ipv4 get</code> 查看ip配置(ipv4)</li>
+</ul>
+<p><code>esxcfg-route</code>:</p>
+<ul>
+<li><code>esxcfg-route</code> 查看默认路由</li>
+</ul>
+<p><code>esxcfg-nics</code>:</p>
+<ul>
+<li><code>esxcfg-nics</code> 等价 <code>esxcli network nic list</code></li>
+</ul>
+<p><code>tcpdump-uw</code>:</p>
+<p>类似于Linux下的 tcpdump, 是 ESX 的抓包工具</p>
+<p><code>vsish</code></p>
+<h2 id="esxi">ESXi命令行修改密码</h2>
+<p>通过 ssh 登录到 ESXi 系统后, 可以通过 passwd root 来修改密码</p>
+<p>参考 <a href="http://vmwaresupportguy.com/2011/12/changing-esxi-root-password/">Changing ESXi Root Password</a> , 里面还说明了如何开启 ESXi ssh 登录.</p>
+<h2 id="esxi-authorized95keys">ESXi 的 authorized_keys</h2>
+<p>For ESXi 5.0, the location of authorized_keys is: <code>/etc/ssh/keys-&lt;username&gt;/authorized_keys</code></p>
+<p>参考: <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1002866">Allowing SSH access to ESX hosts with public/private key authentication</a></p>
+<h2 id="_2">控制虚拟机开关机</h2>
+<p>To power on a virtual machine from the command line:</p>
+<p>List the inventory ID of the virtual machine with the command:</p>
+<div class="hlcode"><pre><span class="n">vim</span><span class="o">-</span><span class="n">cmd</span> <span class="n">vmsvc</span><span class="o">/</span><span class="n">getallvms</span> <span class="o">|</span><span class="n">grep</span> <span class="o">&lt;</span><span class="n">vm</span> <span class="n">name</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Note: The first column of the output shows the vmid.</p>
+<p>Check the power state of the virtual machine with the command:</p>
+<div class="hlcode"><pre><span class="nx">vim</span><span class="na">-cmd</span> <span class="nx">vmsvc</span><span class="p">/</span><span class="nx">power.getstate</span> <span class="o">&lt;</span><span class="nx">vmid</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>Power-on the virtual machine with the command:</p>
+<div class="hlcode"><pre><span class="nx">vim</span><span class="na">-cmd</span> <span class="nx">vmsvc</span><span class="p">/</span><span class="nx">power.on</span> <span class="o">&lt;</span><span class="nx">vmid</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>关机就是把 <code>power.on</code> 改为 <code>power.off</code> 就可以了.</p>
+<p>参考: <a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1038043">Powering on a virtual machine from the command line when the host cannot be managed using vSphere Client</a></p>
+<p>另外还有一种方法, 只能控制关机:</p>
+<p>Get a list of <strong>running</strong> virtual machines, identified by World ID, UUID, Display Name, and path to the .vmx configuration file, using this command:</p>
+<div class="hlcode"><pre><span class="n">esxcli</span> <span class="n">vm</span> <span class="n">process</span> <span class="n">list</span> <span class="err">#</span> <span class="err">只显示开机的虚拟机列表</span>
+</pre></div>
+
+
+<p>Power off one of the virtual machines from the list using this command:</p>
+<div class="hlcode"><pre><span class="n">esxcli</span> <span class="n">vm</span> <span class="n">process</span> <span class="n">kill</span> <span class="o">--</span><span class="n">type</span><span class="o">=</span><span class="p">[</span><span class="n">soft</span><span class="p">,</span><span class="n">hard</span><span class="p">,</span><span class="n">force</span><span class="p">]</span> <span class="o">--</span><span class="n">world</span><span class="o">-</span><span class="n">id</span><span class="o">=</span><span class="n">WorldNumber</span>
+</pre></div>
+
+
+<p>Notes: 
+Three power-off methods are available. Soft is the most graceful, hard performs an immediate shutdown, and force should be used as a last resort.</p>
+<p>Alternate power off command syntax is: </p>
+<div class="hlcode"><pre><span class="n">esxcli</span> <span class="n">vm</span> <span class="n">process</span> <span class="n">kill</span> <span class="o">-</span><span class="n">t</span> <span class="p">[</span><span class="n">soft</span><span class="p">,</span><span class="n">hard</span><span class="p">,</span><span class="n">force</span><span class="p">]</span> <span class="o">-</span><span class="n">w</span> <span class="n">WorldNumber</span>
+</pre></div>
+
+
+<p>参考:</p>
+<ul>
+<li><a href="http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&amp;cmd=displayKC&amp;externalId=1014165">Powering off a virtual machine on an ESXi host</a></li>
+<li><a href="http://serverfault.com/questions/321909/how-to-shutdown-a-virtual-machine-on-esxi5-over-an-ssh-terminal-session">How to shutdown a virtual machine on ESXi5 over an ssh terminal session?</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

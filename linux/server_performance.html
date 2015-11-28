@@ -1,0 +1,173 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Server Performance Analysis - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#linux">linux</a> » Server Performance Analysis
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#load">Load</a></li>
+<li><a href="#cpu">CPU</a></li>
+<li><a href="#memory">Memory</a><ul>
+<li><a href="#swap">Swap</a></li>
+</ul>
+</li>
+<li><a href="#io">磁盘I/O</a></li>
+<li><a href="#io_1">网络I/O</a></li>
+<li><a href="#read-more">Read More</a></li>
+</ul>
+</div>
+<p>服务器性能用到的知识:</p>
+<ul>
+<li>Load</li>
+<li>CPU</li>
+<li>Memory</li>
+<li>磁盘I/O</li>
+<li>网络I/O</li>
+</ul>
+<h2 id="load">Load</h2>
+<p>系统负载指运行队列的平均长度，也就是等待CPU的平均进程数</p>
+<p>可以通过<code>cat /proc/loadavg</code> <code>w</code> <code>top</code>等命令获取</p>
+<p>推荐一篇文章[[http://blog.scoutapp.com/articles/2009/07/31/understanding-load-averages|Understanding Linux CPU Load]]</p>
+<h2 id="cpu">CPU</h2>
+<p><code>top</code> <code>atop</code> <code>htop</code>
+获取CPU信息<code>cat /proc/cpuinfo</code></p>
+<p>其中%wa指CPU等待磁盘写入完成的时间</p>
+<p><code>vmstat</code> <code>sar</code> <code>iostat</code></p>
+<h2 id="memory">Memory</h2>
+<p><code>free</code> <code>vmstat</code> <code>top</code> <code>cat /proc/meminfo</code></p>
+<h3 id="swap">Swap</h3>
+<p>From <a href="https://www.linux.com/news/software/applications/8208-all-about-linux-swap-space">Linux.com</a></p>
+<blockquote>
+<p>Linux divides its physical RAM (random access memory) into chucks of memory called pages. Swapping is the process whereby a page of memory is copied to the preconfigured space on the hard disk, called swap space, to free up that page of memory. The combined sizes of the physical memory and the swap space is the amount of virtual memory available.</p>
+<p>Swapping is necessary for two important reasons. First, when the system requires more memory than is physically available, the kernel swaps out less used pages and gives memory to the current application (process) that needs the memory immediately. Second, a significant number of the pages used by an application during its startup phase may only be used for initialization and then never used again. The system can swap out those pages and free the memory for other applications or even for the disk cache.</p>
+</blockquote>
+<p>排查哪个进程占用swap过高:</p>
+<p>1 读取<code>/proc/*/status</code>或<code>/proc/*/smaps</code>文件, 具体可以<code>man 5 proc</code>. <a href="http://stackoverflow.com/a/7180078">脚本来源</a></p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<span class="c"># Get current swap usage for all running processes</span>
+<span class="c"># Erik Ljungstrom 27/05/2011</span>
+<span class="c"># Modified by Mikko Rantalainen 2012-08-09</span>
+<span class="c"># Pipe the output to &quot;sort -nk3&quot; to get sorted output</span>
+<span class="c"># Modified by Marc Methot 2014-09-18</span>
+<span class="c"># removed the need for sudo</span>
+
+<span class="nv">SUM</span><span class="o">=</span>0
+<span class="nv">OVERALL</span><span class="o">=</span>0
+<span class="k">for </span>DIR in <span class="sb">`</span>find /proc/ -maxdepth 1 -type d -regex <span class="s2">&quot;^/proc/[0-9]+&quot;</span><span class="sb">`</span>
+<span class="k">do</span>
+<span class="k">    </span><span class="nv">PID</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$DIR</span> | cut -d / -f 3<span class="sb">`</span>
+    <span class="nv">PROGNAME</span><span class="o">=</span><span class="sb">`</span>ps -p <span class="nv">$PID</span> -o comm --no-headers<span class="sb">`</span>
+    <span class="k">for </span>SWAP in <span class="sb">`</span>grep VmSwap <span class="nv">$DIR</span>/status 2&gt;/dev/null | awk <span class="s1">&#39;{ print $2 }&#39;</span><span class="sb">`</span>
+    <span class="k">do</span>
+<span class="k">        </span><span class="nb">let </span><span class="nv">SUM</span><span class="o">=</span><span class="nv">$SUM</span>+<span class="nv">$SWAP</span>
+    <span class="k">done</span>
+<span class="k">    if</span> <span class="o">((</span> <span class="nv">$SUM</span> &gt; 0 <span class="o">))</span>; <span class="k">then</span>
+<span class="k">        </span><span class="nb">echo</span> <span class="s2">&quot;PID=$PID swapped $SUM KB ($PROGNAME)&quot;</span>
+    <span class="k">fi</span>
+<span class="k">    </span><span class="nb">let </span><span class="nv">OVERALL</span><span class="o">=</span><span class="nv">$OVERALL</span>+<span class="nv">$SUM</span>
+    <span class="nv">SUM</span><span class="o">=</span>0
+<span class="k">done</span>
+<span class="nb">echo</span> <span class="s2">&quot;Overall swap used: $OVERALL KB&quot;</span>
+</pre></div>
+</td></tr></table>
+
+<p>简短的命令就如下, 不过wild match应该只匹配数字, 所以这里会把一些其它文件包含进来, <a href="http://www.cyberciti.biz/faq/linux-which-process-is-using-swap/">脚本来源</a>:</p>
+<div class="hlcode"><pre><span class="k">for</span> <span class="n">file</span> <span class="n">in</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="err">*/</span><span class="n">status</span> <span class="p">;</span> <span class="k">do</span> <span class="n">awk</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">VmSwap</span><span class="o">|</span><span class="n">Name</span><span class="o">/</span><span class="p">{</span><span class="n">printf</span> <span class="err">$</span><span class="mi">2</span> <span class="s">&quot; &quot;</span> <span class="err">$</span><span class="mi">3</span><span class="p">}</span><span class="n">END</span><span class="p">{</span> <span class="n">print</span> <span class="s">&quot;&quot;</span><span class="p">}</span><span class="err">&#39;</span> <span class="err">$</span><span class="n">file</span><span class="p">;</span> <span class="n">done</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">k</span> <span class="mi">2</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">r</span> <span class="o">|</span> <span class="n">less</span>
+</pre></div>
+
+
+<p>2 <code>top</code>命令, 好像3.2的版本是<code>Op</code>, 3.3的版本是<code>fp</code>来调出swap并排序. 具体查看help.</p>
+<p>3 <code>smem</code>命令, 要装的东西太多了, 所以还没装.</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/479953/how-to-find-out-which-processes-are-swapping-in-linux">how to find out which processes are swapping in linux?</a></li>
+<li><a href="http://northernmost.org/blog/find-out-what-is-using-your-swap/">Find Out What Is Using Your Swap</a></li>
+<li><a href="http://www.cyberciti.biz/faq/linux-which-process-is-using-swap/">Linux: Find Out What Process Are Using Swap Space</a></li>
+<li><a href="http://unix.stackexchange.com/questions/71714/linux-total-swap-used-swap-used-by-processes">Linux: Total swap used = swap used by processes +?</a></li>
+</ul>
+<h2 id="io">磁盘I/O</h2>
+<p><code>iostat</code></p>
+<h2 id="io_1">网络I/O</h2>
+<p><code>netstat</code></p>
+<h2 id="read-more">Read More</h2>
+<ul>
+<li><a href="http://blog.chinaunix.net/uid-27127953-id-3333176.html">Linux服务器性能小结</a></li>
+<li><a href="http://www.cnblogs.com/mfryf/archive/2012/03/12/2392000.html">linux wa%过高，iostat查看io状况</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

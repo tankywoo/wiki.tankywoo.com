@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>svn - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » svn
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="_1">还原到某个版本</h2>
+<ul>
+<li>svn up -r 版本号</li>
+<li>svn up -r 版本号 文件名</li>
+</ul>
+<h2 id="_2">撤销修改</h2>
+<ul>
+<li>svn revert</li>
+</ul>
+<h2 id="diff">diff比较</h2>
+<ul>
+<li>svn diff                  #将修改后和未修改的比较</li>
+<li>svn diff -r 5             #将本地代码和版本好为5的所有文件比较</li>
+<li>svn diff -r 5 a.txt       #将本地代码和版本号为5的a.txt文件比较</li>
+<li>svn diff -r 5:9           #将比较版本5和版本9之间所有文件比较</li>
+<li>svn diff -r 5:9 a.txt     #将版本5和版本9之间的a.txt文件比较</li>
+</ul>
+<h2 id="log">查看log</h2>
+<ul>
+<li>svn log           #查看所有的log信息</li>
+<li>svn log -r 5:9    #只查看版本5和版本9的日志信息</li>
+<li>svn log a.txt     #查看文件a.txt的日志修改信息;</li>
+<li>svn log -v dir    #查看目录的日志修改信息,需要加v;</li>
+</ul>
+<h2 id="svnvimdiff">svn使用vimdiff</h2>
+<p>在 <a href="git.html">git</a> 里提到了git使用vimdiff替换默认的diff工具, svn也可以实现</p>
+<p>首先可以写一个小脚本:</p>
+<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/sh</span>
+<span class="c"># 配置你喜欢的diff程序路径</span>
+<span class="nv">DIFF</span><span class="o">=</span><span class="s2">&quot;vimdiff&quot;</span>
+<span class="c"># SVN diff命令会传入两个文件的参数 </span>
+<span class="nv">LEFT</span><span class="o">=</span><span class="k">${</span><span class="nv">6</span><span class="k">}</span>
+<span class="nv">RIGHT</span><span class="o">=</span><span class="k">${</span><span class="nv">7</span><span class="k">}</span>
+<span class="c"># 拼接成diff命令所需要的命令格式</span>
+<span class="nv">$DIFF</span> <span class="nv">$LEFT</span> <span class="nv">$RIGHT</span>
+</pre></div>
+</td></tr></table>
+
+<p>可以把脚本放到/usr/bin/svndiff, 然后增加<code>x</code>权限</p>
+<p>接着修改svn本地用户配置文件<code>~/.subversion/config</code>, 里面有这么一行:</p>
+<div class="hlcode"><pre><span class="c"># diff-cmd = diff_program (diff, gdiff, etc.)</span>
+</pre></div>
+
+
+<p>改为</p>
+<div class="hlcode"><pre><span class="n">diff</span><span class="o">-</span><span class="n">cmd</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">svndiff</span>
+</pre></div>
+
+
+<p>然后就可以了</p>
+<p>参考了:</p>
+<ul>
+<li><a href="http://www.ccvita.com/445.html">更换svn diff为vimdiff</a></li>
+<li><a href="http://www.blogjava.net/stone2083/archive/2011/05/24/350917.html">使用vimdiff作为svn diff的默认工具</a></li>
+</ul>
+<h2 id="diff-file-marked-as-a-binary-type">diff: file marked as a binary type 问题</h2>
+<p>2013-07-25 补充:</p>
+<p>今天在 svn diff 看一个 xml 文件时, 显示:</p>
+<div class="hlcode"><pre><span class="gh">Index: assets-meishan.xml</span>
+<span class="gh">===================================================================</span>
+Cannot display: file marked as a binary type.
+svn:mime-type = application/xml
+</pre></div>
+
+
+<p>无法查看, 但是另外一个 xml 文件就可以 diff, 且用 file 命令查看, 都是 <code>XML document text</code></p>
+<p>google 了下, 找到了解决方法</p>
+<p>方法一:</p>
+<div class="hlcode"><pre><span class="n">svn</span> <span class="n">diff</span> <span class="o">--</span><span class="n">force</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+
+
+<p>方法二:</p>
+<p>You can use the <a href="http://svnbook.red-bean.com/en/1.5/svn.ref.properties.html">Subversion property</a> svn:mime-type to set an explicit mimetype on the file:</p>
+<div class="hlcode"><pre><span class="n">svn</span> <span class="n">propset</span> <span class="n">svn</span><span class="o">:</span><span class="n">mime</span><span class="o">-</span><span class="n">type</span> <span class="err">&#39;</span><span class="n">text</span><span class="o">/</span><span class="n">plain</span><span class="err">&#39;</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+
+
+<p>Alternatively, you can delete this property (since Subversion assumes plaintext, otherwise) using:</p>
+<div class="hlcode"><pre><span class="n">svn</span> <span class="n">propdel</span> <span class="n">svn</span><span class="o">:</span><span class="n">mime</span><span class="o">-</span><span class="n">type</span> <span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+
+
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/2634043/svn-diff-file-marked-as-binary-type">svn diff: file marked as binary type</a></li>
+<li><a href="http://stackoverflow.com/questions/3580092/persistently-overriding-svns-mime-to-binary-mapping">Persistently overriding svn's mime to binary mapping?</a></li>
+</ul>
+<p><strong>TODO</strong> : 当时是直接用方法一解决的, 抽时间研究下 <code>svn:mine-type</code> 的问题</p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

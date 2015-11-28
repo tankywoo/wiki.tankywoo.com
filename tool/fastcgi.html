@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>fastcgi - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » fastcgi
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="fastcgi">FastCGI</h2>
+<p>参考: <a href="http://book.51cto.com/art/201202/314840.htm">Nginx+FastCGI运行原理</a></p>
+<h2 id="fastcgi_1">FastCGI介绍</h2>
+<p>FastCGI是从CGI发展改进而来的。<br />
+传统CGI接口方式的主要缺点是性能很差，因为每次HTTP服务器遇到动态程序时都需要重新启动脚本解析器来执行解析，然后将结果返回给HTTP服务器。<br />
+这在处理高并发访问时几乎是不可用的。另外传统的CGI接口方式安全性也很差，现在已经很少使用了。</p>
+<p>FastCGI接口方式采用C/S结构，可以将HTTP服务器和脚本解析服务器分开，同时在脚本解析服务器上启动一个或者多个脚本解析守护进程。<br />
+当HTTP服务器每次遇到动态程序时，可以将其直接交付给FastCGI进程来执行，然后将得到的结果返回给浏览器。<br />
+这种方式可以让HTTP服务器专一地处理静态请求或者将动态脚本服务器的结果返回给客户端，这在很大程度上提高了整个应用系统的性能。</p>
+<p>维基百科上的解释：<br />
+快速通用网关接口（Fast Common Gateway Interface／FastCGI）是一种重要的互联网技术，可以让一个客户端，从网页浏览器向执行在网页服务器上的程序请求数据。FastCGI是早期通用网关接口（CGI）的增强版本。<br />
+FastCGI致力于减少网页服务器与CGI程序之间的互动，从而使服务器可以同时处理更多的网页请求。<br />
+参考: <a href="http://zh.wikipedia.org/wiki/FastCGI">维基百科-FastCGI</a></p>
+<h2 id="nginxfastcgi">Nginx+FastCGI运行原理</h2>
+<p>Nginx不支持对外部程序的直接调用或者解析，所有的外部程序（包括PHP）必须通过FastCGI接口来调用。<br />
+FastCGI接口在Linux下是socket（这个socket可以是文件socket，也可以是ip socket）。<br />
+为了调用CGI程序，还需要一个FastCGI的wrapper（wrapper可以理解为用于启动另一个程序的程序），<br />
+这个wrapper绑定在某个固定socket上，如端口或者文件socket。<br />
+当Nginx将CGI请求发送给这个socket的时候，通过FastCGI接口，wrapper接收到请求，然后派生出一个新的线程，<br />
+这个线程调用解释器或者外部程序处理脚本并读取返回数据；<br />
+接着，wrapper再将返回的数据通过FastCGI接口，沿着固定的socket传递给Nginx；<br />
+最后，Nginx将返回的数据发送给客户端。这就是Nginx+FastCGI的整个运作过程。<br />
+如图所示  </p>
+<p>TODO
+    {{/img/fastcgi_1.jpg}}</p>
+<h2 id="spawn-fcgiphp-fpm">spawn-fcgi与PHP-FPM</h2>
+<p>前面介绍过，FastCGI接口方式在脚本解析服务器上启动一个或者多个守护进程对动态脚本进行解析，这些进程就是FastCGI进程管理器，或者称之为FastCGI引擎<br />
+spawn-fcgi与PHP-FPM就是支持PHP的两个FastCGI进程管理器。<br />
+下面简单介绍spawn-fcgi与PHP-FPM的异同:<br />
+spawn-fcgi是HTTP服务器lighttpd的一部分，目前已经独立成为一个项目，一般与lighttpd配合使用来支持PHP<br />
+但是ligttpd的spwan-fcgi在高并发访问的时候，会出现内存泄漏甚至自动重启FastCGI的问题。</p>
+<p>Nginx是个轻量级的HTTP server，必须借助第三方的FastCGI处理器才可以对PHP进行解析，因此Nginx+spawn-fcgi的组合也可以实现对PHP的解析，这里不过多讲述。</p>
+<p>PHP-FPM也是一个第三方的FastCGI进程管理器，它是作为PHP的一个补丁来开发的，在安装的时候也需要和PHP源码一起编译<br />
+也就是说PHP-FPM被编译到PHP内核中，因此在处理性能方面更加优秀；同时它在处理高并发方面也比spawn-fcgi引擎好很多<br />
+因此，推荐Nginx+PHP/PHP-FPM这个组合对PHP进行解析。</p>
+<p>FastCGI 的主要优点是把动态语言和HTTP Server分离开来<br />
+所以Nginx与PHP/PHP-FPM经常被部署在不同的服务器上，以分担前端Nginx服务器的压力，使Nginx专一处理静态请求和转发动态请求<br />
+而PHP/PHP-FPM服务器专一解析PHP动态请求。</p>
+<h2 id="php-cgiphp-fpm">关于php-cgi和php-fpm</h2>
+<p>CGI 是 Web Server 与 Web Application 之间数据交换的一种协议。<br />
+FastCGI 同 CGI 是一种通信协议，但比  CGI 在效率上做了一些优化，同样 SCGI 协议与 FastCGI 类似。<br />
+PHP-CGI 是 PHP （Web Application）对 Web Server 提供的 CGI 协议的接口程序。<br />
+PHP-FPM 是 PHP（Web Application）对 Web Server 提供的 FastCGI 协议的接口程序，额外还提供了相信智能一些任务管理。<br />
+参考：<a href="https://groups.google.com/forum/?fromgroups=#!topic/shlug/d5hJKyFzI-g">请问CGI、PHP-CGI、PHP-FPM之间是什么关系?</a></p>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

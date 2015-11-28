@@ -1,0 +1,750 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Git - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » Git
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#git">给Git输出信息增加颜色</a></li>
+<li><a href="#git_1">关于Git的分支</a></li>
+<li><a href="#_1">远程分支</a><ul>
+<li><a href="#fetchpull">关于fetch和pull区别</a></li>
+</ul>
+</li>
+<li><a href="#git_2">Git标签</a></li>
+<li><a href="#git_3">Git 全局配置</a></li>
+<li><a href="#vimdiff">使用vimdiff</a></li>
+<li><a href="#log">查看提交log</a></li>
+<li><a href="#_2">文件中文名问题</a></li>
+<li><a href="#git-mv">Git mv 日志问题</a></li>
+<li><a href="#pull">指定路径pull</a></li>
+<li><a href="#status">查看指定目录下的 status</a></li>
+<li><a href="#_3">选择一部分修改提交</a></li>
+<li><a href="#git-repo">只从 git repo 中移除文件, 但不删除实际文件</a></li>
+<li><a href="#_4">修改最后一次提交</a></li>
+<li><a href="#commitauthor">修改commit的author</a></li>
+<li><a href="#git-diff">Git diff 技巧</a></li>
+<li><a href="#head-vs-orig_head">HEAD vs ORIG_HEAD</a></li>
+<li><a href="#git-revertresetcheckout">git revert/reset/checkout 区别</a></li>
+<li><a href="#_5">统计每个提交者的提交次数</a></li>
+<li><a href="#git-reflog">git reflog</a></li>
+<li><a href="#git-cherry-pick">git cherry-pick</a></li>
+<li><a href="#git-commit-message">Git Commit Message 基本准则</a></li>
+<li><a href="#git-add-tracked">git add 只添加 tracked 的文件</a></li>
+<li><a href="#untracked-files">删除untracked files</a></li>
+<li><a href="#_6">同一个文件选择部分提交</a></li>
+<li><a href="#checkout-tag">checkout 指定的 tag</a></li>
+<li><a href="#git-add">git add的几个参数和通配符</a></li>
+<li><a href="#repodirty">检查repo是否dirty</a></li>
+<li><a href="#repoheadaheadbehind">检查repo当前HEAD是否提示ahead或behind远程仓库分支</a></li>
+<li><a href="#_7">获取当前分支名</a></li>
+<li><a href="#_8">删除分支</a></li>
+<li><a href="#gitreadonly">Git本地设置某个远程库readonly</a></li>
+<li><a href="#head-head">关于 HEAD^ 和 HEAD~ 的区别</a></li>
+<li><a href="#_9">查看两个分支的差异</a></li>
+<li><a href="#commitreleasetag">查看某个commit在哪些release(tag)引进</a></li>
+<li><a href="#git-subtree">Git subtree</a></li>
+<li><a href="#git-diff_1">git diff 相关</a></li>
+<li><a href="#git_4">Git资料</a></li>
+</ul>
+</div>
+<p>Git的<code>help</code>信息非常好，很多可以直接help来了解</p>
+<h2 id="git">给Git输出信息增加颜色</h2>
+<p>编辑<code>/etc/gitconfig</code>
+比如要对<code>git status</code>设置颜色，可以:</p>
+<div class="hlcode"><pre><span class="k">[color]</span>
+    <span class="na">ui</span> <span class="o">=</span> <span class="s">auto</span>
+<span class="k">[color &quot;branch&quot;]</span>
+    <span class="na">current</span> <span class="o">=</span> <span class="s">yellow reverse</span>
+<span class="s">    local = yellow</span>
+<span class="s">    remote = green</span>
+<span class="k">[color &quot;diff&quot;]</span>
+    <span class="na">meta</span> <span class="o">=</span> <span class="s">yellow bold</span>
+<span class="s">    frag = magenta bold</span>
+<span class="s">    old = red bold</span>
+<span class="s">    new = green bold</span>
+<span class="k">[color &quot;status&quot;]</span>
+    <span class="na">added</span> <span class="o">=</span> <span class="s">yellow</span>
+<span class="s">    changed = green</span>
+<span class="s">    untracked = cyan</span>
+</pre></div>
+
+
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/12255028/how-to-show-git-colors-on-zsh">How to show git colors on zsh</a></li>
+<li><a href="http://stackoverflow.com/questions/8131322/enabling-git-syntax-highlighting-for-macs-terminal">Enabling git syntax highlighting for macs terminal</a></li>
+<li><a href="http://nathanhoad.net/how-to-colours-in-git">How to colours in git</a></li>
+</ul>
+<h2 id="git_1">关于Git的分支</h2>
+<p>参考的 <a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E4%BD%95%E8%B0%93%E5%88%86%E6%94%AF">何谓分支</a></p>
+<p>因为Git是保存的快照，Git仓库有以下几个基本对象</p>
+<ul>
+<li><code>blob</code> 对象用于表示文件快照内容</li>
+<li><code>tree</code> 对象记录目录树内容和各个文件对应的blob对象索引</li>
+<li><code>commit</code> 对象记录提交信息，指向tree对象或其他commit对象</li>
+</ul>
+<p>Git的分支，其本质是一个指向commit对象的可变<code>指针</code>，Git使用<code>master</code>作为分支的默认名字</p>
+<p><code>HEAD</code>指针指向当前的分支指针</p>
+<p>使用<code>git branch</code>是查看当前的分支列表</p>
+<p>使用<code>git branch branch_name</code>新建分支，然后可以使用<code>git checkout branch_name</code>切换分支</p>
+<p>最后可以用<code>git merge branch_name</code>来合并分支</p>
+<p>如果遇到冲突，需要到冲突的文件下根据提示编辑后再commit</p>
+<h2 id="_1">远程分支</h2>
+<p>参考的 <a href="http://git-scm.com/book/zh/Git-%E5%88%86%E6%94%AF-%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF">远程分支</a></p>
+<p>从远程Git repo克隆，Git会自动将此remote repo命名为<code>origin</code>，并下载其中所有的数据，建立一个指向它的<code>master</code>分支的指针，在本地命名为<code>origin/master</code></p>
+<p>但无法在本地更改其数据。接着，Git建立一个属于自己的本地<code>master</code>分支，始于<code>origin</code>上<code>master</code>分支相同的位置，这样可以就此开始工作</p>
+<div class="hlcode"><pre><span class="n">touch</span> <span class="n">README</span><span class="p">.</span><span class="n">md</span>
+<span class="n">git</span> <span class="n">init</span>
+<span class="n">git</span> <span class="n">add</span> <span class="n">README</span><span class="p">.</span><span class="n">md</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s">&quot;first commit&quot;</span>
+<span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">git</span><span class="err">@</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="n">tankywoo</span><span class="o">/</span><span class="n">test</span><span class="p">.</span><span class="n">git</span>
+<span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">master</span>
+</pre></div>
+
+
+<p>这里origin是remote repo name，branch name 是master</p>
+<h3 id="fetchpull">关于fetch和pull区别</h3>
+<p>What is <code>git fetch</code>? and what is the difference to <code>git pull</code>?</p>
+<p><code>git fetch</code>是update from remote repo，但是不合并</p>
+<p><code>git pull</code>是fetch and merge</p>
+<h2 id="git_2">Git标签</h2>
+<ul>
+<li>含附注的标签(annotated)</li>
+<li>轻量级标签(lightweight)</li>
+</ul>
+<p><a href="http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE">2.6 Git 基础 - 打标签</a></p>
+<p>删除远程标签:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="o">:</span><span class="n">tagname</span>
+</pre></div>
+
+
+<p>或</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">push</span> <span class="o">--</span><span class="n">delete</span> <span class="n">origin</span> <span class="n">tagname</span>
+</pre></div>
+
+
+<p><a href="http://stackoverflow.com/a/5480292/1276501">参考</a></p>
+<h2 id="git_3">Git 全局配置</h2>
+<p>全局忽略文件</p>
+<ul>
+<li><a href="http://git-scm.com/book/zh/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-%E9%85%8D%E7%BD%AE-Git">忽略文件</a></li>
+<li><a href="https://github.com/GitHub/gitignore">git ignore repo</a></li>
+</ul>
+<h2 id="vimdiff">使用vimdiff</h2>
+<p>默认的diff应该是使用diff命令, 这个命令也非常有必要掌握.</p>
+<p>但是, 更直观的, 可以选择vimdiff.</p>
+<div class="hlcode"><pre><span class="cp"># 配置Git使用vimdiff来做差异比较</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">diff</span><span class="p">.</span><span class="n">tool</span> <span class="n">vimdiff</span>
+<span class="cp"># 在merge时使用</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">merge</span><span class="p">.</span><span class="n">tool</span> <span class="n">vimdiff</span>
+<span class="cp"># 因为在使用vimdiff时, vim会有如下提示:</span>
+<span class="cp"># Viewing: &#39;tkwiki/tool/git.wiki&#39;</span>
+<span class="cp"># Launch &#39;vimdiff&#39; [Y/n]: y</span>
+<span class="cp"># 可以取消这个提示</span>
+<span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">difftool</span><span class="p">.</span><span class="n">prompt</span> <span class="nb">false</span>
+</pre></div>
+
+
+<p>然后就可以</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">difftool</span> <span class="n">tkwiki</span><span class="o">/</span><span class="n">tool</span><span class="o">/</span><span class="n">git</span><span class="p">.</span><span class="n">wiki</span>
+</pre></div>
+
+
+<p>来查看修改的地方, 效果图:</p>
+<p><img alt="git vimdiff" src="http://tankywoo-wb.b0.upaiyun.com/git_vimdiff.png" /></p>
+<p>参考:</p>
+<ul>
+<li><a href="http://usevim.com/2012/03/21/git-and-vimdiff/">Git and Vimdiff</a></li>
+<li><a href="http://agileadam.com/using-vimdiff-git">Using Vimdiff with Git</a></li>
+</ul>
+<h2 id="log">查看提交log</h2>
+<p>git log 会查看当前git repo里所有的提交历史</p>
+<p>git log filename 会查看这个文件的所有提交历史</p>
+<p>git log -p -2 [filename] 会把最近的2次提交变更展开</p>
+<p>git log --pretty=oneline [filename] 这个太牛逼了, 只显示id和提交说明.</p>
+<p>git log --pretty=format:"xxxx" 这个更牛逼, 自定义查看log的输出格式</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://git-scm.com/book/zh/Git-%E5%9F%BA%E7%A1%80-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2">查看提交历史</a></li>
+</ul>
+<h2 id="_2">文件中文名问题</h2>
+<p>最近遇到同步文件下来, 中文文件名全部是unicode, 解决这个问题加配置:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">global</span> <span class="n">core</span><span class="p">.</span><span class="n">quotepath</span> <span class="nb">false</span>
+</pre></div>
+
+
+<h2 id="git-mv">Git mv 日志问题</h2>
+<p>在 <code>git mv</code> (rename) 文件后, 直接 git log 只能看到这个文件被 rename 后的日志, 想要看到完整的日志, 要用 <code>git log --follow xxx</code></p>
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/2314652/is-it-possible-to-move-rename-files-in-git-and-maintain-their-history">Is it possible to move/rename files in git and maintain their history?</a></li>
+<li><a href="http://stackoverflow.com/questions/1094269/whats-the-purpose-of-git-mv">What's the purpose of git-mv?</a></li>
+</ul>
+<h2 id="pull">指定路径pull</h2>
+<p>以前都是 cd 到仓库当前目录然后 pull. 因为想到 <code>svn up</code> 可以直接指定路径, 这种基本功能 git 肯定会有的, 但是直接指定路径不行.</p>
+<p>搜了下, StackOverflow 上的 <a href="http://stackoverflow.com/a/9876901/1276501">回答1</a> 和 <a href="http://stackoverflow.com/a/9746005/1276501">回答2</a> 非常给力.</p>
+<p>Git 的参数 <code>--git-dir</code> 可以指定 Git 的路径, 即使用这个 <code>.git</code> 的配置等来更新 repo. 但是这个会以 <code>pwd</code> 为要更新的 repo 路径.
+所以还需要 <code>--work-tree</code> 来指定要更新的 repo 的路径, 而不需要 cd 过去.</p>
+<div class="hlcode"><pre>git --git-dir<span class="o">=</span>/path/to/git-repo/.git --work-tree<span class="o">=</span>/path/to/git-repo/ pull
+</pre></div>
+
+
+<h2 id="status">查看指定目录下的 status</h2>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">status</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
+</pre></div>
+
+
+<p>比如当前目录下的 status:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">status</span> <span class="p">.</span>
+</pre></div>
+
+
+<p><a href="http://stackoverflow.com/questions/715321/git-status-is-there-a-way-to-show-changes-only-in-a-specific-directory">git status - is there a way to show changes only in a specific directory?</a></p>
+<h2 id="_3">选择一部分修改提交</h2>
+<p>使用 <code>git add -p filename</code>。</p>
+<p>具体见:</p>
+<ul>
+<li><a href="http://git-scm.com/book/zh/Git-%E5%B7%A5%E5%85%B7-%E4%BA%A4%E4%BA%92%E5%BC%8F%E6%9A%82%E5%AD%98">Git 工具 - 交互式暂存</a></li>
+<li><a href="http://stackoverflow.com/questions/1085162/how-can-i-commit-only-part-of-a-file-in-git">How can I commit only part of a file in git</a></li>
+</ul>
+<h2 id="git-repo">只从 git repo 中移除文件, 但不删除实际文件</h2>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">rm</span> <span class="o">--</span><span class="n">cached</span> <span class="n">file</span>
+</pre></div>
+
+
+<p>默认使用 <code>git rm</code> 会把文件也一并删除掉.</p>
+<h2 id="_4">修改最后一次提交</h2>
+<p>使用:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">commit</span> <span class="o">--</span><span class="n">amend</span>
+</pre></div>
+
+
+<p>如果当前 stage区 没有东西, 则相当于可以修改 commit comment.</p>
+<p>如果 stage区 有新的文件, 比如有个文件staged后忘了和上次的提交一次commit, 则可以撤销并重新提交.</p>
+<h2 id="commitauthor">修改commit的author</h2>
+<p>如果是staged的文件，提交时直接指定 <code>--author</code> 就可以了:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s">&quot;xxx&quot;</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Tanky Woo &lt;noreply@tankywoo.com&gt;&quot;</span>
+</pre></div>
+
+
+<p>修改最后一次提交的author，可以配合 <code>--amend</code>:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">commit</span> <span class="o">--</span><span class="n">amend</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Tanky Woo &lt;noreply@tankywoo.com&gt;&quot;</span>
+</pre></div>
+
+
+<p>如果user config配置修改了，可以直接<code>--reset-author</code>:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">commit</span> <span class="o">--</span><span class="n">amend</span> <span class="o">--</span><span class="n">reset</span><span class="o">-</span><span class="n">author</span>
+</pre></div>
+
+
+<p>修改指定commit的author:</p>
+<div class="hlcode"><pre><span class="o">*</span> <span class="mf">2f1e828</span> <span class="o">-</span> <span class="p">(</span><span class="n">HEAD</span><span class="p">,</span> <span class="n">origin</span><span class="o">/</span><span class="n">test</span><span class="p">,</span> <span class="n">origin</span><span class="o">/</span><span class="n">master</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">master</span><span class="p">)</span> <span class="n">update</span> <span class="n">test</span><span class="o">-</span><span class="n">git</span><span class="o">-</span><span class="n">submodule</span> <span class="p">(</span><span class="mi">2</span> <span class="n">days</span> <span class="n">ago</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">Tanky</span> <span class="n">Woo</span><span class="o">&gt;</span>
+<span class="o">*</span> <span class="mi">3243</span><span class="n">b09</span> <span class="o">-</span> <span class="n">first</span> <span class="n">commit</span> <span class="n">with</span> <span class="n">submodule</span> <span class="p">(</span><span class="mi">2</span> <span class="n">days</span> <span class="n">ago</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">Tanky</span> <span class="n">Woo</span><span class="o">&gt;</span>
+<span class="o">*</span> <span class="mi">5956</span><span class="n">ab0</span> <span class="o">-</span> <span class="n">why</span> <span class="n">conflict</span> <span class="n">and</span> <span class="n">merge</span><span class="o">?</span> <span class="p">(</span><span class="mi">3</span> <span class="n">weeks</span> <span class="n">ago</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">Tanky</span> <span class="n">Woo</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>现在想修改 3243b09 的 author name，需要从它之前的一个commit开始<code>rebase</code>:</p>
+<div class="hlcode"><pre><span class="n">TankyWoo</span><span class="err">@</span><span class="n">Mac</span><span class="o">::</span><span class="n">test</span><span class="o">-</span><span class="n">git</span><span class="o">/</span> <span class="p">(</span><span class="n">master</span><span class="p">)</span> <span class="err">»</span> <span class="n">git</span> <span class="n">rebase</span> <span class="o">-</span><span class="n">i</span> <span class="mi">5956</span><span class="n">ab0</span>
+</pre></div>
+
+
+<p>Git 会使用设置的编辑器打开如下:</p>
+<div class="hlcode"><pre><span class="n">pick</span> <span class="mi">3243</span><span class="n">b09</span> <span class="n">first</span> <span class="n">commit</span> <span class="n">with</span> <span class="n">submodule</span>
+<span class="n">pick</span> <span class="mf">2f1e828</span> <span class="n">update</span> <span class="n">test</span><span class="o">-</span><span class="n">git</span><span class="o">-</span><span class="n">submodule</span>
+
+<span class="cp"># Rebase 5956ab0..2f1e828 onto 5956ab0</span>
+<span class="cp">#</span>
+<span class="cp"># Commands:</span>
+<span class="cp">#  p, pick = use commit</span>
+<span class="cp">#  r, reword = use commit, but edit the commit message</span>
+<span class="cp">#  e, edit = use commit, but stop for amending</span>
+<span class="cp">#  s, squash = use commit, but meld into previous commit</span>
+<span class="cp">#  f, fixup = like &quot;squash&quot;, but discard this commit&#39;s log message</span>
+<span class="cp">#  x, exec = run command (the rest of the line) using shell</span>
+<span class="cp">#</span>
+<span class="cp"># These lines can be re-ordered; they are executed from top to bottom.</span>
+<span class="cp">#</span>
+<span class="cp"># If you remove a line here THAT COMMIT WILL BE LOST.</span>
+<span class="cp">#</span>
+<span class="cp"># However, if you remove everything, the rebase will be aborted.</span>
+<span class="cp">#</span>
+<span class="cp"># Note that empty commits are commented out</span>
+</pre></div>
+
+
+<p>根据提示，把需要修改的一行用<code>edit</code>替换<code>pick</code>:</p>
+<div class="hlcode"><pre><span class="n">edit</span> <span class="mi">3243</span><span class="n">b09</span> <span class="n">first</span> <span class="n">commit</span> <span class="n">with</span> <span class="n">submodule</span>
+<span class="n">pick</span> <span class="mf">2f1e828</span> <span class="n">update</span> <span class="n">test</span><span class="o">-</span><span class="n">git</span><span class="o">-</span><span class="n">submodule</span>
+</pre></div>
+
+
+<p>保存关闭后会提示:</p>
+<div class="hlcode"><pre><span class="n">Stopped</span> <span class="n">at</span> <span class="mi">3243</span><span class="n">b09</span><span class="p">...</span> <span class="n">first</span> <span class="n">commit</span> <span class="n">with</span> <span class="n">submodule</span>
+<span class="n">You</span> <span class="n">can</span> <span class="n">amend</span> <span class="n">the</span> <span class="n">commit</span> <span class="n">now</span><span class="p">,</span> <span class="n">with</span>
+
+        <span class="n">git</span> <span class="n">commit</span> <span class="o">--</span><span class="n">amend</span>
+
+<span class="n">Once</span> <span class="n">you</span> <span class="n">are</span> <span class="n">satisfied</span> <span class="n">with</span> <span class="n">your</span> <span class="n">changes</span><span class="p">,</span> <span class="n">run</span>
+
+        <span class="n">git</span> <span class="n">rebase</span> <span class="o">--</span><span class="k">continue</span>
+</pre></div>
+
+
+<p>如果要对first commit开始做rebase:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">rebase</span> <span class="o">-</span><span class="n">i</span> <span class="o">--</span><span class="n">root</span>
+</pre></div>
+
+
+<p>我设置的PS1的括号里是分支名，可以看到现在的分支是这个要修改的commit id:</p>
+<div class="hlcode"><pre><span class="n">TankyWoo</span><span class="err">@</span><span class="n">Mac</span><span class="o">::</span><span class="n">test</span><span class="o">-</span><span class="n">git</span><span class="o">/</span> <span class="p">(</span><span class="mi">3243</span><span class="n">b09</span><span class="o">*</span><span class="p">)</span> <span class="err">»</span> <span class="n">git</span> <span class="n">commit</span> <span class="o">--</span><span class="n">amend</span> <span class="o">--</span><span class="n">author</span><span class="o">=</span><span class="s">&quot;Tanky &lt;noreply@tankywoo.com&gt;&quot;</span>
+</pre></div>
+
+
+<p>修改完后会进入下一个commit id分支，直接<code>--continue</code>，因为604c35c这个commit设置的是pick，所以不会做改动:</p>
+<div class="hlcode"><pre><span class="n">TankyWoo</span><span class="err">@</span><span class="n">Mac</span><span class="o">::</span><span class="n">test</span><span class="o">-</span><span class="n">git</span><span class="o">/</span> <span class="p">(</span><span class="mi">604</span><span class="n">c35c</span><span class="o">*</span><span class="p">)</span> <span class="err">»</span> <span class="n">git</span> <span class="n">rebase</span> <span class="o">--</span><span class="k">continue</span>
+<span class="n">Successfully</span> <span class="n">rebased</span> <span class="n">and</span> <span class="n">updated</span> <span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">master</span><span class="p">.</span>
+</pre></div>
+
+
+<p>再查看日志:</p>
+<div class="hlcode"><pre><span class="o">*</span> <span class="mi">16</span><span class="nx">c4757</span> <span class="o">-</span> <span class="p">(</span><span class="nb">HEAD</span><span class="p">,</span> <span class="nx">master</span><span class="p">)</span> <span class="nx">update</span> <span class="nx">test</span><span class="na">-git-submodule</span> <span class="p">(</span><span class="mi">2</span> <span class="nx">seconds</span> <span class="nx">ago</span><span class="p">)</span> <span class="o">&lt;</span><span class="nx">Tanky</span> <span class="nx">Woo</span><span class="o">&gt;</span>
+<span class="o">*</span> <span class="nx">b9fbd8a</span> <span class="o">-</span> <span class="nb">first</span> <span class="nx">commit</span> <span class="k">with</span> <span class="nx">submodule</span> <span class="p">(</span><span class="mi">15</span> <span class="nx">seconds</span> <span class="nx">ago</span><span class="p">)</span> <span class="o">&lt;</span><span class="nx">Tanky</span><span class="o">&gt;</span>
+<span class="o">*</span> <span class="mi">5956</span><span class="nx">ab0</span> <span class="o">-</span> <span class="nx">why</span> <span class="nx">conflict</span> <span class="ow">and</span> <span class="nb">merge</span><span class="o">?</span> <span class="p">(</span><span class="mi">3</span> <span class="nx">weeks</span> <span class="nx">ago</span><span class="p">)</span> <span class="o">&lt;</span><span class="nx">Tanky</span> <span class="nx">Woo</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p><a href="http://stackoverflow.com/a/3042512/1276501">SO</a>上的回答:</p>
+<blockquote>
+<p>For example, if your commit history is <code>A-B-C-D-E-F</code> with <code>F</code> as <code>HEAD</code>, and you want to change the author of <code>C</code> and <code>D</code>, then you would...</p>
+<ol>
+<li>Specify <code>git rebase -i B</code></li>
+<li>change the lines for both <code>C</code> and <code>D</code> to <code>edit</code></li>
+<li>Once the rebase started, it would first pause at <code>C</code></li>
+<li>You would <code>git commit --amend --author="Author Name &lt;email@address.com&gt;"</code></li>
+<li>Then <code>git rebase --continue</code></li>
+<li>It would pause again at <code>D</code></li>
+<li>Then you would <code>git commit --amend --author="Author Name &lt;email@address.com&gt;"</code> again</li>
+<li><code>git rebase --continue</code></li>
+<li>The rebase would complete.</li>
+</ol>
+</blockquote>
+<p>如果要修改指定用户全部commit的author:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">filter</span><span class="o">-</span><span class="n">branch</span> <span class="o">-</span><span class="n">f</span> <span class="o">--</span><span class="n">env</span><span class="o">-</span><span class="n">filter</span> <span class="err">&#39;</span>
+<span class="n">an</span><span class="o">=</span><span class="s">&quot;$GIT_AUTHOR_NAME&quot;</span>
+<span class="n">am</span><span class="o">=</span><span class="s">&quot;$GIT_AUTHOR_EMAIL&quot;</span>
+<span class="n">cn</span><span class="o">=</span><span class="s">&quot;$GIT_COMMITTER_NAME&quot;</span>
+<span class="n">cm</span><span class="o">=</span><span class="s">&quot;$GIT_COMMITTER_EMAIL&quot;</span>
+
+<span class="k">if</span> <span class="p">[</span> <span class="s">&quot;$GIT_COMMITTER_EMAIL&quot;</span> <span class="o">=</span> <span class="s">&quot;&lt;OLD EMAIL&gt;&quot;</span> <span class="p">]</span> <span class="p">;</span> <span class="n">then</span>
+    <span class="n">cn</span><span class="o">=</span><span class="s">&quot;&lt;NEW NAME&gt;&quot;</span>
+    <span class="n">cm</span><span class="o">=</span><span class="s">&quot;&lt;NEW EMAIL&gt;&quot;</span>
+    <span class="n">export</span> <span class="n">GIT_COMMITTER_NAME</span><span class="o">=</span><span class="s">&quot;$cn&quot;</span>
+    <span class="n">export</span> <span class="n">GIT_COMMITTER_EMAIL</span><span class="o">=</span><span class="s">&quot;$cm&quot;</span>
+<span class="n">fi</span>
+<span class="k">if</span> <span class="p">[</span> <span class="s">&quot;$GIT_AUTHOR_EMAIL&quot;</span> <span class="o">=</span> <span class="s">&quot;&lt;OLD EMAIL&gt;&quot;</span> <span class="p">]</span> <span class="p">;</span> <span class="n">then</span>
+    <span class="n">an</span><span class="o">=</span><span class="s">&quot;&lt;NEW NAME&gt;&quot;</span>
+    <span class="n">am</span><span class="o">=</span><span class="s">&quot;&lt;NEW EMAIL&gt;&quot;</span>
+    <span class="n">export</span> <span class="n">GIT_AUTHOR_NAME</span><span class="o">=</span><span class="s">&quot;$an&quot;</span>
+    <span class="n">export</span> <span class="n">GIT_AUTHOR_EMAIL</span><span class="o">=</span><span class="s">&quot;$am&quot;</span>
+<span class="n">fi</span>
+<span class="err">&#39;</span>
+</pre></div>
+
+
+<p>这个在<a href="https://help.github.com/articles/changing-author-info">github官方help</a>里也有脚本。</p>
+<p>StackOverflow上有两篇讨论非常好:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/750172/how-do-i-change-the-author-of-a-commit-in-git">How do I change the author of a commit in git?</a></li>
+<li><a href="http://stackoverflow.com/questions/3042437/change-commit-author-at-one-specific-commit">Change commit author at one specific commit</a></li>
+</ul>
+<h2 id="git-diff">Git diff 技巧</h2>
+<p>(待整理)</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">diff</span> <span class="n">tag</span>                    <span class="err">比较</span><span class="n">tag</span><span class="err">和</span><span class="n">HEAD</span><span class="err">之间的不同。</span>
+<span class="n">git</span> <span class="n">diff</span> <span class="n">tag</span> <span class="n">file</span>               <span class="err">比较一个文件在两者之间的不同。</span>
+<span class="n">git</span> <span class="n">diff</span> <span class="n">tag1</span><span class="p">..</span><span class="n">tag2</span>             <span class="err">比较两个</span><span class="n">tag</span><span class="err">之间的不同。</span>
+<span class="n">git</span> <span class="n">diff</span> <span class="n">SHA11</span><span class="p">..</span><span class="n">SHA12</span>           <span class="err">比较两个提交之间的不同。</span>
+<span class="n">git</span> <span class="n">diff</span> <span class="n">tag1</span> <span class="n">tag2</span> <span class="n">file</span> <span class="n">or</span>
+<span class="n">git</span> <span class="n">diff</span> <span class="n">tag1</span><span class="o">:</span><span class="n">file</span> <span class="n">tag2</span><span class="o">:</span><span class="n">file</span>    <span class="err">比较一个文件在两个</span><span class="n">tag</span><span class="err">之间的不同。</span>
+</pre></div>
+
+
+<p><code>ORIG_HEAD</code> 用于指向前一个操作状态，因此在git pull之后如果想得到pull的
+    内容就可以：</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">diff</span> <span class="n">ORIG_HEAD</span>
+
+<span class="n">git</span> <span class="n">diff</span> <span class="o">--</span><span class="n">stat</span>                 <span class="err">用于生成统计信息。</span>
+<span class="n">git</span> <span class="n">diff</span> <span class="o">--</span><span class="n">stat</span> <span class="n">ORIG_HEAD</span>
+</pre></div>
+
+
+<h2 id="head-vs-orig_head"><code>HEAD</code> vs <code>ORIG_HEAD</code></h2>
+<p>关于 <code>HEAD</code> 和 <code>ORIG_HEAD</code> 的区别，来至StackOverflow的<a href="http://stackoverflow.com/a/967611/1276501">回答</a>:</p>
+<blockquote>
+<p><code>HEAD</code> is (direct or indirect, i.e. symbolic) reference to the current commit. It is a commit that you have checked in the working directory (unless you made some changes, or equivalent), and it is a commit on top of which "git commit" would make a new one. Usually <code>HEAD</code> is symbolic reference to some other named branch; this branch is currently checked out branch, or current branch. <code>HEAD</code> can also point directly to a commit; this state is called "detached HEAD", and can be understood as being on unnamed, anonymous branch.</p>
+<p><code>ORIG_HEAD</code> is previous state of <code>HEAD</code>, set by commands that have possibly dangerous behavior, to be easy to revert them. It is less useful now that Git has reflog: <code>HEAD@{1}</code> is roughly equivalent to <code>ORIG_HEAD</code> (<code>HEAD@{1}</code> is always last value of <code>HEAD</code>, <code>ORIG_HEAD</code> is last value of <code>HEAD</code> before dangerous operation).</p>
+</blockquote>
+<p>For more information read <a href="http://www.kernel.org/pub/software/scm/git/docs/git.html">git(1) manpage</a>, <a href="http://www.kernel.org/pub/software/scm/git/docs/user-manual.html">Git User's Manual</a>, the <a href="http://book.git-scm.com/">Git Community Book</a> and <a href="http://www.kernel.org/pub/software/scm/git/docs/gitglossary.html">Git Glossary</a></p>
+<p>其它的一些讲解:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/17595524/orig-head-fetch-head-merge-head-etc">ORIG_HEAD, FETCH_HEAD, MERGE_HEAD etc</a></li>
+<li><a href="http://guibin.iteye.com/blog/1014369">GIT基本概念和用法总结</a></li>
+</ul>
+<h2 id="git-revertresetcheckout">git revert/reset/checkout 区别</h2>
+<p>讲得挺好的一篇 <a href="https://www.atlassian.com/git/tutorial/undoing-changes">Undoing Git Changes</a>，关于<code>git checkout</code>, <code>git revert</code>,<code>git reset</code>, <code>git clean</code> 的对比。</p>
+<h2 id="_5">统计每个提交者的提交次数</h2>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">shortlog</span> <span class="o">--</span><span class="n">numbered</span> <span class="o">--</span><span class="n">summary</span>
+</pre></div>
+
+
+<h2 id="git-reflog">git reflog</h2>
+<p>TODO</p>
+<h2 id="git-cherry-pick">git cherry-pick</h2>
+<p>TODO</p>
+<h2 id="git-commit-message">Git Commit Message 基本准则</h2>
+<p>一些基本的准则:</p>
+<ul>
+<li>commmit时不建议使用<code>-m/--message</code>，这样能提交的信息太简单的；建议直接commit通过编辑器来撰写message.</li>
+<li>
+<p><strong>第一行不</strong>超过50个字符，作为简单的描述，第二行为空行，第三行开始再做详细描述，例子(<a href="http://git-scm.com/book/ch5-2.html">http://git-scm.com/book/ch5-2.html</a>):</p>
+<div class="hlcode"><pre><span class="n">Short</span> <span class="p">(</span><span class="mi">50</span> <span class="n">chars</span> <span class="n">or</span> <span class="n">less</span><span class="p">)</span> <span class="n">summary</span> <span class="n">of</span> <span class="n">changes</span>
+
+<span class="n">More</span> <span class="n">detailed</span> <span class="n">explanatory</span> <span class="n">text</span><span class="p">,</span> <span class="k">if</span> <span class="n">necessary</span><span class="p">.</span>  <span class="n">Wrap</span> <span class="n">it</span> <span class="n">to</span> <span class="n">about</span> <span class="mi">72</span>
+<span class="n">characters</span> <span class="n">or</span> <span class="n">so</span><span class="p">.</span>  <span class="n">In</span> <span class="n">some</span> <span class="n">contexts</span><span class="p">,</span> <span class="n">the</span> <span class="n">first</span> <span class="n">line</span> <span class="n">is</span> <span class="n">treated</span> <span class="n">as</span> <span class="n">the</span>
+<span class="n">subject</span> <span class="n">of</span> <span class="n">an</span> <span class="n">email</span> <span class="n">and</span> <span class="n">the</span> <span class="n">rest</span> <span class="n">of</span> <span class="n">the</span> <span class="n">text</span> <span class="n">as</span> <span class="n">the</span> <span class="n">body</span><span class="p">.</span>  <span class="n">The</span> <span class="n">blank</span>
+<span class="n">line</span> <span class="n">separating</span> <span class="n">the</span> <span class="n">summary</span> <span class="n">from</span> <span class="n">the</span> <span class="n">body</span> <span class="n">is</span> <span class="n">critical</span> <span class="p">(</span><span class="n">unless</span> <span class="n">you</span> <span class="n">omit</span>
+<span class="n">the</span> <span class="n">body</span> <span class="n">entirely</span><span class="p">);</span> <span class="n">tools</span> <span class="n">like</span> <span class="n">rebase</span> <span class="n">can</span> <span class="n">get</span> <span class="n">confused</span> <span class="k">if</span> <span class="n">you</span> <span class="n">run</span> <span class="n">the</span>
+<span class="n">two</span> <span class="n">together</span><span class="p">.</span>
+
+<span class="n">Further</span> <span class="n">paragraphs</span> <span class="n">come</span> <span class="n">after</span> <span class="n">blank</span> <span class="n">lines</span><span class="p">.</span>
+
+ <span class="o">-</span> <span class="n">Bullet</span> <span class="n">points</span> <span class="n">are</span> <span class="n">okay</span><span class="p">,</span> <span class="n">too</span>
+
+ <span class="o">-</span> <span class="n">Typically</span> <span class="n">a</span> <span class="n">hyphen</span> <span class="n">or</span> <span class="n">asterisk</span> <span class="n">is</span> <span class="n">used</span> <span class="k">for</span> <span class="n">the</span> <span class="n">bullet</span><span class="p">,</span> <span class="n">preceded</span> <span class="n">by</span> <span class="n">a</span>
+   <span class="n">single</span> <span class="n">space</span><span class="p">,</span> <span class="n">with</span> <span class="n">blank</span> <span class="n">lines</span> <span class="n">in</span> <span class="n">between</span><span class="p">,</span> <span class="n">but</span> <span class="n">conventions</span> <span class="n">vary</span> <span class="n">here</span>
+</pre></div>
+
+
+</li>
+<li>
+<p><strong>第一行</strong> 结尾不要用句号，这个可以认为是一个标题</p>
+</li>
+<li><strong>第三行</strong> 开始的详细描述长度不超过72个字符</li>
+<li>
+<p>使用 <code>git diff --check</code> 对无用的空白做检查:</p>
+<div class="hlcode"><pre><span class="o">--</span><span class="n">check</span> <span class="o">--</span> <span class="n">warn</span> <span class="k">if</span> <span class="n">changes</span> <span class="n">introduce</span> <span class="n">trailing</span> <span class="n">whitespace</span> <span class="n">or</span> <span class="n">space</span><span class="o">/</span><span class="n">tab</span> <span class="n">indents</span>
+</pre></div>
+
+
+</li>
+<li>
+<p>使用 <code>fix</code>, <code>add</code>, <code>change</code> 而不是 <code>fixed</code>, <code>added</code>, <code>changed</code></p>
+<blockquote>
+<p>Write the summary line and description of what you have done in the imperative mode, that is as if you were commanding someone. Write "fix", "add", "change" instead of "fixed", "added", "changed".</p>
+</blockquote>
+</li>
+<li>
+<p>尽量使用英文提交</p>
+</li>
+<li>针对Github，在commit message中使用 <code>#id</code>(id 为具体issue的标号)，可以把message关联到具体的issue</li>
+</ul>
+<p>可以看看Git源码的提交log : <a href="https://git.kernel.org/cgit/git/git.git/log/">https://git.kernel.org/cgit/git/git.git/log/</a></p>
+<p>一些不错的文章:</p>
+<ul>
+<li><a href="http://robots.thoughtbot.com/5-useful-tips-for-a-better-commit-message">5 Useful Tips For A Better Commit Message</a></li>
+<li><a href="http://www.fwolf.com/blog/post/14">Git commit 注释格式</a></li>
+<li><a href="http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">http://www.fwolf.com/blog/post/14</a></li>
+<li><a href="https://github.com/erlang/otp/wiki/Writing-good-commit-messages">Writing good commit messages</a></li>
+<li><a href="http://git-scm.com/book/en/Distributed-Git-Contributing-to-a-Project">Distributed Git - Contributing to a Project</a></li>
+</ul>
+<h2 id="git-add-tracked">git add 只添加 tracked 的文件</h2>
+<p>git add 有一个 <code>-u</code> 选项，会只添加tracked的文件，比如在项目根目录下，可以添加所有修改过的已经tracked的文件:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">add</span> <span class="o">-</span><span class="n">u</span> <span class="p">.</span>
+</pre></div>
+
+
+<p>如果单纯的<code>git add .</code> 会把untracked的文件也加进去</p>
+<h2 id="untracked-files">删除untracked files</h2>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">clean</span> <span class="o">-</span><span class="n">f</span>
+</pre></div>
+
+
+<p><strong>But beware... there's no going back. Use -n or --dry-run to preview the damage you'll do.</strong></p>
+<p>If you want to also remove directories, run <code>git clean -f -d</code></p>
+<p>If you just want to remove ignored files, run <code>git clean -f -X</code></p>
+<p>If you want to remove ignored as well as non-ignored files, run <code>git clean -f -x</code></p>
+<p>Note the case difference on the X for the two latter commands.</p>
+<p>If <code>clean.requireForce</code> is set to "true" (the default) in your configuration, then unless you specify -f nothing will actually happen, with a recent enough version of git.</p>
+<p>See the <a href="http://git-scm.com/docs/git-clean">git-clean docs</a> for more information.</p>
+<p><a href="http://stackoverflow.com/a/64966/1276501">from</a></p>
+<h2 id="_6">同一个文件选择部分提交</h2>
+<p>You can do <code>git add -p filename</code>, and it'll ask you what you want to stage. You can then:</p>
+<ul>
+<li>hit <code>s</code> to split whatever change into smaller hunks. This only works if there is at least one unchanged line in the "middle" of the hunk, which is where the hunk will be split</li>
+<li>then hit either:<ul>
+<li><code>y</code> to stage that hunk, or</li>
+<li><code>n</code> to not stage that hunk, or</li>
+<li><code>e</code> to manually edit the hunk (useful when git can't split it automatically)</li>
+</ul>
+</li>
+<li>and <code>d</code> to exit or go to the next file.</li>
+<li>Use <code>?</code> to get the whole list of available options.</li>
+</ul>
+<p>If the file is not in the repository yet, do first <code>git add -N filename</code>. Afterwards you can go on with <code>git add -p filename</code>.</p>
+<p><a href="http://stackoverflow.com/a/1085191/1276501">Source</a></p>
+<h2 id="checkout-tag">checkout 指定的 tag</h2>
+<div class="hlcode"><pre><span class="nx">git</span> <span class="nx">checkout</span> <span class="nb">tags</span><span class="o">/&lt;</span><span class="k">tag_name</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p><a href="http://stackoverflow.com/questions/791959/download-a-specific-tag-with-git">参考</a></p>
+<h2 id="git-add">git add的几个参数和通配符</h2>
+<ul>
+<li><code>git add .</code> stages new and modified, in Git 1.x, <strong>without deleted</strong>, in Git 2.x, <strong>with deleted</strong></li>
+<li><code>git add -u</code> stages modified and deleted, <strong>without new</strong></li>
+<li><code>git add -A</code> stages <strong>All</strong></li>
+<li><code>git add *</code> stages new(except name begin with <code>dot</code>) and modified, <strong>without deleted</strong></li>
+</ul>
+<p>这里得注意, <code>git add .</code> 在 Git 1.x 和 Git 2.0以后是不一样的.</p>
+<p>详细讨论见:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/572549/difference-between-git-add-a-and-git-add/16162511#16162511">Difference between “git add -A” and “git add .”</a></li>
+<li><a href="http://stackoverflow.com/questions/26042390/git-add-asterisk-vs-git-add-period">git add * (asterisk) vs git add . (period)</a></li>
+</ul>
+<h2 id="repodirty">检查repo是否dirty</h2>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">status</span> <span class="o">--</span><span class="n">porcelain</span>
+</pre></div>
+
+
+<p>关于git提示的状态, 见<code>man git-status</code>的 <code>[OUTPUT] -&gt; [Short Format]</code> 一节</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/2657935/checking-for-a-dirty-index-or-untracked-files-with-git">Checking for a dirty index or untracked files with Git</a></li>
+<li><a href="http://stackoverflow.com/questions/5143795/how-can-i-check-in-a-bash-script-if-my-local-git-repo-has-changes">How can I check in a bash script if my local git repo has changes</a></li>
+<li><a href="http://stackoverflow.com/questions/3878624/how-do-i-programmatically-determine-if-there-are-uncommited-changes">How do I programmatically determine if there are uncommited changes?</a></li>
+</ul>
+<h2 id="repoheadaheadbehind">检查repo当前HEAD是否提示ahead或behind远程仓库分支</h2>
+<p>比如像这样的:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nlo</span><span class="o">/</span><span class="n">nginx</span><span class="err">#</span> <span class="n">git</span> <span class="n">status</span>
+<span class="cp"># On branch master</span>
+<span class="cp"># Your branch is ahead of &#39;origin/master&#39; by 13 commits.</span>
+<span class="cp">#</span>
+<span class="n">nothing</span> <span class="n">to</span> <span class="n">commit</span> <span class="p">(</span><span class="n">working</span> <span class="n">directory</span> <span class="n">clean</span><span class="p">)</span>
+</pre></div>
+
+
+<p>使用:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">rev</span><span class="o">-</span><span class="n">list</span> <span class="o">--</span><span class="n">left</span><span class="o">-</span><span class="n">right</span> <span class="o">--</span><span class="n">count</span> <span class="n">origin</span><span class="o">/</span><span class="n">master</span><span class="p">...</span><span class="n">master</span>
+</pre></div>
+
+
+<p>将master与远程仓库origin/master作比较.</p>
+<p>如果master的HEAD比origin/master新则报ahead, 否则behind.</p>
+<p>返回结果格式是:</p>
+<div class="hlcode"><pre><span class="p">{</span><span class="n">behind</span><span class="p">}</span><span class="err">\</span><span class="n">t</span><span class="p">{</span><span class="n">ahead</span><span class="p">}</span>
+</pre></div>
+
+
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/2969214/git-programmatically-know-by-how-much-the-branch-is-ahead-behind-a-remote-branc">git: programmatically know by how much the branch is ahead/behind a remote branch</a></li>
+<li><a href="http://stackoverflow.com/questions/20433867/git-ahead-behind-info-between-master-and-branch">git ahead/behind info between master and branch?</a></li>
+<li><a href="https://gist.github.com/vitalk/8639831">git-branch-status</a></li>
+</ul>
+<h2 id="_7">获取当前分支名</h2>
+<p>在<code>Git 1.8</code>及以后:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">symbolic</span><span class="o">-</span><span class="n">ref</span> <span class="o">--</span><span class="kt">short</span> <span class="n">HEAD</span>
+</pre></div>
+
+
+<p><code>Git 1.7+</code>:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">rev</span><span class="o">-</span><span class="n">parse</span> <span class="o">--</span><span class="n">abbrev</span><span class="o">-</span><span class="n">ref</span> <span class="n">HEAD</span>
+</pre></div>
+
+
+<p><a href="http://stackoverflow.com/questions/6245570/how-to-get-current-branch-name-in-git">参考</a></p>
+<h2 id="_8">删除分支</h2>
+<p>远程分支被删除后(如Github在页面上删除分支), 本地删除追踪分支:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">fetch</span> <span class="o">-</span><span class="n">p</span>
+</pre></div>
+
+
+<h2 id="gitreadonly">Git本地设置某个远程库readonly</h2>
+<p>如Github, Gitlab等可以在页面上设置某个用户的权限. 不过有时为了防止出问题, 在本地也可以设置.</p>
+<p>其实就是简单的将remote url的push地址重写为任意字符串.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">remote</span> <span class="n">set</span><span class="o">-</span><span class="n">url</span> <span class="o">--</span><span class="n">push</span> <span class="n">origin</span> <span class="err">&#39;</span><span class="k">do</span> <span class="n">not</span> <span class="n">push</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<h2 id="head-head">关于 HEAD^ 和 HEAD~ 的区别</h2>
+<p><code>HEAD^</code> 表示当前分支的第一个父分支的第一个点, 等同于 <code>HEAD^1</code>; <code>HEAD^2</code>表示第二个父分支的第一个点</p>
+<p><code>HEAD~1</code> 表示当前分支的第一个父分支的第一个点, 等同于 <code>HEAD~1</code>, 效果也等同于 <code>HEAD^</code>; <code>HEAD~2</code>表示第一个父分支的第二个点.</p>
+<p>stackoverflow上这个<a href="http://stackoverflow.com/a/12527561/1276501">回答</a>描述的很详细:</p>
+<div class="hlcode"><pre><span class="n">G</span>   <span class="n">H</span>   <span class="n">I</span>   <span class="n">J</span>
+ <span class="err">\</span> <span class="o">/</span>     <span class="err">\</span> <span class="o">/</span>
+  <span class="n">D</span>   <span class="n">E</span>   <span class="n">F</span>
+   <span class="err">\</span>  <span class="o">|</span>  <span class="o">/</span> \
+    <span class="err">\</span> <span class="o">|</span> <span class="o">/</span>   <span class="o">|</span>
+     <span class="err">\</span><span class="o">|/</span>    <span class="o">|</span>
+      <span class="n">B</span>     <span class="n">C</span>
+       <span class="err">\</span>   <span class="o">/</span>
+        <span class="err">\</span> <span class="o">/</span>
+         <span class="n">A</span>
+<span class="n">A</span> <span class="o">=</span>      <span class="o">=</span> <span class="n">A</span><span class="o">^</span><span class="mi">0</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">A</span><span class="o">^</span>   <span class="o">=</span> <span class="n">A</span><span class="o">^</span><span class="mi">1</span>     <span class="o">=</span> <span class="n">A</span><span class="o">~</span><span class="mi">1</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">A</span><span class="o">^</span><span class="mi">2</span>  <span class="o">=</span> <span class="n">A</span><span class="o">^</span><span class="mi">2</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">A</span><span class="o">^^</span>  <span class="o">=</span> <span class="n">A</span><span class="o">^</span><span class="mi">1</span><span class="o">^</span><span class="mi">1</span>   <span class="o">=</span> <span class="n">A</span><span class="o">~</span><span class="mi">2</span>
+<span class="n">E</span> <span class="o">=</span> <span class="n">B</span><span class="o">^</span><span class="mi">2</span>  <span class="o">=</span> <span class="n">A</span><span class="o">^^</span><span class="mi">2</span>
+<span class="n">F</span> <span class="o">=</span> <span class="n">B</span><span class="o">^</span><span class="mi">3</span>  <span class="o">=</span> <span class="n">A</span><span class="o">^^</span><span class="mi">3</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">A</span><span class="o">^^^</span> <span class="o">=</span> <span class="n">A</span><span class="o">^</span><span class="mi">1</span><span class="o">^</span><span class="mi">1</span><span class="o">^</span><span class="mi">1</span> <span class="o">=</span> <span class="n">A</span><span class="o">~</span><span class="mi">3</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">D</span><span class="o">^</span><span class="mi">2</span>  <span class="o">=</span> <span class="n">B</span><span class="o">^^</span><span class="mi">2</span>    <span class="o">=</span> <span class="n">A</span><span class="o">^^^</span><span class="mi">2</span>  <span class="o">=</span> <span class="n">A</span><span class="o">~</span><span class="mi">2</span><span class="o">^</span><span class="mi">2</span>
+<span class="n">I</span> <span class="o">=</span> <span class="n">F</span><span class="o">^</span>   <span class="o">=</span> <span class="n">B</span><span class="o">^</span><span class="mi">3</span><span class="o">^</span>    <span class="o">=</span> <span class="n">A</span><span class="o">^^</span><span class="mi">3</span><span class="o">^</span>
+<span class="n">J</span> <span class="o">=</span> <span class="n">F</span><span class="o">^</span><span class="mi">2</span>  <span class="o">=</span> <span class="n">B</span><span class="o">^</span><span class="mi">3</span><span class="o">^</span><span class="mi">2</span>   <span class="o">=</span> <span class="n">A</span><span class="o">^^</span><span class="mi">3</span><span class="o">^</span><span class="mi">2</span>
+</pre></div>
+
+
+<p>其它讲解:</p>
+<ul>
+<li><a href="http://www.gitguys.com/topics/head-where-are-we-where-were-we/?lang=zh">head where are we where were we</a></li>
+</ul>
+<h2 id="_9">查看两个分支的差异</h2>
+<p>遇到一个问题, 删除一个已合并分支时, 提示此分支没有完全合并:</p>
+<blockquote>
+<p>error: The branch 'xxx' is not fully merged</p>
+</blockquote>
+<p>在so上发现一个给力的<a href="http://stackoverflow.com/a/7549118/1276501">回答</a></p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">log</span> <span class="o">--</span><span class="n">graph</span> <span class="o">--</span><span class="n">left</span><span class="o">-</span><span class="n">right</span> <span class="o">--</span><span class="n">cherry</span><span class="o">-</span><span class="n">pick</span> <span class="o">--</span><span class="n">oneline</span> <span class="n">master</span><span class="p">...</span><span class="n">experiment</span>
+</pre></div>
+
+
+<h2 id="commitreleasetag">查看某个commit在哪些release(tag)引进</h2>
+<p>之前考虑的是知道某个commit, 这时就知道它的提交时间, 然后找出release/tag在它之后即可, 也就是:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">log</span> <span class="o">--</span><span class="n">tags</span> <span class="o">--</span><span class="n">simplify</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">decoration</span> <span class="o">--</span><span class="n">pretty</span><span class="o">=</span><span class="s">&quot;format:%ai %d&quot;</span>
+</pre></div>
+
+
+<p>然后根据commit的提交时间找到从那个tag开始有.</p>
+<p>不过后来想了下, 这块有问题, 因为当前发布分支不一定merge了这个commit.</p>
+<p>后来搜到git tag有这个功能<code>--contains</code>选项:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">tag</span> <span class="o">--</span><span class="n">contains</span> <span class="o">&lt;</span><span class="n">commit</span> <span class="n">id</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>延伸下: 如果查看哪些分支包含某个指定commit id:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">git</span> <span class="n">branch</span> <span class="o">--</span><span class="n">contains</span> <span class="o">&lt;</span><span class="n">commit</span> <span class="n">id</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<h2 id="git-subtree">Git subtree</h2>
+<p>对<code>submodule</code>的使用应该是非常熟悉了. 听过subtree这个东西有1、2年了, 一直没时间去了解, 前阵子简单了解过, 今晚又看了下文档和一些博客并尝试了(2015-11-11, 好吧, 双十一, 刚剁手完~~~), 也算大致有了一个了解认识.</p>
+<p>首先说一下, 国内很多博客人云亦云, 都没什么实践场景, 就跟着别人说: submodule太复杂, 不好用, 应该用subtree. 这个是相当坑爹的.</p>
+<p>然后放几个链接, 技术上就不详细说明:</p>
+<ul>
+<li>man git-subtree</li>
+<li><a href="https://medium.com/@v/git-subtrees-a-tutorial-6ff568381844">git subtrees: a tutorial</a> 很好的入门资料, 详细的例子</li>
+<li><a href="https://www.atlassian.com/git/articles/alternatives-to-git-submodule-git-subtree/">Alternatives To Git Submodule: Git Subtree</a></li>
+<li><a href="http://blog.zlxstar.me/blog/2014/07/18/git-submodule-vs-git-subtree/">Git submodule 还是 Git Subtree</a> 评价还算中肯</li>
+<li><a href="http://aoxuis.me/post/2013-08-06-git-subtree">使用GIT SUBTREE集成项目到子目录</a> 里面提到的一些链接文章可以看看</li>
+</ul>
+<p>简单说下使用(merge和split还没去尝试):</p>
+<div class="hlcode"><pre><span class="nx">git</span> <span class="nx">subtree</span> <span class="nb">add</span>   <span class="na">-P</span> <span class="o">&lt;</span><span class="nb">prefix</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">repository</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">ref</span><span class="o">&gt;</span>
+<span class="nx">git</span> <span class="nx">subtree</span> <span class="nx">pull</span>  <span class="na">-P</span> <span class="o">&lt;</span><span class="nb">prefix</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">repository</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">ref</span><span class="o">&gt;</span>
+<span class="nx">git</span> <span class="nx">subtree</span> <span class="nb">push</span>  <span class="na">-P</span> <span class="o">&lt;</span><span class="nb">prefix</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">repository</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="nx">ref</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>subtree add命令将一个项目拉到本地作为一个子目录, 这个和submodule类似. prefix执行子目录名.</p>
+<p>子仓库独立更新, 主仓库使用subtree pull命令下拉作更新, 会产生一个merge commit</p>
+<p>主仓库下子目录的仓库作了更新, 可以使用subtree push将修改推到子仓库</p>
+<p>子仓库可以修改并提交, 这个提交是在主仓库历史可以直接git log看到的(不同于submodule)</p>
+<p>因为每次都要敲repository, 可以把这个用git remote增加一个remote alias.</p>
+<p>建议:</p>
+<ul>
+<li>subtree pull建议加上<code>--squash</code>, 将子仓库的多个提交合并为一个提交merge到主仓库, 否则会增加一堆commit.</li>
+<li>主仓库的修改和子仓库的修改分开提交, 主库和子库互相pull/push时会比较混乱</li>
+</ul>
+<p>实例:</p>
+<ul>
+<li><a href="https://gist.github.com/cobyism/4730490">Deploying a subfolder to GitHub Pages</a> Jekyll可以用到的一个例子.</li>
+</ul>
+<p>感受:</p>
+<ul>
+<li>至少目前来说, 我还是喜欢submodule</li>
+<li>说submodule麻烦是因为不了解, 有人说需要.gitmodule配置文件, 我觉得这个的优点之一就是简化文件, 不然每次都要敲prefix, repository很麻烦不是?</li>
+<li>subtree导致历史看起来比较脏, 对于submodule, 主库一个逻辑提交可以直接包含子库的相应commit id即可</li>
+<li>subtree对于一些小项目比较合适</li>
+<li>subtree依赖使用团队的规范约束, 否则历史容易乱.</li>
+</ul>
+<p>当然, 上面也只是我了解一些皮毛的感受, 希望后续有机会能更多的去实践.</p>
+<p>另外, submodule的教程:</p>
+<ul>
+<li><a href="http://www.kafeitu.me/git/2012/03/27/git-submodule.html">Git Submodule使用完整教程</a></li>
+</ul>
+<h2 id="git-diff_1">git diff 相关</h2>
+<p>关于 <code>git diff A..B</code> 和 <code>git diff A...B</code>:</p>
+<p><img alt="git diff help" src="http://tankywoo-wb.b0.upaiyun.com/git-diff-help.png" /> <a href="http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif">图片来源</a></p>
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif">What are the differences between double-dot “..” and triple-dot “…” in Git diff commit ranges?</a></li>
+<li><a href="http://stackoverflow.com/questions/5256249/git-diff-doesnt-show-enough/5257065#5257065">git diff doesn't show enough</a></li>
+<li><a href="http://stackoverflow.com/questions/462974/what-are-the-differences-between-double-dot-and-triple-dot-in-git-com">What are the differences between double-dot “..” and triple-dot “…” in Git commit ranges?</a></li>
+</ul>
+<h2 id="git_4">Git资料</h2>
+<ul>
+<li><a href="http://git-scm.com/book/zh">ProGit中文版</a></li>
+<li><a href="http://gitref.org/">Git Reference</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

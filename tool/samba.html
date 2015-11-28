@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>samba - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » samba
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="samba">SAMBA</h2>
+<h2 id="installation">Installation</h2>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">emerge</span> <span class="n">net</span><span class="o">-</span><span class="n">fs</span><span class="o">/</span><span class="n">samba</span>
+</pre></div>
+
+
+<h2 id="about">About</h2>
+<p>NFS、CIFS？</p>
+<p>Samba是用来让Unix系列的操作系统和微软Windows操作系统的SMB/CIFS（Server Message Block/Common Internet File System）网络协议做连接的自由软件</p>
+<p>Samba是架构在NetBIOS（Network Basic Input/Output System）这个通信协议上面开发出来的。NetBIOS是无法跨路由的，但是现在又NetBIOS over TCP/IP技术可以实现。目前Samba还是广泛用于LAN中。</p>
+<p><a href="http://www.samba.org">官方网站传送门</a></p>
+<h2 id="configuration">Configuration</h2>
+<div class="hlcode"><pre><span class="cp"># TODO</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">samba</span>
+<span class="cp"># the is a smb.conf.default in the dir</span>
+<span class="n">sudo</span> <span class="n">cp</span> <span class="n">smb</span><span class="p">.</span><span class="n">conf</span><span class="p">.</span><span class="k">default</span> <span class="n">smb</span><span class="p">.</span><span class="n">conf</span>
+<span class="n">vim</span> <span class="n">smb</span><span class="p">.</span><span class="n">conf</span>
+<span class="cp"># edit the [global] section</span>
+<span class="cp"># workgroup is the windows pc&#39;s workgroup name</span>
+<span class="cp"># security can be user or shareo</span>
+<span class="cp"># in the end, you can uncomment the [tmp] section</span>
+</pre></div>
+
+
+<p>修改完smb.conf后，可以用testparm命令来检查配置文件的语法合法性</p>
+<h2 id="start-service">Start Service</h2>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">samba</span> <span class="n">start</span>
+</pre></div>
+
+
+<h2 id="read-more">Read More</h2>
+<ul>
+<li><a href="http://www.cnblogs.com/whiteyun/archive/2011/05/27/2059670.html">Linux中Samba详细安装</a></li>
+<li><a href="http://bbs.chinaunix.net/thread-716599-1-1.html">samba安装和配置文档以及和域控制器配合部分</a></li>
+<li><a href="http://bbs.chinaunix.net/thread-1003730-1-1.html">快速搭建Samba服务器</a></li>
+<li><a href="http://bbs.chinaunix.net/thread-1148734-1-1.html">一步一学Linux与Windows 共享文件Samba</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

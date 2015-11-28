@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Email相关 - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#tool">tool</a> » Email相关
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">基础</a></li>
+<li><a href="#msmtp">msmtp</a></li>
+<li><a href="#mutt">mutt</a></li>
+<li><a href="#exim">Exim</a></li>
+</ul>
+</div>
+<h2 id="_1">基础</h2>
+<p>首先得了解MUA，MTA的概念 (可参考鸟哥私房菜服务器篇)</p>
+<ul>
+<li>MUA(Mail User Agent): 主要用于接收、阅读、撰写邮件. 如thunderbird, 以为web的gmail, 或者简单的基于文本的mutt, mail命令(<code>mailx</code>)等.</li>
+<li>MTA(Mail Transfer Agent): 基于SMTP协议, 主要用于邮件的转发，如Postfix，Exim4, Sendmail, msmtp</li>
+<li>MDA(Mail Delivery Agent): 在邮件经过N个MTA达到目标的邮件服务器(local MTA)时, MDA将邮件放到相应的目录下.</li>
+<li>Mailbox: 信箱, linux下一般存在/var/spool/mail下</li>
+</ul>
+<p><img alt="mail process" src="http://tankywoo-wb.b0.upaiyun.com/mail-1.jpg" /></p>
+<p>(图片引用自<a href="http://xmodulo.com/how-mail-server-works.html">How a mail server works</a>)</p>
+<p>更详细的基本概念:</p>
+<ul>
+<li><a href="http://xmodulo.com/how-mail-server-works.html">How a mail server works</a></li>
+<li><a href="http://www.linuxquestions.org/questions/linux-software-2/mta-mda-what-r-they-actually-208129/">MTA, MDA what r they actually?</a></li>
+<li><a href="http://www.nextstep4it.com/mail-server-components-mta-mda-mua/">Mail Server Components – MTA , MDA &amp; MUA</a></li>
+<li><a href="http://ccm.net/contents/116-how-email-works-mta-mda-mua">How email works (MTA, MDA, MUA)</a></li>
+</ul>
+<p>POP3 / IMAP / SMTP:</p>
+<ul>
+<li>POP3(Post Office Protocol 3): 用于邮件访问. 标准端口995(SSL)和110(非SSL)</li>
+<li>IMAP(Internet Mail Access Protocol): 交互式邮件存取协议. 用于邮件访问. 标准端口993(SSL)和143(非SSL)</li>
+<li>SMTP(Simple Mail Transfer Protocol): 简单邮件传输协议. 控制邮件的中转. 标准端口465/994(SSL)和25(非SSL)</li>
+</ul>
+<p>POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. IMAP则是同步的.</p>
+<h2 id="msmtp">msmtp</h2>
+<p>负责smtp的功能</p>
+<p><a href="http://msmtp.sourceforge.net">主页</a></p>
+<blockquote>
+<p>msmtp is an SMTP client. In the default mode, it transmits a mail to an SMTP server which takes care of further delivery. To use this program with your mail user agent (MUA), create a configuration file with your mail account(s), and tell your MUA to call msmtp instead of /usr/sbin/sendmail.</p>
+</blockquote>
+<p>在用户home目录新建一个.msmtprc配置文件</p>
+<div class="hlcode"><pre><span class="n">account</span> <span class="k">default</span>
+<span class="n">host</span> <span class="n">smtp</span><span class="mf">.163</span><span class="p">.</span><span class="n">com</span>   <span class="err">#邮件服务器，我用的是</span><span class="mi">163</span><span class="err">的</span>
+<span class="n">from</span> <span class="n">xxx</span><span class="err">@</span><span class="mf">163.</span><span class="n">com</span>
+<span class="n">auth</span> <span class="n">login</span>
+<span class="n">user</span> <span class="n">xxx</span><span class="err">@</span><span class="mf">163.</span><span class="n">com</span>    <span class="err">#账号</span>
+<span class="n">password</span> <span class="o">*******</span>    <span class="err">#密码</span>
+<span class="n">logfile</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">msmtp</span><span class="p">.</span><span class="n">log</span>
+</pre></div>
+
+
+<p>因为这里涉及到了密码，所以建议把配置文件的权限改为600</p>
+<p>测试:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">msmtp</span> <span class="n">xxx</span><span class="err">@</span><span class="n">xx</span><span class="p">.</span><span class="n">com</span><span class="p">(</span><span class="err">收件人邮箱</span><span class="p">)</span>
+</pre></div>
+
+
+<p>然后随便输入一些字符，按Ctrl+D退出，查看收件人邮箱是否有邮件</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://msmtp.sourceforge.net/doc/mutt+msmtp.txt">msmtp官方文档:Using msmtp with Mutt</a></li>
+</ul>
+<h2 id="mutt">mutt</h2>
+<p><a href="http://www.mutt.org">主页</a></p>
+<blockquote>
+<p>Mutt is a small but very powerful text-based mail client for Unix operating systems.</p>
+</blockquote>
+<p>在用户home目录新建一个.muttrc配置文件</p>
+<div class="hlcode"><pre><span class="n">set</span> <span class="n">sendmail</span><span class="o">=</span><span class="s">&quot;/usr/bin/msmtp&quot;</span>   <span class="err">#这里设置调用的</span><span class="n">MTA</span>
+<span class="n">set</span> <span class="n">use_from</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">set</span> <span class="n">realname</span><span class="o">=</span><span class="s">&quot;XXX&quot;</span>              <span class="err">#发件人名称</span>
+<span class="n">set</span> <span class="n">editor</span><span class="o">=</span><span class="s">&quot;vim&quot;</span>                <span class="err">#调用的编辑器</span>
+</pre></div>
+
+
+<p>测试:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">Hello</span> <span class="n">World</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">mutt</span> <span class="o">-</span><span class="n">s</span> <span class="err">&#39;</span><span class="n">Hi</span><span class="p">,</span> <span class="n">Just</span> <span class="n">a</span> <span class="n">test</span><span class="o">!</span><span class="err">&#39;</span> <span class="n">xxx</span><span class="err">@</span><span class="n">xx</span><span class="p">.</span><span class="n">com</span>
+</pre></div>
+
+
+<p><code>w</code> 可以更改邮件的状态, 有:</p>
+<ul>
+<li>N: 新邮件</li>
+<li>O: 老邮件, 但未读</li>
+<li>r: 已读</li>
+<li>D: 将删除</li>
+</ul>
+<p>关于 tmux下mutt没有重绘窗口的问题, 见我之前的<a href="http://blog.tankywoo.com/2015/10/24/tmux-mutt-not-redraw-problem.html">博客</a></p>
+<p>关于邮件中的搜索, 有两种: <code>search</code> (按<code>/</code>) 和 <code>limit</code> (按<code>l</code>, 字母), 网上说后者比前者更强大, 不过暂时没感觉出来.</p>
+<p>对于包含body content中的搜索, 模式是: <code>/~b xxx</code> 或者 <code>l~b xxx</code>, 前者是定位到第一个匹配的, 按<code>n</code>到第二个匹配; 而 limit搜索相当于filter, 只显示匹配的邮件, 如果想回到所有列表, 则<code>lall</code> (注意这里的/或者l都是上面提到的进入search/limit模式)</p>
+<p>模式见文档 <a href="http://www.mutt.org/doc/manual/manual-4.html#ss4.2">mutt regex</a></p>
+<p>另外在search时, 按<code>\</code>可以toggle关键词高亮.</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://unix.stackexchange.com/questions/91046/search-for-mail-content-with-mutt">Search for mail content with mutt</a></li>
+<li><a href="http://mutt.blackfish.org.uk/searching/">mutt Pattern matching with regular expressions</a></li>
+<li><a href="http://www.gentoo.org/doc/zh_cn/guide-to-mutt.xml?style=printable">Gentoo文档:Mutt电子邮件快速入门指南</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Mutt">Arch - Mutt</a></li>
+<li><a href="http://www.jianshu.com/p/bebbf2db2cd8">使用mutt作为email客户端</a></li>
+<li><a href="http://sheet.shiar.nl/mutt">Mutt cheat sheet</a></li>
+</ul>
+<h2 id="exim">Exim</h2>
+<p>常用命令:</p>
+<div class="hlcode"><pre><span class="cp"># 输出邮件队列(queue)中的邮件数</span>
+<span class="n">exim</span> <span class="o">-</span><span class="n">bpc</span>
+
+<span class="cp"># 输出邮件队列中的邮件信息(time queued, size, message-id, sender, recipient)</span>
+<span class="n">exim</span> <span class="o">-</span><span class="n">bp</span>
+
+<span class="cp"># 输出邮件队列的摘要(count, volume, oldest, newest, domain, and totals)</span>
+<span class="n">exim</span> <span class="o">-</span><span class="n">bp</span> <span class="o">|</span> <span class="n">exiqsumm</span>
+
+<span class="cp"># exim当前状态</span>
+<span class="n">exiwhat</span>
+
+<span class="cp"># 输出exim配置信息</span>
+<span class="n">exim</span> <span class="o">-</span><span class="n">bP</span>
+
+<span class="cp"># 删除邮件队列中指定的邮件</span>
+<span class="n">exim</span> <span class="o">-</span><span class="n">Mrm</span> <span class="o">&lt;</span><span class="n">message</span><span class="o">-</span><span class="n">id</span><span class="o">&gt;</span>
+
+<span class="cp"># 删除邮件队列中所有的邮件(几种方法都行, 暂未全部尝试 XXX)</span>
+<span class="n">exim</span> <span class="o">-</span><span class="n">bp</span> <span class="o">|</span> <span class="n">exiqgrep</span> <span class="o">-</span><span class="n">i</span> <span class="o">|</span> <span class="n">xargs</span> <span class="n">exim</span> <span class="o">-</span><span class="n">Mrm</span>
+<span class="n">exiqgrep</span> <span class="o">-</span><span class="n">i</span><span class="o">|</span><span class="n">xargs</span> <span class="n">exim</span> <span class="o">-</span><span class="n">Mrm</span>
+<span class="n">exim</span> <span class="o">-</span><span class="n">bp</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">&#39;</span><span class="o">/^</span> <span class="o">*</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="n">mhd</span><span class="p">]</span><span class="o">/</span><span class="p">{</span><span class="n">print</span> <span class="s">&quot;exim -Mrm &quot;</span> <span class="err">$</span><span class="mi">3</span><span class="p">}</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">bash</span>
+</pre></div>
+
+
+<p>参考:</p>
+<ul>
+<li><a href="http://bradthemad.org/tech/notes/exim_cheatsheet.php">Exim Cheatsheet</a></li>
+<li><a href="http://www.cyberciti.biz/faq/exim-remove-all-messages-from-the-mail-queue/">Exim Remove All messages From the Mail Queue</a></li>
+<li><a href="http://crybit.com/remove-all-emails-from-queue/">Quick way to remove all emails from the mail queue</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

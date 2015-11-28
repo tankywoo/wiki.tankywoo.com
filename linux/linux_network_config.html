@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <title>Linux Network Configuration - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+<script language="javascript" type="text/javascript">
+    var oddClick = true;
+    $(document).ready(function() {
+      $('#toggle-button').click(function() {
+        $('#container').animate({
+          width: oddClick? "100%":"60%",
+        });
+        $(this).text(oddClick? "窄版":"宽版");
+        oddClick = !oddClick;
+      });
+    });
+</script>
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            <div id="toggle-button">宽版</div>
+            
+            <a href="/">Home</a> » <a href="/#linux">linux</a> » Linux Network Configuration
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <h2 id="ifconfig">直接用ifconfig配置</h2>
+<div class="hlcode"><pre><span class="err">设置网卡</span><span class="n">eth0</span><span class="err">的</span><span class="n">IP</span><span class="err">地址和子网掩码</span>
+<span class="n">sudo</span> <span class="n">ifconfig</span> <span class="n">eth0</span> <span class="mf">192.168.2.106</span> <span class="n">netmask</span> <span class="mf">255.255.255.0</span>
+<span class="err">设置网关</span>
+<span class="n">sudo</span> <span class="n">route</span> <span class="n">add</span> <span class="k">default</span> <span class="n">gw</span> <span class="mf">192.168.2.254</span>
+<span class="err">配置</span><span class="n">DNS</span>
+<span class="n">sudo</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">resolv</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+
+
+<h2 id="gentoo">Gentoo 网络配置文件</h2>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">conf</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">net</span>
+<span class="cp"># 我的网卡名叫 enp2s1</span>
+
+<span class="cp"># This blank configuration will automatically use DHCP for any net.*</span>
+<span class="cp"># scripts in /etc/init.d.  To create a more complete configuration,</span>
+<span class="cp"># please review /usr/share/doc/openrc*/net.example* and save your configuration</span>
+<span class="cp"># in /etc/conf.d/net (this file :]!).</span>
+
+<span class="cp"># DHCP 方式</span>
+<span class="n">config_enp2s1</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;dhcp&quot;</span><span class="p">)</span>
+
+<span class="cp"># 静态 IP</span>
+<span class="n">config_enp2s1</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;192.168.1.100 netmask 255.255.255.0 brd 192.168.1.255&quot;</span><span class="p">)</span>
+<span class="n">routes_enp2s1</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;default via 192.168.1.1&quot;</span><span class="p">)</span>   <span class="err">#</span> <span class="err">设置默认路由</span><span class="p">(</span><span class="err">网关</span><span class="p">)</span>
+<span class="n">dns_servers</span><span class="o">=</span><span class="s">&quot;8.8.8.8&quot;</span>
+<span class="n">dns_search</span><span class="o">=</span><span class="s">&quot;the.dnsdomain.to.search&quot;</span>        <span class="err">#</span> <span class="err">设置</span> <span class="n">dns</span> <span class="err">默认搜索域</span>
+
+<span class="cp">#配置多个路由:</span>
+<span class="n">routes_enp2s1</span><span class="o">=</span><span class="p">(</span>
+    <span class="s">&quot;192.0.0.0/8 via 192.0.0.1&quot;</span>
+    <span class="s">&quot;default via 192.168.1.1&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+
+<p>详细配置参考: /usr/share/doc/openrc*/net.example*</p>
+<h2 id="ubuntu">Ubuntu 网络配置文件</h2>
+<div class="hlcode"><pre><span class="n">sudo</span> <span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">network</span><span class="o">/</span><span class="n">interfaces</span>
+
+<span class="n">DHCP</span><span class="err">连接</span>
+<span class="k">auto</span> <span class="n">eth0</span>
+<span class="n">iface</span> <span class="n">eth0</span> <span class="n">inet</span> <span class="n">dhcp</span>
+
+<span class="err">手动配置静态</span><span class="n">ip</span>
+<span class="k">auto</span> <span class="n">eth0</span>
+<span class="n">iface</span> <span class="n">eth0</span> <span class="n">inet</span> <span class="k">static</span>
+<span class="n">address</span> <span class="mf">192.169.2.106</span>
+<span class="n">gateway</span> <span class="mf">192.168.2.254</span>
+<span class="n">netmask</span> <span class="mf">255.255.255.0</span>
+<span class="cp">#network ?.?.?.?</span>
+<span class="cp">#broadcast ?.?.?.?</span>
+
+<span class="cp"># dns设置</span>
+<span class="cp"># 我印象中重启后resolv.conf的内容会删除</span>
+<span class="cp"># 所以DNS服务器的配置也是在/etc/network/interfaces下</span>
+<span class="n">dns</span><span class="o">-</span><span class="n">nameservers</span> <span class="mf">8.8.8.8</span>
+<span class="n">dns</span><span class="o">-</span><span class="n">search</span> <span class="n">xxx</span><span class="p">.</span><span class="n">xxx</span><span class="p">.</span><span class="n">xxx</span><span class="p">...</span>
+
+<span class="cp"># 添加一条静态路由</span>
+<span class="n">up</span> <span class="n">route</span> <span class="n">add</span> <span class="o">-</span><span class="n">net</span> <span class="mf">192.0.0.0</span><span class="o">/</span><span class="mi">8</span> <span class="n">gw</span> <span class="mf">192.0.0.1</span> <span class="n">dev</span> <span class="n">eth0</span>
+</pre></div>
+
+
+<h2 id="_1">参考链接</h2>
+<ul>
+<li><a href="http://wiki.gentoo.org/wiki/Static_Routing">static routing</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2015 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2015-11-24 21:22:25</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>
