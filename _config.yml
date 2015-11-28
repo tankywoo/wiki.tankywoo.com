@@ -12,3 +12,6 @@ deploy:
     user: root
     host: 192.81.133.96
     dir: /opt/wiki.tankywoo.com/output
+  - type: git
+    remote: origin
+    branch: gh-pages
