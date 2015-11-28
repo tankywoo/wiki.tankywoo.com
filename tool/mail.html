@@ -128,6 +128,17 @@
 <p>对于包含body content中的搜索, 模式是: <code>/~b xxx</code> 或者 <code>l~b xxx</code>, 前者是定位到第一个匹配的, 按<code>n</code>到第二个匹配; 而 limit搜索相当于filter, 只显示匹配的邮件, 如果想回到所有列表, 则<code>lall</code> (注意这里的/或者l都是上面提到的进入search/limit模式)</p>
 <p>模式见文档 <a href="http://www.mutt.org/doc/manual/manual-4.html#ss4.2">mutt regex</a></p>
 <p>另外在search时, 按<code>\</code>可以toggle关键词高亮.</p>
+<p>删除指定日期的所有邮件:</p>
+<div class="hlcode"><pre><span class="cp"># 删除2015年12月1号的邮件</span>
+<span class="n">l</span><span class="o">~</span><span class="n">d</span> <span class="mo">01</span><span class="o">/</span><span class="mi">12</span><span class="o">/</span><span class="mi">2015</span>
+<span class="o">^</span><span class="n">D</span>
+
+<span class="cp"># 删除2015/12/01 - 2015/12/06内的所有邮件</span>
+<span class="n">l</span><span class="o">~</span><span class="n">d</span> <span class="mo">01</span><span class="o">/</span><span class="mi">12</span><span class="o">/</span><span class="mi">2015</span><span class="o">+</span><span class="mi">5</span><span class="n">d</span>
+<span class="o">^</span><span class="n">D</span>
+</pre></div>
+
+
 <p>参考:</p>
 <ul>
 <li><a href="http://unix.stackexchange.com/questions/91046/search-for-mail-content-with-mutt">Search for mail content with mutt</a></li>
@@ -136,6 +147,7 @@
 <li><a href="https://wiki.archlinux.org/index.php/Mutt">Arch - Mutt</a></li>
 <li><a href="http://www.jianshu.com/p/bebbf2db2cd8">使用mutt作为email客户端</a></li>
 <li><a href="http://sheet.shiar.nl/mutt">Mutt cheat sheet</a></li>
+<li><a href="http://promberger.info/linux/2009/07/23/mutt-limit-or-search-by-date/">Mutt: limit or search by date</a></li>
 </ul>
 <h2 id="exim">Exim</h2>
 <p>常用命令:</p>
@@ -179,7 +191,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2015-11-24 21:22:25</p>
+                <p>Last Update 2015-11-28 12:24:10</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
