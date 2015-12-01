@@ -5,6 +5,7 @@
         <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
         <title>Gentoo - Wiki · Tanky Woo</title>
         <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
         <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
@@ -51,6 +52,7 @@
 <li><a href="#python26">卸载python2.6</a></li>
 <li><a href="#gcc">gcc 升级</a></li>
 <li><a href="#x11">卸载X11相关</a></li>
+<li><a href="#usrportagedistfilespackages">清理 /usr/portage/{distfiles,packages}</a></li>
 <li><a href="#_3">其它资源</a></li>
 </ul>
 </div>
@@ -465,6 +467,23 @@ python_single_target_python3_3<span class="p">(</span><span class="o">-</span><s
 
 <h2 id="x11">卸载X11相关</h2>
 <p>还未操作, 先记录:  <a href="https://forums.gentoo.org/viewtopic-p-6667611.html">How to remove X11</a></p>
+<h2 id="usrportagedistfilespackages">清理 /usr/portage/{distfiles,packages}</h2>
+<p>默认情况下, 源文件在<code>/usr/portage/distfiles</code>目录, 二进制文件在<code>/usr/portage/packages</code>. 这些都可以删除.</p>
+<p>不过保留下来以后可以方便的降级.</p>
+<p>使用<code>eclean</code>命令可以方便的删除过时/废弃的文件. 而保留有用的.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="nx">eclean</span> <span class="err">[</span><span class="bp">global</span><span class="na">-option</span><span class="cp">]</span> ... <span class="nt">&lt;action&gt;</span> <span class="cp">[</span><span class="nb">action</span><span class="na">-option</span><span class="cp">]</span> ...
+$ eclean-dist <span class="cp">[</span><span class="bp">global</span><span class="na">-option</span><span class="p">,</span> <span class="nx">distfiles</span><span class="na">-option</span><span class="cp">]</span> ...
+$ eclean-pkg <span class="cp">[</span><span class="bp">global</span><span class="na">-option</span><span class="p">,</span> <span class="nx">packages</span><span class="na">-option</span><span class="cp">]</span> ...
+</pre></div>
+
+
+<p><code>eclean distfiles</code>等价于<code>eclean-dist</code></p>
+<p>参考:</p>
+<ul>
+<li><a href="https://wiki.gentoo.org/wiki/Gentoolkit">Gentoolkit</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Eclean">eclean</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/FAQ#Source_tarballs_are_collecting_in_.2Fusr.2Fportage.2Fdistfiles.2F._Is_it_safe_to_delete_these_files.3F">Gentoo FAQ: Source tarballs are collecting in /usr/portage/distfiles/. Is it safe to delete these files?</a></li>
+</ul>
 <h2 id="_3">其它资源</h2>
 <ul>
 <li><a href="http://www.jinbuguo.com/gentoo/emerge.html">emerge 中文手册</a></li>
@@ -482,7 +501,7 @@ python_single_target_python3_3<span class="p">(</span><span class="o">-</span><s
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2015-11-28 12:24:10</p>
+                <p>Last Update 2015-12-01 23:15:50</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
