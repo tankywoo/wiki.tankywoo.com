@@ -1,11 +1,87 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
+updated: 2015-12-26 14:00
 ---
 
 [TOC]
 
-## gentoo grub升级了 ##
+![Gentoo Logo](https://1b9a50f4f9de4348cd9f-e703bc50ba0aa66772a874f8c7698be7.ssl.cf5.rackcdn.com/site-logo.svg)
+
+* [Gentoo官网](https://www.gentoo.org/)
+* [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:Main_Page)
+
+## 基础 ##
+
+### Architecture ###
+
+[Handbook-MainPage](https://wiki.gentoo.org/wiki/Handbook:Main_Page) 介绍了什么是架构:
+
+> An architecture is a family of CPUs (processors) who support the same instructions. The two most prominent architectures in the desktop world are the x86 architecture and the x86_64 architecture (for which Gentoo uses the amd64 notation). But many other architectures exist, such as sparc, ppc (the PowerPC family), mips, arm, etc...
+> 
+> A distribution as versatile as Gentoo supports many architectures. For that reason, you'll find that our Gentoo Handbooks are offered for many of the supported architectures. However, that might lead to some confusion as not all users are aware of the differences. Some are only aware of the CPU type or name that their system is a part of (like i686 or Intel Core i7). Below you will find a quick summary of the supported architectures and the abbreviation used in Gentoo. However, most people that do not know the architecture of their system are mostly interested in x86 or amd64.
+
+---
+
+## Stage ##
+
+stage3 是Gentoo的最小系统:
+
+> A stage3 tarball is an archive containing a minimal Gentoo environment, suitable to continue the Gentoo installation using the instructions in this manual. Previously, the Gentoo Handbook described the installation using one of three stage tarballs. While Gentoo still offers stage1 and stage2 tarballs, the official installation method uses the stage3 tarball. If you are interested in performing a Gentoo installation using a stage1 or stage2 tarball, please read the Gentoo FAQ on How do I Install Gentoo Using a Stage1 or Stage2 Tarball?
+
+> Stage3 tarballs can be downloaded from releases/amd64/autobuilds/ on any of the official Gentoo mirrors and are not provided by the installation CD.
+
+一般情况下是安装的stage3:
+
+> Instructions on using a stage1 or stage2 tarball are now available in the [Gentoo FAQ](https://wiki.gentoo.org/wiki/Handbook:Main_Page). A stage3 installation is the only supported installation as of now.
+
+[wikipedia](https://en.wikipedia.org/wiki/Gentoo_Linux#Stages)的解释:
+
+Before October 2005, installation could be started from any of three base stages:
+
+* Stage1 begins with only what is necessary to build a toolchain (various compilers, linkers, and libraries necessary to compile all other software) for the target system; this is known as bootstrapping the system.
+* Stage2 begins with a bootstrapped system and requires the compilation of all other base system software.
+* Stage3 begins with a partially configured (but not yet bootable) base system.
+
+Since October 2005, only the stage3 installations have been officially supported. Tarballs for stage1 and stage2 were distributed for some time after this, although the instructions for installing from these stages had been removed from the handbook and moved into the Gentoo FAQ.
+
+As of September 2015, only the supported stage3 tarballs are publicly available. However, if desired so, a user may rebuild the toolchain or reinstall the base system software after completing a stage3 installation.
+
+
+参考:
+
+* [Gentoo](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Media)
+* [Wikipedia - Stage](https://en.wikipedia.org/wiki/Gentoo_Linux#Stages)
+* [How do I install Gentoo using a stage1 or stage2 tarball?](https://wiki.gentoo.org/wiki/FAQ#How_do_I_install_Gentoo_using_a_stage1_or_stage2_tarball.3F)
+
+---
+
+## Portage ##
+
+Portage是一个Python和Shell写的软件包管理系统, 维护了一个软件包树
+
+> Portage is the official package management and distribution system for Gentoo.
+
+> Portage, the package maintenance system which Gentoo uses, is written in Python, meaning the user can easily view and modify the source code.
+
+只升级安装的软件包:
+
+	$ emerge --update --ask @world
+
+Portage will then search for newer version of the applications that are installed. However, it will only verify the versions for the applications that are explicitly installed (the applications listed in `/var/lib/portage/world`) - it does not thoroughly check their dependencies. To update the dependencies of those packages as well, add the --deep option:
+
+	$ emerge --update --deep @world
+
+主动安装的包列表在`/var/lib/portage/world`里
+
+参考:
+
+* [Gentoo - Portage](https://wiki.gentoo.org/wiki/Portage)
+* [Gentoo Handbook - Portage](https://wiki.gentoo.org/wiki/Handbook:AMD64/Working/Portage)
+* [Gentoo Handbook - Installation](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/About)
+
+
+## Gentoo grub升级到grub2 ##
 
 world file: `/var/lib/portage/world`
 
@@ -121,6 +197,8 @@ example:
 更新系统配置文件:
 
     $ dispatch-conf
+
+参考:
 
 * [Gentoo系统全面升级记录](http://blog.chinaunix.net/uid-8874157-id-3763893.html)
 * [Optimal procedure to upgrade Gentoo Linux?](http://serverfault.com/questions/9936/optimal-procedure-to-upgrade-gentoo-linux)
@@ -441,6 +519,16 @@ gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的�
 * [Gentoolkit](https://wiki.gentoo.org/wiki/Gentoolkit)
 * [eclean](https://wiki.gentoo.org/wiki/Eclean)
 * [Gentoo FAQ: Source tarballs are collecting in /usr/portage/distfiles/. Is it safe to delete these files?](https://wiki.gentoo.org/wiki/FAQ#Source_tarballs_are_collecting_in_.2Fusr.2Fportage.2Fdistfiles.2F._Is_it_safe_to_delete_these_files.3F)
+
+## 磁盘分区限制 ##
+
+摘自[Gentoo Handbook - Installation](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks)
+
+> Each partition is limited to 2 TB in size (due to the 32-bit identifiers). Also, the MBR setup does not provide any backup-MBR, so if an application or user overwrites the MBR, all partition information is lost.
+
+> For completeness, the BIOS boot partition is needed when GPT partition layout is used with GRUB2, or when the MBR partition layout is used with GRUB2 when the first partition starts earlier than the 1 MB location on the disk.
+
+之前一直弄错了, 以为mbr分区最大的磁盘限制是2T, 应该是分区限制是2T.
 
 
 ## 其它资源 ##
