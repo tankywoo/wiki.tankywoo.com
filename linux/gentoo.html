@@ -1,9 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
         <title>Gentoo - Wiki · Tanky Woo</title>
@@ -11,19 +9,6 @@
         <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-<script language="javascript" type="text/javascript">
-    var oddClick = true;
-    $(document).ready(function() {
-      $('#toggle-button').click(function() {
-        $('#container').animate({
-          width: oddClick? "100%":"60%",
-        });
-        $(this).text(oddClick? "窄版":"宽版");
-        oddClick = !oddClick;
-      });
-    });
-</script>
 
     </head>
 
@@ -32,16 +17,18 @@
             
     <div id="header">
         <div id="post-nav">
-            <div id="toggle-button">宽版</div>
             
-            <a href="/">Home</a> » <a href="/#linux">linux</a> » Gentoo
+            <a href="/">Wiki · Tanky Woo</a> » <a href="/#linux">linux</a> » Gentoo
             
         </div>
     </div>
     <div class="clearfix"></div>
     <div id="content">
         <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#gentoo-grub">gentoo grub升级了</a></li>
+<li><a href="#architecture">Architecture</a></li>
+<li><a href="#stage">Stage</a></li>
+<li><a href="#portage">Portage</a></li>
+<li><a href="#gentoo-grubgrub2">Gentoo grub升级到grub2</a></li>
 <li><a href="#gentoo">Gentoo 升级相关</a></li>
 <li><a href="#world-world">world 和 @world</a></li>
 <li><a href="#_1">升级后更新系统配置文件</a></li>
@@ -53,10 +40,194 @@
 <li><a href="#gcc">gcc 升级</a></li>
 <li><a href="#x11">卸载X11相关</a></li>
 <li><a href="#usrportagedistfilespackages">清理 /usr/portage/{distfiles,packages}</a></li>
-<li><a href="#_3">其它资源</a></li>
+<li><a href="#_3">磁盘分区限制</a></li>
+<li><a href="#_4">其它资源</a></li>
 </ul>
 </div>
-<h2 id="gentoo-grub">gentoo grub升级了</h2>
+<p><img alt="Gentoo Logo" src="https://1b9a50f4f9de4348cd9f-e703bc50ba0aa66772a874f8c7698be7.ssl.cf5.rackcdn.com/site-logo.svg" /></p>
+<ul>
+<li><a href="https://www.gentoo.org/">Gentoo官网</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Handbook:Main_Page">Gentoo Handbook</a></li>
+</ul>
+<h2 id="architecture">Architecture</h2>
+<p><a href="https://wiki.gentoo.org/wiki/Handbook:Main_Page">Handbook-MainPage</a> 介绍了什么是架构:</p>
+<blockquote>
+<p>An architecture is a family of CPUs (processors) who support the same instructions. The two most prominent architectures in the desktop world are the x86 architecture and the x86_64 architecture (for which Gentoo uses the amd64 notation). But many other architectures exist, such as sparc, ppc (the PowerPC family), mips, arm, etc...</p>
+<p>A distribution as versatile as Gentoo supports many architectures. For that reason, you'll find that our Gentoo Handbooks are offered for many of the supported architectures. However, that might lead to some confusion as not all users are aware of the differences. Some are only aware of the CPU type or name that their system is a part of (like i686 or Intel Core i7). Below you will find a quick summary of the supported architectures and the abbreviation used in Gentoo. However, most people that do not know the architecture of their system are mostly interested in x86 or amd64.</p>
+</blockquote>
+<hr />
+<h2 id="stage">Stage</h2>
+<p>stage3 是Gentoo的最小系统:</p>
+<blockquote>
+<p>A stage3 tarball is an archive containing a minimal Gentoo environment, suitable to continue the Gentoo installation using the instructions in this manual. Previously, the Gentoo Handbook described the installation using one of three stage tarballs. While Gentoo still offers stage1 and stage2 tarballs, the official installation method uses the stage3 tarball. If you are interested in performing a Gentoo installation using a stage1 or stage2 tarball, please read the Gentoo FAQ on How do I Install Gentoo Using a Stage1 or Stage2 Tarball?</p>
+<p>Stage3 tarballs can be downloaded from releases/amd64/autobuilds/ on any of the official Gentoo mirrors and are not provided by the installation CD.</p>
+</blockquote>
+<p>一般情况下是安装的stage3:</p>
+<blockquote>
+<p>Instructions on using a stage1 or stage2 tarball are now available in the <a href="https://wiki.gentoo.org/wiki/Handbook:Main_Page">Gentoo FAQ</a>. A stage3 installation is the only supported installation as of now.</p>
+</blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Gentoo_Linux#Stages">wikipedia</a>的解释:</p>
+<p>Before October 2005, installation could be started from any of three base stages:</p>
+<ul>
+<li>Stage1 begins with only what is necessary to build a toolchain (various compilers, linkers, and libraries necessary to compile all other software) for the target system; this is known as bootstrapping the system.</li>
+<li>Stage2 begins with a bootstrapped system and requires the compilation of all other base system software.</li>
+<li>Stage3 begins with a partially configured (but not yet bootable) base system.</li>
+</ul>
+<p>Since October 2005, only the stage3 installations have been officially supported. Tarballs for stage1 and stage2 were distributed for some time after this, although the instructions for installing from these stages had been removed from the handbook and moved into the Gentoo FAQ.</p>
+<p>As of September 2015, only the supported stage3 tarballs are publicly available. However, if desired so, a user may rebuild the toolchain or reinstall the base system software after completing a stage3 installation.</p>
+<p>参考:</p>
+<ul>
+<li><a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Media">Gentoo</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Gentoo_Linux#Stages">Wikipedia - Stage</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/FAQ#How_do_I_install_Gentoo_using_a_stage1_or_stage2_tarball.3F">How do I install Gentoo using a stage1 or stage2 tarball?</a></li>
+</ul>
+<hr />
+<h2 id="portage">Portage</h2>
+<p>Portage是一个Python和Shell写的软件包管理系统, 维护了一个软件包树</p>
+<blockquote>
+<p>Portage is the official package management and distribution system for Gentoo.</p>
+<p>Portage, the package maintenance system which Gentoo uses, is written in Python, meaning the user can easily view and modify the source code.</p>
+</blockquote>
+<p>只升级安装的软件包:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">emerge</span> <span class="o">--</span><span class="n">update</span> <span class="o">--</span><span class="n">ask</span> <span class="err">@</span><span class="n">world</span>
+</pre></div>
+
+
+<p>Portage will then search for newer version of the applications that are installed. However, it will only verify the versions for the applications that are explicitly installed (the applications listed in <code>/var/lib/portage/world</code>) - it does not thoroughly check their dependencies. To update the dependencies of those packages as well, add the --deep option:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">emerge</span> <span class="o">--</span><span class="n">update</span> <span class="o">--</span><span class="n">deep</span> <span class="err">@</span><span class="n">world</span>
+</pre></div>
+
+
+<p>主动安装的包列表在<code>/var/lib/portage/world</code>里</p>
+<p>Portage的默认配置文件在 <code>/var/share/portage/config/make.globals</code></p>
+<p>每一个架构下都有一系列的profile, 不同的profile管理的系统配置不一样:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">eselect</span> <span class="n">profile</span> <span class="n">list</span>
+<span class="n">Available</span> <span class="n">profile</span> <span class="n">symlink</span> <span class="n">targets</span><span class="o">:</span>
+  <span class="p">[</span><span class="mi">1</span><span class="p">]</span>   <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span> <span class="o">*</span>
+  <span class="p">[</span><span class="mi">2</span><span class="p">]</span>   <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">selinux</span>
+  <span class="p">[</span><span class="mi">3</span><span class="p">]</span>   <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">desktop</span>
+  <span class="p">[</span><span class="mi">4</span><span class="p">]</span>   <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">desktop</span><span class="o">/</span><span class="n">gnome</span>
+  <span class="p">[</span><span class="mi">5</span><span class="p">]</span>   <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">desktop</span><span class="o">/</span><span class="n">gnome</span><span class="o">/</span><span class="n">systemd</span>
+  <span class="p">[</span><span class="mi">6</span><span class="p">]</span>   <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">desktop</span><span class="o">/</span><span class="n">kde</span>
+  <span class="p">[</span><span class="mi">7</span><span class="p">]</span>   <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">desktop</span><span class="o">/</span><span class="n">kde</span><span class="o">/</span><span class="n">systemd</span>
+  <span class="p">[</span><span class="mi">8</span><span class="p">]</span>   <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">desktop</span><span class="o">/</span><span class="n">plasma</span>
+  <span class="p">[</span><span class="mi">9</span><span class="p">]</span>   <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">desktop</span><span class="o">/</span><span class="n">plasma</span><span class="o">/</span><span class="n">systemd</span>
+  <span class="p">[</span><span class="mi">10</span><span class="p">]</span>  <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">developer</span>
+  <span class="p">[</span><span class="mi">11</span><span class="p">]</span>  <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">no</span><span class="o">-</span><span class="n">multilib</span>
+  <span class="p">[</span><span class="mi">12</span><span class="p">]</span>  <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">systemd</span>
+  <span class="p">[</span><span class="mi">13</span><span class="p">]</span>  <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="mf">13.0</span><span class="o">/</span><span class="n">x32</span>
+  <span class="p">[</span><span class="mi">14</span><span class="p">]</span>  <span class="n">hardened</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span>
+  <span class="p">[</span><span class="mi">15</span><span class="p">]</span>  <span class="n">hardened</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">selinux</span>
+  <span class="p">[</span><span class="mi">16</span><span class="p">]</span>  <span class="n">hardened</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">no</span><span class="o">-</span><span class="n">multilib</span>
+  <span class="p">[</span><span class="mi">17</span><span class="p">]</span>  <span class="n">hardened</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">no</span><span class="o">-</span><span class="n">multilib</span><span class="o">/</span><span class="n">selinux</span>
+  <span class="p">[</span><span class="mi">18</span><span class="p">]</span>  <span class="n">hardened</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">x32</span>
+  <span class="p">[</span><span class="mi">19</span><span class="p">]</span>  <span class="n">hardened</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">musl</span><span class="o">/</span><span class="n">amd64</span>
+  <span class="p">[</span><span class="mi">20</span><span class="p">]</span>  <span class="n">hardened</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">musl</span><span class="o">/</span><span class="n">amd64</span><span class="o">/</span><span class="n">x32</span>
+  <span class="p">[</span><span class="mi">21</span><span class="p">]</span>  <span class="k">default</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">uclibc</span><span class="o">/</span><span class="n">amd64</span>
+  <span class="p">[</span><span class="mi">22</span><span class="p">]</span>  <span class="n">hardened</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">uclibc</span><span class="o">/</span><span class="n">amd64</span>
+</pre></div>
+
+
+<p>Profile管理了一些系统的配置, 见<code>/etc/portage/make.profile</code>, 指向的就是配置的profile目录</p>
+<p>当需要修改Portage配置, 不建议直接修改系统的默认配置文件. 可以复制Gentoo提供的sample文件, 默认用户自定义的portage配置文件在<code>/etc/portage/make.conf</code>:</p>
+<div class="hlcode"><pre><span class="n">cp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">config</span><span class="o">/</span><span class="n">make</span><span class="p">.</span><span class="n">conf</span><span class="p">.</span><span class="n">example</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">make</span><span class="p">.</span><span class="n">conf</span>  <span class="err">#</span> <span class="n">copy</span> <span class="n">and</span> <span class="n">edit</span> <span class="n">this</span> <span class="n">file</span>
+</pre></div>
+
+
+<p><code>make.conf</code> 也可以是一个目录, 按alphabetical顺序读取里面的配置.</p>
+<blockquote>
+<p>As noted previously, Portage is configurable through many variables which should be defined in /etc/portage/make.conf or one of the subdirectories of /etc/portage/. Please refer to the make.conf and portage man pages for more and complete information:</p>
+</blockquote>
+<p>这里好像有问题, 并不会读取/etc/portage/下子目录, 测试建立一个子目录, 配置GENTOO_MIRRORS, 但是并没有覆盖.</p>
+<p>用户定制的配置:</p>
+<p><code>/etc/portage/</code>下，有几个文件负责不同的功能:</p>
+<ul>
+<li><code>package.mask</code> which lists the packages that Portage should never try to install</li>
+<li><code>package.unmask</code> which lists the packages Portage should be able to install even though the Gentoo developers highly discourage users from emerging them</li>
+<li><code>package.accept_keywords</code> which lists the packages Portage should be able to install even though the package hasn't been found suitable for the system or architecture (yet)</li>
+<li><code>package.use</code> which lists the USE flags to use for certain packages without having the entire system use those USE flags</li>
+</ul>
+<p>这四个不一定必须是文件, 也可以是目录, 里面一个package一个文件, 这样便于管理维护.</p>
+<p><code>PORTDIR</code> 管理Portage Tree的路径, 默认是<code>/usr/portage</code>, 因为python包是一个分级的结构, 如python是<code>dev-lang/python</code>, portage树存储的也是这个结构, 如python相关的元信息以及ebuild都在/usr/portage/dev-lang/python/下</p>
+<p><code>PKGDIR</code> 管理预编译二进制(prebuilt binary)包的路径, 默认是<code>/usr/portage/packages</code>. 默认情况下python是源码安装管理的, 不过也支持二进制包的安装.</p>
+<p><code>DISTDIR</code> 控制程序源码包下载存放的地址, 默认是 <code>/usr/portage/distfiles</code>. 默认是wget下载下来后安装. 如果空间不是很缺的话，建议保留这个目录下的源码压缩包，比如有时新版本有问题，而老版本已经从portage树中移除，这个可以方便的直接通过源码压缩包安装回退到老版本.</p>
+<p>Portage数据库(存储系统的状态, 如哪些包已经安装，哪些文件属于哪些包) 在 <code>/var/db/pkg</code>. 不建议动, 否则会悲剧.</p>
+<p>Portage cache(修改时间, virtuals, 依赖关系等) 存在 <code>/var/cache/edb</code>. 这个文件是可以清理掉的, 不过也不大, 请不清理没意义.</p>
+<p><code>PORTAGE_TMPDIR</code>管理portage的临时文件, 默认是 <code>/var/tmp/</code>下. Portage编译时, 每个包一个目录, 在 <code>/var/tmp/portage/</code>下, 由<code>BUILD_PREFIX</code>控制.</p>
+<p>如果软件包的配置文件升级, <code>CONFIG_PROTECT</code>用于设置需要保护的配置目录. 这时此目录下的配置文件不会被覆盖, 新的配置会存放在此目录. <code>CONFIG_PROTECT_MASK</code> 用于设置保护目录下不需要保护的子目录.</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ack</span> <span class="n">PROTECT</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">make</span><span class="p">.</span><span class="n">conf</span>
+<span class="cp"># Minimal CONFIG_PROTECT</span>
+<span class="n">CONFIG_PROTECT</span><span class="o">=</span><span class="s">&quot;/etc&quot;</span>
+<span class="n">CONFIG_PROTECT_MASK</span><span class="o">=</span><span class="s">&quot;/etc/env.d&quot;</span>
+
+<span class="cp"># 或者使用 emerge</span>
+<span class="err">$</span> <span class="n">emerge</span> <span class="o">--</span><span class="n">info</span> <span class="o">|</span> <span class="n">ack</span> <span class="err">&#39;</span><span class="n">PROTECT</span><span class="err">&#39;</span>
+<span class="n">CONFIG_PROTECT</span><span class="o">=</span><span class="s">&quot;/etc /usr/share/gnupg/qualified.txt /var/bind&quot;</span>
+<span class="n">CONFIG_PROTECT_MASK</span><span class="o">=</span><span class="s">&quot;/etc/ca-certificates.conf /etc/env.d /etc/gconf /etc/gentoo-release /etc/php/apache2-php5.6/ext-active/ /etc/php/cgi-php5.6/ext-active/ /etc/php/cli-php5.6/ext-active/ /etc/revdep-rebuild /etc/sandbox.d /etc/terminfo&quot;</span>
+</pre></div>
+
+
+<p>后面输出多一些, 暂时还不清楚是哪里插入的?</p>
+<p>当需要的信息/数据在本地系统不存在(比如安装某个软件)时, Portage会通过网络下载相应的数据:</p>
+<ul>
+<li><code>GENTOO_MIRRORS</code> 定义一系列的server, 用于下载源码包(distfiles)</li>
+<li><code>PORTAGE_BINHOST</code> 指定二进制包的server</li>
+</ul>
+<p><code>/etc/portage/repos.conf</code>或者这个目录下的子文件, 用于配置Portage树更新(同步)的配置:</p>
+<ul>
+<li><code>sync-type</code> 定义同步类型, 默认是通过<code>rsync</code>来同步更新Portage树</li>
+<li><code>sync-uri</code> 定义从一个server来更新Portage树</li>
+</ul>
+<p><code>GENTOO_MIRRIOS</code>, <code>sync-type</code>, <code>sync-uri</code> 可以通过 <code>mirrorselect</code> 来自动获取</p>
+<p>当Portage下载(fetch)源码包时, 默认的方式是<code>wget</code>. 可以通过修改<code>FETCHCOMMAND</code>来修改下载方式</p>
+<p>当更新Portage树时, 可以定制 <code>rsync</code> 的选项. <code>PORTAGE_RSYNC_OPTS</code> 定义了默认的选项, 不建议修改. <code>PORTAGE_RSYNC_EXTRA_OPTS</code> 用户定义一些用户定制扩展的选项. <code>PORTAGE_RSYNC_RETRIES</code> 控制重试次数, 默认是3次.</p>
+<p>Gentoo的分支(branch)是指相应架构的软件包分支, 包括稳定(stable)和测试(testing)分支. 通过<code>ACCEPT_KEYWORDS</code>来管理. 默认是稳定分支.</p>
+<p>比如amd64架构下, 默认是:</p>
+<div class="hlcode"><pre><span class="n">ACCEPT_KEYWORDS</span><span class="o">=</span><span class="s">&quot;amd64&quot;</span>
+</pre></div>
+
+
+<p>如果想全局改为使用测试分支，则在 架构名 前加上 <code>~</code>：</p>
+<div class="hlcode"><pre><span class="cp"># /etc/portage/make.conf</span>
+<span class="n">ACCEPT_KEYWORDS</span><span class="o">=</span><span class="s">&quot;~amd64&quot;</span>
+</pre></div>
+
+
+<p>也可以在全局是稳定分支的情况下, 指定某些特定的包是测试分支. <code>/etc/portage/package.accept_keywords</code>文件或目录下添加指定包名:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">package</span><span class="p">.</span><span class="n">accept_keywords</span>
+<span class="cp">#required by dev-db/mongodb (argument)</span>
+<span class="o">=</span><span class="n">dev</span><span class="o">-</span><span class="n">db</span><span class="o">/</span><span class="n">mongodb</span><span class="o">-</span><span class="mf">2.2.0</span><span class="o">-</span><span class="n">r1</span> <span class="o">~</span><span class="n">amd64</span>
+</pre></div>
+
+
+<p>一般被mask的软件包(<code>profiles/default/linux/amd64/package.use.mask</code>)是没法安装, 不过可以通过添加unmask来安装, 同上类似, 文件或目录是<code>/etc/portage/package.unmask</code>:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">more</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">package</span><span class="p">.</span><span class="n">unmask</span>
+<span class="cp"># required by @preserved-rebuild (argument)</span>
+<span class="cp"># /usr/portage/profiles/package.mask:</span>
+<span class="cp"># Hans de Graaff &lt;graaff@gentoo.org&gt; (11 Oct 2015)</span>
+<span class="cp"># Ruby 1.9 is no longer maintained upstream since January</span>
+<span class="cp"># 2015, bug 536852.</span>
+<span class="cp"># Masked for removal in 30 days.</span>
+<span class="o">=</span><span class="n">dev</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mf">1.9.3</span><span class="n">_p551</span><span class="o">-</span><span class="n">r1</span>
+</pre></div>
+
+
+<p>同样也可以指定mask某个包:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">more</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">package</span><span class="p">.</span><span class="n">mask</span>
+<span class="o">=</span><span class="n">dev</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">exec</span><span class="o">-</span><span class="mf">10000.2</span>
+</pre></div>
+
+
+<p>添加第三方的ebuilds, 以前总结过 <a href="http://blog.tankywoo.com/gentoo/2013/09/18/gentoo-overlays-and-layman.html">Gentoo Overlays and Layman</a></p>
+<p>参考:</p>
+<ul>
+<li><a href="https://wiki.gentoo.org/wiki/Portage">Gentoo - Portage</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Portage">Gentoo Handbook - Portage</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/About">Gentoo Handbook - Installation</a></li>
+<li>man portage</li>
+<li>man make.conf</li>
+</ul>
+<h2 id="gentoo-grubgrub2">Gentoo grub升级到grub2</h2>
 <p>world file: <code>/var/lib/portage/world</code></p>
 <p>example:</p>
 <div class="hlcode"><pre><span class="mi">2013</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">14</span><span class="o">-</span><span class="nx">grub2</span><span class="o">-</span><span class="nx">migration</span>
@@ -180,6 +351,7 @@
 </pre></div>
 
 
+<p>参考:</p>
 <ul>
 <li><a href="http://blog.chinaunix.net/uid-8874157-id-3763893.html">Gentoo系统全面升级记录</a></li>
 <li><a href="http://serverfault.com/questions/9936/optimal-procedure-to-upgrade-gentoo-linux">Optimal procedure to upgrade Gentoo Linux?</a></li>
@@ -484,7 +656,14 @@ $ eclean-pkg <span class="cp">[</span><span class="bp">global</span><span class=
 <li><a href="https://wiki.gentoo.org/wiki/Eclean">eclean</a></li>
 <li><a href="https://wiki.gentoo.org/wiki/FAQ#Source_tarballs_are_collecting_in_.2Fusr.2Fportage.2Fdistfiles.2F._Is_it_safe_to_delete_these_files.3F">Gentoo FAQ: Source tarballs are collecting in /usr/portage/distfiles/. Is it safe to delete these files?</a></li>
 </ul>
-<h2 id="_3">其它资源</h2>
+<h2 id="_3">磁盘分区限制</h2>
+<p>摘自<a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks">Gentoo Handbook - Installation</a></p>
+<blockquote>
+<p>Each partition is limited to 2 TB in size (due to the 32-bit identifiers). Also, the MBR setup does not provide any backup-MBR, so if an application or user overwrites the MBR, all partition information is lost.</p>
+<p>For completeness, the BIOS boot partition is needed when GPT partition layout is used with GRUB2, or when the MBR partition layout is used with GRUB2 when the first partition starts earlier than the 1 MB location on the disk.</p>
+</blockquote>
+<p>之前一直弄错了, 以为mbr分区最大的磁盘限制是2T, 应该是分区限制是2T.</p>
+<h2 id="_4">其它资源</h2>
 <ul>
 <li><a href="http://www.jinbuguo.com/gentoo/emerge.html">emerge 中文手册</a></li>
 <li><a href="https://javran.wordpress.com/2011/02/18/gentoo-commands/">gentoo 日常维护命令备忘</a></li>
@@ -501,7 +680,7 @@ $ eclean-pkg <span class="cp">[</span><span class="bp">global</span><span class=
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2015-12-01 23:15:50</p>
+                <p>Last Update 2015-12-26 12:11:50</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">

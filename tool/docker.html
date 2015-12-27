@@ -1,9 +1,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <link rel="Stylesheet" type="text/css" href="/static/css/typo.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/reset_typo.css">
-        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
         <title>Docker - Wiki · Tanky Woo</title>
@@ -11,19 +9,6 @@
         <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
-<script language="javascript" type="text/javascript">
-    var oddClick = true;
-    $(document).ready(function() {
-      $('#toggle-button').click(function() {
-        $('#container').animate({
-          width: oddClick? "100%":"60%",
-        });
-        $(this).text(oddClick? "窄版":"宽版");
-        oddClick = !oddClick;
-      });
-    });
-</script>
 
     </head>
 
@@ -32,9 +17,8 @@
             
     <div id="header">
         <div id="post-nav">
-            <div id="toggle-button">宽版</div>
             
-            <a href="/">Home</a> » <a href="/#tool">tool</a> » Docker
+            <a href="/">Wiki · Tanky Woo</a> » <a href="/#tool">tool</a> » Docker
             
         </div>
     </div>
@@ -57,6 +41,44 @@
 </ul>
 <p>其实以前入门时, 有一个Interactive commandline tutorial, 我觉得挺好的, 但是现在没了.</p>
 <p>那个时候docker官网的域名还是docker.io, 现在已经把docker.com拿下了, 变化还是挺大的.</p>
+<h2 id="_2">遇到的问题</h2>
+<h2 id="loop-module">loop module</h2>
+<p>Gentoo下安装docker后启动报错, 看日志:</p>
+<blockquote>
+<p>level=info msg="Listening for HTTP on unix (/var/run/docker.sock)"
+level=error msg="There are no more loopback devices available."
+level=fatal msg="Error starting daemon: error initializing graphdriver: loopback mounting failed"</p>
+</blockquote>
+<p>原因是没有加载<code>loop</code>模块. 在<code>/etc/conf.d/modules</code> 中加入模块:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">conf</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">modules</span>
+<span class="cp"># You can define a list modules for a specific kernel version,</span>
+<span class="cp"># a released kernel version, a main kernel version or just a list.</span>
+<span class="cp"># The most specific versioned variable will take precedence.</span>
+<span class="cp">#modules_2_6_23_gentoo_r5=&quot;ieee1394 ohci1394&quot;</span>
+<span class="cp">#modules_2_6_23=&quot;tun ieee1394&quot;</span>
+<span class="cp">#modules_2_6=&quot;tun&quot;</span>
+<span class="cp">#modules_2=&quot;ipv6&quot;</span>
+<span class="cp">#modules=&quot;ohci1394&quot;</span>
+
+<span class="cp"># You can give modules a different name when they load - the new name</span>
+<span class="cp"># will also be used to pick arguments below.</span>
+<span class="cp">#modules=&quot;dummy:dummy1&quot;</span>
+
+<span class="cp"># Give the modules some arguments if needed, per version if necessary.</span>
+<span class="cp"># Again, the most specific versioned variable will take precedence.</span>
+<span class="cp">#module_ieee1394_args=&quot;debug&quot;</span>
+<span class="cp">#module_ieee1394_args_2_6_23_gentoo_r5=&quot;debug2&quot;</span>
+<span class="cp">#module_ieee1394_args_2_6_23=&quot;debug3&quot;</span>
+<span class="cp">#module_ieee1394_args_2_6=&quot;debug4&quot;</span>
+<span class="cp">#module_ieee1394_args_2=&quot;debug5&quot;</span>
+
+<span class="cp"># You should consult your kernel documentation and configuration</span>
+<span class="cp"># for a list of modules and their options.</span>
+<span class="n">modules</span><span class="o">=</span><span class="s">&quot;loop&quot;</span>
+</pre></div>
+
+
+<p>然后加载模块: <code>modprobe loop</code></p>
     </div>
 
         </div>
@@ -66,7 +88,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2015-12-01 23:15:50</p>
+                <p>Last Update 2015-12-23 22:11:06</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
