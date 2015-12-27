@@ -1,7 +1,7 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2015-12-26 14:00
+updated: 2015-12-27 12:23
 ---
 
 [TOC]
@@ -11,9 +11,7 @@ updated: 2015-12-26 14:00
 * [Gentoo官网](https://www.gentoo.org/)
 * [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:Main_Page)
 
-## 基础 ##
-
-### Architecture ###
+## Architecture ##
 
 [Handbook-MainPage](https://wiki.gentoo.org/wiki/Handbook:Main_Page) 介绍了什么是架构:
 
@@ -74,12 +72,142 @@ Portage will then search for newer version of the applications that are installe
 
 主动安装的包列表在`/var/lib/portage/world`里
 
+Portage的默认配置文件在 `/var/share/portage/config/make.globals`
+
+每一个架构下都有一系列的profile, 不同的profile管理的系统配置不一样:
+
+	$ eselect profile list
+	Available profile symlink targets:
+	  [1]   default/linux/amd64/13.0 *
+	  [2]   default/linux/amd64/13.0/selinux
+	  [3]   default/linux/amd64/13.0/desktop
+	  [4]   default/linux/amd64/13.0/desktop/gnome
+	  [5]   default/linux/amd64/13.0/desktop/gnome/systemd
+	  [6]   default/linux/amd64/13.0/desktop/kde
+	  [7]   default/linux/amd64/13.0/desktop/kde/systemd
+	  [8]   default/linux/amd64/13.0/desktop/plasma
+	  [9]   default/linux/amd64/13.0/desktop/plasma/systemd
+	  [10]  default/linux/amd64/13.0/developer
+	  [11]  default/linux/amd64/13.0/no-multilib
+	  [12]  default/linux/amd64/13.0/systemd
+	  [13]  default/linux/amd64/13.0/x32
+	  [14]  hardened/linux/amd64
+	  [15]  hardened/linux/amd64/selinux
+	  [16]  hardened/linux/amd64/no-multilib
+	  [17]  hardened/linux/amd64/no-multilib/selinux
+	  [18]  hardened/linux/amd64/x32
+	  [19]  hardened/linux/musl/amd64
+	  [20]  hardened/linux/musl/amd64/x32
+	  [21]  default/linux/uclibc/amd64
+	  [22]  hardened/linux/uclibc/amd64
+
+Profile管理了一些系统的配置, 见`/etc/portage/make.profile`, 指向的就是配置的profile目录
+
+当需要修改Portage配置, 不建议直接修改系统的默认配置文件. 可以复制Gentoo提供的sample文件, 默认用户自定义的portage配置文件在`/etc/portage/make.conf`:
+
+	cp /usr/share/portage/config/make.conf.example /etc/portage/make.conf  # copy and edit this file
+
+`make.conf` 也可以是一个目录, 按alphabetical顺序读取里面的配置.
+
+> As noted previously, Portage is configurable through many variables which should be defined in /etc/portage/make.conf or one of the subdirectories of /etc/portage/. Please refer to the make.conf and portage man pages for more and complete information:
+
+这里好像有问题, 并不会读取/etc/portage/下子目录, 测试建立一个子目录, 配置GENTOO_MIRRORS, 但是并没有覆盖.
+
+用户定制的配置:
+
+`/etc/portage/`下，有几个文件负责不同的功能:
+
+* `package.mask` which lists the packages that Portage should never try to install
+* `package.unmask` which lists the packages Portage should be able to install even though the Gentoo developers highly discourage users from emerging them
+* `package.accept_keywords` which lists the packages Portage should be able to install even though the package hasn't been found suitable for the system or architecture (yet)
+* `package.use` which lists the USE flags to use for certain packages without having the entire system use those USE flags
+
+这四个不一定必须是文件, 也可以是目录, 里面一个package一个文件, 这样便于管理维护.
+
+`PORTDIR` 管理Portage Tree的路径, 默认是`/usr/portage`, 因为python包是一个分级的结构, 如python是`dev-lang/python`, portage树存储的也是这个结构, 如python相关的元信息以及ebuild都在/usr/portage/dev-lang/python/下
+
+`PKGDIR` 管理预编译二进制(prebuilt binary)包的路径, 默认是`/usr/portage/packages`. 默认情况下python是源码安装管理的, 不过也支持二进制包的安装.
+
+`DISTDIR` 控制程序源码包下载存放的地址, 默认是 `/usr/portage/distfiles`. 默认是wget下载下来后安装. 如果空间不是很缺的话，建议保留这个目录下的源码压缩包，比如有时新版本有问题，而老版本已经从portage树中移除，这个可以方便的直接通过源码压缩包安装回退到老版本.
+
+Portage数据库(存储系统的状态, 如哪些包已经安装，哪些文件属于哪些包) 在 `/var/db/pkg`. 不建议动, 否则会悲剧.
+
+Portage cache(修改时间, virtuals, 依赖关系等) 存在 `/var/cache/edb`. 这个文件是可以清理掉的, 不过也不大, 请不清理没意义.
+
+`PORTAGE_TMPDIR`管理portage的临时文件, 默认是 `/var/tmp/`下. Portage编译时, 每个包一个目录, 在 `/var/tmp/portage/`下, 由`BUILD_PREFIX`控制.
+
+如果软件包的配置文件升级, `CONFIG_PROTECT`用于设置需要保护的配置目录. 这时此目录下的配置文件不会被覆盖, 新的配置会存放在此目录. `CONFIG_PROTECT_MASK` 用于设置保护目录下不需要保护的子目录.
+
+	$ ack PROTECT /etc/portage/make.conf
+	# Minimal CONFIG_PROTECT
+	CONFIG_PROTECT="/etc"
+	CONFIG_PROTECT_MASK="/etc/env.d"
+
+	# 或者使用 emerge
+	$ emerge --info | ack 'PROTECT'
+	CONFIG_PROTECT="/etc /usr/share/gnupg/qualified.txt /var/bind"
+	CONFIG_PROTECT_MASK="/etc/ca-certificates.conf /etc/env.d /etc/gconf /etc/gentoo-release /etc/php/apache2-php5.6/ext-active/ /etc/php/cgi-php5.6/ext-active/ /etc/php/cli-php5.6/ext-active/ /etc/revdep-rebuild /etc/sandbox.d /etc/terminfo"
+
+后面输出多一些, 暂时还不清楚是哪里插入的?
+
+当需要的信息/数据在本地系统不存在(比如安装某个软件)时, Portage会通过网络下载相应的数据:
+
+* `GENTOO_MIRRORS` 定义一系列的server, 用于下载源码包(distfiles)
+* `PORTAGE_BINHOST` 指定二进制包的server
+
+`/etc/portage/repos.conf`或者这个目录下的子文件, 用于配置Portage树更新(同步)的配置:
+
+* `sync-type` 定义同步类型, 默认是通过`rsync`来同步更新Portage树
+* `sync-uri` 定义从一个server来更新Portage树
+
+`GENTOO_MIRRIOS`, `sync-type`, `sync-uri` 可以通过 `mirrorselect` 来自动获取
+
+当Portage下载(fetch)源码包时, 默认的方式是`wget`. 可以通过修改`FETCHCOMMAND`来修改下载方式
+
+当更新Portage树时, 可以定制 `rsync` 的选项. `PORTAGE_RSYNC_OPTS` 定义了默认的选项, 不建议修改. `PORTAGE_RSYNC_EXTRA_OPTS` 用户定义一些用户定制扩展的选项. `PORTAGE_RSYNC_RETRIES` 控制重试次数, 默认是3次.
+
+Gentoo的分支(branch)是指相应架构的软件包分支, 包括稳定(stable)和测试(testing)分支. 通过`ACCEPT_KEYWORDS`来管理. 默认是稳定分支.
+
+比如amd64架构下, 默认是:
+
+	ACCEPT_KEYWORDS="amd64"
+
+如果想全局改为使用测试分支，则在 架构名 前加上 `~`：
+
+	# /etc/portage/make.conf
+	ACCEPT_KEYWORDS="~amd64"
+
+也可以在全局是稳定分支的情况下, 指定某些特定的包是测试分支. `/etc/portage/package.accept_keywords`文件或目录下添加指定包名:
+
+	$ cat /etc/portage/package.accept_keywords
+	#required by dev-db/mongodb (argument)
+	=dev-db/mongodb-2.2.0-r1 ~amd64
+
+一般被mask的软件包(`profiles/default/linux/amd64/package.use.mask`)是没法安装, 不过可以通过添加unmask来安装, 同上类似, 文件或目录是`/etc/portage/package.unmask`:
+
+	$ more /etc/portage/package.unmask
+	# required by @preserved-rebuild (argument)
+	# /usr/portage/profiles/package.mask:
+	# Hans de Graaff <graaff@gentoo.org> (11 Oct 2015)
+	# Ruby 1.9 is no longer maintained upstream since January
+	# 2015, bug 536852.
+	# Masked for removal in 30 days.
+	=dev-lang/ruby-1.9.3_p551-r1
+
+同样也可以指定mask某个包:
+
+	$ more /etc/portage/package.mask
+	=dev-python/python-exec-10000.2
+
+添加第三方的ebuilds, 以前总结过 [Gentoo Overlays and Layman](http://blog.tankywoo.com/gentoo/2013/09/18/gentoo-overlays-and-layman.html)
+
 参考:
 
 * [Gentoo - Portage](https://wiki.gentoo.org/wiki/Portage)
-* [Gentoo Handbook - Portage](https://wiki.gentoo.org/wiki/Handbook:AMD64/Working/Portage)
+* [Gentoo Handbook - Portage](https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Portage)
 * [Gentoo Handbook - Installation](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/About)
-
+* man portage
+* man make.conf
 
 ## Gentoo grub升级到grub2 ##
 
