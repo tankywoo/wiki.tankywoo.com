@@ -212,6 +212,21 @@ echo <span class="cp">${</span><span class="nb">str</span><span class="cp">}</sp
 <li><a href="http://stackoverflow.com/questions/908188/is-there-any-way-of-detecting-if-a-drive-is-a-ssd">http://linuxg.net/how-to-find-out-if-a-drive-is-a-ssd-or-an-hdd/</a></li>
 </ul>
 </li>
+<li>
+<p>Ext3关闭日志特性:</p>
+<div class="hlcode"><pre><span class="n">tune2fs</span> <span class="o">-</span><span class="n">O</span> <span class="o">^</span><span class="n">has_journal</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdX</span>
+</pre></div>
+
+
+<p>关闭前后可以确认下文件系统的特性:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">tune2fs</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">features</span>
+<span class="n">Filesystem</span> <span class="n">features</span><span class="o">:</span>      <span class="n">has_journal</span> <span class="n">ext_attr</span> <span class="n">resize_inode</span> <span class="n">dir_index</span> <span class="n">filetype</span> <span class="n">needs_recovery</span> <span class="n">sparse_super</span> <span class="n">large_file</span>
+</pre></div>
+
+
+<p>关闭后 <code>has_journal</code> 日志特性没了</p>
+<p>参考 <a href="http://blog.serverbuddies.com/disable-journaling-in-ext3-file-system/">Disable journaling in ext3 file system</a></p>
+</li>
 </ul>
     </div>
 
@@ -222,7 +237,7 @@ echo <span class="cp">${</span><span class="nb">str</span><span class="cp">}</sp
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2015-12-29 20:13:35</p>
+                <p>Last Update 2015-12-30 21:56:52</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
