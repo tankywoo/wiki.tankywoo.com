@@ -1,6 +1,7 @@
 ---
 title: "Linux Tricks"
 date: 2013-08-17 07:23
+description: "Tricks/Tips/Fragments"
 ---
 
 
@@ -156,3 +157,16 @@ date: 2013-08-17 07:23
 	+ [How to Find Out if a Drive is a SSD or an HDD](http://linuxg.net/how-to-find-out-if-a-drive-is-a-ssd-or-an-hdd/)
 	+ [How to know if a disk is an SSD or an HDD](http://stackoverflow.com/questions/908188/is-there-any-way-of-detecting-if-a-drive-is-a-ssd)
 	+ [http://linuxg.net/how-to-find-out-if-a-drive-is-a-ssd-or-an-hdd/](http://stackoverflow.com/questions/908188/is-there-any-way-of-detecting-if-a-drive-is-a-ssd)
+
+* Ext3关闭日志特性:
+
+		tune2fs -O ^has_journal /dev/sdX
+
+	关闭前后可以确认下文件系统的特性:
+
+		$ tune2fs -l /dev/sda1 | grep features
+		Filesystem features:      has_journal ext_attr resize_inode dir_index filetype needs_recovery sparse_super large_file
+
+	关闭后 `has_journal` 日志特性没了
+
+	参考 [Disable journaling in ext3 file system](http://blog.serverbuddies.com/disable-journaling-in-ext3-file-system/)
