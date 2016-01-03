@@ -24,7 +24,23 @@
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <h2 id="rsync">rsync</h2>
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">使用方式</a><ul>
+<li><a href="#_2">本地同步</a></li>
+<li><a href="#remote-shell">remote shell方式 远程同步</a></li>
+<li><a href="#rsync-daemon">rsync daemon方式 远程同步</a></li>
+</ul>
+</li>
+<li><a href="#_3">常用参数</a></li>
+<li><a href="#_4">经验</a><ul>
+<li><a href="#hosts-allow-hosts-deny">关于 hosts allow 和 hosts deny</a></li>
+<li><a href="#_5">关于认证用户和密码</a></li>
+<li><a href="#filter-exclude-exclude-from">关于 filter, exclude, exclude from 等</a></li>
+</ul>
+</li>
+<li><a href="#troubleshoot">Troubleshoot</a></li>
+</ul>
+</div>
 <p>rsync - a fast, versatile, remote (and local) file-copying tool</p>
 <p>广泛用于<code>备份(backup)</code>和<code>镜像(mirror)</code></p>
 <p>支持本地或远程复制, 有<code>shell</code>和<code>rsync daemon</code>两种方式</p>
@@ -51,9 +67,9 @@
 
 <span class="n">Access</span> <span class="n">via</span> <span class="n">rsync</span> <span class="n">daemon</span><span class="o">:</span>
     <span class="n">Pull</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">::</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
-    <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
+          <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
     <span class="n">Push</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">::</span><span class="n">DEST</span>
-    <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">DEST</span>
+          <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">DEST</span>
 
 <span class="n">Usages</span> <span class="k">with</span> <span class="n">just</span> <span class="n">one</span> <span class="n">SRC</span> <span class="n">arg</span> <span class="n">and</span> <span class="n">no</span> <span class="n">DEST</span> <span class="n">arg</span> <span class="n">will</span> <span class="n">list</span> <span class="n">the</span> <span class="n">source</span> <span class="n">files</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">copying</span><span class="o">.</span>
 </pre></div>
@@ -81,18 +97,23 @@
 <h3 id="rsync-daemon">rsync daemon方式 远程同步</h3>
 <p>有两种方式:</p>
 <ul>
-<li>使用两个冒号<code>::</code>分隔主机和目录</li>
-<li>主机前加上<code>rsync://</code>, 后面直接使用<code>/</code>分隔主机和目录, 和目录结构一样</li>
-</ul>
-<!-- comment -->
-
+<li>
+<p>使用两个冒号<code>::</code>分隔主机和目录</p>
 <div class="hlcode"><pre><span class="n">Pull</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">::</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
-<span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
 <span class="n">Push</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">::</span><span class="n">DEST</span>
-<span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">DEST</span>
 </pre></div>
 
 
+</li>
+<li>
+<p>主机前加上<code>rsync://</code>, 后面直接使用<code>/</code>分隔主机和目录, 和目录结构一样</p>
+<div class="hlcode"><pre><span class="n">Pull</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">SRC</span><span class="o">...</span> <span class="o">[</span><span class="n">DEST</span><span class="o">]</span>
+<span class="n">Push</span><span class="o">:</span> <span class="n">rsync</span> <span class="o">[</span><span class="n">OPTION</span><span class="o">...]</span> <span class="n">SRC</span><span class="o">...</span> <span class="n">rsync</span><span class="o">://[</span><span class="n">USER</span><span class="err">@</span><span class="o">]</span><span class="n">HOST</span><span class="o">[:</span><span class="n">PORT</span><span class="o">]/</span><span class="n">DEST</span>
+</pre></div>
+
+
+</li>
+</ul>
 <h2 id="_3">常用参数</h2>
 <ul>
 <li><code>-a</code> - archive mode; 相当于 <code>-rlptgoD</code></li>
@@ -109,33 +130,100 @@
 <li><code>-h</code> - 以human-readable的方式输出数字格式</li>
 <li><code>-H</code> - 复制硬链接</li>
 <li><code>-E</code> - 保持可执行权限一致</li>
-<li><code>-X</code> - preserve extended attributes <strong>TODO</strong></li>
+<li><code>-X</code> - 保持扩展属性(extended attributes), 如<code>setattr</code>配置的属性</li>
 <li><code>-A</code> - 保持ACL</li>
 <li><code>--delete</code> - 删除src没有, 但dest存在的文件. 这是mirror方式需要的, 保持两边所有文件一致.</li>
 <li><code>--stats</code> - 输出文件传输的状态</li>
 <li><code>--progress</code> - 输出文件传输的进度</li>
 <li><code>--exclude-from</code> - 从文件里读取排除在外的文件或目录</li>
 <li><code>--numeric-ids</code> - 不映射uid/gid到user/group的名字</li>
+<li><code>--list-only</code> - 只列出文件列表, 不同步. 这个和同步时加上<code>-n</code>做pretend有点类似</li>
 </ul>
+<p>列出可用modules(只有module未配置<code>list = no</code>的才会被列出):</p>
+<div class="hlcode"><pre><span class="n">rsync</span> <span class="mf">192.168.1.100</span><span class="o">::</span>
+</pre></div>
+
+
+<p>查看文件列表:</p>
+<div class="hlcode"><pre><span class="n">rsync</span> <span class="o">--</span><span class="n">list</span><span class="o">-</span><span class="n">only</span> <span class="n">bob</span><span class="err">@</span><span class="mf">192.168.1.100</span><span class="o">::</span><span class="n">mymodule</span>
+</pre></div>
+
+
 <p>常用的mirror同步命令:</p>
 <div class="hlcode"><pre><span class="n">rsync</span> <span class="o">-</span><span class="n">hvaHEXA</span> <span class="o">--</span><span class="n">delete</span> <span class="o">--</span><span class="n">stats</span> <span class="o">--</span><span class="n">progress</span> <span class="o">--</span><span class="n">numeric</span><span class="o">-</span><span class="n">ids</span> <span class="o">--</span><span class="n">exclude</span><span class="o">-</span><span class="n">from</span><span class="o">=/</span><span class="n">root</span><span class="o">/</span><span class="n">filter_file</span> <span class="n">tankywoo</span><span class="o">::</span><span class="n">wiki</span> <span class="o">/</span><span class="n">data</span>
 </pre></div>
 
 
-<h2 id="_4">资料</h2>
+<p>rsyncd 可以配置多个modules, 如:</p>
+<div class="hlcode"><pre><span class="k">[mymodule]</span>
+    <span class="na">path</span> <span class="o">=</span> <span class="s">/home/test/</span>
+<span class="s">    numeric ids = yes</span>
+<span class="s">    list = no</span>
+<span class="s">    exclude from = /path/to/file</span>
+<span class="s">    ignore errors</span>
+<span class="s">    auth users = bob</span>
+<span class="s">    secrets file = /etc/rsyncd.secrets</span>
+<span class="s">    hosts allow = 192.168.1.101</span>
+<span class="s">    comment = &quot;for rsyncd test&quot;</span>
+</pre></div>
+
+
+<h2 id="_4">经验</h2>
+<h3 id="hosts-allow-hosts-deny">关于 hosts allow 和 hosts deny</h3>
+<p>如果只设置了<code>hosts allow</code>, 则不符合的都会拒绝连接(reject).</p>
+<p>如果同时设置了<code>hosts allow</code>和<code>hosts deny</code>, 则首先会判断是否符合allow列表, 如果符合则连接, 否则判断deny连接, 如果符合则拒绝, 剩下的都允许连接.</p>
+<p>另外, 这两个配置项都可以是全局级的.</p>
+<p>逻辑上有点绕, 所以感觉这个如果没有仔细看文档和尝试的话, 容易造成安全问题.</p>
+<p>这里也可以使用通配符(wildcards) <code>*</code>.</p>
+<h3 id="_5">关于认证用户和密码</h3>
+<p><code>auth users</code> 和 <code>secrets file</code> 控制.</p>
+<p>前者列出允许连接module的用户, 后者管理用户和密码.</p>
+<p>普通的设置只是简单的帐号密码匹配, 这套用户密码体系和本地用户(<code>/etc/passwd</code>)是无关的.</p>
+<p>也可以配置<code>groupname matching</code>, 组名使用<code>@</code>前缀, 此时认证用户必须是本地系统上存在的真实用户, 且是这个组下的成员.</p>
+<h3 id="filter-exclude-exclude-from">关于 filter, exclude, exclude from 等</h3>
+<p>排除的文件路径, 始终是<strong>相对路径</strong>, 相对于path的路径.</p>
+<p><code>exclude</code> 配置排除的模式</p>
+<p><code>exclude from</code> 配置排除文件, 包含多行排除模式/文件, 一个module只能配置一个此配置项, 配置多个的话以最后一个为主. 但是客户端命令可以指定多个<code>--exclude-from</code>, 且都生效.</p>
+<blockquote>
+<p>Only one "exclude from" parameter can apply to a given module; if you have multiple exclude-from files, you can specify them as a merge file in the "filter" parameter.</p>
+</blockquote>
+<p>排除模式可以使用<code>-</code>和<code>+</code>来显示的指定<code>exclude</code>和<code>include</code>.</p>
+<p>关于filter和exclude from的区别:</p>
 <ul>
-<li><a href="http://www.howtocn.org/rsync">howtocn - rsync</a></li>
+<li>filter 必须指定 <code>-</code> 和 <code>+</code>, 而exclude from里的模式默认都是<code>-</code></li>
 </ul>
+<p>这里还有些疑惑的地方:</p>
+<p>如果配置了<code>use chroot = yes</code>, 那么感觉<code>exclude from</code> 以及 <code>filter</code> 指定的文件都应该是相对路径, 相对于path, 但是实际还是要配置绝对路径, 否则报错.</p>
+<p>不过, filter是可以显式配置为相对:</p>
+<div class="hlcode"><pre><span class="n">filter</span> <span class="o">=</span> <span class="o">:</span> <span class="p">.</span><span class="n">rsync</span><span class="o">-</span><span class="n">filter</span>
+</pre></div>
+
+
+<p>这样就是相对了path配置的路径下的.rsync-filter文件.</p>
+<p>另外就是关于:</p>
+<blockquote>
+<p>you can specify them as a merge file in the "filter" parameter</p>
+</blockquote>
+<p>这里不清楚怎么使用?  <strong>TODO</strong></p>
+<h2 id="troubleshoot">Troubleshoot</h2>
+<blockquote>
+<p>rsync: didn't get server startup line</p>
+</blockquote>
+<p>测试时配置的<code>exclude from</code>是一个无效路径, 导致这个错误</p>
+<blockquote>
+<p>auth failed on module xxx</p>
+</blockquote>
+<p>见 <a href="http://blog.tankywoo.com/linux/2013/12/07/rsync-auth-failed-on-module-xxx.html">rsync auth failed on module xxx 问题总结</a></p>
     </div>
 
         </div>
         <div id="footer">
               <p>
-                Copyright © 2012-2015 Tanky Woo.
+                Copyright © 2012-2016 Tanky Woo.
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2015-12-30 21:56:52</p>
+                <p>Last Update 2016-01-03 11:21:28</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
