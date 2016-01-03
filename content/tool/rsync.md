@@ -111,6 +111,8 @@ rsyncd 可以配置多个modules, 如:
 
 ```
 [mymodule]
+    uid = root
+    gid = root
     path = /home/test/
     numeric ids = yes
     list = no
@@ -178,6 +180,14 @@ rsyncd 可以配置多个modules, 如:
 > you can specify them as a merge file in the "filter" parameter
 
 这里不清楚怎么使用?  **TODO**
+
+## 关于权限问题 ##
+
+同步时会看到有些文件报 `failed: Permission denied`, `uid` 选项给出了说明:
+
+> The default when run by a super-user is to switch to the system’s "nobody" user.  The default for a non-super-user is to not try to change the user.
+
+所以需要配置 `uid = root` (或其它足够的权限)
 
 
 ## Troubleshoot ##
