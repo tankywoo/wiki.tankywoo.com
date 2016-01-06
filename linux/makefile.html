@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+        <title>Makefile & CMakeLists - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Wiki · Tanky Woo</a> » <a href="/#linux">linux</a> » Makefile & CMakeLists
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#makefile">Makefile</a></li>
+<li><a href="#cmakefile">CMakefile</a></li>
+<li><a href="#_1">参考</a></li>
+</ul>
+</div>
+<h2 id="makefile">Makefile</h2>
+<p>Makefile的使用非常广, 除了作为C/C++项目用于构建, 在日常的一些其它小项目里, 也可以简单的使用target来快速做一些操作集合, 类似于一个shell script带有一些子命令.</p>
+<p>如我的项目<a href="http://simiki.org/">Simiki</a>的<a href="https://github.com/tankywoo/simiki/blob/master/Makefile">Makefile</a>.</p>
+<p>注释: 使用 <code>#</code></p>
+<p>宏:</p>
+<p>有默认的值, 也可以修改:</p>
+<div class="hlcode"><pre><span class="n">CC</span><span class="o">=</span><span class="n">gcc</span>
+</pre></div>
+
+
+<p>然后使用宏:</p>
+<div class="hlcode"><pre><span class="nl">build:</span>
+    <span class="err">$</span><span class="p">(</span><span class="n">CC</span><span class="p">)</span> <span class="n">xxx</span><span class="p">.</span><span class="n">c</span>
+</pre></div>
+
+
+<p>最基本的结构 target(目标):</p>
+<div class="hlcode"><pre><span class="n">test</span><span class="o">:</span> <span class="n">clean</span>
+    <span class="n">nosetests</span> <span class="o">-</span><span class="n">v</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">byte</span><span class="o">-</span><span class="n">compile</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">coverage</span> <span class="o">--</span><span class="n">cover</span><span class="o">-</span><span class="kd">package</span><span class="o">=</span><span class="n">simiki</span> <span class="o">--</span><span class="n">cover</span><span class="o">-</span><span class="n">erase</span> <span class="o">-</span><span class="n">s</span>
+</pre></div>
+
+
+<p>这里target是test, clean是dependency(依赖), 下面的是这个target要执行的主体.</p>
+<div class="hlcode"><pre><span class="n">make</span> <span class="n">test</span>
+</pre></div>
+
+
+<p>等价于:</p>
+<div class="hlcode"><pre><span class="n">make</span> <span class="n">clean</span>
+<span class="n">nosetests</span> <span class="o">-</span><span class="n">v</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">byte</span><span class="o">-</span><span class="n">compile</span> <span class="o">--</span><span class="n">with</span><span class="o">-</span><span class="n">coverage</span> <span class="o">--</span><span class="n">cover</span><span class="o">-</span><span class="n">package</span><span class="o">=</span><span class="n">simiki</span> <span class="o">--</span><span class="n">cover</span><span class="o">-</span><span class="n">erase</span> <span class="o">-</span><span class="n">s</span>
+</pre></div>
+
+
+<p>依赖是线性串联的, 使用起来非常方便.</p>
+<p>第一个target是默认的目标, 如果单纯的执行<code>make</code>, 则会执行第一个target.</p>
+<p>target主体中命令加上<code>@</code>符号(at sign):</p>
+<div class="hlcode"><pre><span class="n">test</span><span class="o">:</span>
+    <span class="n">echo</span> <span class="s1">&#39;print this command and then run&#39;</span>
+    <span class="err">@</span><span class="n">echo</span> <span class="s1">&#39;only run this command&#39;</span>
+</pre></div>
+
+
+<p>一般情况逐行执行, 先打印一条命令的内容, 再执行这条命令, 加上<code>@</code>符号表示不打印这条命令, 直接执行.</p>
+<p>如上结果是:</p>
+<div class="hlcode"><pre><span class="n">echo</span> <span class="err">&#39;</span><span class="n">print</span> <span class="n">this</span> <span class="n">command</span> <span class="n">and</span> <span class="n">then</span> <span class="n">run</span><span class="err">&#39;</span>
+<span class="n">print</span> <span class="n">this</span> <span class="n">command</span> <span class="n">and</span> <span class="n">then</span> <span class="n">run</span>
+<span class="n">only</span> <span class="n">run</span> <span class="n">this</span> <span class="n">command</span>
+</pre></div>
+
+
+<p>参考: <a href="http://www.gnu.org/software/make/manual/make.html#index-_0040-_0028in-recipes_0029">Recipe Echoing</a></p>
+<p>另外, target主体必须要以 <code>tab</code> 开始, 不能是4个空格.</p>
+<p>伪目标(.PHONY), 一般用于clean, 用于避免目录下有与clean target同名文件, 导致make失败; 另外还可以提高make时的效率?(没有感触)</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="n">PHONY</span><span class="o">:</span> <span class="n">clean</span>
+
+<span class="nl">clean:</span>
+    <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">*</span><span class="p">.</span><span class="n">o</span>
+</pre></div>
+
+
+<h2 id="cmakefile">CMakefile</h2>
+<p>TODO</p>
+<h2 id="_1">参考</h2>
+<ul>
+<li><a href="http://www.gnu.org/software/make/manual/make.html">GNU make</a> 官方文档</li>
+<li><a href="http://blog.csdn.net/haoel/article/details/2886">跟我一起写Makefile</a> 陈皓写的一个系列, 非常详细</li>
+<li><a href="http://ylwhere.cf/2015/06/03/makefile-%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0/">makefile 入门学习</a></li>
+<li><a href="http://harttle.com/2014/01/01/makefile.html">Makefile入门</a></li>
+<li><a href="http://lesca.me/archives/makefiles.html">Makefile入门</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-01-06 23:47:14</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>

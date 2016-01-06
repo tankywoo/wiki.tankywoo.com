@@ -4,7 +4,7 @@
         <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
         <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-        <title>bwm-ng - Wiki · Tanky Woo</title>
+        <title>Ubuntu - Wiki · Tanky Woo</title>
         <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
         <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,25 +18,38 @@
     <div id="header">
         <div id="post-nav">
             
-            <a href="/">Wiki · Tanky Woo</a> » <a href="/#tool">tool</a> » bwm-ng
+            <a href="/">Wiki · Tanky Woo</a> » <a href="/#linux">linux</a> » Ubuntu
             
         </div>
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <p>Bandwidth Monitor NG (Next Generation), a live bandwidth monitor for network and disk io.</p>
-<p>一个用于实时监控网络流量和硬盘io的软件, 在流量监控方面感觉比 <code>iftop</code> 更简单一些</p>
-<p>gentoo下直接安装<code>net-analyzer/bwm-ng</code>就行了</p>
-<p>在man手册里看到, 输出显示的格式可以是 curses, curses2, plain, csv, html 等格式<br />
-不过<code>bwm-ng -h</code>看到只支持curses, curses2, plain.</p>
-<p>查看流量数据:</p>
-<div class="hlcode"><pre><span class="n">bwm</span><span class="o">-</span><span class="n">ng</span>
-</pre></div>
-
-
-<p>查看硬盘io数据:</p>
-<div class="hlcode"><pre><span class="n">bwm</span><span class="o">-</span><span class="n">ng</span> <span class="o">-</span><span class="n">i</span> <span class="n">disk</span>
-</pre></div>
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">其它</a><ul>
+<li><a href="#remove-vs-purge">remove vs purge</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><img alt="Ubuntu Logo" src="http://design.ubuntu.com/wp-content/uploads/ubuntu-orange.gif" /></p>
+<ul>
+<li><a href="http://www.ubuntu.com/server">Ubuntu官网</a></li>
+<li><a href="https://help.ubuntu.com/">Ubuntu Help</a></li>
+</ul>
+<h2 id="_1">其它</h2>
+<h3 id="remove-vs-purge">remove vs purge</h3>
+<p><code>apt-get</code> 的 <code>remove</code> 和 <code>purge</code> 区别:</p>
+<ul>
+<li><code>remove</code>: 只删除软件包, 保留配置文件</li>
+<li><code>purge</code>: 删除软件包和配置文件</li>
+</ul>
+<p>这里的配置文件是指包添加的系统配置, 不包括用户自定义的配置.</p>
+<p>参考:</p>
+<ul>
+<li>man apt-get</li>
+<li><a href="http://askubuntu.com/questions/231562/what-is-the-difference-between-apt-get-purge-and-apt-get-remove">What is the Difference Between <code>apt-get purge</code> and <code>apt-get remove</code>?</a></li>
+<li><a href="http://askubuntu.com/questions/187888/what-is-the-correct-way-to-completely-remove-an-application">What is the correct way to completely remove an application?</a></li>
+</ul>
     </div>
 
         </div>

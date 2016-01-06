@@ -38,6 +38,7 @@
 <li><a href="#filter-exclude-exclude-from">关于 filter, exclude, exclude from 等</a></li>
 </ul>
 </li>
+<li><a href="#_6">关于权限问题</a></li>
 <li><a href="#troubleshoot">Troubleshoot</a></li>
 </ul>
 </div>
@@ -156,7 +157,9 @@
 
 <p>rsyncd 可以配置多个modules, 如:</p>
 <div class="hlcode"><pre><span class="k">[mymodule]</span>
-    <span class="na">path</span> <span class="o">=</span> <span class="s">/home/test/</span>
+    <span class="na">uid</span> <span class="o">=</span> <span class="s">root</span>
+<span class="s">    gid = root</span>
+<span class="s">    path = /home/test/</span>
 <span class="s">    numeric ids = yes</span>
 <span class="s">    list = no</span>
 <span class="s">    exclude from = /path/to/file</span>
@@ -205,6 +208,12 @@
 <p>you can specify them as a merge file in the "filter" parameter</p>
 </blockquote>
 <p>这里不清楚怎么使用?  <strong>TODO</strong></p>
+<h2 id="_6">关于权限问题</h2>
+<p>同步时会看到有些文件报 <code>failed: Permission denied</code>, <code>uid</code> 选项给出了说明:</p>
+<blockquote>
+<p>The default when run by a super-user is to switch to the system’s "nobody" user.  The default for a non-super-user is to not try to change the user.</p>
+</blockquote>
+<p>所以需要配置 <code>uid = root</code> (或其它足够的权限)</p>
 <h2 id="troubleshoot">Troubleshoot</h2>
 <blockquote>
 <p>rsync: didn't get server startup line</p>
@@ -223,7 +232,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2016-01-03 11:21:28</p>
+                <p>Last Update 2016-01-06 23:47:14</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
