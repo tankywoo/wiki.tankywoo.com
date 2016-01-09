@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+        <title>Nginx - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Wiki · Tanky Woo</a> » <a href="/#tool">tool</a> » Nginx
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">中文域名</a></li>
+</ul>
+</div>
+<h2 id="_1">中文域名</h2>
+<p>中文域名之所以可以解析/访问, 并不是说dns, nginx等都可以识别, 而是再浏览器层面会做一个转码.</p>
+<p>这个转码技术是<a href="https://en.wikipedia.org/wiki/Punycode">Punycode</a>, 将Unicode码转为ASCII码.</p>
+<p>其实不光是中文域名, 只要支持的Unicode编码的域名, 都可以经过Punycode转码.</p>
+<p>这种域名一般称为<a href="https://en.wikipedia.org/wiki/Internationalized_domain_name">IDN</a> (Internationalized domain name).</p>
+<p>相关的rfc规定一般转为<code>xn--&lt;puny&gt;.&lt;suffix&gt;</code>这样的格式. 如<code>中国.com</code>, 转码后是<code>xn--fiqs8s.com</code></p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="err">&#39;</span><span class="n">import</span> <span class="n">sys</span><span class="p">;</span><span class="n">print</span> <span class="n">sys</span><span class="p">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">decode</span><span class="p">(</span><span class="s">&quot;utf-8&quot;</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">&quot;idna&quot;</span><span class="p">)</span><span class="err">&#39;</span> <span class="s">&quot;中国.com&quot;</span>
+<span class="n">xn</span><span class="o">--</span><span class="n">fiqs8s</span><span class="p">.</span><span class="n">com</span>
+</pre></div>
+
+
+<p>也可以安装额外的工具, 如Gentoo下<code>net-dns/libidn</code>, <a href="http://serverfault.com/questions/335073/how-can-i-convert-an-idn-to-punicode-in-bash">参考</a>.</p>
+<p>浏览器也可以直接看到, 如Chrome下点击地址栏最左边的"View site information".</p>
+<p>相应的在nginx的配置中, server_name不能直接写中文域名, 应该写解析后的ascii编码的英文域名, 如:</p>
+<div class="hlcode"><pre><span class="n">server</span>
+<span class="p">{</span>
+    <span class="n">listen</span>          <span class="mi">80</span><span class="p">;</span>
+    <span class="n">server_name</span>     <span class="n">xn</span><span class="o">--</span><span class="n">fiqs8s</span><span class="p">.</span><span class="n">com</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-01-07 22:31:09</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>
