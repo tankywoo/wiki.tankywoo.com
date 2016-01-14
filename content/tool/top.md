@@ -51,3 +51,6 @@ htop有几个亮点:
 
 这玩意暂时还不熟, 输出的内容太多了.
 
+* [One-stop performance analysis using atop](https://lwn.net/Articles/387202/)
+* [How to Perform Load Monitoring in Linux Using atop](https://www.maketecheasier.com/load-monitoring-linux-atop/)
+* [Linux Basics: Monitor System Resources And Processes Using Atop](http://www.unixmen.com/linux-basics-monitor-system-resources-processes-using-atop/)
