@@ -166,6 +166,13 @@ name是映射到/dev/mapper/下的设备名, 可以任意写
 甚至remove也可以. 最后重启确认.
 
 
+## 修改locale ##
+
+发现默认的locale不知为何设置为`en_GB.UTF-8`, 导致使用mosh有问题, 使用export没法修改`LC_ALL`等.
+
+没去具体看原因, 然后发现`raspi-config`里有对本地化的设置.(应该是之前`en_US.UTF-8`没有安装)
+
+
 ## 其它 ##
 
 * [树莓派实验室](http://shumeipai.nxez.com/)
