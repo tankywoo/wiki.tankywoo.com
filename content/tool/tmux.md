@@ -225,6 +225,24 @@ tmux attach-session -d -t 'tankywoo'
 * [Practical Tmux](https://mutelight.org/practical-tmux)
 * [Archlinux - Tmux](https://wiki.archlinux.org/index.php/Tmux)
 
+### pane之间的移动 ###
+
+	join-pane [-bdhv] [-l size | -p percentage] [-s src-pane] [-t dst-pane]
+		(alias: joinp)
+		Like split-window, but instead of splitting dst-pane and creating a new pane, split it and move src-pane into the space.  This can be used to reverse break-pane.  The -b option causes src-pane to be joined to left of or above dst-pane.
+
+比如当前在window6上, 想将window7的pane2合并到当前window:
+
+	joinp -s 7.2
+
+如果只写的7则表示window7的当前活动pane.
+
+关于 `session:window.pane`的详细表示, 可以看`man tmux`的`COMMANDS`这一大节.
+
+参考:
+
+* [Moving tmux window to pane](http://unix.stackexchange.com/questions/14300/moving-tmux-window-to-pane)
+
 ## 扩展 - tmux powerline ##
 
 * [tmux-powerline项目](https://github.com/erikw/tmux-powerline) 官方说此项目现在只做维护, 不更新
@@ -238,6 +256,7 @@ tmux attach-session -d -t 'tankywoo'
 * [使用tmux](https://wiki.freebsdchina.org/software/t/tmux)
 * [Using tmux](http://510x.se/notes/posts/Using_tmux/)
 * [Practical Tmux](https://mutelight.org/practical-tmux)
+* [tmux cheatsheet](https://gist.github.com/henrik/1967800)
 
 ---
 
