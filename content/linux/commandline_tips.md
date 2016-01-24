@@ -145,3 +145,17 @@ stash pop后, 原先index中的files会恢复为staged, 如果要保持index, �
     du --human-readable | sort --human-numeric-sort
 
 参考 [ref1](http://www.cyberciti.biz/faq/how-do-i-sort-du-h-output-by-size-under-linux/)
+
+---
+
+获取外网ip:
+
+之前用的ifconfig.me国内貌似被墙了, 或者特别慢, 不过网上搜到很多其它的同类服务:
+
+    dig +short myip.opendns.com @resolver1.opendns.com
+
+或者:
+
+    wget http://ipinfo.io/ip -qO -
+
+参考 [ref1](http://unix.stackexchange.com/questions/22615/how-can-i-get-my-external-ip-address-in-bash), [ref2](http://askubuntu.com/questions/95910/command-for-determining-my-public-ip)
