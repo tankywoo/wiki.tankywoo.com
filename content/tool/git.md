@@ -695,6 +695,47 @@ subtree add命令将一个项目拉到本地作为一个子目录, 这个和subm
 * [git diff doesn't show enough](http://stackoverflow.com/questions/5256249/git-diff-doesnt-show-enough/5257065#5257065)
 * [What are the differences between double-dot “..” and triple-dot “…” in Git commit ranges?](http://stackoverflow.com/questions/462974/what-are-the-differences-between-double-dot-and-triple-dot-in-git-com)
 
+## git diff 一行太长, 输出混乱 ##
+
+比如一行非常长, 超过了一行, 导致git diff时的输出比较混乱, 超过一行的会覆盖行首的内容, 而不是换行.
+
+本地的环境变量如下:
+
+	$ echo $PAGER
+	less
+	$ echo $LESS
+	-R
+
+`$PAGER` 用于控制文件的显示, 被`man`或其它程序使用. 可以定义为常用的命令如`less`, `more`等.
+
+`$PAGER`也可以配置为命令加参数选项, 不过更好的方式是配置在各自的环境变量, 如less的`$LESS`, more的`$MORE`.
+
+> The pager called by man and other such programs when you tell them to view a file.
+
+git自身也有一个环境变量`$GIT_PAGER`, 如果配置了, 则会覆盖系统的`$PAGER`.
+
+所以这里的情况可以:
+
+	GIT_PAGER='less -RS' git diff /path/to/file
+
+或者应用到git配置中:
+
+	git config core.pager 'less -RS'
+
+默认情况, 超过一个屏幕的一行, 会使用`wrapped`换行, `-S`将行为改为`chopped (truncated)`, 即隐藏超出一个屏幕宽度的内容, 但是可以右移来显示出来.
+
+另外, `-R`和`-r`这两个的区别我还没弄清楚:
+
+> Like  -r,  but  only ANSI "color" escape sequences are output in "raw" form.  Unlike -r, the screen appearance is maintained correctly in most cases
+
+在`$TERM=screen`和`$TERM=screen-256color`时, `-r`可以正确的wrapped换行, 而`-R`不行, 不过在指定`git diff --no-color`时`-R`可以正确换行. **TODO**
+
+另外, 我平时经常实用的一个工具`cdiff`, 没有使用`$GIT_PAGER`, 所以需要配置`$PAGER`
+
+参考:
+
+* [git diff - handling long lines?](http://stackoverflow.com/questions/136178/git-diff-handling-long-lines)
+* [Configuring your console pager](http://www.refining-linux.org/archives/3/Configuring-your-console-pager/)
 
 ## Git资料 ##
 
