@@ -38,6 +38,7 @@
 <li><a href="#_4">技巧</a><ul>
 <li><a href="#_5">批量操作</a></li>
 <li><a href="#session_1">在不同大小的屏幕打开一个session</a></li>
+<li><a href="#pane_1">pane之间的移动</a></li>
 </ul>
 </li>
 <li><a href="#-tmux-powerline">扩展 - tmux powerline</a></li>
@@ -246,6 +247,24 @@ tmux attach-session -d -t <span class="s1">&#39;tankywoo&#39;</span>
 <li><a href="https://mutelight.org/practical-tmux">Practical Tmux</a></li>
 <li><a href="https://wiki.archlinux.org/index.php/Tmux">Archlinux - Tmux</a></li>
 </ul>
+<h3 id="pane_1">pane之间的移动</h3>
+<div class="hlcode"><pre><span class="n">join</span><span class="o">-</span><span class="n">pane</span> <span class="p">[</span><span class="o">-</span><span class="n">bdhv</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">l</span> <span class="n">size</span> <span class="o">|</span> <span class="o">-</span><span class="n">p</span> <span class="n">percentage</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">src</span><span class="o">-</span><span class="n">pane</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">t</span> <span class="n">dst</span><span class="o">-</span><span class="n">pane</span><span class="p">]</span>
+    <span class="p">(</span><span class="n">alias</span><span class="o">:</span> <span class="n">joinp</span><span class="p">)</span>
+    <span class="n">Like</span> <span class="n">split</span><span class="o">-</span><span class="n">window</span><span class="p">,</span> <span class="n">but</span> <span class="n">instead</span> <span class="n">of</span> <span class="n">splitting</span> <span class="n">dst</span><span class="o">-</span><span class="n">pane</span> <span class="n">and</span> <span class="n">creating</span> <span class="n">a</span> <span class="n">new</span> <span class="n">pane</span><span class="p">,</span> <span class="n">split</span> <span class="n">it</span> <span class="n">and</span> <span class="n">move</span> <span class="n">src</span><span class="o">-</span><span class="n">pane</span> <span class="n">into</span> <span class="n">the</span> <span class="n">space</span><span class="p">.</span>  <span class="n">This</span> <span class="n">can</span> <span class="n">be</span> <span class="n">used</span> <span class="n">to</span> <span class="n">reverse</span> <span class="k">break</span><span class="o">-</span><span class="n">pane</span><span class="p">.</span>  <span class="n">The</span> <span class="o">-</span><span class="n">b</span> <span class="n">option</span> <span class="n">causes</span> <span class="n">src</span><span class="o">-</span><span class="n">pane</span> <span class="n">to</span> <span class="n">be</span> <span class="n">joined</span> <span class="n">to</span> <span class="n">left</span> <span class="n">of</span> <span class="n">or</span> <span class="n">above</span> <span class="n">dst</span><span class="o">-</span><span class="n">pane</span><span class="p">.</span>
+</pre></div>
+
+
+<p>比如当前在window6上, 想将window7的pane2合并到当前window:</p>
+<div class="hlcode"><pre><span class="n">joinp</span> <span class="o">-</span><span class="n">s</span> <span class="mf">7.2</span>
+</pre></div>
+
+
+<p>如果只写的7则表示window7的当前活动pane.</p>
+<p>关于 <code>session:window.pane</code>的详细表示, 可以看<code>man tmux</code>的<code>COMMANDS</code>这一大节.</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://unix.stackexchange.com/questions/14300/moving-tmux-window-to-pane">Moving tmux window to pane</a></li>
+</ul>
 <h2 id="-tmux-powerline">扩展 - tmux powerline</h2>
 <ul>
 <li><a href="https://github.com/erikw/tmux-powerline">tmux-powerline项目</a> 官方说此项目现在只做维护, 不更新</li>
@@ -259,6 +278,7 @@ tmux attach-session -d -t <span class="s1">&#39;tankywoo&#39;</span>
 <li><a href="https://wiki.freebsdchina.org/software/t/tmux">使用tmux</a></li>
 <li><a href="http://510x.se/notes/posts/Using_tmux/">Using tmux</a></li>
 <li><a href="https://mutelight.org/practical-tmux">Practical Tmux</a></li>
+<li><a href="https://gist.github.com/henrik/1967800">tmux cheatsheet</a></li>
 </ul>
 <hr />
 <h1 id="tmuxinator">Tmuxinator</h1>
@@ -299,7 +319,7 @@ tmux attach-session -d -t <span class="s1">&#39;tankywoo&#39;</span>
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2016-01-07 22:31:09</p>
+                <p>Last Update 2016-01-24 17:06:14</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">

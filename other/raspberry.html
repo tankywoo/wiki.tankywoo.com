@@ -32,6 +32,7 @@
 <li><a href="#raspbian-vimpython">Raspbian vim支持python</a></li>
 <li><a href="#_5">加密分区</a></li>
 <li><a href="#x-windows">禁止X Windows开机启动</a></li>
+<li><a href="#locale">修改locale</a></li>
 <li><a href="#_6">其它</a></li>
 </ul>
 </div>
@@ -178,6 +179,9 @@
 
 
 <p>甚至remove也可以. 最后重启确认.</p>
+<h2 id="locale">修改locale</h2>
+<p>发现默认的locale不知为何设置为<code>en_GB.UTF-8</code>, 导致使用mosh有问题, 使用export没法修改<code>LC_ALL</code>等.</p>
+<p>没去具体看原因, 然后发现<code>raspi-config</code>里有对本地化的设置.(应该是之前<code>en_US.UTF-8</code>没有安装)</p>
 <h2 id="_6">其它</h2>
 <ul>
 <li><a href="http://shumeipai.nxez.com/">树莓派实验室</a></li>
@@ -192,7 +196,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2016-01-07 22:31:09</p>
+                <p>Last Update 2016-01-24 17:06:14</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">

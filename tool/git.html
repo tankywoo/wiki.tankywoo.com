@@ -65,6 +65,7 @@
 <li><a href="#commitreleasetag">查看某个commit在哪些release(tag)引进</a></li>
 <li><a href="#git-subtree">Git subtree</a></li>
 <li><a href="#git-diff_1">git diff 相关</a></li>
+<li><a href="#git-diff_2">git diff 一行太长, 输出混乱</a></li>
 <li><a href="#git_4">Git资料</a></li>
 </ul>
 </div>
@@ -710,6 +711,44 @@
 <li><a href="http://stackoverflow.com/questions/5256249/git-diff-doesnt-show-enough/5257065#5257065">git diff doesn't show enough</a></li>
 <li><a href="http://stackoverflow.com/questions/462974/what-are-the-differences-between-double-dot-and-triple-dot-in-git-com">What are the differences between double-dot “..” and triple-dot “…” in Git commit ranges?</a></li>
 </ul>
+<h2 id="git-diff_2">git diff 一行太长, 输出混乱</h2>
+<p>比如一行非常长, 超过了一行, 导致git diff时的输出比较混乱, 超过一行的会覆盖行首的内容, 而不是换行.</p>
+<p>本地的环境变量如下:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">echo</span> <span class="err">$</span><span class="n">PAGER</span>
+<span class="n">less</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="err">$</span><span class="n">LESS</span>
+<span class="o">-</span><span class="n">R</span>
+</pre></div>
+
+
+<p><code>$PAGER</code> 用于控制文件的显示, 被<code>man</code>或其它程序使用. 可以定义为常用的命令如<code>less</code>, <code>more</code>等.</p>
+<p><code>$PAGER</code>也可以配置为命令加参数选项, 不过更好的方式是配置在各自的环境变量, 如less的<code>$LESS</code>, more的<code>$MORE</code>.</p>
+<blockquote>
+<p>The pager called by man and other such programs when you tell them to view a file.</p>
+</blockquote>
+<p>git自身也有一个环境变量<code>$GIT_PAGER</code>, 如果配置了, 则会覆盖系统的<code>$PAGER</code>.</p>
+<p>所以这里的情况可以:</p>
+<div class="hlcode"><pre><span class="n">GIT_PAGER</span><span class="o">=</span><span class="err">&#39;</span><span class="n">less</span> <span class="o">-</span><span class="n">RS</span><span class="err">&#39;</span> <span class="n">git</span> <span class="n">diff</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span>
+</pre></div>
+
+
+<p>或者应用到git配置中:</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">config</span> <span class="n">core</span><span class="p">.</span><span class="n">pager</span> <span class="err">&#39;</span><span class="n">less</span> <span class="o">-</span><span class="n">RS</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>默认情况, 超过一个屏幕的一行, 会使用<code>wrapped</code>换行, <code>-S</code>将行为改为<code>chopped (truncated)</code>, 即隐藏超出一个屏幕宽度的内容, 但是可以右移来显示出来.</p>
+<p>另外, <code>-R</code>和<code>-r</code>这两个的区别我还没弄清楚:</p>
+<blockquote>
+<p>Like  -r,  but  only ANSI "color" escape sequences are output in "raw" form.  Unlike -r, the screen appearance is maintained correctly in most cases</p>
+</blockquote>
+<p>在<code>$TERM=screen</code>和<code>$TERM=screen-256color</code>时, <code>-r</code>可以正确的wrapped换行, 而<code>-R</code>不行, 不过在指定<code>git diff --no-color</code>时<code>-R</code>可以正确换行. <strong>TODO</strong></p>
+<p>另外, 我平时经常实用的一个工具<code>cdiff</code>, 没有使用<code>$GIT_PAGER</code>, 所以需要配置<code>$PAGER</code></p>
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/136178/git-diff-handling-long-lines">git diff - handling long lines?</a></li>
+<li><a href="http://www.refining-linux.org/archives/3/Configuring-your-console-pager/">Configuring your console pager</a></li>
+</ul>
 <h2 id="git_4">Git资料</h2>
 <ul>
 <li><a href="http://git-scm.com/book/zh">ProGit中文版</a></li>
@@ -724,7 +763,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2016-01-07 22:31:09</p>
+                <p>Last Update 2016-01-24 17:06:14</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
