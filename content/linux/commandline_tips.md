@@ -159,3 +159,11 @@ stash pop后, 原先index中的files会恢复为staged, 如果要保持index, �
     wget http://ipinfo.io/ip -qO -
 
 参考 [ref1](http://unix.stackexchange.com/questions/22615/how-can-i-get-my-external-ip-address-in-bash), [ref2](http://askubuntu.com/questions/95910/command-for-determining-my-public-ip)
+
+---
+
+图片转为favicon.ico:
+
+    convert -resize x32 -gravity center -crop 32x32+0+0 favicon.png -transparent white -colors 256 -background transparent favicon.ico
+
+参考: [ref1](http://stackoverflow.com/questions/3185677/converting-gifs-pngs-and-jpgs-to-ico-files-using-imagemagick)
