@@ -10,8 +10,7 @@ date: 2016-01-06 10:16
 * [Ubuntu官网](http://www.ubuntu.com/server)
 * [Ubuntu Help](https://help.ubuntu.com/)
 
-
-## 其它 ##
+## 经验 ##
 
 ### remove vs purge ###
 
@@ -27,6 +26,30 @@ date: 2016-01-06 10:16
 * man apt-get
 * [What is the Difference Between `apt-get purge` and `apt-get remove`?](http://askubuntu.com/questions/231562/what-is-the-difference-between-apt-get-purge-and-apt-get-remove)
 * [What is the correct way to completely remove an application?](http://askubuntu.com/questions/187888/what-is-the-correct-way-to-completely-remove-an-application)
+
+### 查询指定包的反向依赖 ###
+
+即查看哪些包依赖指定的包.
+
+    apt-cache rdepends <package>
+
+showpkg也可以, 不过包含的内容更多一些:
+
+    apt-cache showpkg <package>
+
+查看哪些**已安装**的包依赖指定的包:
+
+    apt-cache rdepends --installed <package>
+
+更多可以`man 8 apt-cache`
+
+参考:
+
+* [How to list dependent packages](http://askubuntu.com/questions/128524/how-to-list-dependent-packages-reverse-dependencies)
+* [Can I see why a package is installed?](http://askubuntu.com/questions/5636/can-i-see-why-a-package-is-installed)
+
+
+## 问题 ##
 
 ## syntax error: unknown group 'ssl-cert' in statoverride file ##
 
