@@ -3,6 +3,8 @@
     <head>
         <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
         <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
         <title>CommandLine Tips - Wiki · Tanky Woo</title>
         <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
@@ -157,6 +159,26 @@
 
 
 <p>参考 <a href="http://www.cyberciti.biz/faq/how-do-i-sort-du-h-output-by-size-under-linux/">ref1</a></p>
+<hr />
+<p>获取外网ip:</p>
+<p>之前用的ifconfig.me国内貌似被墙了, 或者特别慢, 不过网上搜到很多其它的同类服务:</p>
+<div class="hlcode"><pre><span class="n">dig</span> <span class="o">+</span><span class="kt">short</span> <span class="n">myip</span><span class="p">.</span><span class="n">opendns</span><span class="p">.</span><span class="n">com</span> <span class="err">@</span><span class="n">resolver1</span><span class="p">.</span><span class="n">opendns</span><span class="p">.</span><span class="n">com</span>
+</pre></div>
+
+
+<p>或者:</p>
+<div class="hlcode"><pre><span class="n">wget</span> <span class="n">http</span><span class="o">:</span><span class="c1">//ipinfo.io/ip -qO -</span>
+</pre></div>
+
+
+<p>参考 <a href="http://unix.stackexchange.com/questions/22615/how-can-i-get-my-external-ip-address-in-bash">ref1</a>, <a href="http://askubuntu.com/questions/95910/command-for-determining-my-public-ip">ref2</a></p>
+<hr />
+<p>图片转为favicon.ico:</p>
+<div class="hlcode"><pre><span class="n">convert</span> <span class="o">-</span><span class="n">resize</span> <span class="n">x32</span> <span class="o">-</span><span class="n">gravity</span> <span class="n">center</span> <span class="o">-</span><span class="n">crop</span> <span class="mi">32</span><span class="n">x32</span><span class="o">+</span><span class="mi">0</span><span class="o">+</span><span class="mi">0</span> <span class="n">favicon</span><span class="p">.</span><span class="n">png</span> <span class="o">-</span><span class="n">transparent</span> <span class="n">white</span> <span class="o">-</span><span class="n">colors</span> <span class="mi">256</span> <span class="o">-</span><span class="n">background</span> <span class="n">transparent</span> <span class="n">favicon</span><span class="p">.</span><span class="n">ico</span>
+</pre></div>
+
+
+<p>参考: <a href="http://stackoverflow.com/questions/3185677/converting-gifs-pngs-and-jpgs-to-ico-files-using-imagemagick">ref1</a></p>
     </div>
 
         </div>
@@ -166,7 +188,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2016-01-24 17:06:14</p>
+                <p>Last Update 2016-01-26 23:48:50</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">

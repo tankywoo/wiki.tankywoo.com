@@ -3,6 +3,8 @@
     <head>
         <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
         <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
         <title>Ubuntu - Wiki · Tanky Woo</title>
         <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
@@ -25,10 +27,12 @@
     <div class="clearfix"></div>
     <div id="content">
         <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">其它</a><ul>
+<li><a href="#_1">经验</a><ul>
 <li><a href="#remove-vs-purge">remove vs purge</a></li>
+<li><a href="#_2">查询指定包的反向依赖</a></li>
 </ul>
 </li>
+<li><a href="#_3">问题</a></li>
 <li><a href="#syntax-error-unknown-group-ssl-cert-in-statoverride-file">syntax error: unknown group 'ssl-cert' in statoverride file</a></li>
 </ul>
 </div>
@@ -37,7 +41,7 @@
 <li><a href="http://www.ubuntu.com/server">Ubuntu官网</a></li>
 <li><a href="https://help.ubuntu.com/">Ubuntu Help</a></li>
 </ul>
-<h2 id="_1">其它</h2>
+<h2 id="_1">经验</h2>
 <h3 id="remove-vs-purge">remove vs purge</h3>
 <p><code>apt-get</code> 的 <code>remove</code> 和 <code>purge</code> 区别:</p>
 <ul>
@@ -51,6 +55,29 @@
 <li><a href="http://askubuntu.com/questions/231562/what-is-the-difference-between-apt-get-purge-and-apt-get-remove">What is the Difference Between <code>apt-get purge</code> and <code>apt-get remove</code>?</a></li>
 <li><a href="http://askubuntu.com/questions/187888/what-is-the-correct-way-to-completely-remove-an-application">What is the correct way to completely remove an application?</a></li>
 </ul>
+<h3 id="_2">查询指定包的反向依赖</h3>
+<p>即查看哪些包依赖指定的包.</p>
+<div class="hlcode"><pre><span class="nx">apt</span><span class="na">-cache</span> <span class="nx">rdepends</span> <span class="o">&lt;</span><span class="nx">package</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>showpkg也可以, 不过包含的内容更多一些:</p>
+<div class="hlcode"><pre><span class="nx">apt</span><span class="na">-cache</span> <span class="nx">showpkg</span> <span class="o">&lt;</span><span class="nx">package</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>查看哪些<strong>已安装</strong>的包依赖指定的包:</p>
+<div class="hlcode"><pre><span class="nx">apt</span><span class="na">-cache</span> <span class="nx">rdepends</span> <span class="o">--</span><span class="nx">installed</span> <span class="o">&lt;</span><span class="nx">package</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>更多可以<code>man 8 apt-cache</code></p>
+<p>参考:</p>
+<ul>
+<li><a href="http://askubuntu.com/questions/128524/how-to-list-dependent-packages-reverse-dependencies">How to list dependent packages</a></li>
+<li><a href="http://askubuntu.com/questions/5636/can-i-see-why-a-package-is-installed">Can I see why a package is installed?</a></li>
+</ul>
+<h2 id="_3">问题</h2>
 <h2 id="syntax-error-unknown-group-ssl-cert-in-statoverride-file">syntax error: unknown group 'ssl-cert' in statoverride file</h2>
 <p>安装某个包时遇到这个报错:</p>
 <div class="hlcode"><pre><span class="err">$</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libffi</span><span class="o">-</span><span class="n">dev</span>
@@ -94,7 +121,7 @@
                 Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
-                <p>Last Update 2016-01-24 17:06:14</p>
+                <p>Last Update 2016-01-26 23:48:50</p>
                 <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
