@@ -167,3 +167,11 @@ stash pop后, 原先index中的files会恢复为staged, 如果要保持index, �
     convert -resize x32 -gravity center -crop 32x32+0+0 favicon.png -transparent white -colors 256 -background transparent favicon.ico
 
 参考: [ref1](http://stackoverflow.com/questions/3185677/converting-gifs-pngs-and-jpgs-to-ico-files-using-imagemagick)
+
+---
+
+`grep -E` or `egrep`:
+
+* [What is the difference between `grep`, `egrep`, and `fgrep`?](http://unix.stackexchange.com/questions/17949/what-is-the-difference-between-grep-egrep-and-fgrep)
+
+`egrep` 等价于 `grep -E`, 不过有的系统可能没有内置 `egrep` 命令, 所以建议用 `grep -E`.
