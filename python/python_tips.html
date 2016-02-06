@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+        <title>Python Tips - Wiki · Tanky Woo</title>
+        <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+        <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+
+    </head>
+
+    <body>
+        <div id="container" class="typo">
+            
+    <div id="header">
+        <div id="post-nav">
+            
+            <a href="/">Wiki · Tanky Woo</a> » <a href="/#python">python</a> » Python Tips
+            
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content">
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#variable-with-underscore">variable with underscore</a></li>
+<li><a href="#property-method">property method</a></li>
+</ul>
+</div>
+<h2 id="variable-with-underscore">variable with underscore</h2>
+<ul>
+<li><a href="https://docs.python.org/2/tutorial/classes.html#private-variables-and-class-local-references">Python Docs - Private Variables and Class-local References</a></li>
+<li><a href="http://stackoverflow.com/questions/1301346/the-meaning-of-a-single-and-a-double-underscore-before-an-object-name-in-python">The meaning of a single- and a double-underscore before an object name in Python</a></li>
+<li><a href="http://stackoverflow.com/questions/6930144/underscore-vs-double-underscore-with-variables-and-methods">Underscore vs Double underscore with variables and methods</a></li>
+<li><a href="http://radek.io/2011/07/21/private-protected-and-public-in-python/">Private, protected and public in Python</a></li>
+</ul>
+<p>@nmichaels's answer:</p>
+<div class="hlcode"><pre><span class="o">-</span> <span class="n">_single_leading_underscore</span><span class="o">:</span> <span class="n">weak</span> <span class="s">&quot;internal use&quot;</span> <span class="n">indicator</span><span class="p">.</span>  <span class="n">E</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="s">&quot;from M</span>
+  <span class="n">import</span> <span class="o">*</span><span class="s">&quot; does not import objects whose name starts with an underscore.</span>
+
+<span class="o">-</span> <span class="n">single_trailing_underscore_</span><span class="o">:</span> <span class="n">used</span> <span class="n">by</span> <span class="n">convention</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">conflicts</span> <span class="n">with</span>
+  <span class="n">Python</span> <span class="n">keyword</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">g</span><span class="p">.</span>
+
+  <span class="n">Tkinter</span><span class="p">.</span><span class="n">Toplevel</span><span class="p">(</span><span class="n">master</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="err">&#39;</span><span class="n">ClassName</span><span class="err">&#39;</span><span class="p">)</span>
+
+<span class="o">-</span> <span class="n">__double_leading_underscore</span><span class="o">:</span> <span class="n">when</span> <span class="n">naming</span> <span class="n">a</span> <span class="n">class</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">invokes</span> <span class="n">name</span>
+  <span class="n">mangling</span> <span class="p">(</span><span class="n">inside</span> <span class="n">class</span> <span class="n">FooBar</span><span class="p">,</span> <span class="n">__boo</span> <span class="n">becomes</span> <span class="n">_FooBar__boo</span><span class="p">;</span> <span class="n">see</span> <span class="n">below</span><span class="p">).</span>
+
+<span class="o">-</span> <span class="n">__double_leading_and_trailing_underscore__</span><span class="o">:</span> <span class="s">&quot;magic&quot;</span> <span class="n">objects</span> <span class="n">or</span>
+  <span class="n">attributes</span> <span class="n">that</span> <span class="n">live</span> <span class="n">in</span> <span class="n">user</span><span class="o">-</span><span class="n">controlled</span> <span class="n">namespaces</span><span class="p">.</span>  <span class="n">E</span><span class="p">.</span><span class="n">g</span><span class="p">.</span> <span class="n">__init__</span><span class="p">,</span>
+  <span class="n">__import__</span> <span class="n">or</span> <span class="n">__file__</span><span class="p">.</span>  <span class="n">Never</span> <span class="n">invent</span> <span class="n">such</span> <span class="n">names</span><span class="p">;</span> <span class="n">only</span> <span class="n">use</span> <span class="n">them</span>
+  <span class="n">as</span> <span class="n">documented</span><span class="p">.</span>
+</pre></div>
+
+
+<h2 id="property-method">property method</h2>
+<ul>
+<li><a href="https://docs.python.org/2/library/functions.html#property">Python Docs - property</a></li>
+<li><a href="http://stackoverflow.com/questions/6618002/python-property-versus-getters-and-setters">Python @property versus getters and setters</a></li>
+<li><a href="http://python.jobbole.com/80955/">Python进阶之“属性（property）”详解</a></li>
+<li><a href="http://www.python-course.eu/python3_properties.php">Properties vs. Getters and Setters</a></li>
+</ul>
+    </div>
+
+        </div>
+        <div id="footer">
+              <p>
+                Copyright © 2012-2016 Tanky Woo.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+                Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
+              </p>
+                <p>Last Update 2016-02-06 23:06:00</p>
+                <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        </div>
+<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+</script>
+    </body>
+</html>
