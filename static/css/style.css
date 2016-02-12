@@ -112,6 +112,7 @@ blockquote {
   float: right;
   display: block;
   font-size: 75%;
+  max-width: 30%;
 }
 
 .toc > .toctitle {
