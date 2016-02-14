@@ -43,6 +43,7 @@
 <li><a href="#impstats">impstats 模块</a></li>
 </ul>
 </li>
+<li><a href="#rainer-script">Rainer Script</a></li>
 <li><a href="#_4">实践</a></li>
 <li><a href="#_5">更多资料</a><ul>
 <li><a href="#_6">官方资料</a></li>
@@ -340,6 +341,94 @@ ereregex</p>
 <li><a href="http://www.rsyslog.com/how-to-use-impstats/">使用impstats</a></li>
 <li><a href="http://www.rsyslog.com/rsyslog-statistic-counter-queues/">Main Queue输出术语</a></li>
 </ul>
+<h2 id="rainer-script">Rainer Script</h2>
+<p>P.S. 再次吐槽, rsyslog 的文档不愧是我见过最差的文档, 读起来线路不清晰就算了, rst解析很多地方也有问题。</p>
+<p>从v8.7.0升级到v8.13.0，有些legacy的配置项已经彻底移除了, 替换为Rainer Script的配置, 所以研究了下Rainer Script。</p>
+<p>检查配置: (<code>rsyslogd -N1</code> 或者 <code>rsyslogd -dn</code>)</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">rsyslogd</span> <span class="o">-</span><span class="n">N1</span>
+<span class="nl">rsyslogd:</span> <span class="n">version</span> <span class="mf">8.13.0</span><span class="p">,</span> <span class="n">config</span> <span class="n">validation</span> <span class="n">run</span> <span class="p">(</span><span class="n">level</span> <span class="mi">1</span><span class="p">),</span> <span class="n">master</span> <span class="n">config</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rsyslog</span><span class="p">.</span><span class="n">conf</span>
+<span class="nl">rsyslogd:</span> <span class="n">invalid</span> <span class="n">or</span> <span class="n">yet</span><span class="o">-</span><span class="n">unknown</span> <span class="n">config</span> <span class="n">file</span> <span class="n">command</span> <span class="err">&#39;</span><span class="n">SystemLogRateLimitInterval</span><span class="err">&#39;</span> <span class="o">-</span> <span class="n">have</span> <span class="n">you</span> <span class="n">forgotten</span> <span class="n">to</span> <span class="n">load</span> <span class="n">a</span> <span class="n">module</span><span class="o">?</span> <span class="p">[</span><span class="n">v8</span><span class="mf">.13.0</span> <span class="n">try</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.rsyslog.com/e/3003 ]</span>
+<span class="nl">rsyslogd:</span> <span class="n">invalid</span> <span class="n">or</span> <span class="n">yet</span><span class="o">-</span><span class="n">unknown</span> <span class="n">config</span> <span class="n">file</span> <span class="n">command</span> <span class="err">&#39;</span><span class="n">SystemLogRateLimitBurst</span><span class="err">&#39;</span> <span class="o">-</span> <span class="n">have</span> <span class="n">you</span> <span class="n">forgotten</span> <span class="n">to</span> <span class="n">load</span> <span class="n">a</span> <span class="n">module</span><span class="o">?</span> <span class="p">[</span><span class="n">v8</span><span class="mf">.13.0</span> <span class="n">try</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.rsyslog.com/e/3003 ]</span>
+<span class="nl">rsyslogd:</span> <span class="n">invalid</span> <span class="n">or</span> <span class="n">yet</span><span class="o">-</span><span class="n">unknown</span> <span class="n">config</span> <span class="n">file</span> <span class="n">command</span> <span class="err">&#39;</span><span class="n">IMUXSockRateLimitInterval</span><span class="err">&#39;</span> <span class="o">-</span> <span class="n">have</span> <span class="n">you</span> <span class="n">forgotten</span> <span class="n">to</span> <span class="n">load</span> <span class="n">a</span> <span class="n">module</span><span class="o">?</span> <span class="p">[</span><span class="n">v8</span><span class="mf">.13.0</span> <span class="n">try</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.rsyslog.com/e/3003 ]</span>
+<span class="nl">rsyslogd:</span> <span class="n">invalid</span> <span class="n">or</span> <span class="n">yet</span><span class="o">-</span><span class="n">unknown</span> <span class="n">config</span> <span class="n">file</span> <span class="n">command</span> <span class="err">&#39;</span><span class="n">IMUXSockRateLimitBurst</span><span class="err">&#39;</span> <span class="o">-</span> <span class="n">have</span> <span class="n">you</span> <span class="n">forgotten</span> <span class="n">to</span> <span class="n">load</span> <span class="n">a</span> <span class="n">module</span><span class="o">?</span> <span class="p">[</span><span class="n">v8</span><span class="mf">.13.0</span> <span class="n">try</span> <span class="n">http</span><span class="o">:</span><span class="c1">//www.rsyslog.com/e/3003 ]</span>
+</pre></div>
+
+
+<p>「<a href="http://www.rsyslog.com/doc/v8-stable/">V8的配置文档</a>」, 主要需要看几个配置:</p>
+<ul>
+<li><a href="http://www.rsyslog.com/doc/v8-stable/rainerscript/index.html">RainerScript</a></li>
+<li>
+<p><a href="http://www.rsyslog.com/doc/v8-stable/configuration/modules/index.html">Modules</a> 介绍了所有modules, 包括Input, Output, 和相应的加载模块和必选参数:</p>
+<div class="hlcode"><pre><span class="n">module</span><span class="p">(</span><span class="n">load</span><span class="o">=</span><span class="s">&quot;imuxsock&quot;</span><span class="p">)</span> <span class="err">#</span> <span class="n">needs</span> <span class="n">to</span> <span class="n">be</span> <span class="n">done</span> <span class="n">just</span> <span class="n">once</span>
+<span class="n">input</span><span class="p">(</span><span class="n">type</span><span class="o">=</span><span class="s">&quot;imuxsock&quot;</span> <span class="n">HostName</span><span class="o">=</span><span class="s">&quot;jail1.example.net&quot;</span>
+      <span class="n">Socket</span><span class="o">=</span><span class="s">&quot;/jail/1/dev/log&quot;</span><span class="p">)</span> <span class="n">input</span><span class="p">(</span><span class="n">type</span><span class="o">=</span><span class="s">&quot;imuxsock&quot;</span>
+      <span class="n">HostName</span><span class="o">=</span><span class="s">&quot;jail2.example.net&quot;</span> <span class="n">Socket</span><span class="o">=</span><span class="s">&quot;/jail/2/dev/log&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+</li>
+<li>
+<p><a href="http://www.rsyslog.com/doc/v8-stable/configuration/actions.html">Actions</a> 包含了公共(所有action都有的)参数, 各自的还是需要看Output Modules</p>
+<div class="hlcode"><pre><span class="cp"># legacy 配置</span>
+<span class="err">$</span><span class="n">ActionResumeRetryCount</span>     <span class="mi">3</span>
+<span class="err">$</span><span class="n">ActionResumeInterval</span>       <span class="mi">30</span>
+<span class="err">$</span><span class="n">ActionQueueType</span>            <span class="n">LinkedList</span>
+<span class="err">$</span><span class="n">ActionQueueFileName</span>        <span class="n">testqueue</span>
+<span class="err">$</span><span class="n">ActionQueueSaveOnShutdown</span>  <span class="n">on</span>
+<span class="err">$</span><span class="n">ActionQueueMaxDiskSpace</span>    <span class="mi">100</span><span class="n">M</span>
+<span class="err">$</span><span class="n">ActionQueueDiscardMark</span>     <span class="mi">1024</span>
+<span class="err">$</span><span class="n">ActionQueueDiscardSeverity</span> <span class="mi">5</span>
+<span class="err">$</span><span class="n">ActionQueueTimeoutEnqueue</span>  <span class="mi">0</span>
+
+<span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="err">@</span><span class="n">syslog</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">:</span><span class="mi">514</span>
+
+<span class="cp"># rainer script 配置</span>
+<span class="n">module</span><span class="p">(</span><span class="n">load</span><span class="o">=</span><span class="s">&quot;builtin:omfwd&quot;</span> <span class="n">Template</span><span class="o">=</span><span class="s">&quot;RSYSLOG_ForwardFormat&quot;</span><span class="p">)</span>
+
+<span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="n">action</span><span class="p">(</span>
+    <span class="n">type</span><span class="o">=</span><span class="s">&quot;omfwd&quot;</span>
+    <span class="n">Target</span><span class="o">=</span><span class="s">&quot;syslog.example.com&quot;</span>
+    <span class="n">Port</span><span class="o">=</span><span class="s">&quot;514&quot;</span>
+    <span class="n">ZipLevel</span><span class="o">=</span><span class="s">&quot;9&quot;</span>
+    <span class="n">compression</span><span class="p">.</span><span class="n">mode</span><span class="o">=</span><span class="s">&quot;single&quot;</span>
+    <span class="n">Action</span><span class="p">.</span><span class="n">ResumeRetryCount</span><span class="o">=</span><span class="s">&quot;3&quot;</span>
+    <span class="n">Action</span><span class="p">.</span><span class="n">ResumeInterval</span><span class="o">=</span><span class="s">&quot;30&quot;</span>
+    <span class="n">Queue</span><span class="p">.</span><span class="n">Type</span><span class="o">=</span><span class="s">&quot;LinkedList&quot;</span>
+    <span class="n">Queue</span><span class="p">.</span><span class="n">FileName</span><span class="o">=</span><span class="s">&quot;testqueue&quot;</span>
+    <span class="n">Queue</span><span class="p">.</span><span class="n">SaveOnShutdown</span><span class="o">=</span><span class="s">&quot;on&quot;</span>
+    <span class="n">Queue</span><span class="p">.</span><span class="n">MaxDiskSpace</span><span class="o">=</span><span class="s">&quot;100M&quot;</span>
+    <span class="n">Queue</span><span class="p">.</span><span class="n">DiscardMark</span><span class="o">=</span><span class="s">&quot;1024&quot;</span>
+    <span class="n">Queue</span><span class="p">.</span><span class="n">Size</span><span class="o">=</span><span class="s">&quot;1024&quot;</span>
+    <span class="n">Queue</span><span class="p">.</span><span class="n">DiscardSeverity</span><span class="o">=</span><span class="s">&quot;5&quot;</span>
+    <span class="n">Queue</span><span class="p">.</span><span class="n">TimeoutEnqueue</span><span class="o">=</span><span class="s">&quot;0&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+
+</li>
+</ul>
+<p>迁移基本就是搜索每一项lagacy配置, 查找对应的rainer配置，另外通过上面可以看出，新配置的命令还是比较有规律的.</p>
+<p>比如<code>Action&lt;xxx&gt;</code>的配置变为<code>Action.&lt;xxx&gt;</code>, <code>ActionQueue&lt;xxx&gt;</code>变为<code>Queue.&lt;xxx&gt;</code>(不区分大小写).</p>
+<p>另外, 在Action的链接里提到两点:</p>
+<blockquote>
+<ul>
+<li>Be warned that legacy action format is hard to get right. It is recommended to use RainerScript-Style action format whenever possible!</li>
+<li>Please also note that legacy action parameters do not affect RainerScript <strong>action</strong> objects.</li>
+</ul>
+</blockquote>
+<p>比如:</p>
+<div class="hlcode"><pre><span class="err">$</span><span class="n">actionResumeRetryCount</span> <span class="mi">10</span>
+<span class="n">action</span><span class="p">(</span><span class="n">type</span><span class="o">=</span><span class="s">&quot;omfwd&quot;</span> <span class="n">target</span><span class="o">=</span><span class="s">&quot;server1.example.net&quot;</span><span class="p">)</span>
+<span class="err">@@</span><span class="n">server2</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">net</span>
+</pre></div>
+
+
+<p>第一行的配置对第二行的action无效，只对第三行有效。</p>
+<p>坑不少~~</p>
+<p>其它参考:</p>
+<ul>
+<li><a href="http://blog.gerhards.net/2012/07/rsyslog-action-queue.html">rsyslog action queue</a> 作者的博客</li>
+</ul>
 <h2 id="_4">实践</h2>
 <p>遇到一个kernel的报错, 一直在刷日志, 现在要把包含这条报错信息的内核日志丢弃:</p>
 <div class="hlcode"><pre><span class="o">:</span><span class="n">msg</span><span class="p">,</span> <span class="n">contains</span><span class="p">,</span> <span class="s">&quot;message want to be dropped&quot;</span> <span class="o">~</span>
@@ -376,7 +465,7 @@ ereregex</p>
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
               <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
-              <p>Last Update 2016-02-12 11:25:22</p>
+              <p>Last Update 2016-02-14 18:19:53</p>
               <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
