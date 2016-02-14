@@ -1,6 +1,8 @@
 ---
 title: "rsyslog"
 date: 2013-08-22 23:48
+updated: 2016-02-14 18:20
+log: "增加Rainer Script"
 ---
 
 [TOC]
@@ -364,6 +366,92 @@ Main Queue 的默认模式是 `FixedArray`，Action Queue 的默认模式是 `Di
 * [impstats配置讲解](http://www.rsyslog.com/doc/impstats.html)
 * [使用impstats](http://www.rsyslog.com/how-to-use-impstats/)
 * [Main Queue输出术语](http://www.rsyslog.com/rsyslog-statistic-counter-queues/)
+
+
+## Rainer Script ##
+
+P.S. 再次吐槽, rsyslog 的文档不愧是我见过最差的文档, 读起来线路不清晰就算了, rst解析很多地方也有问题。
+
+从v8.7.0升级到v8.13.0，有些legacy的配置项已经彻底移除了, 替换为Rainer Script的配置, 所以研究了下Rainer Script。
+
+检查配置: (`rsyslogd -N1` 或者 `rsyslogd -dn`)
+
+	$ rsyslogd -N1
+	rsyslogd: version 8.13.0, config validation run (level 1), master config /etc/rsyslog.conf
+	rsyslogd: invalid or yet-unknown config file command 'SystemLogRateLimitInterval' - have you forgotten to load a module? [v8.13.0 try http://www.rsyslog.com/e/3003 ]
+	rsyslogd: invalid or yet-unknown config file command 'SystemLogRateLimitBurst' - have you forgotten to load a module? [v8.13.0 try http://www.rsyslog.com/e/3003 ]
+	rsyslogd: invalid or yet-unknown config file command 'IMUXSockRateLimitInterval' - have you forgotten to load a module? [v8.13.0 try http://www.rsyslog.com/e/3003 ]
+	rsyslogd: invalid or yet-unknown config file command 'IMUXSockRateLimitBurst' - have you forgotten to load a module? [v8.13.0 try http://www.rsyslog.com/e/3003 ]
+
+「[V8的配置文档](http://www.rsyslog.com/doc/v8-stable/)」, 主要需要看几个配置:
+
+* [RainerScript](http://www.rsyslog.com/doc/v8-stable/rainerscript/index.html)
+* [Modules](http://www.rsyslog.com/doc/v8-stable/configuration/modules/index.html) 介绍了所有modules, 包括Input, Output, 和相应的加载模块和必选参数:
+
+		module(load="imuxsock") # needs to be done just once
+		input(type="imuxsock" HostName="jail1.example.net"
+			  Socket="/jail/1/dev/log") input(type="imuxsock"
+			  HostName="jail2.example.net" Socket="/jail/2/dev/log")
+
+* [Actions](http://www.rsyslog.com/doc/v8-stable/configuration/actions.html) 包含了公共(所有action都有的)参数, 各自的还是需要看Output Modules
+
+		# legacy 配置
+		$ActionResumeRetryCount     3
+		$ActionResumeInterval       30
+		$ActionQueueType            LinkedList
+		$ActionQueueFileName        testqueue
+		$ActionQueueSaveOnShutdown  on
+		$ActionQueueMaxDiskSpace    100M
+		$ActionQueueDiscardMark     1024
+		$ActionQueueDiscardSeverity 5
+		$ActionQueueTimeoutEnqueue  0
+
+		*.* @syslog.example.com:514
+
+		# rainer script 配置
+		module(load="builtin:omfwd" Template="RSYSLOG_ForwardFormat")
+
+		*.* action(
+			type="omfwd"
+			Target="syslog.example.com"
+			Port="514"
+			ZipLevel="9"
+			compression.mode="single"
+			Action.ResumeRetryCount="3"
+			Action.ResumeInterval="30"
+			Queue.Type="LinkedList"
+			Queue.FileName="testqueue"
+			Queue.SaveOnShutdown="on"
+			Queue.MaxDiskSpace="100M"
+			Queue.DiscardMark="1024"
+			Queue.Size="1024"
+			Queue.DiscardSeverity="5"
+			Queue.TimeoutEnqueue="0"
+		)
+
+迁移基本就是搜索每一项lagacy配置, 查找对应的rainer配置，另外通过上面可以看出，新配置的命令还是比较有规律的.
+
+比如`Action<xxx>`的配置变为`Action.<xxx>`, `ActionQueue<xxx>`变为`Queue.<xxx>`(不区分大小写).
+
+另外, 在Action的链接里提到两点:
+
+> * Be warned that legacy action format is hard to get right. It is recommended to use RainerScript-Style action format whenever possible!
+> * Please also note that legacy action parameters do not affect RainerScript **action** objects.
+
+比如:
+
+	$actionResumeRetryCount 10
+	action(type="omfwd" target="server1.example.net")
+	@@server2.example.net
+
+第一行的配置对第二行的action无效，只对第三行有效。
+
+坑不少~~
+
+其它参考:
+
+* [rsyslog action queue](http://blog.gerhards.net/2012/07/rsyslog-action-queue.html) 作者的博客
+
 
 ## 实践 ##
 
