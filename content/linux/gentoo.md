@@ -1,7 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2015-12-27 12:23
+updated: 2016-02-14 21:53
+log: "增加eix"
 ---
 
 [TOC]
@@ -657,6 +658,20 @@ gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的�
 > For completeness, the BIOS boot partition is needed when GPT partition layout is used with GRUB2, or when the MBR partition layout is used with GRUB2 when the first partition starts earlier than the 1 MB location on the disk.
 
 之前一直弄错了, 以为mbr分区最大的磁盘限制是2T, 应该是分区限制是2T.
+
+
+## Eix ##
+
+[eix](https://wiki.gentoo.org/wiki/Eix) 通过增加一个portage树本地索引库, 快速的查询软件包，比「emerge」方便了很多。
+
+	# 搜索软件，用于替代emerge -S
+	eix <package_name>
+
+	# 更新portage树, 等价于 emerge --sync
+	eix-sync
+
+	# 更新本地索引库缓存, 否则有时更新了portage树, eix搜到的还是老的
+	eix-update
 
 
 ## 其它资源 ##
