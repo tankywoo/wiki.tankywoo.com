@@ -7,7 +7,7 @@
   <title>Wiki · Tanky Woo</title>
   <link href="http://wiki.tankywoo.com/" />
   <link href="http://wiki.tankywoo.com/atom.xml" rel="self" type="application/atom+xml" />
-  <updated>2016-02-14T21:54:10+08:00</updated>
+  <updated>2016-02-15T13:30:02+08:00</updated>
   <id>http://wiki.tankywoo.com</id>
   <author>
     <name>Tanky Woo</name>
@@ -66,13 +66,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/top.html</id>
-    <title>top / htop / atop</title>
-    <link href="http://wiki.tankywoo.comtool/top.html" />
-    <published>2013-08-17T07:32:00+08:00</published>
+    <id>http://wiki.tankywoo.combook/practical-vim.html</id>
+    <title>Practical Vim</title>
+    <link href="http://wiki.tankywoo.combook/practical-vim.html" />
+    <published>2014-11-13T22:11:00+08:00</published>
 
     
-    <updated>2013-08-17T07:32:00+08:00</updated>
+    <updated>2014-11-13T22:11:00+08:00</updated>
     
 
     
@@ -83,13 +83,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/saltstack.html</id>
-    <title>SaltStack</title>
-    <link href="http://wiki.tankywoo.comtool/saltstack.html" />
-    <published>2014-02-11T17:11:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/nginx.html</id>
+    <title>Nginx</title>
+    <link href="http://wiki.tankywoo.comtool/nginx.html" />
+    <published>2016-01-07T21:11:00+08:00</published>
 
     
-    <updated>2014-02-11T17:11:00+08:00</updated>
+    <updated>2016-01-07T21:11:00+08:00</updated>
     
 
     
@@ -134,23 +134,6 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/whois.html</id>
-    <title>whois</title>
-    <link href="http://wiki.tankywoo.comtool/whois.html" />
-    <published>2015-11-01T15:21:00+08:00</published>
-
-    
-    <updated>2015-11-01T15:21:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
     <id>http://wiki.tankywoo.comtool/grep.html</id>
     <title>grep</title>
     <link href="http://wiki.tankywoo.comtool/grep.html" />
@@ -185,40 +168,6 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/rsync.html</id>
-    <title>rsync</title>
-    <link href="http://wiki.tankywoo.comtool/rsync.html" />
-    <published>2013-08-17T07:36:00+08:00</published>
-
-    
-    <updated>2016-01-03T11:28:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/nc.html</id>
-    <title>nc</title>
-    <link href="http://wiki.tankywoo.comtool/nc.html" />
-    <published>2013-09-03T22:03:00+08:00</published>
-
-    
-    <updated>2013-09-03T22:03:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
     <id>http://wiki.tankywoo.comlinux/makefile.html</id>
     <title>Makefile &amp; CMakeLists</title>
     <link href="http://wiki.tankywoo.comlinux/makefile.html" />
@@ -236,47 +185,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.compython/supervisor.html</id>
-    <title>Supervisord</title>
-    <link href="http://wiki.tankywoo.compython/supervisor.html" />
-    <published>2014-12-04T15:31:00+08:00</published>
+    <id>http://wiki.tankywoo.combook/version-control-with-git.html</id>
+    <title>Version Control with Git</title>
+    <link href="http://wiki.tankywoo.combook/version-control-with-git.html" />
+    <published>2014-04-28T23:31:00+08:00</published>
 
     
-    <updated>2014-12-04T15:31:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/inotify.html</id>
-    <title>inotify</title>
-    <link href="http://wiki.tankywoo.comtool/inotify.html" />
-    <published>2013-09-06T19:06:00+08:00</published>
-
-    
-    <updated>2013-09-06T19:06:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comlinux/ubuntu.html</id>
-    <title>Ubuntu</title>
-    <link href="http://wiki.tankywoo.comlinux/ubuntu.html" />
-    <published>2016-01-06T10:16:00+08:00</published>
-
-    
-    <updated>2016-01-06T10:16:00+08:00</updated>
+    <updated>2014-04-28T23:31:00+08:00</updated>
     
 
     
@@ -304,40 +219,6 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.compython/virtualenv.html</id>
-    <title>virtualenv</title>
-    <link href="http://wiki.tankywoo.compython/virtualenv.html" />
-    <published>2013-08-22T23:48:00+08:00</published>
-
-    
-    <updated>2013-08-22T23:48:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/tcpcopy.html</id>
-    <title>TCPCopy</title>
-    <link href="http://wiki.tankywoo.comtool/tcpcopy.html" />
-    <published>2015-05-05T11:10:00+08:00</published>
-
-    
-    <updated>2015-05-05T11:10:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
     <id>http://wiki.tankywoo.comtool/awk.html</id>
     <title>awk</title>
     <link href="http://wiki.tankywoo.comtool/awk.html" />
@@ -345,23 +226,6 @@
 
     
     <updated>2013-08-17T07:32:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/samba.html</id>
-    <title>samba</title>
-    <link href="http://wiki.tankywoo.comtool/samba.html" />
-    <published>2013-08-17T07:36:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:36:00+08:00</updated>
     
 
     
@@ -389,9 +253,26 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/find.html</id>
-    <title>find</title>
-    <link href="http://wiki.tankywoo.comtool/find.html" />
+    <id>http://wiki.tankywoo.comtool/pdsh.html</id>
+    <title>pdsh</title>
+    <link href="http://wiki.tankywoo.comtool/pdsh.html" />
+    <published>2014-04-28T14:57:00+08:00</published>
+
+    
+    <updated>2014-04-28T14:57:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/route.html</id>
+    <title>route</title>
+    <link href="http://wiki.tankywoo.comtool/route.html" />
     <published>2013-08-17T07:32:00+08:00</published>
 
     
@@ -406,9 +287,264 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comother/efficiency_tools_i_use.html</id>
-    <title>效率工具</title>
-    <link href="http://wiki.tankywoo.comother/efficiency_tools_i_use.html" />
+    <id>http://wiki.tankywoo.comlinux/bash_shortcuts.html</id>
+    <title>Bash Shortcuts</title>
+    <link href="http://wiki.tankywoo.comlinux/bash_shortcuts.html" />
+    <published>2013-08-17T07:23:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:23:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comother/raspberry.html</id>
+    <title>树莓派 Raspberry</title>
+    <link href="http://wiki.tankywoo.comother/raspberry.html" />
+    <published>2015-10-30T08:30:00+08:00</published>
+
+    
+    <updated>2015-10-30T08:30:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comother/kindle.html</id>
+    <title>Kindle</title>
+    <link href="http://wiki.tankywoo.comother/kindle.html" />
+    <published>2016-02-04T15:00:00+08:00</published>
+
+    
+    <updated>2016-02-04T15:00:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comdatabase/sqlalchemy.html</id>
+    <title>SQLAlchemy</title>
+    <link href="http://wiki.tankywoo.comdatabase/sqlalchemy.html" />
+    <published>2015-09-30T19:00:00+08:00</published>
+
+    
+    <updated>2015-09-30T19:00:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.compython/coverage.html</id>
+    <title>coverage</title>
+    <link href="http://wiki.tankywoo.compython/coverage.html" />
+    <published>2014-06-14T15:00:00+08:00</published>
+
+    
+    <updated>2014-06-14T15:00:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/rsync.html</id>
+    <title>rsync</title>
+    <link href="http://wiki.tankywoo.comtool/rsync.html" />
+    <published>2013-08-17T07:36:00+08:00</published>
+
+    
+    <updated>2016-01-03T11:28:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/npm.html</id>
+    <title>npm</title>
+    <link href="http://wiki.tankywoo.comtool/npm.html" />
+    <published>2016-02-15T13:15:00+08:00</published>
+
+    
+    <updated>2016-02-15T13:15:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comlinux/server_performance.html</id>
+    <title>Server Performance Analysis</title>
+    <link href="http://wiki.tankywoo.comlinux/server_performance.html" />
+    <published>2013-08-17T07:23:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:23:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/tmux.html</id>
+    <title>tmux</title>
+    <link href="http://wiki.tankywoo.comtool/tmux.html" />
+    <published>2013-10-16T16:24:00+08:00</published>
+
+    
+    <updated>2013-10-16T16:24:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/tcpdump.html</id>
+    <title>tcpdump</title>
+    <link href="http://wiki.tankywoo.comtool/tcpdump.html" />
+    <published>2013-09-06T10:24:00+08:00</published>
+
+    
+    <updated>2013-09-06T10:24:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comlinux/gentoo.html</id>
+    <title>Gentoo</title>
+    <link href="http://wiki.tankywoo.comlinux/gentoo.html" />
+    <published>2014-08-30T16:29:00+08:00</published>
+
+    
+    <updated>2016-02-14T21:53:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.compython/py_performance_analysis_tool.html</id>
+    <title>Python Performance Analysis Tool</title>
+    <link href="http://wiki.tankywoo.compython/py_performance_analysis_tool.html" />
+    <published>2013-08-17T07:39:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:39:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comlinux/io_analysis.html</id>
+    <title>IO Analysis</title>
+    <link href="http://wiki.tankywoo.comlinux/io_analysis.html" />
+    <published>2015-02-05T17:37:00+08:00</published>
+
+    
+    <updated>2015-02-05T17:37:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comother/sphinx.html</id>
+    <title>Sphinx</title>
+    <link href="http://wiki.tankywoo.comother/sphinx.html" />
+    <published>2015-04-19T19:30:00+08:00</published>
+
+    
+    <updated>2015-04-19T19:30:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/docker.html</id>
+    <title>Docker</title>
+    <link href="http://wiki.tankywoo.comtool/docker.html" />
+    <published>2015-11-08T12:34:00+08:00</published>
+
+    
+    <updated>2015-11-08T12:34:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/netstat.html</id>
+    <title>netstat</title>
+    <link href="http://wiki.tankywoo.comtool/netstat.html" />
     <published>2013-08-17T07:32:00+08:00</published>
 
     
@@ -423,13 +559,336 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/curl.html</id>
-    <title>curl</title>
-    <link href="http://wiki.tankywoo.comtool/curl.html" />
+    <id>http://wiki.tankywoo.comtool/nc.html</id>
+    <title>nc</title>
+    <link href="http://wiki.tankywoo.comtool/nc.html" />
+    <published>2013-09-03T22:03:00+08:00</published>
+
+    
+    <updated>2013-09-03T22:03:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/host.html</id>
+    <title>host</title>
+    <link href="http://wiki.tankywoo.comtool/host.html" />
     <published>2013-08-17T07:32:00+08:00</published>
 
     
     <updated>2013-08-17T07:32:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.compython/good_resource.html</id>
+    <title>Python Good Resource</title>
+    <link href="http://wiki.tankywoo.compython/good_resource.html" />
+    <published>2015-11-14T15:00:00+08:00</published>
+
+    
+    <updated>2015-11-14T15:00:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/dig.html</id>
+    <title>dig</title>
+    <link href="http://wiki.tankywoo.comtool/dig.html" />
+    <published>2013-08-17T07:32:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:32:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comlinux/linux_tricks.html</id>
+    <title>Linux Tricks</title>
+    <link href="http://wiki.tankywoo.comlinux/linux_tricks.html" />
+    <published>2013-08-17T07:23:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:23:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/inotify.html</id>
+    <title>inotify</title>
+    <link href="http://wiki.tankywoo.comtool/inotify.html" />
+    <published>2013-09-06T19:06:00+08:00</published>
+
+    
+    <updated>2013-09-06T19:06:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/nslookup.html</id>
+    <title>nslookup</title>
+    <link href="http://wiki.tankywoo.comtool/nslookup.html" />
+    <published>2013-08-17T07:32:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:32:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/stunnel.html</id>
+    <title>stunnel</title>
+    <link href="http://wiki.tankywoo.comtool/stunnel.html" />
+    <published>2015-08-03T11:00:00+08:00</published>
+
+    
+    <updated>2015-08-03T11:00:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/nmap.html</id>
+    <title>nmap</title>
+    <link href="http://wiki.tankywoo.comtool/nmap.html" />
+    <published>2013-08-17T07:32:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:32:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/ps.html</id>
+    <title>ps</title>
+    <link href="http://wiki.tankywoo.comtool/ps.html" />
+    <published>2013-08-17T07:32:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:32:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/saltstack.html</id>
+    <title>SaltStack</title>
+    <link href="http://wiki.tankywoo.comtool/saltstack.html" />
+    <published>2014-02-11T17:11:00+08:00</published>
+
+    
+    <updated>2014-02-11T17:11:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/mysql.html</id>
+    <title>mysql</title>
+    <link href="http://wiki.tankywoo.comtool/mysql.html" />
+    <published>2013-08-17T07:36:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:36:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/whois.html</id>
+    <title>whois</title>
+    <link href="http://wiki.tankywoo.comtool/whois.html" />
+    <published>2015-11-01T15:21:00+08:00</published>
+
+    
+    <updated>2015-11-01T15:21:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.compython/supervisor.html</id>
+    <title>Supervisord</title>
+    <link href="http://wiki.tankywoo.compython/supervisor.html" />
+    <published>2014-12-04T15:31:00+08:00</published>
+
+    
+    <updated>2014-12-04T15:31:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comlinux/commandline_tips.html</id>
+    <title>CommandLine Tips</title>
+    <link href="http://wiki.tankywoo.comlinux/commandline_tips.html" />
+    <published>2015-02-09T15:00:00+08:00</published>
+
+    
+    <updated>2015-02-09T15:00:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comlinux/ubuntu.html</id>
+    <title>Ubuntu</title>
+    <link href="http://wiki.tankywoo.comlinux/ubuntu.html" />
+    <published>2016-01-06T10:16:00+08:00</published>
+
+    
+    <updated>2016-01-06T10:16:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.compython/virtualenv.html</id>
+    <title>virtualenv</title>
+    <link href="http://wiki.tankywoo.compython/virtualenv.html" />
+    <published>2013-08-22T23:48:00+08:00</published>
+
+    
+    <updated>2013-08-22T23:48:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/rrdtool.html</id>
+    <title>rrdtool</title>
+    <link href="http://wiki.tankywoo.comtool/rrdtool.html" />
+    <published>2013-08-17T07:36:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:36:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comtool/samba.html</id>
+    <title>samba</title>
+    <link href="http://wiki.tankywoo.comtool/samba.html" />
+    <published>2013-08-17T07:36:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:36:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.compython/flask.html</id>
+    <title>Flask Primer</title>
+    <link href="http://wiki.tankywoo.compython/flask.html" />
+    <published>2015-05-28T08:00:00+08:00</published>
+
+    
+    <updated>2015-05-28T08:00:00+08:00</updated>
     
 
     
@@ -474,23 +933,6 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comother/raspberry.html</id>
-    <title>树莓派 Raspberry</title>
-    <link href="http://wiki.tankywoo.comother/raspberry.html" />
-    <published>2015-10-30T08:30:00+08:00</published>
-
-    
-    <updated>2015-10-30T08:30:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
     <id>http://wiki.tankywoo.comtool/fastcgi.html</id>
     <title>fastcgi</title>
     <link href="http://wiki.tankywoo.comtool/fastcgi.html" />
@@ -498,23 +940,6 @@
 
     
     <updated>2013-08-17T07:36:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/rsyslog.html</id>
-    <title>rsyslog</title>
-    <link href="http://wiki.tankywoo.comtool/rsyslog.html" />
-    <published>2013-08-22T23:48:00+08:00</published>
-
-    
-    <updated>2016-02-14T18:20:00+08:00</updated>
     
 
     
@@ -542,40 +967,6 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/vsftpd.html</id>
-    <title>vsftpd</title>
-    <link href="http://wiki.tankywoo.comtool/vsftpd.html" />
-    <published>2013-08-17T07:36:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:36:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comdatabase/sqlalchemy.html</id>
-    <title>SQLAlchemy</title>
-    <link href="http://wiki.tankywoo.comdatabase/sqlalchemy.html" />
-    <published>2015-09-30T19:00:00+08:00</published>
-
-    
-    <updated>2015-09-30T19:00:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
     <id>http://wiki.tankywoo.comtool/iftop.html</id>
     <title>iftop</title>
     <link href="http://wiki.tankywoo.comtool/iftop.html" />
@@ -593,13 +984,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comother/kindle.html</id>
-    <title>Kindle</title>
-    <link href="http://wiki.tankywoo.comother/kindle.html" />
-    <published>2016-02-04T15:00:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/rsyslog.html</id>
+    <title>rsyslog</title>
+    <link href="http://wiki.tankywoo.comtool/rsyslog.html" />
+    <published>2013-08-22T23:48:00+08:00</published>
 
     
-    <updated>2016-02-04T15:00:00+08:00</updated>
+    <updated>2016-02-14T18:20:00+08:00</updated>
     
 
     
@@ -610,13 +1001,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comlinux/server_performance.html</id>
-    <title>Server Performance Analysis</title>
-    <link href="http://wiki.tankywoo.comlinux/server_performance.html" />
-    <published>2013-08-17T07:23:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/vim.html</id>
+    <title>Vim</title>
+    <link href="http://wiki.tankywoo.comtool/vim.html" />
+    <published>2013-08-17T07:32:00+08:00</published>
 
     
-    <updated>2013-08-17T07:23:00+08:00</updated>
+    <updated>2013-08-17T07:32:00+08:00</updated>
     
 
     
@@ -644,98 +1035,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/tmux.html</id>
-    <title>tmux</title>
-    <link href="http://wiki.tankywoo.comtool/tmux.html" />
-    <published>2013-10-16T16:24:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/tcpcopy.html</id>
+    <title>TCPCopy</title>
+    <link href="http://wiki.tankywoo.comtool/tcpcopy.html" />
+    <published>2015-05-05T11:10:00+08:00</published>
 
     
-    <updated>2013-10-16T16:24:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/rrdtool.html</id>
-    <title>rrdtool</title>
-    <link href="http://wiki.tankywoo.comtool/rrdtool.html" />
-    <published>2013-08-17T07:36:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:36:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/tcpdump.html</id>
-    <title>tcpdump</title>
-    <link href="http://wiki.tankywoo.comtool/tcpdump.html" />
-    <published>2013-09-06T10:24:00+08:00</published>
-
-    
-    <updated>2013-09-06T10:24:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.combook/practical-vim.html</id>
-    <title>Practical Vim</title>
-    <link href="http://wiki.tankywoo.combook/practical-vim.html" />
-    <published>2014-11-13T22:11:00+08:00</published>
-
-    
-    <updated>2014-11-13T22:11:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.compython/coverage.html</id>
-    <title>coverage</title>
-    <link href="http://wiki.tankywoo.compython/coverage.html" />
-    <published>2014-06-14T15:00:00+08:00</published>
-
-    
-    <updated>2014-06-14T15:00:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/vim.html</id>
-    <title>Vim</title>
-    <link href="http://wiki.tankywoo.comtool/vim.html" />
-    <published>2013-08-17T07:32:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:32:00+08:00</updated>
+    <updated>2015-05-05T11:10:00+08:00</updated>
     
 
     
@@ -831,26 +1137,9 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.compython/py_performance_analysis_tool.html</id>
-    <title>Python Performance Analysis Tool</title>
-    <link href="http://wiki.tankywoo.compython/py_performance_analysis_tool.html" />
-    <published>2013-08-17T07:39:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:39:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/dig.html</id>
-    <title>dig</title>
-    <link href="http://wiki.tankywoo.comtool/dig.html" />
+    <id>http://wiki.tankywoo.comother/efficiency_tools_i_use.html</id>
+    <title>效率工具</title>
+    <link href="http://wiki.tankywoo.comother/efficiency_tools_i_use.html" />
     <published>2013-08-17T07:32:00+08:00</published>
 
     
@@ -872,23 +1161,6 @@
 
     
     <updated>2013-08-17T07:32:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comlinux/io_analysis.html</id>
-    <title>IO Analysis</title>
-    <link href="http://wiki.tankywoo.comlinux/io_analysis.html" />
-    <published>2015-02-05T17:37:00+08:00</published>
-
-    
-    <updated>2015-02-05T17:37:00+08:00</updated>
     
 
     
@@ -933,74 +1205,6 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comother/sphinx.html</id>
-    <title>Sphinx</title>
-    <link href="http://wiki.tankywoo.comother/sphinx.html" />
-    <published>2015-04-19T19:30:00+08:00</published>
-
-    
-    <updated>2015-04-19T19:30:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/docker.html</id>
-    <title>Docker</title>
-    <link href="http://wiki.tankywoo.comtool/docker.html" />
-    <published>2015-11-08T12:34:00+08:00</published>
-
-    
-    <updated>2015-11-08T12:34:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/mysql.html</id>
-    <title>mysql</title>
-    <link href="http://wiki.tankywoo.comtool/mysql.html" />
-    <published>2013-08-17T07:36:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:36:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/netstat.html</id>
-    <title>netstat</title>
-    <link href="http://wiki.tankywoo.comtool/netstat.html" />
-    <published>2013-08-17T07:32:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:32:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
     <id>http://wiki.tankywoo.comtool/tig.html</id>
     <title>tig</title>
     <link href="http://wiki.tankywoo.comtool/tig.html" />
@@ -1035,13 +1239,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/pdsh.html</id>
-    <title>pdsh</title>
-    <link href="http://wiki.tankywoo.comtool/pdsh.html" />
-    <published>2014-04-28T14:57:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/find.html</id>
+    <title>find</title>
+    <link href="http://wiki.tankywoo.comtool/find.html" />
+    <published>2013-08-17T07:32:00+08:00</published>
 
     
-    <updated>2014-04-28T14:57:00+08:00</updated>
+    <updated>2013-08-17T07:32:00+08:00</updated>
     
 
     
@@ -1086,40 +1290,6 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.compython/flask.html</id>
-    <title>Flask Primer</title>
-    <link href="http://wiki.tankywoo.compython/flask.html" />
-    <published>2015-05-28T08:00:00+08:00</published>
-
-    
-    <updated>2015-05-28T08:00:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/host.html</id>
-    <title>host</title>
-    <link href="http://wiki.tankywoo.comtool/host.html" />
-    <published>2013-08-17T07:32:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:32:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
     <id>http://wiki.tankywoo.comtool/markdown.html</id>
     <title>markdown</title>
     <link href="http://wiki.tankywoo.comtool/markdown.html" />
@@ -1154,30 +1324,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.compython/good_resource.html</id>
-    <title>Python Good Resource</title>
-    <link href="http://wiki.tankywoo.compython/good_resource.html" />
-    <published>2015-11-14T15:00:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/curl.html</id>
+    <title>curl</title>
+    <link href="http://wiki.tankywoo.comtool/curl.html" />
+    <published>2013-08-17T07:32:00+08:00</published>
 
     
-    <updated>2015-11-14T15:00:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.compython/pylint.html</id>
-    <title>Pylint</title>
-    <link href="http://wiki.tankywoo.compython/pylint.html" />
-    <published>2014-08-26T09:04:00+08:00</published>
-
-    
-    <updated>2014-08-26T09:04:00+08:00</updated>
+    <updated>2013-08-17T07:32:00+08:00</updated>
     
 
     
@@ -1205,47 +1358,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.combook/version-control-with-git.html</id>
-    <title>Version Control with Git</title>
-    <link href="http://wiki.tankywoo.combook/version-control-with-git.html" />
-    <published>2014-04-28T23:31:00+08:00</published>
-
-    
-    <updated>2014-04-28T23:31:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/route.html</id>
-    <title>route</title>
-    <link href="http://wiki.tankywoo.comtool/route.html" />
+    <id>http://wiki.tankywoo.comtool/top.html</id>
+    <title>top / htop / atop</title>
+    <link href="http://wiki.tankywoo.comtool/top.html" />
     <published>2013-08-17T07:32:00+08:00</published>
 
     
     <updated>2013-08-17T07:32:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/nginx.html</id>
-    <title>Nginx</title>
-    <link href="http://wiki.tankywoo.comtool/nginx.html" />
-    <published>2016-01-07T21:11:00+08:00</published>
-
-    
-    <updated>2016-01-07T21:11:00+08:00</updated>
     
 
     
@@ -1273,47 +1392,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/mail.html</id>
-    <title>Email相关</title>
-    <link href="http://wiki.tankywoo.comtool/mail.html" />
+    <id>http://wiki.tankywoo.comtool/vsftpd.html</id>
+    <title>vsftpd</title>
+    <link href="http://wiki.tankywoo.comtool/vsftpd.html" />
     <published>2013-08-17T07:36:00+08:00</published>
 
     
     <updated>2013-08-17T07:36:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comlinux/linux_tricks.html</id>
-    <title>Linux Tricks</title>
-    <link href="http://wiki.tankywoo.comlinux/linux_tricks.html" />
-    <published>2013-08-17T07:23:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:23:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comlinux/commandline_tips.html</id>
-    <title>CommandLine Tips</title>
-    <link href="http://wiki.tankywoo.comlinux/commandline_tips.html" />
-    <published>2015-02-09T15:00:00+08:00</published>
-
-    
-    <updated>2015-02-09T15:00:00+08:00</updated>
     
 
     
@@ -1341,30 +1426,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/nslookup.html</id>
-    <title>nslookup</title>
-    <link href="http://wiki.tankywoo.comtool/nslookup.html" />
-    <published>2013-08-17T07:32:00+08:00</published>
+    <id>http://wiki.tankywoo.compython/pylint.html</id>
+    <title>Pylint</title>
+    <link href="http://wiki.tankywoo.compython/pylint.html" />
+    <published>2014-08-26T09:04:00+08:00</published>
 
     
-    <updated>2013-08-17T07:32:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/stunnel.html</id>
-    <title>stunnel</title>
-    <link href="http://wiki.tankywoo.comtool/stunnel.html" />
-    <published>2015-08-03T11:00:00+08:00</published>
-
-    
-    <updated>2015-08-03T11:00:00+08:00</updated>
+    <updated>2014-08-26T09:04:00+08:00</updated>
     
 
     
@@ -1375,47 +1443,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comlinux/bash_shortcuts.html</id>
-    <title>Bash Shortcuts</title>
-    <link href="http://wiki.tankywoo.comlinux/bash_shortcuts.html" />
-    <published>2013-08-17T07:23:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/mail.html</id>
+    <title>Email相关</title>
+    <link href="http://wiki.tankywoo.comtool/mail.html" />
+    <published>2013-08-17T07:36:00+08:00</published>
 
     
-    <updated>2013-08-17T07:23:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comlinux/gentoo.html</id>
-    <title>Gentoo</title>
-    <link href="http://wiki.tankywoo.comlinux/gentoo.html" />
-    <published>2014-08-30T16:29:00+08:00</published>
-
-    
-    <updated>2016-02-14T21:53:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/nmap.html</id>
-    <title>nmap</title>
-    <link href="http://wiki.tankywoo.comtool/nmap.html" />
-    <published>2013-08-17T07:32:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:32:00+08:00</updated>
+    <updated>2013-08-17T07:36:00+08:00</updated>
     
 
     
@@ -1433,23 +1467,6 @@
 
     
     <updated>2013-09-06T19:06:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.comtool/ps.html</id>
-    <title>ps</title>
-    <link href="http://wiki.tankywoo.comtool/ps.html" />
-    <published>2013-08-17T07:32:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:32:00+08:00</updated>
     
 
     
