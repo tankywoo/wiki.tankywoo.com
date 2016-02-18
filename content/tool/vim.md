@@ -1,8 +1,10 @@
 ---
 title: "Vim"
 date: 2013-08-17 07:32
+updated: 2016-02-18 11:26
 ---
 
+[TOC]
 
 配置见[dotfiles](https://github.com/tankywoo/dotfiles)
 
@@ -147,6 +149,13 @@ Replace:
 							-u NONE                 no                  no
 							-u NORC                 no                  yes
 							--noplugin              yes                 no
+
+### 删除所有匹配的行 ###
+
+	# 删除所有包含abcd的行
+	:g/abcd/d
+
+参考: [Delete all lines containing a pattern](http://vim.wikia.com/wiki/Delete_all_lines_containing_a_pattern)
 
 参考:
 
