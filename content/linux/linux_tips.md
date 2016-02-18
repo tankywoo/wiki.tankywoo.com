@@ -1,7 +1,7 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-02-18 11:15
+updated: 2016-02-18 11:26
 description: "查漏补缺, Tricks/Tips/Fragments"
 ---
 
@@ -197,3 +197,11 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 
 * [What does idle time output from “w” command tell?](http://askubuntu.com/questions/283337/what-does-idle-time-output-from-w-command-tell)
 * [How to read the “IDLE” column in the output of the Linux 'w' command?](http://serverfault.com/questions/302455/how-to-read-the-idle-column-in-the-output-of-the-linux-w-command)
+
+## awk 显示某些列 ##
+
+比如显示第3列及以后所有列:
+
+	ps aux | grep ngin[x] | awk '{for (i=3; i<=NF; i++) printf $i " "} {print ""}'
+
+参考 [Print all but the first three columns](http://stackoverflow.com/questions/2626274/print-all-but-the-first-three-columns)
