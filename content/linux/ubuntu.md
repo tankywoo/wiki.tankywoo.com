@@ -51,7 +51,7 @@ showpkg也可以, 不过包含的内容更多一些:
 
 ## 问题 ##
 
-## syntax error: unknown group 'ssl-cert' in statoverride file ##
+### syntax error: unknown group 'ssl-cert' in statoverride file ###
 
 安装某个包时遇到这个报错:
 
@@ -86,3 +86,30 @@ showpkg也可以, 不过包含的内容更多一些:
 > override ownership and mode of files
 
 > `stat overrides' are a way to tell dpkg(1) to use a different owner or mode for a path when a package is installed
+
+### The following packages have unmet dependencies ###
+
+	Reading package lists... Done
+	Building dependency tree
+	Reading state information... Done
+	You might want to run 'apt-get -f install' to correct these:
+	The following packages have unmet dependencies:
+	 pack_1 : Depends: pack_2 but it is not going to be installed
+	 E: Unmet dependencies. Try 'apt-get -f install' with no packages (or specify a solution).
+
+之前dpkg安装包pack_1, 依赖pack_2;
+
+未安装pack_2前先安装pack_1则出现这个问题, 不过安装pack_2就可以了.
+
+但是pack_2之前是另外一个名称, 导致改名后的deb安装不了.
+
+尝试:
+
+	apt-get -f install
+	apt-get purge pack_2_origin_name
+
+都不行.
+
+后来发现`dpkg --purge package` 可以删除老的包.
+
+参考: [How To Overwrite Existing Files From A Removed Package in Ubuntu and Debian](http://linuxg.net/how-to-overwrite-existing-files-from-another-package-in-ubuntu-and-debian/)
