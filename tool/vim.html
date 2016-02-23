@@ -26,7 +26,31 @@
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <p>配置见<a href="https://github.com/tankywoo/dotfiles">dotfiles</a></p>
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">快捷键</a><ul>
+<li><a href="#movement">Movement</a></li>
+<li><a href="#search">Search</a></li>
+<li><a href="#deletion">Deletion</a></li>
+<li><a href="#yank-put">Yank &amp; Put</a></li>
+<li><a href="#insert-mode">Insert Mode</a></li>
+<li><a href="#visual-mode">Visual Mode</a></li>
+<li><a href="#other">Other</a></li>
+<li><a href="#read-more">Read More</a></li>
+</ul>
+</li>
+<li><a href="#_2">技巧</a><ul>
+<li><a href="#shell">shell多行注释</a></li>
+<li><a href="#_3">自动补全</a></li>
+<li><a href="#help">左右分割打开help文档</a></li>
+<li><a href="#_4">逐个替换</a></li>
+<li><a href="#searchreplace">关于 search/replace 中的换行符</a></li>
+<li><a href="#vimrcplugin">关于.vimrc和plugin的加载</a></li>
+<li><a href="#_5">删除所有匹配的行</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>配置见<a href="https://github.com/tankywoo/dotfiles">dotfiles</a></p>
 <h2 id="_1">快捷键</h2>
 <h3 id="movement">Movement</h3>
 <ul>
@@ -160,6 +184,13 @@
 </pre></div>
 
 
+<h3 id="_5">删除所有匹配的行</h3>
+<div class="hlcode"><pre><span class="cp"># 删除所有包含abcd的行</span>
+<span class="o">:</span><span class="n">g</span><span class="o">/</span><span class="n">abcd</span><span class="o">/</span><span class="n">d</span>
+</pre></div>
+
+
+<p>参考: <a href="http://vim.wikia.com/wiki/Delete_all_lines_containing_a_pattern">Delete all lines containing a pattern</a></p>
 <p>参考:</p>
 <ul>
 <li>[How to replace a character for a newline in Vim?] (http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim)</li>
@@ -177,7 +208,7 @@
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
               <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
-              <p>Last Update 2016-02-15 13:30:02</p>
+              <p>Last Update 2016-02-23 10:44:59</p>
               <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">

@@ -7,7 +7,7 @@
   <title>Wiki · Tanky Woo</title>
   <link href="http://wiki.tankywoo.com/" />
   <link href="http://wiki.tankywoo.com/atom.xml" rel="self" type="application/atom+xml" />
-  <updated>2016-02-15T13:30:02+08:00</updated>
+  <updated>2016-02-23T10:44:59+08:00</updated>
   <id>http://wiki.tankywoo.com</id>
   <author>
     <name>Tanky Woo</name>
@@ -49,13 +49,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comlinux/suid-sgit-sticky.html</id>
-    <title>SUID / SGID / Sticky Bit</title>
-    <link href="http://wiki.tankywoo.comlinux/suid-sgit-sticky.html" />
-    <published>2015-11-03T20:36:00+08:00</published>
+    <id>http://wiki.tankywoo.compython/coverage.html</id>
+    <title>coverage</title>
+    <link href="http://wiki.tankywoo.compython/coverage.html" />
+    <published>2014-06-14T15:00:00+08:00</published>
 
     
-    <updated>2015-11-03T20:36:00+08:00</updated>
+    <updated>2014-06-14T15:00:00+08:00</updated>
     
 
     
@@ -270,9 +270,9 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/route.html</id>
-    <title>route</title>
-    <link href="http://wiki.tankywoo.comtool/route.html" />
+    <id>http://wiki.tankywoo.comtool/top.html</id>
+    <title>top / htop / atop</title>
+    <link href="http://wiki.tankywoo.comtool/top.html" />
     <published>2013-08-17T07:32:00+08:00</published>
 
     
@@ -321,13 +321,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comother/kindle.html</id>
-    <title>Kindle</title>
-    <link href="http://wiki.tankywoo.comother/kindle.html" />
-    <published>2016-02-04T15:00:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/rsyslog.html</id>
+    <title>rsyslog</title>
+    <link href="http://wiki.tankywoo.comtool/rsyslog.html" />
+    <published>2013-08-22T23:48:00+08:00</published>
 
     
-    <updated>2016-02-04T15:00:00+08:00</updated>
+    <updated>2016-02-14T18:20:00+08:00</updated>
     
 
     
@@ -355,13 +355,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.compython/coverage.html</id>
-    <title>coverage</title>
-    <link href="http://wiki.tankywoo.compython/coverage.html" />
-    <published>2014-06-14T15:00:00+08:00</published>
+    <id>http://wiki.tankywoo.comlinux/suid-sgit-sticky.html</id>
+    <title>SUID / SGID / Sticky Bit</title>
+    <link href="http://wiki.tankywoo.comlinux/suid-sgit-sticky.html" />
+    <published>2015-11-03T20:36:00+08:00</published>
 
     
-    <updated>2014-06-14T15:00:00+08:00</updated>
+    <updated>2015-11-03T20:36:00+08:00</updated>
     
 
     
@@ -627,23 +627,6 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comlinux/linux_tricks.html</id>
-    <title>Linux Tricks</title>
-    <link href="http://wiki.tankywoo.comlinux/linux_tricks.html" />
-    <published>2013-08-17T07:23:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:23:00+08:00</updated>
-    
-
-    
-
-    
-    
-  </entry>
-  
-    
-  <entry>
     <id>http://wiki.tankywoo.comtool/inotify.html</id>
     <title>inotify</title>
     <link href="http://wiki.tankywoo.comtool/inotify.html" />
@@ -848,13 +831,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/rrdtool.html</id>
-    <title>rrdtool</title>
-    <link href="http://wiki.tankywoo.comtool/rrdtool.html" />
-    <published>2013-08-17T07:36:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/tcpcopy.html</id>
+    <title>TCPCopy</title>
+    <link href="http://wiki.tankywoo.comtool/tcpcopy.html" />
+    <published>2015-05-05T11:10:00+08:00</published>
 
     
-    <updated>2013-08-17T07:36:00+08:00</updated>
+    <updated>2015-05-05T11:10:00+08:00</updated>
     
 
     
@@ -984,13 +967,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/rsyslog.html</id>
-    <title>rsyslog</title>
-    <link href="http://wiki.tankywoo.comtool/rsyslog.html" />
-    <published>2013-08-22T23:48:00+08:00</published>
+    <id>http://wiki.tankywoo.comother/kindle.html</id>
+    <title>Kindle</title>
+    <link href="http://wiki.tankywoo.comother/kindle.html" />
+    <published>2016-02-04T15:00:00+08:00</published>
 
     
-    <updated>2016-02-14T18:20:00+08:00</updated>
+    <updated>2016-02-04T15:00:00+08:00</updated>
     
 
     
@@ -1007,7 +990,7 @@
     <published>2013-08-17T07:32:00+08:00</published>
 
     
-    <updated>2013-08-17T07:32:00+08:00</updated>
+    <updated>2016-02-18T11:26:00+08:00</updated>
     
 
     
@@ -1035,13 +1018,13 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/tcpcopy.html</id>
-    <title>TCPCopy</title>
-    <link href="http://wiki.tankywoo.comtool/tcpcopy.html" />
-    <published>2015-05-05T11:10:00+08:00</published>
+    <id>http://wiki.tankywoo.comtool/rrdtool.html</id>
+    <title>rrdtool</title>
+    <link href="http://wiki.tankywoo.comtool/rrdtool.html" />
+    <published>2013-08-17T07:36:00+08:00</published>
 
     
-    <updated>2015-05-05T11:10:00+08:00</updated>
+    <updated>2013-08-17T07:36:00+08:00</updated>
     
 
     
@@ -1290,6 +1273,23 @@
   
     
   <entry>
+    <id>http://wiki.tankywoo.combook/regular-expressions-in-10-minutes.html</id>
+    <title>正则表达式必知必会</title>
+    <link href="http://wiki.tankywoo.combook/regular-expressions-in-10-minutes.html" />
+    <published>2016-02-22T11:00:00+08:00</published>
+
+    
+    <updated>2016-02-22T11:00:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
     <id>http://wiki.tankywoo.comtool/markdown.html</id>
     <title>markdown</title>
     <link href="http://wiki.tankywoo.comtool/markdown.html" />
@@ -1358,9 +1358,9 @@
   
     
   <entry>
-    <id>http://wiki.tankywoo.comtool/top.html</id>
-    <title>top / htop / atop</title>
-    <link href="http://wiki.tankywoo.comtool/top.html" />
+    <id>http://wiki.tankywoo.comtool/route.html</id>
+    <title>route</title>
+    <link href="http://wiki.tankywoo.comtool/route.html" />
     <published>2013-08-17T07:32:00+08:00</published>
 
     
@@ -1450,6 +1450,23 @@
 
     
     <updated>2013-08-17T07:36:00+08:00</updated>
+    
+
+    
+
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.comlinux/linux_tips.html</id>
+    <title>Linux Tips</title>
+    <link href="http://wiki.tankywoo.comlinux/linux_tips.html" />
+    <published>2013-08-17T07:23:00+08:00</published>
+
+    
+    <updated>2016-02-18T11:26:00+08:00</updated>
     
 
     
