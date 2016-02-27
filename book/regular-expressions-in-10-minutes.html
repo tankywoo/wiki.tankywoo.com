@@ -27,23 +27,34 @@
     <div class="clearfix"></div>
     <div id="content">
         <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#1">第1章 入门</a></li>
 <li><a href="#2">第2章 匹配单个字符</a></li>
 <li><a href="#3">第3章 匹配一组字符</a></li>
 <li><a href="#4">第4章 使用元字符</a></li>
 <li><a href="#5">第5章 重复匹配</a></li>
+<li><a href="#6">第6章 位置匹配</a></li>
+<li><a href="#7">第7章 子表达式</a></li>
+<li><a href="#8">第8章 回溯引用：前后一致匹配</a></li>
+<li><a href="#9">第9章 前后查找</a></li>
+<li><a href="#10">第10章 嵌入条件</a></li>
+<li><a href="#_1">小结</a></li>
 </ul>
 </div>
-<h2 id="1">第1章 入门</h2>
-<blockquote>
+<p>注:</p>
+<ol>
+<li>使用 <code>grep -P</code> 作为regex解释器</li>
+<li>部分地方使用 <code>-o</code> 选项只输出匹配部分</li>
+<li>部分地方使用 <code>[]</code> 表明里面的内容是匹配的部分</li>
+</ol>
 <p>正则表达式的两种基本用途:「搜索」和「替换」。</p>
-<p>在使用正则表达式的时候, 你将发现几乎所有的问题都有不止一 种解决方案。它们有的比较简单, 有的比较快速, 有的兼容性更好,有的功能更全。这么说吧, 在编写正则表达式的时候, 只有「对」、「错」两种选择的情况是相当少见的 —— 同一个问题往往会有多种解决方案。</p>
-</blockquote>
+<p>第1章 略</p>
 <h2 id="2">第2章 匹配单个字符</h2>
 <p>最简单的是匹配纯文本。</p>
 <p>全局搜索: 针对有多个匹配结果, 大多数正则表达式引擎的默认行为是只返回第1个匹配结果。不过很多实现都提供了能够把所有的匹配结果全部找出来的机制。常见的元字符是 <code>g</code> (表示global)</p>
 <p>大小写问题: 正则表达式是区分字母大小写的, 大多数正则表达的式实现也支持不区分字母大小写的匹配操作。常见的远字符是 <code>i</code> (表示ignore)</p>
-<p>匹配任意单个字符: <code>.</code> 。</p>
+<p>匹配任意单个字符(除了newline字符, 除非设置了DOTALL模式): <code>.</code> 。</p>
+<blockquote>
+<p><code>s (PCRE_DOTALL)</code> If this modifier is set, a dot metacharacter in the pattern matches all characters, including newlines. Without it, newlines are excluded.</p>
+</blockquote>
 <p>转义特殊字符: <code>\</code> 。比如上面的 <code>.</code> , 如果要把这个当成普通字符匹配, 则需要写为 <code>\.</code> ; 同理, 因为 <code>\</code> 是做转义用的特殊字符, 要匹配其本身, 则需要写为 <code>\\</code> 。后续的一些元字符, 如果要匹配其自身, 都需要转义。</p>
 <p>正则表达式经常被简称为模式, 它们其实是一些由字符构成的字符串。这些字符可以是 普通字符(纯文本) 或 元字符(有特殊含义的特殊字符)。</p>
 <h2 id="3">第3章 匹配一组字符</h2>
@@ -72,33 +83,99 @@
 <p>注意 ^ 的效果将作用于给定字符集合里的所有字符或字符区间, 而不是仅限于紧跟在 ^ 字符后面的那一个字符或字符区间。</p>
 <h2 id="4">第4章 使用元字符</h2>
 <p>元字符大致可以分为两种: 一种是用来匹配文本的(比如 <code>.</code>), 另一种是正则表达式的语法所要求的(比如 <code>[</code> 和 <code>]</code>)。</p>
-<p>匹配空白字符:</p>
-<ul>
-<li><code>\n</code> 换行符</li>
-<li><code>\r</code> 回车符</li>
-<li><code>\t</code> 制表符(Tab键)</li>
-<li><code>\f</code> 换页符</li>
-<li><code>\v</code> 垂直制表符</li>
-<li><code>[\b]</code> 回退(并删除)一个字符(Backspace键)</li>
-</ul>
-<p>\r\n匹配一个“回车+换行”组合,有许多操作系统(比如Windows) 都把这个组合用作文本行的结束标签。</p>
-<p>\r\n是Windows所使用的文本行结束标签。Unix和Linux 系统只使用一个换行符来结束一个文本行;换句话说,在 Unix/Linux系统上匹配空白行只使用\n\n即可,不需要加上\r。 同时适用于Windows和Unix/Linux系统的正则表达式应该包含 一个可选的\r和一个必须被匹配的\n。</p>
+<p>匹配空白元字符:</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\n</code></td>
+<td>换行符</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>回车符</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>制表符(Tab键)</td>
+</tr>
+<tr>
+<td><code>\f</code></td>
+<td>换页符</td>
+</tr>
+<tr>
+<td><code>\v</code></td>
+<td>垂直制表符</td>
+</tr>
+<tr>
+<td><code>[\b]</code></td>
+<td>回退(并删除)一个字符(Backspace键)</td>
+</tr>
+</tbody>
+</table>
+<p><code>\r\n</code> 匹配一个 「回车+换行」组合,有许多操作系统(比如Windows) 都把这个组合用作文本行的结束标签。Unix和Linux 系统只使用一个换行符 <code>\n</code> 来结束一个文本行;</p>
+<p>即在 Unix/Linux系统上匹配空白行只使用 <code>\n\n</code> 即可,不需要加上 <code>\r</code>。 同时适用于Windows和Unix/Linux系统的正则表达式应该包含一个可选的 <code>\r</code> 和一个必须被匹配的 <code>\n</code>。</p>
 <p>字符集合(匹配多个字符中的某一个)是最常见的匹配形式, 而一些常用的字符集合可以用特殊元字符来代替:</p>
-<ul>
-<li><code>\d</code> 任何一个数字字符 (等价于 <code>[0-9]</code>)</li>
-<li><code>\D</code> 任何一个非数字字符 (等价于 <code>[^0-9]</code>)</li>
-<li><code>\w</code> 任何一个字母数字字符(大小写均可)或下划线字符 (等价于 <code>[a-zA-Z0-9_]</code>)</li>
-<li><code>\W</code> 任何一个非字母数字或非下划线字符 (等价于 <code>[^a-zA-Z0-9_]</code>)</li>
-<li><code>\s</code> 任何一个空白字符 (等价于 <code>[\f\n\r\t\v]</code>)</li>
-<li><code>\S</code> 任何一个非空白字符(等价于 <code>[^\f\n\r\t\v]</code>)</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\d</code></td>
+<td>任何一个数字字符 (等价于 <code>[0-9]</code>)</td>
+</tr>
+<tr>
+<td><code>\D</code></td>
+<td>任何一个非数字字符 (等价于 <code>[^0-9]</code>)</td>
+</tr>
+<tr>
+<td><code>\w</code></td>
+<td>任何一个字母数字字符(大小写均可)或下划线字符 (等价于 <code>[a-zA-Z0-9_]</code>)</td>
+</tr>
+<tr>
+<td><code>\W</code></td>
+<td>任何一个非字母数字或非下划线字符 (等价于 <code>[^a-zA-Z0-9_]</code>)</td>
+</tr>
+<tr>
+<td><code>\s</code></td>
+<td>任何一个空白字符 (等价于 <code>[\f\n\r\t\v]</code>)</td>
+</tr>
+<tr>
+<td><code>\S</code></td>
+<td>任何一个非空白字符(等价于 <code>[^\f\n\r\t\v]</code>)</td>
+</tr>
+</tbody>
+</table>
 <p>注意 用来匹配退格字符的 <code>[\b]</code> 元字符是一个特例: 它不在类元字符 <code>\s</code> 的覆盖范围内。</p>
 <p>关于<code>-w</code>, 是一种比较常用的字符集合, 这些字符常见于各种名字里,如文件名、子目录名、变量名、数据库对象名等。</p>
 <p>进制匹配:</p>
-<ul>
-<li><code>\x</code> 匹配十六进制。如 <code>\x0A</code> 等价于 <code>\n</code></li>
-<li><code>\0</code> 匹配八进制。如 <code>\011</code> 等价于 <code>\t</code></li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\x</code></td>
+<td>匹配十六进制。如 <code>\x0A</code> 等价于 <code>\n</code></td>
+</tr>
+<tr>
+<td><code>\0</code></td>
+<td>匹配八进制。如 <code>\011</code> 等价于 <code>\t</code></td>
+</tr>
+</tbody>
+</table>
 <p>POSIX字符类是许多正则表达式实现都支持的一种简写形式:</p>
 <table>
 <thead>
@@ -109,51 +186,51 @@
 </thead>
 <tbody>
 <tr>
-<td>[:alnum:]</td>
+<td><code>[:alnum:]</code></td>
 <td>任何一个字母或数字 (等价于[a-zA-Z0-9])</td>
 </tr>
 <tr>
-<td>[:alpha:]</td>
+<td><code>[:alpha:]</code></td>
 <td>任何一个字母 (等价于[a-zA-Z])</td>
 </tr>
 <tr>
-<td>[:blank:]</td>
+<td><code>[:blank:]</code></td>
 <td>空格或制表符 (等价于[\t])</td>
 </tr>
 <tr>
-<td>[:cntrl:]</td>
+<td><code>[:cntrl:]</code></td>
 <td>ASCII控制字符 (ASCII 0到31，再加上ASCII 127)</td>
 </tr>
 <tr>
-<td>[:digit:]</td>
+<td><code>[:digit:]</code></td>
 <td>任何一个数字 (等价于[0-9])</td>
 </tr>
 <tr>
-<td>[:graph:]</td>
+<td><code>[:graph:]</code></td>
 <td>和[:print:]一样，但不包括空格</td>
 </tr>
 <tr>
-<td>[:lower:]</td>
+<td><code>[:lower:]</code></td>
 <td>任何一个小写字母 (等价于[a-z])</td>
 </tr>
 <tr>
-<td>[:print:]</td>
+<td><code>[:print:]</code></td>
 <td>任何一个可打印字符</td>
 </tr>
 <tr>
-<td>[:punct:]</td>
+<td><code>[:punct:]</code></td>
 <td>既不属于[:alnum:]也不属于[:cntrl:]的任何一个字符</td>
 </tr>
 <tr>
-<td>[:space:]</td>
+<td><code>[:space:]</code></td>
 <td>任何一个空白字符，包括空格 (等价于[^\f\n\r\t\v])</td>
 </tr>
 <tr>
-<td>[:upper:]</td>
+<td><code>[:upper:]</code></td>
 <td>任何一个大写字母 (等价于[A-Z])</td>
 </tr>
 <tr>
-<td>[:xdigit:]</td>
+<td><code>[:xdigit:]</code></td>
 <td>任何一个十六进制数字 (等价于[a-fA-F0-9])</td>
 </tr>
 </tbody>
@@ -165,14 +242,41 @@
 
 <p>注意 这里使用的模式以 <code>[[</code> 开头、以 <code>]]</code> 结束 (两对方括号)。 这是使用POSIX字符类所必须的。POSIX字符类必须括在 <code>[:</code> 和 <code>:]</code> 之间,我们使用的POSIX字符类是 <code>[:xdigit:]</code>(不是<code>:xdigit:</code>)。外层的 <code>[</code> 和 <code>]</code> 字符用来定义一个字符集合, 内层的 <code>[</code> 和 <code>]</code> 字符是POSIX字符类本身的组成部分。</p>
 <h2 id="5">第5章 重复匹配</h2>
-<ul>
-<li><code>+</code> 匹配一个或多个</li>
-<li><code>*</code> 匹配零个或多个</li>
-<li><code>?</code> 匹配零个或一个</li>
-<li><code>{N}</code> 指定具体的重复匹配次数, 如 {3} 表示匹配3次</li>
-<li><code>{M, N}</code> 指定重复匹配次数的区间, 如 {3, 5} 表示最少重复3次, 最多重复5次</li>
-<li><code>{M, }</code> 指定最少重复多少次, 如 {3, } 表示重复3次或更多</li>
-</ul>
+<p>针对重复次数的匹配元字符:</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>+</code></td>
+<td>匹配一个或多个</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>匹配零个或多个</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>匹配零个或一个</td>
+</tr>
+<tr>
+<td><code>{N}</code></td>
+<td 3="3">指定具体的重复匹配次数, 如 </td>
+</tr>
+<tr>
+<td><code>{M, N}</code></td>
+<td 3_="3," 5="5">指定重复匹配次数的区间, 如 </td>
+</tr>
+<tr>
+<td><code>{M, }</code></td>
+<td 3_="3,">指定最少重复多少次, 如 </td>
+</tr>
+</tbody>
+</table>
 <p>如:</p>
 <div class="hlcode"><pre><span class="n">a</span><span class="o">+</span>  <span class="err">#</span> <span class="err">匹配一个或多个连续的</span><span class="n">a</span>
 <span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+</span>  <span class="err">#</span> <span class="err">匹配一个或多个连续的数字</span>
@@ -180,17 +284,17 @@
 
 
 <p>注意 <code>+</code>等元字, 如果在集合中, 则表示普通字符。</p>
-<p>另外，<code>?</code>, <code>+</code>, <code>*</code>, <code>{m, n}</code> 都是「贪婪匹配 (greedy match)」的元字符，也就是他们会尽可能多的去匹配。如:</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">txt</span>
+<p>另外，<code>?</code>, <code>+</code>, <code>*</code>, <code>{m, n}</code> 都是「<code>贪婪匹配</code> (greedy match)」的元字符，也就是他们会尽可能多的去匹配。如:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
 <span class="o">---</span><span class="n">text</span> <span class="n">block</span> <span class="mi">1</span><span class="o">---</span><span class="n">text</span> <span class="n">block</span> <span class="mi">2</span><span class="o">---</span><span class="n">end</span>
 
-<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">o</span> <span class="o">--</span> <span class="err">&#39;</span><span class="o">---</span><span class="p">.</span><span class="o">*---</span><span class="err">&#39;</span> <span class="n">txt</span>
+<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">o</span> <span class="o">--</span> <span class="err">&#39;</span><span class="o">---</span><span class="p">.</span><span class="o">*---</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
 <span class="o">---</span><span class="n">text</span> <span class="n">block</span> <span class="mi">1</span><span class="o">---</span><span class="n">text</span> <span class="n">block</span> <span class="mi">2</span><span class="o">---</span>
 </pre></div>
 
 
-<p>某些情况需要尽可能的少的匹配, 即匹配第一次符合的就停止继续匹配, 也就是「懒惰匹配 (non-greedy match 或 lazy match)」, 只需要在贪婪的元字符后面加上 <code>?</code> 后缀:</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">o</span> <span class="o">--</span> <span class="err">&#39;</span><span class="o">---</span><span class="p">.</span><span class="o">*?---</span><span class="err">&#39;</span> <span class="n">txt</span>
+<p>某些情况需要尽可能的少的匹配, 即匹配第一次符合的就停止继续匹配, 也就是「<code>懒惰匹配</code> (non-greedy match 或 lazy match)」, 只需要在贪婪的元字符后面加上 <code>?</code> 后缀:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">o</span> <span class="o">--</span> <span class="err">&#39;</span><span class="o">---</span><span class="p">.</span><span class="o">*?---</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
 <span class="o">---</span><span class="n">text</span> <span class="n">block</span> <span class="mi">1</span><span class="o">---</span>
 </pre></div>
 
@@ -200,15 +304,15 @@
 <p>另外, <code>grep -G</code>, <code>grep -E</code> 都不支持懒惰匹配, 所以使用了Perl型的解析: <code>grep -P</code>。</p>
 <p>最后, <code>grep -o</code> 只打印出匹配的内容, 这么看就比较直观了。</p>
 <p>再比如:</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">txt</span>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
 <span class="o">---</span><span class="n">abcdefg</span><span class="o">---</span><span class="mi">1234567</span><span class="o">---</span><span class="n">xxxxxxx</span>
 
-<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">o</span> <span class="o">--</span> <span class="err">&#39;</span><span class="o">---</span><span class="p">.{</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span><span class="err">&#39;</span> <span class="n">txt</span>
+<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">o</span> <span class="o">--</span> <span class="err">&#39;</span><span class="o">---</span><span class="p">.{</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
 <span class="o">---</span><span class="n">abcde</span>
 <span class="o">---</span><span class="mi">12345</span>
 <span class="o">---</span><span class="n">xxxxx</span>
 
-<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">o</span> <span class="o">--</span> <span class="err">&#39;</span><span class="o">---</span><span class="p">.{</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span><span class="o">?</span><span class="err">&#39;</span> <span class="n">txt</span>
+<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">o</span> <span class="o">--</span> <span class="err">&#39;</span><span class="o">---</span><span class="p">.{</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">}</span><span class="o">?</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
 <span class="o">---</span><span class="n">abc</span>
 <span class="o">---</span><span class="mi">123</span>
 <span class="o">---</span><span class="n">xxx</span>
@@ -216,6 +320,328 @@
 
 
 <p>在 <a href="http://code.tankywoo.com/UVMgMQ77/">正则匹配YAML Front Matter</a> 里也提到了懒惰匹配。</p>
+<h2 id="6">第6章 位置匹配</h2>
+<p>匹配位置的元字符:</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\b</code></td>
+<td>匹配一个单词的开始或结尾</td>
+</tr>
+<tr>
+<td><code>\B</code></td>
+<td>匹配不是一个单词的边界</td>
+</tr>
+<tr>
+<td><code>^</code></td>
+<td>匹配一个(行)字符串的开头</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>匹配一个(行)字符串的结尾</td>
+</tr>
+<tr>
+<td><code>\A</code></td>
+<td>匹配一个字符串的开头。忽略multiple mode</td>
+</tr>
+<tr>
+<td><code>\Z</code></td>
+<td>匹配一个字符串的结尾。忽略multiple mode</td>
+</tr>
+</tbody>
+</table>
+<p>注意: <code>\A</code> 和 <code>\Z</code> 的作用基本等价于 <code>^</code> 和<code>$</code>, 但是不会因为加上了<code>(?m)</code> 前缀而改变行为。即在跨行匹配模式下使用 <code>\A</code> 和<code>\Z</code> 的做法不会收到在分行匹配模式下使用 <code>^</code> 和 <code>$</code> 的效果。</p>
+<p><code>\b</code> 用来匹配一个单词的开始或结尾:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span>  <span class="o">--</span> <span class="err">&#39;</span><span class="n">cat</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">The</span> <span class="p">[</span><span class="n">cat</span><span class="p">]</span> <span class="n">s</span><span class="p">[</span><span class="n">cat</span><span class="p">]</span><span class="n">tered</span> <span class="n">his</span> <span class="n">food</span> <span class="n">all</span> <span class="n">over</span> <span class="n">the</span> <span class="n">room</span>
+
+<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span>  <span class="o">--</span> <span class="err">&#39;\</span><span class="n">bcat</span><span class="err">\</span><span class="n">b</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">The</span> <span class="p">[</span><span class="n">cat</span><span class="p">]</span> <span class="n">scattered</span> <span class="n">his</span> <span class="n">food</span> <span class="n">all</span> <span class="n">over</span> <span class="n">the</span> <span class="n">room</span>
+</pre></div>
+
+
+<p>如上:</p>
+<ul>
+<li>要匹配整个单词, 前后都需要加上 <code>\b</code></li>
+<li>要匹配以某个字符串开头, 则前面加上 <code>\b</code></li>
+<li>要匹配以某个字符串结尾, 则最后加上 <code>\b</code></li>
+</ul>
+<p><code>\B</code> 和 <code>\b</code> 相反, 用于匹配不是一个单词的边界:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span>  <span class="o">--</span> <span class="err">&#39;\</span><span class="n">Bcat</span><span class="err">\</span><span class="n">B</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">The</span> <span class="n">cat</span> <span class="n">s</span><span class="p">[</span><span class="n">cat</span><span class="p">]</span><span class="n">tered</span> <span class="n">his</span> <span class="n">food</span> <span class="n">all</span> <span class="n">over</span> <span class="n">the</span> <span class="n">room</span><span class="p">.</span>
+</pre></div>
+
+
+<p>上面是针对单词的, 下面这两个是针对一行字符串的, 经常用到:</p>
+<ul>
+<li><code>^</code> 用来匹配一个(行)字符串的开头</li>
+<li><code>$</code> 用来匹配一个(行)字符串的结尾</li>
+</ul>
+<p>注意: 之前提到, <code>^</code> 出现在一个字符集合里(被放在[和]之间)并紧跟在左方括号[的后面时, 是表示「求非」的意思。</p>
+<p>针对下面这个例子, 要匹配以<code>&lt;?xml xxx ?&gt;</code>开始的xml配置(前面可以有空格、空行):</p>
+<div class="hlcode"><pre><span class="o">&lt;?</span><span class="nt">xml</span> <span class="nt">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span> <span class="nt">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span> <span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="nt">wsdl</span><span class="nd">:definitions</span> <span class="nt">targetNamespace</span><span class="o">=</span><span class="s2">&quot;http://tips.cf&quot;</span>
+<span class="nt">xmlns</span><span class="nd">:impl</span><span class="o">=</span><span class="s2">&quot;http://tips.cf&quot;</span> <span class="nt">xmlns</span><span class="nd">:intf</span><span class="o">=</span><span class="s2">&quot;http://tips.cf&quot;</span>
+<span class="nt">xmlns</span><span class="nd">:apachesoap</span><span class="o">=</span><span class="s2">&quot;http://xml.apache.org/xml-soap&quot;</span>
+</pre></div>
+
+
+<p>正则 <code>^\s*&lt;\?xml.*\?&gt;</code> 可以匹配, <code>^\s*</code> 将匹配一个字符串的开头位置和随后的零个或多个空白字符(这解决了&lt;?xml&gt;标签前允许有空格、制表符、换行符等空白字符的问题)</p>
+<p>但是如果开头还有其它字符, 则匹配失败, 如:</p>
+<div class="hlcode"><pre><span class="nt">This</span> <span class="nt">is</span> <span class="nt">bad</span><span class="o">,</span> <span class="nt">real</span> <span class="nt">bad</span><span class="o">!</span>
+<span class="o">&lt;?</span><span class="nt">xml</span> <span class="nt">version</span><span class="o">=</span><span class="s2">&quot;1.0&quot;</span> <span class="nt">encoding</span><span class="o">=</span><span class="s2">&quot;UTF-8&quot;</span> <span class="o">?&gt;</span>
+<span class="o">&lt;</span><span class="nt">wsdl</span><span class="nd">:definitions</span> <span class="nt">targetNamespace</span><span class="o">=</span><span class="s2">&quot;http://tips.cf&quot;</span>
+<span class="nt">xmlns</span><span class="nd">:impl</span><span class="o">=</span><span class="s2">&quot;http://tips.cf&quot;</span> <span class="nt">xmlns</span><span class="nd">:intf</span><span class="o">=</span><span class="s2">&quot;http://tips.cf&quot;</span>
+<span class="nt">xmlns</span><span class="nd">:apachesoap</span><span class="o">=</span><span class="s2">&quot;http://xml.apache.org/xml-soap&quot;</span>
+</pre></div>
+
+
+<p>(<code>grep</code> 是针对行匹配的, 所以这块就算开头(上一行)有其它字符, 则可以匹配上; 不过, 使用<code>\A</code> 替代 <code>^</code> 可以解决这个问题, 参考我在StackOverflow上的<a href="http://stackoverflow.com/questions/35582983/linux-grep-how-to-treat-all-lines-as-a-big-line-for-regex">提问</a>)</p>
+<p>多行模式(multiple mode): <code>(?m)</code>, 使得正则表达式引擎把行分隔符当做一个字符串分隔符来对待。否则上面的<code>^</code>和<code>$</code>会把整段来匹配。</p>
+<p>在 <a href="http://code.tankywoo.com/UVMgMQ77/">正则匹配YAML Front Matter</a> 里也提到了多行模式。</p>
+<p>下面这个例子:</p>
+<div class="hlcode"><pre><span class="nt">&lt;SCRIPT&gt;</span>
+function doSpellCheck(form, field) {
+   // Make sure not empty
+   if (field.value == ‘’) {
+      return false;
+   }
+   // Init
+  var windowName=&#39;spellWindow&#39;;
+  var spellCheckURL=&#39;spell.cfm?formname=comment<span class="ni">&amp;fieldname=&#39;+field.name;</span>
+...
+    // Done
+    return false;
+}
+<span class="nt">&lt;/SCRIPT&gt;</span>
+</pre></div>
+
+
+<p>正则 <code>(?m)^\s*//.*$</code> 用来匹配注释行。</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">P</span> <span class="o">-</span><span class="n">o</span> <span class="o">--</span> <span class="err">&#39;</span><span class="p">(</span><span class="o">?</span><span class="n">m</span><span class="p">)</span><span class="o">^</span><span class="err">\</span><span class="n">s</span><span class="err">*/</span><span class="o">/</span><span class="p">.</span><span class="o">*</span><span class="err">$&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+   <span class="c1">// Make sure not empty</span>
+   <span class="c1">// Init</span>
+        <span class="c1">// Done</span>
+</pre></div>
+
+
+<h2 id="7">第7章 子表达式</h2>
+<p>子表达式是一个更大的表达式的一部分; 把一个表达式划分为一系列子表达式的目的是为了把那些子表达式当作一个独立元素来使用。子表达式必须用 <code>(</code> 和 <code>)</code> 括起来。</p>
+<p>比如html中的<code>&amp;nbsp;</code> (non-breaking space), 如果要匹配多个它, 则需要用子表达式括起来, 否则相当于匹配最后的分号:</p>
+<div class="hlcode"><pre><span class="p">(</span><span class="o">&amp;</span><span class="n">nbsp</span><span class="p">;){</span><span class="mi">2</span><span class="p">,}</span>
+</pre></div>
+
+
+<p>为了提高可读性, 有不少人喜欢给表达式的每一个子表达式都加上括号。这种方式没什么问题, 也基本影响不到性能, 主要看习惯和规范了。</p>
+<p>另外, 比如匹配几个数字中的某一个, 使用 <code>|</code> 做或判断, 就需要作为子表达式, 否则和前后混在一起很容易导致错误, 如匹配19XX年或20XX年</p>
+<div class="hlcode"><pre><span class="p">(</span><span class="mi">19</span><span class="o">|</span><span class="mi">20</span><span class="p">)</span><span class="err">\</span><span class="n">d</span><span class="p">{</span><span class="mi">2</span><span class="p">}</span>
+</pre></div>
+
+
+<p>子表达式允许嵌套。事实上, 子表达式允许多重嵌套, 这种嵌套的层次在理论上没有限制, 但在实际工作中还是应该遵循适可而止的原则。</p>
+<p>多重嵌套的子表达式可以构造出功能极其强大的正则表达式来, 但那难免会让模式变得难以阅读和理解, 而这也正是很多人觉得正则表达式难以学习和掌握的原因之一。这种表面现象掩盖了这样一个事实: 绝大多数嵌套子表达式都没有它们看上去那么复杂。</p>
+<h2 id="8">第8章 回溯引用：前后一致匹配</h2>
+<p>子表达式的另一个重要用途——定义回溯引用(backreference)。</p>
+<p>回溯引用指的是模式的后半部分引用在前半部分中定义的子表达式。</p>
+<p><code>\1</code> 代表着模式里的第1个子表达式, <code>\2</code> 代表着第2个子表达式, <code>\3</code> 代表着第3个, 依次类推。</p>
+<p>比如下面这个是匹配html中的<code>&lt;h1&gt;...&lt;/h1&gt; ~ &lt;h6&gt;...&lt;/h6&gt;</code> 标签, 其中 <code>([1-6])</code> 就是为了回溯引用, 而括起来的子表达式:</p>
+<div class="hlcode"><pre><span class="err">&lt;</span><span class="cp">[</span><span class="nx">hH</span><span class="cp">]</span>(<span class="cp">[</span><span class="mi">1</span><span class="o">-</span><span class="mi">6</span><span class="cp">]</span>)&gt;.*?<span class="err">&lt;</span>/<span class="cp">[</span><span class="nx">hH</span><span class="cp">]</span>\1&gt;
+</pre></div>
+
+
+<p>和本章关系不大的, 用来进行大小写转换的元字符:</p>
+<table>
+<thead>
+<tr>
+<th>元字符</th>
+<th>说 明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\E</code></td>
+<td>结束\L或\U转换</td>
+</tr>
+<tr>
+<td><code>\l</code></td>
+<td>把下一个字符转换为小写</td>
+</tr>
+<tr>
+<td><code>\L</code></td>
+<td>把\L到\E之间的字符全部转换为小写</td>
+</tr>
+<tr>
+<td><code>\u</code></td>
+<td>把下一个字符转换为大写</td>
+</tr>
+<tr>
+<td><code>\U</code></td>
+<td>把\U到\E之间的字符全部转换为大写</td>
+</tr>
+</tbody>
+</table>
+<p><code>\l</code> 和 <code>\u</code> 只能把下一个字符(或子表达式)转换为小写或大写。</p>
+<p><code>\L</code>和 <code>\U</code> 将把它后面的所有字符转换为小写或大写, 直到遇上 <code>\E</code> 为止。</p>
+<p>如下面, 将标签内的内容全部改为大写(sed里 <code>()</code> 需要转义):</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="nx">cat</span> <span class="nx">test.txt</span>
+<span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">hello</span> <span class="nx">world</span><span class="o">&lt;/</span><span class="nx">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">test</span> <span class="nx">regex</span><span class="o">&lt;/</span><span class="nx">h3</span><span class="o">&gt;</span>
+
+<span class="err">$</span> <span class="nx">sed</span> <span class="na">-n</span> <span class="s1">&#39;s/&lt;h\([1-6]\)&gt;\(.*\)&lt;\/h</span><span class="se">\1</span><span class="s1">&gt;/&lt;h</span><span class="se">\1</span><span class="s1">&gt;\U</span><span class="se">\2\E</span><span class="s1">&lt;\/h</span><span class="se">\1</span><span class="s1">&gt;/gp&#39;</span> <span class="nx">test.txt</span>
+<span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">HELLO</span> <span class="nx">WORLD</span><span class="o">&lt;/</span><span class="nx">h1</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">TEST</span> <span class="nx">REGEX</span><span class="o">&lt;/</span><span class="nx">h3</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<h2 id="9">第9章 前后查找</h2>
+<p>前后查找 (lookaround, 对某一位置的前、后内容进行查找)</p>
+<p>向前查找 (lookahead) 指定了一个必须匹配但不在结果中返回的模式。</p>
+<p>向前查找模式是一个以 <code>?=</code> 开头的<strong>子表达式</strong>, 需要匹配的文本跟在<code>=</code>的后面。</p>
+<blockquote>
+<p>有些正则表达式文档使用术语 「消费」(consume)来表述「匹配和返回文本」的含义。在向前查找里, 被匹配的文本不包含在最终返回的匹配结果里, 这被称为“不消费”(查找出现在被匹配文本之后的字符，但不消费那个字符)。</p>
+</blockquote>
+<p>向后查找 (lookbehind) 是查找出现在被匹配文本之前的字符(但不消费它), 向后查找操作符是 <code>?&lt;=</code></p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="nx">cat</span> <span class="nx">test.txt</span>
+<span class="o">&lt;</span><span class="nb">HEAD</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nb">TITLE</span><span class="o">&gt;</span><span class="nx">Ben</span> <span class="nx">Forta</span><span class="err">’</span><span class="nb">s</span> <span class="nx">Homepage</span><span class="o">&lt;/</span><span class="nb">TITLE</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nb">HEAD</span><span class="o">&gt;</span>
+
+<span class="err">#</span> <span class="err">普通匹配</span>
+<span class="err">$</span> <span class="nx">grep</span> <span class="na">-Pzo</span> <span class="o">--</span> <span class="s1">&#39;&lt;TITLE&gt;.*&lt;/TITLE&gt;&#39;</span> <span class="nx">test.txt</span>
+<span class="o">&lt;</span><span class="nb">TITLE</span><span class="o">&gt;</span><span class="nx">Ben</span> <span class="nx">Forta</span><span class="err">’</span><span class="nb">s</span> <span class="nx">Homepage</span><span class="o">&lt;/</span><span class="nb">TITLE</span><span class="o">&gt;</span>
+
+<span class="err">#</span> <span class="err">前向匹配</span>
+<span class="err">$</span> <span class="nx">grep</span> <span class="na">-Pzo</span> <span class="o">--</span> <span class="s1">&#39;&lt;TITLE&gt;.*(?=&lt;/TITLE&gt;)&#39;</span> <span class="nx">test.txt</span>
+<span class="o">&lt;</span><span class="nb">TITLE</span><span class="o">&gt;</span><span class="nx">Ben</span> <span class="nx">Forta</span><span class="err">’</span><span class="nb">s</span> <span class="nx">Homepage</span>
+
+<span class="err">#</span> <span class="err">后向匹配</span>
+<span class="err">$</span> <span class="nx">grep</span> <span class="na">-Pzo</span> <span class="o">--</span> <span class="s1">&#39;(?&lt;=&lt;TITLE&gt;).*&lt;/TITLE&gt;&#39;</span> <span class="nx">test.txt</span>
+<span class="nx">Ben</span> <span class="nx">Forta</span><span class="err">’</span><span class="nb">s</span> <span class="nx">Homepage</span><span class="o">&lt;/</span><span class="nb">TITLE</span><span class="o">&gt;</span>
+
+<span class="err">#</span> <span class="err">前后匹配</span>
+<span class="err">$</span> <span class="nx">grep</span> <span class="na">-Pzo</span> <span class="o">--</span> <span class="s1">&#39;(?&lt;=&lt;TITLE&gt;).*(?=&lt;/TITLE&gt;)&#39;</span> <span class="nx">test.txt</span>
+<span class="nx">Ben</span> <span class="nx">Forta</span><span class="err">’</span><span class="nb">s</span> <span class="nx">Homepage</span>
+</pre></div>
+
+
+<p>向前查找和向后查找通常用来匹配文本, 其目的是为了确定将被返回为匹配结果的文本的位置(通过指定匹配结果的前后必须是哪些文本)。这种用法被称为正向前查找(positive lookahead)和正向后查找(positive lookbehind)。术语「正」指的是寻找匹配的事实。</p>
+<p>前后查找还有一种不太常见的用法叫做 负前后查找(negative lookaround)(即取非)。负向前查找(negative lookahead)将向前查找不与给定模式相匹配的文本, 负向后查找（negative lookbehind）将向后查找不与给定模式相匹配的文本。</p>
+<p>之前绍过一个用来对字符集合进行取非处理的操作符 <code>^</code>, 但 <code>^</code> 不能用来对前后查找进行取非处理。这里必须使用另外一种语法: 前后查找必须用 <code>!</code> 来取非(它将替换掉 <code>=</code>)</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">I</span> <span class="n">paid</span> <span class="err">$</span><span class="mi">30</span> <span class="k">for</span> <span class="mi">100</span> <span class="n">apples</span><span class="p">,</span> <span class="mi">50</span> <span class="n">oranges</span><span class="p">,</span> <span class="n">and</span> <span class="mi">60</span> <span class="n">pears</span><span class="p">.</span> <span class="n">I</span> <span class="n">saved</span> <span class="err">$</span><span class="mi">5</span> <span class="n">on</span> <span class="n">this</span> <span class="n">order</span><span class="p">.</span>
+
+<span class="cp"># 正</span>
+<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Pz</span> <span class="o">--</span> <span class="err">&#39;\</span><span class="n">b</span><span class="p">(</span><span class="o">?&lt;=</span><span class="err">\$</span><span class="p">)</span><span class="err">\</span><span class="n">d</span><span class="o">+</span><span class="err">\</span><span class="n">b</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">I</span> <span class="n">paid</span> <span class="err">$</span><span class="p">[</span><span class="mi">30</span><span class="p">]</span> <span class="k">for</span> <span class="mi">100</span> <span class="n">apples</span><span class="p">,</span> <span class="mi">50</span> <span class="n">oranges</span><span class="p">,</span> <span class="n">and</span> <span class="mi">60</span> <span class="n">pears</span><span class="p">.</span> <span class="n">I</span> <span class="n">saved</span> <span class="err">$</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="n">on</span> <span class="n">this</span> <span class="n">order</span><span class="p">.</span>
+
+<span class="cp"># 负</span>
+<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Pz</span> <span class="o">--</span> <span class="err">&#39;\</span><span class="n">b</span><span class="p">(</span><span class="o">?&lt;!</span><span class="err">\$</span><span class="p">)</span><span class="err">\</span><span class="n">d</span><span class="o">+</span><span class="err">\</span><span class="n">b</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="n">I</span> <span class="n">paid</span> <span class="err">$</span><span class="mi">30</span> <span class="k">for</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="n">apples</span><span class="p">,</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span> <span class="n">oranges</span><span class="p">,</span> <span class="n">and</span> <span class="p">[</span><span class="mi">60</span><span class="p">]</span> <span class="n">pears</span><span class="p">.</span> <span class="n">I</span> <span class="n">saved</span> <span class="err">$</span><span class="mi">5</span> <span class="n">on</span> <span class="n">this</span> <span class="n">order</span><span class="p">.</span>
+</pre></div>
+
+
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说 明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(?=)</code></td>
+<td>正向前查找</td>
+</tr>
+<tr>
+<td><code>(?!)</code></td>
+<td>负向前查找</td>
+</tr>
+<tr>
+<td><code>(?&lt;=)</code></td>
+<td>正向后查找</td>
+</tr>
+<tr>
+<td><code>(?&lt;!)</code></td>
+<td>负向后查找</td>
+</tr>
+</tbody>
+</table>
+<h2 id="10">第10章 嵌入条件</h2>
+<p>使用正则配合条件逻辑, 处理复杂的情况。</p>
+<p>主要是两种情况:</p>
+<ul>
+<li>根据一个回溯引用来进行条件处理。</li>
+<li>根据一个前后查找来进行条件处理。</li>
+</ul>
+<p>回溯引用的条件表达式格式是:</p>
+<div class="hlcode"><pre><span class="p">(</span><span class="o">?</span><span class="p">(</span><span class="n">backreference</span><span class="p">)</span><span class="nb">true</span><span class="o">-</span><span class="n">regex</span><span class="p">)</span>
+</pre></div>
+
+
+<p>其中backreference是一个回溯引用, true-regex是一个只在backreference存在时才会被执行的子表达式。</p>
+<p>更进一步, 还可以加上backreference不存在时的子表达式:</p>
+<div class="hlcode"><pre><span class="p">(</span><span class="o">?</span><span class="p">(</span><span class="n">backer</span><span class="o">-</span> <span class="n">ference</span><span class="p">)</span><span class="nb">true</span><span class="o">-</span><span class="n">regex</span><span class="o">|</span><span class="nb">false</span><span class="o">-</span><span class="n">regex</span><span class="p">)</span>
+</pre></div>
+
+
+<p>这点类似于C/C++中的三元运算符:</p>
+<div class="hlcode"><pre><span class="n">expr1</span><span class="o">?</span> <span class="n">expr2</span> <span class="o">:</span> <span class="n">expr3</span>
+</pre></div>
+
+
+<p>例子, 想要匹配 要么以 xxx-xxx 开头, 要么以 (xxx)xxx的字符串 (x表示任意数字):</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="mi">123</span><span class="o">-</span><span class="mi">456</span><span class="o">-</span><span class="mi">7890</span>
+<span class="p">(</span><span class="mi">123</span><span class="p">)</span><span class="mi">456</span><span class="o">-</span><span class="mi">7890</span>
+<span class="p">(</span><span class="mi">123</span><span class="p">)</span><span class="o">-</span><span class="mi">456</span><span class="o">-</span><span class="mi">7890</span>
+<span class="p">(</span><span class="mi">123</span><span class="o">-</span><span class="mi">456</span><span class="o">-</span><span class="mi">7890</span>
+<span class="mi">1234567890</span>
+<span class="mi">123</span> <span class="mi">456</span> <span class="mi">7890</span><span class="p">)</span>
+
+<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Pzo</span> <span class="o">--</span> <span class="err">&#39;</span><span class="p">(</span><span class="err">\</span><span class="p">()</span><span class="o">?</span><span class="err">\</span><span class="n">d</span><span class="p">{</span><span class="mi">3</span><span class="p">}(</span><span class="o">?</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="err">\</span><span class="p">)</span><span class="o">|-</span><span class="p">)</span><span class="err">\</span><span class="n">d</span><span class="p">{</span><span class="mi">3</span><span class="p">}</span><span class="o">-</span><span class="err">\</span><span class="n">d</span><span class="p">{</span><span class="mi">4</span><span class="p">}</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="mi">123</span><span class="o">-</span><span class="mi">456</span><span class="o">-</span><span class="mi">7890</span>
+<span class="p">(</span><span class="mi">123</span><span class="p">)</span><span class="mi">456</span><span class="o">-</span><span class="mi">7890</span>
+</pre></div>
+
+
+<p>其中, <code>(?(1)\)|-)</code> 就是回溯引用的条件表达式, <code>(1)</code> 引用前面的 <code>(\()</code>, 即如果有左圆括号, 才放上右圆括号, 否则是减号。</p>
+<p>前后查找条件表达式, 和前后查找一个, 把括号里的引用编号改为一个前后查找表达式。</p>
+<p>例子, <em>完整的一行</em>要匹配 xxxxx, 或者 xxxxx-xxxx (x表示任意数字):</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">cat</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="mi">11111</span>
+<span class="mi">22222</span>
+<span class="mi">33333</span><span class="o">-</span>
+<span class="mi">44444</span><span class="o">-</span><span class="mi">4444</span>
+
+<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Pzo</span> <span class="o">--</span> <span class="err">&#39;\</span><span class="n">d</span><span class="p">{</span><span class="mi">5</span><span class="p">}(</span><span class="o">-</span><span class="err">\</span><span class="n">d</span><span class="p">{</span><span class="mi">4</span><span class="p">})</span><span class="o">?</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="mi">11111</span>
+<span class="mi">22222</span>
+<span class="mi">33333</span>
+<span class="mi">44444</span><span class="o">-</span><span class="mi">4444</span>
+
+<span class="err">$</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Pzo</span> <span class="o">--</span> <span class="err">&#39;\</span><span class="n">d</span><span class="p">{</span><span class="mi">5</span><span class="p">}(</span><span class="o">?</span><span class="p">(</span><span class="o">?=-</span><span class="p">)</span><span class="o">-</span><span class="err">\</span><span class="n">d</span><span class="p">{</span><span class="mi">4</span><span class="p">})</span><span class="err">&#39;</span> <span class="n">test</span><span class="p">.</span><span class="n">txt</span>
+<span class="mi">11111</span>
+<span class="mi">22222</span>
+<span class="mi">44444</span><span class="o">-</span><span class="mi">4444</span>
+</pre></div>
+
+
+<p>这个条件使用了 <code>?=-</code> 来匹配(但不消费)一个连字符, 如果条件得到满足(那个连字符存在), <code>-\d{4}</code> 将匹配那个连字符和随后的4位数字。</p>
+<p>这个就稍微复杂了。</p>
+<p>另外, <code>grep</code> 的 <code>-x</code> 直接支持整行匹配。</p>
+<h2 id="_1">小结</h2>
+<p>实践出真知:</p>
+<blockquote>
+<p>在使用正则表达式的时候, 你将发现几乎所有的问题都有不止一种解决方案。它们有的比较简单, 有的比较快速, 有的兼容性更好,有的功能更全。这么说吧, 在编写正则表达式的时候, 只有「对」、「错」两种选择的情况是相当少见的 —— 同一个问题往往会有多种解决方案。(第1章)</p>
+<p>把必须匹配的情况考虑周全并写出一个匹配结果符合预期的正则表达式很容易，但把不需要匹配的情况也考虑周全并确保它们都将被排除在匹配结果以外往往要困难得多。(第7章)</p>
+</blockquote>
+<p>看的这本书是图灵引进的中文版, 整体篇幅很小, 不过全部都实践一遍, 收获还是不少; 另外, 中文版下, 里面一些小错误还是不少……</p>
     </div>
 
         </div>
@@ -226,7 +652,7 @@
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
               <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
-              <p>Last Update 2016-02-23 22:22:29</p>
+              <p>Last Update 2016-02-27 17:41:48</p>
               <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
