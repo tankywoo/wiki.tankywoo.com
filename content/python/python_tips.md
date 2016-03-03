@@ -38,3 +38,17 @@ description: "Python查漏补缺, 或收集一些不错的链接"
 * [Python @property versus getters and setters](http://stackoverflow.com/questions/6618002/python-property-versus-getters-and-setters)
 * [Python进阶之“属性（property）”详解](http://python.jobbole.com/80955/)
 * [Properties vs. Getters and Setters](http://www.python-course.eu/python3_properties.php)
+
+
+## 计算目录的md5 ##
+
+也就是遍历目录, 计算所有文件内容合并后的md5值。
+
+**注意**: 保证遍历目录的路径是一致的, 否则跨平台遍历方式不一致导致md5不同。
+
+见Simiki中的实现: [Add directory md5 hash function](https://github.com/tankywoo/simiki/commit/09039e10a9eba2436b1ec74c5d8a6e1cf84c0f5b), 另外, 这个可能还需要考虑内存溢出的情况? TODO
+
+另外可参考:
+
+* [How do I get the MD5 sum of a directory's contents as one sum?](http://unix.stackexchange.com/questions/35832/how-do-i-get-the-md5-sum-of-a-directorys-contents-as-one-sum)
+* [Getting the SHA-1 (or MD5) hash of a directory (Python recipe)](http://code.activestate.com/recipes/576973-getting-the-sha-1-or-md5-hash-of-a-directory/)
