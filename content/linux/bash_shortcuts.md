@@ -1,6 +1,7 @@
 ---
 title: "Bash Shortcuts"
 date: 2013-08-17 07:23
+updated: 2016-03-03 12:53
 ---
 
 ## Ctrl ##
@@ -35,6 +36,12 @@ date: 2013-08-17 07:23
 
 `Ctrl + z`  -  Suspend/Stop the command
 
+## Meta ##
+
+`Meta` + `f` - Move forward a word
+
+`Meta` + `b` - Move backward a word
+
 
 # Bash Mode #
 
@@ -54,4 +61,4 @@ date: 2013-08-17 07:23
 * [Bash快捷键的思维导图](http://www.huangwei.me/blog/2010/10/27/bash_shortcuts_mindmap/)
 * [高效操作Bash](http://ahei.info/bash.htm)
 * [Bash Shell 快速鍵列表](http://blog.longwin.com.tw/2006/09/bash_hot_key_2006/)
-
+* [Shortcuts to Move Faster in Bash Command Line](http://teohm.com/blog/2012/01/04/shortcuts-to-move-faster-in-bash-command-line/)
