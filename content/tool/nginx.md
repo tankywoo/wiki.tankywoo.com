@@ -5,6 +5,15 @@ date: 2016-01-07 21:11
 
 [TOC]
 
+[Nginx Beginner's Guide](http://nginx.org/en/docs/beginners_guide.html)
+
+## 指令 ##
+
+### root vs alias ###
+
+* [nginx目录设置 alias 和 root](http://www.wkii.org/nginx-set-directory-alias-and-root.html)
+* [nginx虚拟目录(alias与root的区别)](http://blog.sina.com.cn/s/blog_6c2e6f1f0100l92h.html)
+
 
 ## 中文域名 ##
 
@@ -32,3 +41,9 @@ date: 2016-01-07 21:11
 		listen			80;
 		server_name		xn--fiqs8s.com;
 	}
+
+
+## 价值链接 ##
+
+* [如何正确配置Nginx+PHP](http://huoding.com/2013/10/23/290)
+* [实战Nginx与PHP（FastCGI）的安装、配置与优化](http://ixdba.blog.51cto.com/2895551/806622)
