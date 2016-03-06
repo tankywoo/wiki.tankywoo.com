@@ -26,7 +26,102 @@
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <h2 id="_1">查看单个数据库或表的大小</h2>
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">常用命令</a></li>
+<li><a href="#_2">问题</a><ul>
+<li><a href="#_3">无法删除数据库</a></li>
+<li><a href="#_4">查看单个数据库或表的大小</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p><code>&lt;&gt;</code> 括起来的表示变量, 根据实际情况而定。</p>
+<h2 id="_1">常用命令</h2>
+<p>查看mysql用户:</p>
+<div class="hlcode"><pre><span class="n">SELECT</span> <span class="n">User</span><span class="p">,</span> <span class="n">Host</span> <span class="n">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span><span class="p">;</span>
+</pre></div>
+
+
+<p>带上主机是因为用户和主机是相关的，否则意义不大，会显示多个相同的用户。</p>
+<p>如果要显示唯一的用户:</p>
+<div class="hlcode"><pre><span class="n">SELECT</span> <span class="n">DISTINCT</span> <span class="n">User</span> <span class="n">FROm</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span><span class="p">;</span>
+</pre></div>
+
+
+<p>删除用户:</p>
+<div class="hlcode"><pre><span class="nx">DROP</span> <span class="nb">USER</span> <span class="s1">&#39;&lt;username&gt;&#39;</span><span class="p">@</span><span class="s1">&#39;&lt;host&gt;&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>带上引号是个好习惯, 否则主机名包含<code>-</code>等符号必须用引号阔起来。</p>
+<p>创建用户:</p>
+<div class="hlcode"><pre><span class="nb">CREATE</span> <span class="nb">USER</span> <span class="s1">&#39;&lt;username&gt;&#39;</span><span class="p">@</span><span class="s1">&#39;&lt;host&gt;&#39;</span> <span class="nx">IDENTIFIED</span> <span class="k">BY</span> <span class="s1">&#39;&lt;password&gt;&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>查看指定用户@主机的权限:</p>
+<div class="hlcode"><pre><span class="nx">SHOW</span> <span class="nx">GRANTS</span> <span class="nb">FOR</span> <span class="s1">&#39;&lt;username&gt;&#39;</span><span class="p">@</span><span class="o">&lt;</span><span class="nb">host</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="nx">mysql</span><span class="o">&gt;</span> <span class="nx">SHOW</span> <span class="nx">GRANTS</span> <span class="nb">FOR</span> <span class="nx">tankywoo</span><span class="p">@</span><span class="nx">localhost</span><span class="p">;</span>
+<span class="o">+-------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="nx">Grants</span> <span class="nb">for</span> <span class="nx">blog1</span><span class="p">@</span><span class="nx">localhost</span>                                                    <span class="o">|</span>
+<span class="o">+-------------------------------------------------------------------------------+</span>
+<span class="o">|</span> <span class="nx">GRANT</span> <span class="nb">USAGE</span> <span class="k">ON</span> <span class="o">*</span><span class="nx">.</span><span class="o">*</span> <span class="k">TO</span> <span class="s1">&#39;tankywoo&#39;</span><span class="p">@</span><span class="s1">&#39;localhost&#39;</span> <span class="nx">IDENTIFIED</span> <span class="k">BY</span> <span class="nx">PASSWORD</span> <span class="s1">&#39;*xxxxxx&#39;</span> <span class="o">|</span>
+<span class="o">+-------------------------------------------------------------------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="k">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="nx">sec</span><span class="p">)</span>
+</pre></div>
+
+
+<p><code>USAGE</code>表示没有任何权限。</p>
+<p>给用户赋予权限:</p>
+<div class="hlcode"><pre><span class="nx">GRANT</span> <span class="o">&lt;</span><span class="nx">privilege</span><span class="o">&gt;</span> <span class="k">ON</span> <span class="o">&lt;</span><span class="nx">database</span><span class="o">&gt;</span><span class="nx">.</span><span class="o">&lt;</span><span class="nb">table</span><span class="o">&gt;</span> <span class="k">TO</span> <span class="s1">&#39;&lt;username&gt;&#39;</span><span class="p">@</span><span class="s1">&#39;&lt;host&gt;&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>如给用户设置所有权限给所有数据库:</p>
+<div class="hlcode"><pre><span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">ON</span> <span class="o">*</span><span class="p">.</span><span class="o">*</span> <span class="n">TO</span> <span class="err">&#39;</span><span class="n">tankywoo</span><span class="sc">&#39;@&#39;</span><span class="n">localhost</span><span class="err">&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>赋予所有权限给指定的数据库:</p>
+<div class="hlcode"><pre><span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">ON</span> <span class="n">testdb</span><span class="p">.</span><span class="o">*</span> <span class="n">TO</span> <span class="err">&#39;</span><span class="n">tankywoo</span><span class="sc">&#39;@&#39;</span><span class="n">localhost</span><span class="err">&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>赋予所有权限给指定的数据库的某个表:</p>
+<div class="hlcode"><pre><span class="n">GRANT</span> <span class="n">ALL</span> <span class="n">ON</span> <span class="n">testdb</span><span class="p">.</span><span class="n">testtable</span> <span class="n">TO</span> <span class="err">&#39;</span><span class="n">tankywoo</span><span class="sc">&#39;@&#39;</span><span class="n">localhost</span><span class="err">&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p>赋予查询,插入权限给指定的数据库的某个表:</p>
+<div class="hlcode"><pre><span class="n">GRANT</span> <span class="n">SELECT</span><span class="p">,</span><span class="n">INSERT</span> <span class="n">ON</span> <span class="n">testdb</span><span class="p">.</span><span class="n">testtable</span> <span class="n">TO</span> <span class="err">&#39;</span><span class="n">tankywoo</span><span class="sc">&#39;@&#39;</span><span class="n">localhost</span><span class="err">&#39;</span><span class="p">;</span>
+</pre></div>
+
+
+<p><strong>注意</strong>: <code>grant</code>命令赋予权限也可以创建用户, 比如上面如果tankywoo@localhost不存在, 则会创建此用户。所以一定要注意host, 如果赋予权限时忘了带上host, 则默认会创建user@%.</p>
+<p>赋予权限后刷新权限是个好习惯:</p>
+<div class="hlcode"><pre><span class="n">FLUSH</span> <span class="n">PRIVILEGES</span><span class="p">;</span>
+</pre></div>
+
+
+<p>修改用户密码:</p>
+<div class="hlcode"><pre><span class="nb">SET</span> <span class="nx">PASSWORD</span> <span class="nb">FOR</span> <span class="s1">&#39;&lt;username&gt;&#39;</span><span class="p">@</span><span class="s1">&#39;&lt;host&gt;&#39;</span> <span class="o">=</span> <span class="nx">Password</span><span class="p">(</span><span class="s1">&#39;&lt;password&gt;&#39;</span><span class="p">);</span>
+</pre></div>
+
+
+<p><code>Password()</code>函数用来给密码加密。</p>
+<h2 id="_2">问题</h2>
+<h3 id="_3">无法删除数据库</h3>
+<p>删除数据库时报错:</p>
+<div class="hlcode"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">drop</span> <span class="n">database</span> <span class="n">testdb</span><span class="p">;</span>
+<span class="n">ERROR</span> <span class="mi">1010</span> <span class="p">(</span><span class="n">HY000</span><span class="p">)</span><span class="o">:</span> <span class="n">Error</span> <span class="n">dropping</span> <span class="n">database</span> <span class="p">(</span><span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">rmdir</span> <span class="err">&#39;</span><span class="p">.</span><span class="o">/</span><span class="n">testdb</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">errno</span><span class="o">:</span> <span class="mi">39</span><span class="p">)</span>
+</pre></div>
+
+
+<p>之前数据库有问题, 不确定是异常退出还是升级导致, binlog问题导致mysqld启动不了, 于是删除了binlog等问题, 可能和这块有关。</p>
+<p>最后手动把数据库目录删除了。暂时没去查这个错误码的意义。</p>
+<p>参考: <a href="http://stackoverflow.com/questions/4584458/error-dropping-database-cant-rmdir-test-errno-17">Error Dropping Database (Can't rmdir '.test\', errno: 17)</a></p>
+<h3 id="_4">查看单个数据库或表的大小</h3>
 <p>要想知道每个数据库的大小的话，步骤如下：</p>
 <p>1、进入<code>information_schema</code> 数据库（存放了其他的数据库的信息）</p>
 <div class="hlcode"><pre><span class="n">use</span> <span class="n">information_schema</span><span class="p">;</span>
@@ -61,7 +156,7 @@
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
               <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
-              <p>Last Update 2016-02-27 17:45:34</p>
+              <p>Last Update 2016-03-03 21:34:21</p>
               <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">
