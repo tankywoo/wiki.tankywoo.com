@@ -1,8 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2016-02-14 21:53
-log: "增加eix"
+updated: 2016-03-07 22:21
+log: "增加两个Gentoo链接资源"
 ---
 
 [TOC]
@@ -681,3 +681,5 @@ gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的�
 * [Gentoo Quick Guide](http://www.tamabc.com/article/60785.html)
 * [Gentoo Troubleshooting](https://wiki.gentoo.org/wiki/Troubleshooting)
 * [Portage入门](https://gentoo-handbook.lugons.org/doc/zh_cn/handbook/handbook-x86.xml?part=2&chap=1&style=printable)
+* [Equery](https://wiki.gentoo.org/wiki/Equery)
+* [Gentoo Cheat Sheet](https://wiki.gentoo.org/wiki/Gentoo_Cheat_Sheet)
