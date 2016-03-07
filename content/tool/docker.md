@@ -1,6 +1,7 @@
 ---
 title: "Docker"
 date: 2015-11-08 12:34
+updated: 2016-03-07 22:25
 ---
 
 [Docker](https://www.docker.com/) Build, Ship, Run; An open platform for distributed applications for developers and sysadmins
@@ -64,3 +65,7 @@ Gentoo下安装docker后启动报错, 看日志:
 
 然后加载模块: `modprobe loop`
 
+## 一些链接 ##
+
+* [Docker —— 从入门到实践](https://www.gitbook.com/book/yeasy/docker_practice/details)
+* [国内daocloud的一些镜像](https://dashboard.daocloud.io/packages) 国内现在没找到什么好的仓库, 这个算一个, 就是镜像略少
