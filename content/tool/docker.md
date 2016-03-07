@@ -1,7 +1,7 @@
 ---
 title: "Docker"
 date: 2015-11-08 12:34
-updated: 2016-03-07 22:25
+updated: 2016-03-07 23:39
 ---
 
 [Docker](https://www.docker.com/) Build, Ship, Run; An open platform for distributed applications for developers and sysadmins
@@ -64,6 +64,30 @@ Gentoo下安装docker后启动报错, 看日志:
 	modules="loop"
 
 然后加载模块: `modprobe loop`
+
+## 内核支持 ##
+
+一个是iptables nat表, 编译内核时忘了打开nat支持了, 导致docker启动不了(docker开启不修改iptables选项应该就没事了).
+
+打开内核选项:
+
+	CONFIG_IP_NF_NAT
+
+[can't initialize iptables table `nat'`](https://forums.gentoo.org/viewtopic-t-1009770.html?sid=7822e8eefcdb28edcedf9db7526b7b1e)
+
+安装完docker顺便发现有如下提示:
+
+	* Messages for package app-emulation/docker-1.10.0:
+	
+	*   CONFIG_IP_NF_TARGET_MASQUERADE:     is not set when it should be.
+	*   CONFIG_CGROUP_HUGETLB:      is not set when it should be.
+	*   CONFIG_CGROUP_NET_PRIO:     is not set when it should be.
+	* Please check to make sure these options are set correctly.
+	* Failure to do so may cause unexpected problems.
+
+就顺便一起重新编译内核了.
+
+官方也提供了内核参数检查的脚本 [docker/contrib/check-config.sh](https://github.com/docker/docker/blob/master/contrib/check-config.sh)
 
 ## 一些链接 ##
 
