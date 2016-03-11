@@ -205,3 +205,21 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 	ps aux | grep ngin[x] | awk '{for (i=3; i<=NF; i++) printf $i " "} {print ""}'
 
 参考 [Print all but the first three columns](http://stackoverflow.com/questions/2626274/print-all-but-the-first-three-columns)
+
+## useradd新建用户的目录权限 ##
+
+默认情况下, `useradd` 的 `UMASK` 是在 `/etc/login.defs` 中控制的, Gentoo下是`0022`.
+
+这样新建用户时, 创建的home目录就是0755了, 针对同一个用户组的, 权限较大, 限制为0700比较合适.
+
+可以通过useradd时指定UMASK:
+
+    useradd -m -K UMASK=0077 testuser
+
+`/etc/login.defs` 的UMASK参数只是针对 useradd 创建用户目录时用的.
+
+参考:
+
+* [Understanding UMASK value in Linux](http://www.golinuxhub.com/2014/05/understanding-umask-value-in-linux.html) 讲解的挺详细
+* [What type of permissions should a user's home directory and files have?](http://unix.stackexchange.com/questions/76532/what-type-of-permissions-should-a-users-home-directory-and-files-have)
+* [Why is the default umask value for useradd in openSuSE set to 022?](http://unix.stackexchange.com/questions/37194/why-is-the-default-umask-value-for-useradd-in-opensuse-set-to-022)
