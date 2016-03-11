@@ -29,6 +29,7 @@
         <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#variable-with-underscore">variable with underscore</a></li>
 <li><a href="#property-method">property method</a></li>
+<li><a href="#md5">计算目录的md5</a></li>
 </ul>
 </div>
 <h2 id="variable-with-underscore">variable with underscore</h2>
@@ -64,6 +65,15 @@
 <li><a href="http://python.jobbole.com/80955/">Python进阶之“属性（property）”详解</a></li>
 <li><a href="http://www.python-course.eu/python3_properties.php">Properties vs. Getters and Setters</a></li>
 </ul>
+<h2 id="md5">计算目录的md5</h2>
+<p>也就是遍历目录, 计算所有文件内容合并后的md5值。</p>
+<p><strong>注意</strong>: 保证遍历目录的路径是一致的, 否则跨平台遍历方式不一致导致md5不同。</p>
+<p>见Simiki中的实现: <a href="https://github.com/tankywoo/simiki/commit/09039e10a9eba2436b1ec74c5d8a6e1cf84c0f5b">Add directory md5 hash function</a>, 另外, 这个可能还需要考虑内存溢出的情况? TODO</p>
+<p>另外可参考:</p>
+<ul>
+<li><a href="http://unix.stackexchange.com/questions/35832/how-do-i-get-the-md5-sum-of-a-directorys-contents-as-one-sum">How do I get the MD5 sum of a directory's contents as one sum?</a></li>
+<li><a href="http://code.activestate.com/recipes/576973-getting-the-sha-1-or-md5-hash-of-a-directory/">Getting the SHA-1 (or MD5) hash of a directory (Python recipe)</a></li>
+</ul>
     </div>
 
         </div>
@@ -74,7 +84,7 @@
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
               <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
-              <p>Last Update 2016-02-28 13:20:05</p>
+              <p>Last Update 2016-03-11 10:34:22</p>
               <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">

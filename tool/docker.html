@@ -81,6 +81,32 @@ level=fatal msg="Error starting daemon: error initializing graphdriver: loopback
 
 
 <p>然后加载模块: <code>modprobe loop</code></p>
+<h2 id="_3">内核支持</h2>
+<p>一个是iptables nat表, 编译内核时忘了打开nat支持了, 导致docker启动不了(docker开启不修改iptables选项应该就没事了).</p>
+<p>打开内核选项:</p>
+<div class="hlcode"><pre><span class="n">CONFIG_IP_NF_NAT</span>
+</pre></div>
+
+
+<p><a href="https://forums.gentoo.org/viewtopic-t-1009770.html?sid=7822e8eefcdb28edcedf9db7526b7b1e">can't initialize iptables table <code>nat'</code></a></p>
+<p>安装完docker顺便发现有如下提示:</p>
+<div class="hlcode"><pre><span class="o">*</span> <span class="n">Messages</span> <span class="k">for</span> <span class="n">package</span> <span class="n">app</span><span class="o">-</span><span class="n">emulation</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="mf">1.10.0</span><span class="o">:</span>
+
+<span class="o">*</span>   <span class="n">CONFIG_IP_NF_TARGET_MASQUERADE</span><span class="o">:</span>     <span class="n">is</span> <span class="n">not</span> <span class="n">set</span> <span class="n">when</span> <span class="n">it</span> <span class="n">should</span> <span class="n">be</span><span class="p">.</span>
+<span class="o">*</span>   <span class="n">CONFIG_CGROUP_HUGETLB</span><span class="o">:</span>      <span class="n">is</span> <span class="n">not</span> <span class="n">set</span> <span class="n">when</span> <span class="n">it</span> <span class="n">should</span> <span class="n">be</span><span class="p">.</span>
+<span class="o">*</span>   <span class="n">CONFIG_CGROUP_NET_PRIO</span><span class="o">:</span>     <span class="n">is</span> <span class="n">not</span> <span class="n">set</span> <span class="n">when</span> <span class="n">it</span> <span class="n">should</span> <span class="n">be</span><span class="p">.</span>
+<span class="o">*</span> <span class="n">Please</span> <span class="n">check</span> <span class="n">to</span> <span class="n">make</span> <span class="n">sure</span> <span class="n">these</span> <span class="n">options</span> <span class="n">are</span> <span class="n">set</span> <span class="n">correctly</span><span class="p">.</span>
+<span class="o">*</span> <span class="n">Failure</span> <span class="n">to</span> <span class="k">do</span> <span class="n">so</span> <span class="n">may</span> <span class="n">cause</span> <span class="n">unexpected</span> <span class="n">problems</span><span class="p">.</span>
+</pre></div>
+
+
+<p>就顺便一起重新编译内核了.</p>
+<p>官方也提供了内核参数检查的脚本 <a href="https://github.com/docker/docker/blob/master/contrib/check-config.sh">docker/contrib/check-config.sh</a></p>
+<h2 id="_4">一些链接</h2>
+<ul>
+<li><a href="https://www.gitbook.com/book/yeasy/docker_practice/details">Docker —— 从入门到实践</a></li>
+<li><a href="https://dashboard.daocloud.io/packages">国内daocloud的一些镜像</a> 国内现在没找到什么好的仓库, 这个算一个, 就是镜像略少</li>
+</ul>
     </div>
 
         </div>
@@ -91,7 +117,7 @@ level=fatal msg="Error starting daemon: error initializing graphdriver: loopback
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
               <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
-              <p>Last Update 2016-02-28 13:20:05</p>
+              <p>Last Update 2016-03-11 10:34:22</p>
               <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">

@@ -50,6 +50,7 @@
 <li><a href="#terminal-name">获取当前的terminal name</a></li>
 <li><a href="#widle">w命令idle</a></li>
 <li><a href="#awk">awk 显示某些列</a></li>
+<li><a href="#useradd">useradd新建用户的目录权限</a></li>
 </ul>
 </div>
 <h2 id="shell">查看现在使用的是哪一个shell</h2>
@@ -237,6 +238,21 @@ echo <span class="cp">${</span><span class="nb">str</span><span class="cp">}</sp
 
 
 <p>参考 <a href="http://stackoverflow.com/questions/2626274/print-all-but-the-first-three-columns">Print all but the first three columns</a></p>
+<h2 id="useradd">useradd新建用户的目录权限</h2>
+<p>默认情况下, <code>useradd</code> 的 <code>UMASK</code> 是在 <code>/etc/login.defs</code> 中控制的, Gentoo下是<code>0022</code>.</p>
+<p>这样新建用户时, 创建的home目录就是0755了, 针对同一个用户组的, 权限较大, 限制为0700比较合适.</p>
+<p>可以通过useradd时指定UMASK:</p>
+<div class="hlcode"><pre><span class="n">useradd</span> <span class="o">-</span><span class="n">m</span> <span class="o">-</span><span class="n">K</span> <span class="n">UMASK</span><span class="o">=</span><span class="mo">0077</span> <span class="n">testuser</span>
+</pre></div>
+
+
+<p><code>/etc/login.defs</code> 的UMASK参数只是针对 useradd 创建用户目录时用的.</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://www.golinuxhub.com/2014/05/understanding-umask-value-in-linux.html">Understanding UMASK value in Linux</a> 讲解的挺详细</li>
+<li><a href="http://unix.stackexchange.com/questions/76532/what-type-of-permissions-should-a-users-home-directory-and-files-have">What type of permissions should a user's home directory and files have?</a></li>
+<li><a href="http://unix.stackexchange.com/questions/37194/why-is-the-default-umask-value-for-useradd-in-opensuse-set-to-022">Why is the default umask value for useradd in openSuSE set to 022?</a></li>
+</ul>
     </div>
 
         </div>
@@ -247,7 +263,7 @@ echo <span class="cp">${</span><span class="nb">str</span><span class="cp">}</sp
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
               <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
-              <p>Last Update 2016-02-28 13:20:05</p>
+              <p>Last Update 2016-03-11 10:34:22</p>
               <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">

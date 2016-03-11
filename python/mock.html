@@ -6,7 +6,7 @@
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/favicon.ico" type="image/x-icon">
         <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-        <title>iptables - Wiki · Tanky Woo</title>
+        <title>Mock - Wiki · Tanky Woo</title>
         <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
         <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,39 +20,30 @@
     <div id="header">
         <div id="post-nav">
             
-            <a href="/">Wiki · Tanky Woo</a> » <a href="/#tool">tool</a> » iptables
+            <a href="/">Wiki · Tanky Woo</a> » <a href="/#python">python</a> » Mock
             
         </div>
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <p>iptables:按照官方文档，是一个ipv4 包过滤和NAT的管理工具</p>
-<p>先开始好像使用iptables命令时，报错，提示没有netfilter模块</p>
-<p>后来make maenuconfig添加后，重新编译一遍，就OK了</p>
-<p>其实这个问题折腾了半天，好像是参考这篇：
-<a href="http://en.gentoo-wiki.com/wiki/HOWTO_Iptables_for_newbies">Iptables for newbies</a></p>
-<h2 id="_1">一些术语</h2>
-<h3 id="chain">Chain</h3>
-<p>Each chain is a list of rules which can match a set of packets.</p>
-<h3 id="table">Table</h3>
-<p><code>filter</code>
-<code>nat</code>
-<code>mangle</code>
-<code>raw</code>
-<code>security</code></p>
-<h2 id="example">Example</h2>
-<div class="hlcode"><pre><span class="n">iptables</span> <span class="o">-</span><span class="n">L</span>
-<span class="n">iptables</span> <span class="o">-</span><span class="n">F</span>
-<span class="n">iptables</span> <span class="o">-</span><span class="n">X</span>
-</pre></div>
-
-
-<h2 id="read-more">Read More</h2>
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul></ul>
+</div>
+<p>Mock 在 Python 3.3 后是Python的内置模块(<code>unittest.mock</code>), 在之前可以安装PyPI上的<a href="https://pypi.python.org/pypi/mock">mock</a>。</p>
 <ul>
-<li><a href="http://lesca.me/archives/iptables-architecture-commands-extensions.html">iptables入门：iptables构架、基本命令及扩展（功能）简介</a> </li>
-<li><a href="http://www.ha97.com/4093.html">iptables的基本概念和数据包流程图</a></li>
-<li><a href="http://www.21andy.com/blog/20120528/2043.html">Linux iptables 配置详解</a></li>
-<li><a href="http://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2">网络地址转换(NAT)</a></li>
+<li>https://virusdefender.net/index.php/archives/10/</li>
+<li>https://www.toptal.com/python/an-introduction-to-mocking-in-python</li>
+<li>http://www.oschina.net/translate/unit-testing-with-the-python-mock-class</li>
+<li>http://www.drdobbs.com/testing/using-mocks-in-python/240168251</li>
+<li>http://alexmarandon.com/articles/python_mock_gotchas/</li>
+<li>http://python-mock.sourceforge.net/</li>
+<li>https://mock.readthedocs.org/en/latest/</li>
+<li>https://docs.python.org/dev/library/unittest.mock.html</li>
+<li>
+<p>https://pypi.python.org/pypi/mock</p>
+</li>
+<li>
+<p>https://segmentfault.com/a/1190000002965620</p>
+</li>
 </ul>
     </div>
 
