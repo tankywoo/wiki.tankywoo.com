@@ -83,6 +83,15 @@ updated: 2016-02-18 11:26
 * [tuxfiles-vimcheat](http://www.tuxfiles.org/linuxhelp/vimcheat.html)
 * [What is your most productive shortcut with Vim?](http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim)
 
+### Vim自定义插件 ###
+
+依葫芦画瓢, 写了一个针对特定格式的高亮插件时的需求。
+
+* [Writing Vim Syntax Plugins](https://robots.thoughtbot.com/writing-vim-syntax-plugins) \*
+* [Vim zh-cn:插件](https://swaroop.wordpress.com/notes/vim_zh-cn-%E6%8F%92%E4%BB%B6/) \*
+* [vim doc - syntax](http://vimcdoc.sourceforge.net/doc/syntax.html#:syn-cluster)
+* [Writing Vim Plugins](http://stevelosh.com/blog/2011/09/writing-vim-plugins/)
+
 
 ## 技巧 ##
 
