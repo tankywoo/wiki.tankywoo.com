@@ -3,6 +3,7 @@
     <head>
         <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
         <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/second.css">
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/favicon.ico" type="image/x-icon">
         <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
@@ -35,6 +36,7 @@
 <li><a href="#_3">问题</a><ul>
 <li><a href="#syntax-error-unknown-group-ssl-cert-in-statoverride-file">syntax error: unknown group 'ssl-cert' in statoverride file</a></li>
 <li><a href="#the-following-packages-have-unmet-dependencies">The following packages have unmet dependencies</a></li>
+<li><a href="#files-list-file-for-package-xxx-is-missing-final-newline">files list file for package 'xxx' is missing final newline</a></li>
 </ul>
 </li>
 </ul>
@@ -138,6 +140,16 @@
 <p>都不行.</p>
 <p>后来发现<code>dpkg --purge package</code> 可以删除老的包.</p>
 <p>参考: <a href="http://linuxg.net/how-to-overwrite-existing-files-from-another-package-in-ubuntu-and-debian/">How To Overwrite Existing Files From A Removed Package in Ubuntu and Debian</a></p>
+<h3 id="files-list-file-for-package-xxx-is-missing-final-newline">files list file for package 'xxx' is missing final newline</h3>
+<p>报错:</p>
+<div class="hlcode"><pre><span class="p">(</span><span class="n">Reading</span> <span class="n">database</span> <span class="p">...</span> <span class="mi">95</span><span class="o">%</span><span class="n">dpkg</span><span class="o">:</span> <span class="n">unrecoverable</span> <span class="n">fatal</span> <span class="n">error</span><span class="p">,</span> <span class="n">aborting</span><span class="o">:</span>
+  <span class="n">files</span> <span class="n">list</span> <span class="n">file</span> <span class="k">for</span> <span class="n">package</span> <span class="err">&#39;</span><span class="n">xxx</span><span class="err">&#39;</span> <span class="n">is</span> <span class="n">missing</span> <span class="n">final</span> <span class="n">newline</span>
+  <span class="nl">E:</span> <span class="n">Sub</span><span class="o">-</span><span class="n">process</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">dpkg</span> <span class="n">returned</span> <span class="n">an</span> <span class="n">error</span> <span class="n">code</span> <span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+
+<p>通过<code>apt-get purge</code>或<code>dpkg -P</code>都无法卸载包。</p>
+<p>参考<a href="http://askubuntu.com/a/350508/434496">这篇回答</a>, 发现是 <code>/var/lib/dpkg/info</code> 下那个包的文件损坏了, 文件内容有乱码导致, 删掉即可.</p>
     </div>
 
         </div>
@@ -148,7 +160,7 @@
                 Theme by <a href="https://github.com/tankywoo/yasimple" target="_blank">YASimple</a>.
               </p>
               <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
-              <p>Last Update 2016-03-11 10:34:22</p>
+              <p>Last Update 2016-03-14 16:51:42</p>
               <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         </div>
 <script type="text/javascript">

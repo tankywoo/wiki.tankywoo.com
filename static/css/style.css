@@ -33,8 +33,7 @@ body {
 a:visited { color: rgb(0, 0, 238); }
 
 p {
-  margin: 0 0 1em 0;
-  line-height: 1.6;
+  line-height: 1.5em;
 }
 
 blockquote {
@@ -132,39 +131,6 @@ blockquote {
 }
 
 /* Code Highlight */
-pre, code { 
-  font-size: 90%;
-  border-radius: 0.2em;
-  -moz-border-radius: 0.2em;
-  -webkit-border-radius: 0.2em;
-  overflow: auto;
-}
-
-pre {
-  white-space: pre;
-  white-space: -moz-pre-wrap;  /* Firefox */
-  white-space: -pre-wrap;  /* ancient Opera */
-  white-space: -o-pre-wrap;  /* newer Opera */
-  white-space: pre-wrap;  /* Chrome; W3C standard */
-  word-wrap: break-word;  /* IE */
-}
-
-code {
-  background-color: #eee;
-}
-
-pre code {
-  border: 0px !important;
-  padding: 0;
-  color: #000;
-}
-
-.hlcode pre {
-  border: 0.1em solid #ddd;
-  padding: 0.5em 0.3em;
-  background: #fbfffd;
-}
-
 /* Temp reset pygement css */
 .hlcode .err {
   color: inherit;
