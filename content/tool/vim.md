@@ -1,7 +1,7 @@
 ---
 title: "Vim"
 date: 2013-08-17 07:32
-updated: 2016-02-18 11:26
+updated: 2016-03-14 16:45
 ---
 
 [TOC]
@@ -91,6 +91,16 @@ updated: 2016-02-18 11:26
 * [Vim zh-cn:插件](https://swaroop.wordpress.com/notes/vim_zh-cn-%E6%8F%92%E4%BB%B6/) \*
 * [vim doc - syntax](http://vimcdoc.sourceforge.net/doc/syntax.html#:syn-cluster)
 * [Writing Vim Plugins](http://stevelosh.com/blog/2011/09/writing-vim-plugins/)
+
+
+## vimdiff ##
+
+vim套件中的对比工具
+
+* `]c` - 跳到下一个差异点
+* `[c` - 上一个差异点
+* `dp` - diff put, 将差异点的内容从当前文件复制到另一文件
+* `do` - diff get, 相反，从另一文件复制到当前文件]
 
 
 ## 技巧 ##
