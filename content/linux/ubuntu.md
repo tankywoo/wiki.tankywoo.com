@@ -113,3 +113,15 @@ showpkg也可以, 不过包含的内容更多一些:
 后来发现`dpkg --purge package` 可以删除老的包.
 
 参考: [How To Overwrite Existing Files From A Removed Package in Ubuntu and Debian](http://linuxg.net/how-to-overwrite-existing-files-from-another-package-in-ubuntu-and-debian/)
+
+### files list file for package 'xxx' is missing final newline ###
+
+报错:
+
+	(Reading database ... 95%dpkg: unrecoverable fatal error, aborting:
+	  files list file for package 'xxx' is missing final newline
+	  E: Sub-process /usr/bin/dpkg returned an error code (2))
+
+通过`apt-get purge`或`dpkg -P`都无法卸载包。
+
+参考[这篇回答](http://askubuntu.com/a/350508/434496), 发现是 `/var/lib/dpkg/info` 下那个包的文件损坏了, 文件内容有乱码导致, 删掉即可.
