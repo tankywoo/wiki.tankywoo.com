@@ -1,42 +1,42 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-02-18 11:26
+updated: 2016-03-15 08:28
 description: "查漏补缺, Tricks/Tips/Fragments"
 ---
 
 [TOC]
 
-## 查看现在使用的是哪一个shell ##
+### 查看现在使用的是哪一个shell ###
 
 	echo $0
 
 
-## 修改login shell ##
+### 修改login shell ###
 
 	chsh
 
 
-## 快速返回到上一个目录 ##
+### 快速返回到上一个目录 ###
 
 有时候移到一个目录, 想直接返回去
 
 	cd -
 
 
-## 关于export C ##
+### 关于export C ###
 
 建议在脚本开始处加上`export C`，且如果man手册乱码，也可以:
 
 	$ export C man xxx
 
 
-## 查看本机最常用的10条命令 ##
+### 查看本机最常用的10条命令 ###
 
 	history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 
 
-## 获取一个字符串的长度 ##
+### 获取一个字符串的长度 ###
 
 三种方法:
 
@@ -45,7 +45,7 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 	echo ${str} # 推荐
 
 
-## 统计当前目录下（包括子目录）以.py结尾文件的个数及总代码行数 ##
+### 统计当前目录下（包括子目录）以.py结尾文件的个数及总代码行数 ###
 
 文件个数: 
 
@@ -56,50 +56,50 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 	find . -name "*.py" | xargs wc -l
 
 
-## 输出错误重定向 ##
+### 输出错误重定向 ###
 
 	ls 1>/dev/null 2>/dev/null
 	ls >/dev/null 2>&1
 
 
-## Show number of connections per remote IP ##
+### Show number of connections per remote IP ###
 
 	netstat -antu | awk '$5 ~ /[0-9]:/{split($5, a, ":"); ips[a[1]]++} END {for (ip in ips) print ips[ip], ip | "sort -k1 -nr"}'
 
 
-## 以root身份执行上一条命令 ##
+### 以root身份执行上一条命令 ###
 
 	sudo !!
 
 
-## 开启一个Web服务器(传输) ##
+### 开启一个Web服务器(传输) ###
 
 	# -m 表示找到模块, 执行相应的.py文件
 	# SimpleHTTPServer 是一个 Http Server 模块
 	python -m SimpleHTTPServer
 
 
-## vim里强制保存 ##
+### vim里强制保存 ###
 
 有时候, 一些文件编辑后, 才发现只有root可写
 
 	:w !sudo tee %
 
 
-## 替换上条命令的关键字并执行 ##
+### 替换上条命令的关键字并执行 ###
 
 	# 将上一条命令的pint换成traceroute
 	^ping^traceroute^
 
 
-## 复制一个备份文件 ##
+### 复制一个备份文件 ###
 
 有时候, 为了测试, 为防止意外, 可能需要把 filename 在备份一个 filename.bak
 
 	cp filename{,.bak}
 
 
-## 搜索最近一条符合关键字的命令 ##
+### 搜索最近一条符合关键字的命令 ###
 
 比如上面执行过命令是ping wutianqi.com, 想再执行, 可以
 
@@ -107,7 +107,7 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 	!p
 
 
-## 给远程机器添加公钥认证 ##
+### 给远程机器添加公钥认证 ###
 
 	ssh-copy-id user@host
 
@@ -116,19 +116,19 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 如果 ssh-add -L 里面有内容，会优先使用里面的公钥; 其次，可以用 -i 指定要添加的公钥，最后会用默认的 ~/.ssh/id_rsa.pub
 
 
-## 把 Linux 桌面录制为视频 ##
+### 把 Linux 桌面录制为视频 ###
 
 *TODO* 这个命令先记录一下, 还没尝试
 
 	ffmpeg -f x11grab -s wxga -r 25 -i :0.0 -sameq /tmp/out.mpg
 
 
-## 快速清空arp缓存表 ##
+### 快速清空arp缓存表 ###
 
 	for a in `arp | grep "eth1" | cut -d " " -f1`; do arp -d $a; done
 
 
-## 检查硬盘是HDD还是SSD ##
+### 检查硬盘是HDD还是SSD ###
 
 方法1:
 
@@ -166,7 +166,7 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 + [http://linuxg.net/how-to-find-out-if-a-drive-is-a-ssd-or-an-hdd/](http://stackoverflow.com/questions/908188/is-there-any-way-of-detecting-if-a-drive-is-a-ssd)
 
 
-## Ext3关闭日志特性 ##
+### Ext3关闭日志特性 ###
 
 	tune2fs -O ^has_journal /dev/sdX
 
@@ -180,14 +180,14 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 参考 [Disable journaling in ext3 file system](http://blog.serverbuddies.com/disable-journaling-in-ext3-file-system/)
 
 
-## 获取当前的terminal name ##
+### 获取当前的terminal name ###
 
 	$ tty
 
 参考 [Find Out What tty I’m Using](http://www.cyberciti.biz/faq/linux-unix-appleosx-bsd-what-tty-command/)
 
 
-## w命令idle ##
+### w命令idle ###
 
 > The idle time is supposed to tell how long it has been since the user typed any input on that terminal. For Xwindows sessions, it is broken since Xwindows never reads input from a terminal, but instead gathers input directly from your mouse and keyboard, so the terminal never gets its timestamp updated since it is never read from.
 
@@ -198,7 +198,7 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 * [What does idle time output from “w” command tell?](http://askubuntu.com/questions/283337/what-does-idle-time-output-from-w-command-tell)
 * [How to read the “IDLE” column in the output of the Linux 'w' command?](http://serverfault.com/questions/302455/how-to-read-the-idle-column-in-the-output-of-the-linux-w-command)
 
-## awk 显示某些列 ##
+### awk 显示某些列 ###
 
 比如显示第3列及以后所有列:
 
@@ -206,7 +206,7 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 
 参考 [Print all but the first three columns](http://stackoverflow.com/questions/2626274/print-all-but-the-first-three-columns)
 
-## useradd新建用户的目录权限 ##
+### useradd新建用户的目录权限 ###
 
 默认情况下, `useradd` 的 `UMASK` 是在 `/etc/login.defs` 中控制的, Gentoo下是`0022`.
 
@@ -223,3 +223,9 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 * [Understanding UMASK value in Linux](http://www.golinuxhub.com/2014/05/understanding-umask-value-in-linux.html) 讲解的挺详细
 * [What type of permissions should a user's home directory and files have?](http://unix.stackexchange.com/questions/76532/what-type-of-permissions-should-a-users-home-directory-and-files-have)
 * [Why is the default umask value for useradd in openSuSE set to 022?](http://unix.stackexchange.com/questions/37194/why-is-the-default-umask-value-for-useradd-in-opensuse-set-to-022)
+
+### 重定向命令的stderr到stdout ###
+
+	command 2>&1
+
+参考 [How to pipe stderr, and not stdout?](http://stackoverflow.com/questions/2342826/how-to-pipe-stderr-and-not-stdout)
