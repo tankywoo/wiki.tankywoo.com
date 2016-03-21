@@ -118,3 +118,14 @@ date: 2013-08-17 07:36
 	select concat(round(sum(data_length/1024/1024),2),'MB') as data from tables where table_schema='home' and table_name='members';
 
 (转载至网上)
+
+
+### 创建名称带点号(dot)的数据库 ###
+
+如创建叫 www.xxx.com 的数据库:
+
+	CREATE DATABASE `www.xxx.com`
+
+引号不行, 要用双引号。
+
+在[这个回答](https://bytes.com/topic/mysql/answers/75624-how-do-you-create-database-dash-name#post260958)上看到, 不过还没看到权威文档说明。
