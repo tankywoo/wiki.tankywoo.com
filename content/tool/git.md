@@ -737,6 +737,170 @@ git自身也有一个环境变量`$GIT_PAGER`, 如果配置了, 则会覆盖系�
 * [git diff - handling long lines?](http://stackoverflow.com/questions/136178/git-diff-handling-long-lines)
 * [Configuring your console pager](http://www.refining-linux.org/archives/3/Configuring-your-console-pager/)
 
+
+## git fetch/pull 小记 ##
+
+一个需求: 假设我在dev分支, 现在我想先更新master分支的代码, 再checkout过去。解决办法:
+
+	git fetch origin master:master
+
+在这块遇到了一些之前没注意的问题, 简单记录下。
+
+首先完整的fetch/pull命令是:
+
+	git fetch/pull [<options>] [<repository> [<refspec>...]]
+
+基本都知道的是pull就是比fetch多了一个merge。
+
+主仓库master:
+
+	*   2d666bc - (HEAD -> master) Merge branch 'dev' (2 hours ago) <Tanky Woo>
+	|\
+	| * 9337ee5 - dev 1 (2 hours ago) <Tanky Woo>
+	|/
+	* 66f72b2 - init (2 hours ago) <Tanky Woo>
+
+主仓库dev:
+
+	* 07e3298 - (HEAD -> dev) dev 2 (61 minutes ago) <Tanky Woo>
+	* 9337ee5 - dev 1 (2 hours ago) <Tanky Woo>
+	* 66f72b2 - init (2 hours ago) <Tanky Woo>
+
+子仓库master:
+
+	* 66f72b2 - (HEAD -> master, origin/master) init (2 hours ago) <Tanky Woo>
+
+子仓库dev:
+
+	* 9337ee5 - (HEAD -> dev, origin/dev, origin/HEAD) dev 1 (2 hours ago) <Tanky Woo>
+	* 66f72b2 - (origin/master, master) init (2 hours ago) <Tanky Woo>
+
+即master合并了dev的9337ee5提交后, dev又新增了一个提交。
+
+最常规的操作就是直接执行`git pull`:
+
+	$ git pull
+	remote: Counting objects: 4, done.
+	remote: Compressing objects: 100% (2/2), done.
+	remote: Total 4 (delta 1), reused 0 (delta 0)
+	Unpacking objects: 100% (4/4), done.
+	From /path/to/repo
+	   9337ee5..07e3298  dev        -> origin/dev
+	   66f72b2..2d666bc  master     -> origin/master
+	Updating 9337ee5..07e3298
+	Fast-forward
+	 hello.txt | 1 +
+	 1 file changed, 1 insertion(+)
+
+子仓库master提交没有任何更新, 有behind提示:
+
+	Your branch is behind 'origin/master' by 2 commits, and can be fast-forwarded.
+	  (use "git pull" to update your local branch)
+	nothing to commit, working directory clean
+
+子仓库dev:
+
+	* 07e3298 - (HEAD -> dev, origin/dev, origin/HEAD) dev 2 (64 minutes ago) <Tanky Woo>
+	* 9337ee5 - dev 1 (2 hours ago) <Tanky Woo>
+	* 66f72b2 - (master) init (2 hours ago) <Tanky Woo>
+
+输出的内容分为两部分:
+
+	# -------- fetch的内容 --------
+	From /path/to/repo
+	   9337ee5..07e3298  dev        -> origin/dev
+	   66f72b2..2d666bc  master     -> origin/master
+	Updating 9337ee5..07e3298
+
+	# -------- merge的内容 --------
+	Fast-forward
+	 hello.txt | 1 +
+	 1 file changed, 1 insertion(+)
+
+之前对这块研究过一次, 不过时间有点久远, 给忘了。
+
+`dev  -> origin/dev` 表示远端的dev写入到本地的origin/dev。
+
+输出(或者说实际结果)表示, 默认情况下(可以看看`.git/config`下的fetch配置), 这个操作会:
+
+1. (fetch)遍历远端所有的refs, 然后更新到本地的remote/refs
+2. (merge)远端跟踪分支到当前分支(dev分支)
+
+按照之前的需求, 我猜测pull执行refspec应该可以, 于是执行下面:
+
+	$ git pull origin master:master
+	remote: Counting objects: 1, done.
+	remote: Total 1 (delta 0), reused 0 (delta 0)
+	Unpacking objects: 100% (1/1), done.
+	From /path/to/repo
+	   66f72b2..2d666bc  master     -> master
+	   66f72b2..2d666bc  master     -> origin/master
+	Updating 9337ee5..2d666bc
+	Fast-forward
+
+子仓库master分支:
+
+	*   2d666bc - (HEAD -> master, origin/master, dev) Merge branch 'dev' (2 hours ago) <Tanky Woo>
+	|\
+	| * 9337ee5 - (origin/dev, origin/HEAD) dev 1 (2 hours ago) <Tanky Woo>
+	|/
+	* 66f72b2 - init (2 hours ago) <Tanky Woo>
+
+子仓库dev分支:
+
+	*   2d666bc - (HEAD -> dev, origin/master, master) Merge branch 'dev' (2 hours ago) <Tanky Woo>
+	|\
+	| * 9337ee5 - (origin/dev, origin/HEAD) dev 1 (2 hours ago) <Tanky Woo>
+	|/
+	* 66f72b2 - init (2 hours ago) <Tanky Woo>
+
+可以看到, 子仓库的master分支和dev分支变成一样的历史, 且都和主仓库的master分支历史树一样。
+
+`git pull repo src:dst` 的实际操作就是:
+
+1. 如果可以做fast-forward, 那么做ff操作把本地的master同步为远端的master
+2. **然后把本地master合并到当前分支**
+
+`man git-pull`:
+
+> The remote ref that matches <src> is fetched, and if <dst> is not empty string, the local ref that matches it is fast-forwarded using <src>.
+
+也就是dev作了一次: `(at dev) $ git merge --ff-only master`。
+
+最后正确的办法, 也就是不需要上面pull的第二步merge, 即只使用fetch:
+
+	$ git fetch origin master:master
+	remote: Counting objects: 1, done.
+	remote: Total 1 (delta 0), reused 0 (delta 0)
+	Unpacking objects: 100% (1/1), done.
+	From /path/to/repo
+	   66f72b2..2d666bc  master     -> master
+	   66f72b2..2d666bc  master     -> origin/master
+
+子仓库master分支:
+
+	*   2d666bc - (HEAD -> master, origin/master) Merge branch 'dev' (2 hours ago) <Tanky Woo>
+	|\
+	| * 9337ee5 - (origin/dev, origin/HEAD, dev) dev 1 (2 hours ago) <Tanky Woo>
+	|/
+	* 66f72b2 - init (2 hours ago) <Tanky Woo>
+
+子仓库dev分支:
+
+	* 9337ee5 - (HEAD -> dev, origin/dev, origin/HEAD) dev 1 (2 hours ago) <Tanky Woo>
+	* 66f72b2 - init (2 hours ago) <Tanky Woo>
+
+之前只是单纯的以为fetch只做拉去更新remote/ref, 但是不做实际的本地合并等修改, 看来这个认识是错的。
+
+另外, 这个还有 `+`加号的涉及到的no-ff问题, 后续再研究下。
+
+参考:
+
+* [Merge, update, and pull Git branches without using checkouts](http://stackoverflow.com/questions/3216360/merge-update-and-pull-git-branches-without-using-checkouts)
+* [Git pull/fetch with refspec differences](http://stackoverflow.com/questions/7169103/git-pull-fetch-with-refspec-differences)
+* [pro git: 9.5 Git 内部原理 - The Refspec](https://git-scm.com/book/zh/v1/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-The-Refspec)
+
+
 ## Git资料 ##
 
 * [ProGit中文版](http://git-scm.com/book/zh)
