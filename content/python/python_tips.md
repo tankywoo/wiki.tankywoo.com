@@ -52,3 +52,13 @@ description: "Python查漏补缺, 或收集一些不错的链接"
 
 * [How do I get the MD5 sum of a directory's contents as one sum?](http://unix.stackexchange.com/questions/35832/how-do-i-get-the-md5-sum-of-a-directorys-contents-as-one-sum)
 * [Getting the SHA-1 (or MD5) hash of a directory (Python recipe)](http://code.activestate.com/recipes/576973-getting-the-sha-1-or-md5-hash-of-a-directory/)
+
+
+### pip install from git repo ###
+
+	$ pip install -e git+https://github.com/username/projname.git#egg=projname
+
+参考:
+
+* [pip install from github repo branch](http://stackoverflow.com/questions/20101834/pip-install-from-github-repo-branch)
+* [pip doc - VCS Support](https://pip.pypa.io/en/latest/reference/pip_install/#vcs-support)
