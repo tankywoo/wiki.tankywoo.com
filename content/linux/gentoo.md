@@ -12,7 +12,10 @@ log: "增加两个Gentoo链接资源"
 * [Gentoo官网](https://www.gentoo.org/)
 * [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:Main_Page)
 
-## Architecture ##
+
+## 基本 ##
+
+### Architecture ###
 
 [Handbook-MainPage](https://wiki.gentoo.org/wiki/Handbook:Main_Page) 介绍了什么是架构:
 
@@ -22,7 +25,7 @@ log: "增加两个Gentoo链接资源"
 
 ---
 
-## Stage ##
+### Stage ###
 
 stage3 是Gentoo的最小系统:
 
@@ -55,7 +58,7 @@ As of September 2015, only the supported stage3 tarballs are publicly available.
 
 ---
 
-## Portage ##
+### Portage ###
 
 Portage是一个Python和Shell写的软件包管理系统, 维护了一个软件包树
 
@@ -210,7 +213,50 @@ Gentoo的分支(branch)是指相应架构的软件包分支, 包括稳定(stable
 * man portage
 * man make.conf
 
-## Gentoo grub升级到grub2 ##
+---
+
+### world 和 @world ###
+
+> @ indicates a package set. In portage-2.1 there are only @world and @system. In portage-2.2 there are more (emerge --list-sets). In both cases world and system are aliases for the correspnding sets, which means there is no difference. Other sets don't have such aliases.
+
+参考:
+
+* [@world versus world...what's the difference?](https://forums.gentoo.org/viewtopic-t-899878-start-0.html)
+* [World set (Portage)](https://wiki.gentoo.org/wiki/World_set\_(Portage))
+
+---
+
+### Eix ###
+
+[eix](https://wiki.gentoo.org/wiki/Eix) 通过增加一个portage树本地索引库, 快速的查询软件包，比「emerge」方便了很多。
+
+	# 搜索软件，用于替代emerge -S
+	eix <package_name>
+
+	# 更新portage树, 等价于 emerge --sync
+	eix-sync
+
+	# 更新本地索引库缓存, 否则有时更新了portage树, eix搜到的还是老的
+	eix-update
+
+---
+
+### EAPI ###
+
+关于EAPI的介绍:
+
+* [EAPI Usage and Description](https://devmanual.gentoo.org/ebuild-writing/eapi/)
+* [EAPI 用途及描述](https://www.gentoo.org.cn/devmanual/ebuild-writing/eapi/index.html) 上面的中文版, 只更新到EAPI5
+* [EAPI](https://wiki.gentoo.org/wiki/EAPI)
+* [初探 ebuild](https://segmentfault.com/a/1190000003819421)
+* [ebuild文件阅读和撰写方法简介](http://tieba.baidu.com/p/2255141345?see_lz=1)
+
+大致就是portage提供的一些现成的函数, 让编写ebuild的工作更简单。我估计EAPI应该是 Ebuild API 的简称(虽然官方没看到有这个说明。。。)
+
+
+## 问题 ##
+
+### Gentoo grub升级到grub2 ###
 
 world file: `/var/lib/portage/world`
 
@@ -243,7 +289,7 @@ example:
 	[2] https://wiki.gentoo.org/wiki/GRUB2_Quick_Start
 	[3] https://wiki.gentoo.org/wiki/GRUB2
 
-## Gentoo 升级相关 ##
+### Gentoo 升级相关 ###
 
 更新portage树
 
@@ -338,16 +384,7 @@ example:
 * [内核/升级](https://wiki.gentoo.org/wiki/Kernel/Upgrade/zh-cn)
 
 
-## world 和 @world ##
-
-> @ indicates a package set. In portage-2.1 there are only @world and @system. In portage-2.2 there are more (emerge --list-sets). In both cases world and system are aliases for the correspnding sets, which means there is no difference. Other sets don't have such aliases.
-
-参考:
-
-* [@world versus world...what's the difference?](https://forums.gentoo.org/viewtopic-t-899878-start-0.html)
-* [World set (Portage)](https://wiki.gentoo.org/wiki/World_set\_(Portage))
-
-## 升级后更新系统配置文件 ##
+### 升级后更新系统配置文件 ###
 
 初试, 所以了解的不是很全.
 
@@ -368,7 +405,7 @@ example:
 
 参考: [Portage附加工具](https://gentoo-handbook.lugons.org/doc/zh_cn/handbook/handbook-arm.xml?part=3&chap=4)
 
-## dependency graph slot conflict ##
+### dependency graph slot conflict ###
 
 如下:
 
@@ -412,7 +449,7 @@ example:
 
 参考: [Gentoo - Troubleshooting](https://wiki.gentoo.org/wiki/Troubleshooting#Dependency_graph_slot_conflicts)
 
-## Perl相关 ##
+### Perl相关 ###
 
 好像perl-core和virtual/xxx合并了, 很多perl的依赖, 可以执行`perl-cleaner -v --modules`重新编译一些较老的库.
 
@@ -450,7 +487,7 @@ example:
 
 参考: [gentoo forums](https://forums.gentoo.org/viewtopic-t-987896.html)
 
-## 编译报错 ##
+### 编译报错 ###
 
 升级pip/lxml时遇到编译报错.
 
@@ -492,7 +529,7 @@ example:
 
 参考: [dev-python/pip fail to emerge](https://forums.gentoo.org/viewtopic-p-7842512.html?sid=933da6a4a2d0e85f87614965a7e3d34d)
 
-## dev-python/python-exec 问题 ##
+### dev-python/python-exec 问题 ###
 
 有bug被移除的是`dev-python/python-exec`, 保留的是`dev-lang/python-exec`.
 
@@ -566,7 +603,7 @@ example:
 
 其中dev-lang/python-3.2.3-r2已经从portage中移除了, 所以可以先检查没有依赖就删掉`emerge --verbose --depclean "=dev-lang/python-3.2.3-r2"`
 
-## 卸载python2.6 ##
+### 卸载python2.6 ###
 
 python2.6在gentoo下已经从portage中移除.
 
@@ -593,7 +630,7 @@ python2.6在gentoo下已经从portage中移除.
 
 具体版本号可以通过`emerge -c -pv "dev-lang/python"`看到.
 
-## gcc 升级 ##
+### gcc 升级 ###
 
 gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的版本.
 
@@ -624,12 +661,12 @@ gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的�
     x86_64-pc-linux-gnu-4.9.3
 
 
-## 卸载X11相关 ##
+### 卸载X11相关 ##A
 
 还未操作, 先记录:  [How to remove X11](https://forums.gentoo.org/viewtopic-p-6667611.html)
 
 
-## 清理 /usr/portage/{distfiles,packages} ##
+### 清理 /usr/portage/{distfiles,packages} ###
 
 默认情况下, 源文件在`/usr/portage/distfiles`目录, 二进制文件在`/usr/portage/packages`. 这些都可以删除.
 
@@ -649,7 +686,7 @@ gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的�
 * [eclean](https://wiki.gentoo.org/wiki/Eclean)
 * [Gentoo FAQ: Source tarballs are collecting in /usr/portage/distfiles/. Is it safe to delete these files?](https://wiki.gentoo.org/wiki/FAQ#Source_tarballs_are_collecting_in_.2Fusr.2Fportage.2Fdistfiles.2F._Is_it_safe_to_delete_these_files.3F)
 
-## 磁盘分区限制 ##
+### 磁盘分区限制 ###
 
 摘自[Gentoo Handbook - Installation](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Disks)
 
@@ -660,21 +697,7 @@ gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的�
 之前一直弄错了, 以为mbr分区最大的磁盘限制是2T, 应该是分区限制是2T.
 
 
-## Eix ##
-
-[eix](https://wiki.gentoo.org/wiki/Eix) 通过增加一个portage树本地索引库, 快速的查询软件包，比「emerge」方便了很多。
-
-	# 搜索软件，用于替代emerge -S
-	eix <package_name>
-
-	# 更新portage树, 等价于 emerge --sync
-	eix-sync
-
-	# 更新本地索引库缓存, 否则有时更新了portage树, eix搜到的还是老的
-	eix-update
-
-
-## Gentoo下Perl的一些问题 ##
+### Gentoo下Perl的一些问题 ###
 
 > 插播一句, 最近被这个问题折腾的蛋疼, 然后看到某个Github Issues上有人评价了一句: Perl in Gentoo is the pain in the ass.
 
@@ -710,8 +733,10 @@ RDEPEND就是运行时依赖, 第一行依赖的意思就是这是一个 **或**
 
 	emerge -auv perl-core/CPAN-Meta virtual/perl-CPAN-Meta
 
+(才发现前面有一个perl的问题了... [链接](/linux/gentoo.html#perl))
 
-## masked by EAPI ##
+
+### masked by EAPI ###
 
 eix看本地git最新稳定版是2.7.3, 但是默认不给安装, 强制指定版本后报:
 
@@ -731,16 +756,6 @@ eix看本地git最新稳定版是2.7.3, 但是默认不给安装, 强制指定�
 	man page or refer to the Gentoo Handbook.
 
 提示很清楚了, 当前的portage版本不支持EAPI6。更新 `sys-apps/portage` 软件即可。
-
-关于EAPI的介绍:
-
-* [EAPI Usage and Description](https://devmanual.gentoo.org/ebuild-writing/eapi/)
-* [EAPI 用途及描述](https://www.gentoo.org.cn/devmanual/ebuild-writing/eapi/index.html) 上面的中文版, 只更新到EAPI5
-* [EAPI](https://wiki.gentoo.org/wiki/EAPI)
-* [初探 ebuild](https://segmentfault.com/a/1190000003819421)
-* [ebuild文件阅读和撰写方法简介](http://tieba.baidu.com/p/2255141345?see_lz=1)
-
-大致就是portage提供的一些现成的函数, 让编写ebuild的工作更简单。我估计EAPI应该是 Ebuild API 的简称(虽然官方没看到有这个说明。。。)
 
 
 ## 其它资源 ##
