@@ -1,7 +1,7 @@
 ---
 title: "Python Tips"
 date: 2016-02-06 22:00
-updated: 2016-02-06 22:00
+updated: 2016-03-24 22:00
 description: "Python查漏补缺, 或收集一些不错的链接"
 ---
 
@@ -62,3 +62,19 @@ description: "Python查漏补缺, 或收集一些不错的链接"
 
 * [pip install from github repo branch](http://stackoverflow.com/questions/20101834/pip-install-from-github-repo-branch)
 * [pip doc - VCS Support](https://pip.pypa.io/en/latest/reference/pip_install/#vcs-support)
+
+
+### virtualenv对系统级包的策略 ###
+
+最近发现使用virtualenv进入一个隔离环境时, 每次cd切换目录都会报错, 原因是autojump(py写的)模块找不到。
+
+排查后发现是系统级的python包目录不在`sys.path`中。
+
+看了virtualenv的changelog发现这个是在1.7版本做的变更:
+
+* virtualenv-1.7 之前, 默认策略是把把系统包路径也加入 `sys.path`. 有 `--no-site-packages` 在创建虚拟环境时, 可以不加入系统包路径.
+* virtualenv-1.7和之后, 默认策略是上面的 `--no-site-packages`. 并且增加了新选项 `--system-site-packages`, 即上面情况的默认策略.
+
+具体可以看看virtualenv 的 [changelog](https://virtualenv.pypa.io/en/latest/changes.html)
+
+我之前应该很长一阵子都处于1.7之前的版本, 最近才作了下升级.
