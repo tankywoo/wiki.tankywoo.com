@@ -7,7 +7,7 @@ description: "Python查漏补缺, 或收集一些不错的链接"
 
 [TOC]
 
-## variable with underscore ##
+### variable with underscore ###
 
 * [Python Docs - Private Variables and Class-local References](https://docs.python.org/2/tutorial/classes.html#private-variables-and-class-local-references)
 * [The meaning of a single- and a double-underscore before an object name in Python](http://stackoverflow.com/questions/1301346/the-meaning-of-a-single-and-a-double-underscore-before-an-object-name-in-python)
@@ -32,7 +32,7 @@ description: "Python查漏补缺, 或收集一些不错的链接"
 	  __import__ or __file__.  Never invent such names; only use them
 	  as documented.
 
-## property method ##
+### property method ###
 
 * [Python Docs - property](https://docs.python.org/2/library/functions.html#property)
 * [Python @property versus getters and setters](http://stackoverflow.com/questions/6618002/python-property-versus-getters-and-setters)
@@ -40,7 +40,7 @@ description: "Python查漏补缺, 或收集一些不错的链接"
 * [Properties vs. Getters and Setters](http://www.python-course.eu/python3_properties.php)
 
 
-## 计算目录的md5 ##
+### 计算目录的md5 ###
 
 也就是遍历目录, 计算所有文件内容合并后的md5值。
 
