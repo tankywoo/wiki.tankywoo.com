@@ -711,6 +711,38 @@ RDEPEND就是运行时依赖, 第一行依赖的意思就是这是一个 **或**
 	emerge -auv perl-core/CPAN-Meta virtual/perl-CPAN-Meta
 
 
+## masked by EAPI ##
+
+eix看本地git最新稳定版是2.7.3, 但是默认不给安装, 强制指定版本后报:
+
+	$ emerge -auv '=dev-vcs/git-2.7.3-r1'
+
+	These are the packages that would be merged, in order:
+
+	Calculating dependencies... done!
+
+	!!! All ebuilds that could satisfy "=dev-vcs/git-2.7.3-r1" have been masked.
+	!!! One of the following masked packages is required to complete your request:
+	- dev-vcs/git-2.7.3-r1::gentoo (masked by: EAPI 6)
+
+	The current version of portage supports EAPI '5'. You must upgrade to a
+	newer version of portage before EAPI masked packages can be installed.
+	For more information, see the MASKED PACKAGES section in the emerge
+	man page or refer to the Gentoo Handbook.
+
+提示很清楚了, 当前的portage版本不支持EAPI6。更新 `sys-apps/portage` 软件即可。
+
+关于EAPI的介绍:
+
+* [EAPI Usage and Description](https://devmanual.gentoo.org/ebuild-writing/eapi/)
+* [EAPI 用途及描述](https://www.gentoo.org.cn/devmanual/ebuild-writing/eapi/index.html) 上面的中文版, 只更新到EAPI5
+* [EAPI](https://wiki.gentoo.org/wiki/EAPI)
+* [初探 ebuild](https://segmentfault.com/a/1190000003819421)
+* [ebuild文件阅读和撰写方法简介](http://tieba.baidu.com/p/2255141345?see_lz=1)
+
+大致就是portage提供的一些现成的函数, 让编写ebuild的工作更简单。我估计EAPI应该是 Ebuild API 的简称(虽然官方没看到有这个说明。。。)
+
+
 ## 其它资源 ##
 
 * [emerge 中文手册](http://www.jinbuguo.com/gentoo/emerge.html)
