@@ -674,6 +674,43 @@ gcc升级后, 如果老版本被卸载, 需要运行`gcc-config`配置到新的�
 	eix-update
 
 
+## Gentoo下Perl的一些问题 ##
+
+> 插播一句, 最近被这个问题折腾的蛋疼, 然后看到某个Github Issues上有人评价了一句: Perl in Gentoo is the pain in the ass.
+
+最近一个新的Gentoo系统, Perl刚从5.18升级到5.20。但是执行 `perl-cleaner --all` 失败。
+
+首先一个是 `app-text/po4a` 这个玩意, 忘了是哪里需要, 但是后面的依赖很多, 有些是不能删的, 看这玩意碍事, 就`-C`不管依赖强制删除了。
+
+另外一个是 `virtual/perl-CPAN-Meta`, 这个在执行时总是让perl升级到5.22, 而5.22又是非稳定版。后来我看了下portage文件:
+
+	$ cat /usr/portage/virtual/perl-CPAN-Meta/perl-CPAN-Meta-2.150.1.ebuild
+
+	DESCRIPTION="Virtual for ${PN#perl-}"
+
+	RDEPEND="
+			|| ( =dev-lang/perl-5.22* ~perl-core/${PN#perl-}-${PV} )
+			>=virtual/perl-CPAN-Meta-YAML-0.11.0
+			>=virtual/perl-JSON-PP-2.271.30
+			>=virtual/perl-Parse-CPAN-Meta-1.441.400
+	"
+
+根据RDEPEND的意思, 我查了下相关文档:
+
+* [Dependencies](https://devmanual.gentoo.org/general-concepts/dependencies/)
+* [Quickstart Ebuild Guide](https://devmanual.gentoo.org/quickstart/)
+
+RDEPEND就是运行时依赖, 第一行依赖的意思就是这是一个 **或** 的关系, 要么存在 `=dev-lang/perl-5.22*` (前面的等号是强制的), 要么存在 `perl-core/CPAN-Meta-${PV}`, 即相同版本.
+
+而`2.143.240`这个版本两者都有, 虽然是masked, 但是只需要perl-5.20, 所以我先unmask, 然后安装:
+
+	emerge -auv '=virtual/perl-CPAN-Meta-2.143.240' '=perl-core/CPAN-Meta-2.143.240'
+
+然后就可以再升级到最新版本:
+
+	emerge -auv perl-core/CPAN-Meta virtual/perl-CPAN-Meta
+
+
 ## 其它资源 ##
 
 * [emerge 中文手册](http://www.jinbuguo.com/gentoo/emerge.html)
