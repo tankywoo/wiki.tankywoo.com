@@ -226,6 +226,14 @@ Gentoo的分支(branch)是指相应架构的软件包分支, 包括稳定(stable
 
 ---
 
+### emerge ##
+
+安装包后做基本配置, 如:
+
+	emerge --config =dev-db/mariadb-10.0.23
+
+---
+
 ### Eix ###
 
 [eix](https://wiki.gentoo.org/wiki/Eix) 通过增加一个portage树本地索引库, 快速的查询软件包，比「emerge」方便了很多。
