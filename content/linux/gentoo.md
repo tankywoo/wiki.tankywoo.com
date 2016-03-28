@@ -261,6 +261,66 @@ Gentoo的分支(branch)是指相应架构的软件包分支, 包括稳定(stable
 
 大致就是portage提供的一些现成的函数, 让编写ebuild的工作更简单。我估计EAPI应该是 Ebuild API 的简称(虽然官方没看到有这个说明。。。)
 
+---
+
+### SLOT ###
+
+SLOT, 即「槽」, 和具体某个包相关的概念, 是Gentoo实现多版本共存的基础。
+
+`0` 是默认的slot名, 表示没有使用slot;
+
+slot名是空字符串表示彻底禁止使用slot;
+
+带有slot的包, 包名后面会有`:`冒号分隔, 并带上slot, 如:
+
+	dev-python/dnspython-1.12.0-r200:py2
+	dev-python/dnspython-1.12.0-r300:py3
+
+表示dnspython这个包分别有py2和py3两个slot。
+
+相关的一些命令:
+
+`eix` 可以直接查看包的所有slot:
+
+	$ eix dnspython
+	* dev-python/dnspython
+		 Available versions:
+		 (py2)  1.12.0-r200
+		 (py3)  1.12.0-r300
+		   {examples test PYTHON_TARGETS="python2_7 python3_3 python3_4"}
+		 Homepage:            http://www.dnspython.org/ https://pypi.python.org/pypi/dnspython
+		 Description:         DNS toolkit for Python
+
+`equery list -p`:
+
+	$ equery l -po dnspython
+	 * Searching for dnspython ...
+	[-P-] [  ] dev-python/dnspython-1.12.0-r200:py2
+	[-P-] [  ] dev-python/dnspython-1.12.0-r300:py3
+	[-P-] [ ~] dev-python/dnspython-1.12.0-r301:py3
+
+`equery keywords`:
+
+	$ equery keywords dnspython
+	Keywords for dev-python/dnspython:
+				|                                 | u     |
+				| a a   a         n   p r     s   | n     |
+				| l m   r h i m m i   p i s   p   | u s   | r
+				| p d a m p a 6 i o p c s 3   a x | s l   | e
+				| h 6 r 6 p 6 8 p s p 6 c 9 s r 8 | e o   | p
+				| a 4 m 4 a 4 k s 2 c 4 v 0 h c 6 | d t   | o
+	------------+---------------------------------+-------+-------
+	1.12.0-r200 | + + + ~ + + o o o + + o ~ ~ + + | o py2 | gentoo
+	------------+---------------------------------+-------+-------
+	1.12.0-r300 | + + + ~ + + o o o + + o ~ ~ + + | o py3 | gentoo
+	1.12.0-r301 | ~ ~ ~ ~ ~ ~ o o o ~ ~ o ~ ~ ~ ~ | o     | gentoo
+
+参考:
+
+* [Slotting](https://devmanual.gentoo.org/general-concepts/slotting/)
+* [Sub-slots and Slot-Operators](https://wiki.gentoo.org/wiki/Sub-slots_and_Slot-Operators)
+* [List *ALL* Slot for a Given Package](https://forums.gentoo.org/viewtopic-t-824052-start-0.html)
+
 
 ## 问题 ##
 
