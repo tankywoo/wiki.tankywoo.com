@@ -1,8 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2016-03-07 22:21
-log: "增加两个Gentoo链接资源"
+updated: 2016-04-01 09:15
+log: "增加Hardend Gentoo文档"
 ---
 
 [TOC]
@@ -320,6 +320,13 @@ slot名是空字符串表示彻底禁止使用slot;
 * [Slotting](https://devmanual.gentoo.org/general-concepts/slotting/)
 * [Sub-slots and Slot-Operators](https://wiki.gentoo.org/wiki/Sub-slots_and_Slot-Operators)
 * [List *ALL* Slot for a Given Package](https://forums.gentoo.org/viewtopic-t-824052-start-0.html)
+
+
+### Hardened Gentoo ###
+
+参考:
+
+* 加固的Gentoo [en](https://wiki.gentoo.org/wiki/Hardened_Gentoo) / [zh](https://wiki.gentoo.org/wiki/Hardened_Gentoo/zh-cn)
 
 
 ## 问题 ##
