@@ -2,7 +2,7 @@
 title: "Gentoo"
 date: 2014-08-30 16:29
 updated: 2016-04-05 14:30
-log: "增加hard blocking问题"
+log: "增加world/system/selected set说明"
 ---
 
 [TOC]
@@ -223,6 +223,22 @@ Gentoo的分支(branch)是指相应架构的软件包分支, 包括稳定(stable
 
 * [@world versus world...what's the difference?](https://forums.gentoo.org/viewtopic-t-899878-start-0.html)
 * [World set (Portage)](https://wiki.gentoo.org/wiki/World_set\_(Portage))
+
+---
+
+### world / system / selected ###
+
+针对这个问题:
+
+	Would you like to add these packages to your world favorites? [Yes/No]
+
+参考:
+
+* [World set](https://wiki.gentoo.org/wiki/World_set_(Portage))
+* [System set](https://wiki.gentoo.org/wiki/System_set_(Portage))
+* [Selected set](https://wiki.gentoo.org/wiki/System_set_(Portage))
+
+里面介绍的已经非常详细了
 
 ---
 
