@@ -1,8 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2016-04-01 09:15
-log: "增加Hardend Gentoo文档"
+updated: 2016-04-05 14:30
+log: "增加hard blocking问题"
 ---
 
 [TOC]
@@ -831,6 +831,25 @@ eix看本地git最新稳定版是2.7.3, 但是默认不给安装, 强制指定�
 	man page or refer to the Gentoo Handbook.
 
 提示很清楚了, 当前的portage版本不支持EAPI6。更新 `sys-apps/portage` 软件即可。
+
+
+### hard blocking ###
+
+更新samba时遇到的阻塞问题:
+
+	[ebuild     U  ] net-fs/samba-4.2.9::gentoo [3.6.25::gentoo] ...
+	[blocks B      ] <net-fs/samba-4.1.7 ("<net-fs/samba-4.1.7" is hard blocking sys-libs/ntdb-1.0-r1)
+
+关于ntdb的ebuild内容:
+
+	DEPEND="!!<net-fs/samba-4.1.7
+			${RDEPEND}
+			${PYTHON_DEPS}
+			app-text/docbook-xml-dtd:4.2"
+
+`!!`表示hard block, 需要用户自己来处理这个关系; 这里表示安装ntdb前samba必须>=4.1.7版本.(参考[dependencies](https://devmanual.gentoo.org/general-concepts/dependencies/))
+
+目前的解决办法就是先卸载掉samba-3.x, 再直接安装samba-4.x (参考[samba hard blocking ntdb](https://forums.gentoo.org/viewtopic-p-7639846.html))
 
 
 ## 其它资源 ##
