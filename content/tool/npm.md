@@ -1,7 +1,7 @@
 ---
 title: "npm"
-date: 2016-02-15 13:15
-log: "初始化, 增加npm基本使用"
+date: 2016-04-09 16:50
+log: "增加npm源说明"
 ---
 
 [TOC]
@@ -22,6 +22,38 @@ log: "初始化, 增加npm基本使用"
 原先`/usr/local/lib/node_modules/`的属主是nobody, 导致加上「-g」安装权限报错, 需要:
 
 	$ sudo chown -R $USER /usr/local/lib/node_modules
+
+查看包信息:
+
+    npm install <package>
+
+### NPM源 ###
+
+本地访问官方npm源timeout，可以改为国内(如淘宝NPM)源。
+
+查看当前的npm registry地址:
+
+    $ npm config get registry
+
+临时设置npm registry地址:
+
+    $ npm config set registry https://registry.npm.taobao.org
+
+或者只在install时指定:
+
+    npm --registry https://registry.npm.taobao.org install <package>
+
+永久则可以写入`.npmrc`:
+
+    registry = https://registry.npm.taobao.org
+
+或者使用`cnpm`:
+
+* [CNPMJS](http://cnpmjs.org/)
+* [淘宝NPM](http://npm.taobao.org/)
+
+参考: [npm 换源 npm 国内镜像 cnpm](http://www.jianshu.com/p/ad29d97b0e9d)
+
 
 参考:
 
