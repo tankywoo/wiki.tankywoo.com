@@ -7,7 +7,7 @@
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/favicon.ico" type="image/x-icon">
         <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-        <title>Python Good Resource - Wiki · Tanky Woo</title>
+        <title>nscd - Wiki · Tanky Woo</title>
         <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
         <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,21 +21,28 @@
     <div id="header">
         <div id="post-nav">
             
-            <a href="/">Wiki · Tanky Woo</a> » <a href="/#python">python</a> » Python Good Resource
+            <a href="/">Wiki · Tanky Woo</a> » <a href="/#tool">tool</a> » nscd
             
         </div>
     </div>
     <div class="clearfix"></div>
     <div id="content">
-        <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">编码风格/规范</a></li>
-</ul>
+        <div class="toc"><span class="toctitle">Table of Contents</span><ul></ul>
 </div>
-<h2 id="_1">编码风格/规范</h2>
-<ul>
-<li><a href="https://www.python.org/dev/peps/pep-0008/">PEP 8 - Style Guide for Python Code</a></li>
-<li><a href="https://google.github.io/styleguide/pyguide.html">Google Python 风格指南</a> | <a href="http://zh-google-styleguide.readthedocs.org/en/latest/google-python-styleguide/">中文</a></li>
-</ul>
+<p>nscd是一个dns解析相关的缓存守护进程。</p>
+<p>之前有遇到过个别域名无法解析的情况, name server都是ok的, 没有具体排查, 只知道是nscd的原因。</p>
+<p>停掉nscd服务后解析正常。</p>
+<p>不过看到一篇文章: <a href="https://stijn.tintel.eu/blog/2012/05/10/how-to-really-flush-the-various-nscd-caches">How to really flush the various nscd caches</a>, 里面指出停掉nscd服务但是缓存文件还是会在本地存放, 所以停掉并不能解决问题, 需要强制去指定清除缓存:</p>
+<div class="hlcode"><pre><span class="nx">nscd</span> <span class="na">-i</span> <span class="o">&lt;</span><span class="nb">table_name</span><span class="o">&gt;</span>  <span class="err">#</span> <span class="err">或者</span> <span class="nx">nscd</span> <span class="o">--</span><span class="n">invalidate</span><span class="o">=&lt;</span><span class="nb">table_name</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>一般是hosts表:</p>
+<div class="hlcode"><pre><span class="n">nscd</span> <span class="o">-</span><span class="n">i</span> <span class="n">hosts</span>
+</pre></div>
+
+
+<p>TODO 这个问题下次再遇到验证下, 本地还没看到这个缓存问题, 暂时不去分析了.</p>
     </div>
 
         </div>
