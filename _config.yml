@@ -5,12 +5,15 @@ description: "Tanky Woo's personal wiki, powered by vim and markdown. Focus on P
 author: Tanky Woo
 theme: yasimple_x
 
+category:
+  - name: linux
+    label: Linux/运维
 
 ##### Deploy #####
 deploy:
   - type: rsync
     user: root
-    host: 192.81.133.96
+    host: 101.200.157.48
     dir: /opt/wiki.tankywoo.com/output
   - type: git
     remote: origin
