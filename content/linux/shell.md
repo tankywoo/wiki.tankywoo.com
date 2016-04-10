@@ -1,6 +1,8 @@
 ---
 title: "Shell"
 date: 2013-08-17 07:23
+updated: 2016-04-10 10:50
+log: "增加命令行参数解析"
 ---
 
 [TOC]
@@ -723,6 +725,11 @@ false: shell built-in command
 或者:
 
     echo {1..10}
+
+
+### 命令行参数解析 ###
+
+* [How do I parse command line arguments in bash?](http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash)
 
 ## 参考 ##
 
