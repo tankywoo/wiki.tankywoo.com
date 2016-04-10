@@ -1,6 +1,8 @@
 ---
 title: "Python Performance Analysis Tool"
 date: 2013-08-17 07:39
+updated: 2016-04-11 01:00
+log: "增加参考文档"
 ---
 
 
@@ -78,3 +80,12 @@ TODO
 ## pstats ##
 
 TODO
+
+---
+
+## 其它参考 ##
+
+* [7 tips to Time Python scripts and control Memory & CPU usage](http://www.marinamele.com/7-tips-to-time-python-scripts-and-control-memory-and-cpu-usage)
+* [A guide to analyzing Python performance](http://www.huyng.com/posts/python-performance-analysis/)
+* [Python 代码性能优化技巧](https://www.ibm.com/developerworks/cn/linux/l-cn-python-optim/)
+* [Python 性能剖分工具](http://blog.csdn.net/gzlaiyonghao/article/details/2120147)
