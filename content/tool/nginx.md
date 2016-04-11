@@ -1,6 +1,8 @@
 ---
 title: "Nginx"
 date: 2016-01-07 21:11
+updated: 2016-04-11 23:27
+log: "增加root和alias区别的链接"
 ---
 
 [TOC]
@@ -11,6 +13,7 @@ date: 2016-01-07 21:11
 
 ### root vs alias ###
 
+* [Nginx — static file serving confusion with root & alias](http://stackoverflow.com/questions/10631933/nginx-static-file-serving-confusion-with-root-alias)
 * [nginx目录设置 alias 和 root](http://www.wkii.org/nginx-set-directory-alias-and-root.html)
 * [nginx虚拟目录(alias与root的区别)](http://blog.sina.com.cn/s/blog_6c2e6f1f0100l92h.html)
 
