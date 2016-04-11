@@ -1,7 +1,8 @@
 ---
 title: "Vim"
 date: 2013-08-17 07:32
-updated: 2016-03-14 16:45
+updated: 2016-04-11 11:11
+log: "更新vim自动补全相关"
 ---
 
 [TOC]
@@ -114,11 +115,13 @@ vim套件中的对比工具
 
 ### 自动补全 ###
 
-目前使用[jedi-vim](https://github.com/davidhalter/jedi-vim)插件
+目前使用[jedi-vim](https://github.com/davidhalter/jedi-vim)插件, 可以配合[Supertab](https://github.com/ervandew/supertab)。
 
 有什么omni(智能补全?), 自动补全啥的, 没去研究.
 
 * [Are there any autocompletion plugins for vim?](http://superuser.com/a/841048/251495)
+* [Vim autocomplete for Python](http://stackoverflow.com/questions/7138039/vim-autocomplete-for-python)
+* [Is it possible to have vim auto-complete function names, variables, etc. when using it to program?](http://vi.stackexchange.com/questions/39/is-it-possible-to-have-vim-auto-complete-function-names-variables-etc-when-us)
 * [vi/vim使用进阶: 智能补全](http://easwy.com/blog/archives/advanced-vim-skills-omin-complete/)
 * [vi/vim使用进阶: 自动补全](http://easwy.com/blog/archives/advanced-vim-skills-auto-complete/)
 
@@ -178,7 +181,7 @@ Replace:
 
 参考:
 
-* [How to replace a character for a newline in Vim?] (http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim)
+* [How to replace a character for a newline in Vim?](http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim)
 * [Why is \r a newline for Vim?](http://stackoverflow.com/questions/71417/why-is-r-a-newline-for-vim)
 * [How can I add a string to the end of each line in Vim?](http://stackoverflow.com/questions/594448/how-can-i-add-a-string-to-the-end-of-each-line-in-vim)
 * [VIM参考手册](http://vimcdoc.sourceforge.net/doc/)
