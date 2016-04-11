@@ -1,8 +1,8 @@
 ---
 title: "Shell"
 date: 2013-08-17 07:23
-updated: 2016-04-10 10:50
-log: "增加命令行参数解析"
+updated: 2016-04-11 23:43
+log: "增加参数扩展"
 ---
 
 [TOC]
@@ -730,6 +730,20 @@ false: shell built-in command
 ### 命令行参数解析 ###
 
 * [How do I parse command line arguments in bash?](http://stackoverflow.com/questions/192249/how-do-i-parse-command-line-arguments-in-bash)
+
+
+### 参数扩展 ###
+
+具体见: `man bash`中的`Parameter Expansion`一段
+
+经常在`/etc/init.d/`下的服务管理脚本中能看到类似的(下面摘自/etc/init.d/nginx)：
+
+	user=${user:-nginx}
+
+`:-`表示获取${user}变量，如果user变量未定义，是值为`:-`后面定义的值，即缺省值。
+
+其它参考: [linux bash shell之变量替换：:=句法、=句法、:-句法、-句法、=?句法、?句法、:+句法、+句法](http://www.cnblogs.com/fhefh/archive/2011/04/22/2024750.html)
+
 
 ## 参考 ##
 
