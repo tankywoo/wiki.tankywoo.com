@@ -1,8 +1,8 @@
 ---
 title: "Nginx"
 date: 2016-01-07 21:11
-updated: 2016-04-11 23:27
-log: "增加root和alias区别的链接"
+updated: 2016-04-12 15:30
+log: "增加location配置"
 ---
 
 [TOC]
@@ -11,6 +11,123 @@ log: "增加root和alias区别的链接"
 
 ## 指令 ##
 
+### location ###
+
+具体见官方文档 [ngx_http_core_module - location](http://nginx.org/en/docs/http/ngx_http_core_module.html#location), 讲得非常详细。
+
+基本语法如下:
+
+	location [ = | ~ | ~* | ^~  ] uri { ...  }
+
+主要分两种:
+
+* prefix string, 普通的前缀字符串匹配。包括 `=`, `^~`
+* regular expression, 正则匹配, 包括 `~*`, `~`
+
+Nginx寻找匹配路径的逻辑:
+
+> To find location matching a given request, nginx first checks locations defined using the prefix strings (prefix locations). Among them, the location with the longest matching prefix is selected and remembered. Then regular expressions are checked, in the order of their appearance in the configuration file. The search of regular expressions terminates on the first match, and the corresponding configuration is used. If no match with a regular expression is found then the configuration of the prefix location remembered earlier is used.
+
+> If the longest matching prefix location has the “^~” modifier then regular expressions are not checked.
+
+> Also, using the “=” modifier it is possible to define an exact match of URI and location. If an exact match is found, the search terminates.
+
+即，会先寻找prefix string的**最长匹配**的路径并**记录**下来，然后再在正则路径中以**配置的顺序**寻找，如果正则路径有匹配，则使用正则location; 否则使用prefix string中之前记录的匹配location。
+
+但是有两个例外，`^~`的作用就是不继续尝试做正则匹配，即如果最长匹配到这个location, 则停止继续尝试正则的location；还有一个是精确匹配`=`。
+
+具体例子, 假设域名是a.com:
+
+	location = / {
+		[ configuration A ]
+		# 精确匹配 (exact match)
+		# 只匹配 a.com/
+		# 优先级最高
+	}
+
+	location / {
+		[ configuration B ]
+		# 普通的prefix string匹配, 优先级最低
+	}
+
+	location /documents/ {
+		[ configuration C ]
+		# 普通的prefix string匹配, 优先级最低
+	}
+
+	location ^~ /images/ {
+		[ configuration D ]
+		# prefix string匹配, 如果匹配上, 则不再尝试去做正则匹配
+	}
+
+	location ~* \.(gif|jpg|jpeg)$ {
+		[ configuration E ]
+		# 正则匹配, 忽略大小写 (case-insensitive)
+	}
+
+	location ~ \.(PNG|TXT)$ {
+		[ configuration E ]
+		# 正则匹配, 大小写敏感 (case-sensitive)
+	}
+
+所以按优先级来说:
+
+1. `=` exact match
+2. `^~` prefix string match
+3. `~*`/`~` re match
+4. common prefix string match
+
+最后，还有几个问题:
+
+1. 如Mac OS X系统，默认是HFS+文件系统，是大小写不敏感的, 做location匹配时是忽略大小写。
+2. 因为如`=`是做精确匹配后就停止，所以效率高。如，如果访问 '/' 非常频繁，可以考虑配置为 `= /`
+
+但是，针对第二点，涉及到一个 `internal redirect` 的问题，具体看[index指令](http://nginx.org/en/docs/http/ngx_http_index_module.html#index)
+
+> It should be noted that using an index file causes an internal redirect, and the request can be processed in a different location. For example, with the following configuration:
+> 
+> 	location = / {
+> 		index index.html;
+> 	}
+> 
+> 	location / {
+> 		...
+> 	}
+> 
+> a “/” request will actually be processed in the second location as “/index.html”.
+
+如果配置为目录，会导致与与其不符的情况，这块需要注意。
+
+本地编译Nginx打开debug选项，然后`error_log`配置为`debug`级别:
+
+	error_log /var/log/nginx/test.error.log debug;
+
+可以看到实际寻找location的顺序和一些行为:
+
+	2016/04/12 18:47:27 [debug] 24990#0: *6 test location: "/"
+	2016/04/12 18:47:27 [debug] 24990#0: *6 using configuration "=/"
+	2016/04/12 18:47:27 [debug] 24990#0: *6 http cl:-1 max:1048576
+	...
+	2016/04/12 18:47:27 [debug] 24990#0: *6 open index "/opt/test/2015/index.html"
+	2016/04/12 18:47:27 [debug] 24990#0: *6 internal redirect: "/index.html?"
+	2016/04/12 18:47:27 [debug] 24990#0: *6 rewrite phase: 1
+	2016/04/12 18:47:27 [debug] 24990#0: *6 test location: "/"
+	2016/04/12 18:47:27 [debug] 24990#0: *6 test location: "images/"
+	2016/04/12 18:47:27 [debug] 24990#0: *6 test location: ~ "\.(gif|jpg|jpeg|txt)$"
+	2016/04/12 18:47:27 [debug] 24990#0: *6 using configuration "/"
+	...
+	2016/04/12 18:47:27 [debug] 24990#0: *6 http filename: "/opt/test/index.html"
+
+比如我同时配置`= /` 和 `/`, root分别是/opt/test/2015/和/opt/test/, 访问根预期是在前者找, 但实际是在后者找了。而index默认是有值的。
+
+其它参考:
+
+* [Understanding Nginx Server and Location Block Selection Algorithms](https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms)
+* [nginx配置location总结及rewrite规则写法](http://seanlook.com/2015/05/17/nginx-location-rewrite/)
+* [Nginx location 配置踩坑过程分享](https://blog.coding.net/blog/tips-in-configuring-Nginx-location)
+* [How to mak nginx to stop processing other rules and serve a specific location?](http://stackoverflow.com/questions/10699755/how-to-mak-nginx-to-stop-processing-other-rules-and-serve-a-specific-location)
+
+
 ### root vs alias ###
 
 * [Nginx — static file serving confusion with root & alias](http://stackoverflow.com/questions/10631933/nginx-static-file-serving-confusion-with-root-alias)
@@ -18,7 +135,9 @@ log: "增加root和alias区别的链接"
 * [nginx虚拟目录(alias与root的区别)](http://blog.sina.com.cn/s/blog_6c2e6f1f0100l92h.html)
 
 
-## 中文域名 ##
+## 其它 ##
+
+### 中文域名 ###
 
 中文域名之所以可以解析/访问, 并不是说dns, nginx等都可以识别, 而是再浏览器层面会做一个转码.
 
@@ -46,7 +165,8 @@ log: "增加root和alias区别的链接"
 	}
 
 
-## 价值链接 ##
+## 链接 ##
 
 * [如何正确配置Nginx+PHP](http://huoding.com/2013/10/23/290)
 * [实战Nginx与PHP（FastCGI）的安装、配置与优化](http://ixdba.blog.51cto.com/2895551/806622)
+* [Pitfalls and Common Mistakes](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/)
