@@ -1,8 +1,8 @@
 ---
 title: "Nginx"
 date: 2016-01-07 21:11
-updated: 2016-04-12 15:30
-log: "增加location配置"
+updated: 2016-04-12 19:00
+log: "更新alias说明"
 ---
 
 [TOC]
@@ -129,6 +129,10 @@ Nginx寻找匹配路径的逻辑:
 
 
 ### root vs alias ###
+
+注意 `alias` 配置的路径需要带上结束的**slash**, 否则做路径拼接会出错导致找不到资源。
+
+另外，官方文档推荐使用`root`。
 
 * [Nginx — static file serving confusion with root & alias](http://stackoverflow.com/questions/10631933/nginx-static-file-serving-confusion-with-root-alias)
 * [nginx目录设置 alias 和 root](http://www.wkii.org/nginx-set-directory-alias-and-root.html)
