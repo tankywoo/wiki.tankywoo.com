@@ -1,7 +1,8 @@
 ---
 title: "tmux"
 date: 2013-10-16 16:24
-update: 2015-10-22 14:22
+update: 2016-04-12 12:52
+log: "增加关闭自动修改title特性"
 ---
 
 [TOC]
@@ -242,6 +243,18 @@ tmux attach-session -d -t 'tankywoo'
 参考:
 
 * [Moving tmux window to pane](http://unix.stackexchange.com/questions/14300/moving-tmux-window-to-pane)
+
+
+### 关闭自动修改title ###
+
+	set -g allow-rename off
+	setw -g automatic-rename off
+
+参考:
+
+* [Tmux window title keeps renaming](http://stackoverflow.com/questions/17289439/tmux-window-title-keeps-renaming)
+* [Keep the window's name fixed in tmux](http://stackoverflow.com/questions/6041178/keep-the-windows-name-fixed-in-tmux)
+
 
 ## 扩展 - tmux powerline ##
 
