@@ -1,6 +1,7 @@
 ---
 title: "Supervisord"
 date: 2014-12-04 15:31
+collection: "服务管理工具"
 ---
 
 > [Supervisor](http://supervisord.org/) is a client/server system that allows its users to monitor and control a number of processes on UNIX-like operating systems.

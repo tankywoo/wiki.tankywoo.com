@@ -1,6 +1,7 @@
 ---
-title: "screen"
+title: "Screen"
 date: 2013-09-06 10:22
+collection: "终端模拟器"
 ---
 
 ## .screenrc ##

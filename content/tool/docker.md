@@ -2,6 +2,7 @@
 title: "Docker"
 date: 2015-11-08 12:34
 updated: 2016-03-07 23:39
+collection: "虚拟化"
 ---
 
 [Docker](https://www.docker.com/) Build, Ship, Run; An open platform for distributed applications for developers and sysadmins

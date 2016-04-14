@@ -1,6 +1,7 @@
 ---
 title: "inotify"
 date: 2013-09-06 19:06
+collection: "系统工具"
 ---
 
 

@@ -2,6 +2,7 @@
 title: "Nginx"
 date: 2016-01-07 21:11
 updated: 2016-04-12 19:00
+collection: "Web服务器"
 log: "更新alias说明"
 ---
 

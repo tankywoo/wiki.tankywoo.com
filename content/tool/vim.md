@@ -2,6 +2,7 @@
 title: "Vim"
 date: 2013-08-17 07:32
 updated: 2016-04-11 11:11
+collection: "编辑器"
 log: "更新vim自动补全相关"
 ---
 

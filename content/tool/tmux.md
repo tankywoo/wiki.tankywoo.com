@@ -2,6 +2,7 @@
 title: "tmux"
 date: 2013-10-16 16:24
 update: 2016-04-12 12:52
+collection: "终端模拟器"
 log: "增加关闭自动修改title特性"
 ---
 

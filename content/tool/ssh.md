@@ -1,6 +1,7 @@
 ---
 title: "ssh"
 date: 2013-09-13 10:48
+collection: "网络相关"
 ---
 
 

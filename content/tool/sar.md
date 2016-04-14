@@ -1,6 +1,7 @@
 ---
 title: "sar"
 date: 2013-08-17 07:32
+collection: "系统工具"
 ---
 
 Sar commands comes with the sysstat package. Make sure sysstat is installed. If you don’t have sar installed on your system, get it from Sysstat project.

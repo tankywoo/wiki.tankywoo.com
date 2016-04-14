@@ -1,6 +1,7 @@
 ---
 title: "samba"
 date: 2013-08-17 07:36
+collection: "数据管理/传输"
 ---
 
 

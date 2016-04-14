@@ -2,6 +2,7 @@
 title: "nscd"
 date: 2016-04-05 14:50
 updated: 2016-04-05 14:50
+collection: "DNS工具"
 log: "新增文档"
 ---
 

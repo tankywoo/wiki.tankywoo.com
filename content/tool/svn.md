@@ -1,6 +1,7 @@
 ---
 title: "svn"
 date: 2013-08-17 07:32
+collection: "版本控制管理"
 ---
 
 

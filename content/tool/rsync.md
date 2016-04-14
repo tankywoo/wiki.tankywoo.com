@@ -2,6 +2,7 @@
 title: "rsync"
 date: 2013-08-17 07:36
 updated: 2016-01-03 11:28
+collection: "数据管理/传输"
 ---
 
 [TOC]

@@ -1,5 +1,5 @@
 ---
-title: "mysql"
+title: "MySQL"
 date: 2013-08-17 07:36
 ---
 

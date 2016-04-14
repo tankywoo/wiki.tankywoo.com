@@ -1,6 +1,7 @@
 ---
 title: "nc"
 date: 2013-09-03 22:03
+collection: "网络相关"
 ---
 
 

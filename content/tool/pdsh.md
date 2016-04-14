@@ -1,6 +1,7 @@
 ---
 title: "pdsh"
 date: 2014-04-28 14:57
+collection: "批量操作"
 ---
 
 [Pdsh](https://code.google.com/p/pdsh/)(Parallel Distributed Shell) 

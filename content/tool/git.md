@@ -1,6 +1,7 @@
 ---
 title: "Git"
 date: 2013-11-08 00:02
+collection: "版本控制管理"
 ---
 
 [TOC]

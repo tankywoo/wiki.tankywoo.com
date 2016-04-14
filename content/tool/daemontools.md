@@ -1,6 +1,7 @@
 ---
 title: "daemontools"
 date: 2013-09-06 19:06
+collection: "服务管理工具"
 ---
 
 

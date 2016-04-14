@@ -1,6 +1,7 @@
 ---
 title: "bwm-ng"
 date: 2013-08-17 07:32
+collection: "网络相关"
 ---
 
 Bandwidth Monitor NG (Next Generation), a live bandwidth monitor for network and disk io.

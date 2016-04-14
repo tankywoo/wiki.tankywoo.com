@@ -1,6 +1,7 @@
 ---
 title: "sed"
 date: 2013-08-17 07:32
+collection: "文本处理"
 ---
 
 使用的是gnu sed, mac 下默认是bsd sed, mac下可以`brew install gnu-sed`

@@ -1,6 +1,7 @@
 ---
 title: "whois"
 date: 2015-11-01 15:21
+collection: "网络相关"
 ---
 
 [TOC]

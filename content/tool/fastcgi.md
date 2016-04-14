@@ -1,6 +1,7 @@
 ---
 title: "fastcgi"
 date: 2013-08-17 07:36
+collection: "Web服务器"
 ---
 
 

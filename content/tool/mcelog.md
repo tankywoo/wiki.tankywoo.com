@@ -1,6 +1,7 @@
 ---
 title: "mcelog"
 date: 2014-03-25 14:08
+collection: "系统工具"
 ---
 
 MCE - Machine Check Exception(Error)

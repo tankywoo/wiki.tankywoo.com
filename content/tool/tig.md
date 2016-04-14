@@ -1,6 +1,7 @@
 ---
 title: "tig"
 date: 2013-09-06 11:35
+collection: "版本控制管理"
 ---
 
 

@@ -1,6 +1,7 @@
 ---
 title: "ethtool"
 date: 2013-08-25 10:01
+collection: "网络相关"
 ---
 
 

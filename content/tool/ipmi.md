@@ -1,6 +1,7 @@
 ---
 title: "ipmi"
 date: 2015-08-10 21:33
+collection: "系统工具"
 ---
 
 IPMI(Intelligent Platform Management Interface) 智慧平台管理工具.

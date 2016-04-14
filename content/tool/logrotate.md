@@ -1,6 +1,7 @@
 ---
 title: "logrotate"
 date: 2016-03-07 22:00
+collection: "日志管理"
 ---
 
 [TOC]

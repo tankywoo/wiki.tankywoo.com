@@ -1,6 +1,7 @@
 ---
 title: "npm"
 date: 2016-04-09 16:50
+collection: "包管理"
 log: "增加npm源说明"
 ---
 

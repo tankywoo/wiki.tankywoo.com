@@ -2,6 +2,7 @@
 layout: post
 title: "SaltStack"
 date: 2014-02-11 17:11
+collection: "配置管理"
 ---
 
 * [官网](http://www.saltstack.com/)
