@@ -1,3 +1,6 @@
 [submodule "themes/yasimple"]
 	path = themes/yasimple
 	url = git@github.com:tankywoo/yasimple.git
+[submodule "themes/yasimple_x2"]
+	path = themes/yasimple_x2
+	url = git@git.coding.net:tankywoo/yasimple_x2.git
