@@ -1,9 +1,9 @@
 ---
 title: "Nginx"
 date: 2016-01-07 21:11
-updated: 2016-04-12 19:00
+updated: 2016-04-15 11:20
 collection: "Web服务器"
-log: "更新alias说明"
+log: "增加auth_basic"
 ---
 
 [TOC]
@@ -138,6 +138,28 @@ Nginx寻找匹配路径的逻辑:
 * [Nginx — static file serving confusion with root & alias](http://stackoverflow.com/questions/10631933/nginx-static-file-serving-confusion-with-root-alias)
 * [nginx目录设置 alias 和 root](http://www.wkii.org/nginx-set-directory-alias-and-root.html)
 * [nginx虚拟目录(alias与root的区别)](http://blog.sina.com.cn/s/blog_6c2e6f1f0100l92h.html)
+
+
+### HTTP Basic Authentication ###
+
+见 [ngx_http_auth_basic_module](http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html)，相关指令:
+
+* `auth_basic`: 任意字符串(开启) 或 off (关闭, 默认值)
+* `auth_basic_user_file`: 用户名:密码 列表文件
+
+创建用户密码对的文件:
+
+	$ htpasswd -c /path/to/auth/file <username>
+
+注意: `-c` 是生成用户密码对并(覆盖)写入文件; 不加`-c`是基于现有文件做append。所以加-c要注意别覆盖已有文件了。
+
+`htpasswd` 命令Gentoo下在`app-admin/apache-tools`包里。
+
+参考:
+
+* [How To Set Up HTTP Authentication With Nginx On Ubuntu 12.10](https://www.digitalocean.com/community/tutorials/how-to-set-up-http-authentication-with-nginx-on-ubuntu-12-10)
+* [How To Set Up Password Authentication with Nginx on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04)
+* [How To Set Up Basic HTTP Authentication With Nginx on CentOS 7](https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-centos-7)
 
 
 ## 其它 ##
