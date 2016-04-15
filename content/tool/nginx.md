@@ -3,7 +3,7 @@ title: "Nginx"
 date: 2016-01-07 21:11
 updated: 2016-04-15 11:20
 collection: "Web服务器"
-log: "增加auth_basic"
+log: "增加一些命令参考官网链接"
 ---
 
 [TOC]
@@ -11,6 +11,19 @@ log: "增加auth_basic"
 [Nginx Beginner's Guide](http://nginx.org/en/docs/beginners_guide.html)
 
 ## 指令 ##
+
+
+### 核心命令 ###
+
+见[Core functionality](http://nginx.org/en/docs/ngx_core_module.html#worker_processes)
+
+* `worker_processes`: (number | auto) 表示Nginx开启的子进程数
+
+
+### server_name ###
+
+见[Server names](http://nginx.org/en/docs/http/server_names.html)
+
 
 ### location ###
 
