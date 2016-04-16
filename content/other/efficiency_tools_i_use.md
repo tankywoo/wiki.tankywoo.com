@@ -1,8 +1,11 @@
 ---
 title: "效率工具"
 date: 2013-08-17 07:32
+updated: 2016-04-16 16:00
+log: "更新梯子相关"
 ---
 
+[TOC]
 
 ## 云笔记本 ##
 
@@ -63,8 +66,15 @@ FreeMind相对而言比较简洁和轻量级, 而且功能也都非常不错.
 
 note: 以下链接用base64转码
 
-* [vpnso](aHR0cDovL3ZwbnNvLmNvbS8K) 用了两年, 可选列表很多, 买的 v?n 还带有chrome插件, 走socks代理.
-* [鱼摆摆](aHR0cHM6Ly95YmIxMDI0LmNvbS8K) 只能mac下用, 走的socks代理.
-* [红杏](aHR0cDovL2hvbnguaW4vaS9WVEpHLVlrV0doakMydURtCg==) 只能邀请注册, 所以url带尾巴. 只支持Chrome浏览器, 以插件形式使用. (未使用)
-* [Shadowsocks](aHR0cHM6Ly9zaGFkb3dzb2Nrcy5jb20vCg==) 用的shadowsocks. (未使用)
-* [熊猫翻滚](aHR0cHM6Ly93d3cucGFuZGFmYW4ub3JnLz9yPTIyNjAxCg==) 带尾巴. http(s)代理. (未使用)
+* vpnso: *aHR0cDovL3ZwbnNvLmNvbS8K* 年付，用了三年, 可选列表很多, 买的 v?n 还带有chrome插件, 走socks代理。也提供ss。
+* 鱼摆摆: *aHR0cHM6Ly95YmIxMDI0LmNvbS8K* 只能mac下用, 走的socks代理。支持月付，用过一阵子，还行。
+* 熊猫翻滚: *aHR0cHM6Ly93d3cucGFuZGFmYW4ub3JnLz9yPTIyNjAxCg==* 带尾巴. http(s)代理。支持月付，看起来还不错。 (未使用)
+* Shadowsocks: *aHR0cHM6Ly9zaGFkb3dzb2Nrcy5jb20vCg==* 年付，非ss官网。(未使用)
+* 红杏: *aHR0cDovL2hvbnguaW4vaS9WVEpHLVlrV0doakMydURtCg==* 只能邀请注册, 所以url带尾巴. 只支持Chrome浏览器, 以插件形式使用。 (未使用)
+* 云梯: *aHR0cHM6Ly93d3cueXRwdWIuY29tLwo=* (未使用)
+* 佛跳墙: *aHR0cDovL3d3dy5nb2R1c2V2cG4uaW8K* 支持月付。(未使用)
+
+最近在用ss, 感觉还是挺方便的。
+
+关于ss的配置: [shadowsocks](https://shadowsocks.org/en/index.html)，另外浏览器端配置可参考: [Chrome + Proxy SwitchOmega](https://ii-i.org/archives/289)。
+
