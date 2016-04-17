@@ -1,9 +1,9 @@
 ---
 title: "Nginx"
 date: 2016-01-07 21:11
-updated: 2016-04-15 11:20
+updated: 2016-04-17 21:30
 collection: "Web服务器"
-log: "增加一些命令参考官网链接"
+log: "增加书籍推荐"
 ---
 
 [TOC]
@@ -210,3 +210,7 @@ Nginx寻找匹配路径的逻辑:
 * [如何正确配置Nginx+PHP](http://huoding.com/2013/10/23/290)
 * [实战Nginx与PHP（FastCGI）的安装、配置与优化](http://ixdba.blog.51cto.com/2895551/806622)
 * [Pitfalls and Common Mistakes](https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/)
+
+书籍:
+
+* [实战Nginx](https://book.douban.com/subject/4251875/) 花了几个小时看完，还是有些收获，给7分
