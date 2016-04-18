@@ -1,8 +1,8 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-03-15 08:28
-description: "查漏补缺, Tricks/Tips/Fragments"
+updated: 2016-04-18 11:25
+description: "增加删除文件的最后一个newline符"
 ---
 
 [TOC]
@@ -229,3 +229,15 @@ description: "查漏补缺, Tricks/Tips/Fragments"
 	command 2>&1
 
 参考 [How to pipe stderr, and not stdout?](http://stackoverflow.com/questions/2342826/how-to-pipe-stderr-and-not-stdout)
+
+
+### 删除文件的最后一个newline符 ###
+
+	$ perl -pe 'chomp if eof' filename >filename2
+
+或
+
+	$ perl -pi -e 'chomp if eof' filename
+
+参考: [How can I delete a newline if it is the last character in a file?](http://stackoverflow.com/questions/1654021/how-can-i-delete-a-newline-if-it-is-the-last-character-in-a-file)
+
