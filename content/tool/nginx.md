@@ -1,9 +1,9 @@
 ---
 title: "Nginx"
 date: 2016-01-07 21:11
-updated: 2016-04-17 21:30
+updated: 2016-04-18 08:50
 collection: "Web服务器"
-log: "增加书籍推荐"
+log: "增加access_log的变量问题"
 ---
 
 [TOC]
@@ -173,6 +173,19 @@ Nginx寻找匹配路径的逻辑:
 * [How To Set Up HTTP Authentication With Nginx On Ubuntu 12.10](https://www.digitalocean.com/community/tutorials/how-to-set-up-http-authentication-with-nginx-on-ubuntu-12-10)
 * [How To Set Up Password Authentication with Nginx on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04)
 * [How To Set Up Basic HTTP Authentication With Nginx on CentOS 7](https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-centos-7)
+
+
+### access_log的变量问题 ###
+
+因为习惯把nginx日志按网站名存放, 即/var/log/nginx/www.xxx.com.log，所以考虑可以改为直接使用`server_name`:
+
+	access_log  /var/log/nginx/$server_name.log;
+
+类似与`proxy_pass`用变量配置域名，变量在运行时会做解析。所以:
+
+nginx会在每次请求过来时打开日志文件，然后在请求结束时关闭文件(strace看)；而不使用变量情况下，会在进程起来时就一直打开文件(lsof看)。前者是非常消耗资源。(TODO 解决方案?)
+
+还有另外一个，就是配置变量后，是每次靠worker process打开，所以日志的权限需要和worker process一样，否则无法写入日志；而后者是master process打开的日志文件，所以日志文件的权限是root也可以。
 
 
 ## 其它 ##
