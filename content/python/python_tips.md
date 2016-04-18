@@ -1,8 +1,9 @@
 ---
 title: "Python Tips"
 date: 2016-02-06 22:00
-updated: 2016-03-24 22:00
+updated: 2016-04-18 11:40
 description: "Python查漏补缺, 或收集一些不错的链接"
+log: "新增list和dict释放空间"
 ---
 
 [TOC]
@@ -78,3 +79,28 @@ description: "Python查漏补缺, 或收集一些不错的链接"
 具体可以看看virtualenv 的 [changelog](https://virtualenv.pypa.io/en/latest/changes.html)
 
 我之前应该很长一阵子都处于1.7之前的版本, 最近才作了下升级.
+
+
+### list和dict释放空间 ###
+
+list:
+
+* [how to release used memory immediately in python list?](http://stackoverflow.com/questions/12417498/how-to-release-used-memory-immediately-in-python-list)
+* [python memory del `list[:]` vs `list = []`](http://stackoverflow.com/questions/2055107/python-memory-del-list-vs-list)
+
+<!-- -->
+
+* `a = []` 新赋值, 其它引用不变
+* `del a` 删除a, 其它引用不变
+* `del a[:]` 清空a的元素, 所有引用和a保持一样变化, 也为空
+
+dict:
+
+* [Difference between dict.clear() and assigning {} in Python](http://stackoverflow.com/questions/369898/difference-between-dict-clear-and-assigning-in-python)
+* [Does dictionary's clear() method delete all the item related objects from memory?](http://stackoverflow.com/questions/10446839/does-dictionarys-clear-method-delete-all-the-item-related-objects-from-memory)
+
+<!-- -->
+
+* `d = {}` 新赋值，其它引用不变
+* `del d` 删除d, 其它引用不变
+* `d.clear()` 清空d的元素, 所有引用和d保持一样变化, 也为空
