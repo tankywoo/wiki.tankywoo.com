@@ -1,9 +1,9 @@
 ---
 title: "Vim"
 date: 2013-08-17 07:32
-updated: 2016-04-11 11:11
+updated: 2016-04-18 18:50
 collection: "编辑器"
-log: "更新vim自动补全相关"
+log: "增加简单调试插件的方法"
 ---
 
 [TOC]
@@ -179,6 +179,21 @@ Replace:
 	:g/abcd/d
 
 参考: [Delete all lines containing a pattern](http://vim.wikia.com/wiki/Delete_all_lines_containing_a_pattern)
+
+### vim调试插件 ###
+
+在使用dash.vim时遇到的一个问题, 想看看插件中某些变量的值是多少。搜到这篇文章：[Echoing Messages](http://learnvimscriptthehardway.stevelosh.com/chapters/01.html)
+
+比如在插件里加上：
+
+	echom var_name
+
+然后在触发到这条后, 可以执行下面来查看输出
+
+	:messages
+
+
+---
 
 参考:
 
