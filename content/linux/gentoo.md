@@ -1,8 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2016-04-05 14:30
-log: "增加world/system/selected set说明"
+updated: 2016-04-19 20:50
+log: "补充mask的说明"
 ---
 
 [TOC]
@@ -203,6 +203,8 @@ Gentoo的分支(branch)是指相应架构的软件包分支, 包括稳定(stable
 	$ more /etc/portage/package.mask
 	=dev-python/python-exec-10000.2
 
+mask是除了keyword外额外的一个限制安装的功能，keyword针对的是架构，mask是针对的整个包。
+
 添加第三方的ebuilds, 以前总结过 [Gentoo Overlays and Layman](http://blog.tankywoo.com/gentoo/2013/09/18/gentoo-overlays-and-layman.html)
 
 参考:
@@ -210,6 +212,7 @@ Gentoo的分支(branch)是指相应架构的软件包分支, 包括稳定(stable
 * [Gentoo - Portage](https://wiki.gentoo.org/wiki/Portage)
 * [Gentoo Handbook - Portage](https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Portage)
 * [Gentoo Handbook - Installation](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/About)
+* [Unmasking a package](https://wiki.gentoo.org/wiki/Knowledge_Base:Unmasking_a_package)
 * man portage
 * man make.conf
 
