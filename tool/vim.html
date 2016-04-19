@@ -40,14 +40,15 @@
 </ul>
 </li>
 <li><a href="#vimdiff">vimdiff</a></li>
-<li><a href="#_2">技巧</a><ul>
+<li><a href="#_2">其它版本</a></li>
+<li><a href="#_3">技巧</a><ul>
 <li><a href="#shell">shell多行注释</a></li>
-<li><a href="#_3">自动补全</a></li>
+<li><a href="#_4">自动补全</a></li>
 <li><a href="#help">左右分割打开help文档</a></li>
-<li><a href="#_4">逐个替换</a></li>
+<li><a href="#_5">逐个替换</a></li>
 <li><a href="#searchreplace">关于 search/replace 中的换行符</a></li>
 <li><a href="#vimrcplugin">关于.vimrc和plugin的加载</a></li>
-<li><a href="#_5">删除所有匹配的行</a></li>
+<li><a href="#_6">删除所有匹配的行</a></li>
 <li><a href="#vim_1">vim调试插件</a></li>
 </ul>
 </li>
@@ -148,14 +149,22 @@
 <li><code>dp</code> - diff put, 将差异点的内容从当前文件复制到另一文件</li>
 <li><code>do</code> - diff get, 相反，从另一文件复制到当前文件]</li>
 </ul>
-<h2 id="_2">技巧</h2>
+<h2 id="_2">其它版本</h2>
+<ul>
+<li><a href="https://neovim.io/">neovim</a> 号称是重构了vim，速度变快？暂时没感觉出和传统vim的区别</li>
+<li>
+<p><a href="https://github.com/macvim-dev/macvim">macvim</a> 试了下，还不错，可以替换本地一直作为记事本的TextMate了</p>
+<p>使用brew安装上macvim后， 终端使用<code>mvim</code>打开App， 但是按任何键都没有反应。需要把当前shell退出，重新打开才行。这个<a href="https://github.com/macvim-dev/macvim/issues/109">issue</a>可以参考下。(折腾了我半天。。。)</p>
+</li>
+</ul>
+<h2 id="_3">技巧</h2>
 <h3 id="shell">shell多行注释</h3>
 <p>命令行模式下，注释掉line1与line2之间的行</p>
 <div class="hlcode"><pre><span class="n">line1</span><span class="p">,</span><span class="n">line2s</span><span class="o">/^/</span><span class="err">#</span><span class="o">/</span><span class="n">g</span>
 </pre></div>
 
 
-<h3 id="_3">自动补全</h3>
+<h3 id="_4">自动补全</h3>
 <p>目前使用<a href="https://github.com/davidhalter/jedi-vim">jedi-vim</a>插件, 可以配合<a href="https://github.com/ervandew/supertab">Supertab</a>。</p>
 <p>有什么omni(智能补全?), 自动补全啥的, 没去研究.</p>
 <ul>
@@ -171,7 +180,7 @@
 </pre></div>
 
 
-<h3 id="_4">逐个替换</h3>
+<h3 id="_5">逐个替换</h3>
 <p>全文直接替换:</p>
 <div class="hlcode"><pre><span class="o">:%</span><span class="n">s</span><span class="o">/</span><span class="n">old_str</span><span class="o">/</span><span class="n">new_str</span><span class="o">/</span><span class="n">g</span>
 </pre></div>
@@ -205,7 +214,7 @@
 </pre></div>
 
 
-<h3 id="_5">删除所有匹配的行</h3>
+<h3 id="_6">删除所有匹配的行</h3>
 <div class="hlcode"><pre><span class="cp"># 删除所有包含abcd的行</span>
 <span class="o">:</span><span class="n">g</span><span class="o">/</span><span class="n">abcd</span><span class="o">/</span><span class="n">d</span>
 </pre></div>
@@ -244,7 +253,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>Last Update 2016-04-19 14:41:19</p>
+        <p>Last Update 2016-04-19 23:17:21</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
