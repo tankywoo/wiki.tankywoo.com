@@ -48,6 +48,7 @@
 <li><a href="#searchreplace">关于 search/replace 中的换行符</a></li>
 <li><a href="#vimrcplugin">关于.vimrc和plugin的加载</a></li>
 <li><a href="#_5">删除所有匹配的行</a></li>
+<li><a href="#vim_1">vim调试插件</a></li>
 </ul>
 </li>
 </ul>
@@ -211,6 +212,19 @@
 
 
 <p>参考: <a href="http://vim.wikia.com/wiki/Delete_all_lines_containing_a_pattern">Delete all lines containing a pattern</a></p>
+<h3 id="vim_1">vim调试插件</h3>
+<p>在使用dash.vim时遇到的一个问题, 想看看插件中某些变量的值是多少。搜到这篇文章：<a href="http://learnvimscriptthehardway.stevelosh.com/chapters/01.html">Echoing Messages</a></p>
+<p>比如在插件里加上：</p>
+<div class="hlcode"><pre><span class="n">echom</span> <span class="n">var_name</span>
+</pre></div>
+
+
+<p>然后在触发到这条后, 可以执行下面来查看输出</p>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">messages</span>
+</pre></div>
+
+
+<hr />
 <p>参考:</p>
 <ul>
 <li><a href="http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim">How to replace a character for a newline in Vim?</a></li>
@@ -230,7 +244,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>Last Update 2016-04-15 16:00:26</p>
+        <p>Last Update 2016-04-19 14:41:19</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

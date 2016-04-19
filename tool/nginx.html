@@ -33,6 +33,7 @@
 <li><a href="#location">location</a></li>
 <li><a href="#root-vs-alias">root vs alias</a></li>
 <li><a href="#http-basic-authentication">HTTP Basic Authentication</a></li>
+<li><a href="#access_log">access_log的变量问题</a></li>
 </ul>
 </li>
 <li><a href="#_3">其它</a><ul>
@@ -187,6 +188,15 @@
 <li><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04">How To Set Up Password Authentication with Nginx on Ubuntu 14.04</a></li>
 <li><a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-basic-http-authentication-with-nginx-on-centos-7">How To Set Up Basic HTTP Authentication With Nginx on CentOS 7</a></li>
 </ul>
+<h3 id="access_log">access_log的变量问题</h3>
+<p>因为习惯把nginx日志按网站名存放, 即/var/log/nginx/www.xxx.com.log，所以考虑可以改为直接使用<code>server_name</code>:</p>
+<div class="hlcode"><pre><span class="n">access_log</span>  <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="err">$</span><span class="n">server_name</span><span class="p">.</span><span class="n">log</span><span class="p">;</span>
+</pre></div>
+
+
+<p>类似与<code>proxy_pass</code>用变量配置域名，变量在运行时会做解析。所以:</p>
+<p>nginx会在每次请求过来时打开日志文件，然后在请求结束时关闭文件(strace看)；而不使用变量情况下，会在进程起来时就一直打开文件(lsof看)。前者是非常消耗资源。(TODO 解决方案?)</p>
+<p>还有另外一个，就是配置变量后，是每次靠worker process打开，所以日志的权限需要和worker process一样，否则无法写入日志；而后者是master process打开的日志文件，所以日志文件的权限是root也可以。</p>
 <h2 id="_3">其它</h2>
 <h3 id="_4">中文域名</h3>
 <p>中文域名之所以可以解析/访问, 并不是说dns, nginx等都可以识别, 而是再浏览器层面会做一个转码.</p>
@@ -216,6 +226,10 @@
 <li><a href="http://ixdba.blog.51cto.com/2895551/806622">实战Nginx与PHP（FastCGI）的安装、配置与优化</a></li>
 <li><a href="https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/">Pitfalls and Common Mistakes</a></li>
 </ul>
+<p>书籍:</p>
+<ul>
+<li><a href="https://book.douban.com/subject/4251875/">实战Nginx</a> 花了几个小时看完，还是有些收获，给7分</li>
+</ul>
 </div>
     </div>
     <div id="footer">
@@ -228,7 +242,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>Last Update 2016-04-15 16:00:26</p>
+        <p>Last Update 2016-04-19 14:41:19</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
