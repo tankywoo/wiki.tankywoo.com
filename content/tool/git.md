@@ -1,7 +1,9 @@
 ---
 title: "Git"
 date: 2013-11-08 00:02
+updated: 2016-04-19 14:40
 collection: "版本控制管理"
+log: "增加删除分支的命令"
 ---
 
 [TOC]
@@ -557,6 +559,25 @@ If the file is not in the repository yet, do first `git add -N filename`. Afterw
 远程分支被删除后(如Github在页面上删除分支), 本地删除追踪分支:
 
     git fetch -p
+
+定期清除远程分支和本地已合并分支是一个好习惯，否则有时会遇到这种本地refs冲突:
+
+    $ git pull
+    remote: Counting objects: 3, done.
+    remote: Compressing objects: 100% (2/2), done.
+    remote: Total 3 (delta 0), reused 0 (delta 0)
+    Unpacking objects: 100% (3/3), done.
+    error: cannot lock ref 'refs/remotes/origin/feature/new': 'refs/remotes/origin/feature' exists; cannot create 'refs/remotes/origin/feature/new'
+    From git.coding.net:tankywoo/test-repo
+     ! [new branch]      feature/new -> origin/feature/new  (unable to update local ref)
+    error: some local refs could not be updated; try running
+     'git remote prune origin' to remove any old, conflicting branches
+
+因为远程有一个老的分支叫feature在本地有refs, 现在又有一个新的分支叫feature/new, 这样就没法在系统上建立refs目录了。
+
+提示已经很清楚了, 请出指定remote的stale分支, 即远程分支已被删除(上面那条命令效果类似，不过在清除的时候还会下拉新的分支)。
+
+    git remote prune origin
 
 ## Git本地设置某个远程库readonly ##
 
