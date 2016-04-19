@@ -1,9 +1,9 @@
 ---
 title: "Vim"
 date: 2013-08-17 07:32
-updated: 2016-04-18 18:50
+updated: 2016-04-19 23:23
 collection: "编辑器"
-log: "增加简单调试插件的方法"
+log: "增加其它版本"
 ---
 
 [TOC]
@@ -103,6 +103,14 @@ vim套件中的对比工具
 * `[c` - 上一个差异点
 * `dp` - diff put, 将差异点的内容从当前文件复制到另一文件
 * `do` - diff get, 相反，从另一文件复制到当前文件]
+
+
+## 其它版本 ##
+
+* [neovim](https://neovim.io/) 号称是重构了vim，速度变快？暂时没感觉出和传统vim的区别
+* [macvim](https://github.com/macvim-dev/macvim) 试了下，还不错，可以替换本地一直作为记事本的TextMate了
+
+	使用brew安装上macvim后， 终端使用`mvim`打开App， 但是按任何键都没有反应。需要把当前shell退出，重新打开才行。这个[issue](https://github.com/macvim-dev/macvim/issues/109)可以参考下。(折腾了我半天。。。)
 
 
 ## 技巧 ##
