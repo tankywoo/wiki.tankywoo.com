@@ -1,8 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2016-04-19 20:50
-log: "补充mask的说明"
+updated: 2016-04-20 16:20
+log: "增加Overlay和Layman"
 ---
 
 [TOC]
@@ -205,8 +205,6 @@ Gentoo的分支(branch)是指相应架构的软件包分支, 包括稳定(stable
 
 mask是除了keyword外额外的一个限制安装的功能，keyword针对的是架构，mask是针对的整个包。
 
-添加第三方的ebuilds, 以前总结过 [Gentoo Overlays and Layman](http://blog.tankywoo.com/gentoo/2013/09/18/gentoo-overlays-and-layman.html)
-
 参考:
 
 * [Gentoo - Portage](https://wiki.gentoo.org/wiki/Portage)
@@ -215,6 +213,146 @@ mask是除了keyword外额外的一个限制安装的功能，keyword针对的�
 * [Unmasking a package](https://wiki.gentoo.org/wiki/Knowledge_Base:Unmasking_a_package)
 * man portage
 * man make.conf
+
+---
+
+### Overlay and Layman ###
+
+最初的需求是13年时，想安装一个包，但是Gentoo官方Portage中没有，于是了解到Overlay。
+
+添加第三方的ebuilds, 以前总结过 [Gentoo Overlays and Layman](http://blog.tankywoo.com/gentoo/2013/09/18/gentoo-overlays-and-layman.html)
+
+去年Gentoo官方Portage中移除了Python2.6，后来本地一个项目支持py2.6，为了单元测试，所以本地考虑装回Python2.6。
+
+解决方案就是本地建立Local Overlay，手动维护一个个人的Portage。
+
+> A local repository aka local overlay
+
+**What Are Overlays?**
+
+> "Overlays" are package trees for Portage. They contain additional ebuilds for Gentoo. They are maintained by Gentoo developers and projects but distributed separately from the main Portage tree.
+
+From [Gentoo Overlays: Users' Guide](http://www.gentoo.org/proj/en/overlays/userguide.xml)
+
+
+**Why call it Overlays?**
+
+> Within Gentoo Linux, users already have one "main" package repository, called the Portage tree. This main repository contains all the software packages (called ebuilds) maintained by Gentoo developers. But users can add additional repositories to the tree that are "layed over" the main tree - hence the name, overlays.
+
+From [Gentoo Wiki: Overlay](http://wiki.gentoo.org/wiki/Overlay)
+
+操作比较简单(部分步骤直接copy的官方文档):
+
+	# 官方portage放在/usr/portage下，这里个人的放在/usr/local/portage
+	# 最基本的就是两个子目录 metadata, profiles
+	$ mkdir -p /usr/local/portage/{metadata,profiles}
+	# NameOfYourOverlay自定义，和下面repos.conf中的名称一致
+	$ echo 'NameOfYourOverlay' > /usr/local/portage/profiles/repo_name
+	$ echo 'masters = gentoo' > /usr/local/portage/metadata/layout.conf
+	$ chown -R portage:portage /usr/local/portage
+
+然后增加repos配置:
+
+	$ more /etc/portage/repos.conf/*.conf
+	# 这个是默认的官方portage配置
+	::::::::::::::
+	/etc/portage/repos.conf/gentoo.conf
+	::::::::::::::
+	[DEFAULT]
+	main-repo = gentoo
+	
+	[gentoo]
+	location = /usr/portage
+	sync-type = rsync
+	sync-uri = rsync://mirrors.163.com/gentoo-portage
+	auto-sync = yes
+
+	# 这个是个人的overlay
+	::::::::::::::
+	/etc/portage/repos.conf/local.conf
+	::::::::::::::
+	[NameOfYourOverlay]
+	location = /usr/local/portage
+	masters = gentoo
+	auto-sync = no
+
+`/etc/portage/make.conf`最下面添加 (**TODO**: 这块具体目的/用途还得再研究下):
+
+	PORTDIR_OVERLAY='/usr/local/portage'
+
+这样最基本的local overlay就搭建好了，接下来就是增加自己维护的ebuilds了。
+
+ebuilds文件存放的目录结构，和官方portage保持一致，即`/usr/local/portage/<type>/<name>/`，目录里存放具体的ebuild `name-version.ebuild`等。
+
+放置相关的ebuils和一些依赖文件后，就是签名生成清单了，如:
+
+	# digest和manifest子命令等价, 前者已过时
+	$ ebuild dev-lang/python/python-2.6.8.ebuild manifest
+	>>> Creating Manifest for /usr/local/portage/dev-lang/python
+
+或者文档里推荐:
+
+	$ pushd /usr/local/portage/dev-lang/python
+	$ repoman manifest
+	$ popd
+
+`ebuild`命令虽然指定了版本号的文件，但是实际会扫描这个ebuild所在目录，所有相关的文件(以及其它版本)都会写入Manifest文件。
+
+目前我的local overlay目录结构如下:
+
+	$ tree /usr/local/portage
+	/usr/local/portage
+	├── dev-lang
+	│   └── python
+	│       ├── files
+	│       │   ├── pydoc.conf
+	│       │   ├── pydoc.init
+	│       │   └── python-2.5-tcl86.patch
+	│       ├── Manifest
+	│       ├── python-2.6.8.ebuild
+	│       └── python-2.6.9.ebuild
+	├── dev-python
+	│   └── python-docs
+	│       ├── Manifest
+	│       ├── python-docs-2.6.8.ebuild
+	│       └── python-docs-2.6.9.ebuild
+	├── metadata
+	│   └── layout.conf
+	└── profiles
+	    └── repo_name
+	
+	7 directories, 11 files
+
+ebuild和tar包可以在官网源或其它可信站点里找，比如我在[这里](https://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/dev-lang/python/?hideattic=0)找的。
+
+然后就可以`emerge`正常安装了。
+
+*遇到的问题：*
+
+在安装Python2.6.x时遇到一个问题，找的python-2.6.9和python2.6.8-r3的ebuild，发现在安装时又依赖python2.6的解释器，具体是ebuild编译时有如下的内容:
+
+	...
+	SLOT="2.6"
+	...
+	python_export python${SLOT} EPYTHON PYTHON PYTHON_SITEDIR
+
+不确定为何python-2.6.9.ebuild会依赖这个，其它版本只在`-rX`的小版本会依赖，大版本(不带`-rX`)的不会依赖python2.6的解释器。具体可以看看我之前在Gentoo论坛的[提问](https://forums.gentoo.org/viewtopic-p-7867700.html#7867700)
+
+还有一个问题就是python2.6.9的EAPI是2, 导致ebuild有些函数指定不了:
+
+	die "python_do* and python_new* helpers are banned in EAPIs older than 4."
+
+改为`EAPI="4"`即可。
+
+参考:
+
+* [Project:Overlays/User Guide](https://wiki.gentoo.org/wiki/Project:Overlays/User_Guide)
+* [Overlay/Local overlay](https://wiki.gentoo.org/wiki/Overlay/Local_overlay)
+* [Handbook - Adding unoffical ebuilds](https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Portage#Adding_unofficial_ebuilds)
+* [初探 ebuild](https://segmentfault.com/a/1190000003819421) 总结的也挺不错的
+* [Gentoo Portage](https://packages.gentoo.org/)
+* [Gentoo Overlays](https://overlays.gentoo.org/)
+* [Gentoo Layman](https://wiki.gentoo.org/wiki/Layman)
 
 ---
 
