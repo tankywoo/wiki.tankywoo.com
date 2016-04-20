@@ -95,11 +95,13 @@ hr {
 
 #footer .footer-left {
   float: left;
+  max-width: 70%;
 }
 
 #footer .footer-right {
   float: right;
   text-align: right;
+  max-width: 30%;
 }
 
 #container {

@@ -31,6 +31,7 @@
 <li><a href="#architecture">Architecture</a></li>
 <li><a href="#stage">Stage</a></li>
 <li><a href="#portage">Portage</a></li>
+<li><a href="#overlay-and-layman">Overlay and Layman</a></li>
 <li><a href="#world-world">world 和 @world</a></li>
 <li><a href="#world-system-selected">world / system / selected</a></li>
 <li><a href="#emerge">emerge</a></li>
@@ -237,7 +238,6 @@
 
 
 <p>mask是除了keyword外额外的一个限制安装的功能，keyword针对的是架构，mask是针对的整个包。</p>
-<p>添加第三方的ebuilds, 以前总结过 <a href="http://blog.tankywoo.com/gentoo/2013/09/18/gentoo-overlays-and-layman.html">Gentoo Overlays and Layman</a></p>
 <p>参考:</p>
 <ul>
 <li><a href="https://wiki.gentoo.org/wiki/Portage">Gentoo - Portage</a></li>
@@ -246,6 +246,132 @@
 <li><a href="https://wiki.gentoo.org/wiki/Knowledge_Base:Unmasking_a_package">Unmasking a package</a></li>
 <li>man portage</li>
 <li>man make.conf</li>
+</ul>
+<hr />
+<h3 id="overlay-and-layman">Overlay and Layman</h3>
+<p>最初的需求是13年时，想安装一个包，但是Gentoo官方Portage中没有，于是了解到Overlay。</p>
+<p>添加第三方的ebuilds, 以前总结过 <a href="http://blog.tankywoo.com/gentoo/2013/09/18/gentoo-overlays-and-layman.html">Gentoo Overlays and Layman</a></p>
+<p>去年Gentoo官方Portage中移除了Python2.6，后来本地一个项目支持py2.6，为了单元测试，所以本地考虑装回Python2.6。</p>
+<p>解决方案就是本地建立Local Overlay，手动维护一个个人的Portage。</p>
+<blockquote>
+<p>A local repository aka local overlay</p>
+</blockquote>
+<p><strong>What Are Overlays?</strong></p>
+<blockquote>
+<p>"Overlays" are package trees for Portage. They contain additional ebuilds for Gentoo. They are maintained by Gentoo developers and projects but distributed separately from the main Portage tree.</p>
+</blockquote>
+<p>From <a href="http://www.gentoo.org/proj/en/overlays/userguide.xml">Gentoo Overlays: Users' Guide</a></p>
+<p><strong>Why call it Overlays?</strong></p>
+<blockquote>
+<p>Within Gentoo Linux, users already have one "main" package repository, called the Portage tree. This main repository contains all the software packages (called ebuilds) maintained by Gentoo developers. But users can add additional repositories to the tree that are "layed over" the main tree - hence the name, overlays.</p>
+</blockquote>
+<p>From <a href="http://wiki.gentoo.org/wiki/Overlay">Gentoo Wiki: Overlay</a></p>
+<p>操作比较简单(部分步骤直接copy的官方文档):</p>
+<div class="hlcode"><pre><span class="cp"># 官方portage放在/usr/portage下，这里个人的放在/usr/local/portage</span>
+<span class="cp"># 最基本的就是两个子目录 metadata, profiles</span>
+<span class="err">$</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="p">{</span><span class="n">metadata</span><span class="p">,</span><span class="n">profiles</span><span class="p">}</span>
+<span class="cp"># NameOfYourOverlay自定义，和下面repos.conf中的名称一致</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">NameOfYourOverlay</span><span class="err">&#39;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">profiles</span><span class="o">/</span><span class="n">repo_name</span>
+<span class="err">$</span> <span class="n">echo</span> <span class="err">&#39;</span><span class="n">masters</span> <span class="o">=</span> <span class="n">gentoo</span><span class="err">&#39;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">metadata</span><span class="o">/</span><span class="n">layout</span><span class="p">.</span><span class="n">conf</span>
+<span class="err">$</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">portage</span><span class="o">:</span><span class="n">portage</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span>
+</pre></div>
+
+
+<p>然后增加repos配置:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">more</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">repos</span><span class="p">.</span><span class="n">conf</span><span class="o">/*</span><span class="p">.</span><span class="n">conf</span>
+<span class="cp"># 这个是默认的官方portage配置</span>
+<span class="o">::::::::::::::</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">repos</span><span class="p">.</span><span class="n">conf</span><span class="o">/</span><span class="n">gentoo</span><span class="p">.</span><span class="n">conf</span>
+<span class="o">::::::::::::::</span>
+<span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">main</span><span class="o">-</span><span class="n">repo</span> <span class="o">=</span> <span class="n">gentoo</span>
+
+<span class="p">[</span><span class="n">gentoo</span><span class="p">]</span>
+<span class="n">location</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">portage</span>
+<span class="n">sync</span><span class="o">-</span><span class="n">type</span> <span class="o">=</span> <span class="n">rsync</span>
+<span class="n">sync</span><span class="o">-</span><span class="n">uri</span> <span class="o">=</span> <span class="n">rsync</span><span class="o">:</span><span class="c1">//mirrors.163.com/gentoo-portage</span>
+<span class="k">auto</span><span class="o">-</span><span class="n">sync</span> <span class="o">=</span> <span class="n">yes</span>
+
+<span class="cp"># 这个是个人的overlay</span>
+<span class="o">::::::::::::::</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">repos</span><span class="p">.</span><span class="n">conf</span><span class="o">/</span><span class="n">local</span><span class="p">.</span><span class="n">conf</span>
+<span class="o">::::::::::::::</span>
+<span class="p">[</span><span class="n">NameOfYourOverlay</span><span class="p">]</span>
+<span class="n">location</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span>
+<span class="n">masters</span> <span class="o">=</span> <span class="n">gentoo</span>
+<span class="k">auto</span><span class="o">-</span><span class="n">sync</span> <span class="o">=</span> <span class="n">no</span>
+</pre></div>
+
+
+<p><code>/etc/portage/make.conf</code>最下面添加 (<strong>TODO</strong>: 这块具体目的/用途还得再研究下):</p>
+<div class="hlcode"><pre><span class="n">PORTDIR_OVERLAY</span><span class="o">=</span><span class="err">&#39;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>这样最基本的local overlay就搭建好了，接下来就是增加自己维护的ebuilds了。</p>
+<p>ebuilds文件存放的目录结构，和官方portage保持一致，即<code>/usr/local/portage/&lt;type&gt;/&lt;name&gt;/</code>，目录里存放具体的ebuild <code>name-version.ebuild</code>等。</p>
+<p>放置相关的ebuils和一些依赖文件后，就是签名生成清单了，如:</p>
+<div class="hlcode"><pre><span class="cp"># digest和manifest子命令等价, 前者已过时</span>
+<span class="err">$</span> <span class="n">ebuild</span> <span class="n">dev</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="mf">2.6.8</span><span class="p">.</span><span class="n">ebuild</span> <span class="n">manifest</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Creating</span> <span class="n">Manifest</span> <span class="k">for</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">dev</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">python</span>
+</pre></div>
+
+
+<p>或者文档里推荐:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">pushd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span><span class="o">/</span><span class="n">dev</span><span class="o">-</span><span class="n">lang</span><span class="o">/</span><span class="n">python</span>
+<span class="err">$</span> <span class="n">repoman</span> <span class="n">manifest</span>
+<span class="err">$</span> <span class="n">popd</span>
+</pre></div>
+
+
+<p><code>ebuild</code>命令虽然指定了版本号的文件，但是实际会扫描这个ebuild所在目录，所有相关的文件(以及其它版本)都会写入Manifest文件。</p>
+<p>目前我的local overlay目录结构如下:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">tree</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">portage</span>
+<span class="err">├──</span> <span class="n">dev</span><span class="o">-</span><span class="n">lang</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="n">python</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="n">files</span>
+<span class="err">│  </span>     <span class="err">│  </span> <span class="err">├──</span> <span class="n">pydoc</span><span class="p">.</span><span class="n">conf</span>
+<span class="err">│  </span>     <span class="err">│  </span> <span class="err">├──</span> <span class="n">pydoc</span><span class="p">.</span><span class="n">init</span>
+<span class="err">│  </span>     <span class="err">│  </span> <span class="err">└──</span> <span class="n">python</span><span class="o">-</span><span class="mf">2.5</span><span class="o">-</span><span class="n">tcl86</span><span class="p">.</span><span class="n">patch</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="n">Manifest</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="n">python</span><span class="o">-</span><span class="mf">2.6.8</span><span class="p">.</span><span class="n">ebuild</span>
+<span class="err">│  </span>     <span class="err">└──</span> <span class="n">python</span><span class="o">-</span><span class="mf">2.6.9</span><span class="p">.</span><span class="n">ebuild</span>
+<span class="err">├──</span> <span class="n">dev</span><span class="o">-</span><span class="n">python</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="n">python</span><span class="o">-</span><span class="n">docs</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="n">Manifest</span>
+<span class="err">│  </span>     <span class="err">├──</span> <span class="n">python</span><span class="o">-</span><span class="n">docs</span><span class="o">-</span><span class="mf">2.6.8</span><span class="p">.</span><span class="n">ebuild</span>
+<span class="err">│  </span>     <span class="err">└──</span> <span class="n">python</span><span class="o">-</span><span class="n">docs</span><span class="o">-</span><span class="mf">2.6.9</span><span class="p">.</span><span class="n">ebuild</span>
+<span class="err">├──</span> <span class="n">metadata</span>
+<span class="err">│  </span> <span class="err">└──</span> <span class="n">layout</span><span class="p">.</span><span class="n">conf</span>
+<span class="err">└──</span> <span class="n">profiles</span>
+    <span class="err">└──</span> <span class="n">repo_name</span>
+
+<span class="mi">7</span> <span class="n">directories</span><span class="p">,</span> <span class="mi">11</span> <span class="n">files</span>
+</pre></div>
+
+
+<p>ebuild和tar包可以在官网源或其它可信站点里找，比如我在<a href="https://sources.gentoo.org/cgi-bin/viewvc.cgi/gentoo-x86/dev-lang/python/?hideattic=0">这里</a>找的。</p>
+<p>然后就可以<code>emerge</code>正常安装了。</p>
+<p><em>遇到的问题：</em></p>
+<p>在安装Python2.6.x时遇到一个问题，找的python-2.6.9和python2.6.8-r3的ebuild，发现在安装时又依赖python2.6的解释器，具体是ebuild编译时有如下的内容:</p>
+<div class="hlcode"><pre>...
+SLOT=&quot;2.6&quot;
+...
+python_export python<span class="cp">${</span><span class="n">SLOT</span><span class="cp">}</span> EPYTHON PYTHON PYTHON_SITEDIR
+</pre></div>
+
+
+<p>不确定为何python-2.6.9.ebuild会依赖这个，其它版本只在<code>-rX</code>的小版本会依赖，大版本(不带<code>-rX</code>)的不会依赖python2.6的解释器。具体可以看看我之前在Gentoo论坛的<a href="https://forums.gentoo.org/viewtopic-p-7867700.html#7867700">提问</a></p>
+<p>参考:</p>
+<ul>
+<li><a href="https://wiki.gentoo.org/wiki/Project:Overlays/User_Guide">Project:Overlays/User Guide</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Overlay/Local_overlay">Overlay/Local overlay</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Handbook:AMD64/Full/Portage#Adding_unofficial_ebuilds">Handbook - Adding unoffical ebuilds</a></li>
+<li><a href="https://segmentfault.com/a/1190000003819421">初探 ebuild</a> 总结的也挺不错的</li>
+<li><a href="https://packages.gentoo.org/">Gentoo Portage</a></li>
+<li><a href="https://overlays.gentoo.org/">Gentoo Overlays</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Layman">Gentoo Layman</a></li>
 </ul>
 <hr />
 <h3 id="world-world">world 和 @world</h3>
@@ -889,7 +1015,7 @@ RDEPEND=&quot;
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>Last Update 2016-04-17 21:12:51</p>
+        <p>最后更新 2016-04-20 16:22:07</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
