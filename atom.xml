@@ -7,7 +7,7 @@
   <title>Wiki · Tanky Woo</title>
   <link href="http://wiki.tankywoo.com/" />
   <link href="http://wiki.tankywoo.com/atom.xml" rel="self" type="application/atom+xml" />
-  <updated>2016-04-20T16:22:07+08:00</updated>
+  <updated>2016-04-21T11:15:25+08:00</updated>
   <id>http://wiki.tankywoo.com</id>
   <author>
     <name>Tanky Woo</name>
@@ -109,7 +109,7 @@
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -310,7 +310,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -327,13 +327,13 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
   
     
   <entry>
-    <id>http://wiki.tankywoo.com/linux/suid-sgit-sticky.html</id>
-    <title>SUID / SGID / Sticky Bit</title>
-    <link href="http://wiki.tankywoo.com/linux/suid-sgit-sticky.html" />
-    <published>2015-11-03T20:36:00+08:00</published>
+    <id>http://wiki.tankywoo.com/python/coverage.html</id>
+    <title>coverage</title>
+    <link href="http://wiki.tankywoo.com/python/coverage.html" />
+    <published>2014-06-14T15:00:00+08:00</published>
 
     
-    <updated>2015-11-03T20:36:00+08:00</updated>
+    <updated>2014-06-14T15:00:00+08:00</updated>
     
 
     
@@ -347,7 +347,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
     &lt;link rel=&#34;shortcut icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
     &lt;link rel=&#34;icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
     &lt;link rel=&#34;alternate&#34; type=&#34;application/atom+xml&#34; href=&#34;atom.xml&#34; title=&#34;Atom feed&#34;&gt;
-    &lt;title&gt;SUID / SGID / Sticky Bit - Wiki · Tanky Woo&lt;/title&gt;
+    &lt;title&gt;coverage - Wiki · Tanky Woo&lt;/title&gt;
     &lt;meta name=&#34;keywords&#34; content=&#34;wiki, makrdown, linux, python, cpp, ops, simiki&#34;/&gt;
     &lt;meta name=&#34;description&#34; content=&#34;Tanky Woo&#39;s personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on.&#34;/&gt;
     &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
@@ -361,192 +361,51 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
   &lt;div id=&#34;post-nav&#34;&gt;
     &lt;a href=&#34;/&#34;&gt;Wiki · Tanky Woo&lt;/a&gt;
     &amp;nbsp;&amp;#187;&amp;nbsp;
-    &lt;a href=&#34;/#linux&#34;&gt;linux&lt;/a&gt;
-    &amp;nbsp;&amp;#187;&amp;nbsp;SUID / SGID / Sticky Bit
+    &lt;a href=&#34;/#python&#34;&gt;python&lt;/a&gt;
+    &amp;nbsp;&amp;#187;&amp;nbsp;coverage
   &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
 &lt;div id=&#34;content&#34;&gt;
-  &lt;div class=&#34;toc&#34;&gt;&lt;span class=&#34;toctitle&#34;&gt;Table of Contents&lt;/span&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#suid&#34;&gt;SUID&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#sgid&#34;&gt;SGID&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#sticky-bit&#34;&gt;Sticky Bit&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#_1&#34;&gt;参考&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;h2 id=&#34;suid&#34;&gt;SUID&lt;/h2&gt;
-&lt;p&gt;即 Set User IDentification, 更详细说是Set owner User ID on execution.&lt;/p&gt;
+  &lt;p&gt;&lt;a href=&#34;http://nedbatchelder.com/code/coverage/&#34;&gt;文档&lt;/a&gt; | &lt;a href=&#34;https://pypi.python.org/pypi/coverage&#34;&gt;项目主页&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;is a special type of file permissions given to a file. Normally in Linux/Unix when a program runs, it inherits access permissions from the logged in user. SUID is defined as giving temporary permissions to a user to run a program/file with the permissions of the file owner rather that the user who runs it. &lt;strong&gt;In simple words users will get file owner’s permissions as well as owner UID and GID when executing a file/program/command&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Measure, collect, and report on code coverage in Python programs.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;用户在执行程序/命令时, 会临时拥有此程序的属主权限.&lt;/p&gt;
-&lt;p&gt;使用场景:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Where root login is required to execute some commands/programs/scripts.&lt;/li&gt;
-&lt;li&gt;Where you don’t want to give credentials of a particular user, but want to run some programs as the owner.&lt;/li&gt;
-&lt;li&gt;Where you don’t want to use SUDO command, but want to give execute permission for a file/script etc.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;针对目标一般是文件&lt;/p&gt;
-&lt;p&gt;最常见的就是&lt;code&gt;passwd&lt;/code&gt;命令:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;alh&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;passwd&lt;/span&gt;
-&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rws&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;42&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Sep&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;17&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;2012&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;passwd&lt;/span&gt;
-
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;alh&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;etc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;passwd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shadow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.8&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;05&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;28&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;etc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;passwd&lt;/span&gt;
-&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-----&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;854&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;05&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;28&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;etc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shadow&lt;/span&gt;
+&lt;p&gt;主要用于测试代码覆盖率，收集统计生成报表。&lt;/p&gt;
+&lt;p&gt;安装:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;coverage&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;执行passwd命令会修改如上面的文件, 但是设置了suid, 则在执行命令时effective uid则是root.&lt;/p&gt;
-&lt;p&gt;设置suid的两种方式:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4644&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;
+&lt;p&gt;常用的一些操作:&lt;/p&gt;
+&lt;p&gt;执行统计:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;coverage&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;py&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;q&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;nosetests&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;注意user权限一栏的x是&lt;code&gt;s&lt;/code&gt;. 如果&lt;code&gt;S&lt;/code&gt;(captial), 则表示没有设置可执行权限(&lt;code&gt;x&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;[虽然有人说这样会导致suid无效, 不过我测试是没问题]&lt;/p&gt;
-&lt;p&gt;suid也可以给目录设置, 不过没什么用.&lt;/p&gt;
-&lt;p&gt;测试例子:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;cp&#34;&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
-&lt;span class=&#34;cp&#34;&gt;#include &amp;lt;unistd.h&amp;gt;&lt;/span&gt;
-
-&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;argc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;**&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;argv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;geteuid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;());&lt;/span&gt;
-    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;p&gt;会生成一个&lt;code&gt;.coverage&lt;/code&gt;的统计文件。然后可以配合其它子命令如&lt;code&gt;report&lt;/code&gt;显示统计结果。&lt;/p&gt;
+&lt;p&gt;选项&lt;code&gt;--branch&lt;/code&gt;, 增加分支覆盖率, 见&lt;a href=&#34;http://nedbatchelder.com/code/coverage/branch.html#branch&#34;&gt;文档&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;清除统计数据：&lt;/p&gt;
+&lt;p&gt;上面的run命令会生成统计文件，使用&lt;code&gt;coverage erase&lt;/code&gt;可以清除生成的文件。&lt;/p&gt;
+&lt;p&gt;生成统计报表:&lt;/p&gt;
+&lt;p&gt;通过&lt;code&gt;coverage run&lt;/code&gt;生成的统计文件，显示出统计结果：&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;coverage&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;report&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;执行:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test_suid&lt;/span&gt;
-&lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;
-
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sudo&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_suid&lt;/span&gt;
-
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test_suid&lt;/span&gt;
-&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+&lt;p&gt;coverage也可以将结果生成为html，并且点击html里各个模块的文件名，还可以看到此模块详细的覆盖范围，哪些没有被覆盖到。&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;coverage&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;html&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;另外, 脚本设置suid是无效的:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cat&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt;
-&lt;span class=&#34;cp&#34;&gt;#!/bin/bash&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effective&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;`&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;real&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;u&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;`&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;---------------------&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;
-
-&lt;span class=&#34;n&#34;&gt;touch&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xxxxx&lt;/span&gt;
-
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;al&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt;
-&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rwsr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tankywoo&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;129&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;06&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;27&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt;
-
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt;
-&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effective&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;
-&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;real&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;
-
-&lt;span class=&#34;o&#34;&gt;---------------------&lt;/span&gt;
-
-&lt;span class=&#34;nl&#34;&gt;touch:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cannot&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;touch&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;‘&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xxxxx&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;’&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Permission&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;denied&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;可以通过C代码做一个wrapper来实现. 具体的原因和方法见:&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Linux ignores the setuid¹ bit on all interpreted executables (i.e. executables starting with a #! line). The &lt;a href=&#34;http://www.faqs.org/faqs/unix-faq/faq/part4/section-7.html&#34;&gt;comp.unix.questions FAQ&lt;/a&gt; explains the security problems with setuid shell scripts. These problems are of two kinds: shebang-related and shell-related&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://unix.stackexchange.com/questions/364/allow-setuid-on-shell-scripts&#34;&gt;Allow setuid on shell scripts&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://unix.stackexchange.com/questions/166817/using-the-setuid-bit-properly&#34;&gt;Using the setuid bit properly&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://superuser.com/questions/440363/can-i-make-a-script-always-execute-as-root&#34;&gt;Can I make a script always execute as root?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;sgid&#34;&gt;SGID&lt;/h2&gt;
-&lt;p&gt;和SUID类似. Set Group ID up on execution.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;is a special type of file permissions given to a file/folder. Normally in Linux/Unix when a program runs, it inherits access permissions from the logged in user. SGID is defined as giving temporary permissions to a user to run a program/file with the permissions of the file group permissions to become member of that group to execute the file. &lt;strong&gt;In simple words users will get file Group’s permissions when executing a Folder/file/program/command&lt;/strong&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;使用场景:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;保持子文件/子目录和父目录一个数组&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;针对目标一般是目录&lt;/p&gt;
-&lt;p&gt;设置sgid的两种方式:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2755&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;注意group权限一栏的x是&lt;code&gt;s&lt;/code&gt;. 如果&lt;code&gt;S&lt;/code&gt;(captial), 则表示没有设置可执行权限(&lt;code&gt;x&lt;/code&gt;).&lt;/p&gt;
-&lt;p&gt;默认情况下, 用户创建文件的数组是自身的primary group, 通过sgid可以改变这个特性:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;c1&#34;&gt;# 设置sgid前&lt;/span&gt;
-&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; ll file1
-&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;rw&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;r&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;r&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; tankywoo tankywoo &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; Nov  &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;06&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;54&lt;/span&gt; file1         &lt;span class=&#34;c1&#34;&gt;# &amp;lt;--- group是tankywoo&lt;/span&gt;
-&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; id
-uid&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tankywoo&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; gid&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tankywoo&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; groups&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tankywoo&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;wheel&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;cron&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;c1&#34;&gt;# 设置sgid&lt;/span&gt;
-&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; mkdir test_gid
-&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; sudo chmod g&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;s test_gid
-&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; chgrp mygroup test_gid
-&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; ls &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;ald test_gid
-drwxr&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;sr&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; tankywoo mygroup &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; Nov  &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;06&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;54&lt;/span&gt; test_gid
-&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; cd test_gid
-&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; touch file2
-&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; ll file2
-&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;rw&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;r&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;r&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; tankywoo mygroup &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; Nov  &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;06&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;56&lt;/span&gt; file2          &lt;span class=&#34;c1&#34;&gt;# &amp;lt;--- group是mygroup&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2 id=&#34;sticky-bit&#34;&gt;Sticky Bit&lt;/h2&gt;
-&lt;p&gt;即 粘滞位&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;is mainly used on folders in order to avoid deletion of a folder and its content by other users though they having write permissions on the folder contents. If Sticky bit is enabled on a folder, the folder contents are deleted by only owner who created them and the root user. No one else can delete other users data in this folder(Where sticky bit is set). This is a security measure to avoid deletion of critical folders and their content(sub-folders and files), though other users have full permissions.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;使用场景即作用, 一个公共目录, 大家(other)都可以写文件, 这时自然大家也都可以删文件; 粘滞位就是保护这些文件&lt;/p&gt;
-&lt;p&gt;设置sticky bit的三种方式:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1777&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;最常见的就是&lt;code&gt;/tmp&lt;/code&gt; 目录:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ll&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;drwxrwxrwt&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;14&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4096&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;07&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;12&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;针对目标一般是目录&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1777&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ald&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;drwxrwxrwt&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4096&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;07&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;17&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# 用户shen创建一个文件&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;shen&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;touch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;txt&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# 用户tankywoo删除此文件&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;tankywoo&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rm&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;txt&lt;/span&gt;
-&lt;span class=&#34;nl&#34;&gt;rm:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cannot&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;remove&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;‘&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;txt&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;’&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Operation&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;permitted&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# 去掉sticky bit权限&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
-&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ald&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;drwxrwxrwx&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4096&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;07&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;18&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# 正常删除&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;tankywoo&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rm&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;txt&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;tankywoo&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2 id=&#34;_1&#34;&gt;参考&lt;/h2&gt;
-&lt;p&gt;非常详细的一系列三篇文章:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.linuxnix.com/suid-set-suid-linuxunix/&#34;&gt;What is SUID and how to set SUID in Linux/Unix?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.linuxnix.com/sgid-set-sgid-linuxunix/&#34;&gt;What is SGID and how to set SGID in Linux?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.linuxnix.com/sticky-bit-set-linux/&#34;&gt;What is a sticky Bit and how to set it in Linux?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;还可以转为xml格式&lt;/p&gt;
+&lt;p&gt;其它命令可参考&lt;a href=&#34;http://nedbatchelder.com/code/coverage/cmd.html#cmd&#34;&gt;Coverage command line usage&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;配置:&lt;/p&gt;
+&lt;p&gt;coverage的配置文件默认是&lt;code&gt;.coveragerc&lt;/code&gt;，放在项目根目录下就行，coverage测试时会寻找当前目录下的此配置文件。&lt;a href=&#34;http://nedbatchelder.com/code/coverage/config.html#config&#34;&gt;文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;相关项目: &lt;a href=&#34;https://github.com/coagulant/coveralls-python&#34;&gt;coveralls&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/coagulant/coveralls-python&#34;&gt;coveralls.io&lt;/a&gt; 是一个在线显示代码覆盖率统计的服务。
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Code_coverage&#34;&gt;Code coverage&lt;/a&gt;
+&lt;a href=&#34;http://www.cnblogs.com/coderzh/archive/2009/03/29/1424344.html&#34;&gt;代码覆盖率浅谈&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
     &lt;/div&gt;
     &lt;div id=&#34;footer&#34;&gt;
@@ -559,7 +418,7 @@ drwxr&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;sr&lt;span class=&#34;o&#34;&gt
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -861,7 +720,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -1134,7 +993,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -1254,7 +1113,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -1324,7 +1183,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -1469,7 +1328,7 @@ print the match line number&lt;/p&gt;
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -1554,7 +1413,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -1638,7 +1497,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -1783,7 +1642,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -5094,7 +4953,7 @@ git filter-branch --env-filter &lt;span class=&#34;s1&#34;&gt;&amp;#39;&lt;/span
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -5166,7 +5025,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -5281,7 +5140,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -5366,7 +5225,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -5478,7 +5337,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -5553,7 +5412,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -5637,7 +5496,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -5739,7 +5598,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -5971,7 +5830,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -6071,7 +5930,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -6190,7 +6049,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -6207,13 +6066,13 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
   
     
   <entry>
-    <id>http://wiki.tankywoo.com/python/coverage.html</id>
-    <title>coverage</title>
-    <link href="http://wiki.tankywoo.com/python/coverage.html" />
-    <published>2014-06-14T15:00:00+08:00</published>
+    <id>http://wiki.tankywoo.com/linux/suid-sgit-sticky.html</id>
+    <title>SUID / SGID / Sticky Bit</title>
+    <link href="http://wiki.tankywoo.com/linux/suid-sgit-sticky.html" />
+    <published>2015-11-03T20:36:00+08:00</published>
 
     
-    <updated>2014-06-14T15:00:00+08:00</updated>
+    <updated>2015-11-03T20:36:00+08:00</updated>
     
 
     
@@ -6227,7 +6086,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
     &lt;link rel=&#34;shortcut icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
     &lt;link rel=&#34;icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
     &lt;link rel=&#34;alternate&#34; type=&#34;application/atom+xml&#34; href=&#34;atom.xml&#34; title=&#34;Atom feed&#34;&gt;
-    &lt;title&gt;coverage - Wiki · Tanky Woo&lt;/title&gt;
+    &lt;title&gt;SUID / SGID / Sticky Bit - Wiki · Tanky Woo&lt;/title&gt;
     &lt;meta name=&#34;keywords&#34; content=&#34;wiki, makrdown, linux, python, cpp, ops, simiki&#34;/&gt;
     &lt;meta name=&#34;description&#34; content=&#34;Tanky Woo&#39;s personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on.&#34;/&gt;
     &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
@@ -6241,51 +6100,192 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
   &lt;div id=&#34;post-nav&#34;&gt;
     &lt;a href=&#34;/&#34;&gt;Wiki · Tanky Woo&lt;/a&gt;
     &amp;nbsp;&amp;#187;&amp;nbsp;
-    &lt;a href=&#34;/#python&#34;&gt;python&lt;/a&gt;
-    &amp;nbsp;&amp;#187;&amp;nbsp;coverage
+    &lt;a href=&#34;/#linux&#34;&gt;linux&lt;/a&gt;
+    &amp;nbsp;&amp;#187;&amp;nbsp;SUID / SGID / Sticky Bit
   &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
 &lt;div id=&#34;content&#34;&gt;
-  &lt;p&gt;&lt;a href=&#34;http://nedbatchelder.com/code/coverage/&#34;&gt;文档&lt;/a&gt; | &lt;a href=&#34;https://pypi.python.org/pypi/coverage&#34;&gt;项目主页&lt;/a&gt;&lt;/p&gt;
+  &lt;div class=&#34;toc&#34;&gt;&lt;span class=&#34;toctitle&#34;&gt;Table of Contents&lt;/span&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#suid&#34;&gt;SUID&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sgid&#34;&gt;SGID&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sticky-bit&#34;&gt;Sticky Bit&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#_1&#34;&gt;参考&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;suid&#34;&gt;SUID&lt;/h2&gt;
+&lt;p&gt;即 Set User IDentification, 更详细说是Set owner User ID on execution.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Measure, collect, and report on code coverage in Python programs.&lt;/p&gt;
+&lt;p&gt;is a special type of file permissions given to a file. Normally in Linux/Unix when a program runs, it inherits access permissions from the logged in user. SUID is defined as giving temporary permissions to a user to run a program/file with the permissions of the file owner rather that the user who runs it. &lt;strong&gt;In simple words users will get file owner’s permissions as well as owner UID and GID when executing a file/program/command&lt;/strong&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;主要用于测试代码覆盖率，收集统计生成报表。&lt;/p&gt;
-&lt;p&gt;安装:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;pip&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;install&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;coverage&lt;/span&gt;
+&lt;p&gt;用户在执行程序/命令时, 会临时拥有此程序的属主权限.&lt;/p&gt;
+&lt;p&gt;使用场景:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Where root login is required to execute some commands/programs/scripts.&lt;/li&gt;
+&lt;li&gt;Where you don’t want to give credentials of a particular user, but want to run some programs as the owner.&lt;/li&gt;
+&lt;li&gt;Where you don’t want to use SUDO command, but want to give execute permission for a file/script etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;针对目标一般是文件&lt;/p&gt;
+&lt;p&gt;最常见的就是&lt;code&gt;passwd&lt;/code&gt;命令:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;alh&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;passwd&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rws&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;42&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Sep&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;17&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;2012&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bin&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;passwd&lt;/span&gt;
+
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;alh&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;etc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;passwd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shadow&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.8&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;05&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;28&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;etc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;passwd&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rw&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-----&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;854&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;05&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;28&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;etc&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;shadow&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;常用的一些操作:&lt;/p&gt;
-&lt;p&gt;执行统计:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;coverage&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;run&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;setup&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;py&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;q&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;nosetests&lt;/span&gt;
+&lt;p&gt;执行passwd命令会修改如上面的文件, 但是设置了suid, 则在执行命令时effective uid则是root.&lt;/p&gt;
+&lt;p&gt;设置suid的两种方式:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4644&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;file&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;会生成一个&lt;code&gt;.coverage&lt;/code&gt;的统计文件。然后可以配合其它子命令如&lt;code&gt;report&lt;/code&gt;显示统计结果。&lt;/p&gt;
-&lt;p&gt;选项&lt;code&gt;--branch&lt;/code&gt;, 增加分支覆盖率, 见&lt;a href=&#34;http://nedbatchelder.com/code/coverage/branch.html#branch&#34;&gt;文档&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;清除统计数据：&lt;/p&gt;
-&lt;p&gt;上面的run命令会生成统计文件，使用&lt;code&gt;coverage erase&lt;/code&gt;可以清除生成的文件。&lt;/p&gt;
-&lt;p&gt;生成统计报表:&lt;/p&gt;
-&lt;p&gt;通过&lt;code&gt;coverage run&lt;/code&gt;生成的统计文件，显示出统计结果：&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;coverage&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;report&lt;/span&gt;
+&lt;p&gt;注意user权限一栏的x是&lt;code&gt;s&lt;/code&gt;. 如果&lt;code&gt;S&lt;/code&gt;(captial), 则表示没有设置可执行权限(&lt;code&gt;x&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;[虽然有人说这样会导致suid无效, 不过我测试是没问题]&lt;/p&gt;
+&lt;p&gt;suid也可以给目录设置, 不过没什么用.&lt;/p&gt;
+&lt;p&gt;测试例子:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;cp&#34;&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#include &amp;lt;unistd.h&amp;gt;&lt;/span&gt;
+
+&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;argc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;**&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;argv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;printf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;quot;%d&amp;quot;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;geteuid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;());&lt;/span&gt;
+    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;coverage也可以将结果生成为html，并且点击html里各个模块的文件名，还可以看到此模块详细的覆盖范围，哪些没有被覆盖到。&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;coverage&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;html&lt;/span&gt;
+&lt;p&gt;执行:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test_suid&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;
+
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sudo&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_suid&lt;/span&gt;
+
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;test_suid&lt;/span&gt;
+&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;还可以转为xml格式&lt;/p&gt;
-&lt;p&gt;其它命令可参考&lt;a href=&#34;http://nedbatchelder.com/code/coverage/cmd.html#cmd&#34;&gt;Coverage command line usage&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;配置:&lt;/p&gt;
-&lt;p&gt;coverage的配置文件默认是&lt;code&gt;.coveragerc&lt;/code&gt;，放在项目根目录下就行，coverage测试时会寻找当前目录下的此配置文件。&lt;a href=&#34;http://nedbatchelder.com/code/coverage/config.html#config&#34;&gt;文档&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;相关项目: &lt;a href=&#34;https://github.com/coagulant/coveralls-python&#34;&gt;coveralls&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/coagulant/coveralls-python&#34;&gt;coveralls.io&lt;/a&gt; 是一个在线显示代码覆盖率统计的服务。
-&lt;a href=&#34;http://en.wikipedia.org/wiki/Code_coverage&#34;&gt;Code coverage&lt;/a&gt;
-&lt;a href=&#34;http://www.cnblogs.com/coderzh/archive/2009/03/29/1424344.html&#34;&gt;代码覆盖率浅谈&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;另外, 脚本设置suid是无效的:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cat&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#!/bin/bash&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effective&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;u&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;`&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;real&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;id&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;u&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;r&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;`&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;---------------------&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;\&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;
+
+&lt;span class=&#34;n&#34;&gt;touch&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xxxxx&lt;/span&gt;
+
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;al&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;rwsr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xr&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tankywoo&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;129&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;06&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;27&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt;
+
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;a&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sh&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;effective&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;real&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;id&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;1000&lt;/span&gt;
+
+&lt;span class=&#34;o&#34;&gt;---------------------&lt;/span&gt;
+
+&lt;span class=&#34;nl&#34;&gt;touch:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cannot&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;touch&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;‘&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;opt&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xxxxx&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;’&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Permission&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;denied&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;可以通过C代码做一个wrapper来实现. 具体的原因和方法见:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Linux ignores the setuid¹ bit on all interpreted executables (i.e. executables starting with a #! line). The &lt;a href=&#34;http://www.faqs.org/faqs/unix-faq/faq/part4/section-7.html&#34;&gt;comp.unix.questions FAQ&lt;/a&gt; explains the security problems with setuid shell scripts. These problems are of two kinds: shebang-related and shell-related&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://unix.stackexchange.com/questions/364/allow-setuid-on-shell-scripts&#34;&gt;Allow setuid on shell scripts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://unix.stackexchange.com/questions/166817/using-the-setuid-bit-properly&#34;&gt;Using the setuid bit properly&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://superuser.com/questions/440363/can-i-make-a-script-always-execute-as-root&#34;&gt;Can I make a script always execute as root?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;sgid&#34;&gt;SGID&lt;/h2&gt;
+&lt;p&gt;和SUID类似. Set Group ID up on execution.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;is a special type of file permissions given to a file/folder. Normally in Linux/Unix when a program runs, it inherits access permissions from the logged in user. SGID is defined as giving temporary permissions to a user to run a program/file with the permissions of the file group permissions to become member of that group to execute the file. &lt;strong&gt;In simple words users will get file Group’s permissions when executing a Folder/file/program/command&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用场景:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;保持子文件/子目录和父目录一个数组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;针对目标一般是目录&lt;/p&gt;
+&lt;p&gt;设置sgid的两种方式:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;g&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2755&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;注意group权限一栏的x是&lt;code&gt;s&lt;/code&gt;. 如果&lt;code&gt;S&lt;/code&gt;(captial), 则表示没有设置可执行权限(&lt;code&gt;x&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;默认情况下, 用户创建文件的数组是自身的primary group, 通过sgid可以改变这个特性:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;c1&#34;&gt;# 设置sgid前&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; ll file1
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;rw&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;r&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;r&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; tankywoo tankywoo &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; Nov  &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;06&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;54&lt;/span&gt; file1         &lt;span class=&#34;c1&#34;&gt;# &amp;lt;--- group是tankywoo&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; id
+uid&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tankywoo&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; gid&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tankywoo&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; groups&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tankywoo&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;wheel&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;cron&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;c1&#34;&gt;# 设置sgid&lt;/span&gt;
+&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; mkdir test_gid
+&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; sudo chmod g&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;s test_gid
+&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; chgrp mygroup test_gid
+&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; ls &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;ald test_gid
+drwxr&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;sr&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;x &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt; tankywoo mygroup &lt;span class=&#34;m&#34;&gt;4096&lt;/span&gt; Nov  &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;06&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;54&lt;/span&gt; test_gid
+&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; cd test_gid
+&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; touch file2
+&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt; ll file2
+&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;rw&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;r&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;r&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; tankywoo mygroup &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt; Nov  &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;06&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;56&lt;/span&gt; file2          &lt;span class=&#34;c1&#34;&gt;# &amp;lt;--- group是mygroup&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;sticky-bit&#34;&gt;Sticky Bit&lt;/h2&gt;
+&lt;p&gt;即 粘滞位&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;is mainly used on folders in order to avoid deletion of a folder and its content by other users though they having write permissions on the folder contents. If Sticky bit is enabled on a folder, the folder contents are deleted by only owner who created them and the root user. No one else can delete other users data in this folder(Where sticky bit is set). This is a security measure to avoid deletion of critical folders and their content(sub-folders and files), though other users have full permissions.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;使用场景即作用, 一个公共目录, 大家(other)都可以写文件, 这时自然大家也都可以删文件; 粘滞位就是保护这些文件&lt;/p&gt;
+&lt;p&gt;设置sticky bit的三种方式:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1777&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;最常见的就是&lt;code&gt;/tmp&lt;/code&gt; 目录:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ll&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;d&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;drwxrwxrwt&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;14&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4096&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;07&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;12&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;针对目标一般是目录&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1777&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ald&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;drwxrwxrwt&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4096&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;07&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;17&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# 用户shen创建一个文件&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;shen&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;touch&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;txt&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# 用户tankywoo删除此文件&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;tankywoo&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rm&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;txt&lt;/span&gt;
+&lt;span class=&#34;nl&#34;&gt;rm:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cannot&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;remove&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;‘&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;txt&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;’&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Operation&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;permitted&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# 去掉sticky bit权限&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;o&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
+&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ls&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ald&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;drwxrwxrwx&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;4096&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Nov&lt;/span&gt;  &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt; &lt;span class=&#34;mo&#34;&gt;07&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;18&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;test_sticky&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# 正常删除&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;tankywoo&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;rm&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;xxx&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;txt&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;tankywoo&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;_1&#34;&gt;参考&lt;/h2&gt;
+&lt;p&gt;非常详细的一系列三篇文章:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.linuxnix.com/suid-set-suid-linuxunix/&#34;&gt;What is SUID and how to set SUID in Linux/Unix?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.linuxnix.com/sgid-set-sgid-linuxunix/&#34;&gt;What is SGID and how to set SGID in Linux?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.linuxnix.com/sticky-bit-set-linux/&#34;&gt;What is a sticky Bit and how to set it in Linux?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/div&gt;
     &lt;/div&gt;
     &lt;div id=&#34;footer&#34;&gt;
@@ -6298,7 +6298,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -6566,7 +6566,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -6699,7 +6699,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -6882,7 +6882,195 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
+        &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
+      &lt;/div&gt; &lt;!-- end footer-right --&gt;
+    &lt;/div&gt;
+    &lt;script type=&#34;text/javascript&#34;&gt;
+var _bdhmProtocol = ((&#34;https:&#34; == document.location.protocol) ? &#34; https://&#34; : &#34; http://&#34;);
+document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196&#39; type=&#39;text/javascript&#39;%3E%3C/script%3E&#34;));
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</content>
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.com/python/flask.html</id>
+    <title>Flask Primer</title>
+    <link href="http://wiki.tankywoo.com/python/flask.html" />
+    <published>2015-05-28T08:00:00+08:00</published>
+
+    
+    <updated>2015-05-28T08:00:00+08:00</updated>
+    
+
+    
+
+    
+    <content type="html">&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;/static/css/colorful.css&#34;&gt;
+    &lt;link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;/static/css/style.css&#34;&gt;
+    &lt;link rel=&#34;shortcut icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
+    &lt;link rel=&#34;icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
+    &lt;link rel=&#34;alternate&#34; type=&#34;application/atom+xml&#34; href=&#34;atom.xml&#34; title=&#34;Atom feed&#34;&gt;
+    &lt;title&gt;Flask Primer - Wiki · Tanky Woo&lt;/title&gt;
+    &lt;meta name=&#34;keywords&#34; content=&#34;wiki, makrdown, linux, python, cpp, ops, simiki&#34;/&gt;
+    &lt;meta name=&#34;description&#34; content=&#34;Tanky Woo&#39;s personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on.&#34;/&gt;
+    &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
+    
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;div id=&#34;container&#34; class=&#34;typo&#34;&gt;
+      
+&lt;div id=&#34;header&#34;&gt;
+  &lt;div id=&#34;post-nav&#34;&gt;
+    &lt;a href=&#34;/&#34;&gt;Wiki · Tanky Woo&lt;/a&gt;
+    &amp;nbsp;&amp;#187;&amp;nbsp;
+    &lt;a href=&#34;/#python&#34;&gt;python&lt;/a&gt;
+    &amp;nbsp;&amp;#187;&amp;nbsp;Flask Primer
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;content&#34;&gt;
+  &lt;div class=&#34;toc&#34;&gt;&lt;span class=&#34;toctitle&#34;&gt;Table of Contents&lt;/span&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#_1&#34;&gt;文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#flask-sqlalchemy&#34;&gt;Flask-SQLAlchemy&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#_2&#34;&gt;部署&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#nginx&#34;&gt;Nginx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#uwsgi&#34;&gt;uWSGI&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#faq&#34;&gt;FAQ&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;h2 id=&#34;_1&#34;&gt;文档&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Flask官方文档 &lt;a href=&#34;http://flask.pocoo.org/docs/0.10/&#34;&gt;en&lt;/a&gt; | &lt;a href=&#34;http://docs.jinkan.org/docs/flask/&#34;&gt;zh&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Explore Flask &lt;a href=&#34;https://exploreflask.com/index.html&#34;&gt;en&lt;/a&gt; | &lt;a href=&#34;http://www.pythondoc.com/exploreflask/preface.html&#34;&gt;zh-1&lt;/a&gt; | &lt;a href=&#34;http://spacewander.github.io/explore-flask-zh/index.html&#34;&gt;zh-2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The Flask Mega-Tutorial &lt;a href=&#34;http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world&#34;&gt;en&lt;/a&gt; | &lt;a href=&#34;http://www.oschina.net/translate/the-flask-mega-tutorial-part-i-hello-world&#34;&gt;zh&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://book.douban.com/subject/26274202/&#34;&gt;Flask Web开发&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/realpython/discover-flask&#34;&gt;Discover Flask&lt;/a&gt; 扫了一眼, 发现基本是视频教程&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/humiaozuzu/awesome-flask&#34;&gt;Awesome Flask&lt;/a&gt; Flask资源汇总大全&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/miguelgrinberg&#34;&gt;Miguel Grinberg&lt;/a&gt;的&lt;a href=&#34;http://blog.miguelgrinberg.com/&#34;&gt;博客&lt;/a&gt;内容很多, 上面的The Flask Mega-Tutorial就是其博客上的在线教程, Flask Web开发是他出的书, 有中文版.&lt;/p&gt;
+&lt;h2 id=&#34;flask-sqlalchemy&#34;&gt;Flask-SQLAlchemy&lt;/h2&gt;
+&lt;p&gt;逆序排序desc:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;Blog&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;query&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;order_by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Blog&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;desc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;或者:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;Blog&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;query&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;order_by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;db&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;desc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Blog&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h2 id=&#34;_2&#34;&gt;部署&lt;/h2&gt;
+&lt;h3 id=&#34;nginx&#34;&gt;Nginx&lt;/h3&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;listen&lt;/span&gt;       &lt;span class=&#34;mi&#34;&gt;80&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;server_name&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;localhost&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+
+    &lt;span class=&#34;n&#34;&gt;location&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;include&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;uwsgi_params&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+        &lt;span class=&#34;n&#34;&gt;uwsgi_pass&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unix&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;或者参考&lt;a href=&#34;http://flask.pocoo.org/docs/0.10/deploying/uwsgi/#configuring-nginx&#34;&gt;Flask - uWSGI&lt;/a&gt;文档:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;location&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;try_files&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uri&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;yourapplication&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;location&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;yourapplication&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;include&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;uwsgi_params&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+    &lt;span class=&#34;n&#34;&gt;uwsgi_pass&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unix&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;将&lt;code&gt;yourapplication&lt;/code&gt;改为实际的包或模块名.&lt;/p&gt;
+&lt;p&gt;这里使用了location的&lt;code&gt;@&lt;/code&gt;语法, 参考&lt;a href=&#34;http://wiki.nginx.org/NginxHttpCoreModule#location&#34;&gt;nginx文档&lt;/a&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The prefix &#34;@&#34; specifies a named location. Such locations are not used during normal processing of requests, they are intended only to process internally redirected requests (see error_page, try_files).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;uwsgi&#34;&gt;uWSGI&lt;/h3&gt;
+&lt;p&gt;安装&lt;a href=&#34;https://uwsgi-docs.readthedocs.org/en/latest/&#34;&gt;uwsgi&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;执行命令:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sock&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;666&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pythonpath&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;project&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;module&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;yourmodulename&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;callable&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;其中:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;--pythonpath&lt;/code&gt; 将模块(包)的父目录加到PYTHONPATH, 否则无法搜到相应的模块&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--module&lt;/code&gt; load a WSGI module&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--callable&lt;/code&gt; set default WSGI callable name, 一般因为&lt;code&gt;app = Flask(__name__)&lt;/code&gt;, 所以这里配置app&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;--module yourmodulename --callable app&lt;/code&gt; 也可以简写为 &lt;code&gt;-w yourmodulename:app&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果使用了virtualenv, 当没有active这个virtualenv时, 需要用&lt;code&gt;H|--home|--virtualenv|--venv|--pyhome&lt;/code&gt;指定virtualenv的路径&lt;/p&gt;
+&lt;p&gt;也可以写成配置文件, 如ini, xml等:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cat&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;uwsgi_example&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ini&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;# application&amp;#39;s base folder&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;base&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# python module to import&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;blogwall&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;module&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# set PYTHONHOME/virtualenv&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;# if use virtual, set this option&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;#home =&lt;/span&gt;
+&lt;span class=&#34;cp&#34;&gt;# add directory (or glob) to pythonpath&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;pythonpath&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;base&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# socket file&amp;#39;s location&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;socket&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# permissions for the socket file&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;socket&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;666&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# the variable that holds a flask application inside the module imported at line #6&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;callable&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# location of log files&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;logto&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;详细可参考&lt;a href=&#34;http://uwsgi-docs.readthedocs.org/en/latest/Configuration.html&#34;&gt;uWSGI配置文档&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;其它一些参考文档:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Serving Flask With Nginx &lt;a href=&#34;http://vladikk.com/2013/09/12/serving-flask-with-nginx-on-ubuntu/&#34;&gt;en&lt;/a&gt; | &lt;a href=&#34;http://www.oschina.net/translate/serving-flask-with-nginx-on-ubuntu&#34;&gt;zh&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://flaviusim.com/blog/Deploying-Flask-with-nginx-uWSGI-and-Supervisor/&#34;&gt;Deploying Flask With Nginx&lt;/a&gt; 里面提到了使用supervisor管理&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/mking/flask-uwsgi&#34;&gt;flask-uwsgi&lt;/a&gt; Tutorial for setting up Flask with uWSGI + Nginx&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;faq&#34;&gt;FAQ&lt;/h2&gt;
+&lt;p&gt;运行Flask自带的example &lt;a href=&#34;https://github.com/mitsuhiko/flask/tree/master/examples/flaskr&#34;&gt;flaskr&lt;/a&gt;, 提示:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nl&#34;&gt;AttributeError:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Flask&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;object&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;has&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;no&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;attribute&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cli&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;原因是flask命令行方式在dev版才支持, &lt;a href=&#34;https://github.com/mitsuhiko/flask/issues/1048&#34;&gt;issue&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id=&#34;footer&#34;&gt;
+      &lt;div class=&#34;footer-left&#34;&gt;
+        &lt;p&gt;
+        Copyright © 2012-2016 Tanky Woo.
+        Powered by &lt;a href=&#34;http://simiki.org/&#34; target=&#34;_blank&#34;&gt;Simiki&lt;/a&gt;.
+        Theme by &lt;a href=&#34;https://git.coding.net/tankywoo/yasimple_x2.git&#34; target=&#34;_blank&#34;&gt;YASimple_X2&lt;/a&gt;.
+        &lt;/p&gt;
+        &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
+      &lt;/div&gt; &lt;!-- end footer-left --&gt;
+      &lt;div class=&#34;footer-right&#34;&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -7249,7 +7437,7 @@ tmux attach-session -d -t &lt;span class=&#34;s1&#34;&gt;&amp;#39;tankywoo&amp;#
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -7392,7 +7580,7 @@ Create 2013/01/13&lt;/p&gt;
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -7786,6 +7974,12 @@ python_export python&lt;span class=&#34;cp&#34;&gt;${&lt;/span&gt;&lt;span class
 
 
 &lt;p&gt;不确定为何python-2.6.9.ebuild会依赖这个，其它版本只在&lt;code&gt;-rX&lt;/code&gt;的小版本会依赖，大版本(不带&lt;code&gt;-rX&lt;/code&gt;)的不会依赖python2.6的解释器。具体可以看看我之前在Gentoo论坛的&lt;a href=&#34;https://forums.gentoo.org/viewtopic-p-7867700.html#7867700&#34;&gt;提问&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;还有一个问题就是python2.6.9的EAPI是2, 导致ebuild有些函数指定不了:&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;die&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;quot;python_do* and python_new* helpers are banned in EAPIs older than 4.&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;改为&lt;code&gt;EAPI=&#34;4&#34;&lt;/code&gt;即可。&lt;/p&gt;
 &lt;p&gt;参考:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;https://wiki.gentoo.org/wiki/Project:Overlays/User_Guide&#34;&gt;Project:Overlays/User Guide&lt;/a&gt;&lt;/li&gt;
@@ -8438,7 +8632,7 @@ RDEPEND=&amp;quot;
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -8586,7 +8780,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -8782,7 +8976,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -8968,7 +9162,7 @@ Project release [0.1]:&lt;/p&gt;
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9118,7 +9312,7 @@ level=fatal msg=&#34;Error starting daemon: error initializing graphdriver: loop
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9231,7 +9425,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9320,7 +9514,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9398,7 +9592,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9501,7 +9695,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9636,7 +9830,7 @@ This specifies a limit on the number of watches that can be associated with each
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9706,7 +9900,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9785,7 +9979,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9886,7 +10080,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -9966,7 +10160,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -10115,7 +10309,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -10203,7 +10397,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -10352,7 +10546,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -10643,7 +10837,7 @@ template函数允许指定更新DS的顺序  &lt;/p&gt;
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -10745,7 +10939,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -10937,7 +11131,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -11013,7 +11207,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -11164,7 +11358,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -11270,7 +11464,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -11287,13 +11481,13 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
   
     
   <entry>
-    <id>http://wiki.tankywoo.com/python/flask.html</id>
-    <title>Flask Primer</title>
-    <link href="http://wiki.tankywoo.com/python/flask.html" />
-    <published>2015-05-28T08:00:00+08:00</published>
+    <id>http://wiki.tankywoo.com/tool/curl.html</id>
+    <title>curl</title>
+    <link href="http://wiki.tankywoo.com/tool/curl.html" />
+    <published>2013-08-17T07:32:00+08:00</published>
 
     
-    <updated>2015-05-28T08:00:00+08:00</updated>
+    <updated>2013-08-17T07:32:00+08:00</updated>
     
 
     
@@ -11307,7 +11501,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
     &lt;link rel=&#34;shortcut icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
     &lt;link rel=&#34;icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
     &lt;link rel=&#34;alternate&#34; type=&#34;application/atom+xml&#34; href=&#34;atom.xml&#34; title=&#34;Atom feed&#34;&gt;
-    &lt;title&gt;Flask Primer - Wiki · Tanky Woo&lt;/title&gt;
+    &lt;title&gt;curl - Wiki · Tanky Woo&lt;/title&gt;
     &lt;meta name=&#34;keywords&#34; content=&#34;wiki, makrdown, linux, python, cpp, ops, simiki&#34;/&gt;
     &lt;meta name=&#34;description&#34; content=&#34;Tanky Woo&#39;s personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on.&#34;/&gt;
     &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
@@ -11321,131 +11515,53 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
   &lt;div id=&#34;post-nav&#34;&gt;
     &lt;a href=&#34;/&#34;&gt;Wiki · Tanky Woo&lt;/a&gt;
     &amp;nbsp;&amp;#187;&amp;nbsp;
-    &lt;a href=&#34;/#python&#34;&gt;python&lt;/a&gt;
-    &amp;nbsp;&amp;#187;&amp;nbsp;Flask Primer
+    &lt;a href=&#34;/#tool&#34;&gt;tool&lt;/a&gt;
+    &amp;nbsp;&amp;#187;&amp;nbsp;curl
   &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
 &lt;div id=&#34;content&#34;&gt;
   &lt;div class=&#34;toc&#34;&gt;&lt;span class=&#34;toctitle&#34;&gt;Table of Contents&lt;/span&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#_1&#34;&gt;文档&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#flask-sqlalchemy&#34;&gt;Flask-SQLAlchemy&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#_2&#34;&gt;部署&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#nginx&#34;&gt;Nginx&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#uwsgi&#34;&gt;uWSGI&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#faq&#34;&gt;FAQ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#argument&#34;&gt;Argument&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#example&#34;&gt;Example&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#ipv6&#34;&gt;IPv6&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#read-more&#34;&gt;Read More&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
-&lt;h2 id=&#34;_1&#34;&gt;文档&lt;/h2&gt;
+&lt;h2 id=&#34;argument&#34;&gt;Argument&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;Flask官方文档 &lt;a href=&#34;http://flask.pocoo.org/docs/0.10/&#34;&gt;en&lt;/a&gt; | &lt;a href=&#34;http://docs.jinkan.org/docs/flask/&#34;&gt;zh&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Explore Flask &lt;a href=&#34;https://exploreflask.com/index.html&#34;&gt;en&lt;/a&gt; | &lt;a href=&#34;http://www.pythondoc.com/exploreflask/preface.html&#34;&gt;zh-1&lt;/a&gt; | &lt;a href=&#34;http://spacewander.github.io/explore-flask-zh/index.html&#34;&gt;zh-2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;The Flask Mega-Tutorial &lt;a href=&#34;http://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world&#34;&gt;en&lt;/a&gt; | &lt;a href=&#34;http://www.oschina.net/translate/the-flask-mega-tutorial-part-i-hello-world&#34;&gt;zh&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://book.douban.com/subject/26274202/&#34;&gt;Flask Web开发&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/realpython/discover-flask&#34;&gt;Discover Flask&lt;/a&gt; 扫了一眼, 发现基本是视频教程&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/humiaozuzu/awesome-flask&#34;&gt;Awesome Flask&lt;/a&gt; Flask资源汇总大全&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-o&lt;/code&gt; - output to file&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-O&lt;/code&gt; - output to file named the same with the remote name&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-i&lt;/code&gt; - Include the HTTP-header in the output&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-I&lt;/code&gt; - only get the HTTP-header&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-u&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/miguelgrinberg&#34;&gt;Miguel Grinberg&lt;/a&gt;的&lt;a href=&#34;http://blog.miguelgrinberg.com/&#34;&gt;博客&lt;/a&gt;内容很多, 上面的The Flask Mega-Tutorial就是其博客上的在线教程, Flask Web开发是他出的书, 有中文版.&lt;/p&gt;
-&lt;h2 id=&#34;flask-sqlalchemy&#34;&gt;Flask-SQLAlchemy&lt;/h2&gt;
-&lt;p&gt;逆序排序desc:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;Blog&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;query&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;order_by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Blog&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;desc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;cp&#34;&gt;# get the file source and output to the STDOUT&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//wiki.wutianqi.com/index.html&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# download the file&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;myindex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;html&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//wiki.wutianqi.com/index.html&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;O&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//wiki.wutianqi.com/index.html&lt;/span&gt;
+
+&lt;span class=&#34;cp&#34;&gt;# get the HTTP-header only&lt;/span&gt;
+&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;I&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//wiki.wutianqi.com/index.html&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;或者:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;Blog&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;query&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;order_by&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;db&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;desc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Blog&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;date&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)).&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;h2 id=&#34;ipv6&#34;&gt;IPv6&lt;/h2&gt;
+&lt;p&gt;curl ipv6 localhost:8000, 注意要加&lt;code&gt;-g&lt;/code&gt;和&lt;code&gt;-6&lt;/code&gt;, url要用方括号(bracket):&lt;/p&gt;
+&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//[::1]:8000&amp;#39;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;h2 id=&#34;_2&#34;&gt;部署&lt;/h2&gt;
-&lt;h3 id=&#34;nginx&#34;&gt;Nginx&lt;/h3&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;listen&lt;/span&gt;       &lt;span class=&#34;mi&#34;&gt;80&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;server_name&lt;/span&gt;  &lt;span class=&#34;n&#34;&gt;localhost&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-
-    &lt;span class=&#34;n&#34;&gt;location&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;include&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;uwsgi_params&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-        &lt;span class=&#34;n&#34;&gt;uwsgi_pass&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unix&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;或者参考&lt;a href=&#34;http://flask.pocoo.org/docs/0.10/deploying/uwsgi/#configuring-nginx&#34;&gt;Flask - uWSGI&lt;/a&gt;文档:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;location&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;try_files&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;$&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uri&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;yourapplication&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;location&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;@&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;yourapplication&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;include&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;uwsgi_params&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-    &lt;span class=&#34;n&#34;&gt;uwsgi_pass&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;unix&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sock&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;将&lt;code&gt;yourapplication&lt;/code&gt;改为实际的包或模块名.&lt;/p&gt;
-&lt;p&gt;这里使用了location的&lt;code&gt;@&lt;/code&gt;语法, 参考&lt;a href=&#34;http://wiki.nginx.org/NginxHttpCoreModule#location&#34;&gt;nginx文档&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;The prefix &#34;@&#34; specifies a named location. Such locations are not used during normal processing of requests, they are intended only to process internally redirected requests (see error_page, try_files).&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&#34;uwsgi&#34;&gt;uWSGI&lt;/h3&gt;
-&lt;p&gt;安装&lt;a href=&#34;https://uwsgi-docs.readthedocs.org/en/latest/&#34;&gt;uwsgi&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;执行命令:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;s&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;tmp&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sock&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sock&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;666&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pythonpath&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;to&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;project&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;module&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;yourmodulename&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;callable&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;其中:&lt;/p&gt;
+&lt;p&gt;参考: &lt;a href=&#34;http://superuser.com/a/885757/251495&#34;&gt;How can I use curl with ::1 for ipv6 based loopback?&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;read-more&#34;&gt;Read More&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;code&gt;--pythonpath&lt;/code&gt; 将模块(包)的父目录加到PYTHONPATH, 否则无法搜到相应的模块&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--module&lt;/code&gt; load a WSGI module&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--callable&lt;/code&gt; set default WSGI callable name, 一般因为&lt;code&gt;app = Flask(__name__)&lt;/code&gt;, 所以这里配置app&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;--module yourmodulename --callable app&lt;/code&gt; 也可以简写为 &lt;code&gt;-w yourmodulename:app&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.thegeekstuff.com/2012/04/curl-examples/&#34;&gt;15 Practical Linux cURL Command Examples&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage&#34;&gt;curl tutorial with examples of usage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2011/09/curl.html&#34;&gt;curl网站开发指南&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;如果使用了virtualenv, 当没有active这个virtualenv时, 需要用&lt;code&gt;H|--home|--virtualenv|--venv|--pyhome&lt;/code&gt;指定virtualenv的路径&lt;/p&gt;
-&lt;p&gt;也可以写成配置文件, 如ini, xml等:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;err&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cat&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;uwsgi_example&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ini&lt;/span&gt;
-&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;uwsgi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
-&lt;span class=&#34;cp&#34;&gt;# application&amp;#39;s base folder&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;base&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# python module to import&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;blogwall&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;module&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# set PYTHONHOME/virtualenv&lt;/span&gt;
-&lt;span class=&#34;cp&#34;&gt;# if use virtual, set this option&lt;/span&gt;
-&lt;span class=&#34;cp&#34;&gt;#home =&lt;/span&gt;
-&lt;span class=&#34;cp&#34;&gt;# add directory (or glob) to pythonpath&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;pythonpath&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;base&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# socket file&amp;#39;s location&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;socket&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# permissions for the socket file&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;chmod&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;socket&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;666&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# the variable that holds a flask application inside the module imported at line #6&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;callable&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;app&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# location of log files&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;logto&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;详细可参考&lt;a href=&#34;http://uwsgi-docs.readthedocs.org/en/latest/Configuration.html&#34;&gt;uWSGI配置文档&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;其它一些参考文档:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Serving Flask With Nginx &lt;a href=&#34;http://vladikk.com/2013/09/12/serving-flask-with-nginx-on-ubuntu/&#34;&gt;en&lt;/a&gt; | &lt;a href=&#34;http://www.oschina.net/translate/serving-flask-with-nginx-on-ubuntu&#34;&gt;zh&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://flaviusim.com/blog/Deploying-Flask-with-nginx-uWSGI-and-Supervisor/&#34;&gt;Deploying Flask With Nginx&lt;/a&gt; 里面提到了使用supervisor管理&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/mking/flask-uwsgi&#34;&gt;flask-uwsgi&lt;/a&gt; Tutorial for setting up Flask with uWSGI + Nginx&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;faq&#34;&gt;FAQ&lt;/h2&gt;
-&lt;p&gt;运行Flask自带的example &lt;a href=&#34;https://github.com/mitsuhiko/flask/tree/master/examples/flaskr&#34;&gt;flaskr&lt;/a&gt;, 提示:&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;nl&#34;&gt;AttributeError:&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Flask&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;object&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;has&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;no&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;attribute&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cli&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;原因是flask命令行方式在dev版才支持, &lt;a href=&#34;https://github.com/mitsuhiko/flask/issues/1048&#34;&gt;issue&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
     &lt;/div&gt;
     &lt;div id=&#34;footer&#34;&gt;
@@ -11458,7 +11574,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -11570,7 +11686,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -11946,7 +12062,120 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
+        &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
+      &lt;/div&gt; &lt;!-- end footer-right --&gt;
+    &lt;/div&gt;
+    &lt;script type=&#34;text/javascript&#34;&gt;
+var _bdhmProtocol = ((&#34;https:&#34; == document.location.protocol) ? &#34; https://&#34; : &#34; http://&#34;);
+document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196&#39; type=&#39;text/javascript&#39;%3E%3C/script%3E&#34;));
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</content>
+    
+    
+  </entry>
+  
+    
+  <entry>
+    <id>http://wiki.tankywoo.com/tool/fastcgi.html</id>
+    <title>fastcgi</title>
+    <link href="http://wiki.tankywoo.com/tool/fastcgi.html" />
+    <published>2013-08-17T07:36:00+08:00</published>
+
+    
+    <updated>2013-08-17T07:36:00+08:00</updated>
+    
+
+    
+
+    
+    <content type="html">&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;/static/css/colorful.css&#34;&gt;
+    &lt;link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;/static/css/style.css&#34;&gt;
+    &lt;link rel=&#34;shortcut icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
+    &lt;link rel=&#34;icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
+    &lt;link rel=&#34;alternate&#34; type=&#34;application/atom+xml&#34; href=&#34;atom.xml&#34; title=&#34;Atom feed&#34;&gt;
+    &lt;title&gt;fastcgi - Wiki · Tanky Woo&lt;/title&gt;
+    &lt;meta name=&#34;keywords&#34; content=&#34;wiki, makrdown, linux, python, cpp, ops, simiki&#34;/&gt;
+    &lt;meta name=&#34;description&#34; content=&#34;Tanky Woo&#39;s personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on.&#34;/&gt;
+    &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
+    
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;div id=&#34;container&#34; class=&#34;typo&#34;&gt;
+      
+&lt;div id=&#34;header&#34;&gt;
+  &lt;div id=&#34;post-nav&#34;&gt;
+    &lt;a href=&#34;/&#34;&gt;Wiki · Tanky Woo&lt;/a&gt;
+    &amp;nbsp;&amp;#187;&amp;nbsp;
+    &lt;a href=&#34;/#tool&#34;&gt;tool&lt;/a&gt;
+    &amp;nbsp;&amp;#187;&amp;nbsp;fastcgi
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;content&#34;&gt;
+  &lt;h2 id=&#34;fastcgi&#34;&gt;FastCGI&lt;/h2&gt;
+&lt;p&gt;参考: &lt;a href=&#34;http://book.51cto.com/art/201202/314840.htm&#34;&gt;Nginx+FastCGI运行原理&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;fastcgi_1&#34;&gt;FastCGI介绍&lt;/h2&gt;
+&lt;p&gt;FastCGI是从CGI发展改进而来的。&lt;br /&gt;
+传统CGI接口方式的主要缺点是性能很差，因为每次HTTP服务器遇到动态程序时都需要重新启动脚本解析器来执行解析，然后将结果返回给HTTP服务器。&lt;br /&gt;
+这在处理高并发访问时几乎是不可用的。另外传统的CGI接口方式安全性也很差，现在已经很少使用了。&lt;/p&gt;
+&lt;p&gt;FastCGI接口方式采用C/S结构，可以将HTTP服务器和脚本解析服务器分开，同时在脚本解析服务器上启动一个或者多个脚本解析守护进程。&lt;br /&gt;
+当HTTP服务器每次遇到动态程序时，可以将其直接交付给FastCGI进程来执行，然后将得到的结果返回给浏览器。&lt;br /&gt;
+这种方式可以让HTTP服务器专一地处理静态请求或者将动态脚本服务器的结果返回给客户端，这在很大程度上提高了整个应用系统的性能。&lt;/p&gt;
+&lt;p&gt;维基百科上的解释：&lt;br /&gt;
+快速通用网关接口（Fast Common Gateway Interface／FastCGI）是一种重要的互联网技术，可以让一个客户端，从网页浏览器向执行在网页服务器上的程序请求数据。FastCGI是早期通用网关接口（CGI）的增强版本。&lt;br /&gt;
+FastCGI致力于减少网页服务器与CGI程序之间的互动，从而使服务器可以同时处理更多的网页请求。&lt;br /&gt;
+参考: &lt;a href=&#34;http://zh.wikipedia.org/wiki/FastCGI&#34;&gt;维基百科-FastCGI&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;nginxfastcgi&#34;&gt;Nginx+FastCGI运行原理&lt;/h2&gt;
+&lt;p&gt;Nginx不支持对外部程序的直接调用或者解析，所有的外部程序（包括PHP）必须通过FastCGI接口来调用。&lt;br /&gt;
+FastCGI接口在Linux下是socket（这个socket可以是文件socket，也可以是ip socket）。&lt;br /&gt;
+为了调用CGI程序，还需要一个FastCGI的wrapper（wrapper可以理解为用于启动另一个程序的程序），&lt;br /&gt;
+这个wrapper绑定在某个固定socket上，如端口或者文件socket。&lt;br /&gt;
+当Nginx将CGI请求发送给这个socket的时候，通过FastCGI接口，wrapper接收到请求，然后派生出一个新的线程，&lt;br /&gt;
+这个线程调用解释器或者外部程序处理脚本并读取返回数据；&lt;br /&gt;
+接着，wrapper再将返回的数据通过FastCGI接口，沿着固定的socket传递给Nginx；&lt;br /&gt;
+最后，Nginx将返回的数据发送给客户端。这就是Nginx+FastCGI的整个运作过程。&lt;br /&gt;
+如图所示  &lt;/p&gt;
+&lt;p&gt;TODO
+    {{/img/fastcgi_1.jpg}}&lt;/p&gt;
+&lt;h2 id=&#34;spawn-fcgiphp-fpm&#34;&gt;spawn-fcgi与PHP-FPM&lt;/h2&gt;
+&lt;p&gt;前面介绍过，FastCGI接口方式在脚本解析服务器上启动一个或者多个守护进程对动态脚本进行解析，这些进程就是FastCGI进程管理器，或者称之为FastCGI引擎&lt;br /&gt;
+spawn-fcgi与PHP-FPM就是支持PHP的两个FastCGI进程管理器。&lt;br /&gt;
+下面简单介绍spawn-fcgi与PHP-FPM的异同:&lt;br /&gt;
+spawn-fcgi是HTTP服务器lighttpd的一部分，目前已经独立成为一个项目，一般与lighttpd配合使用来支持PHP&lt;br /&gt;
+但是ligttpd的spwan-fcgi在高并发访问的时候，会出现内存泄漏甚至自动重启FastCGI的问题。&lt;/p&gt;
+&lt;p&gt;Nginx是个轻量级的HTTP server，必须借助第三方的FastCGI处理器才可以对PHP进行解析，因此Nginx+spawn-fcgi的组合也可以实现对PHP的解析，这里不过多讲述。&lt;/p&gt;
+&lt;p&gt;PHP-FPM也是一个第三方的FastCGI进程管理器，它是作为PHP的一个补丁来开发的，在安装的时候也需要和PHP源码一起编译&lt;br /&gt;
+也就是说PHP-FPM被编译到PHP内核中，因此在处理性能方面更加优秀；同时它在处理高并发方面也比spawn-fcgi引擎好很多&lt;br /&gt;
+因此，推荐Nginx+PHP/PHP-FPM这个组合对PHP进行解析。&lt;/p&gt;
+&lt;p&gt;FastCGI 的主要优点是把动态语言和HTTP Server分离开来&lt;br /&gt;
+所以Nginx与PHP/PHP-FPM经常被部署在不同的服务器上，以分担前端Nginx服务器的压力，使Nginx专一处理静态请求和转发动态请求&lt;br /&gt;
+而PHP/PHP-FPM服务器专一解析PHP动态请求。&lt;/p&gt;
+&lt;h2 id=&#34;php-cgiphp-fpm&#34;&gt;关于php-cgi和php-fpm&lt;/h2&gt;
+&lt;p&gt;CGI 是 Web Server 与 Web Application 之间数据交换的一种协议。&lt;br /&gt;
+FastCGI 同 CGI 是一种通信协议，但比  CGI 在效率上做了一些优化，同样 SCGI 协议与 FastCGI 类似。&lt;br /&gt;
+PHP-CGI 是 PHP （Web Application）对 Web Server 提供的 CGI 协议的接口程序。&lt;br /&gt;
+PHP-FPM 是 PHP（Web Application）对 Web Server 提供的 FastCGI 协议的接口程序，额外还提供了相信智能一些任务管理。&lt;br /&gt;
+参考：&lt;a href=&#34;https://groups.google.com/forum/?fromgroups=#!topic/shlug/d5hJKyFzI-g&#34;&gt;请问CGI、PHP-CGI、PHP-FPM之间是什么关系?&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id=&#34;footer&#34;&gt;
+      &lt;div class=&#34;footer-left&#34;&gt;
+        &lt;p&gt;
+        Copyright © 2012-2016 Tanky Woo.
+        Powered by &lt;a href=&#34;http://simiki.org/&#34; target=&#34;_blank&#34;&gt;Simiki&lt;/a&gt;.
+        Theme by &lt;a href=&#34;https://git.coding.net/tankywoo/yasimple_x2.git&#34; target=&#34;_blank&#34;&gt;YASimple_X2&lt;/a&gt;.
+        &lt;/p&gt;
+        &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
+      &lt;/div&gt; &lt;!-- end footer-left --&gt;
+      &lt;div class=&#34;footer-right&#34;&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -12169,7 +12398,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -12510,7 +12739,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -12606,7 +12835,7 @@ rates indicate the rate average of 2s, 10s, 40s  &lt;/p&gt;
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -13104,7 +13333,7 @@ ereregex&lt;/p&gt;
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -13388,7 +13617,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -13476,7 +13705,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -13561,7 +13790,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -13694,7 +13923,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -13793,7 +14022,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -13875,7 +14104,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -14135,7 +14364,7 @@ The kernel does the immediate actions (like killing processes etc.) and mcelog d
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -14285,7 +14514,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -14361,7 +14590,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -14500,7 +14729,7 @@ Three power-off methods are available. Soft is the most graceful, hard performs 
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -14637,7 +14866,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -14820,7 +15049,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -14910,7 +15139,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -15075,7 +15304,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -15199,7 +15428,7 @@ Exclude nodes in dsh group file &#34;groupname.&#34;&lt;/p&gt;
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -15296,7 +15525,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -15445,7 +15674,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -16130,118 +16359,7 @@ function doSpellCheck(form, field) {
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
-        &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
-        &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
-      &lt;/div&gt; &lt;!-- end footer-right --&gt;
-    &lt;/div&gt;
-    &lt;script type=&#34;text/javascript&#34;&gt;
-var _bdhmProtocol = ((&#34;https:&#34; == document.location.protocol) ? &#34; https://&#34; : &#34; http://&#34;);
-document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196&#39; type=&#39;text/javascript&#39;%3E%3C/script%3E&#34;));
-    &lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</content>
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.com/tool/top.html</id>
-    <title>top / htop / atop</title>
-    <link href="http://wiki.tankywoo.com/tool/top.html" />
-    <published>2013-08-17T07:32:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:32:00+08:00</updated>
-    
-
-    
-
-    
-    <content type="html">&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;/static/css/colorful.css&#34;&gt;
-    &lt;link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;/static/css/style.css&#34;&gt;
-    &lt;link rel=&#34;shortcut icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
-    &lt;link rel=&#34;icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
-    &lt;link rel=&#34;alternate&#34; type=&#34;application/atom+xml&#34; href=&#34;atom.xml&#34; title=&#34;Atom feed&#34;&gt;
-    &lt;title&gt;top / htop / atop - Wiki · Tanky Woo&lt;/title&gt;
-    &lt;meta name=&#34;keywords&#34; content=&#34;wiki, makrdown, linux, python, cpp, ops, simiki&#34;/&gt;
-    &lt;meta name=&#34;description&#34; content=&#34;Tanky Woo&#39;s personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on.&#34;/&gt;
-    &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
-    
-  &lt;/head&gt;
-
-  &lt;body&gt;
-    &lt;div id=&#34;container&#34; class=&#34;typo&#34;&gt;
-      
-&lt;div id=&#34;header&#34;&gt;
-  &lt;div id=&#34;post-nav&#34;&gt;
-    &lt;a href=&#34;/&#34;&gt;Wiki · Tanky Woo&lt;/a&gt;
-    &amp;nbsp;&amp;#187;&amp;nbsp;
-    &lt;a href=&#34;/#tool&#34;&gt;tool&lt;/a&gt;
-    &amp;nbsp;&amp;#187;&amp;nbsp;top / htop / atop
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
-&lt;div id=&#34;content&#34;&gt;
-  &lt;p&gt;htop及类似的工具很多, 暂时接触过的有以下几个:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;top&lt;/li&gt;
-&lt;li&gt;htop&lt;/li&gt;
-&lt;li&gt;atop&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;没有最好, 完全看个人爱好了. 我就比较喜欢htop.&lt;/p&gt;
-&lt;h2 id=&#34;top&#34;&gt;top&lt;/h2&gt;
-&lt;p&gt;关于top, 直接借用好基友 磊妹 的文章:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://kumu-linux.github.io/blog/2013/06/02/top/&#34;&gt;Top基本介绍&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://kumu-linux.github.io/blog/2013/06/07/top-hacks/&#34;&gt;Top实践小技巧&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;很多用法也是从他那里学到的&lt;/p&gt;
-&lt;p&gt;最近在公司的一台服务器发现一台好像是8核cpu的机器, 一个进程的cpu跑到了9999%. 但是htop显示一切正常, 应该是top计算有bug.&lt;/p&gt;
-&lt;p&gt;常用的参数:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-b&lt;/code&gt;: 以 &lt;code&gt;batch&lt;/code&gt;方式运行, 如果没有加-n参数, 则和正常top一样, 一直循环输出. 适合输出给其它程序或文件&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-n &amp;lt;X&amp;gt;&lt;/code&gt;: 指定循环次数&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-c&lt;/code&gt;: command-line/program-name切换, 按c&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-H&lt;/code&gt;: 线程模式, 默认只输出进程, 按H&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-p &amp;lt;pid&amp;gt;&lt;/code&gt;: 监控指定的pid&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-u &amp;lt;username&amp;gt;&lt;/code&gt;: 监控指定用户进程&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;htop&#34;&gt;htop&lt;/h2&gt;
-&lt;p&gt;htop底部已经显示了一些帮助的快捷键, 不过有一些功能键我这里按不了, 估计是虚拟机按键受限的原因.&lt;/p&gt;
-&lt;p&gt;htop有几个亮点:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;直接按 &lt;code&gt;h&lt;/code&gt; 可以看到帮助&lt;/li&gt;
-&lt;li&gt;可以通过&lt;code&gt;方向键上下&lt;/code&gt;或&lt;code&gt;鼠标&lt;/code&gt;选择相应的进程&lt;/li&gt;
-&lt;li&gt;可以按进程用户筛选&lt;/li&gt;
-&lt;li&gt;按&lt;code&gt;space&lt;/code&gt;键来高亮标记一些进程, 方便查看&lt;/li&gt;
-&lt;li&gt;可以直接使用快捷键&lt;code&gt;l&lt;/code&gt;调用lsof查看该进程开启的文件&lt;/li&gt;
-&lt;li&gt;...&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;atop&#34;&gt;atop&lt;/h2&gt;
-&lt;p&gt;这玩意暂时还不熟, 输出的内容太多了.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://lwn.net/Articles/387202/&#34;&gt;One-stop performance analysis using atop&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.maketecheasier.com/load-monitoring-linux-atop/&#34;&gt;How to Perform Load Monitoring in Linux Using atop&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.unixmen.com/linux-basics-monitor-system-resources-processes-using-atop/&#34;&gt;Linux Basics: Monitor System Resources And Processes Using Atop&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div id=&#34;footer&#34;&gt;
-      &lt;div class=&#34;footer-left&#34;&gt;
-        &lt;p&gt;
-        Copyright © 2012-2016 Tanky Woo.
-        Powered by &lt;a href=&#34;http://simiki.org/&#34; target=&#34;_blank&#34;&gt;Simiki&lt;/a&gt;.
-        Theme by &lt;a href=&#34;https://git.coding.net/tankywoo/yasimple_x2.git&#34; target=&#34;_blank&#34;&gt;YASimple_X2&lt;/a&gt;.
-        &lt;/p&gt;
-        &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
-      &lt;/div&gt; &lt;!-- end footer-left --&gt;
-      &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -16356,7 +16474,7 @@ And there are some implementation by other languages, such as &lt;a href=&#34;ht
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -17210,117 +17328,7 @@ false: shell built-in command&lt;/p&gt;
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
-        &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
-        &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
-      &lt;/div&gt; &lt;!-- end footer-right --&gt;
-    &lt;/div&gt;
-    &lt;script type=&#34;text/javascript&#34;&gt;
-var _bdhmProtocol = ((&#34;https:&#34; == document.location.protocol) ? &#34; https://&#34; : &#34; http://&#34;);
-document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196&#39; type=&#39;text/javascript&#39;%3E%3C/script%3E&#34;));
-    &lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;</content>
-    
-    
-  </entry>
-  
-    
-  <entry>
-    <id>http://wiki.tankywoo.com/tool/curl.html</id>
-    <title>curl</title>
-    <link href="http://wiki.tankywoo.com/tool/curl.html" />
-    <published>2013-08-17T07:32:00+08:00</published>
-
-    
-    <updated>2013-08-17T07:32:00+08:00</updated>
-    
-
-    
-
-    
-    <content type="html">&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;/static/css/colorful.css&#34;&gt;
-    &lt;link rel=&#34;Stylesheet&#34; type=&#34;text/css&#34; href=&#34;/static/css/style.css&#34;&gt;
-    &lt;link rel=&#34;shortcut icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
-    &lt;link rel=&#34;icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
-    &lt;link rel=&#34;alternate&#34; type=&#34;application/atom+xml&#34; href=&#34;atom.xml&#34; title=&#34;Atom feed&#34;&gt;
-    &lt;title&gt;curl - Wiki · Tanky Woo&lt;/title&gt;
-    &lt;meta name=&#34;keywords&#34; content=&#34;wiki, makrdown, linux, python, cpp, ops, simiki&#34;/&gt;
-    &lt;meta name=&#34;description&#34; content=&#34;Tanky Woo&#39;s personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on.&#34;/&gt;
-    &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
-    
-  &lt;/head&gt;
-
-  &lt;body&gt;
-    &lt;div id=&#34;container&#34; class=&#34;typo&#34;&gt;
-      
-&lt;div id=&#34;header&#34;&gt;
-  &lt;div id=&#34;post-nav&#34;&gt;
-    &lt;a href=&#34;/&#34;&gt;Wiki · Tanky Woo&lt;/a&gt;
-    &amp;nbsp;&amp;#187;&amp;nbsp;
-    &lt;a href=&#34;/#tool&#34;&gt;tool&lt;/a&gt;
-    &amp;nbsp;&amp;#187;&amp;nbsp;curl
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
-&lt;div id=&#34;content&#34;&gt;
-  &lt;div class=&#34;toc&#34;&gt;&lt;span class=&#34;toctitle&#34;&gt;Table of Contents&lt;/span&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#argument&#34;&gt;Argument&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#example&#34;&gt;Example&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#ipv6&#34;&gt;IPv6&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#read-more&#34;&gt;Read More&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;h2 id=&#34;argument&#34;&gt;Argument&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;-o&lt;/code&gt; - output to file&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-O&lt;/code&gt; - output to file named the same with the remote name&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-i&lt;/code&gt; - Include the HTTP-header in the output&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-I&lt;/code&gt; - only get the HTTP-header&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-u&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;example&#34;&gt;Example&lt;/h2&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;cp&#34;&gt;# get the file source and output to the STDOUT&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//wiki.wutianqi.com/index.html&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# download the file&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;o&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;myindex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;html&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//wiki.wutianqi.com/index.html&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;O&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//wiki.wutianqi.com/index.html&lt;/span&gt;
-
-&lt;span class=&#34;cp&#34;&gt;# get the HTTP-header only&lt;/span&gt;
-&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;I&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//wiki.wutianqi.com/index.html&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;h2 id=&#34;ipv6&#34;&gt;IPv6&lt;/h2&gt;
-&lt;p&gt;curl ipv6 localhost:8000, 注意要加&lt;code&gt;-g&lt;/code&gt;和&lt;code&gt;-6&lt;/code&gt;, url要用方括号(bracket):&lt;/p&gt;
-&lt;div class=&#34;hlcode&#34;&gt;&lt;pre&gt;&lt;span class=&#34;n&#34;&gt;curl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;g&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;6&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//[::1]:8000&amp;#39;&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;
-
-
-&lt;p&gt;参考: &lt;a href=&#34;http://superuser.com/a/885757/251495&#34;&gt;How can I use curl with ::1 for ipv6 based loopback?&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;read-more&#34;&gt;Read More&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.thegeekstuff.com/2012/04/curl-examples/&#34;&gt;15 Practical Linux cURL Command Examples&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.yilmazhuseyin.com/blog/dev/curl-tutorial-examples-usage&#34;&gt;curl tutorial with examples of usage&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.ruanyifeng.com/blog/2011/09/curl.html&#34;&gt;curl网站开发指南&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div id=&#34;footer&#34;&gt;
-      &lt;div class=&#34;footer-left&#34;&gt;
-        &lt;p&gt;
-        Copyright © 2012-2016 Tanky Woo.
-        Powered by &lt;a href=&#34;http://simiki.org/&#34; target=&#34;_blank&#34;&gt;Simiki&lt;/a&gt;.
-        Theme by &lt;a href=&#34;https://git.coding.net/tankywoo/yasimple_x2.git&#34; target=&#34;_blank&#34;&gt;YASimple_X2&lt;/a&gt;.
-        &lt;/p&gt;
-        &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
-      &lt;/div&gt; &lt;!-- end footer-left --&gt;
-      &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -18308,7 +18316,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -18325,13 +18333,13 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
   
     
   <entry>
-    <id>http://wiki.tankywoo.com/tool/fastcgi.html</id>
-    <title>fastcgi</title>
-    <link href="http://wiki.tankywoo.com/tool/fastcgi.html" />
-    <published>2013-08-17T07:36:00+08:00</published>
+    <id>http://wiki.tankywoo.com/tool/top.html</id>
+    <title>top / htop / atop</title>
+    <link href="http://wiki.tankywoo.com/tool/top.html" />
+    <published>2013-08-17T07:32:00+08:00</published>
 
     
-    <updated>2013-08-17T07:36:00+08:00</updated>
+    <updated>2013-08-17T07:32:00+08:00</updated>
     
 
     
@@ -18345,7 +18353,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
     &lt;link rel=&#34;shortcut icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
     &lt;link rel=&#34;icon&#34; href=&#34;/favicon.ico&#34; type=&#34;image/x-icon&#34;&gt;
     &lt;link rel=&#34;alternate&#34; type=&#34;application/atom+xml&#34; href=&#34;atom.xml&#34; title=&#34;Atom feed&#34;&gt;
-    &lt;title&gt;fastcgi - Wiki · Tanky Woo&lt;/title&gt;
+    &lt;title&gt;top / htop / atop - Wiki · Tanky Woo&lt;/title&gt;
     &lt;meta name=&#34;keywords&#34; content=&#34;wiki, makrdown, linux, python, cpp, ops, simiki&#34;/&gt;
     &lt;meta name=&#34;description&#34; content=&#34;Tanky Woo&#39;s personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on.&#34;/&gt;
     &lt;meta http-equiv=&#34;Content-Type&#34; content=&#34;text/html; charset=UTF-8&#34;&gt;
@@ -18360,55 +18368,53 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
     &lt;a href=&#34;/&#34;&gt;Wiki · Tanky Woo&lt;/a&gt;
     &amp;nbsp;&amp;#187;&amp;nbsp;
     &lt;a href=&#34;/#tool&#34;&gt;tool&lt;/a&gt;
-    &amp;nbsp;&amp;#187;&amp;nbsp;fastcgi
+    &amp;nbsp;&amp;#187;&amp;nbsp;top / htop / atop
   &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&#34;clearfix&#34;&gt;&lt;/div&gt;
 &lt;div id=&#34;content&#34;&gt;
-  &lt;h2 id=&#34;fastcgi&#34;&gt;FastCGI&lt;/h2&gt;
-&lt;p&gt;参考: &lt;a href=&#34;http://book.51cto.com/art/201202/314840.htm&#34;&gt;Nginx+FastCGI运行原理&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;fastcgi_1&#34;&gt;FastCGI介绍&lt;/h2&gt;
-&lt;p&gt;FastCGI是从CGI发展改进而来的。&lt;br /&gt;
-传统CGI接口方式的主要缺点是性能很差，因为每次HTTP服务器遇到动态程序时都需要重新启动脚本解析器来执行解析，然后将结果返回给HTTP服务器。&lt;br /&gt;
-这在处理高并发访问时几乎是不可用的。另外传统的CGI接口方式安全性也很差，现在已经很少使用了。&lt;/p&gt;
-&lt;p&gt;FastCGI接口方式采用C/S结构，可以将HTTP服务器和脚本解析服务器分开，同时在脚本解析服务器上启动一个或者多个脚本解析守护进程。&lt;br /&gt;
-当HTTP服务器每次遇到动态程序时，可以将其直接交付给FastCGI进程来执行，然后将得到的结果返回给浏览器。&lt;br /&gt;
-这种方式可以让HTTP服务器专一地处理静态请求或者将动态脚本服务器的结果返回给客户端，这在很大程度上提高了整个应用系统的性能。&lt;/p&gt;
-&lt;p&gt;维基百科上的解释：&lt;br /&gt;
-快速通用网关接口（Fast Common Gateway Interface／FastCGI）是一种重要的互联网技术，可以让一个客户端，从网页浏览器向执行在网页服务器上的程序请求数据。FastCGI是早期通用网关接口（CGI）的增强版本。&lt;br /&gt;
-FastCGI致力于减少网页服务器与CGI程序之间的互动，从而使服务器可以同时处理更多的网页请求。&lt;br /&gt;
-参考: &lt;a href=&#34;http://zh.wikipedia.org/wiki/FastCGI&#34;&gt;维基百科-FastCGI&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;nginxfastcgi&#34;&gt;Nginx+FastCGI运行原理&lt;/h2&gt;
-&lt;p&gt;Nginx不支持对外部程序的直接调用或者解析，所有的外部程序（包括PHP）必须通过FastCGI接口来调用。&lt;br /&gt;
-FastCGI接口在Linux下是socket（这个socket可以是文件socket，也可以是ip socket）。&lt;br /&gt;
-为了调用CGI程序，还需要一个FastCGI的wrapper（wrapper可以理解为用于启动另一个程序的程序），&lt;br /&gt;
-这个wrapper绑定在某个固定socket上，如端口或者文件socket。&lt;br /&gt;
-当Nginx将CGI请求发送给这个socket的时候，通过FastCGI接口，wrapper接收到请求，然后派生出一个新的线程，&lt;br /&gt;
-这个线程调用解释器或者外部程序处理脚本并读取返回数据；&lt;br /&gt;
-接着，wrapper再将返回的数据通过FastCGI接口，沿着固定的socket传递给Nginx；&lt;br /&gt;
-最后，Nginx将返回的数据发送给客户端。这就是Nginx+FastCGI的整个运作过程。&lt;br /&gt;
-如图所示  &lt;/p&gt;
-&lt;p&gt;TODO
-    {{/img/fastcgi_1.jpg}}&lt;/p&gt;
-&lt;h2 id=&#34;spawn-fcgiphp-fpm&#34;&gt;spawn-fcgi与PHP-FPM&lt;/h2&gt;
-&lt;p&gt;前面介绍过，FastCGI接口方式在脚本解析服务器上启动一个或者多个守护进程对动态脚本进行解析，这些进程就是FastCGI进程管理器，或者称之为FastCGI引擎&lt;br /&gt;
-spawn-fcgi与PHP-FPM就是支持PHP的两个FastCGI进程管理器。&lt;br /&gt;
-下面简单介绍spawn-fcgi与PHP-FPM的异同:&lt;br /&gt;
-spawn-fcgi是HTTP服务器lighttpd的一部分，目前已经独立成为一个项目，一般与lighttpd配合使用来支持PHP&lt;br /&gt;
-但是ligttpd的spwan-fcgi在高并发访问的时候，会出现内存泄漏甚至自动重启FastCGI的问题。&lt;/p&gt;
-&lt;p&gt;Nginx是个轻量级的HTTP server，必须借助第三方的FastCGI处理器才可以对PHP进行解析，因此Nginx+spawn-fcgi的组合也可以实现对PHP的解析，这里不过多讲述。&lt;/p&gt;
-&lt;p&gt;PHP-FPM也是一个第三方的FastCGI进程管理器，它是作为PHP的一个补丁来开发的，在安装的时候也需要和PHP源码一起编译&lt;br /&gt;
-也就是说PHP-FPM被编译到PHP内核中，因此在处理性能方面更加优秀；同时它在处理高并发方面也比spawn-fcgi引擎好很多&lt;br /&gt;
-因此，推荐Nginx+PHP/PHP-FPM这个组合对PHP进行解析。&lt;/p&gt;
-&lt;p&gt;FastCGI 的主要优点是把动态语言和HTTP Server分离开来&lt;br /&gt;
-所以Nginx与PHP/PHP-FPM经常被部署在不同的服务器上，以分担前端Nginx服务器的压力，使Nginx专一处理静态请求和转发动态请求&lt;br /&gt;
-而PHP/PHP-FPM服务器专一解析PHP动态请求。&lt;/p&gt;
-&lt;h2 id=&#34;php-cgiphp-fpm&#34;&gt;关于php-cgi和php-fpm&lt;/h2&gt;
-&lt;p&gt;CGI 是 Web Server 与 Web Application 之间数据交换的一种协议。&lt;br /&gt;
-FastCGI 同 CGI 是一种通信协议，但比  CGI 在效率上做了一些优化，同样 SCGI 协议与 FastCGI 类似。&lt;br /&gt;
-PHP-CGI 是 PHP （Web Application）对 Web Server 提供的 CGI 协议的接口程序。&lt;br /&gt;
-PHP-FPM 是 PHP（Web Application）对 Web Server 提供的 FastCGI 协议的接口程序，额外还提供了相信智能一些任务管理。&lt;br /&gt;
-参考：&lt;a href=&#34;https://groups.google.com/forum/?fromgroups=#!topic/shlug/d5hJKyFzI-g&#34;&gt;请问CGI、PHP-CGI、PHP-FPM之间是什么关系?&lt;/a&gt;&lt;/p&gt;
+  &lt;p&gt;htop及类似的工具很多, 暂时接触过的有以下几个:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;top&lt;/li&gt;
+&lt;li&gt;htop&lt;/li&gt;
+&lt;li&gt;atop&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;没有最好, 完全看个人爱好了. 我就比较喜欢htop.&lt;/p&gt;
+&lt;h2 id=&#34;top&#34;&gt;top&lt;/h2&gt;
+&lt;p&gt;关于top, 直接借用好基友 磊妹 的文章:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://kumu-linux.github.io/blog/2013/06/02/top/&#34;&gt;Top基本介绍&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://kumu-linux.github.io/blog/2013/06/07/top-hacks/&#34;&gt;Top实践小技巧&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;很多用法也是从他那里学到的&lt;/p&gt;
+&lt;p&gt;最近在公司的一台服务器发现一台好像是8核cpu的机器, 一个进程的cpu跑到了9999%. 但是htop显示一切正常, 应该是top计算有bug.&lt;/p&gt;
+&lt;p&gt;常用的参数:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;-b&lt;/code&gt;: 以 &lt;code&gt;batch&lt;/code&gt;方式运行, 如果没有加-n参数, 则和正常top一样, 一直循环输出. 适合输出给其它程序或文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-n &amp;lt;X&amp;gt;&lt;/code&gt;: 指定循环次数&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-c&lt;/code&gt;: command-line/program-name切换, 按c&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-H&lt;/code&gt;: 线程模式, 默认只输出进程, 按H&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-p &amp;lt;pid&amp;gt;&lt;/code&gt;: 监控指定的pid&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;-u &amp;lt;username&amp;gt;&lt;/code&gt;: 监控指定用户进程&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;htop&#34;&gt;htop&lt;/h2&gt;
+&lt;p&gt;htop底部已经显示了一些帮助的快捷键, 不过有一些功能键我这里按不了, 估计是虚拟机按键受限的原因.&lt;/p&gt;
+&lt;p&gt;htop有几个亮点:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;直接按 &lt;code&gt;h&lt;/code&gt; 可以看到帮助&lt;/li&gt;
+&lt;li&gt;可以通过&lt;code&gt;方向键上下&lt;/code&gt;或&lt;code&gt;鼠标&lt;/code&gt;选择相应的进程&lt;/li&gt;
+&lt;li&gt;可以按进程用户筛选&lt;/li&gt;
+&lt;li&gt;按&lt;code&gt;space&lt;/code&gt;键来高亮标记一些进程, 方便查看&lt;/li&gt;
+&lt;li&gt;可以直接使用快捷键&lt;code&gt;l&lt;/code&gt;调用lsof查看该进程开启的文件&lt;/li&gt;
+&lt;li&gt;...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;atop&#34;&gt;atop&lt;/h2&gt;
+&lt;p&gt;这玩意暂时还不熟, 输出的内容太多了.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://lwn.net/Articles/387202/&#34;&gt;One-stop performance analysis using atop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.maketecheasier.com/load-monitoring-linux-atop/&#34;&gt;How to Perform Load Monitoring in Linux Using atop&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.unixmen.com/linux-basics-monitor-system-resources-processes-using-atop/&#34;&gt;Linux Basics: Monitor System Resources And Processes Using Atop&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/div&gt;
     &lt;/div&gt;
     &lt;div id=&#34;footer&#34;&gt;
@@ -18421,7 +18427,7 @@ PHP-FPM 是 PHP（Web Application）对 Web Server 提供的 FastCGI 协议的�
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -18586,7 +18592,7 @@ svn:mime-type = application/xml
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -18814,7 +18820,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -18902,7 +18908,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -19151,7 +19157,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -19349,7 +19355,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -19561,7 +19567,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -19876,7 +19882,7 @@ echo &lt;span class=&#34;cp&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nb&#34;&g
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;
@@ -19991,7 +19997,7 @@ document.write(unescape(&#34;%3Cscript src=&#39;&#34; + _bdhmProtocol + &#34;hm.
         &lt;p&gt;本作品采用&lt;a rel=&#34;license&#34; href=&#34;http://creativecommons.org/licenses/by-nc-sa/4.0/&#34;&gt;知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议&lt;/a&gt;进行许可。&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-left --&gt;
       &lt;div class=&#34;footer-right&#34;&gt;
-        &lt;p&gt;最后更新 2016-04-20 16:22:07&lt;/p&gt;
+        &lt;p&gt;最后更新 2016-04-21 11:15:25&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;https://github.com/tankywoo/wiki.tankywoo.com&#34;&gt;Fork me on Github&lt;/a&gt;&lt;/p&gt;
         &lt;p&gt;&lt;a href=&#34;http://www.miitbeian.gov.cn/&#34;&gt;京ICP备16016622号&lt;/a&gt;&lt;/p&gt;
       &lt;/div&gt; &lt;!-- end footer-right --&gt;

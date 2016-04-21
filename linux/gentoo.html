@@ -363,6 +363,12 @@ python_export python<span class="cp">${</span><span class="n">SLOT</span><span c
 
 
 <p>不确定为何python-2.6.9.ebuild会依赖这个，其它版本只在<code>-rX</code>的小版本会依赖，大版本(不带<code>-rX</code>)的不会依赖python2.6的解释器。具体可以看看我之前在Gentoo论坛的<a href="https://forums.gentoo.org/viewtopic-p-7867700.html#7867700">提问</a></p>
+<p>还有一个问题就是python2.6.9的EAPI是2, 导致ebuild有些函数指定不了:</p>
+<div class="hlcode"><pre><span class="n">die</span> <span class="s">&quot;python_do* and python_new* helpers are banned in EAPIs older than 4.&quot;</span>
+</pre></div>
+
+
+<p>改为<code>EAPI="4"</code>即可。</p>
 <p>参考:</p>
 <ul>
 <li><a href="https://wiki.gentoo.org/wiki/Project:Overlays/User_Guide">Project:Overlays/User Guide</a></li>
@@ -1015,7 +1021,7 @@ RDEPEND=&quot;
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>最后更新 2016-04-20 16:22:07</p>
+        <p>最后更新 2016-04-21 11:15:25</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
