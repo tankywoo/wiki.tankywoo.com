@@ -1,8 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2016-04-20 16:20
-log: "增加Overlay和Layman"
+updated: 2016-04-26 21:55
+log: "增加内核升级"
 ---
 
 [TOC]
@@ -1007,6 +1007,28 @@ eix看本地git最新稳定版是2.7.3, 但是默认不给安装, 强制指定�
 `!!`表示hard block, 需要用户自己来处理这个关系; 这里表示安装ntdb前samba必须>=4.1.7版本.(参考[dependencies](https://devmanual.gentoo.org/general-concepts/dependencies/))
 
 目前的解决办法就是先卸载掉samba-3.x, 再直接安装samba-4.x (参考[samba hard blocking ntdb](https://forums.gentoo.org/viewtopic-p-7639846.html))
+
+
+### 内核升级 ###
+
+* [Kernel/Upgrade](https://wiki.gentoo.org/wiki/Kernel/Upgrade)
+* [Kernel/Configuration](https://wiki.gentoo.org/wiki/Kernel/Configuration#Build)
+* [Kernel/Removal](https://wiki.gentoo.org/wiki/Kernel/Removaol)
+
+基于旧的`.config`文件, 转为适应新内核选项的配置文件:
+
+	# 选择新的内核
+	# 其实是修改/usr/src/linux的符号链接
+	$ eselect kernel set xxx
+
+	# 把当前运行的(老内核)的配置放到新内核源码文件目录下
+	$ zcat /proc/config.gz > /usr/src/linux/.config
+
+	# 将旧的内核配置转为新的内核配置
+	$ cd /usr/src/linux
+	$ make olddefconfig
+
+然后就是编译内核和initramfs了。
 
 
 ## 其它资源 ##
