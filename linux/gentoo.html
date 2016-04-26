@@ -57,9 +57,10 @@
 <li><a href="#gentooperl">Gentoo下Perl的一些问题</a></li>
 <li><a href="#masked-by-eapi">masked by EAPI</a></li>
 <li><a href="#hard-blocking">hard blocking</a></li>
+<li><a href="#_6">内核升级</a></li>
 </ul>
 </li>
-<li><a href="#_6">其它资源</a></li>
+<li><a href="#_7">其它资源</a></li>
 </ul>
 </div>
 <p><img alt="Gentoo Logo" src="https://1b9a50f4f9de4348cd9f-e703bc50ba0aa66772a874f8c7698be7.ssl.cf5.rackcdn.com/site-logo.svg" /></p>
@@ -999,7 +1000,28 @@ RDEPEND=&quot;
 
 <p><code>!!</code>表示hard block, 需要用户自己来处理这个关系; 这里表示安装ntdb前samba必须&gt;=4.1.7版本.(参考<a href="https://devmanual.gentoo.org/general-concepts/dependencies/">dependencies</a>)</p>
 <p>目前的解决办法就是先卸载掉samba-3.x, 再直接安装samba-4.x (参考<a href="https://forums.gentoo.org/viewtopic-p-7639846.html">samba hard blocking ntdb</a>)</p>
-<h2 id="_6">其它资源</h2>
+<h3 id="_6">内核升级</h3>
+<ul>
+<li><a href="https://wiki.gentoo.org/wiki/Kernel/Upgrade">Kernel/Upgrade</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Kernel/Configuration#Build">Kernel/Configuration</a></li>
+<li><a href="https://wiki.gentoo.org/wiki/Kernel/Removaol">Kernel/Removal</a></li>
+</ul>
+<p>基于旧的<code>.config</code>文件, 转为适应新内核选项的配置文件:</p>
+<div class="hlcode"><pre><span class="cp"># 选择新的内核</span>
+<span class="cp"># 其实是修改/usr/src/linux的符号链接</span>
+<span class="err">$</span> <span class="n">eselect</span> <span class="n">kernel</span> <span class="n">set</span> <span class="n">xxx</span>
+
+<span class="cp"># 把当前运行的(老内核)的配置放到新内核源码文件目录下</span>
+<span class="err">$</span> <span class="n">zcat</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">config</span><span class="p">.</span><span class="n">gz</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="p">.</span><span class="n">config</span>
+
+<span class="cp"># 将旧的内核配置转为新的内核配置</span>
+<span class="err">$</span> <span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">linux</span>
+<span class="err">$</span> <span class="n">make</span> <span class="n">olddefconfig</span>
+</pre></div>
+
+
+<p>然后就是编译内核和initramfs了。</p>
+<h2 id="_7">其它资源</h2>
 <ul>
 <li><a href="http://www.jinbuguo.com/gentoo/emerge.html">emerge 中文手册</a></li>
 <li><a href="https://javran.wordpress.com/2011/02/18/gentoo-commands/">gentoo 日常维护命令备忘</a></li>
@@ -1021,7 +1043,7 @@ RDEPEND=&quot;
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>最后更新 2016-04-25 23:44:23</p>
+        <p>最后更新 2016-04-26 22:13:41</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
