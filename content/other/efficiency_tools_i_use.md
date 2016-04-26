@@ -1,8 +1,8 @@
 ---
 title: "效率工具"
 date: 2013-08-17 07:32
-updated: 2016-04-16 16:20
-log: "更新格式，补充"
+updated: 2016-04-26 09:00
+log: "更新梯子的http代理和文档"
 ---
 
 [TOC]
@@ -81,7 +81,57 @@ note: 以下链接用base64转码
 * 云梯: *aHR0cHM6Ly93d3cueXRwdWIuY29tLwo=* (未使用)
 * 佛跳墙: *aHR0cDovL3d3dy5nb2R1c2V2cG4uaW8K* 支持月付。(未使用)
 
-最近在用ss, 感觉还是挺方便的。
+最近在用ss (socks5代理), 感觉还是挺方便的。
 
 关于ss的配置: [shadowsocks](https://shadowsocks.org/en/index.html)，另外浏览器端配置可参考: [Chrome + Proxy SwitchOmega](https://ii-i.org/archives/289)。
 
+ss转http代理，官方wiki提供了[polipo](https://github.com/jech/polipo)这个工具，具体见[Convert Shadowsocks into an HTTP proxy](https://github.com/shadowsocks/shadowsocks/wiki/Convert-Shadowsocks-into-an-HTTP-proxy)：
+
+	$ brew install polipo
+	$ polipo socksParentProxy=localhost:1080
+
+也可以写入配置文件，默认是`/etc/polipo/config`，这里放在家目录：
+
+	$ cat ~/.polipo
+	socksParentProxy = "localhost:1080"
+	socksProxyType = socks5
+	logFile=/tmp/polipo.log
+	logLevel=4
+
+	$ polipo -c ~/.polipo
+
+更详细的配置可以看看这篇文章：[为终端设置Shadowsocks代理](http://droidyue.com/blog/2016/04/04/set-shadowsocks-proxy-for-terminal/)
+
+polipo默认启动的端口是8123。
+
+	# apt-get
+	$ http_proxy=http://localhost:8123 apt-get update
+
+	# curl
+	$ http_proxy=http://localhost:8123 curl www.google.com
+
+	# wget
+	$ http_proxy=http://localhost:8123 wget www.google.com
+
+	# git
+	$ git config --global http.proxy 127.0.0.1:8123
+	$ git clone https://github.com/xxx/xxx.git
+	$ git xxx
+	$ git config --global --unset-all http.proxy
+
+	# brew
+	$ http_proxy=http://localhost:8123 brew install xxx
+
+另外, `brew`更新也可以直接使用socks5:
+
+	$ ALL_PROXY=socks5://127.1:1080 brew update
+
+参考这两篇:
+
+* [Homebrew behind proxy?](https://github.com/Homebrew/legacy-homebrew/issues/11114)
+* [homebrew使用socks-proxy](http://blog.suchasplus.com/2014/10/homebrew-using-socks-proxy.html) 配置的curl socks代理
+
+其它工具:
+
+* [cow](https://github.com/cyfdecyf/cow) go写的http代理
+* [proxychains](https://github.com/shadowsocks/shadowsocks/wiki/Using-Shadowsocks-with-Command-Line-Tools) 这个工具有时间也尝试下
