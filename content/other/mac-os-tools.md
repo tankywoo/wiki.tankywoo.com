@@ -2,7 +2,11 @@
 layout: post
 title: "Mac OS 软件"
 date: 2014-01-25 15:08
+updated: 2016-04-27 21:35
+log: "更新"
 ---
+
+[TOC]
 
 ## 综合(其它)
 
@@ -14,6 +18,7 @@ date: 2014-01-25 15:08
 * [Gemini](http://macpaw.com/gemini) 检查重复文件
 * [Hazel](http://www.noodlesoft.com/hazel.php) 自动清理存放
 * [Cyberduck](http://cyberduck.io/) FTP
+* [ForkLift](http://www.binarynights.com/forklift/) 取代Finder，自带ftp/sftp
 
 
 ## 开发
@@ -44,10 +49,14 @@ date: 2014-01-25 15:08
 
 * [iA Writer](http://www.iawriter.com/mac/) 有点不太习惯，对Markdown的语法我感觉支持不够好，不过很简洁。半价30R时入手的
 * [Byword](http://bywordapp.com/) 没试过
-* [Mou](http://mouapp.com/) 国人开发的，写技术文档不错
+* [Mou](http://mouapp.com/) <strike>国人开发的，写技术文档不错</strike>。现在名声不好。
+* [MacDown](http://macdown.uranusjr.com/) 取代Mou
+* [typora](http://www.typora.io/) 小清新的Markdown编辑器，写完自动显示为解析后效果，比较新奇，免费，推荐试试
 
 ## 阅读器
 
+* iBooks 看epub效果还行，就是TOC不太方便
+* [Clearview](http://www.canoejoy.com/) 比较简洁, 支持pdf / mobi /epub，管理起来比较方便；不过看起来现在维护的比较少了。
+* [Adobe Digital Editions](http://www.adobe.com/solutions/ebook/digital-editions.html) brew cask可以直接安装，支持pdf / epub，看pdf比较合适。
 * [Calibre](http://calibre-ebook.com/) 主要用于mobi转为epub, 平板上多看不支持mobi, 图灵社区买的书只有pdf和mobi. 转换参考这篇[文章](http://osxdaily.com/2010/08/12/convert-to-epub/). Mac下Kindle没看直接看mobi.
-* [Clearview](http://www.canoejoy.com/) 听说简洁, 支持mobi, epub.
 * [更多选择](http://www.makeuseof.com/tag/7-ebook-readers-mac-compared/)
