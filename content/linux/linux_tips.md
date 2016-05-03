@@ -1,8 +1,9 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-04-18 11:25
-description: "增加删除文件的最后一个newline符"
+updated: 2016-05-03 21:20
+description: "查漏补缺, Tricks/Tips/Fragments"
+log: "增加查看网卡类型"
 ---
 
 [TOC]
@@ -241,3 +242,10 @@ description: "增加删除文件的最后一个newline符"
 
 参考: [How can I delete a newline if it is the last character in a file?](http://stackoverflow.com/questions/1654021/how-can-i-delete-a-newline-if-it-is-the-last-character-in-a-file)
 
+
+### 查看网卡类型 ###
+
+	$ lspci | egrep -i --color 'network|ethernet'
+	$ lspci | grep -i net
+	$ lshw -class network
+	$ dmesg | grep 'Ethernet driver'
