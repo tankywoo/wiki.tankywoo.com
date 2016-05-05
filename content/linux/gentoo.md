@@ -3,6 +3,7 @@ title: "Gentoo"
 date: 2014-08-30 16:29
 updated: 2016-04-26 21:55
 log: "增加内核升级"
+collection: "发行版"
 ---
 
 [TOC]

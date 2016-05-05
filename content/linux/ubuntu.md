@@ -1,6 +1,7 @@
 ---
 title: "Ubuntu"
 date: 2016-01-06 10:16
+collection: "发行版"
 ---
 
 [TOC]
