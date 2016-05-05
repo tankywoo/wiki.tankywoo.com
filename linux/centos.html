@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-    <title>uniq - Wiki · Tanky Woo</title>
+    <title>CentOS - Wiki · Tanky Woo</title>
     <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
     <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,16 +20,31 @@
   <div id="post-nav">
     <a href="/">Wiki · Tanky Woo</a>
     &nbsp;&#187;&nbsp;
-    <a href="/#tool">tool</a>
-    &nbsp;&#187;&nbsp;uniq
+    <a href="/#linux">linux</a>
+    &nbsp;&#187;&nbsp;CentOS
     <span class="updated">最后更新&nbsp;
-    2013-08-17 07:32
+    2016-05-01 23:00
     </span>
   </div>
 </div>
 <div class="clearfix"></div>
 <div id="content">
-  <p><a href="http://www.thegeekstuff.com/2013/05/uniq-command-examples/">7 Linux Uniq Command Examples to Remove Duplicate Lines from File</a></p>
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">基本</a><ul>
+<li><a href="#epel">EPEL</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="_1">基本</h2>
+<h3 id="epel">EPEL</h3>
+<p>Extra Packages for Enterprise Linux的简写，详细见<a href="https://fedoraproject.org/wiki/EPEL">官方wiki</a>：</p>
+<blockquote>
+<p>EPEL is a Fedora Special Interest Group that creates, maintains, and manages a high quality set of additional packages for Enterprise Linux, including, but not limited to, Red Hat Enterprise Linux (RHEL), CentOS and Scientific Linux (SL), Oracle Linux (OL).</p>
+</blockquote>
+<p>使用rpm安装相应版本的<a href="https://dl.fedoraproject.org/pub/epel/">epel源</a>:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">rpm</span> <span class="o">-</span><span class="n">Uvh</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">X</span><span class="o">-</span><span class="n">Y</span><span class="p">.</span><span class="n">rpm</span>
+</pre></div>
 </div>
     </div>
     <div id="footer">

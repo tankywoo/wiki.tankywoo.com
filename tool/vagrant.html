@@ -1,0 +1,325 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>Vagrant - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#tool">tool</a>
+    &nbsp;&#187;&nbsp;Vagrant
+    <span class="updated">最后更新&nbsp;
+    2016-05-04 20:30
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">基础</a></li>
+<li><a href="#_2">安装</a></li>
+<li><a href="#_3">常用命令</a></li>
+<li><a href="#providerpd">provider使用PD</a></li>
+<li><a href="#_4">其它参考</a></li>
+</ul>
+</div>
+<h2 id="_1">基础</h2>
+<p>Vagrant是一个基于虚拟机(VM)的统一配置开发环境工具，基于Ruby。</p>
+<p>类似于Docker的Dockerfile，通过一个配置文件(<code>Vagrantfile</code>)来编写配置环境，实现统一的开发测试环境，底层是各种虚拟机工具(如Virtualbox，Vmware，Parallels等)，称为<code>provider</code>；上层是shell脚本等，称为<code>provisioning</code>。</p>
+<p>当前Vagrant虽然支持各种provider，不过对Virtualbox的支持是最好。</p>
+<ul>
+<li>官方： <a href="https://www.vagrantup.com/">https://www.vagrantup.com/</a></li>
+<li>源码： <a href="https://github.com/mitchellh/vagrant">https://github.com/mitchellh/vagrant</a></li>
+<li>文档：<a href="https://www.vagrantup.com/docs/">https://www.vagrantup.com/docs/</a></li>
+</ul>
+<p>Vagrant将image称作<code>box</code>。</p>
+<ul>
+<li>官方box： <a href="https://atlas.hashicorp.com/boxes/search">https://atlas.hashicorp.com/boxes/search</a> 暂时只看到搜索名称，没法下载</li>
+<li>第三方box: <a href="http://www.vagrantbox.es/">http://www.vagrantbox.es/</a> 提供了各发行版/provider的下载链接，貌似官方的url也有</li>
+</ul>
+<p>如ubuntu 12.04的box:</p>
+<div class="hlcode"><pre><span class="nl">http:</span><span class="c1">//files.vagrantup.com/precise64.box</span>
+</pre></div>
+
+
+<p>当时在国内下载太慢，看到有人推荐<a href="http://mirrors.opencas.cn/ubuntu-vagrant/">opencas</a>。</p>
+<p>网上看到几副原理图，讲解的比较清楚：</p>
+<p><img alt="" src="http://tankywoo-wb.b0.upaiyun.com/vagrant/vagrant-1.png" /></p>
+<p>(摘自<a href="https://www.zybuluo.com/gabe/note/229777">使用Vagrant打造统一的开发环境</a>)</p>
+<p><img alt="" src="http://tankywoo-wb.b0.upaiyun.com/vagrant/vagrant-2.png" /></p>
+<p>(摘自<a href="http://www.ociweb.com/resources/publications/sett/march-2015-docker-vs-vagrant/">Docker vs. Vagrant</a>)</p>
+<p><img alt="" src="http://tankywoo-wb.b0.upaiyun.com/vagrant/vagrant-3.png" /></p>
+<p>(摘自<a href="Vagrant Getting Started Create and Share Virtual Environments">Vagrant Getting Started Create and Share Virtual Environments</a>)</p>
+<p>Vagrant和Docker还是有区别，前者是针对VM级别，后者是针对VE级别，更适用于application的统一配置构建。</p>
+<p>同样网上有一个side by side对比图：</p>
+<p><img alt="" src="http://tankywoo-wb.b0.upaiyun.com/vagrant/docker-vs-vagrant.png" /></p>
+<p>(摘自<a href="https://www.upguard.com/articles/docker-vs-vagrant">[Infographic] Docker vs. Vagrant</a>)</p>
+<p>更多相关的文章和讨论：</p>
+<ul>
+<li><a href="http://www.slideshare.net/jchase50/vagrant-vs-docker">Vagrant vs Docker PPT</a></li>
+<li><a href="https://www.upguard.com/articles/docker-vs-vagrant">[Infographic] Docker vs. Vagrant</a></li>
+<li><a href="http://stackoverflow.com/questions/16647069/should-i-use-vagrant-or-docker-for-creating-an-isolated-environment">Should I use Vagrant or Docker for creating an isolated environment?</a></li>
+<li><a href="https://www.quora.com/What-is-the-difference-between-Docker-and-Vagrant-When-should-you-use-each-one">What is the difference between Docker and Vagrant? When should you use each one?</a></li>
+</ul>
+<h2 id="_2">安装</h2>
+<p>MacOS下：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">brew</span> <span class="n">cask</span> <span class="n">install</span> <span class="n">vagrant</span>
+</pre></div>
+
+
+<h2 id="_3">常用命令</h2>
+<p>生成初始的Vagrantfile：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">mkdir</span> <span class="n">vagrant_env</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">vagrant_env</span>
+<span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span>
+</pre></div>
+
+
+<p>指定box来生成Vagrantfile：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span> <span class="n">hashicorp</span><span class="o">/</span><span class="n">precise64</span>
+</pre></div>
+
+
+<p>添加(下载)box：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="n">hashicorp</span><span class="o">/</span><span class="n">precise64</span>
+<span class="o">==&gt;</span> <span class="n">box</span><span class="o">:</span> <span class="n">Loading</span> <span class="n">metadata</span> <span class="k">for</span> <span class="n">box</span> <span class="err">&#39;</span><span class="n">hashicorp</span><span class="o">/</span><span class="n">precise64</span><span class="err">&#39;</span>
+    <span class="nl">box:</span> <span class="n">URL</span><span class="o">:</span> <span class="n">https</span><span class="o">:</span><span class="c1">//atlas.hashicorp.com/hashicorp/precise64</span>
+<span class="n">This</span> <span class="n">box</span> <span class="n">can</span> <span class="n">work</span> <span class="n">with</span> <span class="n">multiple</span> <span class="n">providers</span><span class="o">!</span> <span class="n">The</span> <span class="n">providers</span> <span class="n">that</span> <span class="n">it</span>
+<span class="n">can</span> <span class="n">work</span> <span class="n">with</span> <span class="n">are</span> <span class="n">listed</span> <span class="n">below</span><span class="p">.</span> <span class="n">Please</span> <span class="n">review</span> <span class="n">the</span> <span class="n">list</span> <span class="n">and</span> <span class="n">choose</span>
+<span class="n">the</span> <span class="n">provider</span> <span class="n">you</span> <span class="n">will</span> <span class="n">be</span> <span class="n">working</span> <span class="n">with</span><span class="p">.</span>
+
+<span class="mi">1</span><span class="p">)</span> <span class="n">hyperv</span>
+<span class="mi">2</span><span class="p">)</span> <span class="n">virtualbox</span>
+<span class="mi">3</span><span class="p">)</span> <span class="n">vmware_fusion</span>
+
+<span class="n">Enter</span> <span class="n">your</span> <span class="n">choice</span><span class="o">:</span> <span class="mi">2</span>
+<span class="o">==&gt;</span> <span class="n">box</span><span class="o">:</span> <span class="n">Adding</span> <span class="n">box</span> <span class="err">&#39;</span><span class="n">hashicorp</span><span class="o">/</span><span class="n">precise64</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">v1</span><span class="mf">.1.0</span><span class="p">)</span> <span class="k">for</span> <span class="n">provider</span><span class="o">:</span> <span class="n">virtualbox</span>
+    <span class="nl">box:</span> <span class="n">Downloading</span><span class="o">:</span> <span class="n">https</span><span class="o">:</span><span class="c1">//atlas.hashicorp.com/hashicorp/boxes/precise64/versions/1.1.0/providers/virtualbox.box</span>
+<span class="p">...</span>
+</pre></div>
+
+
+<p>如果本地没有下载box，则init或者box add都会从官方源里下载。</p>
+<p>因为官方源从国内下载非常慢，可以先通过其它下载工具将box下载下来，然后手动add。</p>
+<p>通过本地box文件添加：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="n">ubuntu1204</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">precise</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">cloudimg</span><span class="o">-</span><span class="n">amd64</span><span class="o">-</span><span class="n">vagrant</span><span class="o">-</span><span class="n">disk1</span><span class="p">.</span><span class="n">box</span>
+<span class="o">==&gt;</span> <span class="n">box</span><span class="o">:</span> <span class="n">Box</span> <span class="n">file</span> <span class="n">was</span> <span class="n">not</span> <span class="n">detected</span> <span class="n">as</span> <span class="n">metadata</span><span class="p">.</span> <span class="n">Adding</span> <span class="n">it</span> <span class="n">directly</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="n">box</span><span class="o">:</span> <span class="n">Adding</span> <span class="n">box</span> <span class="err">&#39;</span><span class="n">ubuntu1204</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="n">provider</span><span class="o">:</span>
+    <span class="nl">box:</span> <span class="n">Unpacking</span> <span class="n">necessary</span> <span class="n">files</span> <span class="n">from</span><span class="o">:</span> <span class="n">file</span><span class="o">:</span><span class="c1">///path/to/precise-server-cloudimg-amd64-vagrant-disk1.box</span>
+<span class="o">==&gt;</span> <span class="n">box</span><span class="o">:</span> <span class="n">Successfully</span> <span class="n">added</span> <span class="n">box</span> <span class="err">&#39;</span><span class="n">ubuntu1204</span><span class="err">&#39;</span> <span class="p">(</span><span class="n">v0</span><span class="p">)</span> <span class="k">for</span> <span class="err">&#39;</span><span class="n">virtualbox</span><span class="err">&#39;</span><span class="o">!</span>
+</pre></div>
+
+
+<p>查看box列表：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">box</span> <span class="n">list</span>
+<span class="n">ubuntu1204</span> <span class="p">(</span><span class="n">virtualbox</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+
+<p>根据指定的box来init一个Vagrantfile后，启动vm：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span>
+<span class="n">Bringing</span> <span class="n">machine</span> <span class="err">&#39;</span><span class="k">default</span><span class="err">&#39;</span> <span class="n">up</span> <span class="n">with</span> <span class="err">&#39;</span><span class="n">virtualbox</span><span class="err">&#39;</span> <span class="n">provider</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Importing</span> <span class="n">base</span> <span class="n">box</span> <span class="err">&#39;</span><span class="n">ubuntu1204</span><span class="err">&#39;</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Matching</span> <span class="n">MAC</span> <span class="n">address</span> <span class="k">for</span> <span class="n">NAT</span> <span class="n">networking</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Setting</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">the</span> <span class="n">VM</span><span class="o">:</span> <span class="n">ubuntu1204</span><span class="o">-</span><span class="n">a_default_1462377211760_99376</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Clearing</span> <span class="n">any</span> <span class="n">previously</span> <span class="n">set</span> <span class="n">forwarded</span> <span class="n">ports</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Clearing</span> <span class="n">any</span> <span class="n">previously</span> <span class="n">set</span> <span class="n">network</span> <span class="n">interfaces</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Preparing</span> <span class="n">network</span> <span class="n">interfaces</span> <span class="n">based</span> <span class="n">on</span> <span class="n">configuration</span><span class="p">...</span>
+    <span class="nl">default:</span> <span class="n">Adapter</span> <span class="mi">1</span><span class="o">:</span> <span class="n">nat</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Forwarding</span> <span class="n">ports</span><span class="p">...</span>
+    <span class="nl">default:</span> <span class="mi">22</span> <span class="p">(</span><span class="n">guest</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">2222</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span> <span class="p">(</span><span class="n">adapter</span> <span class="mi">1</span><span class="p">)</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Booting</span> <span class="n">VM</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">machine</span> <span class="n">to</span> <span class="n">boot</span><span class="p">.</span> <span class="n">This</span> <span class="n">may</span> <span class="n">take</span> <span class="n">a</span> <span class="n">few</span> <span class="n">minutes</span><span class="p">...</span>
+    <span class="nl">default:</span> <span class="n">SSH</span> <span class="n">address</span><span class="o">:</span> <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">2222</span>
+    <span class="nl">default:</span> <span class="n">SSH</span> <span class="n">username</span><span class="o">:</span> <span class="n">vagrant</span>
+    <span class="nl">default:</span> <span class="n">SSH</span> <span class="n">auth</span> <span class="n">method</span><span class="o">:</span> <span class="n">private</span> <span class="n">key</span>
+    <span class="nl">default:</span>
+    <span class="nl">default:</span> <span class="n">Vagrant</span> <span class="n">insecure</span> <span class="n">key</span> <span class="n">detected</span><span class="p">.</span> <span class="n">Vagrant</span> <span class="n">will</span> <span class="n">automatically</span> <span class="n">replace</span>
+    <span class="nl">default:</span> <span class="n">this</span> <span class="n">with</span> <span class="n">a</span> <span class="n">newly</span> <span class="n">generated</span> <span class="n">keypair</span> <span class="k">for</span> <span class="n">better</span> <span class="n">security</span><span class="p">.</span>
+    <span class="nl">default:</span>
+    <span class="nl">default:</span> <span class="n">Inserting</span> <span class="n">generated</span> <span class="n">public</span> <span class="n">key</span> <span class="n">within</span> <span class="n">guest</span><span class="p">...</span>
+    <span class="nl">default:</span> <span class="n">Removing</span> <span class="n">insecure</span> <span class="n">key</span> <span class="n">from</span> <span class="n">the</span> <span class="n">guest</span> <span class="k">if</span> <span class="n">it</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">present</span><span class="p">...</span>
+    <span class="nl">default:</span> <span class="n">Key</span> <span class="n">inserted</span><span class="o">!</span> <span class="n">Disconnecting</span> <span class="n">and</span> <span class="n">reconnecting</span> <span class="n">using</span> <span class="n">new</span> <span class="n">SSH</span> <span class="n">key</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Machine</span> <span class="n">booted</span> <span class="n">and</span> <span class="n">ready</span><span class="o">!</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Checking</span> <span class="k">for</span> <span class="n">guest</span> <span class="n">additions</span> <span class="n">in</span> <span class="n">VM</span><span class="p">...</span>
+    <span class="nl">default:</span> <span class="n">The</span> <span class="n">guest</span> <span class="n">additions</span> <span class="n">on</span> <span class="n">this</span> <span class="n">VM</span> <span class="k">do</span> <span class="n">not</span> <span class="n">match</span> <span class="n">the</span> <span class="n">installed</span> <span class="n">version</span> <span class="n">of</span>
+    <span class="nl">default:</span> <span class="n">VirtualBox</span><span class="o">!</span> <span class="n">In</span> <span class="n">most</span> <span class="n">cases</span> <span class="n">this</span> <span class="n">is</span> <span class="n">fine</span><span class="p">,</span> <span class="n">but</span> <span class="n">in</span> <span class="n">rare</span> <span class="n">cases</span> <span class="n">it</span> <span class="n">can</span>
+    <span class="nl">default:</span> <span class="n">prevent</span> <span class="n">things</span> <span class="n">such</span> <span class="n">as</span> <span class="n">shared</span> <span class="n">folders</span> <span class="n">from</span> <span class="n">working</span> <span class="n">properly</span><span class="p">.</span> <span class="n">If</span> <span class="n">you</span> <span class="n">see</span>
+    <span class="nl">default:</span> <span class="n">shared</span> <span class="n">folder</span> <span class="n">errors</span><span class="p">,</span> <span class="n">please</span> <span class="n">make</span> <span class="n">sure</span> <span class="n">the</span> <span class="n">guest</span> <span class="n">additions</span> <span class="n">within</span> <span class="n">the</span>
+    <span class="nl">default:</span> <span class="n">virtual</span> <span class="n">machine</span> <span class="n">match</span> <span class="n">the</span> <span class="n">version</span> <span class="n">of</span> <span class="n">VirtualBox</span> <span class="n">you</span> <span class="n">have</span> <span class="n">installed</span> <span class="n">on</span>
+    <span class="nl">default:</span> <span class="n">your</span> <span class="n">host</span> <span class="n">and</span> <span class="n">reload</span> <span class="n">your</span> <span class="n">VM</span><span class="p">.</span>
+    <span class="nl">default:</span>
+    <span class="nl">default:</span> <span class="n">Guest</span> <span class="n">Additions</span> <span class="n">Version</span><span class="o">:</span> <span class="mf">4.1.44</span>
+    <span class="nl">default:</span> <span class="n">VirtualBox</span> <span class="n">Version</span><span class="o">:</span> <span class="mf">5.0</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Mounting</span> <span class="n">shared</span> <span class="n">folders</span><span class="p">...</span>
+    <span class="nl">default:</span> <span class="o">/</span><span class="n">vagrant</span> <span class="o">=&gt;</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">TankyWoo</span><span class="o">/</span><span class="n">vagrant</span><span class="o">/</span><span class="n">ubuntu1204</span><span class="o">-</span><span class="n">a</span>
+</pre></div>
+
+
+<p>如果配置了共有网络：</p>
+<div class="hlcode"><pre><span class="n">config</span><span class="p">.</span><span class="n">vm</span><span class="p">.</span><span class="n">network</span> <span class="s">&quot;public_network&quot;</span>
+</pre></div>
+
+
+<p>则vagrant up时会让选择桥接网卡：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">reload</span> <span class="mf">25f</span><span class="n">eab6</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Attempting</span> <span class="n">graceful</span> <span class="n">shutdown</span> <span class="n">of</span> <span class="n">VM</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Clearing</span> <span class="n">any</span> <span class="n">previously</span> <span class="n">set</span> <span class="n">forwarded</span> <span class="n">ports</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Clearing</span> <span class="n">any</span> <span class="n">previously</span> <span class="n">set</span> <span class="n">network</span> <span class="n">interfaces</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Available</span> <span class="n">bridged</span> <span class="n">network</span> <span class="n">interfaces</span><span class="o">:</span>
+<span class="mi">1</span><span class="p">)</span> <span class="n">en0</span><span class="o">:</span> <span class="n">Wi</span><span class="o">-</span><span class="n">Fi</span> <span class="p">(</span><span class="n">AirPort</span><span class="p">)</span>
+<span class="mi">2</span><span class="p">)</span> <span class="n">en1</span><span class="o">:</span> <span class="n">Thunderbolt</span> <span class="mi">1</span>
+<span class="mi">3</span><span class="p">)</span> <span class="n">en2</span><span class="o">:</span> <span class="n">Thunderbolt</span> <span class="mi">2</span>
+<span class="mi">4</span><span class="p">)</span> <span class="n">p2p0</span>
+<span class="mi">5</span><span class="p">)</span> <span class="n">awdl0</span>
+<span class="mi">6</span><span class="p">)</span> <span class="n">bridge0</span>
+<span class="mi">7</span><span class="p">)</span> <span class="n">vnic0</span>
+<span class="mi">8</span><span class="p">)</span> <span class="n">vnic1</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">When</span> <span class="n">choosing</span> <span class="n">an</span> <span class="n">interface</span><span class="p">,</span> <span class="n">it</span> <span class="n">is</span> <span class="n">usually</span> <span class="n">the</span> <span class="n">one</span> <span class="n">that</span> <span class="n">is</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">being</span> <span class="n">used</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">the</span> <span class="n">internet</span><span class="p">.</span>
+    <span class="nl">default:</span> <span class="n">Which</span> <span class="n">interface</span> <span class="n">should</span> <span class="n">the</span> <span class="n">network</span> <span class="n">bridge</span> <span class="n">to</span><span class="o">?</span> <span class="mi">1</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Preparing</span> <span class="n">network</span> <span class="n">interfaces</span> <span class="n">based</span> <span class="n">on</span> <span class="n">configuration</span><span class="p">...</span>
+    <span class="nl">default:</span> <span class="n">Adapter</span> <span class="mi">1</span><span class="o">:</span> <span class="n">nat</span>
+    <span class="nl">default:</span> <span class="n">Adapter</span> <span class="mi">2</span><span class="o">:</span> <span class="n">bridged</span>
+<span class="p">...</span>
+</pre></div>
+
+
+<p>如果up时没有安装virtualbox, 会自动安装：</p>
+<div class="hlcode"><pre><span class="o">==&gt;</span>  <span class="n">Provider</span> <span class="err">&#39;</span><span class="n">virtualbox</span><span class="err">&#39;</span> <span class="n">not</span> <span class="n">found</span><span class="p">.</span> <span class="n">We</span><span class="err">&#39;</span><span class="n">ll</span> <span class="n">automatically</span> <span class="n">install</span> <span class="n">it</span> <span class="n">now</span><span class="p">...</span>
+     <span class="n">The</span> <span class="n">installation</span> <span class="n">process</span> <span class="n">will</span> <span class="n">start</span> <span class="n">below</span><span class="p">.</span> <span class="n">Human</span> <span class="n">interaction</span> <span class="n">may</span> <span class="n">be</span>
+     <span class="n">required</span> <span class="n">at</span> <span class="n">some</span> <span class="n">points</span><span class="p">.</span> <span class="n">If</span> <span class="n">you</span><span class="err">&#39;</span><span class="n">re</span> <span class="n">uncomfortable</span> <span class="n">with</span> <span class="n">automatically</span>
+     <span class="n">installing</span> <span class="n">this</span> <span class="n">provider</span><span class="p">,</span> <span class="n">you</span> <span class="n">can</span> <span class="n">safely</span> <span class="n">Ctrl</span><span class="o">-</span><span class="n">C</span> <span class="n">this</span> <span class="n">process</span> <span class="n">and</span> <span class="n">install</span>
+     <span class="n">it</span> <span class="n">manually</span><span class="p">.</span>
+<span class="o">==&gt;</span>  <span class="n">Downloading</span> <span class="n">VirtualBox</span> <span class="mf">5.0.10</span><span class="p">...</span>
+     <span class="n">This</span> <span class="n">may</span> <span class="n">not</span> <span class="n">be</span> <span class="n">the</span> <span class="n">latest</span> <span class="n">version</span> <span class="n">of</span> <span class="n">VirtualBox</span><span class="p">,</span> <span class="n">but</span> <span class="n">it</span> <span class="n">is</span> <span class="n">a</span> <span class="n">version</span>
+     <span class="n">that</span> <span class="n">is</span> <span class="n">known</span> <span class="n">to</span> <span class="n">work</span> <span class="n">well</span><span class="p">.</span> <span class="n">Over</span> <span class="n">time</span><span class="p">,</span> <span class="n">we</span><span class="err">&#39;</span><span class="n">ll</span> <span class="n">update</span> <span class="n">the</span> <span class="n">version</span> <span class="n">that</span>
+     <span class="n">is</span> <span class="n">installed</span><span class="p">.</span>
+</pre></div>
+
+
+<p>MacOS下可以先用brew cask安装virtualbox：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">brew</span> <span class="n">cask</span> <span class="n">install</span> <span class="n">virtualbox</span>
+</pre></div>
+
+
+<p>查看本机的vm状态:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">global</span><span class="o">-</span><span class="n">status</span>
+<span class="n">id</span>       <span class="n">name</span>    <span class="n">provider</span>   <span class="n">state</span>   <span class="n">directory</span>
+<span class="o">-------------------------------------------------------------------------</span>
+<span class="mf">1f</span><span class="mi">0</span><span class="n">bdd5</span>  <span class="k">default</span> <span class="n">virtualbox</span> <span class="n">running</span> <span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">TankyWoo</span><span class="o">/</span><span class="n">vagrant</span><span class="o">/</span><span class="n">ubuntu1204</span><span class="o">-</span><span class="n">a</span>
+
+<span class="n">The</span> <span class="n">above</span> <span class="n">shows</span> <span class="n">information</span> <span class="n">about</span> <span class="n">all</span> <span class="n">known</span> <span class="n">Vagrant</span> <span class="n">environments</span>
+<span class="n">on</span> <span class="n">this</span> <span class="n">machine</span><span class="p">.</span> <span class="n">This</span> <span class="n">data</span> <span class="n">is</span> <span class="n">cached</span> <span class="n">and</span> <span class="n">may</span> <span class="n">not</span> <span class="n">be</span> <span class="n">completely</span>
+<span class="n">up</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">date</span><span class="p">.</span> <span class="n">To</span> <span class="n">interact</span> <span class="n">with</span> <span class="n">any</span> <span class="n">of</span> <span class="n">the</span> <span class="n">machines</span><span class="p">,</span> <span class="n">you</span> <span class="n">can</span> <span class="n">go</span> <span class="n">to</span>
+<span class="n">that</span> <span class="n">directory</span> <span class="n">and</span> <span class="n">run</span> <span class="n">Vagrant</span><span class="p">,</span> <span class="n">or</span> <span class="n">you</span> <span class="n">can</span> <span class="n">use</span> <span class="n">the</span> <span class="n">ID</span> <span class="n">directly</span>
+<span class="n">with</span> <span class="n">Vagrant</span> <span class="n">commands</span> <span class="n">from</span> <span class="n">any</span> <span class="n">directory</span><span class="p">.</span> <span class="n">For</span> <span class="n">example</span><span class="o">:</span>
+<span class="s">&quot;vagrant destroy 1a2b3c4d&quot;</span>
+</pre></div>
+
+
+<p>下面一些操作都需要进入init Vagrantfile的目录，或者指定id，可以通过上面的命令获取id。</p>
+<p>SSH登录:</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">ssh</span>
+</pre></div>
+
+
+<p>查看端口映射关系：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">port</span>
+<span class="n">The</span> <span class="n">forwarded</span> <span class="n">ports</span> <span class="k">for</span> <span class="n">the</span> <span class="n">machine</span> <span class="n">are</span> <span class="n">listed</span> <span class="n">below</span><span class="p">.</span> <span class="n">Please</span> <span class="n">note</span> <span class="n">that</span>
+<span class="n">these</span> <span class="n">values</span> <span class="n">may</span> <span class="n">differ</span> <span class="n">from</span> <span class="n">values</span> <span class="n">configured</span> <span class="n">in</span> <span class="n">the</span> <span class="n">Vagrantfile</span> <span class="k">if</span> <span class="n">the</span>
+<span class="n">provider</span> <span class="n">supports</span> <span class="n">automatic</span> <span class="n">port</span> <span class="n">collision</span> <span class="n">detection</span> <span class="n">and</span> <span class="n">resolution</span><span class="p">.</span>
+
+    <span class="mi">22</span> <span class="p">(</span><span class="n">guest</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">2222</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span>
+</pre></div>
+
+
+<p>销毁vm (删除本地的vm，但是不删除box文件)：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">destroy</span>
+    <span class="nl">default:</span> <span class="n">Are</span> <span class="n">you</span> <span class="n">sure</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">destroy</span> <span class="n">the</span> <span class="err">&#39;</span><span class="k">default</span><span class="err">&#39;</span> <span class="n">VM</span><span class="o">?</span> <span class="p">[</span><span class="n">y</span><span class="o">/</span><span class="n">N</span><span class="p">]</span> <span class="n">y</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Forcing</span> <span class="n">shutdown</span> <span class="n">of</span> <span class="n">VM</span><span class="p">...</span>
+<span class="o">==&gt;</span> <span class="k">default</span><span class="o">:</span> <span class="n">Destroying</span> <span class="n">VM</span> <span class="n">and</span> <span class="n">associated</span> <span class="n">drives</span><span class="p">...</span>
+</pre></div>
+
+
+<h2 id="providerpd">provider使用PD</h2>
+<p>因为本机装了PD9(Parallels Desktop 9)，如果在启动了PD的虚拟机后，又启动vb的虚拟机，则会导致PD的虚拟机直接关机。具体原因见：<a href="http://kb.parallels.com/cn/115966">Mac reboots when you attempt to launch Parallels Desktop 8/9 and Virtual Box simultaneously</a>，也可以看看这个<a href="https://forums.virtualbox.org/viewtopic.php?f=8&amp;t=56508">讨论</a>。好像PD10解决了和vb共存的问题，不过还得花几百大洋去升级，不值。</p>
+<p>所以只能考虑把provider换成<code>parallels</code>，首先安装插件：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">plugin</span> <span class="n">install</span> <span class="n">vagrant</span><span class="o">-</span><span class="n">parallels</span>
+</pre></div>
+
+
+<p>下载支持parallels的发行版：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">init</span> <span class="n">parallels</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">-</span><span class="mf">14.04</span>
+</pre></div>
+
+
+<p>以parallels为provider启动：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">vagrant</span> <span class="n">up</span> <span class="o">--</span><span class="n">provider</span><span class="o">=</span><span class="n">parallels</span>
+</pre></div>
+
+
+<p>在up时遇到这个问题：</p>
+<blockquote>
+<p>The provider 'parallels' that was requested to back the machine 'default' is reporting that it isn't usable on this system. The reason is shown below:</p>
+<p>Vagrant could not detect Parallels Desktop! Make sure it is properly installed.</p>
+<p>Vagrant uses the <code>prlctl</code> binary that ships with Parallels Desktop, and requires this to be available on the PATH. If Parallels Desktop is installed, please find the <code>prlctl</code> binary and add it to the PATH environmental variable.</p>
+</blockquote>
+<p>本地找不到<code>prlctl</code>命令，这个是PD安装时自带的命令行工具。</p>
+<p>把整个系统find了遍才找到：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">Applications</span><span class="o">/</span><span class="n">Parallels</span><span class="err">\</span> <span class="n">Desktop</span><span class="p">.</span><span class="n">app</span><span class="o">/</span><span class="n">Contents</span><span class="o">/</span><span class="n">MacOS</span><span class="o">/</span><span class="n">prlctl</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">prlctl</span>
+</pre></div>
+
+
+<p>其它参考：</p>
+<ul>
+<li><a href="http://parallels.github.io/vagrant-parallels/docs/getting-started.html">vagrant-parallels: getting started</a></li>
+<li><a href="http://parallels.github.io/vagrant-parallels/docs/configuration.html">vagrant-parallels: configuration</a></li>
+</ul>
+<h2 id="_4">其它参考</h2>
+<ul>
+<li><a href="http://weizhifeng.net/learn-vagrant-01.html"><strong>Vagrant介绍</strong></a></li>
+<li><a href="http://twang2218.github.io/tutorial/openstack/vagrant.html">Vagrant 简介</a></li>
+<li><a href="http://ninghao.net/blog/1566">使用 Vagrant 搭建本地开发环境的教程</a></li>
+<li><a href="https://imququ.com/post/vagrantup.html">开始使用 Vagrant</a></li>
+<li><a href="https://segmentfault.com/a/1190000000264347">使用 Vagrant 打造跨平台开发环境</a></li>
+<li><a href="http://zhuli.me/create-develop-environment-with-vagrant/">Vagrant 配置和打包开发环境</a></li>
+<li><a href="http://rmingwang.com/vagrant-commands-and-config.html">Vagrant简介和安装配置</a></li>
+<li>Vagrant - Go in Action <a href="https://github.com/astaxie/Go-in-Action/blob/master/ebook/zh/01.2.md">Vgrant安装配置</a> / <a href="https://github.com/astaxie/Go-in-Action/blob/master/ebook/zh/01.3.md">Vgrant使用入门</a></li>
+</ul>
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2016 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2016-05-06 00:18:48</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>

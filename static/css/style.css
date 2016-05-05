@@ -79,6 +79,12 @@ hr {
   color: black;
 }
 
+#header .updated {
+  float: right;
+  font-size: 80%;
+  color: #555;
+}
+
 #footer {
   width: 60%;
   margin: 1em auto;
