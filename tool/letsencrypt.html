@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>Let’s Encrypt - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#tool">tool</a>
+    &nbsp;&#187;&nbsp;Let’s Encrypt
+    <span class="updated">最后更新&nbsp;
+    2016-05-06 22:30
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">介绍</a><ul>
+<li><a href="#lets-encrypt">什么是Let’s Encrypt</a></li>
+<li><a href="#acme">什么是ACME</a></li>
+</ul>
+</li>
+<li><a href="#_2">生成证书</a></li>
+<li><a href="#_3">更新证书</a></li>
+<li><a href="#_4">其它参考</a></li>
+</ul>
+</div>
+<h2 id="_1">介绍</h2>
+<p><a href="https://letsencrypt.org/">Let’s Encrypt</a> 是一个新兴的免费证书签发机构:</p>
+<blockquote>
+<p>Let’s Encrypt is a new Certificate Authority: It’s free, automated, and open. In Public Beta</p>
+</blockquote>
+<p>摘自<a href="https://www.paulyang.cn/blog/archives/39">网上的介绍</a>:</p>
+<h3 id="lets-encrypt">什么是Let’s Encrypt</h3>
+<p>Let’s Encrypt是由ISRG提供的免费CA服务。ISRG，即Internet Security Research Group，是一个由多个组织和公司共同资助的、旨在提高互联网通信安全的非营利性公益组织。Let’s Encrypt的功能简单来说，就是基于ACME协议提供了一套自动化的证书管理服务，包括证书的签发、更新、撤销等功能，而且这一切还都是免费的。</p>
+<h3 id="acme">什么是ACME</h3>
+<p>ACME是Automated Certificate Management Environment的缩写，是一种在证书申请者和CA之间进行自动认证域名有效性并执行DV级别证书签发/作废等操作的网络协议，ACME协议的通信格式使用JSON，并完全基于HTTPS在client和server之间。该协议正在标准化的进程当中，目前还并不是十分完善，最新的draft可以在如下地址查看：https://github.com/ietf-wg-acme/acme</p>
+<p>ACME协议本身比较独立，不仅仅是Let’s Encrypt在使用，也可以考虑和web服务器紧密集成，例如与tengine集成之后，就可以实现服务器主动发起证书新签发/过期续签的完全自动化，也就是获取到签发的证书之后，可以直接动态应用到tengine中，当然目前是没有此等功能的，后续如有机会也许能在tengine里实现一下。</p>
+<p>原理见<a href="https://letsencrypt.org/how-it-works/">How It Works</a></p>
+<p><img alt="" src="https://letsencrypt.org/images/howitworks_authorization.png" /></p>
+<h2 id="_2">生成证书</h2>
+<p>letsencrypt 提供一个客户端工具 <a href="https://github.com/letsencrypt/letsencrypt">letsencrypt</a>, 包含了自动化的脚本，快速的生成key, csr, 进而生成证书：</p>
+<div class="hlcode"><pre><span class="n">user</span><span class="err">@</span><span class="n">webserver</span><span class="o">:~</span><span class="err">$</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/letsencrypt/letsencrypt</span>
+<span class="n">user</span><span class="err">@</span><span class="n">webserver</span><span class="o">:~</span><span class="err">$</span> <span class="n">cd</span> <span class="n">letsencrypt</span>
+<span class="n">user</span><span class="err">@</span><span class="n">webserver</span><span class="o">:~/</span><span class="n">letsencrypt</span><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">letsencrypt</span><span class="o">-</span><span class="k">auto</span> <span class="o">--</span><span class="n">help</span>
+</pre></div>
+
+
+<p>如果要显示详细的输出，包括各子命令的参数选项：</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">letsencrypt</span><span class="o">-</span><span class="k">auto</span> <span class="o">--</span><span class="n">help</span> <span class="n">all</span>
+</pre></div>
+
+
+<p><strong>注</strong>：</p>
+<ul>
+<li><strike>2016-02-23 当前这个脚本在gentoo下有问题, 执行emerge的命令, 临时修改了才可以; 另外执行<code>--help</code>没有看到帮助...</strike> 最新的已修复</li>
+<li>首次执行letsencrypt-auto时会检查环境，安装一些系统服务包，Python包等；本地测试环境下安装的Python包在<code>~/.local/share/letsencrypt</code>，相当于一个virtual env了。</li>
+</ul>
+<p>脚本的help输出感觉不是很详细，有点歧义，最好还是直接看文档：</p>
+<ul>
+<li><a href="https://letsencrypt.org/getting-started/">Getting Started</a></li>
+<li><a href="https://letsencrypt.readthedocs.org/en/latest/using.html">User Guide</a></li>
+</ul>
+<p>申请签发证书:</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">letsencrypt</span><span class="o">-</span><span class="k">auto</span> <span class="n">certonly</span> <span class="o">--</span><span class="n">manual</span> <span class="o">--</span><span class="n">debug</span> <span class="o">-</span><span class="n">d</span> <span class="o">&lt;</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">d</span> <span class="o">&lt;</span><span class="n">www</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">email</span> <span class="n">me</span><span class="err">@</span><span class="n">example</span><span class="p">.</span><span class="n">com</span>
+</pre></div>
+
+
+<ul>
+<li><code>-d</code> 可以有多个，指定这个证书绑定的域名，这个生成的是单个证书还是分别每个域名一个证书？需要确认下。TODO</li>
+<li><code>certonly</code> 只生成证书</li>
+<li><code>--manual</code> 表示手动验证</li>
+<li><code>--email</code> (2016-05-06)当前<code>-e</code>不行，必须写长选项，且要放在<code>-d</code>之后……</li>
+</ul>
+<p>传统CA的验证方式一般是往「域名管理员邮箱」发验证邮件，而Let's Encrypt是在你的服务器上生成一个随机验证文件，再通过创建CSR时指定的域名访问，如果可以访问则表明你对这个域名有控制权。</p>
+<p>所以除非是在这个域名自身的web server上操作, 否则需要指定 <code>--manual</code> (参考<a href="https://community.letsencrypt.org/t/can-i-generate-a-letsencrypt-cert-in-local-host-for-a-domain-i-own/3336">回答</a>), 在本地服务器上操作, 中途会给类似提示：</p>
+<div class="hlcode"><pre>Make sure your web server displays the following content at
+http://www.example.com/.well-known/acme-challenge/h0Dq4VhR1auCxNPJlMsqZsGu973Q1BATzyOGuju7-_8 before continuing:
+
+h0Dq4VhR1auCxNPJlMsqZsGu9p3QqBATzyOGuju7-_8.3u_l8dRYlRb-7ngu302BnLnkE0ZHhS691rZ0VudW9aQ
+
+If you don&#39;t have HTTP server configured, you can run the following
+command on the target server (as root):
+
+mkdir -p /tmp/letsencrypt/public_html/.well-known/acme-challenge
+cd /tmp/letsencrypt/public_html
+printf &quot;%s&quot; h0Dq4VhR1auCxNPJlMsqZsGu9p3QqBATzyOGuju7-_8.3u_l8dRYlRb-7ngu302BnLnkE0ZHhS6m1rZ0VudW9aQ &gt; .well-known/acme-challenge/h0Dq4VhR1auCxNPJlMsqZsGu9p3QqBATzyOGuju7-_8
+# run only once per server:
+$(command -v python2 || command -v python2.7 || command -v python2.6) -c \
+&quot;import BaseHTTPServer, SimpleHTTPServer; \
+s = BaseHTTPServer.HTTPServer((&#39;&#39;, 80), SimpleHTTPServer.SimpleHTTPRequestHandler); \
+s.serve_forever()&quot;
+Press ENTER to continue
+</pre></div>
+
+
+<p>这里只需要在web server上配置一个验证域名所有权的上面指定随机url即可:</p>
+<div class="hlcode"><pre><span class="n">location</span> <span class="o">^~</span> <span class="o">/</span><span class="p">.</span><span class="n">well</span><span class="o">-</span><span class="n">known</span><span class="o">/</span><span class="n">acme</span><span class="o">-</span><span class="n">challenge</span><span class="o">/</span>
+<span class="p">{</span>
+    <span class="n">alias</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">letsencrypt</span><span class="o">/</span><span class="n">public_html</span><span class="o">/</span><span class="p">.</span><span class="n">well</span><span class="o">-</span><span class="n">known</span><span class="o">/</span><span class="n">acme</span><span class="o">-</span><span class="n">challenge</span><span class="o">/</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>或者更简单的：</p>
+<div class="hlcode"><pre><span class="n">location</span> <span class="o">^~</span> <span class="o">/</span><span class="p">.</span><span class="n">well</span><span class="o">-</span><span class="n">known</span><span class="o">/</span><span class="n">acme</span><span class="o">-</span><span class="n">challenge</span><span class="o">/</span><span class="n">h0Dq4VhR1auCxNPJlMsqZsGu973Q1BATzyOGuju7</span><span class="o">-</span><span class="n">_8</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="mi">200</span> <span class="err">&#39;</span><span class="n">h0Dq4VhR1auCxNPJlMsqZsGu9p3QqBATzyOGuju7</span><span class="o">-</span><span class="n">_8</span><span class="mf">.3</span><span class="n">u_l8dRYlRb</span><span class="o">-</span><span class="mi">7</span><span class="n">ngu302BnLnkE0ZHhS691rZ0VudW9aQ</span><span class="err">&#39;</span><span class="p">;</span>
+    <span class="n">add_header</span> <span class="n">Content</span><span class="o">-</span><span class="n">Type</span> <span class="n">text</span><span class="o">/</span><span class="n">plain</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>确认配置ok后, 按Enter开始验证. 成功后给出提示:</p>
+<div class="hlcode"><pre>IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at
+   /etc/letsencrypt/live/www.example.com/fullchain.pem. Your cert
+   will expire on 2016-05-23. To obtain a new version of the
+   certificate in the future, simply run Let&#39;s Encrypt again.
+ - If you like Let&#39;s Encrypt, please consider supporting our work by:
+
+   Donating to ISRG / Let&#39;s Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+</pre></div>
+
+
+<p>存放的pem和key在 <code>/etc/letsencrypt/live/www.example.com/</code> 下, 本身是软链接.</p>
+<ul>
+<li>cert.pem  用户证书</li>
+<li>chain.pem  中间证书</li>
+<li>fullchain.pem  证书链, chain.pem + cert.pem</li>
+<li>privkey.pem  证书私钥</li>
+</ul>
+<p>最后使用privkey.pem和fullchain.pem即可。</p>
+<h2 id="_3">更新证书</h2>
+<p>TODO</p>
+<p>Let’s Encrypt 签发的证书只有 90 天有效期，但可以通过crontab脚本定期更新。</p>
+<h2 id="_4">其它参考</h2>
+<ul>
+<li><a href="https://imququ.com/post/letsencrypt-certificate.html">Let's Encrypt，免费好用的 HTTPS 证书</a></li>
+<li><a href="https://blog.kuoruan.com/71.html">Let’s Encrypt免费HTTPS SSL证书获取教程</a></li>
+<li><a href="https://www.paulyang.cn/blog/archives/39">用Let’s Encrypt获取免费证书</a></li>
+<li><a href="http://www.freehao123.com/lets-encrypt/">免费SSL证书Let’s Encrypt安装使用教程:Apache和Nginx配置SSL</a></li>
+<li><a href="使用 Let’s Encrypt 开源 SSL 证书">使用 Let’s Encrypt 开源 SSL 证书</a></li>
+<li><a href="https://www.v2ex.com/t/241819">一个快速获取/更新 Let's encrypt 证书的 shell script</a> | <a href="https://github.com/xdtianyu/scripts/blob/master/lets-encrypt/README-CN.md">另外一个</a></li>
+</ul>
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2016 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2016-05-07 00:03:32</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>

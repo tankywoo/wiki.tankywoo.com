@@ -43,7 +43,7 @@
 <p><a href="https://www.stunnel.org/index.html">stunnel</a> 是一个自由的跨平台软件, 用于提供全局的TLS/SSL服务. 针对本身无法进行TLS或SSL通信的客户端及服务器, Stunnel可提供安全的加密连接. --- 引自<a href="https://zh.wikipedia.org/wiki/Stunnel">维基百科</a></p>
 <p>stunnel 是一个c/s结构. 在不可信的网络环境里(如公网), 通过stunnel 的server 和 client之间建立安全的加密隧道, 然后两边的网络服务之间通信就可以通过这个安全隧道来通信.</p>
 <p>比如redis主从环境, redis自身是没有提供安全的通信接口的, 所以这块需要配合stunnel来做:</p>
-<p><img alt="redis stunnel" src="http://tankywoo-wb.b0.upaiyun.com/redis-stunnel.png" /></p>
+<p><img alt="redis stunnel" src="https://tankywoo-wb.b0.upaiyun.com/redis-stunnel.png" /></p>
 <p>(图片摘自<a href="https://www.packtpub.com/books/content/using-redis-hostile-environment-advanced">USING REDIS IN A HOSTILE ENVIRONMENT</a>)</p>
 <p>以上图为例, redis client和server是跨公网的不可信环境, 如果两者需要通信, 则需要配合一个安全的通信隧道, 如stunnel.</p>
 <p>加上stunnel后, 相当于redis client/server 都隐藏在后端.</p>
@@ -195,7 +195,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-05-06 00:18:48</p>
+        <p>站点最后生成 2016-05-07 00:03:32</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
