@@ -90,7 +90,7 @@ Git对象库中的对象**只有**四种类型: 块(blog), 目录树(tree), 提�
 
 下面是一个简单的git object内部dag图, 经过两次的提交, 非常清晰(摘自书上图4-2):
 
-![Figure 4-2. Git objects after a second commit](http://tankywoo-wb.b0.upaiyun.com/git-4-2.png!small)
+![Figure 4-2. Git objects after a second commit](https://tankywoo-wb.b0.upaiyun.com/git-4-2.png!small)
 
 
 ### 可寻址内容名称 ###
@@ -405,7 +405,7 @@ git 自动定期对仓库进行重新打包以节省空间. 也可以手工运�
 
 (图片引用 [图解Git](https://marklodato.github.io/visual-git-guide/index-zh-cn.html))
 
-![The lifecycle of the status of your files](http://tankywoo-wb.b0.upaiyun.com/git-5-lifecycle.png!small)
+![The lifecycle of the status of your files](https://tankywoo-wb.b0.upaiyun.com/git-5-lifecycle.png!small)
 
 (图片引用 [Pro Git - 2.2](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository))
 
@@ -496,19 +496,19 @@ A Detailed View of Git’s Object Model and Files 一节对 Git中对象模型�
 
 Figure 5-1. Initial files and objects:
 
-![Figure 5-1. Initial files and objects](http://tankywoo-wb.b0.upaiyun.com/git-5-1.png!small)
+![Figure 5-1. Initial files and objects](https://tankywoo-wb.b0.upaiyun.com/git-5-1.png!small)
 
 Figure 5-2. After editing file1:
 
-![Figure 5-2. After editing file1](http://tankywoo-wb.b0.upaiyun.com/git-5-2.png!small)
+![Figure 5-2. After editing file1](https://tankywoo-wb.b0.upaiyun.com/git-5-2.png!small)
 
 Figure 5-3. After git add:
 
-![Figure 5-3. After git add](http://tankywoo-wb.b0.upaiyun.com/git-5-3.png!small)
+![Figure 5-3. After git add](https://tankywoo-wb.b0.upaiyun.com/git-5-3.png!small)
 
 Figure 5-4. After git commit:
 
-![Figure 5-4. After git commit](http://tankywoo-wb.b0.upaiyun.com/git-5-4.png!small)
+![Figure 5-4. After git commit](https://tankywoo-wb.b0.upaiyun.com/git-5-4.png!small)
 
 关于索引, 更多可以参考:
 
@@ -744,7 +744,7 @@ fa在历史库中只有line 1这一行, 在unstaged中增加了line 2.
 如图:
 
 
-![Figure 6-9. Interpreting ranges as set subtraction](http://tankywoo-wb.b0.upaiyun.com/git-6-9.png!small)
+![Figure 6-9. Interpreting ranges as set subtraction](https://tankywoo-wb.b0.upaiyun.com/git-6-9.png!small)
 
 实际也就是:
 

@@ -14,7 +14,7 @@ stunnel 是一个c/s结构. 在不可信的网络环境里(如公网), 通过stu
 
 比如redis主从环境, redis自身是没有提供安全的通信接口的, 所以这块需要配合stunnel来做:
 
-![redis stunnel](http://tankywoo-wb.b0.upaiyun.com/redis-stunnel.png)
+![redis stunnel](https://tankywoo-wb.b0.upaiyun.com/redis-stunnel.png)
 
 (图片摘自[USING REDIS IN A HOSTILE ENVIRONMENT](https://www.packtpub.com/books/content/using-redis-hostile-environment-advanced))
 

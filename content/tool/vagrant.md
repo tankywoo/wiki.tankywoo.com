@@ -31,15 +31,15 @@ Vagrant将image称作`box`。
 
 网上看到几副原理图，讲解的比较清楚：
 
-![](http://tankywoo-wb.b0.upaiyun.com/vagrant/vagrant-1.png)
+![](https://tankywoo-wb.b0.upaiyun.com/vagrant/vagrant-1.png)
 
 (摘自[使用Vagrant打造统一的开发环境](https://www.zybuluo.com/gabe/note/229777))
 
-![](http://tankywoo-wb.b0.upaiyun.com/vagrant/vagrant-2.png)
+![](https://tankywoo-wb.b0.upaiyun.com/vagrant/vagrant-2.png)
 
 (摘自[Docker vs. Vagrant](http://www.ociweb.com/resources/publications/sett/march-2015-docker-vs-vagrant/))
 
-![](http://tankywoo-wb.b0.upaiyun.com/vagrant/vagrant-3.png)
+![](https://tankywoo-wb.b0.upaiyun.com/vagrant/vagrant-3.png)
 
 (摘自[Vagrant Getting Started Create and Share Virtual Environments](Vagrant Getting Started Create and Share Virtual Environments))
 
@@ -47,7 +47,7 @@ Vagrant和Docker还是有区别，前者是针对VM级别，后者是针对VE级
 
 同样网上有一个side by side对比图：
 
-![](http://tankywoo-wb.b0.upaiyun.com/vagrant/docker-vs-vagrant.png)
+![](https://tankywoo-wb.b0.upaiyun.com/vagrant/docker-vs-vagrant.png)
 
 (摘自[[Infographic] Docker vs. Vagrant](https://www.upguard.com/articles/docker-vs-vagrant))
 

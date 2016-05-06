@@ -191,7 +191,7 @@ ereregex
 <!-- 来至[官方文档](http://www.rsyslog.com/doc/queues_analogy.html)的一幅图： -->
 <!-- ![dataflow](http://www.rsyslog.com/doc/dataflow.png) -->
 
-![message flow](http://tankywoo-wb.b0.upaiyun.com/rsyslog_message_flow.png)
+![message flow](https://tankywoo-wb.b0.upaiyun.com/rsyslog_message_flow.png)
 
 
 队列分为 `Main Queue` 和 `Action Queue`，Main Queue 只有一个，Action Queue 有多个，每一个 Action 前面都有一个 Action Queue。Main Queue 的配置一般以`MainMsg`开头，Action Queue的配置以`Action`开头，两者的配置基本相同。

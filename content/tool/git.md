@@ -131,7 +131,7 @@ What is `git fetch`? and what is the difference to `git pull`?
 
 来查看修改的地方, 效果图:
 
-![git vimdiff](http://tankywoo-wb.b0.upaiyun.com/git_vimdiff.png)
+![git vimdiff](https://tankywoo-wb.b0.upaiyun.com/git_vimdiff.png)
 
 参考:
 
@@ -709,7 +709,7 @@ subtree add命令将一个项目拉到本地作为一个子目录, 这个和subm
 
 关于 `git diff A..B` 和 `git diff A...B`:
 
-![git diff help](http://tankywoo-wb.b0.upaiyun.com/git-diff-help.png) [图片来源](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif)
+![git diff help](https://tankywoo-wb.b0.upaiyun.com/git-diff-help.png) [图片来源](http://stackoverflow.com/questions/7251477/what-are-the-differences-between-double-dot-and-triple-dot-in-git-dif)
 
 参考:
 
