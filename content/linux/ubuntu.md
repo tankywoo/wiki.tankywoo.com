@@ -1,7 +1,9 @@
 ---
 title: "Ubuntu"
 date: 2016-01-06 10:16
+updated: 2016-05-07 12:20
 collection: "发行版"
+log: "增加配置时区命令"
 ---
 
 [TOC]
@@ -126,3 +128,7 @@ showpkg也可以, 不过包含的内容更多一些:
 通过`apt-get purge`或`dpkg -P`都无法卸载包。
 
 参考[这篇回答](http://askubuntu.com/a/350508/434496), 发现是 `/var/lib/dpkg/info` 下那个包的文件损坏了, 文件内容有乱码导致, 删掉即可.
+
+### 配置timezone(时区) ###
+
+	$ dpkg-reconfigure tzdata
