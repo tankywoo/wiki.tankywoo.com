@@ -2,6 +2,8 @@
 title: "Email相关"
 date: 2013-08-17 07:36
 description: "Mutt / Msmtp/ Exim"
+updated: 2016-05-13 10:30
+log: "更新mutt文档地址"
 ---
 
 [TOC]
@@ -94,7 +96,7 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
 
 对于包含body content中的搜索, 模式是: `/~b xxx` 或者 `l~b xxx`, 前者是定位到第一个匹配的, 按`n`到第二个匹配; 而 limit搜索相当于filter, 只显示匹配的邮件, 如果想回到所有列表, 则`lall` (注意这里的/或者l都是上面提到的进入search/limit模式)
 
-模式见文档 [mutt regex](http://www.mutt.org/doc/manual/manual-4.html#ss4.2)
+模式见文档 [mutt regex](http://www.mutt.org/doc/manual/#patterns)
 
 另外在search时, 按`\`可以toggle关键词高亮.
 
