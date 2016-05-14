@@ -1,6 +1,8 @@
 ---
 title: "Let’s Encrypt"
 date: 2016-05-06 22:30
+updated: 2016-05-14 21:30
+log: "更新,增加renew"
 ---
 
 [TOC]
@@ -28,6 +30,12 @@ ACME协议本身比较独立，不仅仅是Let’s Encrypt在使用，也可以�
 ![](https://letsencrypt.org/images/howitworks_authorization.png)
 
 ## 生成证书 ##
+
+*2016-05-14更新* Github上包括组织和项目都改名叫`certbot`了，`letsencrypt-auto`脚本也copy了一份，叫`certbot-auto`，不知道为啥……
+
+另外它们也提供了一个[certbot.eff.org](https://certbot.eff.org/)，用于针对指定的webserver和system os提供相关的安装/配置方案。
+
+---
 
 letsencrypt 提供一个客户端工具 [letsencrypt](https://github.com/letsencrypt/letsencrypt), 包含了自动化的脚本，快速的生成key, csr, 进而生成证书：
 
@@ -123,9 +131,25 @@ IMPORTANT NOTES:
 
 ## 更新证书 ##
 
-TODO
-
 Let’s Encrypt 签发的证书只有 90 天有效期，但可以通过crontab脚本定期更新。
+
+一个是`renew`子命令，不过这个命令会更新所有即将到期的域名，不能指定单个域名：
+
+> Currently, the renew verb is only capable of renewing all installed certificates that are due to be renewed; individual domains cannot be specified with this action. If you would like to renew specific certificates, use the certonly command. The renew verb may provide other options for selecting certificates to renew in the future.
+
+按照提示，可以使用`certonly`来更新指定域名：
+
+使用`--keep-until-expiring`选项：
+
+	certbot-auto certonly --manual --keep-until-expiring -d tankywoo.com --email me@tankywoo.com
+
+只有在即将到期的才会更新：
+
+> Certificate not yet due for renewal; no action taken.
+
+也可以强制更新，用`--renew-by-default`选项：
+
+	./certbot-auto certonly --manual --renew-by-default -d tankywoo.com --email me@tankywoo.com
 
 
 ## 其它参考 ##
@@ -136,3 +160,5 @@ Let’s Encrypt 签发的证书只有 90 天有效期，但可以通过crontab�
 * [免费SSL证书Let’s Encrypt安装使用教程:Apache和Nginx配置SSL](http://www.freehao123.com/lets-encrypt/)
 * [使用 Let’s Encrypt 开源 SSL 证书](使用 Let’s Encrypt 开源 SSL 证书)
 * [一个快速获取/更新 Let's encrypt 证书的 shell script](https://www.v2ex.com/t/241819) | [另外一个](https://github.com/xdtianyu/scripts/blob/master/lets-encrypt/README-CN.md)
+* [Cipherli.st](https://cipherli.st/) 提供了各种webserver和一些软件的ssl推荐配置
+* [SSL Server Test](https://www.ssllabs.com/ssltest/index.html) 站点https安全分析/检查
