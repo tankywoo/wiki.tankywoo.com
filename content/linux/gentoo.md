@@ -1,8 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2016-04-26 21:55
-log: "增加内核升级"
+updated: 2016-05-14 20:55
+log: "增加preserved-libs"
 collection: "发行版"
 ---
 
@@ -485,6 +485,37 @@ slot名是空字符串表示彻底禁止使用slot;
 参考:
 
 * 加固的Gentoo [en](https://wiki.gentoo.org/wiki/Hardened_Gentoo) / [zh](https://wiki.gentoo.org/wiki/Hardened_Gentoo/zh-cn)
+
+### Preserved libs ###
+
+比如手动更新masked的czmq，导致需要rebuild：
+
+	!!! existing preserved libs:
+	>>> package: net-libs/zeromq-4.1.4
+	 *  - /usr/lib64/libzmq.so.3
+	 *  - /usr/lib64/libzmq.so.3.0.0
+	 *      used by /usr/bin/makecert-czmq (net-libs/czmq-3.0.2)
+	 *      used by /usr/lib64/libczmq.so.3.0.0 (net-libs/czmq-3.0.2)
+	 *      used by /usr/lib64/rsyslog/imzmq3.so (app-admin/rsyslog-8.16.0-r1)
+	 *      used by /usr/lib64/rsyslog/omzmq3.so (app-admin/rsyslog-8.16.0-r1)
+	>>> package: net-libs/czmq-3.0.2
+	 *  - /usr/lib64/libczmq.so.1
+	 *  - /usr/lib64/libczmq.so.1.1.0
+	 *      used by /usr/lib64/rsyslog/imzmq3.so (app-admin/rsyslog-8.16.0-r1)
+	 *      used by /usr/lib64/rsyslog/omzmq3.so (app-admin/rsyslog-8.16.0-r1)
+	Use emerge @preserved-rebuild to rebuild packages using these libraries
+
+可以rebuild依赖这个的包：
+
+root@gentoo-local ~ % emerge -p @preserved-rebuild
+
+	These are the packages that would be merged, in order:
+
+	Calculating dependencies... done!
+	[ebuild   R   ~] net-libs/czmq-3.0.2
+	[ebuild   R    ] app-admin/rsyslog-8.16.0-r1
+
+参考：[preserve-libs](https://wiki.gentoo.org/wiki/Preserve-libs)
 
 
 ## 问题 ##
