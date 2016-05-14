@@ -23,7 +23,8 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Email相关
     <span class="updated">最后更新&nbsp;
-    2013-08-17 07:36
+    2016-05-13 10:30
+    
     </span>
   </div>
 </div>
@@ -116,7 +117,7 @@
 <p>关于 tmux下mutt没有重绘窗口的问题, 见我之前的<a href="http://blog.tankywoo.com/2015/10/24/tmux-mutt-not-redraw-problem.html">博客</a></p>
 <p>关于邮件中的搜索, 有两种: <code>search</code> (按<code>/</code>) 和 <code>limit</code> (按<code>l</code>, 字母), 网上说后者比前者更强大, 不过暂时没感觉出来.</p>
 <p>对于包含body content中的搜索, 模式是: <code>/~b xxx</code> 或者 <code>l~b xxx</code>, 前者是定位到第一个匹配的, 按<code>n</code>到第二个匹配; 而 limit搜索相当于filter, 只显示匹配的邮件, 如果想回到所有列表, 则<code>lall</code> (注意这里的/或者l都是上面提到的进入search/limit模式)</p>
-<p>模式见文档 <a href="http://www.mutt.org/doc/manual/manual-4.html#ss4.2">mutt regex</a></p>
+<p>模式见文档 <a href="http://www.mutt.org/doc/manual/#patterns">mutt regex</a></p>
 <p>另外在search时, 按<code>\</code>可以toggle关键词高亮.</p>
 <p>删除指定日期的所有邮件:</p>
 <div class="hlcode"><pre><span class="cp"># 删除2015年12月1号的邮件</span>
@@ -129,6 +130,17 @@
 </pre></div>
 
 
+<p>另外，还可以只指定某个日期之前或之后：</p>
+<blockquote>
+<p>The forms “&lt;[MAX]”, “&gt;[MIN]”, “[MIN]-” and “-[MAX]” are allowed, too.</p>
+</blockquote>
+<p>即：</p>
+<div class="hlcode"><pre><span class="cp"># 删除2015年5月8号之前的邮件</span>
+<span class="n">l</span><span class="o">~</span><span class="n">d</span> <span class="s">&quot;-08/05/2016&quot;</span>
+</pre></div>
+
+
+<p><strong>注</strong>：注意要加上双引号</p>
 <p>参考:</p>
 <ul>
 <li><a href="http://unix.stackexchange.com/questions/91046/search-for-mail-content-with-mutt">Search for mail content with mutt</a></li>
@@ -184,7 +196,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-05-10 22:44:57</p>
+        <p>站点最后生成 2016-05-14 22:00:37</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

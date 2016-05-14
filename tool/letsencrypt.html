@@ -23,7 +23,8 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Let’s Encrypt
     <span class="updated">最后更新&nbsp;
-    2016-05-06 22:30
+    2016-05-14 21:30
+    
     </span>
   </div>
 </div>
@@ -54,6 +55,9 @@
 <p>原理见<a href="https://letsencrypt.org/how-it-works/">How It Works</a></p>
 <p><img alt="" src="https://letsencrypt.org/images/howitworks_authorization.png" /></p>
 <h2 id="_2">生成证书</h2>
+<p><em>2016-05-14更新</em> Github上包括组织和项目都改名叫<code>certbot</code>了，<code>letsencrypt-auto</code>脚本也copy了一份，叫<code>certbot-auto</code>，不知道为啥……</p>
+<p>另外它们也提供了一个<a href="https://certbot.eff.org/">certbot.eff.org</a>，用于针对指定的webserver和system os提供相关的安装/配置方案。</p>
+<hr />
 <p>letsencrypt 提供一个客户端工具 <a href="https://github.com/letsencrypt/letsencrypt">letsencrypt</a>, 包含了自动化的脚本，快速的生成key, csr, 进而生成证书：</p>
 <div class="hlcode"><pre><span class="n">user</span><span class="err">@</span><span class="n">webserver</span><span class="o">:~</span><span class="err">$</span> <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="o">:</span><span class="c1">//github.com/letsencrypt/letsencrypt</span>
 <span class="n">user</span><span class="err">@</span><span class="n">webserver</span><span class="o">:~</span><span class="err">$</span> <span class="n">cd</span> <span class="n">letsencrypt</span>
@@ -148,8 +152,26 @@ Press ENTER to continue
 </ul>
 <p>最后使用privkey.pem和fullchain.pem即可。</p>
 <h2 id="_3">更新证书</h2>
-<p>TODO</p>
 <p>Let’s Encrypt 签发的证书只有 90 天有效期，但可以通过crontab脚本定期更新。</p>
+<p>一个是<code>renew</code>子命令，不过这个命令会更新所有即将到期的域名，不能指定单个域名：</p>
+<blockquote>
+<p>Currently, the renew verb is only capable of renewing all installed certificates that are due to be renewed; individual domains cannot be specified with this action. If you would like to renew specific certificates, use the certonly command. The renew verb may provide other options for selecting certificates to renew in the future.</p>
+</blockquote>
+<p>按照提示，可以使用<code>certonly</code>来更新指定域名：</p>
+<p>使用<code>--keep-until-expiring</code>选项：</p>
+<div class="hlcode"><pre><span class="n">certbot</span><span class="o">-</span><span class="k">auto</span> <span class="n">certonly</span> <span class="o">--</span><span class="n">manual</span> <span class="o">--</span><span class="n">keep</span><span class="o">-</span><span class="n">until</span><span class="o">-</span><span class="n">expiring</span> <span class="o">-</span><span class="n">d</span> <span class="n">tankywoo</span><span class="p">.</span><span class="n">com</span> <span class="o">--</span><span class="n">email</span> <span class="n">me</span><span class="err">@</span><span class="n">tankywoo</span><span class="p">.</span><span class="n">com</span>
+</pre></div>
+
+
+<p>只有在即将到期的才会更新：</p>
+<blockquote>
+<p>Certificate not yet due for renewal; no action taken.</p>
+</blockquote>
+<p>也可以强制更新，用<code>--renew-by-default</code>选项：</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">certbot</span><span class="o">-</span><span class="k">auto</span> <span class="n">certonly</span> <span class="o">--</span><span class="n">manual</span> <span class="o">--</span><span class="n">renew</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="k">default</span> <span class="o">-</span><span class="n">d</span> <span class="n">tankywoo</span><span class="p">.</span><span class="n">com</span> <span class="o">--</span><span class="n">email</span> <span class="n">me</span><span class="err">@</span><span class="n">tankywoo</span><span class="p">.</span><span class="n">com</span>
+</pre></div>
+
+
 <h2 id="_4">其它参考</h2>
 <ul>
 <li><a href="https://imququ.com/post/letsencrypt-certificate.html">Let's Encrypt，免费好用的 HTTPS 证书</a></li>
@@ -158,6 +180,8 @@ Press ENTER to continue
 <li><a href="http://www.freehao123.com/lets-encrypt/">免费SSL证书Let’s Encrypt安装使用教程:Apache和Nginx配置SSL</a></li>
 <li><a href="使用 Let’s Encrypt 开源 SSL 证书">使用 Let’s Encrypt 开源 SSL 证书</a></li>
 <li><a href="https://www.v2ex.com/t/241819">一个快速获取/更新 Let's encrypt 证书的 shell script</a> | <a href="https://github.com/xdtianyu/scripts/blob/master/lets-encrypt/README-CN.md">另外一个</a></li>
+<li><a href="https://cipherli.st/">Cipherli.st</a> 提供了各种webserver和一些软件的ssl推荐配置</li>
+<li><a href="https://www.ssllabs.com/ssltest/index.html">SSL Server Test</a> 站点https安全分析/检查</li>
 </ul>
 </div>
     </div>
@@ -171,7 +195,7 @@ Press ENTER to continue
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-05-10 22:44:57</p>
+        <p>站点最后生成 2016-05-14 22:00:37</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
