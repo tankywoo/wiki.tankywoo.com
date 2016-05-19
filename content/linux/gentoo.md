@@ -1045,7 +1045,7 @@ eix看本地git最新稳定版是2.7.3, 但是默认不给安装, 强制指定�
 
 * [Kernel/Upgrade](https://wiki.gentoo.org/wiki/Kernel/Upgrade)
 * [Kernel/Configuration](https://wiki.gentoo.org/wiki/Kernel/Configuration#Build)
-* [Kernel/Removal](https://wiki.gentoo.org/wiki/Kernel/Removaol)
+* [Kernel/Removal](https://wiki.gentoo.org/wiki/Kernel/Removal)
 
 基于旧的`.config`文件, 转为适应新内核选项的配置文件:
 
