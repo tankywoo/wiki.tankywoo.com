@@ -1,9 +1,9 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-05-03 21:20
+updated: 2016-05-23 16:20
 description: "查漏补缺, Tricks/Tips/Fragments"
-log: "增加查看网卡类型"
+log: "增加cron的%符号"
 ---
 
 [TOC]
@@ -249,3 +249,22 @@ log: "增加查看网卡类型"
 	$ lspci | grep -i net
 	$ lshw -class network
 	$ dmesg | grep 'Ethernet driver'
+
+
+### cron命令中的`%`
+
+本来是准备通过crontab把命令的标准输出重定向到文件中，于是写为：
+
+	*/1 * * * * root /tmp/test.sh >> /tmp/$(date +%d-%m-%Y).log
+
+结果没有产生日志文件，且cron日志显示：
+
+	CMD (/tmp/test.sh >> /tmp/$(date +)
+
+`man 8 crontab` 有提到百分号`%`在cron中的特殊意义：
+
+> The entire command portion of the line, up to a newline or % character, will be executed by /bin/sh or by the shell specified in the SHELL variable of the cronfile.  Percent-signs (%) in the command, unless escaped with  backslash (\), will be changed into newline characters, and all data after the first % will be sent to the command as standard input.
+
+除非转义，否则`%`相当于换行符, 命令中第一个%之后的都被当做标准输入(`read`可以读到)。改为：
+
+	*/1 * * * * root /tmp/test.sh >> /tmp/$(date +\%d-\%m-\%Y).log
