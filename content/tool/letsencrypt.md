@@ -1,8 +1,8 @@
 ---
 title: "Let’s Encrypt"
 date: 2016-05-06 22:30
-updated: 2016-05-14 21:30
-log: "更新,增加renew"
+updated: 2016-06-13 18:51
+log: "更新acme-tiny"
 ---
 
 [TOC]
@@ -152,6 +152,13 @@ Let’s Encrypt 签发的证书只有 90 天有效期，但可以通过crontab�
 	./certbot-auto certonly --manual --renew-by-default -d tankywoo.com --email me@tankywoo.com
 
 
+## 其它 ##
+
+(*2016-06-13更新*)
+
+试了下[这个脚本](https://github.com/xdtianyu/scripts/tree/master/lets-encrypt)，在它的基础上改了一些，签发/更新比较方便（其实就是重新签发）。核心是使用[diafygi/acme-tiny](https://github.com/diafygi/acme-tiny)，相对于certbot复杂以及各种环境检查，安装一堆东西，这个Python写的工具我感觉好用多了，在傻瓜式和使用上选择了一个折中合适的点。
+
+
 ## 其它参考 ##
 
 * [Let's Encrypt，免费好用的 HTTPS 证书](https://imququ.com/post/letsencrypt-certificate.html)
@@ -159,6 +166,7 @@ Let’s Encrypt 签发的证书只有 90 天有效期，但可以通过crontab�
 * [用Let’s Encrypt获取免费证书](https://www.paulyang.cn/blog/archives/39)
 * [免费SSL证书Let’s Encrypt安装使用教程:Apache和Nginx配置SSL](http://www.freehao123.com/lets-encrypt/)
 * [使用 Let’s Encrypt 开源 SSL 证书](使用 Let’s Encrypt 开源 SSL 证书)
+* [How To Secure Nginx with Let's Encrypt on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-14-04)
 * [一个快速获取/更新 Let's encrypt 证书的 shell script](https://www.v2ex.com/t/241819) | [另外一个](https://github.com/xdtianyu/scripts/blob/master/lets-encrypt/README-CN.md)
 * [Cipherli.st](https://cipherli.st/) 提供了各种webserver和一些软件的ssl推荐配置
 * [SSL Server Test](https://www.ssllabs.com/ssltest/index.html) 站点https安全分析/检查
