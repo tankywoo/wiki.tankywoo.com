@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
     <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
@@ -10,271 +10,265 @@
     <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
     <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
   </head>
 
   <body>
-    <div id="container" class="typo">
+    <div id="container">
       
 <div id="header">
-  <div id="post-nav">
-    <a href="/">Wiki · Tanky Woo</a>
-    &nbsp;&#187;&nbsp;
-    <a href="/#tool">tool</a>
-    &nbsp;&#187;&nbsp;Vim
-    <span class="updated">最后更新&nbsp;
-    2016-04-19 23:23
-    
-    </span>
-  </div>
+  <div class="post-nav"><a href="/">Home</a>&nbsp;&#187;&nbsp;<a href="/#tool">tool</a>&nbsp;&#187;&nbsp;Vim
+    <span class="updated">Updated&nbsp;
+      2016-06-23 20:45
+      
+    </span></div>
 </div>
 <div class="clearfix"></div>
-<div id="content">
-  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">快捷键</a><ul>
-<li><a href="#movement">Movement</a></li>
-<li><a href="#search">Search</a></li>
-<li><a href="#deletion">Deletion</a></li>
-<li><a href="#yank-put">Yank &amp; Put</a></li>
-<li><a href="#insert-mode">Insert Mode</a></li>
-<li><a href="#visual-mode">Visual Mode</a></li>
-<li><a href="#other">Other</a></li>
-<li><a href="#read-more">Read More</a></li>
-<li><a href="#vim">Vim自定义插件</a></li>
-</ul>
-</li>
-<li><a href="#vimdiff">vimdiff</a></li>
-<li><a href="#_2">其它版本</a></li>
-<li><a href="#_3">技巧</a><ul>
-<li><a href="#shell">shell多行注释</a></li>
-<li><a href="#_4">自动补全</a></li>
-<li><a href="#help">左右分割打开help文档</a></li>
-<li><a href="#_5">逐个替换</a></li>
-<li><a href="#searchreplace">关于 search/replace 中的换行符</a></li>
-<li><a href="#vimrcplugin">关于.vimrc和plugin的加载</a></li>
-<li><a href="#_6">删除所有匹配的行</a></li>
-<li><a href="#vim_1">vim调试插件</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<p>配置见<a href="https://github.com/tankywoo/dotfiles">dotfiles</a></p>
-<h2 id="_1">快捷键</h2>
-<h3 id="movement">Movement</h3>
-<ul>
-<li><code>h</code>  - Move <em>left</em></li>
-<li><code>j</code>  - Move <em>down</em></li>
-<li><code>k</code>  - Move <em>up</em></li>
-<li><code>l</code>  - Move <em>right</em></li>
-<li><code>0</code>  - Move to <em>beginging</em> of line, 也可以使用 <code>Home</code>.</li>
-<li><code>^</code>  - 在有tab或space的代码行里, <code>0</code>是移到最行首, 而<code>^</code>是移到代码行首</li>
-<li><code>$</code>  - Move to <em>end</em> of line</li>
-<li><code>gg</code> - Move to <em>first</em> line of file</li>
-<li><code>G</code>  - Move to <em>last</em> line of file</li>
-<li><code>ngg</code>- 移动到指定的第n行, 也可以用<code>nG</code></li>
-<li><code>w</code>  - Move <em>forward</em> to next word</li>
-<li><code>b</code>  - Move <em>backward</em> to next word</li>
-<li><code>%</code>  - 在匹配的括号、块的首尾移动</li>
-<li><code>C-o</code>- 返回到上次移动前的位置, 也可以用两个单引号<code>'</code></li>
-<li><code>C-i</code>- 前进到后一次移动的位置</li>
-<li><code>f</code>  - 后接字符，移动到当前行的下一个指定字符，然后按<code>;</code>继续搜索下一个</li>
-<li><code>F</code>  - 同上，移动到上一个</li>
-<li><code>|</code>  - 竖线，前接数字，移动到当前行的指定列，如<code>30|</code>，移动到当前行的第30列</li>
-</ul>
-<h3 id="search">Search</h3>
-<ul>
-<li><code>*</code>     - Search <em>forward</em> for word under cursor</li>
-<li><code>#</code>     - Search <em>backward</em> for word under curor</li>
-<li><code>/word</code> - Search <em>forward</em> for <em>word</em>. Support <em>RE</em></li>
-<li><code>?word</code> - Search <em>backward</em> for <em>word</em>. Support <em>RE</em></li>
-<li><code>n</code>     - Repeat the last <code>/</code> or <code>?</code> command  </li>
-<li><code>N</code>     - Repeat the last <code>/</code> or <code>?</code> command in opposite direction</li>
-</ul>
-<p>在搜索后, 被搜索的单词都会高亮, 一般想取消那些高亮的单词, 可以再次搜索随便输入一些字母, 搜索不到自然就取消了. 另外也可以使用 <code>nohl</code> 取消这些被高亮的词.</p>
-<h3 id="deletion">Deletion</h3>
-<ul>
-<li><code>x</code>  - Delete character <em>forward</em>(under cursor), and remain in normal mode</li>
-<li><code>X</code>  - Delete character <em>backward</em>(before cursor), and remain in normal mode</li>
-<li><code>r</code>  - Replace single character under cursor, and remain in normal mode</li>
-<li><code>s</code>  - Delete single character under cursor, and <em>switch</em> to insert mode</li>
-<li><code>shift+~</code> - 这个可以把光标下的单词转换为大写/小写, 并自动移到下一个字符</li>
-<li><code>dw</code> - Delete a <em>word</em> forward</li>
-<li><code>daw</code>- 上面的<code>dw</code>是删除一个单词的前向部分, 而这个是删除整个单词, 不论cursor是否在单词中间</li>
-<li><code>db</code> - Delete a <em>word</em> backward</li>
-<li><code>dd</code> - Delete <em>entire</em> current line</li>
-<li><code>D</code>  - Delete until end of line</li>
-</ul>
-<h3 id="yank-put">Yank &amp; Put</h3>
-<ul>
-<li><code>y</code>   - Yank(copy)</li>
-<li><code>yy</code>  - Yank current line</li>
-<li><code>nyy</code> - Yank <code>n</code> lines form current line</li>
-<li><code>p</code>   - Put(paste) yanked text <em>below</em> current line</li>
-<li><code>P</code>   - Put(paste) yanked text <em>above</em> current line</li>
-</ul>
-<h3 id="insert-mode">Insert Mode</h3>
-<ul>
-<li><code>i</code> - Enter insert mode to the <em>left</em> of the cursor</li>
-<li><code>a</code> - Enter insert mode to the <em>right</em> of the cursor</li>
-<li><code>o</code> - Enter insert mode to the line <em>below</em> the current line</li>
-<li><code>O</code> - Enter insert mode to the line <em>above</em> the current line</li>
-</ul>
-<h3 id="visual-mode">Visual Mode</h3>
-<ul>
-<li><code>v</code>   - Enter visual mode, highlight characters</li>
-<li><code>V</code>   - Enter visual mode, highlight lines</li>
-<li><code>C-v</code> - Enter visual mode, highlight block</li>
-</ul>
-<h3 id="other">Other</h3>
-<ul>
-<li><code>u</code>   - Undo</li>
-<li><code>U</code>   - Undo all changes on current line</li>
-<li><code>C-r</code> - Redo</li>
-</ul>
-<h3 id="read-more">Read More</h3>
-<ul>
-<li><a href="http://eastcoastefx.vaesite.com/vim">A handy guide to Vim shortcuts</a></li>
-<li><a href="http://www.tuxfiles.org/linuxhelp/vimcheat.html">tuxfiles-vimcheat</a></li>
-<li><a href="http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim">What is your most productive shortcut with Vim?</a></li>
-</ul>
-<h3 id="vim">Vim自定义插件</h3>
-<p>依葫芦画瓢, 写了一个针对特定格式的高亮插件时的需求。</p>
-<ul>
-<li><a href="https://robots.thoughtbot.com/writing-vim-syntax-plugins">Writing Vim Syntax Plugins</a> *</li>
-<li><a href="https://swaroop.wordpress.com/notes/vim_zh-cn-%E6%8F%92%E4%BB%B6/">Vim zh-cn:插件</a> *</li>
-<li><a href="http://vimcdoc.sourceforge.net/doc/syntax.html#:syn-cluster">vim doc - syntax</a></li>
-<li><a href="http://stevelosh.com/blog/2011/09/writing-vim-plugins/">Writing Vim Plugins</a></li>
-</ul>
-<h2 id="vimdiff">vimdiff</h2>
-<p>vim套件中的对比工具</p>
-<ul>
-<li><code>]c</code> - 跳到下一个差异点</li>
-<li><code>[c</code> - 上一个差异点</li>
-<li><code>dp</code> - diff put, 将差异点的内容从当前文件复制到另一文件</li>
-<li><code>do</code> - diff get, 相反，从另一文件复制到当前文件]</li>
-</ul>
-<h2 id="_2">其它版本</h2>
-<ul>
-<li><a href="https://neovim.io/">neovim</a> 号称是重构了vim，速度变快？暂时没感觉出和传统vim的区别</li>
-<li>
-<p><a href="https://github.com/macvim-dev/macvim">macvim</a> 试了下，还不错，可以替换本地一直作为记事本的TextMate了</p>
-<p>使用brew安装上macvim后， 终端使用<code>mvim</code>打开App， 但是按任何键都没有反应。需要把当前shell退出，重新打开才行。这个<a href="https://github.com/macvim-dev/macvim/issues/109">issue</a>可以参考下。(折腾了我半天。。。)</p>
-</li>
-</ul>
-<h2 id="_3">技巧</h2>
-<h3 id="shell">shell多行注释</h3>
-<p>命令行模式下，注释掉line1与line2之间的行</p>
-<div class="hlcode"><pre><span class="n">line1</span><span class="p">,</span><span class="n">line2s</span><span class="o">/^/</span><span class="err">#</span><span class="o">/</span><span class="n">g</span>
-</pre></div>
 
+<div class="page_title">Vim</div>
 
-<h3 id="_4">自动补全</h3>
-<p>目前使用<a href="https://github.com/davidhalter/jedi-vim">jedi-vim</a>插件, 可以配合<a href="https://github.com/ervandew/supertab">Supertab</a>。</p>
-<p>有什么omni(智能补全?), 自动补全啥的, 没去研究.</p>
-<ul>
-<li><a href="http://superuser.com/a/841048/251495">Are there any autocompletion plugins for vim?</a></li>
-<li><a href="http://stackoverflow.com/questions/7138039/vim-autocomplete-for-python">Vim autocomplete for Python</a></li>
-<li><a href="http://vi.stackexchange.com/questions/39/is-it-possible-to-have-vim-auto-complete-function-names-variables-etc-when-us">Is it possible to have vim auto-complete function names, variables, etc. when using it to program?</a></li>
-<li><a href="http://easwy.com/blog/archives/advanced-vim-skills-omin-complete/">vi/vim使用进阶: 智能补全</a></li>
-<li><a href="http://easwy.com/blog/archives/advanced-vim-skills-auto-complete/">vi/vim使用进阶: 自动补全</a></li>
-</ul>
-<h3 id="help">左右分割打开help文档</h3>
-<p>默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便</p>
-<div class="hlcode"><pre><span class="o">:</span><span class="n">vert</span> <span class="n">help</span> <span class="n">xxx</span>
-</pre></div>
-
-
-<h3 id="_5">逐个替换</h3>
-<p>全文直接替换:</p>
-<div class="hlcode"><pre><span class="o">:%</span><span class="n">s</span><span class="o">/</span><span class="n">old_str</span><span class="o">/</span><span class="n">new_str</span><span class="o">/</span><span class="n">g</span>
-</pre></div>
-
-
-<p>加上参数c可以逐个替换，这样可以对每一个再确认:</p>
-<div class="hlcode"><pre><span class="o">:%</span><span class="n">s</span><span class="o">/</span><span class="n">old_str</span><span class="o">/</span><span class="n">new_str</span><span class="o">/</span><span class="n">gc</span>
-</pre></div>
-
-
-<h3 id="searchreplace">关于 search/replace 中的换行符</h3>
-<p>Search:</p>
-<p><code>\n</code> is <code>newline</code>, <code>\r</code> is <code>CR</code>(carriage return = Ctrl-M = ^M)</p>
-<p>Replace:</p>
-<p><code>\r</code> is newline, <code>\n</code> is a null byte(0x00)</p>
-<p>比如字符串 test1,test2,test3 把逗号换成换行：</p>
-<div class="hlcode"><pre><span class="c">%s/,/\r/g</span>
-</pre></div>
-
-
-<h3 id="vimrcplugin">关于.vimrc和plugin的加载</h3>
-<p>具体见<code>:help --noplugin</code>:</p>
-<div class="hlcode"><pre><span class="o">--</span><span class="n">noplugin</span>      <span class="n">Skip</span> <span class="n">loading</span> <span class="n">plugins</span><span class="p">.</span>  <span class="n">Resets</span> <span class="n">the</span> <span class="err">&#39;</span><span class="n">loadplugins</span><span class="err">&#39;</span> <span class="n">option</span><span class="p">.</span>
-                <span class="p">{</span><span class="n">not</span> <span class="n">in</span> <span class="n">Vi</span><span class="p">}</span>
-                <span class="n">Note</span> <span class="n">that</span> <span class="n">the</span> <span class="o">|-</span><span class="n">u</span><span class="o">|</span> <span class="n">argument</span> <span class="n">may</span> <span class="n">also</span> <span class="n">disable</span> <span class="n">loading</span> <span class="n">plugins</span><span class="o">:</span>
-                        <span class="n">argument</span>        <span class="n">load</span> <span class="n">vimrc</span> <span class="n">files</span>        <span class="n">load</span> <span class="n">plugins</span>
-                        <span class="p">(</span><span class="n">nothing</span><span class="p">)</span>               <span class="n">yes</span>                 <span class="n">yes</span>
-                        <span class="o">-</span><span class="n">u</span> <span class="n">NONE</span>                 <span class="n">no</span>                  <span class="n">no</span>
-                        <span class="o">-</span><span class="n">u</span> <span class="n">NORC</span>                 <span class="n">no</span>                  <span class="n">yes</span>
-                        <span class="o">--</span><span class="n">noplugin</span>              <span class="n">yes</span>                 <span class="n">no</span>
-</pre></div>
-
-
-<h3 id="_6">删除所有匹配的行</h3>
-<div class="hlcode"><pre><span class="cp"># 删除所有包含abcd的行</span>
-<span class="o">:</span><span class="n">g</span><span class="o">/</span><span class="n">abcd</span><span class="o">/</span><span class="n">d</span>
-</pre></div>
-
-
-<p>参考: <a href="http://vim.wikia.com/wiki/Delete_all_lines_containing_a_pattern">Delete all lines containing a pattern</a></p>
-<h3 id="vim_1">vim调试插件</h3>
-<p>在使用dash.vim时遇到的一个问题, 想看看插件中某些变量的值是多少。搜到这篇文章：<a href="http://learnvimscriptthehardway.stevelosh.com/chapters/01.html">Echoing Messages</a></p>
-<p>比如在插件里加上：</p>
-<div class="hlcode"><pre><span class="n">echom</span> <span class="n">var_name</span>
-</pre></div>
-
-
-<p>然后在触发到这条后, 可以执行下面来查看输出</p>
-<div class="hlcode"><pre><span class="o">:</span><span class="n">messages</span>
-</pre></div>
-
-
-<hr />
-<p>参考:</p>
-<ul>
-<li><a href="http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim">How to replace a character for a newline in Vim?</a></li>
-<li><a href="http://stackoverflow.com/questions/71417/why-is-r-a-newline-for-vim">Why is \r a newline for Vim?</a></li>
-<li><a href="http://stackoverflow.com/questions/594448/how-can-i-add-a-string-to-the-end-of-each-line-in-vim">How can I add a string to the end of each line in Vim?</a></li>
-<li><a href="http://vimcdoc.sourceforge.net/doc/">VIM参考手册</a></li>
-</ul>
   
-  <div class="relation">
-    Related:
-    <ul>
-  
-    <li><a href="/book/practical-vim.html">Practical Vim</a></li>
-  
-    </ul>
-  </div>
-  
-</div>
+
+[TOC]
+
+配置见[dotfiles](https://github.com/tankywoo/dotfiles)
+
+
+## 快捷键 ##
+
+### Movement ###
+* `h`  - Move *left*
+* `j`  - Move *down*
+* `k`  - Move *up*
+* `l`  - Move *right*
+* `0`  - Move to *beginging* of line, 也可以使用 `Home`.
+* `^`  - 在有tab或space的代码行里, `0`是移到最行首, 而`^`是移到代码行首
+* `$`  - Move to *end* of line
+* `gg` - Move to *first* line of file
+* `G`  - Move to *last* line of file
+* `ngg`- 移动到指定的第n行, 也可以用`nG`
+* `w`  - Move *forward* to next word
+* `b`  - Move *backward* to next word
+* `%`  - 在匹配的括号、块的首尾移动
+* `C-o`- 返回到上次移动前的位置, 也可以用两个单引号`'`
+* `C-i`- 前进到后一次移动的位置
+* `f`  - 后接字符，移动到当前行的下一个指定字符，然后按`;`继续搜索下一个
+* `F`  - 同上，移动到上一个
+* `|`  - 竖线，前接数字，移动到当前行的指定列，如`30|`，移动到当前行的第30列
+
+### Search ###
+* `*`     - Search *forward* for word under cursor
+* `#`     - Search *backward* for word under curor
+* `/word` - Search *forward* for *word*. Support *RE*
+* `?word` - Search *backward* for *word*. Support *RE*
+* `n`     - Repeat the last `/` or `?` command  
+* `N`     - Repeat the last `/` or `?` command in opposite direction
+
+在搜索后, 被搜索的单词都会高亮, 一般想取消那些高亮的单词, 可以再次搜索随便输入一些字母, 搜索不到自然就取消了. 另外也可以使用 `nohl` 取消这些被高亮的词.
+
+### Deletion ###
+* `x`  - Delete character *forward*(under cursor), and remain in normal mode
+* `X`  - Delete character *backward*(before cursor), and remain in normal mode
+* `r`  - Replace single character under cursor, and remain in normal mode
+* `s`  - Delete single character under cursor, and *switch* to insert mode
+* `shift+~` - 这个可以把光标下的单词转换为大写/小写, 并自动移到下一个字符
+* `dw` - Delete a *word* forward
+* `daw`- 上面的`dw`是删除一个单词的前向部分, 而这个是删除整个单词, 不论cursor是否在单词中间
+* `db` - Delete a *word* backward
+* `dd` - Delete *entire* current line
+* `D`  - Delete until end of line
+
+
+### Yank & Put ###
+* `y`   - Yank(copy)
+* `yy`  - Yank current line
+* `nyy` - Yank `n` lines form current line
+* `p`   - Put(paste) yanked text *below* current line
+* `P`   - Put(paste) yanked text *above* current line
+
+### Insert Mode ###
+* `i` - Enter insert mode to the *left* of the cursor
+* `a` - Enter insert mode to the *right* of the cursor
+* `o` - Enter insert mode to the line *below* the current line
+* `O` - Enter insert mode to the line *above* the current line
+
+### Visual Mode ###
+* `v`   - Enter visual mode, highlight characters
+* `V`   - Enter visual mode, highlight lines
+* `C-v` - Enter visual mode, highlight block
+
+### Other ###
+* `u`   - Undo
+* `U`   - Undo all changes on current line
+* `C-r` - Redo
+
+### Read More ###
+
+* [A handy guide to Vim shortcuts](http://eastcoastefx.vaesite.com/vim)
+* [tuxfiles-vimcheat](http://www.tuxfiles.org/linuxhelp/vimcheat.html)
+* [What is your most productive shortcut with Vim?](http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim)
+
+### Vim自定义插件 ###
+
+依葫芦画瓢, 写了一个针对特定格式的高亮插件时的需求。
+
+* [Writing Vim Syntax Plugins](https://robots.thoughtbot.com/writing-vim-syntax-plugins) \*
+* [Vim zh-cn:插件](https://swaroop.wordpress.com/notes/vim_zh-cn-%E6%8F%92%E4%BB%B6/) \*
+* [vim doc - syntax](http://vimcdoc.sourceforge.net/doc/syntax.html#:syn-cluster)
+* [Writing Vim Plugins](http://stevelosh.com/blog/2011/09/writing-vim-plugins/)
+
+
+## vimdiff ##
+
+vim套件中的对比工具
+
+* `]c` - 跳到下一个差异点
+* `[c` - 上一个差异点
+* `dp` - diff put, 将差异点的内容从当前文件复制到另一文件
+* `do` - diff get, 相反，从另一文件复制到当前文件]
+
+
+## 其它版本 ##
+
+* [neovim](https://neovim.io/) 号称是重构了vim，速度变快？暂时没感觉出和传统vim的区别
+* [macvim](https://github.com/macvim-dev/macvim) 试了下，还不错，可以替换本地一直作为记事本的TextMate了
+
+	使用brew安装上macvim后， 终端使用`mvim`打开App， 但是按任何键都没有反应。需要把当前shell退出，重新打开才行。这个[issue](https://github.com/macvim-dev/macvim/issues/109)可以参考下。(折腾了我半天。。。)
+
+
+## 技巧 ##
+
+### shell多行注释 ###
+
+命令行模式下，注释掉line1与line2之间的行
+
+	line1,line2s/^/#/g
+
+
+### 自动补全 ###
+
+目前使用[jedi-vim](https://github.com/davidhalter/jedi-vim)插件, 可以配合[Supertab](https://github.com/ervandew/supertab)。
+
+有什么omni(智能补全?), 自动补全啥的, 没去研究.
+
+* [Are there any autocompletion plugins for vim?](http://superuser.com/a/841048/251495)
+* [Vim autocomplete for Python](http://stackoverflow.com/questions/7138039/vim-autocomplete-for-python)
+* [Is it possible to have vim auto-complete function names, variables, etc. when using it to program?](http://vi.stackexchange.com/questions/39/is-it-possible-to-have-vim-auto-complete-function-names-variables-etc-when-us)
+* [vi/vim使用进阶: 智能补全](http://easwy.com/blog/archives/advanced-vim-skills-omin-complete/)
+* [vi/vim使用进阶: 自动补全](http://easwy.com/blog/archives/advanced-vim-skills-auto-complete/)
+
+
+### 左右分割打开help文档 ###
+
+默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便
+
+	:vert help xxx
+
+
+### 逐个替换 ###
+
+全文直接替换:
+
+	:%s/old_str/new_str/g
+
+加上参数c可以逐个替换，这样可以对每一个再确认:
+
+	:%s/old_str/new_str/gc
+
+
+### 关于 search/replace 中的换行符 ###
+
+Search:
+
+`\n` is `newline`, `\r` is `CR`(carriage return = Ctrl-M = ^M)
+
+Replace:
+
+`\r` is newline, `\n` is a null byte(0x00)
+
+比如字符串 test1,test2,test3 把逗号换成换行：
+
+	%s/,/\r/g
+
+
+### 关于.vimrc和plugin的加载 ###
+
+具体见`:help --noplugin`:
+
+	--noplugin      Skip loading plugins.  Resets the 'loadplugins' option.
+					{not in Vi}
+					Note that the |-u| argument may also disable loading plugins:
+							argument        load vimrc files        load plugins
+							(nothing)               yes                 yes
+							-u NONE                 no                  no
+							-u NORC                 no                  yes
+							--noplugin              yes                 no
+
+### 删除所有匹配的行 ###
+
+	# 删除所有包含abcd的行
+	:g/abcd/d
+
+参考: [Delete all lines containing a pattern](http://vim.wikia.com/wiki/Delete_all_lines_containing_a_pattern)
+
+### vim调试插件 ###
+
+在使用dash.vim时遇到的一个问题, 想看看插件中某些变量的值是多少。搜到这篇文章：[Echoing Messages](http://learnvimscriptthehardway.stevelosh.com/chapters/01.html)
+
+比如在插件里加上：
+
+	echom var_name
+
+然后在触发到这条后, 可以执行下面来查看输出
+
+	:messages
+
+
+### 忽略大小写搜索
+
+首先有两个bool开关:
+
+* `ignorecase` 忽略大小写
+* `smartcase` 智能选择匹配, 如果搜索pattern是全小写，则忽略大小写匹配；如果pattern包含大写，则会精准匹配
+
+另外，`\c`, `\C`可以覆盖`ignorecase`和`smartcase`的配置。
+
+`\c`表示搜索pattern忽略大小写，如下都会忽略大小写匹配`hello`：
+
+	# 最前的`/`表示vi中的开始搜索
+	/\chello
+	/\cHello
+	/hello\c
+	/HELLO\c
+
+`\C`和`\c`相关，表示大小写敏感。
+
+具体可以：
+
+	:help /\c
+	:help /\C
+	:help smartcase
+	:help ignorecase
+
+参考 [How to do case insensitive search in Vim](http://stackoverflow.com/questions/2287440/how-to-do-case-insensitive-search-in-vim)
+
+
+
+---
+
+参考:
+
+* [How to replace a character for a newline in Vim?](http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim)
+* [Why is \r a newline for Vim?](http://stackoverflow.com/questions/71417/why-is-r-a-newline-for-vim)
+* [How can I add a string to the end of each line in Vim?](http://stackoverflow.com/questions/594448/how-can-i-add-a-string-to-the-end-of-each-line-in-vim)
+* [VIM参考手册](http://vimcdoc.sourceforge.net/doc/)
+
     </div>
     <div id="footer">
-      <div class="footer-left">
-        <p>
-        Copyright © 2012-2016 Tanky Woo.
-        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
-        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
-        </p>
-        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
-      </div> <!-- end footer-left -->
-      <div class="footer-right">
-        <p>站点最后生成 2016-06-23 20:40:01</p>
-        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
-        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
-      </div> <!-- end footer-right -->
+      <span>
+        <p>Copyright © 2016 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.</p>
+        <p>Site Generated 2016-06-19 14:52:12</p>
+      </span>
     </div>
-    <script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
-    </script>
   </body>
 </html>
