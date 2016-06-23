@@ -79,14 +79,14 @@
 <h2 id="_2">脚本</h2>
 <p>格式:</p>
 <p>第一行指定执行shell的文件, 成为shell bang, 一般是</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<div class="hlcode"><pre><span class="c">#!/bin/bash</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>或</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/sh</span>
+<div class="hlcode"><pre><span class="c">#!/bin/sh</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>运行时加<code>-x</code>是line-by-line的方式执行脚本, 每行都会输出</p>
 <div class="hlcode"><pre><span class="c">% bash -x /path/to/script</span>
@@ -409,19 +409,14 @@ $<span class="p">@:</span>  <span class="n">one</span> <span class="n">two</span
 
 <p><a href="http://www.cyberciti.biz/faq/bash-for-loop/">Bash For Loop Examples</a></p>
 <p>C语言风格的for循环:</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<div class="hlcode"><pre><span class="c">#!/bin/bash</span>
 
 <span class="k">for</span> <span class="o">((</span> <span class="nv">i</span><span class="o">=</span>1; i&lt;<span class="o">=</span>5; ++i <span class="o">))</span>
 <span class="k">do</span>
 <span class="k">        </span><span class="nb">echo</span> <span class="nv">$i</span>
 <span class="k">done</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>while 循环:</p>
 <div class="hlcode"><pre><span class="k">while</span> <span class="n">condition</span>
@@ -432,13 +427,7 @@ $<span class="p">@:</span>  <span class="n">one</span> <span class="n">two</span
 
 
 <p>无限循环(这里又用到了<code>:</code>shell builtin命令):</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<div class="hlcode"><pre><span class="c">#!/bin/bash</span>
 
 <span class="k">while</span> :
 <span class="k">do</span>
@@ -446,7 +435,7 @@ $<span class="p">@:</span>  <span class="n">one</span> <span class="n">two</span
     sleep 1
 <span class="k">done</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>也可以:</p>
 <div class="hlcode"><pre><span class="k">while</span> <span class="nb">true</span>
@@ -476,17 +465,7 @@ $<span class="p">@:</span>  <span class="n">one</span> <span class="n">two</span
 
 
 <p>如:</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/sh</span>
+<div class="hlcode"><pre><span class="c">#!/bin/sh</span>
 <span class="c"># case statement</span>
 <span class="nb">echo</span> <span class="s2">&quot;Please answer yes or no&quot;</span>
 <span class="nb">read </span>ans
@@ -498,7 +477,7 @@ $<span class="p">@:</span>  <span class="n">one</span> <span class="n">two</span
 
 <span class="nb">exit </span>0
 </pre></div>
-</td></tr></table>
+
 
 <p>逻辑条件 与(<code>&amp;&amp;</code>) 和 或(<code>||</code>):</p>
 <div class="hlcode"><pre><span class="n">con1</span> <span class="o">&amp;&amp;</span> <span class="n">con2</span> <span class="o">&amp;&amp;</span> <span class="n">con3</span>
@@ -730,19 +709,14 @@ two
 true: shell built-in command
 false: shell built-in command</p>
 <p>既然是命令, 就不能用<code>[ ]</code>或<code>test</code>来判断, 直接使用:</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<div class="hlcode"><pre><span class="c">#!/bin/bash</span>
 <span class="k">if </span><span class="nb">true</span>; <span class="k">then</span>
 <span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;True&#39;</span>
 <span class="k">else</span>
 <span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;False&#39;</span>
 <span class="k">fi</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>或者:</p>
 <div class="hlcode"><pre><span class="n">TankyWoo</span> <span class="o">~/</span><span class="n">dev_env</span><span class="o">/</span><span class="n">bash_learn</span> <span class="o">%</span> <span class="nb">true</span> <span class="o">&amp;&amp;</span> <span class="n">echo</span> <span class="err">$</span><span class="o">?</span>
@@ -753,15 +727,7 @@ false: shell built-in command</p>
 
 <p>因为false, 所以后面不会输出echo $?</p>
 <p>一般情况下, 判断某个变量是true/false:</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<div class="hlcode"><pre><span class="c">#!/bin/bash</span>
 <span class="nv">flag</span><span class="o">=</span><span class="nb">true</span>
 <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$flag&quot;</span> <span class="o">=</span> <span class="nb">false</span> <span class="o">]</span>; <span class="k">then</span>
 <span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;False&#39;</span>
@@ -771,7 +737,7 @@ false: shell built-in command</p>
 <span class="k">    </span><span class="nb">echo</span> <span class="s1">&#39;Nothing&#39;</span>
 <span class="k">fi</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>具体讨论见:</p>
 <ul>
@@ -815,6 +781,7 @@ false: shell built-in command</p>
 <li><a href="http://linuxcommand.org/writing_shell_scripts.php">Writing shell script</a></li>
 <li><code>man bash</code> 最根本的</li>
 </ul>
+  
 </div>
     </div>
     <div id="footer">
@@ -827,7 +794,7 @@ false: shell built-in command</p>
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-05-14 22:00:37</p>
+        <p>站点最后生成 2016-06-23 20:40:01</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

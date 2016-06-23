@@ -2,7 +2,7 @@
 Theme Name: YASimple_X2
 Author: Tanky Woo<me@tankywoo.com>
 Author URI: https://tankywoo.com
-Home Page: https://git.coding.net/tankywoo/yasimple_x2.git
+Home Page: https://github.com/tankywoo/yasimple_x2
 Description: Fork of YASimple_X
 Version: 0.1
 License: The MIT License (MIT)
@@ -169,6 +169,14 @@ hr {
   text-decoration: none;
 }
 
+.relation {
+  border: 1px solid #eee;
+  padding: 1em;
+  margin: 1em 0;
+  background: #fefefe;
+  font-size: 80%;
+}
+
 /* Table of Contents */
 .toc {
   margin: 0 0.5em;
@@ -278,6 +286,43 @@ code {
   white-space: -pre-wrap;      /* Opera 4-6 */
   white-space: -o-pre-wrap;    /* Opera 7 */
   word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+table.hlcodetable {
+    border: 1px solid #eee;
+    border-collapse: separate !important;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.hlcodetable td {
+    padding: 0;
+    border: none;
+}
+
+.hlcodetable td.code {
+  width: 100%;
+}
+
+.hlcodetable pre {
+  font-size: .9em;
+  padding: 8px 8px 7px 8px;
+  white-space: pre-wrap;
+}
+
+.hlcodetable .linenodiv {
+    border-right: 1px solid #ccc;
+}
+
+.hlcodetable .linenodiv pre {
+    margin: 0;
+    border: none;
+}
+
+.hlcodetable .hlcode pre {
+    margin: 0;
+    border: none;
 }
 
 /* Reset pygement css */

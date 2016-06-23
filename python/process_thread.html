@@ -57,42 +57,7 @@
 <p>在看上面链接的第一个代码时，遇到了一个<code>print</code>和<code>sys.stdout.write</code>的问题<br />
 具体见 TODO</p>
 <p>最简单的threading配合Queue的Example</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding: utf-8 -*-</span>
 <span class="c"># wutq@2013-02-18</span>
 <span class="c"># Python参考手册 P363</span>
@@ -129,7 +94,7 @@
 <span class="n">w</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;world&quot;</span><span class="p">)</span>
 <span class="n">w</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>在StackOverflow上也找到一篇帖子: <a href="http://stackoverflow.com/questions/2846653/python-multithreading-for-dummies">python multithreading for dummies</a>
 里面也提到了</p>
@@ -155,75 +120,7 @@
 <li><a href="http://blog.chinaunix.net/uid-26983585-id-3336491.html">线程池的概念及Linux 怎么设计一个简单的线程池</a></li>
 </ul>
 <p>一个不错的Example</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
+<div class="hlcode"><pre><span class="c">#!/usr/bin/env python</span>
 <span class="c"># -*- coding: utf-8 -*-</span>
 
 <span class="kn">import</span> <span class="nn">Queue</span>
@@ -293,7 +190,7 @@
         <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="k">print</span> <span class="s">&quot;cost all time: </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">)</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>来源: http://www.open-open.com/home/space-5679-do-blog-id-3247.html</p>
 <p>略做了一点修改</p>
@@ -301,6 +198,7 @@
 <em> <a href="http://www.the5fire.net/python-thread-pool.html">python线程池</a>
 </em> <a href="http://www.handaoliang.com/a/20071102/184706.html">python线程池的实现</a>
 * <a href="http://www.chrisarndt.de/projects/threadpool/">python threadpool第三方模块</a></p>
+  
 </div>
     </div>
     <div id="footer">
@@ -313,7 +211,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-05-14 22:00:37</p>
+        <p>站点最后生成 2016-06-23 20:40:01</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

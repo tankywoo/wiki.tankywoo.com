@@ -56,14 +56,7 @@
 <h2 id="svnvimdiff">svn使用vimdiff</h2>
 <p>在 <a href="git.html">git</a> 里提到了git使用vimdiff替换默认的diff工具, svn也可以实现</p>
 <p>首先可以写一个小脚本:</p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5
-6
-7
-8</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/sh</span>
+<div class="hlcode"><pre><span class="c">#!/bin/sh</span>
 <span class="c"># 配置你喜欢的diff程序路径</span>
 <span class="nv">DIFF</span><span class="o">=</span><span class="s2">&quot;vimdiff&quot;</span>
 <span class="c"># SVN diff命令会传入两个文件的参数 </span>
@@ -72,7 +65,7 @@
 <span class="c"># 拼接成diff命令所需要的命令格式</span>
 <span class="nv">$DIFF</span> <span class="nv">$LEFT</span> <span class="nv">$RIGHT</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>可以把脚本放到/usr/bin/svndiff, 然后增加<code>x</code>权限</p>
 <p>接着修改svn本地用户配置文件<code>~/.subversion/config</code>, 里面有这么一行:</p>
@@ -125,6 +118,7 @@ svn:mime-type = application/xml
 <li><a href="http://stackoverflow.com/questions/3580092/persistently-overriding-svns-mime-to-binary-mapping">Persistently overriding svn's mime to binary mapping?</a></li>
 </ul>
 <p><strong>TODO</strong> : 当时是直接用方法一解决的, 抽时间研究下 <code>svn:mine-type</code> 的问题</p>
+  
 </div>
     </div>
     <div id="footer">
@@ -137,7 +131,7 @@ svn:mime-type = application/xml
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-05-14 22:00:37</p>
+        <p>站点最后生成 2016-06-23 20:40:01</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

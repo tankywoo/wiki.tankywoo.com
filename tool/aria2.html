@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-    <title>bwm-ng - Wiki · Tanky Woo</title>
+    <title>aria2 - Wiki · Tanky Woo</title>
     <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
     <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,27 +21,55 @@
     <a href="/">Wiki · Tanky Woo</a>
     &nbsp;&#187;&nbsp;
     <a href="/#tool">tool</a>
-    &nbsp;&#187;&nbsp;bwm-ng
+    &nbsp;&#187;&nbsp;aria2
     <span class="updated">最后更新&nbsp;
-    2013-08-17 07:32
+    2016-05-21 20:30
     </span>
   </div>
 </div>
 <div class="clearfix"></div>
 <div id="content">
-  <p>Bandwidth Monitor NG (Next Generation), a live bandwidth monitor for network and disk io.</p>
-<p>一个用于实时监控网络流量和硬盘io的软件, 在流量监控方面感觉比 <code>iftop</code> 更简单一些</p>
-<p>gentoo下直接安装<code>net-analyzer/bwm-ng</code>就行了</p>
-<p>在man手册里看到, 输出显示的格式可以是 curses, curses2, plain, csv, html 等格式<br />
-不过<code>bwm-ng -h</code>看到只支持curses, curses2, plain.</p>
-<p>查看流量数据:</p>
-<div class="hlcode"><pre><span class="n">bwm</span><span class="o">-</span><span class="n">ng</span>
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">介绍</a></li>
+<li><a href="#_2">基本用法</a></li>
+<li><a href="#rpc-server">rpc server</a></li>
+<li><a href="#_3">参考</a></li>
+</ul>
+</div>
+<h2 id="_1">介绍</h2>
+<p>aria2是一个轻量级的下载工具，跨平台，使用C++编写，支持多种协议：</p>
+<ul>
+<li>HTTP(S)</li>
+<li>FTP</li>
+<li>SFTP</li>
+<li>BitTorrent</li>
+<li>...</li>
+</ul>
+<p>链接：</p>
+<ul>
+<li><a href="https://aria2.github.io/">官网页面</a></li>
+<li><a href="https://aria2.github.io/manual/en/html/">manual</a></li>
+<li><a href="https://github.com/aria2/aria2">Github</a></li>
+</ul>
+<h2 id="_2">基本用法</h2>
+<p>命令行<code>aria2c</code>，直接接下载url，默认无配置会下载到当前目录下。</p>
+<p>如：</p>
+<div class="hlcode"><pre><span class="n">aria2c</span> <span class="o">-</span><span class="n">s</span> <span class="mi">5</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="o">:</span><span class="c1">//mirrors.aliyun.com/linux-kernel/v4.x/linux-4.4.6.tar.gz</span>
 </pre></div>
 
 
-<p>查看硬盘io数据:</p>
-<div class="hlcode"><pre><span class="n">bwm</span><span class="o">-</span><span class="n">ng</span> <span class="o">-</span><span class="n">i</span> <span class="n">disk</span>
-</pre></div>
+<p>其中：</p>
+<ul>
+<li><code>-s N</code> 分段下载</li>
+<li><code>-c</code> 断点续传</li>
+</ul>
+<h2 id="rpc-server">rpc server</h2>
+<p>TODO</p>
+<h2 id="_3">参考</h2>
+<ul>
+<li><a href="http://blog.binux.me/2012/12/aria2-examples/">aria2配置示例</a></li>
+<li><a href="http://azeril.me/blog/Aria2.html">Aria2——Unix 系统中潜行的下载神器</a></li>
+</ul>
   
 </div>
     </div>

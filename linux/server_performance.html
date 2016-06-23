@@ -68,31 +68,7 @@
 </blockquote>
 <p>排查哪个进程占用swap过高:</p>
 <p>1 读取<code>/proc/*/status</code>或<code>/proc/*/smaps</code>文件, 具体可以<code>man 5 proc</code>. <a href="http://stackoverflow.com/a/7180078">脚本来源</a></p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/bash</span>
+<div class="hlcode"><pre><span class="c">#!/bin/bash</span>
 <span class="c"># Get current swap usage for all running processes</span>
 <span class="c"># Erik Ljungstrom 27/05/2011</span>
 <span class="c"># Modified by Mikko Rantalainen 2012-08-09</span>
@@ -118,7 +94,7 @@
 <span class="k">done</span>
 <span class="nb">echo</span> <span class="s2">&quot;Overall swap used: $OVERALL KB&quot;</span>
 </pre></div>
-</td></tr></table>
+
 
 <p>简短的命令就如下, 不过wild match应该只匹配数字, 所以这里会把一些其它文件包含进来, <a href="http://www.cyberciti.biz/faq/linux-which-process-is-using-swap/">脚本来源</a>:</p>
 <div class="hlcode"><pre><span class="k">for</span> <span class="n">file</span> <span class="n">in</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="err">*/</span><span class="n">status</span> <span class="p">;</span> <span class="k">do</span> <span class="n">awk</span> <span class="err">&#39;</span><span class="o">/</span><span class="n">VmSwap</span><span class="o">|</span><span class="n">Name</span><span class="o">/</span><span class="p">{</span><span class="n">printf</span> <span class="err">$</span><span class="mi">2</span> <span class="s">&quot; &quot;</span> <span class="err">$</span><span class="mi">3</span><span class="p">}</span><span class="n">END</span><span class="p">{</span> <span class="n">print</span> <span class="s">&quot;&quot;</span><span class="p">}</span><span class="err">&#39;</span> <span class="err">$</span><span class="n">file</span><span class="p">;</span> <span class="n">done</span> <span class="o">|</span> <span class="n">sort</span> <span class="o">-</span><span class="n">k</span> <span class="mi">2</span> <span class="o">-</span><span class="n">n</span> <span class="o">-</span><span class="n">r</span> <span class="o">|</span> <span class="n">less</span>
@@ -143,6 +119,7 @@
 <li><a href="http://blog.chinaunix.net/uid-27127953-id-3333176.html">Linux服务器性能小结</a></li>
 <li><a href="http://www.cnblogs.com/mfryf/archive/2012/03/12/2392000.html">linux wa%过高，iostat查看io状况</a></li>
 </ul>
+  
 </div>
     </div>
     <div id="footer">
@@ -155,7 +132,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-05-14 22:00:37</p>
+        <p>站点最后生成 2016-06-23 20:40:01</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

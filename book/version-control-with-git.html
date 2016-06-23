@@ -2955,25 +2955,7 @@ Submodule path &#39;git-sub&#39;: checked out &#39;1efb773d1740a7ad66e5b53bdf66f
 
 <p>如果filter-branch需要在所有分支上操作, 则在命令最后加上<code>--all</code></p>
 <p>最后, 来一个以前用过的例子, 修改提交者的name和email, 有时会遇到这个情况, 可能个人的两个开发环境配置的name不一样, 导致提交会出现多个昵称, 这时可以统一下, github help已经给出了脚本, 用的就是filter-branch的env-filter, 文档链接 <a href="https://help.github.com/articles/changing-author-info/">Changing author info</a></p>
-<table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19</pre></div></td><td class="code"><div class="hlcode"><pre><span class="c">#!/bin/sh</span>
+<div class="hlcode"><pre><span class="c">#!/bin/sh</span>
 
 git filter-branch --env-filter <span class="s1">&#39;</span>
 
@@ -2993,7 +2975,7 @@ git filter-branch --env-filter <span class="s1">&#39;</span>
 <span class="s1">fi</span>
 <span class="s1">&#39;</span> --tag-name-filter cat -- --branches --tags
 </pre></div>
-</td></tr></table>
+
 
 <p>更多的filter可以man, 暂时也就跟着书折腾了这几个filter.</p>
 <p><code>git rev-list</code> 和 git log 类似, 不过只输出sha-1 id. 并且两者的文档很多地方也是一样. 比如对输出范围的限制. 不过git log默认参数是HEAD, 而 rev-list必须指定commit id.</p>
@@ -3271,6 +3253,7 @@ git filter-branch --env-filter <span class="s1">&#39;</span>
 
 <p>比如我这里, 如果合并时有冲突, 会产生一个preimage, 记录冲突的diff; 如果我修复提交后, 会产生一个postimage, 记录解决冲突后的内容.</p>
 <h2 id="21-git-github">21. Git 和 Github(略)</h2>
+  
 </div>
     </div>
     <div id="footer">
@@ -3283,7 +3266,7 @@ git filter-branch --env-filter <span class="s1">&#39;</span>
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-05-14 22:00:37</p>
+        <p>站点最后生成 2016-06-23 20:40:01</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
