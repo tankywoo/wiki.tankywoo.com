@@ -1,8 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2016-05-14 20:55
-log: "增加preserved-libs"
+updated: 2016-06-23 19:15
+log: "增加禁用新网卡命名的方式"
 collection: "发行版"
 ---
 
@@ -1061,6 +1061,28 @@ eix看本地git最新稳定版是2.7.3, 但是默认不给安装, 强制指定�
 	$ make olddefconfig
 
 然后就是编译内核和initramfs了。
+
+
+### 禁用新网卡命名方式 ###
+
+Gentoo采用新网卡命名方式(应该是从udev-197下一个版本开始)，称为 [Predictable Network Interface Names](https://www.freedesktop.org/wiki/Software/systemd/PredictableNetworkInterfaceNames/)。
+
+具体的命名规则没去看，基本就是各种enp0s5, enp5s0, ens32等等方式。
+
+这个新方式是可以禁用的。
+
+最可靠的方式就是内核启动选项加上：
+
+	net.ifnames=0
+
+还可以通过udev rules来禁用。
+
+udev-208之前是增加软链接`/etc/udev/rules.d/80-net-name-slot.rules`，指向`/dev/null`；udev-208之后是增加软链接 `/etc/udev/rules.d/80-net-setup-link.rules`，指向 `/dev/null`
+
+参考：
+
+* [Udev/Upgrade Guide](https://wiki.gentoo.org/wiki/Udev/Upgrade_Guide)
+* [Upgrading udev to version >=200](https://www.gentoo.org/support/news-items/2013-03-29-udev-upgrade.html)
 
 
 ## 其它资源 ##
