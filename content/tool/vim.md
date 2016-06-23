@@ -1,9 +1,10 @@
 ---
 title: "Vim"
 date: 2013-08-17 07:32
-updated: 2016-04-19 23:23
+updated: 2016-06-23 20:45
 collection: "编辑器"
-log: "增加其它版本"
+tag: vim
+log: "增加搜索忽略大小写"
 ---
 
 [TOC]
@@ -199,6 +200,36 @@ Replace:
 然后在触发到这条后, 可以执行下面来查看输出
 
 	:messages
+
+
+### 忽略大小写搜索
+
+首先有两个bool开关:
+
+* `ignorecase` 忽略大小写
+* `smartcase` 智能选择匹配, 如果搜索pattern是全小写，则忽略大小写匹配；如果pattern包含大写，则会精准匹配
+
+另外，`\c`, `\C`可以覆盖`ignorecase`和`smartcase`的配置。
+
+`\c`表示搜索pattern忽略大小写，如下都会忽略大小写匹配`hello`：
+
+	# 最前的`/`表示vi中的开始搜索
+	/\chello
+	/\cHello
+	/hello\c
+	/HELLO\c
+
+`\C`和`\c`相关，表示大小写敏感。
+
+具体可以：
+
+	:help /\c
+	:help /\C
+	:help smartcase
+	:help ignorecase
+
+参考 [How to do case insensitive search in Vim](http://stackoverflow.com/questions/2287440/how-to-do-case-insensitive-search-in-vim)
+
 
 
 ---
