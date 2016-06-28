@@ -1,9 +1,9 @@
 ---
 title: "Ubuntu"
 date: 2016-01-06 10:16
-updated: 2016-05-07 12:20
+updated: 2016-06-28 11:00
 collection: "发行版"
-log: "增加配置时区命令"
+log: "增加更新的命令"
 ---
 
 [TOC]
@@ -51,6 +51,42 @@ showpkg也可以, 不过包含的内容更多一些:
 * [How to list dependent packages](http://askubuntu.com/questions/128524/how-to-list-dependent-packages-reverse-dependencies)
 * [Can I see why a package is installed?](http://askubuntu.com/questions/5636/can-i-see-why-a-package-is-installed)
 
+### 更新 ###
+
+	$ sudo apt-get update        # Fetches the list of available updates
+	$ sudo apt-get upgrade       # Strictly upgrades the current packages
+	$ sudo apt-get dist-upgrade  # Installs updates (new ones)
+
+`update`负责更新可更新的软件列表，`upgrade`更新已装的包，`dist-upgrade`更新需要新安装的包。
+
+比如在upgrade时，提示
+
+	$ apt-get upgrade
+	...
+	The following packages were automatically installed and are no longer required:
+	  linux-headers-4.4.0-21 linux-headers-4.4.0-21-generic linux-image-4.4.0-21-generic linux-image-extra-4.4.0-21-generic
+	Use 'apt autoremove' to remove them.
+	The following packages have been kept back:
+	  linux-generic linux-headers-generic linux-image-generic
+	The following packages will be upgraded:
+	...
+
+在dist-upgrade时，提示：
+
+	$ apt-get dist-upgrade
+	...
+	The following packages were automatically installed and are no longer required:
+	  linux-headers-4.4.0-21 linux-headers-4.4.0-21-generic linux-image-4.4.0-21-generic linux-image-extra-4.4.0-21-generic
+	Use 'apt autoremove' to remove them.
+	The following NEW packages will be installed:
+	  linux-headers-4.4.0-28 linux-headers-4.4.0-28-generic linux-image-4.4.0-28-generic linux-image-extra-4.4.0-28-generic
+	The following packages will be upgraded:
+	  linux-generic linux-headers-generic linux-image-generic
+	...
+
+即更新linux-headers, linux-image等相关的包
+
+参考：[How to install updates via command line?](http://askubuntu.com/questions/196768/how-to-install-updates-via-command-line)
 
 ## 问题 ##
 
