@@ -1,7 +1,8 @@
 ---
 title: "ipmi"
-date: 2015-08-10 21:33
+date: 2016-06-29 22:45
 collection: "系统工具"
+log: "增加chassis命令"
 ---
 
 IPMI(Intelligent Platform Management Interface) 智慧平台管理工具.
@@ -140,6 +141,9 @@ open是默认的, 基于本地的操作可以不写.
 
 	# 修改认证方式
 	$ ipmitool lan set 1 auth USER MD5,MD2
+
+	# 控制服务器信号灯闪烁(方便找到指定的机器)
+	$ ipmitool chassis identify 20  # 此处表示闪烁20s，默认是15秒
 
 
 ## 参考 ##
