@@ -1,9 +1,9 @@
 ---
 title: "Ubuntu"
 date: 2016-01-06 10:16
-updated: 2016-06-28 11:00
+updated: 2016-06-29 16:00
 collection: "发行版"
-log: "增加更新的命令"
+log: "增加安全更新说明"
 ---
 
 [TOC]
@@ -87,6 +87,41 @@ showpkg也可以, 不过包含的内容更多一些:
 即更新linux-headers, linux-image等相关的包
 
 参考：[How to install updates via command line?](http://askubuntu.com/questions/196768/how-to-install-updates-via-command-line)
+
+### 安全更新 ###
+
+和上面基本一样。
+
+Ubuntu的包版本在当前发行版(如12.04)release出来后，版本号基本是不会变的，后期有安全更新，都是以patch形式增加。
+
+比如openssl，经常爆出漏洞，虽然官方是建议建议到1.0.1t等当前最新版本，不过ubuntu下针对这些安全更新都增加了patch。
+
+首先`apt-get update`更新软件包树，如果有更新一是`apt-get upgrade`会提示；另外还可以通过`source`来确认：
+
+	$ apt-get source openssl
+
+会将openssl的debian目录tar包等下载下来：
+
+	# ls
+	debian  // openssl_1.0.1-4ubuntu5.36.debian.tar.gz解压后的目录
+	openssl_1.0.1-4ubuntu5.36.debian.tar.gz
+	openssl_1.0.1-4ubuntu5.36.dsc
+	openssl_1.0.1.orig.tar.gz
+
+	$ ls debian/patches/CVE-2016-2107.patch
+
+比如最近的安全漏洞CVE-2016-2107，目前就给出了修复patch, 版本是openssl_1.0.1-4ubuntu5.36
+
+然后更新：
+
+	apt-get install openssl
+	apt-get install libssl1.0.0
+
+注意，对于openssl，要更新libssl1.0.0, openssl只是相关的工具包，而libssl1.0.0才是动态库的更新。具体可以看debian/control文件。
+
+更新完记得重启nginx。
+
+
 
 ## 问题 ##
 
