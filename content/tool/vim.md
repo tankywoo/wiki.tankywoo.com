@@ -4,7 +4,7 @@ date: 2013-08-17 07:32
 updated: 2016-07-02 17:20
 collection: "编辑器"
 tag: vim
-log: "增加查看某个按键的映射"
+log: "增加重加载配置"
 ---
 
 [TOC]
@@ -181,6 +181,14 @@ Replace:
 							-u NONE                 no                  no
 							-u NORC                 no                  yes
 							--noplugin              yes                 no
+
+重新加载配置：
+
+	# % 表示当前文件, so是source简写
+	:so %
+
+	# 指定配置文件
+	:so ~/.vimrc
 
 ### 删除所有匹配的行 ###
 
