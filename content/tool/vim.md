@@ -134,6 +134,7 @@ vim套件中的对比工具
 * [Is it possible to have vim auto-complete function names, variables, etc. when using it to program?](http://vi.stackexchange.com/questions/39/is-it-possible-to-have-vim-auto-complete-function-names-variables-etc-when-us)
 * [vi/vim使用进阶: 智能补全](http://easwy.com/blog/archives/advanced-vim-skills-omin-complete/)
 * [vi/vim使用进阶: 自动补全](http://easwy.com/blog/archives/advanced-vim-skills-auto-complete/)
+* [VIM的JavaScript补全](http://efe.baidu.com/blog/vim-javascript-completion/) 介绍了ins-completion的几个快捷键
 
 
 ### 左右分割打开help文档 ###
