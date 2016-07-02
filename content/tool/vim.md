@@ -4,7 +4,7 @@ date: 2013-08-17 07:32
 updated: 2016-07-02 17:20
 collection: "编辑器"
 tag: vim
-log: "增加重加载配置"
+log: "增加加载的文件"
 ---
 
 [TOC]
@@ -250,6 +250,9 @@ Replace:
 
 [参考](https://github.com/ervandew/supertab)
 
+### 查看加载的文件
+
+	:scriptnames
 
 ---
 
