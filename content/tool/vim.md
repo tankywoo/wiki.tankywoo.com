@@ -1,10 +1,10 @@
 ---
 title: "Vim"
 date: 2013-08-17 07:32
-updated: 2016-06-23 20:45
+updated: 2016-07-02 17:20
 collection: "编辑器"
 tag: vim
-log: "增加搜索忽略大小写"
+log: "增加查看某个按键的映射"
 ---
 
 [TOC]
@@ -230,6 +230,17 @@ Replace:
 
 参考 [How to do case insensitive search in Vim](http://stackoverflow.com/questions/2287440/how-to-do-case-insensitive-search-in-vim)
 
+### 查看某个按键的映射
+
+一般用于排查按键冲突，可以看某个按键实际被谁绑定了。
+
+以tab为例，本地被supertab插件绑定了：
+
+	:verbose imap <tab>
+	i  <Tab>         <Plug>SuperTabForward
+		Last set from ~/.vim/bundle/supertab/plugin/supertab.vim
+
+[参考](https://github.com/ervandew/supertab)
 
 
 ---
