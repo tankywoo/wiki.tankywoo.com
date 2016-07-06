@@ -2,7 +2,7 @@
 title: "效率工具"
 date: 2013-08-17 07:32
 updated: 2016-05-11 22:15
-log: "更新梯子"
+log: "更新polipo"
 ---
 
 [TOC]
@@ -103,10 +103,13 @@ ss转http代理，官方wiki提供了[polipo](https://github.com/jech/polipo)这
 	socksProxyType = socks5
 	logFile=/tmp/polipo.log
 	logLevel=4
+	daemonise=True
 
 	$ polipo -c ~/.polipo
 
-更详细的配置可以看看这篇文章：[为终端设置Shadowsocks代理](http://droidyue.com/blog/2016/04/04/set-shadowsocks-proxy-for-terminal/)
+参考：[为终端设置Shadowsocks代理](http://droidyue.com/blog/2016/04/04/set-shadowsocks-proxy-for-terminal/)
+
+查看所有的配置项：`polipo -v`
 
 polipo默认启动的端口是8123。
 
