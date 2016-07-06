@@ -1,9 +1,11 @@
 ---
 title: "Docker"
 date: 2015-11-08 12:34
-updated: 2016-03-07 23:39
-collection: "虚拟化"
+updated: 2016-07-06 22:00
+collection: "增加基础文档"
 ---
+
+[TOC]
 
 [Docker](https://www.docker.com/) Build, Ship, Run; An open platform for distributed applications for developers and sysadmins
 
@@ -26,9 +28,44 @@ collection: "虚拟化"
 
 那个时候docker官网的域名还是docker.io, 现在已经把docker.com拿下了, 变化还是挺大的.
 
+## 基础 ##
+
+docker的分层镜像，支持devicemapper, aufs, btrfs。
+
+目前本地1.11.0版本，默认是devicemapper
+
+关于aufs，有两篇文章：
+
+* [Docker基础技术：AUFS](http://coolshell.cn/articles/17061.html)
+* [Docker容器和镜像存储机制](http://fengchj.com/?tag=aufs%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F)
+
+另外关于devicemapper，在同步系统时遇到一个问题：
+
+rsync同步时/var/lib/docker/devicemapper/devicemapper/data这个文件显示100G，已经超出机器存储的总大小。
+
+第一感觉就是类似esxi的精简置备(thin provisioning)，网上搜了下，linux下叫[`sparse file`](https://en.wikipedia.org/wiki/Sparse_file)
+
+> In computer science, a sparse file is a type of computer file that attempts to use file system space more efficiently when the file itself is mostly empty.
+
+`ls`命令的`-s`参数可以看到实际使用大小:
+
+	$ ls -alsh /var/lib/docker/devicemapper/devicemapper
+	total 952M
+	4.0K drwx------ 2 root root 4.0K Jul  6 17:12 .
+	4.0K drwx------ 5 root root 4.0K Jul  6 19:14 ..
+	950M -rw------- 1 root root 100G Jul  6 22:25 data
+	2.0M -rw------- 1 root root 2.0G Jul  6 22:25 metadata
+
+比如data文件，最前面是实际使用大小950M, 后面100G是最大分配的大小。但是rsync同步时是会按100G数据来同步的，并且这个也应该排除。
+
+参考：
+
+* [In Linux, how can I create thin-provisioned file so it can be mounted and a filesystem created on it?](http://serverfault.com/questions/344518/in-linux-how-can-i-create-thin-provisioned-file-so-it-can-be-mounted-and-a-file)
+* [Finding sparse files?](http://unix.stackexchange.com/questions/86442/finding-sparse-files)
+
 ## 遇到的问题 ##
 
-## loop module ##
+### loop module ###
 
 Gentoo下安装docker后启动报错, 看日志:
 
@@ -66,7 +103,7 @@ Gentoo下安装docker后启动报错, 看日志:
 
 然后加载模块: `modprobe loop`
 
-## 内核支持 ##
+### 内核支持 ###
 
 一个是iptables nat表, 编译内核时忘了打开nat支持了, 导致docker启动不了(docker开启不修改iptables选项应该就没事了).
 
@@ -89,6 +126,19 @@ Gentoo下安装docker后启动报错, 看日志:
 就顺便一起重新编译内核了.
 
 官方也提供了内核参数检查的脚本 [docker/contrib/check-config.sh](https://github.com/docker/docker/blob/master/contrib/check-config.sh)
+
+### docker hub 墙 ###
+
+可以通过配置`HTTP_PROXY`来解决：
+
+	HTTP_PROXY=http://127.1:8123 docker pull busybox
+
+讨论帖：
+
+* [set http/https proxy through command line](https://github.com/docker/docker/issues/11093)
+* [please add support for socks5 proxy](https://github.com/docker/docker/issues/5989)
+
+1.11版本好像支持socks5代理了
 
 ## 一些链接 ##
 
