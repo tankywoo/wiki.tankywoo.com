@@ -1,6 +1,7 @@
 ---
 title: "JavaScript编程精解"
 date: 2016-06-25 21:35
+updated: 2016-07-10 20:55
 tag: web
 ---
 
@@ -8,7 +9,7 @@ tag: web
 
 ## JavaScript基础部分
 
-数字(number): JavaScript 使用固定长度为64位的位序列来存储数字值。
+数字: JavaScript 使用固定长度为64位的位序列来存储数字值。
 
 几个特殊的数字：
 
@@ -18,8 +19,10 @@ tag: web
 
 `typeof` 一元运算符，获取给定值的具体类型：
 
-	typeof "abcd"
-	"string"
+```javascript
+> typeof "abcd"
+'string'
+```
 
 布尔值：`true` / `false`
 
@@ -473,6 +476,49 @@ JS并未对选择性捕获异常提供良好的支持，要不捕获所有异常
 	  if (!test)
 		throw new AssertionFailed(message);
 	}
+
+## 浏览器中的JavaScript
+
+HTML中某些字符的特殊标记方法，格式`& + 单词 + ;`，成为实体。如`&lt;`表示小于号，`&gt;`表示大于号等。
+
+文档对象模型(DOM, Document Object Model)
+
+document.documentElement 根节点
+
+每个DOM节点对象都包含`nodeType`属性，一个表示节点类型的数字代码，如：
+
+* document.ELEMENT_NODE (1)
+* document.TEXT_NODE (3)
+* document.COMMENT_NODE (8)
+
+通过树结构访问节点:
+
+* parentNode
+* childNodes (注意因为子节点一般会有多个，所以是Nodes)
+* firstChild
+* lastChild
+* previousSibling
+* nextSibling
+
+因为`childNodes`是一个包含多个子节点的类数组对象，有`length`属性，所以可以循环访问：
+
+```javascript
+var node = document.body;
+for (var i = 0; i < node.childNodes.length; i++) {
+  console.log(node.childNodes[i]);
+}
+```
+
+查找元素：
+
+* document.getElementsByTagName
+* document.getElementsByClassNmae
+* document.getElementById
+
+注：
+
+* 同上面，因为id是唯一的，所以Element是单数，通过Tag/Class获取的元素一般是多个，所以Elements是复数
+* 另外，比如Tag/Class等可以如document.body.getElementsByTagName，但是ById只能在document下 TODO
 
 
 ## TODO
