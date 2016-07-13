@@ -1,10 +1,10 @@
 ---
 title: "Vim"
 date: 2013-08-17 07:32
-updated: 2016-07-02 17:20
+updated: 2016-07-13 22:10
 collection: "编辑器"
 tag: vim
-log: "增加加载的文件"
+log: "增加快速跳转到上次位置"
 ---
 
 [TOC]
@@ -254,6 +254,13 @@ Replace:
 ### 查看加载的文件
 
 	:scriptnames
+
+### 快速跳回到上次位置
+
+`''`或者<code>``</code>
+
+具体见：[Move cursor to its last position](http://stackoverflow.com/questions/5052079/move-cursor-to-its-last-position)
+
 
 ---
 
