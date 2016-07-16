@@ -1,7 +1,7 @@
 ---
 title: "JavaScript编程精解"
 date: 2016-06-25 21:35
-updated: 2016-07-10 20:55
+updated: 2016-07-16 16:35
 tag: web
 ---
 
@@ -519,6 +519,69 @@ for (var i = 0; i < node.childNodes.length; i++) {
 
 * 同上面，因为id是唯一的，所以Element是单数，通过Tag/Class获取的元素一般是多个，所以Elements是复数
 * 另外，比如Tag/Class等可以如document.body.getElementsByTagName，但是ById只能在document下 TODO
+
+修改文档：
+
+* removeChild: 从文档中删除指定节点
+* appendChild: 添加指定节点到文档末尾
+* insertBefore: 将第一个参数的节点插入到第二个参数的节点之前
+* replaceChild: 将第一个参数的节点替换为另一个节点
+
+注：将节点插入到某处的副作用是会将其从当前位置移除
+
+创建节点：
+
+* document.createElement
+* document.createTextNode
+
+访问属性：
+
+* getAttribute
+* setAttribute
+
+HTML允许给节点自定义任何属性，都可以通过上面的方法来访问。
+
+TODO: 「我们可以通过元素的DOM对象的同名属性去访问元素的某些属性，比如链接的href属性。但只有常用的标准属性中很少的一部分是这样的。」是指只有小部分标准属性是可以访问的？
+
+布局：
+
+元素一般分为块(Block)元素和内敛(inline)元素。
+
+JS可以访问元素的尺寸与位置。
+
+* 属性offsetWidth: 元素的起始位置(单位是px)
+* 属性offsetHeight: 同上
+* 属性clientWidth: 元素内部占据的空间尺寸(不包括padding, border, margin)
+* 属性clientHeight: 同上
+* 方法getBoundingClientRect(): 返回一个对象，包含top/left/bottom/right和height/width属性，可以精确的顶一个一个元素。注意这些属性的值都是以border外边沿为主。
+
+操作节点的样式：
+
+对于样式直接定义在HTML的节点上，JS可以通过节点的style属性操作元素的样式。如body.style.color, 对于一些样式属性名，如`font-family`，可以写为body.style['font-family']或者body.style.fontFamily(即破折号移除，破折号后第一个字母大写)。
+
+```javascript
+<p style="color: purple; font-family: fantasy">
+  Pretty Text
+</p>
+
+<script>
+  "use strict";
+
+  var para = document.body.getElementsByTagName("p")[0];
+  console.log(para.style['font-family']);
+  //console.log(para.style.fontFamily);
+  para.style['font-family'] = "sans-serif";
+  //para.style.fontFamily = "sans-serif";
+  console.log(para.style.fontFamily);
+</script>
+```
+
+查询选择器：
+
+* querySelectorAll: document对象和元素节点都定义了此方法，接收一个选择器字符串并返回类数组的对象
+* querySelector: 只返回第一个匹配的元素
+
+此方法不随文档变化而动态更新。
 
 
 ## TODO
