@@ -1,7 +1,7 @@
 ---
 title: "JavaScript编程精解"
 date: 2016-06-25 21:35
-updated: 2016-07-16 16:35
+updated: 2016-07-17 13:40
 tag: web
 ---
 
@@ -582,6 +582,86 @@ JS可以访问元素的尺寸与位置。
 * querySelector: 只返回第一个匹配的元素
 
 此方法不随文档变化而动态更新。
+
+浏览器支持我们将函数注册为特定事件(如鼠标、键盘操作等)的处理器。(底层系统给予了在事件发生时响应的机会)
+
+每个DOM元素都有自己的`addEventListener`方法，支持在特定元素上监听事件。
+
+* addEventListener
+* removeEventListener
+
+事件触发时会为事件处理函数传递`事件对象`，事件对象有很多属性，比如`type`是表示事件的字符串("click", "mousedown"等)。
+
+```javascript
+<button>Click me</button>
+
+<script>
+// 按一次后就删除事件
+var button = document.querySelector("button");
+function once(event) {
+  console.log("Button clicked");
+  // console.log(event.type);
+  // console.log(event);
+  button.removeEventListener("click", once);
+}
+</script>
+button.addEventListener("click", once);
+```
+
+`传播(propagation)`：若节点含有子节点，则在节点上注册的事件处理器也会接收到在子节点中发生的事件。事件是向外传播的，从触发事件的节点到其父节点，最终直到文档根节点。可以通过调用**事件对象**的`stopPropagation`来阻止事件进一步传播。
+
+```javascript
+<p>A paragraph with a <button>button</button>.</p>
+
+<script>
+// 按鼠标右键时阻止此事件传播，段落p收不到；其它事件p和button都能收到
+var para = document.querySelector("p");
+var button = document.querySelector("button");
+para.addEventListener("mousedown", function() {
+  console.log("Handler for paragraph.");
+});
+button.addEventListener("mousedown", function(event) {
+  console.log("Handler for button.");
+  if (event.which == 3)
+    event.stopPropagation();
+});
+</script>
+```
+
+事件对象的`target`属性，指向事件的来源节点。
+
+大多数事件都有与其关联的**默认动作**，如点击链接会跳转到相应页面。对于大多数类型的事件，JS事件处理器会在默认处理器执行前被调用，如果事件处理器不想执行默认行为，则可以调用事件对象的`preventDefault`方法。
+
+```javascript
+<a href="https://developer.mozilla.org/">MDN</a>
+
+<script>
+// 禁止链接的默认事件处理器
+var link = document.body.querySelector("a");
+link.addEventListener("click", function(event) {
+  console.log("Nope.");
+  event.preventDefault();
+});
+</script>
+```
+
+一些事件：
+
+* keydown / keyup : keyCode属性是按键值, 通过charCodeAt方法找到按键对应的keyCode值。
+* keypress : 在keydown之后触发，只获得按键的输入
+* mousedown / mouseup
+* click / dbclick : 在mouseup事件之后触发
+* mousemove / mouseover / mouseout
+* scroll : 滚动事件
+* focus / blur : 焦点事件
+
+定时器方法：
+
+* setTimeout: 定时调度, 等待多少毫秒之后执行函数
+* clearTimeout: 参数是setTimeout的返回值
+* setInterval: 计时器, 每隔一定毫秒数重复执行一次
+* clearInterval: 同上，参数是setInterval的返回值
+
 
 
 ## TODO
