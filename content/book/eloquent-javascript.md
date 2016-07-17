@@ -1,7 +1,7 @@
 ---
 title: "JavaScript编程精解"
 date: 2016-06-25 21:35
-updated: 2016-07-17 13:40
+updated: 2016-07-17 16:25
 tag: web
 ---
 
@@ -662,7 +662,54 @@ link.addEventListener("click", function(event) {
 * setInterval: 计时器, 每隔一定毫秒数重复执行一次
 * clearInterval: 同上，参数是setInterval的返回值
 
+URL编码：使用一个百分号和16进制的数字对字符进行编码：
 
+* encodeURI / decodeURL
+* encodeURLComponent / decodeURLComponent
+
+`encodeURI` 假设输入是一个完整的URI，一些特殊字符需要编码；而`encodeURLComponent`则会编码所有的特殊字符。
+
+```javascript
+> encodeURIComponent('Hello & World');
+'Hello%20%26%20World'
+
+> decodeURIComponent('Hello%20%26%20World');
+'Hello & World'
+
+> encodeURI("https://tankywoo.com/Hello & World")
+'https://tankywoo.com/Hello%20&%20World'
+```
+
+`XMLHttpRequest`: JS发送HTTP请求的接口(注意大小写)
+
+```javascript
+var req = new XMLHttpRequest();
+req.open("GET", "/test.txt", false);
+req.send(null);
+console.log('responseText: ', req.responseText);
+console.log('status: ', req.status);
+console.log('Content-Type: ', req.getResponseHeader('Content-Type'));
+```
+
+请求对象的`open`方法配置请求，第三个参数false表示同步请求，true表示异步请求。 对于`GET`请求，`send`方法发送null就可以了。
+
+
+上面头信息不区分大小写，content-type也可以。另外`setRequestHeader`用于配置请求头。
+
+另外对于xhr, 如果是跨域的请求，需要配置`Access-Control-Allow-Origin`，明确告诉浏览器网站向其它域发送请求没问题，否则浏览器console会报错。
+
+对于异步请求：
+
+下面给请求对象加上事件处理器，表示数据ok后提醒前台代码：
+
+```javascript
+var req = new XMLHttpRequest();
+req.open("GET", "/test.txt", true);
+req.addEventListener("load", function() {
+  console.log("Done: ", req.status);
+});
+req.send(null);
+```
 
 ## TODO
 
