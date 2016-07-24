@@ -1,8 +1,9 @@
 ---
 title: "rsync"
 date: 2013-08-17 07:36
-updated: 2016-01-03 11:28
+updated: 2016-07-24 22:13
 collection: "数据管理/传输"
+log: "增加--ignore-existing参数"
 ---
 
 [TOC]
@@ -95,6 +96,7 @@ rsync - a fast, versatile, remote (and local) file-copying tool
 * `--exclude-from` - 从文件里读取排除在外的文件或目录
 * `--numeric-ids` - 不映射uid/gid到user/group的名字
 * `--list-only` - 只列出文件列表, 不同步. 这个和同步时加上`-n`做pretend有点类似
+* `--ignore-existing` - 跳过接收端已经存在的文件不做更新
 
 列出可用modules(只有module未配置`list = no`的才会被列出):
 
