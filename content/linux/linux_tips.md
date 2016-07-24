@@ -1,9 +1,9 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-05-23 16:20
+updated: 2016-07-24 21:25
 description: "查漏补缺, Tricks/Tips/Fragments"
-log: "增加cron的%符号"
+log: "增加overflow /tmp"
 ---
 
 [TOC]
@@ -268,3 +268,26 @@ log: "增加cron的%符号"
 除非转义，否则`%`相当于换行符, 命令中第一个%之后的都被当做标准输入(`read`可以读到)。改为：
 
 	*/1 * * * * root /tmp/test.sh >> /tmp/$(date +\%d-\%m-\%Y).log
+
+
+### mount /tmp overflow
+
+一台机器显示/tmp被mount为overflow:
+
+```bash
+$ df -lh
+Filesystem                   Size  Used Avail Use% Mounted on
+...
+overflow                     1.0M 1004K   20K  99% /tmp
+```
+
+以前没见过这种情况，搜了下，主要是开机时/tmp分区磁盘满了，无法写一些数据，于是临时建了一个overflow。
+
+清理空间后重启就可以了，或者直接umount，不过要注意很多服务把临时文件以及socks等，都写在/tmp下，所以umount后服务要重启。
+
+可以通过配置禁止这个行为。
+
+参考：
+
+* [Overflow filesystem mounted as /tmp in linux](http://jarrodoverson.com/blog/overflow-filesystem-in-linux/)
+* [Overflow /tmp mounted when there is free space on /](http://unix.stackexchange.com/questions/60731/overflow-tmp-mounted-when-there-is-free-space-on)
