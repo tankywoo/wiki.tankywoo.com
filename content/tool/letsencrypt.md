@@ -1,8 +1,8 @@
 ---
 title: "Let’s Encrypt"
 date: 2016-05-06 22:30
-updated: 2016-06-13 18:51
-log: "更新acme-tiny"
+updated: 2016-08-02 00:05
+log: "更新acme协议说明"
 ---
 
 [TOC]
@@ -28,6 +28,9 @@ ACME协议本身比较独立，不仅仅是Let’s Encrypt在使用，也可以�
 原理见[How It Works](https://letsencrypt.org/how-it-works/)
 
 ![](https://letsencrypt.org/images/howitworks_authorization.png)
+
+* 协议说明 [仓库](https://github.com/ietf-wg-acme/acme) / [HTML](https://tools.ietf.org/html/draft-ietf-acme-acme-03) / [老仓库](https://github.com/letsencrypt/acme-spec)
+* [SSL/TLS 加密新纪元 - Let's Encrypt](https://linux.cn/article-6565-1.html) 里面对ACME作了简单讲解
 
 ## 生成证书 ##
 
@@ -170,3 +173,4 @@ Let’s Encrypt 签发的证书只有 90 天有效期，但可以通过crontab�
 * [一个快速获取/更新 Let's encrypt 证书的 shell script](https://www.v2ex.com/t/241819) | [另外一个](https://github.com/xdtianyu/scripts/blob/master/lets-encrypt/README-CN.md)
 * [Cipherli.st](https://cipherli.st/) 提供了各种webserver和一些软件的ssl推荐配置
 * [SSL Server Test](https://www.ssllabs.com/ssltest/index.html) 站点https安全分析/检查
+* [实践个人网站迁移HTTPS与HTTP/2](https://www.freemindworld.com/blog/2016/160301_migrate_to_https_and_http2.shtml)
