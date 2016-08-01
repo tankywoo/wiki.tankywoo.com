@@ -1,9 +1,9 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-07-24 21:25
+updated: 2016-08-02 00:25
 description: "查漏补缺, Tricks/Tips/Fragments"
-log: "增加overflow /tmp"
+log: "增加检查端口是否被监听
 ---
 
 [TOC]
@@ -291,3 +291,13 @@ overflow                     1.0M 1004K   20K  99% /tmp
 
 * [Overflow filesystem mounted as /tmp in linux](http://jarrodoverson.com/blog/overflow-filesystem-in-linux/)
 * [Overflow /tmp mounted when there is free space on /](http://unix.stackexchange.com/questions/60731/overflow-tmp-mounted-when-there-is-free-space-on)
+
+### 检测某个端口是否被监听
+
+```
+$ nc -z <ip> <port>; echo $?
+```
+
+ref: [Quick way to find if a port is open on Linux](http://stackoverflow.com/questions/9609130/quick-way-to-find-if-a-port-is-open-on-linux)
+
+TODO 通过/dev 或 /proc 下读取信息?
