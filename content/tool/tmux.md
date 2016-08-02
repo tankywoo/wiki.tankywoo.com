@@ -1,9 +1,9 @@
 ---
 title: "tmux"
 date: 2013-10-16 16:24
-update: 2016-04-12 12:52
+update: 2016-08-02 17:13
 collection: "终端模拟器"
-log: "增加关闭自动修改title特性"
+log: "增加移动window"
 ---
 
 [TOC]
@@ -50,6 +50,8 @@ tmux有很多组合键, 类似screen, tmux的组合键前缀(prefix)默认是`C-
 * `C-b number` 切换到指定编号的window, 默认从0开始
 * `C-b w` 显示当前会话的window, 可以通过上下选择来切换
 * `tmux neww -n tmux` 新建一个window, 名称是tmux
+* `tmux display-message` 显示当前window的信息
+* `tmux display-message -p '#I'` 显示当前window的id
 
 ### pane 操作 ###
 
@@ -255,6 +257,26 @@ tmux attach-session -d -t 'tankywoo'
 
 * [Tmux window title keeps renaming](http://stackoverflow.com/questions/17289439/tmux-window-title-keeps-renaming)
 * [Keep the window's name fixed in tmux](http://stackoverflow.com/questions/6041178/keep-the-windows-name-fixed-in-tmux)
+
+
+### window的移动 ###
+
+有时关闭了中间的某个window，想重新调整id的顺序。
+
+`move-window`和`swap-window`可以用来处理这个。
+
+* `move-window -t 2` 将当前window的id调整到2
+* `swap-window -s 3 -t 2` 将window #3 和 window #2 对调
+* `move-window -r` 自动对当前会话的window重新排序
+
+也可以`set renumber-windows`设置为自动排序，和`move-window -r`效果一样，比如有id 1-4, 关闭3后, 4会自动改为3。
+
+参考：
+
+* [How do I reorder tmux windows?](http://superuser.com/questions/343572/how-do-i-reorder-tmux-windows)
+* [Renumbering windows in tmux](http://unix.stackexchange.com/questions/21742/renumbering-windows-in-tmux)
+
+注：版本v2.2，测试发现有个问题，对于swap-window后，id好像混乱了，虽然display-message显示的预期的id，但是swap-window没用，或者把**其它会话**的window移到当前会话了。
 
 
 ## 扩展 - tmux powerline ##
