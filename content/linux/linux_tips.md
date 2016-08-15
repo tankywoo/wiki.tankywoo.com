@@ -1,9 +1,9 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-08-02 00:25
+updated: 2016-08-15 16:28
 description: "查漏补缺, Tricks/Tips/Fragments"
-log: "增加检查端口是否被监听
+log: "简单了解sit"
 ---
 
 [TOC]
@@ -301,3 +301,59 @@ $ nc -z <ip> <port>; echo $?
 ref: [Quick way to find if a port is open on Linux](http://stackoverflow.com/questions/9609130/quick-way-to-find-if-a-port-is-open-on-linux)
 
 TODO 通过/dev 或 /proc 下读取信息?
+
+
+### Linux IPv6-in-IPv4
+
+某个机器下有网卡`sit0`，研究了下。
+
+摘自网上一篇[回答](http://askubuntu.com/a/236071/434496)：
+
+> sit stands for simple internet transition. sit0 is the Linux name for 6to4. 6to4 is a tunneling protocol for using IPv6 over an existing IPv4 connection.
+
+> Source: <http://www.tldp.org/HOWTO/Linux+IPv6-HOWTO/>
+
+具体可以参考[Configuring IPv6-in-IPv4 tunnels](http://www.tldp.org/HOWTO/Linux+IPv6-HOWTO/chapter-configuring-ipv6-in-ipv4-tunnels.html)
+
+```bash
+# 创建tunnel device
+# 注意：最开始没有指定local，即默认的any，则报错：
+# $ ip tunnel add tun6to4 mode sit ttl 64
+# > add tunnel "sit0" failed: No buffer space available
+# 这个帖子也有这个问题，还不太清楚：https://forums.gentoo.org/viewtopic-t-862122-start-0.html
+# 创建设备后，会有两个虚拟网卡sit0和tun6to4
+$ ip tunnel add tun6to4 mode sit ttl 64 local x.x.x.x
+
+# 查看当前的tunnel device
+$ ip tunnel show
+tun6to4: ipv6/ip remote any local x.x.x.x ttl 64 6rd-prefix 2002::/16
+sit0: ipv6/ip remote any local any ttl 64 nopmtudisc 6rd-prefix 2002::/16
+
+# 启动tunnel device
+$ ip link set dev tun6to4 up
+
+# 添加ipv6地址和路由
+$ ip -6 addr add <ipv6_address> dev tun6to4
+$ ip -6 route add default via <ipv6_gw> dev tun6to4
+
+# 停掉并删除tunnel device
+# 注意sit0不是通过 ip tun del删除，是需要卸载模块
+# $ ip tun del sit0
+# delete tunnel "sit0" failed: Operation not permitted
+# 比较奇怪的是如果sit0已经被卸载，再执行ip tun del sit0，模块又被加载上
+$ ip link set dev tun6to4 down
+$ ip tun del tun6to4
+$ rmmod sit tunnel4 ip_tunnel  # 删除sit0
+
+```
+
+Hurricane Eletrict(简称he, [he.net](http://he.net/))提供免费的IPv6 tunnel
+
+额外参考：
+
+* [用TunnelBroker给AWS绑定IPv6](http://zablog.me/2015/11/23/IPv6AWS/#注册_HE_Tunnel)
+* [SixXS configuration for Gentoo](https://www.sixxs.net/wiki/Gentoo_configuration)
+* [Configuring Hurricane Electric IPv6 Tunnel](Configuring Hurricane Electric IPv6 Tunnel)
+* [Configuring tunnels with iproute2](http://www.deepspace6.net/docs/iproute2tunnel-en.html)
+
+目前只是简单了解一些，有时间再注册下he.net实践下。
