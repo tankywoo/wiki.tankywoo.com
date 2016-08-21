@@ -1,9 +1,9 @@
 ---
 title: "Nginx"
 date: 2016-01-07 21:11
-updated: 2016-04-18 08:50
+updated: 2016-08-21 22:23
 collection: "Web服务器"
-log: "增加access_log的变量问题"
+log: "隐藏Server头信息"
 ---
 
 [TOC]
@@ -186,6 +186,35 @@ Nginx寻找匹配路径的逻辑:
 nginx会在每次请求过来时打开日志文件，然后在请求结束时关闭文件(strace看)；而不使用变量情况下，会在进程起来时就一直打开文件(lsof看)。前者是非常消耗资源。(TODO 解决方案?)
 
 还有另外一个，就是配置变量后，是每次靠worker process打开，所以日志的权限需要和worker process一样，否则无法写入日志；而后者是master process打开的日志文件，所以日志文件的权限是root也可以。
+
+### 隐藏Server头信息 ###
+
+正常情况下，Nginx返回的头信息会包括Web服务器用的什么软件(Nginx)，以及版本号是多少：
+
+```bash
+$ curl -I localhost
+HTTP/1.1 200 OK
+Server: nginx/1.10.1
+Date: Sun, 21 Aug 2016 14:15:32 GMT
+...
+```
+
+为了提高安全性，隐藏Nginx的版本号是第一步，Nginx的http配置支持关闭掉版本号：
+
+```nginx
+http {
+	server_tokens: off;
+	...
+}
+```
+
+更进一步，修改Server头信息，不显示Nginx，而改为一个其它值。
+
+这个可以通过模块[openresty/headers-more-nginx-module](https://github.com/openresty/headers-more-nginx-module#more_set_headers)来处理。然后配置`more_set_headers`指令：
+
+```nginx
+more_set_headers    "Server: my_server";
+```
 
 
 ## 其它 ##
