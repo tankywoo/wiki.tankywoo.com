@@ -1,6 +1,7 @@
 ---
 title: "Practical Vim"
 date: 2014-11-13 22:11
+tag: vim
 ---
 
 [TOC]

@@ -2,7 +2,7 @@
 title: "JavaScript编程精解"
 date: 2016-06-25 21:35
 updated: 2016-07-17 16:25
-tag: web
+tag: web, javascript
 ---
 
 [TOC]

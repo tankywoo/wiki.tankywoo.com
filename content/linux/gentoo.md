@@ -1094,3 +1094,4 @@ udev-208之前是增加软链接`/etc/udev/rules.d/80-net-name-slot.rules`，指
 * [Portage入门](https://gentoo-handbook.lugons.org/doc/zh_cn/handbook/handbook-x86.xml?part=2&chap=1&style=printable)
 * [Equery](https://wiki.gentoo.org/wiki/Equery)
 * [Gentoo Cheat Sheet](https://wiki.gentoo.org/wiki/Gentoo_Cheat_Sheet)
+* [General Concepts](https://devmanual.gentoo.org/general-concepts/index.html)

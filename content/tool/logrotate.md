@@ -3,6 +3,7 @@ title: "logrotate"
 date: 2016-03-07 22:00
 collection: "日志管理"
 updated: 2016-08-03 22:03
+log: "增加信号相关"
 ---
 
 [TOC]
