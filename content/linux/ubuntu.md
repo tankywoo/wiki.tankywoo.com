@@ -1,9 +1,9 @@
 ---
 title: "Ubuntu"
 date: 2016-01-06 10:16
-updated: 2016-06-29 16:00
+updated: 2016-08-22 13:30
 collection: "发行版"
-log: "增加安全更新说明"
+log: "增加apt-key"
 ---
 
 [TOC]
@@ -12,6 +12,41 @@ log: "增加安全更新说明"
 
 * [Ubuntu官网](http://www.ubuntu.com/server)
 * [Ubuntu Help](https://help.ubuntu.com/)
+
+## 基本 ##
+
+### apt-key ###
+
+APT key管理工具
+
+有时添加第三方的apt源，需要添加授权的key保证源是安全可信的。
+
+比如添加salt源并操作`apt-get update`之前需要先添加key `apt-key add <key_file>`:
+
+```bash
+$ wget -O - https://repo.saltstack.com/apt/ubuntu/16.04/amd64/latest/SALTSTACK-GPG-KEY.pub | sudo apt-key add -
+```
+
+列出已有的key `apt-key list`:
+
+```bash
+$ apt-key list
+/etc/apt/trusted.gpg
+--------------------
+
+pub   2048R/DE57BFBE 2014-06-24
+uid                  SaltStack Packaging Team <packaging@saltstack.com>
+sub   2048R/17928113 2014-06-24
+```
+
+其中keyid是DE57BFBE
+
+删除指定的key `apt-key del <keyid>`
+
+```bash
+$ apt-key del DE57BFBE
+```
+
 
 ## 经验 ##
 
