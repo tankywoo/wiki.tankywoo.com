@@ -1,9 +1,9 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-08-15 16:28
+updated: 2016-08-22 11:00
 description: "查漏补缺, Tricks/Tips/Fragments"
-log: "简单了解sit"
+log: "days since 1970/01/01 和 当前日期互相转换"
 ---
 
 [TOC]
@@ -357,3 +357,32 @@ Hurricane Eletrict(简称he, [he.net](http://he.net/))提供免费的IPv6 tunnel
 * [Configuring tunnels with iproute2](http://www.deepspace6.net/docs/iproute2tunnel-en.html)
 
 目前只是简单了解一些，有时间再注册下he.net实践下。
+
+
+### days since 1970/01/01 和 当前日期互相转换
+
+根据当前日期，获取days since 1970/01/01
+
+```bash
+$ echo $((`date +%s` / 86400))
+17035
+```
+
+根据days since 1970/01/01, 反推出这一天的日期。
+
+一般出现在根据密码修改时间获取日期，因为`/etc/shadow`存放的密码修改时间是days since 1970/01/01
+
+针对这样的情况，最简单的是：
+
+```bash
+$ chage -l tankywoo
+Last password change                                    : Jun 07, 2016
+...
+```
+
+第二种就是通过date命令计算：
+
+```bash
+$ date -d "01/01/1970 +17035days" +%F
+2016-08-22
+```
