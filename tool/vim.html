@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Vim
     <span class="updated">最后更新&nbsp;
-    2016-06-23 20:45
+    2016-07-13 22:10
     
     </span>
   </div>
@@ -55,6 +55,9 @@
 <li><a href="#_6">删除所有匹配的行</a></li>
 <li><a href="#vim_1">vim调试插件</a></li>
 <li><a href="#_7">忽略大小写搜索</a></li>
+<li><a href="#_8">查看某个按键的映射</a></li>
+<li><a href="#_9">查看加载的文件</a></li>
+<li><a href="#_10">快速跳回到上次位置</a></li>
 </ul>
 </li>
 </ul>
@@ -178,6 +181,7 @@
 <li><a href="http://vi.stackexchange.com/questions/39/is-it-possible-to-have-vim-auto-complete-function-names-variables-etc-when-us">Is it possible to have vim auto-complete function names, variables, etc. when using it to program?</a></li>
 <li><a href="http://easwy.com/blog/archives/advanced-vim-skills-omin-complete/">vi/vim使用进阶: 智能补全</a></li>
 <li><a href="http://easwy.com/blog/archives/advanced-vim-skills-auto-complete/">vi/vim使用进阶: 自动补全</a></li>
+<li><a href="http://efe.baidu.com/blog/vim-javascript-completion/">VIM的JavaScript补全</a> 介绍了ins-completion的几个快捷键</li>
 </ul>
 <h3 id="help">左右分割打开help文档</h3>
 <p>默认是上下分割来打开文档，但是对于宽屏，左右分割反而更加方便</p>
@@ -216,6 +220,15 @@
                         <span class="o">-</span><span class="n">u</span> <span class="n">NONE</span>                 <span class="n">no</span>                  <span class="n">no</span>
                         <span class="o">-</span><span class="n">u</span> <span class="n">NORC</span>                 <span class="n">no</span>                  <span class="n">yes</span>
                         <span class="o">--</span><span class="n">noplugin</span>              <span class="n">yes</span>                 <span class="n">no</span>
+</pre></div>
+
+
+<p>重新加载配置：</p>
+<div class="hlcode"><pre><span class="cp"># % 表示当前文件, so是source简写</span>
+<span class="o">:</span><span class="n">so</span> <span class="o">%</span>
+
+<span class="cp"># 指定配置文件</span>
+<span class="o">:</span><span class="n">so</span> <span class="o">~/</span><span class="p">.</span><span class="n">vimrc</span>
 </pre></div>
 
 
@@ -264,6 +277,24 @@
 
 
 <p>参考 <a href="http://stackoverflow.com/questions/2287440/how-to-do-case-insensitive-search-in-vim">How to do case insensitive search in Vim</a></p>
+<h3 id="_8">查看某个按键的映射</h3>
+<p>一般用于排查按键冲突，可以看某个按键实际被谁绑定了。</p>
+<p>以tab为例，本地被supertab插件绑定了：</p>
+<div class="hlcode"><pre><span class="p">:</span><span class="nx">verbose</span> <span class="nx">imap</span> <span class="o">&lt;</span><span class="nx">tab</span><span class="o">&gt;</span>
+<span class="nx">i</span>  <span class="o">&lt;</span><span class="nx">Tab</span><span class="o">&gt;</span>         <span class="o">&lt;</span><span class="nx">Plug</span><span class="o">&gt;</span><span class="nx">SuperTabForward</span>
+    <span class="nb">Last</span> <span class="nb">set</span> <span class="nb">from</span> <span class="err">~</span><span class="p">/</span><span class="nx">.vim</span><span class="p">/</span><span class="nx">bundle</span><span class="p">/</span><span class="nx">supertab</span><span class="p">/</span><span class="nx">plugin</span><span class="p">/</span><span class="nx">supertab.vim</span>
+</pre></div>
+
+
+<p><a href="https://github.com/ervandew/supertab">参考</a></p>
+<h3 id="_9">查看加载的文件</h3>
+<div class="hlcode"><pre><span class="o">:</span><span class="n">scriptnames</span>
+</pre></div>
+
+
+<h3 id="_10">快速跳回到上次位置</h3>
+<p><code>''</code>或者<code>``</code></p>
+<p>具体见：<a href="http://stackoverflow.com/questions/5052079/move-cursor-to-its-last-position">Move cursor to its last position</a></p>
 <hr />
 <p>参考:</p>
 <ul>
@@ -294,7 +325,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-06-23 20:47:16</p>
+        <p>站点最后生成 2016-08-22 13:39:07</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

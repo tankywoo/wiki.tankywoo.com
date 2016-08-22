@@ -45,6 +45,7 @@
 <li><a href="#session_1">在不同大小的屏幕打开一个session</a></li>
 <li><a href="#pane_1">pane之间的移动</a></li>
 <li><a href="#title">关闭自动修改title</a></li>
+<li><a href="#window_1">window的移动</a></li>
 </ul>
 </li>
 <li><a href="#-tmux-powerline">扩展 - tmux powerline</a></li>
@@ -91,6 +92,8 @@
 <li><code>C-b number</code> 切换到指定编号的window, 默认从0开始</li>
 <li><code>C-b w</code> 显示当前会话的window, 可以通过上下选择来切换</li>
 <li><code>tmux neww -n tmux</code> 新建一个window, 名称是tmux</li>
+<li><code>tmux display-message</code> 显示当前window的信息</li>
+<li><code>tmux display-message -p '#I'</code> 显示当前window的id</li>
 </ul>
 <h3 id="pane">pane 操作</h3>
 <ul>
@@ -282,6 +285,21 @@ tmux attach-session -d -t <span class="s1">&#39;tankywoo&#39;</span>
 <li><a href="http://stackoverflow.com/questions/17289439/tmux-window-title-keeps-renaming">Tmux window title keeps renaming</a></li>
 <li><a href="http://stackoverflow.com/questions/6041178/keep-the-windows-name-fixed-in-tmux">Keep the window's name fixed in tmux</a></li>
 </ul>
+<h3 id="window_1">window的移动</h3>
+<p>有时关闭了中间的某个window，想重新调整id的顺序。</p>
+<p><code>move-window</code>和<code>swap-window</code>可以用来处理这个。</p>
+<ul>
+<li><code>move-window -t 2</code> 将当前window的id调整到2</li>
+<li><code>swap-window -s 3 -t 2</code> 将window #3 和 window #2 对调</li>
+<li><code>move-window -r</code> 自动对当前会话的window重新排序</li>
+</ul>
+<p>也可以<code>set renumber-windows</code>设置为自动排序，和<code>move-window -r</code>效果一样，比如有id 1-4, 关闭3后, 4会自动改为3。</p>
+<p>参考：</p>
+<ul>
+<li><a href="http://superuser.com/questions/343572/how-do-i-reorder-tmux-windows">How do I reorder tmux windows?</a></li>
+<li><a href="http://unix.stackexchange.com/questions/21742/renumbering-windows-in-tmux">Renumbering windows in tmux</a></li>
+</ul>
+<p>注：版本v2.2，测试发现有个问题，对于swap-window后，id好像混乱了，虽然display-message显示的预期的id，但是swap-window没用，或者把<strong>其它会话</strong>的window移到当前会话了。</p>
 <h2 id="-tmux-powerline">扩展 - tmux powerline</h2>
 <ul>
 <li><a href="https://github.com/erikw/tmux-powerline">tmux-powerline项目</a> 官方说此项目现在只做维护, 不更新</li>
@@ -340,7 +358,7 @@ tmux attach-session -d -t <span class="s1">&#39;tankywoo&#39;</span>
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-06-23 20:47:16</p>
+        <p>站点最后生成 2016-08-22 13:39:07</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

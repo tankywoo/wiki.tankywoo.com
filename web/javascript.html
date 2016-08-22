@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-    <title>SQLite 3 - Wiki · Tanky Woo</title>
+    <title>JavaScript - Wiki · Tanky Woo</title>
     <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
     <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,10 +20,10 @@
   <div id="post-nav">
     <a href="/">Wiki · Tanky Woo</a>
     &nbsp;&#187;&nbsp;
-    <a href="/#database">database</a>
-    &nbsp;&#187;&nbsp;SQLite 3
+    <a href="/#web">web</a>
+    &nbsp;&#187;&nbsp;JavaScript
     <span class="updated">最后更新&nbsp;
-    2016-04-11 23:33
+    2016-08-21 22:29
     
     </span>
   </div>
@@ -31,35 +31,42 @@
 <div class="clearfix"></div>
 <div id="content">
   <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">常用命令</a></li>
 <li><a href="#tips">Tips</a><ul>
-<li><a href="#_2">备份</a></li>
+<li><a href="#_1">如何复制一个对象</a></li>
 </ul>
 </li>
 </ul>
 </div>
-<h2 id="_1">常用命令</h2>
-<p>命令都是以<code>.</code> dot 开头:</p>
-<div class="hlcode"><pre><span class="p">.</span><span class="n">help</span> <span class="err">查看帮助</span>
-<span class="p">.</span><span class="n">quit</span> <span class="err">退出</span>
-</pre></div>
-
-
 <h2 id="tips">Tips</h2>
-<h3 id="_2">备份</h3>
-<p>因为sqlite3数据库直接是一个实体文件，最简单的就是拷贝一份，不过如果是拷贝时正在写操作等，会导致数据库不完整。</p>
-<p>使用sqlite3提供的<code>.backup</code>命令可以完成:</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">sqlite3</span> <span class="n">mydb</span><span class="p">.</span><span class="n">sqlite3</span>
-<span class="o">&gt;</span> <span class="p">.</span><span class="n">backup</span> <span class="n">mydb</span><span class="p">.</span><span class="n">bak</span><span class="p">.</span><span class="n">sqlite3</span>
+<h3 id="_1">如何复制一个对象</h3>
+<p>涉及到深复制和浅复制的问题</p>
+<p>参考SO上回答：<a href="http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object-in-javascript">What is the most efficient way to clone an object in JavaScript?</a></p>
+<p>最简单的答案，通过jQuery来处理。注意我之前在搜相关API时，也看到下面提到的clone这个方法，不过看文档说是针对DOM的。</p>
+<p>I want to note that the <a href="http://api.jquery.com/clone/"><code>.clone()</code></a> method in jQuery only clones DOM elements. In order to clone JavaScript objects, you would do:</p>
+<div class="hlcode"><pre><span class="c1">// Shallow copy</span>
+<span class="kd">var</span> <span class="nx">newObject</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">extend</span><span class="p">({},</span> <span class="nx">oldObject</span><span class="p">);</span>
+
+<span class="c1">// Deep copy</span>
+<span class="kd">var</span> <span class="nx">newObject</span> <span class="o">=</span> <span class="nx">jQuery</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="kc">true</span><span class="p">,</span> <span class="p">{},</span> <span class="nx">oldObject</span><span class="p">);</span>
 </pre></div>
 
 
-<p>或者直接在命令行而不进入交互来完成:</p>
-<div class="hlcode"><pre><span class="err">$</span> <span class="n">sqlite3</span> <span class="n">mydb</span><span class="p">.</span><span class="n">sqlite3</span> <span class="s">&quot;.backup mydb.bak.sqlite3&quot;</span>
-</pre></div>
-
-
-<p>参考: <a href="http://stackoverflow.com/a/25684912/1276501">How to backup sqlite database?</a></p>
+<p>More information can be found in the <a href="http://api.jquery.com/jQuery.extend/">jQuery documentation</a>.</p>
+<p>I also want to note that the deep copy is actually much smarter than what is shown above – it's able to avoid many traps (trying to deep extend a DOM element, for example). It's used frequently in jQuery core and in plugins to great effect.</p>
+<p>其它参考：</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/23031215">javascript中的深拷贝和浅拷贝？</a></li>
+<li><a href="https://segmentfault.com/q/1010000000148290">在javascript里怎样方便的克隆一个object</a></li>
+</ul>
+  
+  <div class="relation">
+    Related:
+    <ul>
+  
+    <li><a href="/book/eloquent-javascript.html">JavaScript编程精解</a></li>
+  
+    </ul>
+  </div>
   
 </div>
     </div>

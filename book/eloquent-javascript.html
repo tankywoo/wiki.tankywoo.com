@@ -1,0 +1,759 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>JavaScript编程精解 - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#book">book</a>
+    &nbsp;&#187;&nbsp;JavaScript编程精解
+    <span class="updated">最后更新&nbsp;
+    2016-07-17 16:25
+    
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#javascript">JavaScript基础部分</a></li>
+<li><a href="#javascript_1">浏览器中的JavaScript</a></li>
+<li><a href="#todo">TODO</a></li>
+</ul>
+</div>
+<h2 id="javascript">JavaScript基础部分</h2>
+<p>数字: JavaScript 使用固定长度为64位的位序列来存储数字值。</p>
+<p>几个特殊的数字：</p>
+<ul>
+<li><code>Infinity</code>: 正无穷大</li>
+<li><code>-Infinity</code>: 负无穷大</li>
+<li><code>NaN</code>: 非数值，表示无意义的值</li>
+</ul>
+<p><code>typeof</code> 一元运算符，获取给定值的具体类型：</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="k">typeof</span> <span class="s2">&quot;abcd&quot;</span>
+<span class="s1">&#39;string&#39;</span>
+</pre></div>
+
+
+<p>布尔值：<code>true</code> / <code>false</code></p>
+<p>逻辑运算符：<code>&amp;&amp;</code> / <code>||</code> / <code>!</code></p>
+<p>未定义值 (两者基本等价)</p>
+<ul>
+<li><code>null</code></li>
+<li><code>undefined</code></li>
+</ul>
+<p>JavaScript对于不同类型的运算或比较会进行自动类型转换。对于比较，可以使用严格比较：<code>===</code> 和 <code>!==</code></p>
+<p><code>var</code>定义变量，可以同时定义多个变量，并用逗号分隔：</p>
+<div class="hlcode"><pre><span class="n">var</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+
+
+<p>几个函数：</p>
+<ul>
+<li><code>alert</code></li>
+<li><code>confirm</code></li>
+<li><code>prompt</code></li>
+<li><code>isNaN</code></li>
+<li><code>Number</code> 强制转换为数值</li>
+<li><code>console.log</code> 适合调试用</li>
+</ul>
+<p>if语句：</p>
+<div class="hlcode"><pre><span class="k">if</span> <span class="p">(...)</span>
+  <span class="p">...;</span>
+<span class="k">else</span> <span class="k">if</span> <span class="p">(...)</span>
+  <span class="p">...;</span>
+<span class="k">else</span>
+  <span class="p">...;</span>
+</pre></div>
+
+
+<p>while语句：</p>
+<div class="hlcode"><pre><span class="k">while</span> <span class="p">(...)</span> <span class="p">{</span>
+  <span class="p">...;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>do..while语句：</p>
+<div class="hlcode"><pre><span class="k">do</span> <span class="p">{</span>
+  <span class="p">...;</span>
+<span class="p">}</span> <span class="k">while</span> <span class="p">(...);</span>  <span class="c1">// 注意有分号</span>
+</pre></div>
+
+
+<p>for循环：</p>
+<div class="hlcode"><pre><span class="k">for</span> <span class="p">(</span><span class="n">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="k">break</span><span class="p">;</span>  <span class="c1">// break语句</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>switch语句：</p>
+<div class="hlcode"><pre><span class="k">switch</span> <span class="p">(...)</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="n">condition1</span>:
+    <span class="p">...;</span>
+    <span class="k">break</span>
+  <span class="k">case</span> <span class="n">condition2</span>:
+    <span class="p">...;</span>
+    <span class="k">break</span>
+  <span class="p">...</span>
+  <span class="nl">default:</span>
+    <span class="p">...;</span>
+    <span class="k">break</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>对于switch, 每一个条件后加上<code>break</code>是个好习惯，否则比如匹配到condition1后，后面的语句都会执行，不管是否匹配的。如果没有任何匹配，则会跳到<code>default</code>标签。</p>
+<p>注视：</p>
+<ul>
+<li><code>//</code> 适合单行注释</li>
+<li><code>/* .... */</code> 适合块注释</li>
+</ul>
+<p>经验：</p>
+<ul>
+<li>变量声明/定义都以<code>var</code>开头</li>
+<li>语句都以<code>分号</code>结尾</li>
+<li>缩进使用<code>2个空格</code></li>
+</ul>
+<p>函数定义的两种方式：</p>
+<p>方式一，直接定义匿名函数，赋值给一个变量：</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">square</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">;</span>
+<span class="p">};</span>  <span class="c1">// 分号结尾</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+</pre></div>
+
+
+<p>方式二，直接做<strong>函数声明</strong>：</p>
+<div class="hlcode"><pre><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+
+<span class="kd">function</span> <span class="nx">square</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">;</span>
+<span class="p">}</span>  <span class="c1">// 无分号</span>
+</pre></div>
+
+
+<p>这种方式不需要遵守从上而下的定义方式。</p>
+<p>注：</p>
+<ul>
+<li>注意函数中变量作用域，只有在函数内部用<code>var</code>定义的变量才属于函数内</li>
+<li>在JS中，只有函数能够创建新的作用域</li>
+<li>JS对传入函数的参数数量几乎没有任何限制。如果有参数定义但是没有传参，则这些变量为undefined</li>
+</ul>
+<p>当函数被调用时，函数体内部会添加一个特殊变量<code>arguments</code>，指向一个包含所有传入传输的对象。</p>
+<p>此对象有length属性，和数组比较类似，但是不包含数组的任何方法</p>
+<p>数组：</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="n">var</span> <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">];</span>
+<span class="o">&gt;</span> <span class="n">typeof</span> <span class="n">arr</span>
+<span class="err">&#39;</span><span class="n">object</span><span class="err">&#39;</span>
+</pre></div>
+
+
+<p>数组也是一种对象</p>
+<p>属性：如Math.max，mystr.length; 可以通过点号<code>.</code>或方括号<code>[]</code>获取，后者的key可以是带有空格的</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="p">[</span><span class="sc">&#39;a&#39;</span><span class="p">,</span> <span class="sc">&#39;b&#39;</span><span class="p">,</span> <span class="sc">&#39;c&#39;</span><span class="p">].</span><span class="n">length</span>
+<span class="mi">3</span>
+</pre></div>
+
+
+<p>方法：如mystr.toUpperCase()</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="k">typeof</span> <span class="s1">&#39;abc&#39;</span><span class="p">.</span><span class="nx">toUpperCase</span>
+<span class="s1">&#39;function&#39;</span>
+<span class="o">&gt;</span> <span class="s1">&#39;ABc&#39;</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span>
+<span class="s1">&#39;abc&#39;</span>
+</pre></div>
+
+
+<p>数组的几个方法：</p>
+<ul>
+<li>join</li>
+<li>push: 在末尾添加</li>
+<li>pop: 在末尾删除</li>
+<li>unshift: 在开头添加</li>
+<li>shift: 在开头删除</li>
+<li>indexOf: 从第一个元素向后搜索</li>
+<li>lastIndexOf: 从最后一个元素向前搜索</li>
+<li>concat: 拼接两个数组(类似于python中的extend)</li>
+<li>slice: 取其中一部分数组 (不清楚这个和直接arr[i1:i2]有什么区别?)
+对象：</li>
+</ul>
+<p>创建对象的方式之一是使用大括号：</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">desc</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">work</span><span class="o">:</span> <span class="s1">&#39;program&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;my name&#39;</span><span class="o">:</span> <span class="s1">&#39;tanky&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;other&#39;</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="s1">&#39;hello world&#39;</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="o">&gt;</span> <span class="k">typeof</span> <span class="nx">desc</span>
+<span class="s1">&#39;object&#39;</span>
+<span class="o">&gt;</span> <span class="nx">desc</span><span class="p">.</span><span class="nx">other</span><span class="p">();</span>
+<span class="s1">&#39;hello world&#39;</span>
+</pre></div>
+
+
+<p>JS中对象的属性/方法是<code>**引用**</code>方式。</p>
+<ul>
+<li><code>in</code> 二元操作符，判断属性或方法是否在对象中</li>
+<li><code>delete</code> 一元操作符，从对象中移除指定的属性</li>
+</ul>
+<p>可以直接通过<code>=</code>给对象的属性/方法赋值，如果属性/方法不存在，则相当于新增属性，否则相当于修改属性。</p>
+<p>对于对象，引用两个相同的对象和两个不同对象包含相同属性是一样的：</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="n">var</span> <span class="n">obj1</span> <span class="o">=</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">value</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">10</span><span class="p">};</span>
+<span class="o">&gt;</span> <span class="n">var</span> <span class="n">obj2</span> <span class="o">=</span> <span class="n">obj1</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="n">var</span> <span class="n">obj3</span> <span class="o">=</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">value</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">10</span><span class="p">};</span>
+<span class="o">&gt;</span> <span class="n">obj1</span> <span class="o">==</span> <span class="n">obj2</span><span class="p">;</span>
+<span class="nb">true</span>
+<span class="o">&gt;</span> <span class="n">obj1</span> <span class="o">==</span> <span class="n">obj3</span><span class="p">;</span>
+<span class="nb">false</span>
+<span class="o">&gt;</span> <span class="n">obj1</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span>
+<span class="mi">15</span>
+<span class="o">&gt;</span> <span class="n">obj2</span><span class="p">.</span><span class="n">value</span>
+<span class="mi">15</span>
+<span class="o">&gt;</span> <span class="n">obj3</span><span class="p">.</span><span class="n">value</span>
+<span class="mi">10</span>
+</pre></div>
+
+
+<p>遍历对象，使用<code>for (var name in object)</code>方式：</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="k">in</span> <span class="nx">desc</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;k: &#39;</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">+</span> <span class="s1">&#39;, v: &#39;</span> <span class="o">+</span> <span class="nx">desc</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="nx">k</span><span class="o">:</span> <span class="nx">work</span><span class="p">,</span> <span class="nx">v</span><span class="o">:</span> <span class="nx">program</span>
+<span class="nx">k</span><span class="o">:</span> <span class="nx">my</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">v</span><span class="o">:</span> <span class="nx">tanky</span>
+<span class="nx">k</span><span class="o">:</span> <span class="nx">other</span><span class="p">,</span> <span class="nx">v</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="k">return</span> <span class="s1">&#39;hello world&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>字符串、数字、布尔等都不是对象，所以不能添加属性，添加不会报错，不过没什么作用。</p>
+<p>Math对象：</p>
+<ul>
+<li>min: 求最小值</li>
+<li>max: 求最大值</li>
+<li>sqrt: 求平方根</li>
+<li>三角函数sin, cos, tan ...</li>
+<li>random: 0-1之间的随机数</li>
+<li>floor: 向下取整</li>
+<li>ceil: 向上取整</li>
+<li>round: 四舍五入</li>
+</ul>
+<p>全局对象 <code>window</code>：每一个全局变量作为一个属性，存储在全局对象中。在浏览器中，全局对象存储在window变量中。</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="n">var</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+<span class="o">&gt;</span> <span class="sc">&#39;a&#39;</span> <span class="n">in</span> <span class="n">window</span><span class="p">;</span>
+<span class="nb">true</span>
+</pre></div>
+
+
+<p>数组的<code>forEach</code>方法：</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">square_arr</span><span class="p">(</span><span class="nx">arr</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">n_arr</span> <span class="o">=</span> <span class="cp">[]</span><span class="p">;</span>
+  <span class="nx">arr</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">n_arr</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span><span class="p">);</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="nx">n_arr</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">square_arr</span><span class="p">(</span><span class="cp">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="cp">]</span><span class="p">));</span>  <span class="c1">// </span><span class="cp">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="cp">]</span><span class="c1"></span>
+</pre></div>
+
+
+<p>数组的<code>filter</code>方法用于过滤：</p>
+<div class="hlcode"><pre><span class="c1">// 过滤出所有的奇数</span>
+<span class="k">var</span> <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">,</span> <span class="mh">3</span><span class="p">,</span> <span class="mh">4</span><span class="p">,</span> <span class="mh">5</span><span class="p">];</span>
+
+<span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">filter</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">v</span> <span class="o">%</span> <span class="mh">2</span><span class="p">;</span>
+<span class="p">}));</span>
+</pre></div>
+
+
+<p>数组的<code>map</code>方法用于对每一个元素分别调用函数，生成一个新的数组：</p>
+<div class="hlcode"><pre><span class="c1">// 和上面forEach效果一样，对数组进行求平方</span>
+<span class="k">var</span> <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">,</span> <span class="mh">3</span><span class="p">,</span> <span class="mh">4</span><span class="p">,</span> <span class="mh">5</span><span class="p">];</span>
+
+<span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">v</span> <span class="o">*</span> <span class="n">v</span><span class="p">;</span>
+<span class="p">}));</span>
+</pre></div>
+
+
+<p>数组的<code>reduce</code>方法用于折叠数组，接收用于合并操作的函数以及初始值，如果初始值没写，则默认表示0；合并函数接收两个参数，即前一次和本次：</p>
+<div class="hlcode"><pre><span class="c1">// 数组所有元素求和</span>
+<span class="k">var</span> <span class="n">arr</span> <span class="o">=</span> <span class="p">[</span><span class="mh">1</span><span class="p">,</span> <span class="mh">2</span><span class="p">,</span> <span class="mh">3</span><span class="p">,</span> <span class="mh">4</span><span class="p">,</span> <span class="mh">5</span><span class="p">];</span>
+
+<span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">reduce</span><span class="p">(</span><span class="k">function</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">cur</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">pre</span> <span class="o">+</span> <span class="n">cur</span><span class="p">;</span>
+<span class="p">}));</span>
+</pre></div>
+
+
+<p>函数的<code>apply</code>方法，接收一个数组或类数组的参数（所以可以把arguments传过去）</p>
+<p>函数的<code>call</code>方法，接收一系列参数，和<code>apply</code>相比相当于把参数数组展开</p>
+<p>函数的<code>bind</code>方法新生成一个函数，并把传递的参数当做上下文一起传过去。</p>
+<p>参考：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/1986896/what-is-the-difference-between-call-and-apply">What is the difference between call and apply?</a></li>
+<li><a href="http://stackoverflow.com/questions/15455009/javascript-call-apply-vs-bind">Javascript call() &amp; apply() vs bind()?</a></li>
+</ul>
+<p>与JSON相关的两个方法：</p>
+<ul>
+<li><code>JSON.stringify</code>：输入javascript变量，返回JSON编码后的字符串</li>
+<li><code>JSON.parse</code>：输入一个字符串，返回解码后的值</li>
+</ul>
+<p>在调用object.method()时，对象中的一个特殊变量<code>this</code>会指向当前方法所属的对象。</p>
+<p>原型(prototype)：原型是另一个对象，是对象的属性来源，当访问一个对象不包含的属性时，会从对象原型中搜索属性，接着是原型的原型...</p>
+<p>JS对象原型的关系是一种树形结构，根部就是Object.prototype；</p>
+<p>子对象可以继承父对象的属性。</p>
+<p>原型是一层层继承下来，比如函数继承自原型Function.prototype，数组继承自Array.prototype。</p>
+<p>通过<code>Object.getPrototypeOf()</code>返回一个对象的原型：</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">func</span><span class="p">()</span> <span class="p">{</span>
+<span class="p">};</span>
+
+<span class="c1">// true</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">func</span><span class="p">)</span> <span class="o">==</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+</pre></div>
+
+
+<p>通过<code>Object.create</code>利用一个特定的原型来创建对象。</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">protoObj</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">say</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">my_obj</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">protoObj</span><span class="p">);</span>
+<span class="c1">// print &#39;hello&#39;</span>
+<span class="nx">my_obj</span><span class="p">.</span><span class="nx">say</span><span class="p">();</span>
+
+<span class="c1">// true</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">Object</span><span class="p">.</span><span class="nx">getPrototypeOf</span><span class="p">(</span><span class="nx">my_obj</span><span class="p">)</span> <span class="o">==</span> <span class="nx">protoObj</span><span class="p">);</span>
+</pre></div>
+
+
+<p>构造函数：</p>
+<p>(<strong>这块内容有点绕，需额外再研究下</strong>)</p>
+<p>在JS中，调用函数之前添加一个关键字<code>new</code>则表示调用其构造函数；构造函数中包含了指向新对象的变量this。</p>
+<p>通过关键字<code>new</code>创建的对象称之为构造函数的实例。</p>
+<p>构造函数的名称一般以大写字母开头，便于与其它函数区分。</p>
+<p>所有使用特定构造函数创建的对象，都会将构造函数的prototype属性作为其原型。</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">Rabbit</span><span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">=</span> <span class="nx">type</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">killerRabbit</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Rabbit</span><span class="p">(</span><span class="s2">&quot;killer&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">blackRabbit</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Rabbit</span><span class="p">(</span><span class="s2">&quot;black&quot;</span><span class="p">);</span>
+<span class="c1">// black</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">blackRabbit</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span>
+
+<span class="nx">Rabbit</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">speak</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">line</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;The &quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">+</span> <span class="s2">&quot; rabbit says &#39;&quot;</span> <span class="o">+</span> <span class="nx">line</span> <span class="o">+</span> <span class="s2">&quot;&#39;&quot;</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nx">blackRabbit</span><span class="p">.</span><span class="nx">speak</span><span class="p">(</span><span class="s2">&quot;Hello...&quot;</span><span class="p">);</span>
+</pre></div>
+
+
+<p>关于原型，有<code>可枚举(enumerable)</code>和<code>不可枚举(nonenumerable)</code>属性：</p>
+<ul>
+<li>可枚举：我们创建并赋予对象的所有属性</li>
+<li>不可枚举：Object.prototype中的标准属性</li>
+</ul>
+<p><code>in</code> 可以测试属性是否在对象中：</p>
+<div class="hlcode"><pre>var map <span class="o">=</span> <span class="p">{</span><span class="s">&#39;one&#39;</span><span class="o">:</span> <span class="m">1</span><span class="p">,</span> <span class="s">&#39;two&#39;</span><span class="o">:</span> <span class="m">2</span><span class="p">}</span>
+
+Object.prototype.nonsense <span class="o">=</span> <span class="s">&quot;hi&quot;</span><span class="p">;</span>
+
+<span class="o">//</span> one
+<span class="o">//</span> two
+<span class="o">//</span> nonsense  <span class="o">&lt;--</span> nonsense也在
+<span class="kr">for</span> <span class="p">(</span>var n <span class="kr">in</span> map<span class="p">)</span>
+  console.log<span class="p">(</span>n<span class="p">);</span>
+
+<span class="o">//</span> true
+console.log<span class="p">(</span><span class="s">&quot;nonsense&quot;</span> <span class="kr">in</span> map<span class="p">);</span>
+<span class="o">//</span> true
+console.log<span class="p">(</span><span class="s">&quot;toString&quot;</span> <span class="kr">in</span> map<span class="p">);</span>
+</pre></div>
+
+
+<p><code>Object.defineProperty</code>函数可以定义自己的不可枚举属性：</p>
+<div class="hlcode"><pre><span class="n">var</span> <span class="n">map</span> <span class="o">=</span> <span class="p">{</span><span class="err">&#39;</span><span class="n">one</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">two</span><span class="err">&#39;</span><span class="o">:</span> <span class="mi">2</span><span class="p">}</span>
+
+<span class="n">Object</span><span class="p">.</span><span class="n">defineProperty</span><span class="p">(</span><span class="n">Object</span><span class="p">.</span><span class="n">prototype</span><span class="p">,</span> <span class="s">&quot;hiddenNonsense&quot;</span><span class="p">,</span>
+                      <span class="p">{</span><span class="n">enumerable</span><span class="o">:</span> <span class="nb">false</span><span class="p">,</span> <span class="n">value</span><span class="o">:</span> <span class="s">&quot;hi&quot;</span><span class="p">});</span>
+
+<span class="c1">// one</span>
+<span class="c1">// two</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">var</span> <span class="n">n</span> <span class="n">in</span> <span class="n">map</span><span class="p">)</span>
+  <span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+
+<span class="c1">// true</span>
+<span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="s">&quot;hiddenNonsense&quot;</span> <span class="n">in</span> <span class="n">map</span><span class="p">);</span>
+<span class="c1">// &quot;hi&quot;</span>
+<span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">map</span><span class="p">.</span><span class="n">hiddenNonsense</span><span class="p">);</span>
+</pre></div>
+
+
+<p><code>in</code>并不能判断属性是自身还是原型中继承的，可以通过<code>hasOwnProperty</code>方法来判断：</p>
+<div class="hlcode"><pre><span class="c1">// false</span>
+<span class="n">console</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">map</span><span class="p">.</span><span class="n">hasOwnProperty</span><span class="p">(&#39;</span><span class="n">toString</span><span class="p">&#39;));</span>
+</pre></div>
+
+
+<p><code>instanceof</code>二元运算符用于判断某个对象是否继承自指定的构造函数：</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">Func1</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">text</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">Func2</span> <span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">Func1</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">text</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">Func2</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Func1</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>  <span class="c1">// 继承</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">new</span> <span class="nx">Func2</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">instanceof</span> <span class="nx">Func2</span><span class="p">);</span>  <span class="c1">// true</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">new</span> <span class="nx">Func2</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">instanceof</span> <span class="nx">Func1</span><span class="p">);</span> <span class="c1">// true</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">new</span> <span class="nx">Func1</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">instanceof</span> <span class="nx">Func2</span><span class="p">);</span> <span class="c1">// false</span>
+</pre></div>
+
+
+<p>调试相关：</p>
+<p>启用严格模式：在文件或函数体顶部加上字符串<code>"use strict"</code></p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">func</span><span class="p">()</span> <span class="p">{</span>
+  <span class="s2">&quot;use strict&quot;</span>
+  <span class="p">...</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<blockquote>
+<p>我们必须遏制住随意修改代码进行调试的冲动，思考才是最重要的。</p>
+</blockquote>
+<ol>
+<li>有目的的在程序中使用console.log输出额外信息</li>
+<li>断点：浏览器一般可以直接设置断点，或者使用<code>debugger</code>语句</li>
+</ol>
+<p>(chrome下打开开发者工具-&gt;Sources, 找到相应JS代码，点击行号增加断点, 具体可以参考<a href="https://developer.chrome.com/devtools/docs/javascript-debugging">chrome js debugging</a>)</p>
+<p>异常：<code>try .. catch .. finally</code>，其中finally可选，catch 到的异常值会绑定到圆括号中的变量：</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">func</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="s2">&quot;value can&#39;t equel 5&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nx">func</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;error: &#39;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;exit with clean task...&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>JS并未对选择性捕获异常提供良好的支持，要不捕获所有异常，要不什么都不捕获。只能靠额外来支持：</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">InputError</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="nx">msg</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">stack</span> <span class="o">=</span> <span class="p">(</span><span class="k">new</span> <span class="nb">Error</span><span class="p">()).</span><span class="nx">stack</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">InputError</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nb">Error</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+<span class="nx">InputError</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;InputError&#39;</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">func</span><span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">==</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nx">InputError</span><span class="p">(</span><span class="s2">&quot;value can&#39;t equel 5&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">try</span> <span class="p">{</span>
+  <span class="nx">func</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// if (! (error instanceof InputError))</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span> <span class="k">instanceof</span> <span class="nx">InputError</span><span class="p">)</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;input error: &#39;</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;exit with clean task...&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>最后就是实现断言这个工具函数了，JS自身是没有提供这个语句：</p>
+<div class="hlcode"><pre><span class="kd">function</span> <span class="nx">AssertionFailed</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="nx">message</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">AssertionFailed</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nb">Error</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nx">assert</span><span class="p">(</span><span class="nx">test</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">test</span><span class="p">)</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nx">AssertionFailed</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h2 id="javascript_1">浏览器中的JavaScript</h2>
+<p>HTML中某些字符的特殊标记方法，格式<code>&amp; + 单词 + ;</code>，成为实体。如<code>&amp;lt;</code>表示小于号，<code>&amp;gt;</code>表示大于号等。</p>
+<p>文档对象模型(DOM, Document Object Model)</p>
+<p>document.documentElement 根节点</p>
+<p>每个DOM节点对象都包含<code>nodeType</code>属性，一个表示节点类型的数字代码，如：</p>
+<ul>
+<li>document.ELEMENT_NODE (1)</li>
+<li>document.TEXT_NODE (3)</li>
+<li>document.COMMENT_NODE (8)</li>
+</ul>
+<p>通过树结构访问节点:</p>
+<ul>
+<li>parentNode</li>
+<li>childNodes (注意因为子节点一般会有多个，所以是Nodes)</li>
+<li>firstChild</li>
+<li>lastChild</li>
+<li>previousSibling</li>
+<li>nextSibling</li>
+</ul>
+<p>因为<code>childNodes</code>是一个包含多个子节点的类数组对象，有<code>length</code>属性，所以可以循环访问：</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">node</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>查找元素：</p>
+<ul>
+<li>document.getElementsByTagName</li>
+<li>document.getElementsByClassNmae</li>
+<li>document.getElementById</li>
+</ul>
+<p>注：</p>
+<ul>
+<li>同上面，因为id是唯一的，所以Element是单数，通过Tag/Class获取的元素一般是多个，所以Elements是复数</li>
+<li>另外，比如Tag/Class等可以如document.body.getElementsByTagName，但是ById只能在document下 TODO</li>
+</ul>
+<p>修改文档：</p>
+<ul>
+<li>removeChild: 从文档中删除指定节点</li>
+<li>appendChild: 添加指定节点到文档末尾</li>
+<li>insertBefore: 将第一个参数的节点插入到第二个参数的节点之前</li>
+<li>replaceChild: 将第一个参数的节点替换为另一个节点</li>
+</ul>
+<p>注：将节点插入到某处的副作用是会将其从当前位置移除</p>
+<p>创建节点：</p>
+<ul>
+<li>document.createElement</li>
+<li>document.createTextNode</li>
+</ul>
+<p>访问属性：</p>
+<ul>
+<li>getAttribute</li>
+<li>setAttribute</li>
+</ul>
+<p>HTML允许给节点自定义任何属性，都可以通过上面的方法来访问。</p>
+<p>TODO: 「我们可以通过元素的DOM对象的同名属性去访问元素的某些属性，比如链接的href属性。但只有常用的标准属性中很少的一部分是这样的。」是指只有小部分标准属性是可以访问的？</p>
+<p>布局：</p>
+<p>元素一般分为块(Block)元素和内敛(inline)元素。</p>
+<p>JS可以访问元素的尺寸与位置。</p>
+<ul>
+<li>属性offsetWidth: 元素的起始位置(单位是px)</li>
+<li>属性offsetHeight: 同上</li>
+<li>属性clientWidth: 元素内部占据的空间尺寸(不包括padding, border, margin)</li>
+<li>属性clientHeight: 同上</li>
+<li>方法getBoundingClientRect(): 返回一个对象，包含top/left/bottom/right和height/width属性，可以精确的顶一个一个元素。注意这些属性的值都是以border外边沿为主。</li>
+</ul>
+<p>操作节点的样式：</p>
+<p>对于样式直接定义在HTML的节点上，JS可以通过节点的style属性操作元素的样式。如body.style.color, 对于一些样式属性名，如<code>font-family</code>，可以写为body.style['font-family']或者body.style.fontFamily(即破折号移除，破折号后第一个字母大写)。</p>
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="nx">p</span> <span class="nx">style</span><span class="o">=</span><span class="s2">&quot;color: purple; font-family: fantasy&quot;</span><span class="o">&gt;</span>
+  <span class="nx">Pretty</span> <span class="nx">Text</span>
+<span class="o">&lt;</span><span class="err">/p&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+  <span class="s2">&quot;use strict&quot;</span><span class="p">;</span>
+
+  <span class="kd">var</span> <span class="nx">para</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">para</span><span class="p">.</span><span class="nx">style</span><span class="p">[</span><span class="s1">&#39;font-family&#39;</span><span class="p">]);</span>
+  <span class="c1">//console.log(para.style.fontFamily);</span>
+  <span class="nx">para</span><span class="p">.</span><span class="nx">style</span><span class="p">[</span><span class="s1">&#39;font-family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;sans-serif&quot;</span><span class="p">;</span>
+  <span class="c1">//para.style.fontFamily = &quot;sans-serif&quot;;</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">para</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">fontFamily</span><span class="p">);</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</pre></div>
+
+
+<p>查询选择器：</p>
+<ul>
+<li>querySelectorAll: document对象和元素节点都定义了此方法，接收一个选择器字符串并返回类数组的对象</li>
+<li>querySelector: 只返回第一个匹配的元素</li>
+</ul>
+<p>此方法不随文档变化而动态更新。</p>
+<p>浏览器支持我们将函数注册为特定事件(如鼠标、键盘操作等)的处理器。(底层系统给予了在事件发生时响应的机会)</p>
+<p>每个DOM元素都有自己的<code>addEventListener</code>方法，支持在特定元素上监听事件。</p>
+<ul>
+<li>addEventListener</li>
+<li>removeEventListener</li>
+</ul>
+<p>事件触发时会为事件处理函数传递<code>事件对象</code>，事件对象有很多属性，比如<code>type</code>是表示事件的字符串("click", "mousedown"等)。</p>
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="nx">button</span><span class="o">&gt;</span><span class="nx">Click</span> <span class="nx">me</span><span class="o">&lt;</span><span class="err">/button&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="c1">// 按一次后就删除事件</span>
+<span class="kd">var</span> <span class="nx">button</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nx">once</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Button clicked&quot;</span><span class="p">);</span>
+  <span class="c1">// console.log(event.type);</span>
+  <span class="c1">// console.log(event);</span>
+  <span class="nx">button</span><span class="p">.</span><span class="nx">removeEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="nx">once</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+<span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="nx">once</span><span class="p">);</span>
+</pre></div>
+
+
+<p><code>传播(propagation)</code>：若节点含有子节点，则在节点上注册的事件处理器也会接收到在子节点中发生的事件。事件是向外传播的，从触发事件的节点到其父节点，最终直到文档根节点。可以通过调用<strong>事件对象</strong>的<code>stopPropagation</code>来阻止事件进一步传播。</p>
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">A</span> <span class="nx">paragraph</span> <span class="kd">with</span> <span class="nx">a</span> <span class="o">&lt;</span><span class="nx">button</span><span class="o">&gt;</span><span class="nx">button</span><span class="o">&lt;</span><span class="err">/button&gt;.&lt;/p&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="c1">// 按鼠标右键时阻止此事件传播，段落p收不到；其它事件p和button都能收到</span>
+<span class="kd">var</span> <span class="nx">para</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;p&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">button</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;button&quot;</span><span class="p">);</span>
+<span class="nx">para</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;mousedown&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Handler for paragraph.&quot;</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">button</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;mousedown&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Handler for button.&quot;</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">which</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">stopPropagation</span><span class="p">();</span>
+<span class="p">});</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</pre></div>
+
+
+<p>事件对象的<code>target</code>属性，指向事件的来源节点。</p>
+<p>大多数事件都有与其关联的<strong>默认动作</strong>，如点击链接会跳转到相应页面。对于大多数类型的事件，JS事件处理器会在默认处理器执行前被调用，如果事件处理器不想执行默认行为，则可以调用事件对象的<code>preventDefault</code>方法。</p>
+<div class="hlcode"><pre><span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;https://developer.mozilla.org/&quot;</span><span class="o">&gt;</span><span class="nx">MDN</span><span class="o">&lt;</span><span class="err">/a&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="c1">// 禁止链接的默认事件处理器</span>
+<span class="kd">var</span> <span class="nx">link</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">);</span>
+<span class="nx">link</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Nope.&quot;</span><span class="p">);</span>
+  <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<span class="p">});</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</pre></div>
+
+
+<p>一些事件：</p>
+<ul>
+<li>keydown / keyup : keyCode属性是按键值, 通过charCodeAt方法找到按键对应的keyCode值。</li>
+<li>keypress : 在keydown之后触发，只获得按键的输入</li>
+<li>mousedown / mouseup</li>
+<li>click / dbclick : 在mouseup事件之后触发</li>
+<li>mousemove / mouseover / mouseout</li>
+<li>scroll : 滚动事件</li>
+<li>focus / blur : 焦点事件</li>
+</ul>
+<p>定时器方法：</p>
+<ul>
+<li>setTimeout: 定时调度, 等待多少毫秒之后执行函数</li>
+<li>clearTimeout: 参数是setTimeout的返回值</li>
+<li>setInterval: 计时器, 每隔一定毫秒数重复执行一次</li>
+<li>clearInterval: 同上，参数是setInterval的返回值</li>
+</ul>
+<p>URL编码：使用一个百分号和16进制的数字对字符进行编码：</p>
+<ul>
+<li>encodeURI / decodeURL</li>
+<li>encodeURLComponent / decodeURLComponent</li>
+</ul>
+<p><code>encodeURI</code> 假设输入是一个完整的URI，一些特殊字符需要编码；而<code>encodeURLComponent</code>则会编码所有的特殊字符。</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="nb">encodeURIComponent</span><span class="p">(</span><span class="s1">&#39;Hello &amp; World&#39;</span><span class="p">);</span>
+<span class="s1">&#39;Hello%20%26%20World&#39;</span>
+
+<span class="o">&gt;</span> <span class="nb">decodeURIComponent</span><span class="p">(</span><span class="s1">&#39;Hello%20%26%20World&#39;</span><span class="p">);</span>
+<span class="s1">&#39;Hello &amp; World&#39;</span>
+
+<span class="o">&gt;</span> <span class="nb">encodeURI</span><span class="p">(</span><span class="s2">&quot;https://tankywoo.com/Hello &amp; World&quot;</span><span class="p">)</span>
+<span class="s1">&#39;https://tankywoo.com/Hello%20&amp;%20World&#39;</span>
+</pre></div>
+
+
+<p><code>XMLHttpRequest</code>: JS发送HTTP请求的接口(注意大小写)</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;/test.txt&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;responseText: &#39;</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;status: &#39;</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Content-Type: &#39;</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">getResponseHeader</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">));</span>
+</pre></div>
+
+
+<p>请求对象的<code>open</code>方法配置请求，第三个参数false表示同步请求，true表示异步请求。 对于<code>GET</code>请求，<code>send</code>方法发送null就可以了。</p>
+<p>上面头信息不区分大小写，content-type也可以。另外<code>setRequestHeader</code>用于配置请求头。</p>
+<p>另外对于xhr, 如果是跨域的请求，需要配置<code>Access-Control-Allow-Origin</code>，明确告诉浏览器网站向其它域发送请求没问题，否则浏览器console会报错。</p>
+<p>对于异步请求：</p>
+<p>下面给请求对象加上事件处理器，表示数据ok后提醒前台代码：</p>
+<div class="hlcode"><pre><span class="kd">var</span> <span class="nx">req</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;/test.txt&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;load&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Done: &quot;</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nx">req</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</pre></div>
+
+
+<h2 id="todo">TODO</h2>
+<ul>
+<li>未定义值null和undefined不等价的情况?</li>
+<li>函数 - 闭包</li>
+<li>创建对象的另外一种方式?</li>
+<li>JS 正则</li>
+<li>第十章 模块</li>
+</ul>
+  
+  <div class="relation">
+    Related:
+    <ul>
+  
+    <li><a href="/web/javascript.html">JavaScript</a></li>
+  
+    </ul>
+  </div>
+  
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2016 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2016-08-22 13:39:07</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>
