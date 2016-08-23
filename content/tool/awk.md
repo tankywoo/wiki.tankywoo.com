@@ -1,7 +1,9 @@
 ---
 title: "awk"
 date: 2013-08-17 07:32
+updated: 2016-08-23 18:07
 collection: "文本处理"
+log: "筛选第N个字段包含某某字符串的行"
 ---
 
 
@@ -49,3 +51,13 @@ collection: "文本处理"
 	p
 	$ gawk 'BEGIN { print "The data fileL"} { print $0 }\
 			END { print "End of File"}' mydata
+
+
+## 常用命令
+
+### 筛选第N个字段包含某某字符串的行
+
+```
+# 搜索/var/log/nginx/access_log日志中第三列包含error字符串的行
+$ awk '($3 ~ /error/)' /var/log/nginx/access_log
+```
