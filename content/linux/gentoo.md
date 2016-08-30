@@ -1,8 +1,8 @@
 ---
 title: "Gentoo"
 date: 2014-08-30 16:29
-updated: 2016-06-23 19:15
-log: "增加禁用新网卡命名的方式"
+updated: 2016-08-30 16:40
+log: "增加USE_EXPAND"
 collection: "发行版"
 ---
 
@@ -214,6 +214,39 @@ mask是除了keyword外额外的一个限制安装的功能，keyword针对的�
 * [Unmasking a package](https://wiki.gentoo.org/wiki/Knowledge_Base:Unmasking_a_package)
 * man portage
 * man make.conf
+
+---
+
+### USE_EXPAND ###
+
+最近编译nginx的http扩展模块，之前是写在make.conf中，如：
+
+```
+NGINX_MODULES_HTTP="access auth_basic autoindex browser charset empty_gif fastcgi geo gzip headers_more limit_conn limit_req map memcached proxy referer rewrite scgi split_clients ssi upstream_ip_hash userid uwsgi"
+```
+
+如果没有配置此选项，nginx会默认安装一些模块，(ebuild中定义的`NGINX_MODULES_STD`)
+
+我想在原有默认模块的基础之上新安装一个模块，于是加上：
+
+```
+NGINX_MODULES_HTTP="${NGINX_MODULES_HTTP} headers_more"
+```
+
+但是这样会有问题，`NGINX_MODULES_HTTP`是在profile时扩展开的，并没有预定义这个变量，所以相当于会删掉其它已安装的模块。
+
+问了同事后了解到 [`USE_EXPAND`](https://devmanual.gentoo.org/general-concepts/use-flags/) 这个概念。
+
+在[nginx package页面](https://packages.gentoo.org/packages/www-servers/nginx)，有提到这些模块是作为`USE_EXPAND`存在的。
+
+普通的USE描述信息是在`/usr/portage/profiles/use.desc`或自己ebuild包中的`metadata.xml`中定义的; `USE_EXPAND`是在`/usr/portage/profiles/desc/`目录中定义，如nginx http 模块的/usr/portage/profiles/desc/nginx_modules_http.desc
+
+因为扩展USE Flag，如果在package.use文件中，需要加上扩展头，针对上面的例子：
+
+```
+www-servers/nginx nginx_modules_http_headers_more
+```
+
 
 ---
 
