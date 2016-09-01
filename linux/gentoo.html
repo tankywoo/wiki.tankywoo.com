@@ -23,7 +23,7 @@
     <a href="/#linux">linux</a>
     &nbsp;&#187;&nbsp;Gentoo
     <span class="updated">最后更新&nbsp;
-    2016-06-23 19:15
+    2016-08-30 16:40
     
     </span>
   </div>
@@ -35,6 +35,7 @@
 <li><a href="#architecture">Architecture</a></li>
 <li><a href="#stage">Stage</a></li>
 <li><a href="#portage">Portage</a></li>
+<li><a href="#use_expand">USE_EXPAND</a></li>
 <li><a href="#overlay-and-layman">Overlay and Layman</a></li>
 <li><a href="#world-world">world 和 @world</a></li>
 <li><a href="#world-system-selected">world / system / selected</a></li>
@@ -254,6 +255,28 @@
 <li>man portage</li>
 <li>man make.conf</li>
 </ul>
+<hr />
+<h3 id="use_expand">USE_EXPAND</h3>
+<p>最近编译nginx的http扩展模块，之前是写在make.conf中，如：</p>
+<div class="hlcode"><pre><span class="n">NGINX_MODULES_HTTP</span><span class="o">=</span><span class="s">&quot;access auth_basic autoindex browser charset empty_gif fastcgi geo gzip headers_more limit_conn limit_req map memcached proxy referer rewrite scgi split_clients ssi upstream_ip_hash userid uwsgi&quot;</span>
+</pre></div>
+
+
+<p>如果没有配置此选项，nginx会默认安装一些模块，(ebuild中定义的<code>NGINX_MODULES_STD</code>)</p>
+<p>我想在原有默认模块的基础之上新安装一个模块，于是加上：</p>
+<div class="hlcode"><pre>NGINX_MODULES_HTTP=&quot;<span class="cp">${</span><span class="n">NGINX_MODULES_HTTP</span><span class="cp">}</span> headers_more&quot;
+</pre></div>
+
+
+<p>但是这样会有问题，<code>NGINX_MODULES_HTTP</code>是在profile时扩展开的，并没有预定义这个变量，所以相当于会删掉其它已安装的模块。</p>
+<p>问了同事后了解到 <a href="https://devmanual.gentoo.org/general-concepts/use-flags/"><code>USE_EXPAND</code></a> 这个概念。</p>
+<p>在<a href="https://packages.gentoo.org/packages/www-servers/nginx">nginx package页面</a>，有提到这些模块是作为<code>USE_EXPAND</code>存在的。</p>
+<p>普通的USE描述信息是在<code>/usr/portage/profiles/use.desc</code>或自己ebuild包中的<code>metadata.xml</code>中定义的; <code>USE_EXPAND</code>是在<code>/usr/portage/profiles/desc/</code>目录中定义，如nginx http 模块的/usr/portage/profiles/desc/nginx_modules_http.desc</p>
+<p>因为扩展USE Flag，如果在package.use文件中，需要加上扩展头，针对上面的例子：</p>
+<div class="hlcode"><pre><span class="n">www</span><span class="o">-</span><span class="n">servers</span><span class="o">/</span><span class="n">nginx</span> <span class="n">nginx_modules_http_headers_more</span>
+</pre></div>
+
+
 <hr />
 <h3 id="overlay-and-layman">Overlay and Layman</h3>
 <p>最初的需求是13年时，想安装一个包，但是Gentoo官方Portage中没有，于是了解到Overlay。</p>
@@ -1097,7 +1120,7 @@ RDEPEND=&quot;
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-08-22 13:39:07</p>
+        <p>站点最后生成 2016-08-30 16:44:29</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
