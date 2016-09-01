@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-    <title>Shell - Wiki · Tanky Woo</title>
+    <title>Bash Script - Wiki · Tanky Woo</title>
     <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
     <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,9 +21,9 @@
     <a href="/">Wiki · Tanky Woo</a>
     &nbsp;&#187;&nbsp;
     <a href="/#linux">linux</a>
-    &nbsp;&#187;&nbsp;Shell
+    &nbsp;&#187;&nbsp;Bash Script
     <span class="updated">最后更新&nbsp;
-    2016-08-02 00:17
+    2016-09-01 18:00
     
     </span>
   </div>
@@ -379,6 +379,18 @@ $<span class="p">@:</span>  <span class="n">one</span> <span class="n">two</span
 <li><a href="http://stackoverflow.com/questions/17420994/bash-regex-match-string">bash regex match string</a></li>
 <li><a href="http://stackoverflow.com/questions/21112707/check-if-string-match-a-regex-in-bash-shell-script">check if string match a regex in BASH Shell script</a></li>
 </ul>
+<p>这块有个地方要注意，针对wildcard匹配，在<code>[[  ]]</code>中，有双引号和没双引号是不一样的。</p>
+<p>比如在匹配以某个子字符串开头的字符串：</p>
+<div class="hlcode"><pre><span class="c"># The == comparison operator behaves differently within a double-brackets</span>
+<span class="c"># test than within single brackets.</span>
+
+<span class="o">[[</span> <span class="nv">$a</span> <span class="o">==</span> z* <span class="o">]]</span>   <span class="c"># True if $a starts with an &quot;z&quot; (wildcard matching).</span>
+<span class="o">[[</span> <span class="nv">$a</span> <span class="o">==</span> <span class="s2">&quot;z*&quot;</span> <span class="o">]]</span> <span class="c"># True if $a is equal to z* (literal matching).</span>
+</pre></div>
+
+
+<p>参考：<a href="http://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value">In bash, how can I check if a string begins with some value?</a></p>
+<p>TODO：不过这种行为不清楚具体原因是什么, mac手册里也没看到有说明。</p>
 <p>控制结构</p>
 <p>if 判断:</p>
 <div class="hlcode"><pre><span class="k">if</span> <span class="n">condition</span>
@@ -829,7 +841,7 @@ false: shell built-in command</p>
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-08-30 16:44:29</p>
+        <p>站点最后生成 2016-09-01 18:02:31</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
