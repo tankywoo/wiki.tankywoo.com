@@ -1,8 +1,8 @@
 ---
-title: "Shell"
+title: "Bash Script"
 date: 2013-08-17 07:23
-updated: 2016-08-02 00:17
-log: "增加$!说明"
+updated: 2016-09-01 18:00
+log: "增加[[中wildcard匹配的问题"
 ---
 
 [TOC]
@@ -340,6 +340,21 @@ Linux/Unix 都有默认的shell, 使用环境变量`$SHELL`可以查看当前的
 * [bash regex match string](http://stackoverflow.com/questions/17420994/bash-regex-match-string)
 * [check if string match a regex in BASH Shell script](http://stackoverflow.com/questions/21112707/check-if-string-match-a-regex-in-bash-shell-script)
 
+这块有个地方要注意，针对wildcard匹配，在`[[  ]]`中，有双引号和没双引号是不一样的。
+
+比如在匹配以某个子字符串开头的字符串：
+
+```bash
+# The == comparison operator behaves differently within a double-brackets
+# test than within single brackets.
+
+[[ $a == z* ]]   # True if $a starts with an "z" (wildcard matching).
+[[ $a == "z*" ]] # True if $a is equal to z* (literal matching).
+```
+
+参考：[In bash, how can I check if a string begins with some value?](http://stackoverflow.com/questions/2172352/in-bash-how-can-i-check-if-a-string-begins-with-some-value)
+
+TODO：不过这种行为不清楚具体原因是什么, mac手册里也没看到有说明。
 
 控制结构
 
