@@ -1,9 +1,9 @@
 ---
 title: "Ubuntu"
 date: 2016-01-06 10:16
-updated: 2016-08-22 13:30
+updated: 2016-09-03 17:45
 collection: "发行版"
-log: "增加apt-key"
+log: "更新配置timezone"
 ---
 
 [TOC]
@@ -237,4 +237,12 @@ Ubuntu的包版本在当前发行版(如12.04)release出来后，版本号基本
 
 ### 配置timezone(时区) ###
 
-	$ dpkg-reconfigure tzdata
+```bash
+$ dpkg-reconfigure tzdata
+```
+
+基本和Gentoo的方式一样，通过/etc/timezone的配置，修改/etc/localtime。执行命令时会显示一个交互式的窗口，更新会同时写入/etc/timezone和/etc/localtime。可以直接写文件而不进入交互方式：
+
+```bash
+$ dpkg-reconfigure -u tzdata
+```

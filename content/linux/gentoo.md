@@ -1,9 +1,9 @@
 ---
 title: "Gentoo"
-date: 2014-08-30 16:29
-updated: 2016-08-30 16:40
-log: "增加USE_EXPAND"
 collection: "发行版"
+date: 2014-08-30 16:29
+updated: 2016-09-03 17:45
+log: "更新配置timezone"
 ---
 
 [TOC]
@@ -1116,6 +1116,15 @@ udev-208之前是增加软链接`/etc/udev/rules.d/80-net-name-slot.rules`，指
 
 * [Udev/Upgrade Guide](https://wiki.gentoo.org/wiki/Udev/Upgrade_Guide)
 * [Upgrading udev to version >=200](https://www.gentoo.org/support/news-items/2013-03-29-udev-upgrade.html)
+
+
+### 配置timezone(时区)
+
+```bash
+$ emerge --config timezone-data
+```
+
+根据`/etc/timezone`的时区配置文件，生成`/etc/localtime`；因为老的`/etc/localtime`是一个指向时区文件的软链接，而新的方式是直接写文件，所以如果还是软链接的老方式，则此命令不做处理。
 
 
 ## 其它资源 ##
