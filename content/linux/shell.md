@@ -1,8 +1,8 @@
 ---
 title: "Bash Script"
 date: 2013-08-17 07:23
-updated: 2016-09-01 18:00
-log: "增加[[中wildcard匹配的问题"
+updated: 2016-09-03 17:31
+log: "增加输出保持换行方法"
 ---
 
 [TOC]
@@ -759,6 +759,37 @@ false: shell built-in command
 `:-`表示获取${user}变量，如果user变量未定义，是值为`:-`后面定义的值，即缺省值。
 
 其它参考: [linux bash shell之变量替换：:=句法、=句法、:-句法、-句法、=?句法、?句法、:+句法、+句法](http://www.cnblogs.com/fhefh/archive/2011/04/22/2024750.html)
+
+
+### 输出保持原有的换行
+
+比如：
+
+```bash
+msg="hello
+world"
+
+echo $msg
+> hello world
+```
+
+预期的换行没了。
+
+原因是因为`IFS (Internal Field Separator)`导致。默认的IFS是`<space><tab><newline>`，如果`unset IFS`或者没有配置IFS(默认值)，则针对这几个字符，在没有`双引号`括起来时，会被分割为一个个的单词，然后输出。
+
+解决方法是：
+
+```bash
+echo "$msg"
+> hello
+> world
+
+# 或者 (不推荐)
+IFS=""
+echo $msg
+```
+
+具体可以看`man bash`的`Word Splitting`一节。
 
 
 ## 参考 ##
