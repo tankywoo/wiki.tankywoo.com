@@ -2,7 +2,7 @@
 title: "Docker"
 date: 2015-11-08 12:34
 updated: 2016-07-06 22:00
-collection: "增加基础文档"
+collection: "虚拟化"
 ---
 
 [TOC]
