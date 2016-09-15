@@ -1,13 +1,17 @@
 ---
 title: "MySQL"
 date: 2013-08-17 07:36
+updated: 2016-09-15 16:20
+log: "增加修改表列类型"
 ---
 
 [TOC]
 
 `<>` 括起来的表示变量, 根据实际情况而定。
 
-## 常用命令 ##
+## 基础&常用命令 ##
+
+### 查看/新建/删除 用户
 
 查看mysql用户:
 
@@ -28,6 +32,9 @@ date: 2013-08-17 07:36
 创建用户:
 
 	CREATE USER '<username>'@'<host>' IDENTIFIED BY '<password>';
+
+
+### 用户权限
 
 查看指定用户@主机的权限:
 
@@ -69,12 +76,48 @@ date: 2013-08-17 07:36
 
 	FLUSH PRIVILEGES;
 
+
+### 用户密码
+
 修改用户密码:
 
 	SET PASSWORD FOR '<username>'@'<host>' = Password('<password>');
 
 `Password()`函数用来给密码加密。
 
+
+### 修改表中某一列的类型
+
+
+```mysql
+# 显示表中各列的类型
+# http://dev.mysql.com/doc/refman/5.7/en/show-columns.html
+mysql> SHOW COLUMNS FROM mytable;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name        | varchar(50)  | NO   |     | NULL    |                |
+| desc        | varchar(50)  | NO   |     | NULL    |                |
+| create_date | datetime(6)  | NO   |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+# 修改指定列的类型, 从varchar改为text
+# 这里MODIFY用CHANGE也可以
+# 如果要保持NOT NULL，也要加上，否则默认会被改为YES
+# http://dev.mysql.com/doc/refman/5.7/en/alter-table.html
+mysql> ALTER TABLE mytable MODIFY name TEXT NOT NULL;
+Query OK, 22 rows affected (0.54 sec)
+Records: 22  Duplicates: 0  Warnings: 0
+
+# 修改指定列的类型, 从datetime改为date
+mysql> ALTER TABLE mytable MODIFY create_date DATE NOT NULL;
+Query OK, 22 rows affected, 22 warnings (0.57 sec)
+Records: 22  Duplicates: 0  Warnings: 22
+```
+
+注：如果表名或列名等是保留关键字，记得要加上反引号，之前改desc时没注意，然后就报错。
 
 
 ## 问题 ##
