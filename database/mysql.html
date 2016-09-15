@@ -23,24 +23,60 @@
     <a href="/#database">database</a>
     &nbsp;&#187;&nbsp;MySQL
     <span class="updated">最后更新&nbsp;
-    2013-08-17 07:36
+    2016-09-15 16:30
+    
     </span>
   </div>
 </div>
 <div class="clearfix"></div>
 <div id="content">
   <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">常用命令</a></li>
-<li><a href="#_2">问题</a><ul>
-<li><a href="#_3">无法删除数据库</a></li>
-<li><a href="#_4">查看单个数据库或表的大小</a></li>
+<li><a href="#_1">基础&amp;常用命令</a><ul>
+<li><a href="#_2">单引号/双引号/反引号</a></li>
+<li><a href="#_3">查看/新建/删除 用户</a></li>
+<li><a href="#_4">用户权限</a></li>
+<li><a href="#_5">用户密码</a></li>
+<li><a href="#_6">修改表中某一列的类型</a></li>
+</ul>
+</li>
+<li><a href="#_7">问题</a><ul>
+<li><a href="#_8">无法删除数据库</a></li>
+<li><a href="#_9">查看单个数据库或表的大小</a></li>
 <li><a href="#dot">创建名称带点号(dot)的数据库</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <p><code>&lt;&gt;</code> 括起来的表示变量, 根据实际情况而定。</p>
-<h2 id="_1">常用命令</h2>
+<h2 id="_1">基础&amp;常用命令</h2>
+<h3 id="_2">单引号/双引号/反引号</h3>
+<p>参考<a href="http://stackoverflow.com/a/11321508/1276501">SO上回答</a>：</p>
+<blockquote>
+<p>Backticks are to be used for table and column identifiers, but are only necessary when the identifier is a <a href="http://dev.mysql.com/doc/refman/5.5/en/reserved-words.html">MySQL reserved keyword</a>, or when the identifier contains whitespace characters or characters beyond a limited set (see below) It is often recommended to avoid using reserved keywords as column or table identifiers when possible, avoiding the quoting issue.</p>
+</blockquote>
+<p>反引号(backticks/backquote)一般用于针对表/列名包含保留关键字，或者包含空格的情况。下面有提到这种情况。</p>
+<blockquote>
+<p>Single quotes should be used for string values like in the <code>VALUES()</code> list.  Double quotes are supported by MySQL for string values as well, but single quotes are more widely accepted by other RDBMS, so it is a good habit to use single quotes instead of double.</p>
+</blockquote>
+<p>单双引号用于将一些字符串值阔起来，单引号用的多一些。</p>
+<blockquote>
+<p><code>'</code> for enclosing string literals</p>
+<p><code>`</code> for enclosing identifiers such as table and column names</p>
+</blockquote>
+<div class="hlcode"><pre><span class="nf">Backtick</span> <span class="p">(</span><span class="ss">`)</span>
+<span class="ss">table &amp; column ───────┬─────┬──┬──┬──┬────┬──┬────┬──┬────┬──┬───────┐</span>
+<span class="ss">                      ↓     ↓  ↓  ↓  ↓    ↓  ↓    ↓  ↓    ↓  ↓       ↓</span>
+<span class="ss">$query = &quot;INSERT INTO `</span><span class="k">table</span><span class="ss">` (`</span><span class="n">id</span><span class="ss">`, `</span><span class="n">col1</span><span class="ss">`, `</span><span class="n">col2</span><span class="ss">`, `</span><span class="kt">date</span><span class="ss">`, `</span><span class="n">updated</span><span class="o">`</span><span class="p">)</span>
+                   <span class="k">VALUES</span> <span class="p">(</span><span class="no">NULL</span><span class="p">,</span> <span class="s1">&#39;val1&#39;</span><span class="p">,</span> <span class="s1">&#39;val2&#39;</span><span class="p">,</span> <span class="s1">&#39;2001-01-01&#39;</span><span class="p">,</span> <span class="nf">NOW</span><span class="p">())</span><span class="err">&quot;</span><span class="p">;</span>
+                               <span class="err">↑↑↑↑</span>  <span class="err">↑</span>    <span class="err">↑</span>  <span class="err">↑</span>    <span class="err">↑</span>  <span class="err">↑</span>          <span class="err">↑</span>  <span class="err">↑↑↑↑↑</span>
+<span class="n">Unquoted</span> <span class="n">keyword</span>          <span class="err">─────┴┴┴┘</span>  <span class="err">│</span>    <span class="err">│</span>  <span class="err">│</span>    <span class="err">│</span>  <span class="err">│</span>          <span class="err">│</span>  <span class="err">│││││</span>
+<span class="n">Single</span><span class="o">-</span><span class="nf">quoted</span> <span class="p">(</span><span class="s1">&#39;) strings ───────────┴────┴──┴────┘  │          │  │││││</span>
+<span class="s1">Single-quoted (&#39;</span><span class="p">)</span> <span class="kt">DATE</span>    <span class="err">───────────────────────────┴──────────┘</span>  <span class="err">│││││</span>
+<span class="n">Unquoted</span> <span class="n">function</span>         <span class="err">─────────────────────────────────────────┴┴┴┴┘</span>
+</pre></div>
+
+
+<h3 id="_3">查看/新建/删除 用户</h3>
 <p>查看mysql用户:</p>
 <div class="hlcode"><pre><span class="n">SELECT</span> <span class="n">User</span><span class="p">,</span> <span class="n">Host</span> <span class="n">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="n">user</span><span class="p">;</span>
 </pre></div>
@@ -63,6 +99,7 @@
 </pre></div>
 
 
+<h3 id="_4">用户权限</h3>
 <p>查看指定用户@主机的权限:</p>
 <div class="hlcode"><pre><span class="nx">SHOW</span> <span class="nx">GRANTS</span> <span class="nb">FOR</span> <span class="s1">&#39;&lt;username&gt;&#39;</span><span class="p">@</span><span class="o">&lt;</span><span class="nb">host</span><span class="o">&gt;</span><span class="p">;</span>
 
@@ -108,14 +145,45 @@
 </pre></div>
 
 
+<h3 id="_5">用户密码</h3>
 <p>修改用户密码:</p>
 <div class="hlcode"><pre><span class="nb">SET</span> <span class="nx">PASSWORD</span> <span class="nb">FOR</span> <span class="s1">&#39;&lt;username&gt;&#39;</span><span class="p">@</span><span class="s1">&#39;&lt;host&gt;&#39;</span> <span class="o">=</span> <span class="nx">Password</span><span class="p">(</span><span class="s1">&#39;&lt;password&gt;&#39;</span><span class="p">);</span>
 </pre></div>
 
 
 <p><code>Password()</code>函数用来给密码加密。</p>
-<h2 id="_2">问题</h2>
-<h3 id="_3">无法删除数据库</h3>
+<h3 id="_6">修改表中某一列的类型</h3>
+<div class="hlcode"><pre><span class="c1"># 显示表中各列的类型</span>
+<span class="c1"># http://dev.mysql.com/doc/refman/5.7/en/show-columns.html</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">SHOW</span> <span class="n">COLUMNS</span> <span class="k">FROM</span> <span class="n">mytable</span><span class="p">;</span>
+<span class="o">+-------------+--------------+------+-----+---------+----------------+</span>
+<span class="o">|</span> <span class="n">Field</span>       <span class="o">|</span> <span class="n">Type</span>         <span class="o">|</span> <span class="no">Null</span> <span class="o">|</span> <span class="k">Key</span> <span class="o">|</span> <span class="k">Default</span> <span class="o">|</span> <span class="n">Extra</span>          <span class="o">|</span>
+<span class="o">+-------------+--------------+------+-----+---------+----------------+</span>
+<span class="o">|</span> <span class="n">id</span>          <span class="o">|</span> <span class="kt">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>      <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span> <span class="n">PRI</span> <span class="o">|</span> <span class="no">NULL</span>    <span class="o">|</span> <span class="kp">auto_increment</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">name</span>        <span class="o">|</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span>     <span class="o">|</span> <span class="no">NULL</span>    <span class="o">|</span>                <span class="o">|</span>
+<span class="o">|</span> <span class="k">desc</span>        <span class="o">|</span> <span class="kt">varchar</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>  <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span>     <span class="o">|</span> <span class="no">NULL</span>    <span class="o">|</span>                <span class="o">|</span>
+<span class="o">|</span> <span class="n">create_date</span> <span class="o">|</span> <span class="kt">datetime</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>  <span class="o">|</span> <span class="n">NO</span>   <span class="o">|</span>     <span class="o">|</span> <span class="no">NULL</span>    <span class="o">|</span>                <span class="o">|</span>
+<span class="o">+-------------+--------------+------+-----+---------+----------------+</span>
+<span class="mi">9</span> <span class="n">rows</span> <span class="k">in</span> <span class="kt">set</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="c1"># 修改指定列的类型, 从varchar改为text</span>
+<span class="c1"># 这里MODIFY用CHANGE也可以</span>
+<span class="c1"># 如果要保持NOT NULL，也要加上，否则默认会被改为YES</span>
+<span class="c1"># http://dev.mysql.com/doc/refman/5.7/en/alter-table.html</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="n">MODIFY</span> <span class="n">name</span> <span class="kt">TEXT</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">22</span> <span class="n">rows</span> <span class="nf">affected</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">54</span> <span class="n">sec</span><span class="p">)</span>
+<span class="n">Records</span><span class="p">:</span> <span class="mi">22</span>  <span class="n">Duplicates</span><span class="p">:</span> <span class="mi">0</span>  <span class="n">Warnings</span><span class="p">:</span> <span class="mi">0</span>
+
+<span class="c1"># 修改指定列的类型, 从datetime改为date</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="k">ALTER</span> <span class="k">TABLE</span> <span class="n">mytable</span> <span class="n">MODIFY</span> <span class="n">create_date</span> <span class="kt">DATE</span> <span class="k">NOT</span> <span class="no">NULL</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">22</span> <span class="n">rows</span> <span class="n">affected</span><span class="p">,</span> <span class="mi">22</span> <span class="nf">warnings</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">57</span> <span class="n">sec</span><span class="p">)</span>
+<span class="n">Records</span><span class="p">:</span> <span class="mi">22</span>  <span class="n">Duplicates</span><span class="p">:</span> <span class="mi">0</span>  <span class="n">Warnings</span><span class="p">:</span> <span class="mi">22</span>
+</pre></div>
+
+
+<p>注：如果表名或列名等是保留关键字，记得要加上反引号，之前改desc时没注意，然后就报错。</p>
+<h2 id="_7">问题</h2>
+<h3 id="_8">无法删除数据库</h3>
 <p>删除数据库时报错:</p>
 <div class="hlcode"><pre><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">drop</span> <span class="n">database</span> <span class="n">testdb</span><span class="p">;</span>
 <span class="n">ERROR</span> <span class="mi">1010</span> <span class="p">(</span><span class="n">HY000</span><span class="p">)</span><span class="o">:</span> <span class="n">Error</span> <span class="n">dropping</span> <span class="n">database</span> <span class="p">(</span><span class="n">can</span><span class="err">&#39;</span><span class="n">t</span> <span class="n">rmdir</span> <span class="err">&#39;</span><span class="p">.</span><span class="o">/</span><span class="n">testdb</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">errno</span><span class="o">:</span> <span class="mi">39</span><span class="p">)</span>
@@ -125,7 +193,7 @@
 <p>之前数据库有问题, 不确定是异常退出还是升级导致, binlog问题导致mysqld启动不了, 于是删除了binlog等问题, 可能和这块有关。</p>
 <p>最后手动把数据库目录删除了。暂时没去查这个错误码的意义。</p>
 <p>参考: <a href="http://stackoverflow.com/questions/4584458/error-dropping-database-cant-rmdir-test-errno-17">Error Dropping Database (Can't rmdir '.test\', errno: 17)</a></p>
-<h3 id="_4">查看单个数据库或表的大小</h3>
+<h3 id="_9">查看单个数据库或表的大小</h3>
 <p>要想知道每个数据库的大小的话，步骤如下：</p>
 <p>1、进入<code>information_schema</code> 数据库（存放了其他的数据库的信息）</p>
 <div class="hlcode"><pre><span class="n">use</span> <span class="n">information_schema</span><span class="p">;</span>
@@ -171,7 +239,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-09-03 17:32:28</p>
+        <p>站点最后生成 2016-09-15 16:39:53</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
