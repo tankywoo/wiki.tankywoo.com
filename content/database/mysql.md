@@ -1,8 +1,8 @@
 ---
 title: "MySQL"
 date: 2013-08-17 07:36
-updated: 2016-09-15 16:20
-log: "增加修改表列类型"
+updated: 2016-09-15 16:30
+log: "增加单引号/反引号区别"
 ---
 
 [TOC]
@@ -10,6 +10,36 @@ log: "增加修改表列类型"
 `<>` 括起来的表示变量, 根据实际情况而定。
 
 ## 基础&常用命令 ##
+
+### 单引号/双引号/反引号
+
+参考[SO上回答](http://stackoverflow.com/a/11321508/1276501)：
+
+> Backticks are to be used for table and column identifiers, but are only necessary when the identifier is a [MySQL reserved keyword](http://dev.mysql.com/doc/refman/5.5/en/reserved-words.html), or when the identifier contains whitespace characters or characters beyond a limited set (see below) It is often recommended to avoid using reserved keywords as column or table identifiers when possible, avoiding the quoting issue.
+
+反引号(backticks/backquote)一般用于针对表/列名包含保留关键字，或者包含空格的情况。下面有提到这种情况。
+
+> Single quotes should be used for string values like in the `VALUES()` list.  Double quotes are supported by MySQL for string values as well, but single quotes are more widely accepted by other RDBMS, so it is a good habit to use single quotes instead of double.
+
+单双引号用于将一些字符串值阔起来，单引号用的多一些。
+
+> `'` for enclosing string literals
+>
+> `` ` `` for enclosing identifiers such as table and column names
+
+```mysql
+Backtick (`)
+table & column ───────┬─────┬──┬──┬──┬────┬──┬────┬──┬────┬──┬───────┐
+                      ↓     ↓  ↓  ↓  ↓    ↓  ↓    ↓  ↓    ↓  ↓       ↓
+$query = "INSERT INTO `table` (`id`, `col1`, `col2`, `date`, `updated`)
+                   VALUES (NULL, 'val1', 'val2', '2001-01-01', NOW())";
+                               ↑↑↑↑  ↑    ↑  ↑    ↑  ↑          ↑  ↑↑↑↑↑
+Unquoted keyword          ─────┴┴┴┘  │    │  │    │  │          │  │││││
+Single-quoted (') strings ───────────┴────┴──┴────┘  │          │  │││││
+Single-quoted (') DATE    ───────────────────────────┴──────────┘  │││││
+Unquoted function         ─────────────────────────────────────────┴┴┴┴┘
+```
+
 
 ### 查看/新建/删除 用户
 
