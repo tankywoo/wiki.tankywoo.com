@@ -1,8 +1,9 @@
 ---
 title: "Docker"
 date: 2015-11-08 12:34
-updated: 2016-07-06 22:00
+updated: 2016-09-17 19:20
 collection: "虚拟化"
+log: "增加registry的搜索"
 ---
 
 [TOC]
@@ -139,6 +140,46 @@ Gentoo下安装docker后启动报错, 看日志:
 * [please add support for socks5 proxy](https://github.com/docker/docker/issues/5989)
 
 1.11版本好像支持socks5代理了
+
+
+### 针对registry的搜索
+
+基于registry v1，列出全部的镜像：
+
+```bash
+$ curl http://localhost:5000/v1/search 2>/dev/null | jq '.results[].name'
+"library/mongodb"
+"library/elasticsearch"
+"library/python"
+"library/golang"
+```
+
+搜索某个镜像仓库，`docker search`指定仓库url：
+
+```bash
+$ docker search http://localhost:5000/python
+NAME             DESCRIPTION   STARS     OFFICIAL   AUTOMATED
+library/python                 0
+```
+
+列出某个镜像仓库的所有tags，参考[官方registry api](https://docs.docker.com/v1.6/reference/api/registry_api/#tags)：
+
+```bash
+$ curl http://localhost:5000/v1/repositories/library/python/tags 2>/dev/null | jq '.'
+{
+  "2.7": "7a7d87336a3328623e3fb332a8752b940097aec03e4d39804721bfda2fa2a08d"
+}
+```
+
+官方Registry即：
+
+```bash
+curl https://registry.hub.docker.com/v1/repositories/ubuntu/tags 2>/dev/null | jq '.[].name'
+"10.04"
+"12.10"
+"13.04"
+...
+```
 
 ## 一些链接 ##
 
