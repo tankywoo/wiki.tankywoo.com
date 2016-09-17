@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Docker
     <span class="updated">最后更新&nbsp;
-    2016-07-06 22:00
+    2016-09-17 19:20
     
     </span>
   </div>
@@ -37,6 +37,7 @@
 <li><a href="#loop-module">loop module</a></li>
 <li><a href="#_4">内核支持</a></li>
 <li><a href="#docker-hub">docker hub 墙</a></li>
+<li><a href="#registry">针对registry的搜索</a></li>
 </ul>
 </li>
 <li><a href="#_5">一些链接</a></li>
@@ -160,6 +161,40 @@ level=fatal msg="Error starting daemon: error initializing graphdriver: loopback
 <li><a href="https://github.com/docker/docker/issues/5989">please add support for socks5 proxy</a></li>
 </ul>
 <p>1.11版本好像支持socks5代理了</p>
+<h3 id="registry">针对registry的搜索</h3>
+<p>基于registry v1，列出全部的镜像：</p>
+<div class="hlcode"><pre><span class="nv">$ </span>curl http://localhost:5000/v1/search 2&gt;/dev/null | jq <span class="s1">&#39;.results[].name&#39;</span>
+<span class="s2">&quot;library/mongodb&quot;</span>
+<span class="s2">&quot;library/elasticsearch&quot;</span>
+<span class="s2">&quot;library/python&quot;</span>
+<span class="s2">&quot;library/golang&quot;</span>
+</pre></div>
+
+
+<p>搜索某个镜像仓库，<code>docker search</code>指定仓库url：</p>
+<div class="hlcode"><pre><span class="nv">$ </span>docker search http://localhost:5000/python
+NAME             DESCRIPTION   STARS     OFFICIAL   AUTOMATED
+library/python                 0
+</pre></div>
+
+
+<p>列出某个镜像仓库的所有tags，参考<a href="https://docs.docker.com/v1.6/reference/api/registry_api/#tags">官方registry api</a>：</p>
+<div class="hlcode"><pre><span class="nv">$ </span>curl http://localhost:5000/v1/repositories/library/python/tags 2&gt;/dev/null | jq <span class="s1">&#39;.&#39;</span>
+<span class="o">{</span>
+  <span class="s2">&quot;2.7&quot;</span>: <span class="s2">&quot;7a7d87336a3328623e3fb332a8752b940097aec03e4d39804721bfda2fa2a08d&quot;</span>
+<span class="o">}</span>
+</pre></div>
+
+
+<p>官方Registry即：</p>
+<div class="hlcode"><pre>curl https://registry.hub.docker.com/v1/repositories/ubuntu/tags 2&gt;/dev/null | jq <span class="s1">&#39;.[].name&#39;</span>
+<span class="s2">&quot;10.04&quot;</span>
+<span class="s2">&quot;12.10&quot;</span>
+<span class="s2">&quot;13.04&quot;</span>
+...
+</pre></div>
+
+
 <h2 id="_5">一些链接</h2>
 <ul>
 <li><a href="https://www.gitbook.com/book/yeasy/docker_practice/details">Docker —— 从入门到实践</a></li>
@@ -178,7 +213,7 @@ level=fatal msg="Error starting daemon: error initializing graphdriver: loopback
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-09-17 12:47:31</p>
+        <p>站点最后生成 2016-09-17 19:21:31</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
