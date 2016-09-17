@@ -1,9 +1,9 @@
 ---
 title: "Git"
 date: 2013-11-08 00:02
-updated: 2016-04-19 14:40
+updated: 2016-09-17 12:30
 collection: "版本控制管理"
-log: "增加删除分支的命令"
+log: "更新子模块文档"
 ---
 
 [TOC]
@@ -651,7 +651,7 @@ stackoverflow上这个[回答](http://stackoverflow.com/a/12527561/1276501)描�
 
 	$ git branch --contains <commit id>
 
-## Git subtree ##
+## Git subtree & submodule ##
 
 对`submodule`的使用应该是非常熟悉了. 听过subtree这个东西有1、2年了, 一直没时间去了解, 前阵子简单了解过, 今晚又看了下文档和一些博客并尝试了(2015-11-11, 好吧, 双十一, 刚剁手完~~~), 也算大致有了一个了解认识.
 
@@ -703,6 +703,53 @@ subtree add命令将一个项目拉到本地作为一个子目录, 这个和subm
 另外, submodule的教程:
 
 * [Git Submodule使用完整教程](http://www.kafeitu.me/git/2012/03/27/git-submodule.html)
+
+关于子模块：
+
+`git submodule status`可以用于查看子模块的状态：
+
+```bash
+$ git submodule status
+abf682ed9f412b28e3147e6774b2dc3daa96efbd themes/yasimple (heads/master)
++a26442b58f9d709802af7e07d95657a7ddf3194c themes/yasimple_x2 (heads/master)
+```
+其中SHA-1 hash前的flag表示状态：`-`表示模板在本地没有初始化; `+`表示子模块的HEAD和被引入的id不一致，即有新的提交没有合并到仓库里。
+
+撤销子模块在本地的注册：
+
+```bash
+$ git submodule deinit -f --all
+Cleared directory 'themes/yasimple'
+Submodule 'themes/yasimple' (git@github.com:tankywoo/yasimple.git) unregistered for path 'themes/yasimple'
+Cleared directory 'themes/yasimple_x2'
+Submodule 'themes/yasimple_x2' (git@git.coding.net:tankywoo/yasimple_x2.git) unregistered for path 'themes/yasimple_x2'
+
+$ git submodule status
+-abf682ed9f412b28e3147e6774b2dc3daa96efbd themes/yasimple
+-691af22bdfe5315540934809fb9374567f9b7af8 themes/yasimple_x2
+```
+
+如果要删除子模块，而不是撤销，则需要使用`git rm`命令：
+
+```bash
+$ git rm themes/yasimple themes/yasimple_x2
+rm 'themes/yasimple'
+rm 'themes/yasimple_x2'
+
+$ git submodule status  # 输出空
+```
+
+之前没注意，使用deinit后发现没完全清除子模块，于是直接手动删掉`.gitmodules`文件，导致后来clone报错：
+
+> No submodule mapping found in .gitmodule for ...
+
+子模块的文件mode是`160000`:
+
+```bash
+$ git ls-files --stage | grep 160000
+```
+
+这样也可以看到实际上子模块还存在，没彻底删除。[参考](http://stackoverflow.com/questions/4185365/no-submodule-mapping-found-in-gitmodule-for-a-path-thats-not-a-submodule)
 
 
 ## git diff 相关 ##
