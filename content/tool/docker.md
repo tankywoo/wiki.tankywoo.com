@@ -1,9 +1,9 @@
 ---
 title: "Docker"
 date: 2015-11-08 12:34
-updated: 2016-09-17 19:20
+updated: 2016-09-20 11:10
 collection: "虚拟化"
-log: "增加registry的搜索"
+log: "增加stop vs kill"
 ---
 
 [TOC]
@@ -180,6 +180,14 @@ curl https://registry.hub.docker.com/v1/repositories/ubuntu/tags 2>/dev/null | j
 "13.04"
 ...
 ```
+
+### docker stop vs. docker kill
+
+具体看help和man
+
+* `docker stop`会先发SIGTERM信号，等待默认10s后发SIGKILL信号 (graceful关闭)
+* `docker kill`直接发送默认SIGKILL信号，也可以指定其它信号 (暴力关闭)
+
 
 ## 一些链接 ##
 
