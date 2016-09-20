@@ -1,9 +1,9 @@
 ---
 title: "Docker"
 date: 2015-11-08 12:34
-updated: 2016-09-20 11:10
+updated: 2016-09-20 11:30
 collection: "虚拟化"
-log: "增加stop vs kill"
+log: "增加CMD vs. ENTRYPOINT"
 ---
 
 [TOC]
@@ -28,6 +28,11 @@ log: "增加stop vs kill"
 其实以前入门时, 有一个Interactive commandline tutorial, 我觉得挺好的, 但是现在没了.
 
 那个时候docker官网的域名还是docker.io, 现在已经把docker.com拿下了, 变化还是挺大的.
+
+实践：
+
+* [Dockerfile Best Practices](http://crosbymichael.com/dockerfile-best-practices.html) / [Dockerfile最佳实践](http://dockone.io/article/131)
+* [Best practices for writing Dockerfiles](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/)
 
 ## 基础 ##
 
@@ -63,6 +68,24 @@ rsync同步时/var/lib/docker/devicemapper/devicemapper/data这个文件显示10
 
 * [In Linux, how can I create thin-provisioned file so it can be mounted and a filesystem created on it?](http://serverfault.com/questions/344518/in-linux-how-can-i-create-thin-provisioned-file-so-it-can-be-mounted-and-a-file)
 * [Finding sparse files?](http://unix.stackexchange.com/questions/86442/finding-sparse-files)
+
+
+### CMD 与 ENTRYPOINT 的区别
+
+简单的说：
+
+* 两者都是在在container启动时执行，两者在Dockerfile总都只能有一条
+* CMD的内容可以在`docker run <image> <your cmd>`时被your cmd覆盖
+* ENTRYPOINT不会被覆盖，默认是`/bin/sh -c`
+* ENTRYPOINT优先于CMD执行，所以两者可以配合
+
+更详细可以看看这几篇，资源都不错：
+
+* [Dockerfile reference - ENTRYPOINT](https://docs.docker.com/engine/reference/builder/#/entrypoint)
+* [Dockerfile里指定执行命令用ENTRYPOING和用CMD有何不同？](https://segmentfault.com/q/1010000000417103)
+* [Dockerfile Best Practices](http://crosbymichael.com/dockerfile-best-practices.html) 5. CMD and ENTRYPOINT better together一节
+* [What is the difference between CMD and ENTRYPOINT in a Dockerfile?](http://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile)
+* [Best practices for writing Dockerfiles](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/entrypoint)
 
 ## 遇到的问题 ##
 
