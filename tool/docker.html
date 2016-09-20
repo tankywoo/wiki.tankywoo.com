@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Docker
     <span class="updated">最后更新&nbsp;
-    2016-09-17 19:20
+    2016-09-20 11:10
     
     </span>
   </div>
@@ -38,6 +38,7 @@
 <li><a href="#_4">内核支持</a></li>
 <li><a href="#docker-hub">docker hub 墙</a></li>
 <li><a href="#registry">针对registry的搜索</a></li>
+<li><a href="#docker-stop-vs-docker-kill">docker stop vs. docker kill</a></li>
 </ul>
 </li>
 <li><a href="#_5">一些链接</a></li>
@@ -195,6 +196,12 @@ library/python                 0
 </pre></div>
 
 
+<h3 id="docker-stop-vs-docker-kill">docker stop vs. docker kill</h3>
+<p>具体看help和man</p>
+<ul>
+<li><code>docker stop</code>会先发SIGTERM信号，等待默认10s后发SIGKILL信号 (graceful关闭)</li>
+<li><code>docker kill</code>直接发送默认SIGKILL信号，也可以指定其它信号 (暴力关闭)</li>
+</ul>
 <h2 id="_5">一些链接</h2>
 <ul>
 <li><a href="https://www.gitbook.com/book/yeasy/docker_practice/details">Docker —— 从入门到实践</a></li>
@@ -213,7 +220,7 @@ library/python                 0
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-09-20 09:11:55</p>
+        <p>站点最后生成 2016-09-20 11:12:19</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
