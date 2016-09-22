@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Docker
     <span class="updated">最后更新&nbsp;
-    2016-09-20 11:10
+    2016-09-20 11:30
     
     </span>
   </div>
@@ -32,7 +32,10 @@
 <div id="content">
   <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#_1">前言</a></li>
-<li><a href="#_2">基础</a></li>
+<li><a href="#_2">基础</a><ul>
+<li><a href="#cmd-entrypoint">CMD 与 ENTRYPOINT 的区别</a></li>
+</ul>
+</li>
 <li><a href="#_3">遇到的问题</a><ul>
 <li><a href="#loop-module">loop module</a></li>
 <li><a href="#_4">内核支持</a></li>
@@ -61,6 +64,11 @@
 </ul>
 <p>其实以前入门时, 有一个Interactive commandline tutorial, 我觉得挺好的, 但是现在没了.</p>
 <p>那个时候docker官网的域名还是docker.io, 现在已经把docker.com拿下了, 变化还是挺大的.</p>
+<p>实践：</p>
+<ul>
+<li><a href="http://crosbymichael.com/dockerfile-best-practices.html">Dockerfile Best Practices</a> / <a href="http://dockone.io/article/131">Dockerfile最佳实践</a></li>
+<li><a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Best practices for writing Dockerfiles</a></li>
+</ul>
 <h2 id="_2">基础</h2>
 <p>docker的分层镜像，支持devicemapper, aufs, btrfs。</p>
 <p>目前本地1.11.0版本，默认是devicemapper</p>
@@ -90,6 +98,22 @@
 <ul>
 <li><a href="http://serverfault.com/questions/344518/in-linux-how-can-i-create-thin-provisioned-file-so-it-can-be-mounted-and-a-file">In Linux, how can I create thin-provisioned file so it can be mounted and a filesystem created on it?</a></li>
 <li><a href="http://unix.stackexchange.com/questions/86442/finding-sparse-files">Finding sparse files?</a></li>
+</ul>
+<h3 id="cmd-entrypoint">CMD 与 ENTRYPOINT 的区别</h3>
+<p>简单的说：</p>
+<ul>
+<li>两者都是在在container启动时执行，两者在Dockerfile总都只能有一条</li>
+<li>CMD的内容可以在<code>docker run &lt;image&gt; &lt;your cmd&gt;</code>时被your cmd覆盖</li>
+<li>ENTRYPOINT不会被覆盖，默认是<code>/bin/sh -c</code></li>
+<li>ENTRYPOINT优先于CMD执行，所以两者可以配合</li>
+</ul>
+<p>更详细可以看看这几篇，资源都不错：</p>
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/builder/#/entrypoint">Dockerfile reference - ENTRYPOINT</a></li>
+<li><a href="https://segmentfault.com/q/1010000000417103">Dockerfile里指定执行命令用ENTRYPOING和用CMD有何不同？</a></li>
+<li><a href="http://crosbymichael.com/dockerfile-best-practices.html">Dockerfile Best Practices</a> 5. CMD and ENTRYPOINT better together一节</li>
+<li><a href="http://stackoverflow.com/questions/21553353/what-is-the-difference-between-cmd-and-entrypoint-in-a-dockerfile">What is the difference between CMD and ENTRYPOINT in a Dockerfile?</a></li>
+<li><a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/#/entrypoint">Best practices for writing Dockerfiles</a></li>
 </ul>
 <h2 id="_3">遇到的问题</h2>
 <h3 id="loop-module">loop module</h3>
@@ -220,7 +244,7 @@ library/python                 0
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-09-20 11:12:19</p>
+        <p>站点最后生成 2016-09-22 17:29:16</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

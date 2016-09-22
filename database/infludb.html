@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>InfluxDB - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#database">database</a>
+    &nbsp;&#187;&nbsp;InfluxDB
+    <span class="updated">最后更新&nbsp;
+    2016-09-21 10:40
+    
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">基本</a><ul>
+<li><a href="#_2">核心概念</a></li>
+<li><a href="#_3">常用操作</a></li>
+<li><a href="#_4">用户认证和权限</a></li>
+</ul>
+</li>
+<li><a href="#_5">术语</a></li>
+<li><a href="#_6">其它</a></li>
+</ul>
+</div>
+<p>InfluxDB是一个Go写的时序数据库(Time-Series Database)。</p>
+<p><a href="https://www.influxdata.com/time-series-platform/influxdb/">官网</a> / <a href="https://github.com/influxdata/influxdb">Github</a> / <a href="https://docs.influxdata.com/influxdb/latest/">文档</a></p>
+<h2 id="_1">基本</h2>
+<p>环境：Gentoo</p>
+<p>目前版本V1.0，没有提供官方的ebuild，不过<code>go-overlay</code>有别人写好的：<a href="https://github.com/gentoo-mirror/go-overlay/tree/master/dev-db/influxdb">https://github.com/gentoo-mirror/go-overlay/tree/master/dev-db/influxdb</a></p>
+<p>也可以直接下载tar包，里面是Go编译好的，包括二进制工具，配置文件和目录等。</p>
+<p>tar包里的配置有详细注释，默认的比如数据存储路径都是<code>/etc</code>下。</p>
+<p>也可以手动生成配置。手动生成的配置默认存储路径等在$HOME/.influxdb/，且注释相对少一些：</p>
+<div class="hlcode"><pre><span class="nv">$ </span>cp ./etc/influxdb/influxdb.conf<span class="o">{</span>,bak<span class="o">}</span>
+<span class="nv">$ </span>./usr/bin/influxd config &gt; ./etc/influxdb/influxdb.conf
+</pre></div>
+
+
+<p>启动influxdb：</p>
+<div class="hlcode"><pre>$ ./usr/bin/influxd run --config ./etc/influxdb/infludb.conf
+</pre></div>
+
+
+<p>默认会全局监听三个端口：</p>
+<ul>
+<li>8083: Web admin管理服务的端口, <a href="http://localhost:8083">http://localhost:8083</a></li>
+<li>8086: HTTP API的端口</li>
+<li>8088: 集群端口(目前还不是很清楚, 配置在全局的bind-address，默认不配置就是开启的)</li>
+</ul>
+<p>官方给出的硬件配置是，<a href="https://docs.influxdata.com/influxdb/v1.0/introduction/installation#hardware">参考</a>：</p>
+<ul>
+<li>两块SSD。一块存储influxdb/wal，一块存储influxdb/data</li>
+<li>最少8G内存</li>
+</ul>
+<p>另外就是注意启动时的进程权限以及存储目录权限问题了。</p>
+<h3 id="_2">核心概念</h3>
+<p>Influxdb是一个时序数据库，数据都是一些可度量的值，比如cpu load或者温度等。</p>
+<p>写入是一行行的数据，称为<code>Point</code>：</p>
+<div class="hlcode"><pre>&lt;measurement&gt;[,&lt;tag-key&gt;=&lt;tag-value&gt;...] &lt;field-key&gt;=&lt;field-value&gt;[,&lt;field2-key&gt;=&lt;field2-value&gt;...] [unix-nano-timestamp]
+</pre></div>
+
+
+<p>由<code>time</code>(时间戳), <code>measurement</code>(比如cpuload), 至少一个k/v对<code>field</code>(measured value，比如value=0.6), 0个或多个k/v对<code>tags</code>(一些元信息metadata, 如host=server01, region=us)</p>
+<p>官方给的例子：</p>
+<div class="hlcode"><pre>cpu,host=serverA,region=us_west value=0.64
+payment,device=mobile,product=Notepad,method=credit billed=33,licenses=3i 1434067467100293230
+stock,symbol=AAPL bid=127.46,ask=127.48
+temperature,machine=unit42,type=assembly external=25,internal=37 1434067467000000000
+</pre></div>
+
+
+<p>和MySQL做类比，InfluxDB的<code>measurement</code>类似于表，主索引永远是time, tags是被索引的，fields不是；Point就是一行行的数据，只不过表名是在Point中。</p>
+<h3 id="_3">常用操作</h3>
+<div class="hlcode"><pre># 创建数据库
+&gt; create database mydb
+
+# 查看有哪些数据库, 在配置了认证的情况下，只有admin权限的用户可以看
+&gt; show databases;
+name: databases
+---------------
+name
+_internal  # &lt;-- 这个是内置的，用于存储一些influxdb元信息
+mydb
+
+# 选择使用的数据库
+&gt; use mydb
+Using database mydb
+
+# 插入数据
+&gt; INSERT cpu,host=serverA,region=us_west value=0.62
+
+# 查询数据
+# 需要用 **双引号**
+# 也可以 **都** 不用双引号
+&gt; SELECT &quot;host&quot;, &quot;region&quot;, &quot;value&quot; FROM &quot;cpu&quot;
+name: cpu
+---------
+time                    host    region  value
+1474442747173411091     serverA us_west 0.62
+
+# 插入多个数据(fields)
+&gt; INSERT temperature,machine=unit42,type=assembly external=25,internal=37
+
+# 除了glob匹配，InfluxQL还支持Go-Style的正则
+&gt; SELECT * FROM &#39;cpu&#39;
+ERR: error parsing query: found cpu, expected identifier at line 1, char 14
+&gt; SELECT * FROM &quot;cpu&quot;
+name: cpu
+---------
+time                    host    region  value
+1474442747173411091     serverA us_west 0.62
+</pre></div>
+
+
+<h3 id="_4">用户认证和权限</h3>
+<p>文档：<a href="https://docs.influxdata.com/influxdb/v1.0/query_language/authentication_and_authorization/">Authentication and Authorization</a></p>
+<p>开启用户认证，首先创建admin权限用户和相应数据库的普通用户：</p>
+<div class="hlcode"><pre># 默认没有用户
+&gt; show users;
+user    admin  # 这里admin是一个boolean值
+
+# 创建一个admin权限的用户
+&gt; create user admin with password &#39;********&#39; with all privileges
+&gt; show users;
+user    admin
+admin   true
+
+# 创建一个普通权限的用户
+&gt; create user tankywoo with password &#39;********&#39;
+&gt; show users;
+user       admin
+admin      true
+tankywoo   false
+
+# 给普通用户赋予某个数据库的权限
+&gt; grant all on mydb to tankywoo
+
+# 查看某个用户的权限
+&gt; show grants for tankywoo
+database        privilege
+mydb            ALL PRIVILEGES
+
+# 删除用户
+&gt; drop user tankywoo
+</pre></div>
+
+
+<p>配置文件的<code>[http]</code>块：</p>
+<div class="hlcode"><pre>[http]
+  enable = true
+  bind-address = &quot;:8086&quot;
+  auth-enabled = true  # 开启认证
+  ...
+</pre></div>
+
+
+<p>重启influxd，下次使用influx cli时需要认证：</p>
+<div class="hlcode"><pre># influx cli认证
+# 然后进入交互输入用户名和密码
+&gt; auth
+username: tankywoo
+password:
+</pre></div>
+
+
+<h2 id="_5">术语</h2>
+<ul>
+<li>InfluxQL: Influx Query Language</li>
+</ul>
+<h2 id="_6">其它</h2>
+<ul>
+<li><a href="https://www.gitbook.com/book/xtutu/influxdb-handbook/details">influxdb-handbook</a></li>
+</ul>
+  
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2016 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2016-09-22 17:29:16</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>
