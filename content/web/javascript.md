@@ -1,8 +1,9 @@
 ---
 title: "JavaScript"
 date: 2016-08-21 22:29
-updated: 2016-08-21 22:29
+updated: 2016-09-24 23:30
 tag: javascript
+log: "增加click实践在ajax下失效问题"
 ---
 
 [TOC]
@@ -36,3 +37,35 @@ I also want to note that the deep copy is actually much smarter than what is sho
 
 * [javascript中的深拷贝和浅拷贝？](https://www.zhihu.com/question/23031215)
 * [在javascript里怎样方便的克隆一个object](https://segmentfault.com/q/1010000000148290)
+
+
+### click事件在Ajax下失效问题
+
+最开始给一个click事件写一个Ajax，更新#board的html内容：
+
+```javascript
+$('#board').click(function(){
+	$.ajax() {
+		...
+	}
+})
+```
+
+但是在点击一次后，后续点击就不再触发click事件了。
+
+搜了下，针对`.click()`，因为ajax中有replace替换了原来绑定了这个事件的元素(element)，所以导致失效。
+
+`.on()`方法使用`事件代理(event delegation)`，可以保证在动态元素上：
+
+```javascript
+$('document').on("click", "#board", function(){
+	$.ajax() {
+		...
+	}
+})
+```
+
+参考：
+
+* [Jquery Event wont fire after ajax call](http://stackoverflow.com/questions/13767919/jquery-event-wont-fire-after-ajax-call)
+* [jQuery click() event not firing on AJAX loaded HTML elements](http://stackoverflow.com/questions/9272438/jquery-click-event-not-firing-on-ajax-loaded-html-elements)
