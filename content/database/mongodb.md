@@ -1,8 +1,8 @@
 ---
 title: "MongoDB"
 date: 2016-09-16 14:00
-updated: 2016-09-16 14:00
-logs: "新增"
+updated: 2016-09-24 16:00
+logs: "增加新增列和修改某列操作"
 ---
 
 [TOC]
@@ -69,6 +69,27 @@ mycollection.update({'_id':mongo_id}, {"$set": post}, upsert=False)
 * [How do I update a Mongo document after inserting it?](http://stackoverflow.com/questions/4372797/how-do-i-update-a-mongo-document-after-inserting-it)
 * [How do I partially update an object in MongoDB so the new object will overlay / merge with the existing one](http://stackoverflow.com/questions/10290621/how-do-i-partially-update-an-object-in-mongodb-so-the-new-object-will-overlay)
 
+
+### collection增加一列
+
+```text
+> db.coll.update({}, {$set: {'data': {}}}, false, true)
+Updated 2 existing record(s) in 2ms
+WriteResult({
+  "nMatched": 2,
+  "nUpserted": 0,
+  "nModified": 2
+})
+```
+
+参考：[Add new field to a collection in MongoDB](http://stackoverflow.com/questions/7714216/add-new-field-to-a-collection-in-mongodb)
+
+
+### 修改某一个文档的某一列值
+
+```text
+> db.coll.update({'_id': ObjectId('123405ff3b909e19269a381a')}, {$set: {'data': {'2016-09-24': true}}})
+```
 
 ## Cheat Sheet
 
