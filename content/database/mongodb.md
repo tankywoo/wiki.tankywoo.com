@@ -1,8 +1,8 @@
 ---
 title: "MongoDB"
 date: 2016-09-16 14:00
-updated: 2016-09-24 16:00
-logs: "增加新增列和修改某列操作"
+updated: 2016-09-24 23:00
+logs: "更新多级字典修改某列操作"
 ---
 
 [TOC]
@@ -87,9 +87,20 @@ WriteResult({
 
 ### 修改某一个文档的某一列值
 
+比如多级字典：
+
 ```text
 > db.coll.update({'_id': ObjectId('123405ff3b909e19269a381a')}, {$set: {'data': {'2016-09-24': true}}})
 ```
+
+或者（这种比较方便）：
+
+```text
+> db.coll.update({'_id': ObjectId('123405ff3b909e19269a381a')}, {$set: {'data.2016-09-24': true}} )
+```
+
+参考：[MongoDB: update dictionary in document](http://stackoverflow.com/questions/29267519/mongodb-update-dictionary-in-document)
+
 
 ## Cheat Sheet
 
