@@ -23,7 +23,7 @@
     <a href="/#web">web</a>
     &nbsp;&#187;&nbsp;JavaScript
     <span class="updated">最后更新&nbsp;
-    2016-08-21 22:29
+    2016-09-24 23:30
     
     </span>
   </div>
@@ -33,6 +33,7 @@
   <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#tips">Tips</a><ul>
 <li><a href="#_1">如何复制一个对象</a></li>
+<li><a href="#clickajax">click事件在Ajax下失效问题</a></li>
 </ul>
 </li>
 </ul>
@@ -58,6 +59,32 @@
 <li><a href="https://www.zhihu.com/question/23031215">javascript中的深拷贝和浅拷贝？</a></li>
 <li><a href="https://segmentfault.com/q/1010000000148290">在javascript里怎样方便的克隆一个object</a></li>
 </ul>
+<h3 id="clickajax">click事件在Ajax下失效问题</h3>
+<p>最开始给一个click事件写一个Ajax，更新#board的html内容：</p>
+<div class="hlcode"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#board&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+
+
+<p>但是在点击一次后，后续点击就不再触发click事件了。</p>
+<p>搜了下，针对<code>.click()</code>，因为ajax中有replace替换了原来绑定了这个事件的元素(element)，所以导致失效。</p>
+<p><code>.on()</code>方法使用<code>事件代理(event delegation)</code>，可以保证在动态元素上：</p>
+<div class="hlcode"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;document&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s2">&quot;click&quot;</span><span class="p">,</span> <span class="s2">&quot;#board&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">()</span> <span class="p">{</span>
+        <span class="p">...</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+
+
+<p>参考：</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/13767919/jquery-event-wont-fire-after-ajax-call">Jquery Event wont fire after ajax call</a></li>
+<li><a href="http://stackoverflow.com/questions/9272438/jquery-click-event-not-firing-on-ajax-loaded-html-elements">jQuery click() event not firing on AJAX loaded HTML elements</a></li>
+</ul>
   
   <div class="relation">
     Related:
@@ -80,7 +107,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-09-22 17:29:16</p>
+        <p>站点最后生成 2016-09-25 00:17:07</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

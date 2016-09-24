@@ -23,7 +23,7 @@
     <a href="/#database">database</a>
     &nbsp;&#187;&nbsp;MongoDB
     <span class="updated">最后更新&nbsp;
-    2016-09-16 14:00
+    2016-09-24 23:00
     
     </span>
   </div>
@@ -35,6 +35,8 @@
 <li><a href="#_2">插入数据</a></li>
 <li><a href="#_3">用户认证</a></li>
 <li><a href="#_4">更新整个文档</a></li>
+<li><a href="#collection">collection增加一列</a></li>
+<li><a href="#_5">修改某一个文档的某一列值</a></li>
 </ul>
 </li>
 <li><a href="#cheat-sheet">Cheat Sheet</a></li>
@@ -91,6 +93,30 @@ Successfully added user: { &quot;user&quot; : &quot;tankywoo&quot;, &quot;roles&
 <li><a href="http://stackoverflow.com/questions/4372797/how-do-i-update-a-mongo-document-after-inserting-it">How do I update a Mongo document after inserting it?</a></li>
 <li><a href="http://stackoverflow.com/questions/10290621/how-do-i-partially-update-an-object-in-mongodb-so-the-new-object-will-overlay">How do I partially update an object in MongoDB so the new object will overlay / merge with the existing one</a></li>
 </ul>
+<h3 id="collection">collection增加一列</h3>
+<div class="hlcode"><pre>&gt; db.coll.update({}, {$set: {&#39;data&#39;: {}}}, false, true)
+Updated 2 existing record(s) in 2ms
+WriteResult({
+  &quot;nMatched&quot;: 2,
+  &quot;nUpserted&quot;: 0,
+  &quot;nModified&quot;: 2
+})
+</pre></div>
+
+
+<p>参考：<a href="http://stackoverflow.com/questions/7714216/add-new-field-to-a-collection-in-mongodb">Add new field to a collection in MongoDB</a></p>
+<h3 id="_5">修改某一个文档的某一列值</h3>
+<p>比如多级字典：</p>
+<div class="hlcode"><pre>&gt; db.coll.update({&#39;_id&#39;: ObjectId(&#39;123405ff3b909e19269a381a&#39;)}, {$set: {&#39;data&#39;: {&#39;2016-09-24&#39;: true}}})
+</pre></div>
+
+
+<p>或者（这种比较方便）：</p>
+<div class="hlcode"><pre>&gt; db.coll.update({&#39;_id&#39;: ObjectId(&#39;123405ff3b909e19269a381a&#39;)}, {$set: {&#39;data.2016-09-24&#39;: true}} )
+</pre></div>
+
+
+<p>参考：<a href="http://stackoverflow.com/questions/29267519/mongodb-update-dictionary-in-document">MongoDB: update dictionary in document</a></p>
 <h2 id="cheat-sheet">Cheat Sheet</h2>
 <ul>
 <li><a href="chrome-extension://ikhdkkncnoglghljlkmcimlnlhkeamad/pdf-viewer/web/viewer.html?file=https%3A%2F%2Fblog.codecentric.de%2Ffiles%2F2012%2F12%2FMongoDB-CheatSheet-v1_0.pdf">MongoDB-CheatSheet-v1_0.pdf</a></li>
@@ -110,7 +136,7 @@ Successfully added user: { &quot;user&quot; : &quot;tankywoo&quot;, &quot;roles&
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-09-22 17:29:16</p>
+        <p>站点最后生成 2016-09-25 00:17:07</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
