@@ -23,7 +23,7 @@
     <a href="/#linux">linux</a>
     &nbsp;&#187;&nbsp;Bash Script
     <span class="updated">最后更新&nbsp;
-    2016-09-03 17:31
+    2016-10-02 10:20
     
     </span>
   </div>
@@ -39,6 +39,7 @@
 <li><a href="#_4">命令行参数解析</a></li>
 <li><a href="#_5">参数扩展</a></li>
 <li><a href="#_6">输出保持原有的换行</a></li>
+<li><a href="#root">判断当前执行用户是否是root</a></li>
 </ul>
 </li>
 <li><a href="#_7">参考</a></li>
@@ -839,6 +840,26 @@ false: shell built-in command</p>
 
 
 <p>具体可以看<code>man bash</code>的<code>Word Splitting</code>一节。</p>
+<h3 id="root">判断当前执行用户是否是root</h3>
+<p>简单如<code>whoami</code>或者<code>id -u</code>:</p>
+<div class="hlcode"><pre><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$(id -u)&quot;</span> -eq 0  <span class="o">]</span>; <span class="k">then</span>
+  ...
+<span class="k">fi</span>
+<span class="c"># 或者</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$(whoami)&quot;</span> <span class="o">==</span> <span class="s2">&quot;root&quot;</span>  <span class="o">]</span>; <span class="k">then</span>
+  ...
+<span class="k">fi</span>
+</pre></div>
+
+
+<p>不过更好的是通过环境变量<code>$EUID</code>:</p>
+<div class="hlcode"><pre><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$EUID&quot;</span> -eq 0  <span class="o">]</span>; <span class="k">then</span>
+  ..
+<span class="k">fi</span>
+</pre></div>
+
+
+<p>参考：<a href="http://stackoverflow.com/questions/18215973/how-to-check-if-running-as-root-in-a-bash-script">How to check if running as root in a bash script</a></p>
 <h2 id="_7">参考</h2>
 <ul>
 <li>Linux程序设计</li>
@@ -866,7 +887,7 @@ false: shell built-in command</p>
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-09-29 15:14:09</p>
+        <p>站点最后生成 2016-10-02 11:48:46</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
