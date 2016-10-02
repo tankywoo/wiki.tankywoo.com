@@ -1,8 +1,8 @@
 ---
 title: "Bash Script"
 date: 2013-08-17 07:23
-updated: 2016-09-03 17:31
-log: "增加输出保持换行方法"
+updated: 2016-10-02 10:20
+log: "增加判断当前执行用户是否是root"
 ---
 
 [TOC]
@@ -790,6 +790,31 @@ echo $msg
 ```
 
 具体可以看`man bash`的`Word Splitting`一节。
+
+
+### 判断当前执行用户是否是root
+
+简单如`whoami`或者`id -u`:
+
+```bash
+if [ "$(id -u)" -eq 0  ]; then
+  ...
+fi
+# 或者
+if [ "$(whoami)" == "root"  ]; then
+  ...
+fi
+```
+
+不过更好的是通过环境变量`$EUID`:
+
+```bash
+if [ "$EUID" -eq 0  ]; then
+  ..
+fi
+```
+
+参考：[How to check if running as root in a bash script](http://stackoverflow.com/questions/18215973/how-to-check-if-running-as-root-in-a-bash-script)
 
 
 ## 参考 ##
