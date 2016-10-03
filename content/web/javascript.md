@@ -1,15 +1,87 @@
 ---
 title: "JavaScript"
 date: 2016-08-21 22:29
-updated: 2016-09-24 23:30
+updated: 2016-10-03 11:00
 tag: javascript
-log: "增加click实践在ajax下失效问题"
+log: "增加$(document).ready()相关"
 ---
 
 [TOC]
 
 
 ## Tips
+
+### $(document).ready(function() {}) vs $(function(){})
+
+以前入门学习都是见的前者这种格式:
+
+```javascript
+// 方式1
+$(document).ready(function(){
+  ...
+});
+```
+
+最近见到不少这种写法：
+
+```javascript
+// 方式2
+$(function() {
+  ...
+});
+```
+
+这两种实际是**等价**的，后者是前者的简写。
+
+方式1还可以写为：
+
+```javascript
+// 方式3, 不推荐
+$().ready(function(){
+  ...
+});
+```
+
+这三种都是在**DOM被加载后**才执行。
+
+参考:
+
+* [Differences between document.ready and $function](http://stackoverflow.com/questions/9396415/differences-between-document-ready-and-function)
+* [$(document).ready(function() VS $(function(){](http://stackoverflow.com/questions/3528509/document-readyfunction-vs-function)
+
+再拓展下，这种写法：
+
+```javascript
+(function() {
+  ...
+});
+```
+
+这个是定义一个匿名函数，并在浏览器开始解释js脚本时就会执行。
+
+比如之前用过的扩展jQuery：
+
+```javascript
+// http://stackoverflow.com/a/4180972/1276501
+(function($) {
+  $.fn.outerHTML = function() {
+    return $(this).clone().wrap('<div></div>').parent().html();
+  };
+})(jQuery);
+```
+
+参考：[jQuery document.ready vs self calling anonymous function](http://stackoverflow.com/questions/3259496/jquery-document-ready-vs-self-calling-anonymous-function)
+
+这个总结挺好[from](http://stackoverflow.com/a/3259561/1276501)：
+
+* `$(document).ready(function(){ ... });` or short `$(function(){...});`
+
+	This Function is called when the `DOM is ready` which means, you can start to **query** elements for instance. `.ready()` will use different ways on different browsers to make sure that the DOM really IS ready.
+
+* `(function(){ ... })();`
+
+	That is nothing else than a function that **invokes itself** as soon as possible when the browser is interpreting your `ecma-/javascript`. Therefor, its very unlikely that you can successfully act on `DOM elements` here.
+
 
 ### 如何复制一个对象
 
@@ -69,3 +141,8 @@ $('document').on("click", "#board", function(){
 
 * [Jquery Event wont fire after ajax call](http://stackoverflow.com/questions/13767919/jquery-event-wont-fire-after-ajax-call)
 * [jQuery click() event not firing on AJAX loaded HTML elements](http://stackoverflow.com/questions/9272438/jquery-click-event-not-firing-on-ajax-loaded-html-elements)
+
+
+## 其它
+
+* [jQuery官网](https://jquery.com/)
