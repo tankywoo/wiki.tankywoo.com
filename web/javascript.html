@@ -23,7 +23,7 @@
     <a href="/#web">web</a>
     &nbsp;&#187;&nbsp;JavaScript
     <span class="updated">最后更新&nbsp;
-    2016-09-24 23:30
+    2016-10-03 11:00
     
     </span>
   </div>
@@ -32,13 +32,77 @@
 <div id="content">
   <div class="toc"><span class="toctitle">Table of Contents</span><ul>
 <li><a href="#tips">Tips</a><ul>
+<li><a href="#documentreadyfunction-vs-function">$(document).ready(function() {}) vs $(function(){})</a></li>
 <li><a href="#_1">如何复制一个对象</a></li>
 <li><a href="#clickajax">click事件在Ajax下失效问题</a></li>
 </ul>
 </li>
+<li><a href="#_2">其它</a></li>
 </ul>
 </div>
 <h2 id="tips">Tips</h2>
+<h3 id="documentreadyfunction-vs-function">$(document).ready(function() {}) vs $(function(){})</h3>
+<p>以前入门学习都是见的前者这种格式:</p>
+<div class="hlcode"><pre><span class="c1">// 方式1</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>最近见到不少这种写法：</p>
+<div class="hlcode"><pre><span class="c1">// 方式2</span>
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>这两种实际是<strong>等价</strong>的，后者是前者的简写。</p>
+<p>方式1还可以写为：</p>
+<div class="hlcode"><pre><span class="c1">// 方式3, 不推荐</span>
+<span class="nx">$</span><span class="p">().</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>这三种都是在<strong>DOM被加载后</strong>才执行。</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/9396415/differences-between-document-ready-and-function">Differences between document.ready and $function</a></li>
+<li><a href="http://stackoverflow.com/questions/3528509/document-readyfunction-vs-function">$(document).ready(function() VS $(function(){</a></li>
+</ul>
+<p>再拓展下，这种写法：</p>
+<div class="hlcode"><pre><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+</pre></div>
+
+
+<p>这个是定义一个匿名函数，并在浏览器开始解释js脚本时就会执行。</p>
+<p>比如之前用过的扩展jQuery：</p>
+<div class="hlcode"><pre><span class="c1">// http://stackoverflow.com/a/4180972/1276501</span>
+<span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">$</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">outerHTML</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">clone</span><span class="p">().</span><span class="nx">wrap</span><span class="p">(</span><span class="s1">&#39;&lt;div&gt;&lt;/div&gt;&#39;</span><span class="p">).</span><span class="nx">parent</span><span class="p">().</span><span class="nx">html</span><span class="p">();</span>
+  <span class="p">};</span>
+<span class="p">})(</span><span class="nx">jQuery</span><span class="p">);</span>
+</pre></div>
+
+
+<p>参考：<a href="http://stackoverflow.com/questions/3259496/jquery-document-ready-vs-self-calling-anonymous-function">jQuery document.ready vs self calling anonymous function</a></p>
+<p>这个总结挺好<a href="http://stackoverflow.com/a/3259561/1276501">from</a>：</p>
+<ul>
+<li>
+<p><code>$(document).ready(function(){ ... });</code> or short <code>$(function(){...});</code></p>
+<p>This Function is called when the <code>DOM is ready</code> which means, you can start to <strong>query</strong> elements for instance. <code>.ready()</code> will use different ways on different browsers to make sure that the DOM really IS ready.</p>
+</li>
+<li>
+<p><code>(function(){ ... })();</code></p>
+<p>That is nothing else than a function that <strong>invokes itself</strong> as soon as possible when the browser is interpreting your <code>ecma-/javascript</code>. Therefor, its very unlikely that you can successfully act on <code>DOM elements</code> here.</p>
+</li>
+</ul>
 <h3 id="_1">如何复制一个对象</h3>
 <p>涉及到深复制和浅复制的问题</p>
 <p>参考SO上回答：<a href="http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object-in-javascript">What is the most efficient way to clone an object in JavaScript?</a></p>
@@ -85,6 +149,10 @@
 <li><a href="http://stackoverflow.com/questions/13767919/jquery-event-wont-fire-after-ajax-call">Jquery Event wont fire after ajax call</a></li>
 <li><a href="http://stackoverflow.com/questions/9272438/jquery-click-event-not-firing-on-ajax-loaded-html-elements">jQuery click() event not firing on AJAX loaded HTML elements</a></li>
 </ul>
+<h2 id="_2">其它</h2>
+<ul>
+<li><a href="https://jquery.com/">jQuery官网</a></li>
+</ul>
   
   <div class="relation">
     Related:
@@ -107,7 +175,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-10-02 11:48:46</p>
+        <p>站点最后生成 2016-10-11 10:53:44</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

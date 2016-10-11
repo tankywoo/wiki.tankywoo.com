@@ -23,7 +23,7 @@
     <a href="/#database">database</a>
     &nbsp;&#187;&nbsp;InfluxDB
     <span class="updated">最后更新&nbsp;
-    2016-09-21 10:40
+    2016-10-11 10:50
     
     </span>
   </div>
@@ -89,7 +89,12 @@ temperature,machine=unit42,type=assembly external=25,internal=37 143406746700000
 
 <p>和MySQL做类比，InfluxDB的<code>measurement</code>类似于表，主索引永远是time, tags是被索引的，fields不是；Point就是一行行的数据，只不过表名是在Point中。</p>
 <h3 id="_3">常用操作</h3>
-<div class="hlcode"><pre># 创建数据库
+<div class="hlcode"><pre># -----------------------------------------------------------------------------
+# Query Language列表:
+# &lt;https://docs.influxdata.com/influxdb/v1.0/query_language/spec/&gt;
+# -----------------------------------------------------------------------------
+
+# 创建数据库
 &gt; create database mydb
 
 # 查看有哪些数据库, 在配置了认证的情况下，只有admin权限的用户可以看
@@ -127,6 +132,29 @@ name: cpu
 ---------
 time                    host    region  value
 1474442747173411091     serverA us_west 0.62
+
+# 显示所有的measurements
+&gt; show measurements
+name: measurements
+------------------
+name
+cpu
+
+
+# 删除操作
+# https://docs.influxdata.com/influxdb/v1.0/query_language/database_management/
+# 看了下v1.0和v0.9的文档，这块变化还是不少
+# 目前这块几种的具体区别还没弄明白 TODO
+
+## drops the series from index
+## FROM或WHERE至少存在一个
+&gt; DROP SERIES FROM &quot;cpu&quot; WHERE host=&#39;serverA&#39;
+
+## Unlike DROP SERIES, it does not drop the series from the index and it supports time intervals in the WHERE clause.
+&gt; DELETE FROM &quot;cpu&quot; WHERE host=&#39;serverA&#39;
+
+## The DROP MEASUREMENT query deletes all data and series from the specified measurement and deletes the measurement from the index.
+&gt; DROP MEASUREMENT &quot;cpu&quot;
 </pre></div>
 
 
@@ -202,7 +230,7 @@ password:
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-10-02 11:48:46</p>
+        <p>站点最后生成 2016-10-11 10:53:44</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
