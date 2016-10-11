@@ -1,8 +1,8 @@
 ---
 title: "InfluxDB"
 date: 2016-09-21 10:40
-updated: 2016-09-21 10:40
-logs: "新增"
+updated: 2016-10-11 10:50
+logs: "增加查看measurements和删除操作"
 ---
 
 [TOC]
@@ -76,6 +76,11 @@ temperature,machine=unit42,type=assembly external=25,internal=37 143406746700000
 ### 常用操作
 
 ```text
+# -----------------------------------------------------------------------------
+# Query Language列表:
+# <https://docs.influxdata.com/influxdb/v1.0/query_language/spec/>
+# -----------------------------------------------------------------------------
+
 # 创建数据库
 > create database mydb
 
@@ -114,6 +119,29 @@ name: cpu
 ---------
 time                    host    region  value
 1474442747173411091     serverA us_west 0.62
+
+# 显示所有的measurements
+> show measurements
+name: measurements
+------------------
+name
+cpu
+
+
+# 删除操作
+# https://docs.influxdata.com/influxdb/v1.0/query_language/database_management/
+# 看了下v1.0和v0.9的文档，这块变化还是不少
+# 目前这块几种的具体区别还没弄明白 TODO
+
+## drops the series from index
+## FROM或WHERE至少存在一个
+> DROP SERIES FROM "cpu" WHERE host='serverA'
+
+## Unlike DROP SERIES, it does not drop the series from the index and it supports time intervals in the WHERE clause.
+> DELETE FROM "cpu" WHERE host='serverA'
+
+## The DROP MEASUREMENT query deletes all data and series from the specified measurement and deletes the measurement from the index.
+> DROP MEASUREMENT "cpu"
 
 ```
 
