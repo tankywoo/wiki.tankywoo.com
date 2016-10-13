@@ -1,9 +1,9 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-08-22 11:00
+updated: 2016-10-13 14:06
 description: "查漏补缺, Tricks/Tips/Fragments"
-log: "days since 1970/01/01 和 当前日期互相转换"
+log: "增加如何加密文件"
 ---
 
 [TOC]
@@ -386,3 +386,65 @@ Last password change                                    : Jun 07, 2016
 $ date -d "01/01/1970 +17035days" +%F
 2016-08-22
 ```
+
+
+### 如何加密文件
+
+最原始的需求是当时为了打包时加密，但是tgz等不支持。
+
+一种是考虑改为zip包，支持密码：
+
+```bash
+$ zip -P password filename.zip filename
+```
+
+因为这个是在命令行写密码，不支持交互式，所以不安全。
+
+下面几种方式使用范围更广泛，可以针对文件等加密。
+
+使用crypt工具(如[ccrypt](http://ccrypt.sourceforge.net/) 或 [mcrypt](http://mcrypt.sourceforge.net/)):
+
+```bash
+# use ccrypt
+# create new crypt file
+$ cat filename | ccencrypt > filename.cpt
+Enter encryption key:
+Enter encryption key: (repeat)
+
+# create new crypt file in place
+$ ccencrypt filename
+
+# decrypt
+$ ccdecrypt filename.cpt
+```
+
+使用gpg加密：
+
+```bash
+# encrypt
+$ gpg -c -o filename.gpg filename
+
+# decrypt
+gpg -d filename.gpg > filename
+```
+
+使用openssl enc加密
+
+```bash
+# encrypt
+$ openssl enc -des -e -in filename -out filename.crypt
+enter des-cbc encryption password:
+Verifying - enter des-cbc encryption password:
+
+# encrypt without interactive
+$ openssl enc -des -e -in filename -out filename.crypt -pass pass:password
+
+# decrypt
+openssl enc -des -d -in filename.crypt -out filename
+enter des-cbc decryption password:
+```
+
+参考：
+
+* [How do I password protect a .tgz file with tar in Unix?](http://superuser.com/questions/370389/how-do-i-password-protect-a-tgz-file-with-tar-in-unix/370390#370390)
+* [openssl加密文件或文件夹](http://www.361way.com/openssl-encrypt-file/2692.html)
