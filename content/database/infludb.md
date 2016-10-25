@@ -1,8 +1,8 @@
 ---
 title: "InfluxDB"
 date: 2016-09-21 10:40
-updated: 2016-10-11 10:50
-logs: "增加查看measurements和删除操作"
+updated: 2016-10-25 11:12
+logs: "增加查询时的时间显示"
 ---
 
 [TOC]
@@ -143,6 +143,12 @@ cpu
 ## The DROP MEASUREMENT query deletes all data and series from the specified measurement and deletes the measurement from the index.
 > DROP MEASUREMENT "cpu"
 
+
+# 其它
+# 查询时时间显示，使用rfc3339格式时间(默认是时间戳)
+# https://docs.influxdata.com/influxdb/v1.0//tools/shell/#influx-arguments
+> precision rfc3339
+
 ```
 
 
@@ -211,3 +217,5 @@ password:
 ## 其它
 
 * [influxdb-handbook](https://www.gitbook.com/book/xtutu/influxdb-handbook/details)
+* [python-influxdb](http://influxdb-python.readthedocs.io/en/latest/index.html)
+* [influxdata/telegraf](https://github.com/influxdata/telegraf)  The plugin-driven server agent for collecting & reporting metrics.
