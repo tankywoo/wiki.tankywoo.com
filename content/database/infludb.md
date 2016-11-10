@@ -1,8 +1,8 @@
 ---
 title: "InfluxDB"
 date: 2016-09-21 10:40
-updated: 2016-10-25 11:12
-logs: "增加查询时的时间显示"
+updated: 2016-11-10 18:00
+logs: "增加RP和CQ"
 ---
 
 [TOC]
@@ -208,10 +208,31 @@ username: tankywoo
 password:
 ```
 
+## Retention Policy 和 Continuous Query
+
+* Retention Policy(RP): 保留策略, 控制数据存储的周期，超过duration的自动删除
+* Continuous Query(CQ): 连续查询, 配合RP，自动对数据downsample(降低采样率)并存入其它measurement
+
+类似于rrdtool中的rra的概念，可以控制不同的存储时长有不同的数据采样粒度。
+
+参考文档:
+
+* [Downsampling and Data Retention](https://docs.influxdata.com/influxdb/v1.0/guides/downsampling_and_retention/)
+* [Continuous Queries](https://docs.influxdata.com/influxdb/v1.0/query_language/continuous_queries/)
+* [InfluxDB学习之InfluxDB数据保留策略](http://www.linuxdaxue.com/retention-policies-in-influxdb.html)
+
+
+## 其它
+
+1\. 覆盖原来的point:
+
+插入point时指定需要覆盖的point的时间戳即可
+
 
 ## 术语
 
 * InfluxQL: Influx Query Language
+* Series: 序列, 是由一项指标(measurement)和一组标签键值对(tag)组成的
 
 
 ## 其它
@@ -219,3 +240,4 @@ password:
 * [influxdb-handbook](https://www.gitbook.com/book/xtutu/influxdb-handbook/details)
 * [python-influxdb](http://influxdb-python.readthedocs.io/en/latest/index.html)
 * [influxdata/telegraf](https://github.com/influxdata/telegraf)  The plugin-driven server agent for collecting & reporting metrics.
+* [时间序列数据库调研之InfluxDB](http://blog.fatedier.com/2016/07/05/research-of-time-series-database-influxdb/)
