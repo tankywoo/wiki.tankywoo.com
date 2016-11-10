@@ -1,9 +1,9 @@
 ---
 title: "Nginx"
 date: 2016-01-07 21:11
-updated: 2016-08-21 22:23
+updated: 2016-11-10 22:23
 collection: "Web服务器"
-log: "隐藏Server头信息"
+log: "增加alias注意事项"
 ---
 
 [TOC]
@@ -151,6 +151,27 @@ Nginx寻找匹配路径的逻辑:
 * [Nginx — static file serving confusion with root & alias](http://stackoverflow.com/questions/10631933/nginx-static-file-serving-confusion-with-root-alias)
 * [nginx目录设置 alias 和 root](http://www.wkii.org/nginx-set-directory-alias-and-root.html)
 * [nginx虚拟目录(alias与root的区别)](http://blog.sina.com.cn/s/blog_6c2e6f1f0100l92h.html)
+
+`alias`有个要注意的问题:
+
+之前遇到一个问题, 如:
+
+```nginx
+location ~ /loc/ {
+	alias /home/tankywoo/testloc/;
+}
+```
+
+导致访问http://example.com/loc/css/main.css 会自动301跳转到http://example.com/local/css/main.css/，进而导致403 forbidden.
+
+文档已有说明：
+
+> If alias is used inside a location defined with a regular expression then such regular expression should contain captures and alias should refer to these captures (0.7.40), for example:
+
+>     location ~ ^/users/(.+\.(?:gif|jpe?g|png))$ {
+>         alias /data/w3/images/$1;
+>     }
+
 
 
 ### HTTP Basic Authentication ###
