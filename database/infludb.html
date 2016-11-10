@@ -23,7 +23,7 @@
     <a href="/#database">database</a>
     &nbsp;&#187;&nbsp;InfluxDB
     <span class="updated">最后更新&nbsp;
-    2016-10-11 10:50
+    2016-11-10 18:00
     
     </span>
   </div>
@@ -37,8 +37,10 @@
 <li><a href="#_4">用户认证和权限</a></li>
 </ul>
 </li>
-<li><a href="#_5">术语</a></li>
-<li><a href="#_6">其它</a></li>
+<li><a href="#retention-policy-continuous-query">Retention Policy 和 Continuous Query</a></li>
+<li><a href="#_5">其它</a></li>
+<li><a href="#_6">术语</a></li>
+<li><a href="#_7">其它</a></li>
 </ul>
 </div>
 <p>InfluxDB是一个Go写的时序数据库(Time-Series Database)。</p>
@@ -155,6 +157,12 @@ cpu
 
 ## The DROP MEASUREMENT query deletes all data and series from the specified measurement and deletes the measurement from the index.
 &gt; DROP MEASUREMENT &quot;cpu&quot;
+
+
+# 其它
+# 查询时时间显示，使用rfc3339格式时间(默认是时间戳)
+# https://docs.influxdata.com/influxdb/v1.0//tools/shell/#influx-arguments
+&gt; precision rfc3339
 </pre></div>
 
 
@@ -209,13 +217,32 @@ password:
 </pre></div>
 
 
-<h2 id="_5">术语</h2>
+<h2 id="retention-policy-continuous-query">Retention Policy 和 Continuous Query</h2>
+<ul>
+<li>Retention Policy(RP): 保留策略, 控制数据存储的周期，超过duration的自动删除</li>
+<li>Continuous Query(CQ): 连续查询, 配合RP，自动对数据downsample(降低采样率)并存入其它measurement</li>
+</ul>
+<p>类似于rrdtool中的rra的概念，可以控制不同的存储时长有不同的数据采样粒度。</p>
+<p>参考文档:</p>
+<ul>
+<li><a href="https://docs.influxdata.com/influxdb/v1.0/guides/downsampling_and_retention/">Downsampling and Data Retention</a></li>
+<li><a href="https://docs.influxdata.com/influxdb/v1.0/query_language/continuous_queries/">Continuous Queries</a></li>
+<li><a href="http://www.linuxdaxue.com/retention-policies-in-influxdb.html">InfluxDB学习之InfluxDB数据保留策略</a></li>
+</ul>
+<h2 id="_5">其它</h2>
+<p>1. 覆盖原来的point:</p>
+<p>插入point时指定需要覆盖的point的时间戳即可</p>
+<h2 id="_6">术语</h2>
 <ul>
 <li>InfluxQL: Influx Query Language</li>
+<li>Series: 序列, 是由一项指标(measurement)和一组标签键值对(tag)组成的</li>
 </ul>
-<h2 id="_6">其它</h2>
+<h2 id="_7">其它</h2>
 <ul>
 <li><a href="https://www.gitbook.com/book/xtutu/influxdb-handbook/details">influxdb-handbook</a></li>
+<li><a href="http://influxdb-python.readthedocs.io/en/latest/index.html">python-influxdb</a></li>
+<li><a href="https://github.com/influxdata/telegraf">influxdata/telegraf</a>  The plugin-driven server agent for collecting &amp; reporting metrics.</li>
+<li><a href="http://blog.fatedier.com/2016/07/05/research-of-time-series-database-influxdb/">时间序列数据库调研之InfluxDB</a></li>
 </ul>
   
 </div>
@@ -230,7 +257,7 @@ password:
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-10-11 10:53:44</p>
+        <p>站点最后生成 2016-11-10 18:51:24</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
