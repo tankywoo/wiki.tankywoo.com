@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Nginx
     <span class="updated">最后更新&nbsp;
-    2016-08-21 22:23
+    2016-11-10 22:23
     
     </span>
   </div>
@@ -174,6 +174,25 @@
 <li><a href="http://www.wkii.org/nginx-set-directory-alias-and-root.html">nginx目录设置 alias 和 root</a></li>
 <li><a href="http://blog.sina.com.cn/s/blog_6c2e6f1f0100l92h.html">nginx虚拟目录(alias与root的区别)</a></li>
 </ul>
+<p><code>alias</code>有个要注意的问题:</p>
+<p>之前遇到一个问题, 如:</p>
+<div class="hlcode"><pre><span class="k">location</span> <span class="p">~</span> <span class="sr">/loc/</span> <span class="p">{</span>
+    <span class="kn">alias</span> <span class="s">/home/tankywoo/testloc/</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>导致访问http://example.com/loc/css/main.css 会自动301跳转到http://example.com/local/css/main.css/，进而导致403 forbidden.</p>
+<p>文档已有说明：</p>
+<blockquote>
+<p>If alias is used inside a location defined with a regular expression then such regular expression should contain captures and alias should refer to these captures (0.7.40), for example:</p>
+<div class="hlcode"><pre><span class="n">location</span> <span class="o">~</span> <span class="o">^/</span><span class="n">users</span><span class="o">/</span><span class="p">(.</span><span class="o">+</span><span class="err">\</span><span class="p">.(</span><span class="o">?:</span><span class="n">gif</span><span class="o">|</span><span class="n">jpe</span><span class="o">?</span><span class="n">g</span><span class="o">|</span><span class="n">png</span><span class="p">))</span><span class="err">$</span> <span class="p">{</span>
+    <span class="n">alias</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">w3</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="err">$</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+</blockquote>
 <h3 id="http-basic-authentication">HTTP Basic Authentication</h3>
 <p>见 <a href="http://nginx.org/en/docs/http/ngx_http_auth_basic_module.html">ngx_http_auth_basic_module</a>，相关指令:</p>
 <ul>
@@ -272,7 +291,7 @@ Date: Sun, 21 Aug 2016 14:15:32 GMT
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-11-10 18:51:24</p>
+        <p>站点最后生成 2016-11-07 10:38:36</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
