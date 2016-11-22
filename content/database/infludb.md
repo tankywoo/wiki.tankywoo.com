@@ -2,7 +2,7 @@
 title: "InfluxDB"
 date: 2016-09-21 10:40
 updated: 2016-11-10 18:00
-logs: "增加RP和CQ"
+logs: "更新RP和CQ文档"
 ---
 
 [TOC]
@@ -214,6 +214,59 @@ password:
 * Continuous Query(CQ): 连续查询, 配合RP，自动对数据downsample(降低采样率)并存入其它measurement
 
 类似于rrdtool中的rra的概念，可以控制不同的存储时长有不同的数据采样粒度。
+
+关于RP, 默认是autogen, 表示永久存储. 默认配置下对每一个DB会自动创建, 可以通过修改配置`retention-autocreate`来控制不自动创建.
+
+可以修改其它RP为默认RP:
+
+```
+# 如新建一个one_hour的RP, 并设置为默认的RP
+> show retention policies on mydb
+name            duration        shardGroupDuration      replicaN        default
+autogen         0               168h0m0s                1               false
+one_hour        1h0m0s          1h0m0s                  1               true
+one_day         24h0m0s         1h0m0s                  1               false
+```
+
+关于对其它RP的写入和查询, 格式和普通的稍微有些区别, 之前没看清楚文档, 结果被折腾了半天:
+
+```text
+# 写入
+> INSERT INTO [<database>.]<retention_policy> <line_protocol>
+
+# 查询
+> SELECT * FROM "<database>"."<retention_policy>"."<measurement>"
+```
+
+注意写入是有个`INTO`子句. [How do I write to a non-DEFAULT retention policy with InfluxDB’s CLI?](https://docs.influxdata.com/influxdb/v1.0/troubleshooting/frequently-asked-questions/#how-do-i-write-to-a-non-default-retention-policy-with-influxdb-s-cli)
+
+比如:
+
+```
+> insert into one_hour load 1=1.0,5=2.0,15=3.0
+
+> select * from one_hour.load
+```
+
+还有个地方需要注意:
+
+> Note that once you specify a retention policy with INSERT INTO, influx automatically writes data to that retention policy. This occurs even for later INSERT entries that do not include an INTO clause. Restarting the CLI will revert to using the DEFAULT retention policy. [来源](https://docs.influxdata.com/influxdb/v1.0/tools/shell/#write-data-to-influxdb-with-insert)
+
+```text
+> insert into one_day mem value=2
+Using retention policy one_day
+```
+
+如上可以看到, 说有使用`one_day`这个RP, 后续如果直接`insert mem value=3`，则依然是写入`one_day`这个RP. 要么重新`insert into`指定, 要么重新登录cli client.
+
+构建CQ:
+
+```
+> create continuous query "cq_5m" on "mydb" begin select mean("value") into "one_day"."load" from "load" group by time(5m) end
+
+# 查看
+> show continuous queries
+```
 
 参考文档:
 
