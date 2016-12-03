@@ -223,6 +223,52 @@ password:
 <li>Continuous Query(CQ): 连续查询, 配合RP，自动对数据downsample(降低采样率)并存入其它measurement</li>
 </ul>
 <p>类似于rrdtool中的rra的概念，可以控制不同的存储时长有不同的数据采样粒度。</p>
+<p>关于RP, 默认是autogen, 表示永久存储. 默认配置下对每一个DB会自动创建, 可以通过修改配置<code>retention-autocreate</code>来控制不自动创建.</p>
+<p>可以修改其它RP为默认RP:</p>
+<div class="hlcode"><pre><span class="cp"># 如新建一个one_hour的RP, 并设置为默认的RP</span>
+<span class="o">&gt;</span> <span class="n">show</span> <span class="n">retention</span> <span class="n">policies</span> <span class="n">on</span> <span class="n">mydb</span>
+<span class="n">name</span>            <span class="n">duration</span>        <span class="n">shardGroupDuration</span>      <span class="n">replicaN</span>        <span class="k">default</span>
+<span class="n">autogen</span>         <span class="mi">0</span>               <span class="mi">168</span><span class="n">h0m0s</span>                <span class="mi">1</span>               <span class="nb">false</span>
+<span class="n">one_hour</span>        <span class="mi">1</span><span class="n">h0m0s</span>          <span class="mi">1</span><span class="n">h0m0s</span>                  <span class="mi">1</span>               <span class="nb">true</span>
+<span class="n">one_day</span>         <span class="mi">24</span><span class="n">h0m0s</span>         <span class="mi">1</span><span class="n">h0m0s</span>                  <span class="mi">1</span>               <span class="nb">false</span>
+</pre></div>
+
+
+<p>关于对其它RP的写入和查询, 格式和普通的稍微有些区别, 之前没看清楚文档, 结果被折腾了半天:</p>
+<div class="hlcode"><pre># 写入
+&gt; INSERT INTO [&lt;database&gt;.]&lt;retention_policy&gt; &lt;line_protocol&gt;
+
+# 查询
+&gt; SELECT * FROM &quot;&lt;database&gt;&quot;.&quot;&lt;retention_policy&gt;&quot;.&quot;&lt;measurement&gt;&quot;
+</pre></div>
+
+
+<p>注意写入是有个<code>INTO</code>子句. <a href="https://docs.influxdata.com/influxdb/v1.0/troubleshooting/frequently-asked-questions/#how-do-i-write-to-a-non-default-retention-policy-with-influxdb-s-cli">How do I write to a non-DEFAULT retention policy with InfluxDB’s CLI?</a></p>
+<p>比如:</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="n">insert</span> <span class="n">into</span> <span class="n">one_hour</span> <span class="n">load</span> <span class="mi">1</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">5</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span><span class="mi">15</span><span class="o">=</span><span class="mf">3.0</span>
+
+<span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="n">from</span> <span class="n">one_hour</span><span class="p">.</span><span class="n">load</span>
+</pre></div>
+
+
+<p>还有个地方需要注意:</p>
+<blockquote>
+<p>Note that once you specify a retention policy with INSERT INTO, influx automatically writes data to that retention policy. This occurs even for later INSERT entries that do not include an INTO clause. Restarting the CLI will revert to using the DEFAULT retention policy. <a href="https://docs.influxdata.com/influxdb/v1.0/tools/shell/#write-data-to-influxdb-with-insert">来源</a></p>
+</blockquote>
+<div class="hlcode"><pre>&gt; insert into one_day mem value=2
+Using retention policy one_day
+</pre></div>
+
+
+<p>如上可以看到, 说有使用<code>one_day</code>这个RP, 后续如果直接<code>insert mem value=3</code>，则依然是写入<code>one_day</code>这个RP. 要么重新<code>insert into</code>指定, 要么重新登录cli client.</p>
+<p>构建CQ:</p>
+<div class="hlcode"><pre><span class="o">&gt;</span> <span class="n">create</span> <span class="n">continuous</span> <span class="n">query</span> <span class="s">&quot;cq_5m&quot;</span> <span class="n">on</span> <span class="s">&quot;mydb&quot;</span> <span class="n">begin</span> <span class="n">select</span> <span class="n">mean</span><span class="p">(</span><span class="s">&quot;value&quot;</span><span class="p">)</span> <span class="n">into</span> <span class="s">&quot;one_day&quot;</span><span class="p">.</span><span class="s">&quot;load&quot;</span> <span class="n">from</span> <span class="s">&quot;load&quot;</span> <span class="n">group</span> <span class="n">by</span> <span class="n">time</span><span class="p">(</span><span class="mi">5</span><span class="n">m</span><span class="p">)</span> <span class="n">end</span>
+
+<span class="cp"># 查看</span>
+<span class="o">&gt;</span> <span class="n">show</span> <span class="n">continuous</span> <span class="n">queries</span>
+</pre></div>
+
+
 <p>参考文档:</p>
 <ul>
 <li><a href="https://docs.influxdata.com/influxdb/v1.0/guides/downsampling_and_retention/">Downsampling and Data Retention</a></li>
@@ -257,7 +303,7 @@ password:
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-11-10 18:51:24</p>
+        <p>站点最后生成 2016-12-03 13:12:43</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

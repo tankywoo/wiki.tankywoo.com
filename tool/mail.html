@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Email相关
     <span class="updated">最后更新&nbsp;
-    2016-05-13 10:30
+    2016-12-03 13:00
     
     </span>
   </div>
@@ -175,6 +175,12 @@
 <span class="n">exim</span> <span class="o">-</span><span class="n">bp</span> <span class="o">|</span> <span class="n">exiqgrep</span> <span class="o">-</span><span class="n">i</span> <span class="o">|</span> <span class="n">xargs</span> <span class="n">exim</span> <span class="o">-</span><span class="n">Mrm</span>
 <span class="n">exiqgrep</span> <span class="o">-</span><span class="n">i</span><span class="o">|</span><span class="n">xargs</span> <span class="n">exim</span> <span class="o">-</span><span class="n">Mrm</span>
 <span class="n">exim</span> <span class="o">-</span><span class="n">bp</span> <span class="o">|</span> <span class="n">awk</span> <span class="err">&#39;</span><span class="o">/^</span> <span class="o">*</span><span class="p">[</span><span class="mi">0</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="n">mhd</span><span class="p">]</span><span class="o">/</span><span class="p">{</span><span class="n">print</span> <span class="s">&quot;exim -Mrm &quot;</span> <span class="err">$</span><span class="mi">3</span><span class="p">}</span><span class="err">&#39;</span> <span class="o">|</span> <span class="n">bash</span>
+
+<span class="cp"># 查看message header</span>
+<span class="n">exim</span> <span class="o">-</span><span class="n">Mvh</span> <span class="o">&lt;</span><span class="n">message</span><span class="o">-</span><span class="n">id</span><span class="o">&gt;</span>
+
+<span class="cp"># 查看message body</span>
+<span class="n">exim</span> <span class="o">-</span><span class="n">Mvb</span> <span class="o">&lt;</span><span class="n">message</span><span class="o">-</span><span class="n">id</span><span class="o">&gt;</span>
 </pre></div>
 
 
@@ -197,7 +203,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-11-10 18:51:24</p>
+        <p>站点最后生成 2016-12-03 13:12:43</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
