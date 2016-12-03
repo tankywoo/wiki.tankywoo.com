@@ -2,8 +2,8 @@
 title: "Email相关"
 date: 2013-08-17 07:36
 description: "Mutt / Msmtp/ Exim"
-updated: 2016-05-13 10:30
-log: "更新mutt时间匹配例子"
+updated: 2016-12-03 13:00
+log: "更新exim命令"
 ---
 
 [TOC]
@@ -157,6 +157,13 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
     exim -bp | exiqgrep -i | xargs exim -Mrm
     exiqgrep -i|xargs exim -Mrm
     exim -bp | awk '/^ *[0-9]+[mhd]/{print "exim -Mrm " $3}' | bash
+
+    # 查看message header
+    exim -Mvh <message-id>
+
+    # 查看message body
+    exim -Mvb <message-id>
+
 
 参考:
 
