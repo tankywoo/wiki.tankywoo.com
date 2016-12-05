@@ -1,8 +1,8 @@
 ---
 title: "Bash Script"
 date: 2013-08-17 07:23
-updated: 2016-10-02 10:20
-log: "增加判断当前执行用户是否是root"
+updated: 2016-12-05 20:50
+log: "补充here document的说明"
 ---
 
 [TOC]
@@ -115,6 +115,19 @@ Linux/Unix 都有默认的shell, 使用环境变量`$SHELL`可以查看当前的
 
 * [Shell Script Put Multiple Line Comment](http://www.cyberciti.biz/faq/bash-comment-out-multiple-line-code/)
 * [Commenting out a set of lines in a shell script](http://stackoverflow.com/questions/1444367/commenting-out-a-set-of-lines-in-a-shell-script)
+
+遇到这个报错:
+
+```
+./a.sh: line 46: warning: here-document at line 34 delimited by end-of-file (wanted `HERE')
+./a.sh: line 47: syntax error: unexpected end of file`)
+```
+
+原因是因为delimiter前面有空格, 如果是tab, 在`<<-word`的情况下也可以, 但是空格不行; 如果是`<<word`, 则必须以delimiter开头.
+
+另外, `<<-word`这个挺实用的:
+
+> If the redirection operator is <<-, then all leading tab characters are stripped from input lines and the line containing delimiter.  This allows here-documents within shell scripts to be indented in a natural fashion
 
 
 ## Shell语法 ##
