@@ -2,8 +2,8 @@
 title: "Email相关"
 date: 2013-08-17 07:36
 description: "Mutt / Msmtp/ Exim"
-updated: 2016-12-03 13:00
-log: "更新exim命令"
+updated: 2016-12-20 11:30
+log: "增加mutt limit的逻辑操作"
 ---
 
 [TOC]
@@ -120,6 +120,15 @@ POP3和IMAP的区别是前者本地的操作如删除不会同步到服务器. I
 	l~d "-08/05/2016"
 
 **注**：注意要加上双引号
+
+另外, 还可以配合逻辑操作:
+
+* `~d 20/12/2016 ~b python`  # 逻辑与
+* `~d 20/12/2016 ! ~b python`  # 逻辑取反
+* `~d 20/12/2016 (~b python|~b bash)`  # 逻辑或、逻辑组
+
+具体可以看文档[Nesting and Boolean Operators](http://www.mutt.org/doc/manual/#complex-patterns)一节
+
 
 参考:
 
