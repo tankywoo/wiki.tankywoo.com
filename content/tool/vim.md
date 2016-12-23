@@ -1,10 +1,10 @@
 ---
 title: "Vim"
 date: 2013-08-17 07:32
-updated: 2016-07-13 22:10
+updated: 2016-12-23 11:10
 collection: "编辑器"
 tag: vim
-log: "增加快速跳转到上次位置"
+log: "插入特殊字符"
 ---
 
 [TOC]
@@ -86,7 +86,7 @@ log: "增加快速跳转到上次位置"
 * [tuxfiles-vimcheat](http://www.tuxfiles.org/linuxhelp/vimcheat.html)
 * [What is your most productive shortcut with Vim?](http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim)
 
-### Vim自定义插件 ###
+## Vim自定义插件 ##
 
 依葫芦画瓢, 写了一个针对特定格式的高亮插件时的需求。
 
@@ -261,10 +261,32 @@ Replace:
 
 具体见：[Move cursor to its last position](http://stackoverflow.com/questions/5052079/move-cursor-to-its-last-position)
 
+### 插入特殊字符
+
+最近看Go的字符串编码那块, 想在vim上敲一些特殊字符, 但是不知道怎么弄, 只能在网上找到这个字符, 然后C-v复制到vim里, 但是不行, 于是研究了下这块。
+
+`:digraphs`可以看到支持的特殊字符列表, 比如`u: ü  252`, vim定义了**两个字符**的组合(即digraph)来映射特殊字符, 如这里使用`u:`来表示`ü`; 第三个252表示赋予它的十进制编码.
+
+其中有两种方式来键入特殊字符(`:h digraphs-use`):
+
+1. `CTRL-K {char1} {char2}`  # 任何模式都行
+2. `{char1} <BS> {char2}`    # 只支持在digraph模式下,即`:set digraph`
+
+第二种方式还有点疑问, 貌似只能在命令行模式里输入
+
+光标在字符上, 普通模式敲入`ga`, 可以查看这个字符(包括特殊字符)的十进制,十六进制等: `<ü> 252, Hex 00fc, Octal 374`
+
+还可以通过敲入16进制符来输出特殊字符, `<C-v>uXXXX`; 比如上面这个十六进制是00fc, 插入模式输入 `<C-v>u00fc`
+
+其它参考:
+
+* [Vim: enter Unicode characters with 8-digit hex code](http://stackoverflow.com/questions/9119649/vim-enter-unicode-characters-with-8-digit-hex-code)
+* [Vim digraphs](http://ricostacruz.com/cheatsheets/vim-digraphs.html) 里面列了一些比较有趣的字符
+* [chrisbra/unicode.vim](https://github.com/chrisbra/unicode.vim) 针对unicode字符加强功能的插件
 
 ---
 
-参考:
+## 参考:
 
 * [How to replace a character for a newline in Vim?](http://stackoverflow.com/questions/71323/how-to-replace-a-character-for-a-newline-in-vim)
 * [Why is \r a newline for Vim?](http://stackoverflow.com/questions/71417/why-is-r-a-newline-for-vim)
