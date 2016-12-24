@@ -1,19 +1,18 @@
 ---
 title: "Nginx"
 date: 2016-01-07 21:11
-updated: 2016-11-10 22:23
+updated: 2016-12-24 13:00
 collection: "Web服务器"
-log: "增加alias注意事项"
+log: "增加proxy module"
 ---
 
 [TOC]
 
 [Nginx Beginner's Guide](http://nginx.org/en/docs/beginners_guide.html)
 
-## 指令 ##
+## 基础
 
-
-### 核心命令 ###
+### core module ###
 
 见[Core functionality](http://nginx.org/en/docs/ngx_core_module.html#worker_processes)
 
@@ -238,8 +237,6 @@ more_set_headers    "Server: my_server";
 ```
 
 
-## 其它 ##
-
 ### 中文域名 ###
 
 中文域名之所以可以解析/访问, 并不是说dns, nginx等都可以识别, 而是再浏览器层面会做一个转码.
@@ -268,7 +265,71 @@ more_set_headers    "Server: my_server";
 	}
 
 
-## 链接 ##
+### proxy module
+
+`proxy_cache_path` 控制cache的存储路径,名称,分级等. 其中, `levels`最多分三级结构, 一般是`1:2`, 先取最后一个字符作一级目录, 再取两个字符作二级目录; `keys_zone`控制存在shm中的active keys和data; inactive控制如果缓存在指定时间没有被访问, 则删掉; `max_size`控制存在目录文件系统下缓存的最大大小. [这篇](http://serverfault.com/a/641572/173472)辅助解释讲得比较清晰.
+
+`proxy_cache_key`控制匹配的模式, 在缓存文件中会记录当前这个缓存的key: `KEY: http://test.tankywoo.com/hello.html`;
+
+变量`$proxy_host`表示被代理的host:port, 即`proxy_pass`中的地址.
+
+如果配置了`proxy_temp_path`, 则缓存会现在temp path创建, 再rename到cache path, 所以建议在一个文件系统内.
+
+先开始没注意cache key 和 purge 有`$scheme`, 导致上了ssl后, 清理的缓存还是http的缓存. 应该清理https的缓存.
+
+清理缓存: `curl -I http://test.tankywoo.com/cache_purge/hello.html`
+
+参考配置:
+
+```nginx
+proxy_temp_path /data/nginx/temp;
+proxy_cache_path /data/nginx/cache levels=1:2 keys_zone=cache:200m inactive=1d max_size=1g;
+
+server {
+	listen       80;
+
+	server_name test.tankywoo.com;
+
+	root /opt/test/;
+
+	proxy_cache cache;
+	proxy_cache_valid 200 302     10m;
+	proxy_cache_valid 404          1m;
+	proxy_cache_valid any          1m;
+
+	proxy_cache_key $scheme://$host$uri$is_args$args;
+
+	proxy_set_header Host $host;
+	proxy_set_header X-Forwarded-For $remote_addr;
+	proxy_set_header X-Real-IP $remote_addr;
+
+	add_header X-CACHE $upstream_cache_status;
+
+	access_log  /var/log/nginx/test.log test;
+	error_log /var/log/nginx/test.error.log debug;
+
+	location / {
+		proxy_pass http://127.0.0.1:8080;
+	}
+
+	location ~ /cache_purge(/.*) {
+		proxy_cache_purge cache $scheme://$host$1$is_args$args;
+	}
+}
+```
+
+关于proxy ssl这块, 抽时间再研究下 TODO
+
+
+
+### 一些坑
+
+* `nginx -t`会对如`proxy_pass`指定的域名做检查, 如果无法解析, 会报`host not found in upstream...`, 感觉这个错误有些歧义, 和实现逻辑有关.
+
+
+
+
+## 资源 ##
 
 * [如何正确配置Nginx+PHP](http://huoding.com/2013/10/23/290)
 * [实战Nginx与PHP（FastCGI）的安装、配置与优化](http://ixdba.blog.51cto.com/2895551/806622)
