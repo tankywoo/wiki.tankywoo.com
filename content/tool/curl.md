@@ -1,5 +1,5 @@
 ---
-title: "curl"
+title: "cURL"
 date: 2013-08-17 07:32
 update: 2016-12-24 16:00
 collection: "网络相关"
@@ -42,7 +42,7 @@ curl ipv6 localhost:8000, 注意要加`-g`和`-6`, url要用方括号(bracket):
 
 除了通过`/etc/hosts`绑定主机. 对于http请求, 可以在`-H 'Host: example.com'`中来绑定host访问某台机器.
 
-对于SNI, 因为**证书验证时的FQDN是通过url来判断**的, 所以上面的方法没用.
+对于SNI, 因为**证书验证时的CN匹配是通过url来判断**的, 所以上面的方法没用.
 
 可以考虑`--resolve <host:port:address>`来绑定主机和端口 (所以除了SNI, 其它协议都可以). 手册讲得有点不清楚.
 
