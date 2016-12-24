@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Nginx
     <span class="updated">最后更新&nbsp;
-    2016-11-10 22:23
+    2016-12-24 13:00
     
     </span>
   </div>
@@ -31,26 +31,25 @@
 <div class="clearfix"></div>
 <div id="content">
   <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">指令</a><ul>
-<li><a href="#_2">核心命令</a></li>
+<li><a href="#_1">基础</a><ul>
+<li><a href="#core-module">core module</a></li>
 <li><a href="#server_name">server_name</a></li>
 <li><a href="#location">location</a></li>
 <li><a href="#root-vs-alias">root vs alias</a></li>
 <li><a href="#http-basic-authentication">HTTP Basic Authentication</a></li>
 <li><a href="#access_log">access_log的变量问题</a></li>
 <li><a href="#server">隐藏Server头信息</a></li>
+<li><a href="#_2">中文域名</a></li>
+<li><a href="#proxy-module">proxy module</a></li>
+<li><a href="#_3">一些坑</a></li>
 </ul>
 </li>
-<li><a href="#_3">其它</a><ul>
-<li><a href="#_4">中文域名</a></li>
-</ul>
-</li>
-<li><a href="#_5">链接</a></li>
+<li><a href="#_4">资源</a></li>
 </ul>
 </div>
 <p><a href="http://nginx.org/en/docs/beginners_guide.html">Nginx Beginner's Guide</a></p>
-<h2 id="_1">指令</h2>
-<h3 id="_2">核心命令</h3>
+<h2 id="_1">基础</h2>
+<h3 id="core-module">core module</h3>
 <p>见<a href="http://nginx.org/en/docs/ngx_core_module.html#worker_processes">Core functionality</a></p>
 <ul>
 <li><code>worker_processes</code>: (number | auto) 表示Nginx开启的子进程数</li>
@@ -245,8 +244,7 @@ Date: Sun, 21 Aug 2016 14:15:32 GMT
 </pre></div>
 
 
-<h2 id="_3">其它</h2>
-<h3 id="_4">中文域名</h3>
+<h3 id="_2">中文域名</h3>
 <p>中文域名之所以可以解析/访问, 并不是说dns, nginx等都可以识别, 而是再浏览器层面会做一个转码.</p>
 <p>这个转码技术是<a href="https://en.wikipedia.org/wiki/Punycode">Punycode</a>, 将Unicode码转为ASCII码.</p>
 <p>其实不光是中文域名, 只要支持的Unicode编码的域名, 都可以经过Punycode转码.</p>
@@ -268,7 +266,57 @@ Date: Sun, 21 Aug 2016 14:15:32 GMT
 </pre></div>
 
 
-<h2 id="_5">链接</h2>
+<h3 id="proxy-module">proxy module</h3>
+<p><code>proxy_cache_path</code> 控制cache的存储路径,名称,分级等. 其中, <code>levels</code>最多分三级结构, 一般是<code>1:2</code>, 先取最后一个字符作一级目录, 再取两个字符作二级目录; <code>keys_zone</code>控制存在shm中的active keys和data; inactive控制如果缓存在指定时间没有被访问, 则删掉; <code>max_size</code>控制存在目录文件系统下缓存的最大大小. <a href="http://serverfault.com/a/641572/173472">这篇</a>辅助解释讲得比较清晰.</p>
+<p><code>proxy_cache_key</code>控制匹配的模式, 在缓存文件中会记录当前这个缓存的key: <code>KEY: http://test.tankywoo.com/hello.html</code>;</p>
+<p>变量<code>$proxy_host</code>表示被代理的host:port, 即<code>proxy_pass</code>中的地址.</p>
+<p>如果配置了<code>proxy_temp_path</code>, 则缓存会现在temp path创建, 再rename到cache path, 所以建议在一个文件系统内.</p>
+<p>先开始没注意cache key 和 purge 有<code>$scheme</code>, 导致上了ssl后, 清理的缓存还是http的缓存. 应该清理https的缓存.</p>
+<p>清理缓存: <code>curl -I http://test.tankywoo.com/cache_purge/hello.html</code></p>
+<p>参考配置:</p>
+<div class="hlcode"><pre><span class="k">proxy_temp_path</span> <span class="s">/data/nginx/temp</span><span class="p">;</span>
+<span class="k">proxy_cache_path</span> <span class="s">/data/nginx/cache</span> <span class="s">levels=1:2</span> <span class="s">keys_zone=cache:200m</span> <span class="s">inactive=1d</span> <span class="s">max_size=1g</span><span class="p">;</span>
+
+<span class="k">server</span> <span class="p">{</span>
+    <span class="kn">listen</span>       <span class="mi">80</span><span class="p">;</span>
+
+    <span class="kn">server_name</span> <span class="s">test.tankywoo.com</span><span class="p">;</span>
+
+    <span class="kn">root</span> <span class="s">/opt/test/</span><span class="p">;</span>
+
+    <span class="kn">proxy_cache</span> <span class="s">cache</span><span class="p">;</span>
+    <span class="kn">proxy_cache_valid</span> <span class="mi">200</span> <span class="mi">302</span>     <span class="mi">10m</span><span class="p">;</span>
+    <span class="kn">proxy_cache_valid</span> <span class="mi">404</span>          <span class="mi">1m</span><span class="p">;</span>
+    <span class="kn">proxy_cache_valid</span> <span class="s">any</span>          <span class="mi">1m</span><span class="p">;</span>
+
+    <span class="kn">proxy_cache_key</span> <span class="nv">$scheme://$host$uri$is_args$args</span><span class="p">;</span>
+
+    <span class="kn">proxy_set_header</span> <span class="s">Host</span> <span class="nv">$host</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">X-Forwarded-For</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+    <span class="kn">proxy_set_header</span> <span class="s">X-Real-IP</span> <span class="nv">$remote_addr</span><span class="p">;</span>
+
+    <span class="kn">add_header</span> <span class="s">X-CACHE</span> <span class="nv">$upstream_cache_status</span><span class="p">;</span>
+
+    <span class="kn">access_log</span>  <span class="s">/var/log/nginx/test.log</span> <span class="s">test</span><span class="p">;</span>
+    <span class="kn">error_log</span> <span class="s">/var/log/nginx/test.error.log</span> <span class="s">debug</span><span class="p">;</span>
+
+    <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
+        <span class="kn">proxy_pass</span> <span class="s">http://127.0.0.1:8080</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kn">location</span> <span class="p">~</span> <span class="sr">/cache_purge(/.*)</span> <span class="p">{</span>
+        <span class="kn">proxy_cache_purge</span> <span class="s">cache</span> <span class="nv">$scheme://$host$1$is_args$args</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>关于proxy ssl这块, 抽时间再研究下 TODO</p>
+<h3 id="_3">一些坑</h3>
+<ul>
+<li><code>nginx -t</code>会对如<code>proxy_pass</code>指定的域名做检查, 如果无法解析, 会报<code>host not found in upstream...</code>, 感觉这个错误有些歧义, 和实现逻辑有关.</li>
+</ul>
+<h2 id="_4">资源</h2>
 <ul>
 <li><a href="http://huoding.com/2013/10/23/290">如何正确配置Nginx+PHP</a></li>
 <li><a href="http://ixdba.blog.51cto.com/2895551/806622">实战Nginx与PHP（FastCGI）的安装、配置与优化</a></li>
@@ -291,11 +339,15 @@ Date: Sun, 21 Aug 2016 14:15:32 GMT
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-12-03 13:12:43</p>
+        <p>站点最后生成 2016-12-24 16:16:26</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
     </div>
+
+    
+    
+
     <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));

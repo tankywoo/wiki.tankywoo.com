@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Email相关
     <span class="updated">最后更新&nbsp;
-    2016-12-03 13:00
+    2016-12-20 11:30
     
     </span>
   </div>
@@ -141,6 +141,13 @@
 
 
 <p><strong>注</strong>：注意要加上双引号</p>
+<p>另外, 还可以配合逻辑操作:</p>
+<ul>
+<li><code>~d 20/12/2016 ~b python</code>  # 逻辑与</li>
+<li><code>~d 20/12/2016 ! ~b python</code>  # 逻辑取反</li>
+<li><code>~d 20/12/2016 (~b python|~b bash)</code>  # 逻辑或、逻辑组</li>
+</ul>
+<p>具体可以看文档<a href="http://www.mutt.org/doc/manual/#complex-patterns">Nesting and Boolean Operators</a>一节</p>
 <p>参考:</p>
 <ul>
 <li><a href="http://unix.stackexchange.com/questions/91046/search-for-mail-content-with-mutt">Search for mail content with mutt</a></li>
@@ -203,11 +210,15 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-12-03 13:12:43</p>
+        <p>站点最后生成 2016-12-24 16:16:26</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
     </div>
+
+    
+    
+
     <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));

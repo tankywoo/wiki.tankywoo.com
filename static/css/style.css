@@ -100,7 +100,7 @@ hr {
 
 #footer .footer-left {
   float: left;
-  max-width: 70%;
+  max-width: 75%;
 }
 
 #footer .footer-right {
@@ -130,7 +130,16 @@ hr {
 }
 
 .category_list ul {
-  padding-left: 1em;
+  padding-left: 0em;
+}
+
+li.pagelist {
+  list-style: none;
+}
+
+.item_arrow:before {
+    content: "\0BB \020";
+    color: gray;
 }
 
 .category_list li.pagelist {
@@ -151,8 +160,9 @@ hr {
   margin-top: 0;
 }
 
-.coll_name:before { content: '['; }
-.coll_name:after { content: ']'; }
+.coll_name {
+  float: left;
+}
 
 #content {
   border-bottom: 0.1em solid #ccc;

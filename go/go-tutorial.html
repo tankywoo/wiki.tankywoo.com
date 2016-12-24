@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-    <title>logrotate - Wiki · Tanky Woo</title>
+    <title>Go入门笔记 - Wiki · Tanky Woo</title>
     <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
     <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -20,37 +20,20 @@
   <div id="post-nav">
     <a href="/">Wiki · Tanky Woo</a>
     &nbsp;&#187;&nbsp;
-    <a href="/#tool">tool</a>
-    &nbsp;&#187;&nbsp;logrotate
+    <a href="/#go">go</a>
+    &nbsp;&#187;&nbsp;Go入门笔记
     <span class="updated">最后更新&nbsp;
-    2016-08-03 22:03
-    
+    2016-12-15 22:00
     </span>
   </div>
 </div>
 <div class="clearfix"></div>
 <div id="content">
-  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">基础</a></li>
-<li><a href="#_2">参考</a></li>
-</ul>
-</div>
-<h2 id="_1">基础</h2>
-<p>关于logrotate分割日志后重新打开日志文件，一般发送<code>USR1</code>信号。</p>
-<p>具体可以看看各个信号的作用<code>man 7 signal</code>。 延伸：</p>
-<ul>
-<li><a href="http://stackoverflow.com/questions/5350865/why-do-many-unix-programs-use-signals-like-usr1">Why do many Unix programs use signals like USR1?</a></li>
-<li><a href="http://serverfault.com/questions/444673/php-fpm-signals-for-pool-error-log-rotation">PHP-FPM signals for pool error_log rotation</a></li>
-</ul>
-<h2 id="_2">参考</h2>
-<ul>
-<li>man 8 logrotate</li>
-<li><a href="http://vbird.dic.ksu.edu.tw/linux_basic/0570syslog_3.php#rotate">鸟哥的Linux私房菜</a></li>
-<li><a href="http://huoding.com/2013/04/21/246">被遗忘的Logrotate</a></li>
-<li><a href="http://www.thegeekstuff.com/2010/07/logrotate-examples/">HowTo: The Ultimate Logrotate Command Tutorial with 10 Examples</a></li>
-<li><a href="https://support.rackspace.com/how-to/understanding-logrotate-utility/">Understanding logrotate utility</a></li>
-<li><a href="https://serversforhackers.com/managing-logs-with-logrotate">Managing Logs with Logrotate</a></li>
-</ul>
+  <p>关于<code>GOROOT</code>和<code>GOPATH</code>环境变量, 如果是系统默认安装, 而非自定义的安装目录, 则<code>GOROOT</code>不需要设置.</p>
+<blockquote>
+<p>GOROOT must be set only when installing to a custom location. <a href="https://golang.org/doc/install#install">from</a></p>
+</blockquote>
+<p>关于<code>GOPATH</code>, 必须设置, 在get/build/install包时用到, 第三方的包都会装在这个目录下, 包括里面的二进制文件, 所以建议将<code>$GOPATH/bin</code>加入到<code>$PATH</code>环境变量中. 更多可以<code>go help gopath</code>.</p>
   
 </div>
     </div>

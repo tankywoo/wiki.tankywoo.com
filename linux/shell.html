@@ -23,7 +23,7 @@
     <a href="/#linux">linux</a>
     &nbsp;&#187;&nbsp;Bash Script
     <span class="updated">最后更新&nbsp;
-    2016-10-02 10:20
+    2016-12-05 20:50
     
     </span>
   </div>
@@ -151,6 +151,17 @@
 <li><a href="http://www.cyberciti.biz/faq/bash-comment-out-multiple-line-code/">Shell Script Put Multiple Line Comment</a></li>
 <li><a href="http://stackoverflow.com/questions/1444367/commenting-out-a-set-of-lines-in-a-shell-script">Commenting out a set of lines in a shell script</a></li>
 </ul>
+<p>遇到这个报错:</p>
+<div class="hlcode"><pre><span class="p">.</span><span class="o">/</span><span class="n">a</span><span class="p">.</span><span class="n">sh</span><span class="o">:</span> <span class="n">line</span> <span class="mi">46</span><span class="o">:</span> <span class="n">warning</span><span class="o">:</span> <span class="n">here</span><span class="o">-</span><span class="n">document</span> <span class="n">at</span> <span class="n">line</span> <span class="mi">34</span> <span class="n">delimited</span> <span class="n">by</span> <span class="n">end</span><span class="o">-</span><span class="n">of</span><span class="o">-</span><span class="n">file</span> <span class="p">(</span><span class="n">wanted</span> <span class="err">`</span><span class="n">HERE</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="p">.</span><span class="o">/</span><span class="n">a</span><span class="p">.</span><span class="n">sh</span><span class="o">:</span> <span class="n">line</span> <span class="mi">47</span><span class="o">:</span> <span class="n">syntax</span> <span class="n">error</span><span class="o">:</span> <span class="n">unexpected</span> <span class="n">end</span> <span class="n">of</span> <span class="n">file</span><span class="err">`</span><span class="p">)</span>
+</pre></div>
+
+
+<p>原因是因为delimiter前面有空格, 如果是tab, 在<code>&lt;&lt;-word</code>的情况下也可以, 但是空格不行; 如果是<code>&lt;&lt;word</code>, 则必须以delimiter开头.</p>
+<p>另外, <code>&lt;&lt;-word</code>这个挺实用的:</p>
+<blockquote>
+<p>If the redirection operator is &lt;&lt;-, then all leading tab characters are stripped from input lines and the line containing delimiter.  This allows here-documents within shell scripts to be indented in a natural fashion</p>
+</blockquote>
 <h2 id="shell">Shell语法</h2>
 <p>变量:</p>
 <ul>
@@ -887,11 +898,15 @@ false: shell built-in command</p>
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-12-03 13:12:43</p>
+        <p>站点最后生成 2016-12-24 16:16:26</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
     </div>
+
+    
+    
+
     <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
 document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
