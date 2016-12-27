@@ -1,9 +1,9 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-10-13 14:06
+updated: 2016-12-27 09:00
 description: "查漏补缺, Tricks/Tips/Fragments"
-log: "增加如何加密文件"
+log: "增加named pipe"
 ---
 
 [TOC]
@@ -448,3 +448,70 @@ enter des-cbc decryption password:
 
 * [How do I password protect a .tgz file with tar in Unix?](http://superuser.com/questions/370389/how-do-i-password-protect-a-tgz-file-with-tar-in-unix/370390#370390)
 * [openssl加密文件或文件夹](http://www.361way.com/openssl-encrypt-file/2692.html)
+
+
+### Named Pipe
+
+传统的pipe如`ls | grep x`, 是unamed pipe.
+
+而[named pipe](https://en.wikipedia.org/wiki/Named_pipe)(也就是fifo), 是对传统pipe的一种扩展, 用于进程间通信(IPC)
+
+fifo通过`mkfifo`命令创建:
+
+```bash
+$ mkfifo mypipe
+
+$ ls -alh mypipe
+prw-r--r-- 1 root root 0 Dec 27 08:52 mypipe
+```
+
+工作方式:
+
+```bash
+# client_1
+$ ls -al > mypipe
+
+# client_2
+$ cat < mypipe
+total 8
+drwxr-xr-x 2 root root 4096 Dec 27 08:54 .
+drwxr-xr-x 4 root root 4096 Dec 26 23:24 ..
+prw-r--r-- 1 root root    0 Dec 27 08:52 mypipe
+```
+
+比如client_1向fifo写内容后, 如果client_2还没有执行获取, 则client_1会被内核悬挂(阻塞)
+
+另外一个例子:
+
+```bash
+while read line <mypipe; do
+while> echo $line
+while> done
+```
+
+while循环一直等待mypipe的输入, 然后就可以被变量line读取并输出.
+
+
+关于**Command Substitution**, 可以直接看[Introduction to Named Pipes](http://www.linuxjournal.com/article/2156?page=0,0):
+
+```
+Command substitution occurs when you put a < or > in front of the left parenthesis. For instance, typing the command:
+
+	cat <(ls -l)
+
+results in the command ls -l executing in a subshell as usual, but redirects the output to a temporary named pipe, which bash creates, names and later deletes. Therefore, cat has a valid file name to read from, and we see the output of ls -l, taking one more step than usual to do so. Similarly, giving >(commands) results in Bash naming a temporary pipe, which the commands inside the parenthesis read for input.
+
+If you want to see whether two directories contain the same file names, run the single command:
+
+	cmp <(ls /dir1) <(ls /dir2)
+
+The compare program cmp will see the names of two files which it will read and compare.
+```
+
+cmp的这个用法前几天还见过.
+
+参考:
+
+* [Introduction to Named Pipes](http://www.linuxjournal.com/article/2156?page=0,0)
+* [How can I get more info on open pipes show in /proc in Linux?](http://serverfault.com/questions/48330/how-can-i-get-more-info-on-open-pipes-show-in-proc-in-linux)
+* [Why bash is closed while writing to named pipe?](http://stackoverflow.com/questions/37673392/why-bash-is-closed-while-writing-to-named-pipe)
