@@ -18,7 +18,7 @@ collection: "网络相关"
 
 图片阐述了域名注册各部分的职能, 来源 [Domain Name Registration Process](http://whois.icann.org/en/domain-name-registration-process):
 
-![domain registry process](https://tankywoo-wb.b0.upaiyun.com/Registry-Process-Large-FINALgif)
+![domain registry process](https://tankywoo-wb.b0.upaiyun.com/Registry-Process-Large-FINAL.gif)
 
 
 ## 术语 ##
