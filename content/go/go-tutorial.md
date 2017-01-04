@@ -1,8 +1,8 @@
 ---
 title: "Go入门笔记"
 date: 2016-12-15 22:00
-updated: 2017-01-01 21:00
-log: "增加教程"
+updated: 2017-01-04 08:30
+log: "更新笔记"
 ---
 
 [TOC]
@@ -43,7 +43,7 @@ func main() {
 }
 ```
 
-其中package我的理解是继续或者说基于的包名; main包表示这个程序的执行入口, 编译时会将这个编译为可执行程序(`go build`)而不是$GOPATH/pkg/下的静态库(`go install`). 类似Python中的`if __name__ == '__main__'`.
+其中package我的理解是继承或者说基于的包名; main包表示这个程序的执行入口, 编译时会将这个编译为可执行程序(`go build`)而不是$GOPATH/pkg/下的静态库(`go install`). 类似Python中的`if __name__ == '__main__'`.
 
 import则表示导入要使用的标准库包或第三方包.
 
@@ -52,7 +52,7 @@ import则表示导入要使用的标准库包或第三方包.
 * [Understanding Golang Packages](http://thenewstack.io/understanding-golang-packages/)
 * [golang-book Packages](https://www.golang-book.com/books/intro/11)
 
-多个import语句可以使用打包导入(factored import), 更优雅:
+多个import语句可以使用**打包导入(factored import)**, 更优雅:
 
 ```go
 import (
@@ -67,7 +67,7 @@ import "match"
 
 ### Exported names
 
-在 Go 中，首字母大写的名称是被导出的. 当import包时, 不被导出的包是无法被访问使用的.
+在 Go 中，首字母大写的名称是**可被导出**的. 当import包时, 不被导出的包是无法被访问使用的.
 
 ### Function
 
@@ -83,7 +83,7 @@ func swap(x, y string) (string, string) {
 
 函数名后面圆括号接参数, 参数后面指定返回类型, 多个相同的类型**不能**省略只写一个; 单个返回值可以不用圆括号括起来; 没有返回值则不写.
 
-Named return values(命令返回值), 即在函数名后的返回值指定变量名, 函数体内只需要裸return即可:
+Named return values(命名返回值), 即在函数名后的返回值指定变量名, 函数体内只需要裸return即可:
 
 ```go
 func swap(x, y string) (m, n string) {
@@ -92,7 +92,7 @@ func swap(x, y string) (m, n string) {
 }
 ```
 
-这里不能对参数做修改饭后通过命名返回值返回, 否则报错:
+这里不能对参数做修改后通过命名返回值返回, 否则报错:
 
 ```go
 // 错误的
@@ -121,7 +121,7 @@ func main() {
 // 输出: false false 1 2 abc 100 200
 ```
 
-Go中声明(declaration)和定义(definition)个人理解是不做区分的(和C不一样), 因为如果声明了变量但是未显式赋值, 会隐式复制给各类型的初始值(zero value, 零值).
+Go中声明(declaration)和定义(definition)个人理解是不做区分的(和C不一样), 因为如果声明了变量但是未显式赋值, 会隐式复制给各类型的初始值(zero value, **零值**).
 
 另外`var var_name var_type`和函数参数一样, 变量名在前, 类型在后.
 
@@ -129,7 +129,7 @@ Go中声明(declaration)和定义(definition)个人理解是不做区分的(和C
 
 最后, 也可以不写`var`, 改用`:=`的简明赋值语句, 但是此语法**只能用于函数内**, 而`var`则可以在函数外使用.
 
-声明和导入包一样, 可以打包声明:
+声明和导入包一样, 可以**打包声明**:
 
 ```go
 var (
@@ -192,7 +192,7 @@ for sum <= 10 {
 	sum += sum
 }
 
-// 上面的例子, 退出条件也省略, 就是无线循环了
+// 上面的例子, 退出条件也省略, 就是无限循环了
 for {
 }
 ```
@@ -313,7 +313,7 @@ fmt.Println(v)
 // {7 5}
 // {8 5}
 
-// Struct Literals 不清楚这个怎么翻译比较合适?
+// Struct Literals 结构体字面值
 v1 := Vertex{X: 1} // X: 1, Y: 0
 v2 := Vertex{}     // X: 0, Y: 0
 p := &Vertex{1, 2} // has type *Vertex
@@ -325,7 +325,7 @@ fmt.Println(v1, v2, p)
 
 ### Array
 
-数组是定长的`[n]T`
+数组是**定长**的`[n]T`
 
 ```go
 var a1 [2]string
@@ -336,12 +336,12 @@ fmt.Println(a1, a2)
 // 输出: [hello world] [1 2 3]
 ```
 
-注意长长度`[n]`也是类型的一部分
+注意长度`[n]`也是类型的一部分
 
 
 ### Slice
 
-数组是定长的, Go还提供了切片这个数据结构, 长度是动态变化的, 所以这个用的比数组更频繁.
+数组是定长的, Go还提供了切片这个数据结构, 长度是**动态变化**的, 所以这个用的比数组更频繁.
 
 (刚看到 slice/切片 这个词, 第一反应是一个函数, 结果是一个数据结构...)
 
@@ -361,7 +361,7 @@ fmt.Println(reflect.TypeOf(slice1), reflect.TypeOf(slice2))
 // []int []int
 ```
 
-切片自身并不存储数据, 它是对底层数组的引用.
+**切片自身并不存储数据, 它是对底层数组的引用**.
 
 所以对切片中数据的修改, 会影响相应的底层数组的值, 也会影响其它引用到这个数组的切片
 
@@ -488,6 +488,11 @@ s := []int{1, 2, 3}
 for i, v := range s {
 	fmt.Println(i, v)
 }
+
+// i 是切片索引
+for i := range s {
+	fmt.Println(s[i])
+}
 ```
 
 和Python一样, 如果不关心索引, 可以直接赋值给变量名`_`
@@ -498,7 +503,7 @@ for i, v := range s {
 映射(也就是字典吧)表示一个key/value对集合, 声明语法:
 
 ```go
-var <map_name> map[<map_key_type>]<map_value_type>
+var map_name map[map_key_type]map_value_type
 ```
 
 即:
@@ -583,7 +588,7 @@ v := Vertex{3, 4}
 fmt.Println(AbsFunc(v))
 ```
 
-如上所说, 不光结构体可以声明方法, 比如:
+如上所说, 不光结构体可以声明方法, 比如自定义类型:
 
 ```go
 type MyFloat float64
@@ -596,9 +601,9 @@ func (f MyFloat) Abs() float64 {
 }
 ```
 
-但是receiver的类型必须定义在当前包里, 不能给其它包里定义的类型声明method, 比如内置类型.
+但是**receiver的类型必须定义在当前包里, 不能给其它包里定义的类型声明method, 比如内置类型**.
 
-上面使用的receiver是一个值(value receiver), receiver还是是一个指针(pointer receiver), 如:
+上面使用的receiver是一个值(value receiver), receiver还可以是一个指针(pointer receiver), 如:
 
 ```go
 // method
@@ -656,7 +661,7 @@ Go Tour上这块英文感觉有点绕, 需要多读几遍.
 
 接口类型是一个抽象类型, 它的值可以是任何值, 只需要这个值实现了接口的methods
 
-接口的好处就是将接口的定义和时间分离.
+接口的好处就是将接口的定义和实现分离.
 
 ```go
 // 接口类型
@@ -698,7 +703,7 @@ func main() {
 // 0.11
 ```
 
-一个接口需要挂载到一个底层具体类型上, 调用接口的方法实际就是调用底层具体类型的同名方法.
+**一个接口需要挂载到一个底层具体类型上, 调用接口的方法实际就是调用底层具体类型的同名方法.**
 
 如果实际类型是nil (nil underlying value), 则接口也是nil
 
