@@ -1,8 +1,8 @@
 ---
 title: "Go入门笔记"
 date: 2016-12-15 22:00
-updated: 2017-01-04 08:30
-log: "更新笔记"
+updated: 2017-01-04 23:00
+log: "增加goroutine & channel"
 ---
 
 [TOC]
@@ -764,3 +764,116 @@ func main() {
 	fmt.Println(a)
 ```
 
+
+### goroutine
+
+轻量级线程(lightweight thread)
+
+goroutines在同一个地址空间中运行, 所以访问共享内存必须进行同步
+
+使用关键字`go`, `go func(x, y)`中x, y是在当前goroutine中定义, 但是func的执行是在一个新的goroutine:
+
+```go
+func say(s string) {
+    for i := 0; i < 5; i++ {
+        time.Sleep(100 * time.Millisecond)
+        fmt.Println(s)
+    }
+}
+
+func main() {
+    go say("world")
+    say("hello")
+}
+```
+
+如果当前goroutine结束, 则新起的goroutine也会结束. 所以这个和执行时间、顺序有关系, 上面的例子会出现偶尔world只输出4次的情况. 如果去掉time.Sleep, 则可能会出现world还没来得及输出就已经结束了.
+
+### channel
+
+channel是一个有类型的管道(typed conduit), 可以用来接收或发送数据, 操作符`<-`, channel 和 `<-`的方向表示了数据流的方向:
+
+```go
+ch <- v    // 发送v到channel ch
+v := <-ch  // 接收来自channel ch的数据, 并赋值给v
+```
+
+和slice, map类似, channel 在使用前需要创建:
+
+```
+ch := make(chan int)
+```
+
+**默认情况下，在另一端准备好之前，发送和接收都会阻塞。这使得 goroutine 可以在没有明确的锁或竞态变量的情况下进行同步。**
+
+```go
+package main
+
+import "fmt"
+
+func sum(s []int, c chan int) {
+	sum := 0
+	for _, v := range s {
+		sum += v
+	}
+	c <- sum // send sum to c
+}
+
+func main() {
+	s := []int{7, 2, 8, -9, 4, 0}
+
+	c := make(chan int)
+	go sum(s[:len(s)/2], c)
+	go sum(s[len(s)/2:], c)
+	x, y := <-c, <-c // receive from c
+
+	fmt.Println(x, y, x+y)
+}
+```
+
+上面例子是goroutine和channel的配合.
+
+创建channel时, 第二个参数可以指定channel大小, 使其为**buffered channel**:
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	ch := make(chan int, 2)
+	ch <- 1
+	ch <- 2
+	fmt.Println(<-ch)
+	fmt.Println(<-ch)
+}
+```
+
+如果是buffered channel, 则如果buffer满了, 则发送给channel会被block; 如果buffer空了, 则从channel读取数据会被block.
+
+上面例子如果在<-ch之前再写数据进ch, 会导致报错: fatal error: all goroutines are asleep - deadlock!
+
+在读取channel时, 如果指定第二个参数, 可以确认channel是否关闭. 对channel进行for循环可以持续从channel读取数据, 直到channel关闭.
+
+
+```go
+ch := make(chan int)
+close(ch)    // 关闭channel
+v, ok := <-ch  // 检查channel是否关闭
+for i := range ch {  // 持续从channel读取数据
+  ...
+}
+```
+
+`select` 语句用于从多个channel中选出一个可用的channel来执行, 都没有则block, 如果有多个则随机选一个; 如果有`default` case, 则不会block, 没有任何case可执行时则用default case
+
+```go
+select {
+case <-c1:
+	...
+case <-c2:
+	...
+default:
+	...
+}
+```
