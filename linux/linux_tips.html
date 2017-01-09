@@ -22,8 +22,8 @@
     &nbsp;&#187;&nbsp;
     <a href="/#linux">linux</a>
     &nbsp;&#187;&nbsp;Linux Tips
-    <span class="updated">最后更新&nbsp;
-    2016-10-13 14:06
+    <span class="updated">当前页面最后更新&nbsp;
+    2016-12-27 09:00
     
     </span>
   </div>
@@ -64,6 +64,7 @@
 <li><a href="#linux-ipv6-in-ipv4">Linux IPv6-in-IPv4</a></li>
 <li><a href="#days-since-19700101">days since 1970/01/01 和 当前日期互相转换</a></li>
 <li><a href="#_10">如何加密文件</a></li>
+<li><a href="#named-pipe">Named Pipe</a></li>
 </ul>
 </div>
 <h3 id="shell">查看现在使用的是哪一个shell</h3>
@@ -458,20 +459,75 @@ enter des-cbc decryption password:
 <li><a href="http://superuser.com/questions/370389/how-do-i-password-protect-a-tgz-file-with-tar-in-unix/370390#370390">How do I password protect a .tgz file with tar in Unix?</a></li>
 <li><a href="http://www.361way.com/openssl-encrypt-file/2692.html">openssl加密文件或文件夹</a></li>
 </ul>
+<h3 id="named-pipe">Named Pipe</h3>
+<p>传统的pipe如<code>ls | grep x</code>, 是unamed pipe.</p>
+<p>而<a href="https://en.wikipedia.org/wiki/Named_pipe">named pipe</a>(也就是fifo), 是对传统pipe的一种扩展, 用于进程间通信(IPC)</p>
+<p>fifo通过<code>mkfifo</code>命令创建:</p>
+<div class="hlcode"><pre><span class="nv">$ </span>mkfifo mypipe
+
+<span class="nv">$ </span>ls -alh mypipe
+prw-r--r-- 1 root root 0 Dec 27 08:52 mypipe
+</pre></div>
+
+
+<p>工作方式:</p>
+<div class="hlcode"><pre><span class="c"># client_1</span>
+<span class="nv">$ </span>ls -al &gt; mypipe
+
+<span class="c"># client_2</span>
+<span class="nv">$ </span>cat &lt; mypipe
+total 8
+drwxr-xr-x 2 root root 4096 Dec 27 08:54 .
+drwxr-xr-x 4 root root 4096 Dec 26 23:24 ..
+prw-r--r-- 1 root root    0 Dec 27 08:52 mypipe
+</pre></div>
+
+
+<p>比如client_1向fifo写内容后, 如果client_2还没有执行获取, 则client_1会被内核悬挂(阻塞)</p>
+<p>另外一个例子:</p>
+<div class="hlcode"><pre><span class="k">while </span><span class="nb">read </span>line &lt;mypipe; <span class="k">do</span>
+<span class="k">while</span>&gt; <span class="nb">echo</span> <span class="nv">$line</span>
+<span class="k">while</span>&gt; <span class="k">done</span>
+</pre></div>
+
+
+<p>while循环一直等待mypipe的输入, 然后就可以被变量line读取并输出.</p>
+<p>关于<strong>Command Substitution</strong>, 可以直接看<a href="http://www.linuxjournal.com/article/2156?page=0,0">Introduction to Named Pipes</a>:</p>
+<div class="hlcode"><pre><span class="n">Command</span> <span class="n">substitution</span> <span class="n">occurs</span> <span class="n">when</span> <span class="n">you</span> <span class="n">put</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">or</span> <span class="o">&gt;</span> <span class="n">in</span> <span class="n">front</span> <span class="n">of</span> <span class="n">the</span> <span class="n">left</span> <span class="n">parenthesis</span><span class="p">.</span> <span class="n">For</span> <span class="n">instance</span><span class="p">,</span> <span class="n">typing</span> <span class="n">the</span> <span class="n">command</span><span class="o">:</span>
+
+    <span class="n">cat</span> <span class="o">&lt;</span><span class="p">(</span><span class="n">ls</span> <span class="o">-</span><span class="n">l</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="n">in</span> <span class="n">the</span> <span class="n">command</span> <span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="n">executing</span> <span class="n">in</span> <span class="n">a</span> <span class="n">subshell</span> <span class="n">as</span> <span class="n">usual</span><span class="p">,</span> <span class="n">but</span> <span class="n">redirects</span> <span class="n">the</span> <span class="n">output</span> <span class="n">to</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">named</span> <span class="n">pipe</span><span class="p">,</span> <span class="n">which</span> <span class="n">bash</span> <span class="n">creates</span><span class="p">,</span> <span class="n">names</span> <span class="n">and</span> <span class="n">later</span> <span class="n">deletes</span><span class="p">.</span> <span class="n">Therefore</span><span class="p">,</span> <span class="n">cat</span> <span class="n">has</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">file</span> <span class="n">name</span> <span class="n">to</span> <span class="n">read</span> <span class="n">from</span><span class="p">,</span> <span class="n">and</span> <span class="n">we</span> <span class="n">see</span> <span class="n">the</span> <span class="n">output</span> <span class="n">of</span> <span class="n">ls</span> <span class="o">-</span><span class="n">l</span><span class="p">,</span> <span class="n">taking</span> <span class="n">one</span> <span class="n">more</span> <span class="n">step</span> <span class="n">than</span> <span class="n">usual</span> <span class="n">to</span> <span class="k">do</span> <span class="n">so</span><span class="p">.</span> <span class="n">Similarly</span><span class="p">,</span> <span class="n">giving</span> <span class="o">&gt;</span><span class="p">(</span><span class="n">commands</span><span class="p">)</span> <span class="n">results</span> <span class="n">in</span> <span class="n">Bash</span> <span class="n">naming</span> <span class="n">a</span> <span class="n">temporary</span> <span class="n">pipe</span><span class="p">,</span> <span class="n">which</span> <span class="n">the</span> <span class="n">commands</span> <span class="n">inside</span> <span class="n">the</span> <span class="n">parenthesis</span> <span class="n">read</span> <span class="k">for</span> <span class="n">input</span><span class="p">.</span>
+
+<span class="n">If</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">see</span> <span class="n">whether</span> <span class="n">two</span> <span class="n">directories</span> <span class="n">contain</span> <span class="n">the</span> <span class="n">same</span> <span class="n">file</span> <span class="n">names</span><span class="p">,</span> <span class="n">run</span> <span class="n">the</span> <span class="n">single</span> <span class="n">command</span><span class="o">:</span>
+
+    <span class="n">cmp</span> <span class="o">&lt;</span><span class="p">(</span><span class="n">ls</span> <span class="o">/</span><span class="n">dir1</span><span class="p">)</span> <span class="o">&lt;</span><span class="p">(</span><span class="n">ls</span> <span class="o">/</span><span class="n">dir2</span><span class="p">)</span>
+
+<span class="n">The</span> <span class="n">compare</span> <span class="n">program</span> <span class="n">cmp</span> <span class="n">will</span> <span class="n">see</span> <span class="n">the</span> <span class="n">names</span> <span class="n">of</span> <span class="n">two</span> <span class="n">files</span> <span class="n">which</span> <span class="n">it</span> <span class="n">will</span> <span class="n">read</span> <span class="n">and</span> <span class="n">compare</span><span class="p">.</span>
+</pre></div>
+
+
+<p>cmp的这个用法前几天还见过.</p>
+<p>参考:</p>
+<ul>
+<li><a href="http://www.linuxjournal.com/article/2156?page=0,0">Introduction to Named Pipes</a></li>
+<li><a href="http://serverfault.com/questions/48330/how-can-i-get-more-info-on-open-pipes-show-in-proc-in-linux">How can I get more info on open pipes show in /proc in Linux?</a></li>
+<li><a href="http://stackoverflow.com/questions/37673392/why-bash-is-closed-while-writing-to-named-pipe">Why bash is closed while writing to named pipe?</a></li>
+</ul>
   
 </div>
     </div>
     <div id="footer">
       <div class="footer-left">
         <p>
-        Copyright © 2012-2016 Tanky Woo.
+        Copyright © 2012-2017 Tanky Woo.
         Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
         Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
         </p>
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2016-12-24 16:16:26</p>
+        <p>站点最后生成 2017-01-08 18:02:50</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
