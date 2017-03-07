@@ -1,9 +1,9 @@
 ---
 title: "Git"
 date: 2013-11-08 00:02
-updated: 2016-09-17 12:30
+updated: 2017-03-07 17:55
 collection: "版本控制管理"
-log: "更新子模块文档"
+log: "增加缓存用户名/密码"
 ---
 
 [TOC]
@@ -968,6 +968,80 @@ git自身也有一个环境变量`$GIT_PAGER`, 如果配置了, 则会覆盖系�
 * [Merge, update, and pull Git branches without using checkouts](http://stackoverflow.com/questions/3216360/merge-update-and-pull-git-branches-without-using-checkouts)
 * [Git pull/fetch with refspec differences](http://stackoverflow.com/questions/7169103/git-pull-fetch-with-refspec-differences)
 * [pro git: 9.5 Git 内部原理 - The Refspec](https://git-scm.com/book/zh/v1/Git-%E5%86%85%E9%83%A8%E5%8E%9F%E7%90%86-The-Refspec)
+
+
+## 缓存用户名/密码
+
+Git 的 pull/push url 如果是 `http/https` 的情况下，每次执行 pull 或 push 都需要交互式输入用户名和密码。
+
+Git 提供了 credential cache 的功能，就是将第一次输入的用户名密码缓存到内存一段时间，后续这个时间段内的 git 操作如果需要输入用户名密码，都可以从这个缓存中获取。
+
+详细见文档：[git-credential-cache](https://git-scm.com/docs/git-credential-cache#_name) 和 [Caching your GitHub password in Git](https://help.github.com/articles/caching-your-github-password-in-git/#platform-linux)
+
+比如在一个 git 项目里，执行（例子来源上面链接的文档）：
+
+```
+$ git config credential.helper cache
+$ git push http://example.com/repo.git
+Username: <type your username>
+Password: <type your password>
+
+[work for 5 more minutes]
+$ git push http://example.com/repo.git
+[your credentials are used automatically]
+```
+
+如果 `git config` 没有指定 `--global` 全局配置，则写操作默认（`--local`）只针对当前项目，后续还有其它项目，则需要在 pull/push 之前先再执行 `git config credential.helper cache` 使这个项目也配置 cache。
+
+另外，默认的缓存时间目前是 900s，也可以改超时时间：
+
+```
+$ git config credential.helper 'cache --timeout=300'
+```
+
+题外话：
+
+最近写一个脚本，习惯在脚本开始获取 git 的用户名密码保存在变量中，然后后续使用，也可以如下：
+
+```bash
+read -p "Input git username: " GIT_USER
+read -s -p "Input git password: " GIT_PASS
+git clone http://${GIT_USER}:${GIT_PASS}@example.com/repo.git
+```
+
+另外一个情况，很多工具可以通过环境变量指定用户名密码，如：`USERNAME=tankywoo PASSWORD=*** my-command`
+
+git 也可以实现这种情况，关于 credential，git 默认提供两种方式（`helper`）：`cache` 和 `store`，后者存在磁盘。
+
+但是其也支持使用第三方 helper，可以实现这个功能：
+
+```
+# on Gentoo
+$ cat /usr/libexec/git-core/git-credential-read-env
+#!/bin/bash
+
+if [[ $# -eq 1 && $1 == "get" ]] ; then
+    if [[ -z ${USERNAME} || -z ${PASSWORD} ]] ; then
+        exit 0
+    fi
+    echo "username=${USERNAME}"
+    echo "password=${PASSWORD}"
+fi
+
+exit 0
+
+$ cat ~/.gitconfig
+[credential]
+    helper = read-env
+
+$ USERNAME=tankywoo PASSWORD=*** git pull
+```
+
+具体需要看 [gitcredentials](https://git-scm.com/docs/gitcredentials) 和 `man git-credential`。
+
+将自定义的脚本放到指令路径下，通过`git help -a | grep credential-` 可以搜到，然后配置 `[credential]`，名称为不包含`git-credential-`的名字即可。
+
+（TODO：有一个坑，在 `zsh` 下报错：`remote: HTTP Basic: Access denied`，暂时未找到原因。）
 
 
 ## Git资料 ##
