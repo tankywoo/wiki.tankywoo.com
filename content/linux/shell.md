@@ -2,6 +2,7 @@
 title: "Bash Script"
 date: 2013-08-17 07:23
 updated: 2016-12-05 20:50
+collection: Bash
 log: "补充here document的说明"
 ---
 

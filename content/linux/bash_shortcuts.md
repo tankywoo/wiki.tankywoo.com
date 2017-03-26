@@ -2,6 +2,7 @@
 title: "Bash Shortcuts"
 date: 2013-08-17 07:23
 updated: 2016-03-03 12:53
+collection: Bash
 ---
 
 ## Ctrl ##
