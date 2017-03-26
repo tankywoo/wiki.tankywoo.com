@@ -1,7 +1,8 @@
 ---
 title: "Practical Vim"
 date: 2014-11-13 22:11
-tag: vim
+collection: "编辑器"
+tag: vim, book
 ---
 
 [TOC]

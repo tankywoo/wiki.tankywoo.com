@@ -1,6 +1,8 @@
 ---
 title: "Version Control with Git"
 date: 2014-04-28 23:31
+collection: "版本控制管理"
+tag: git, book
 ---
 
 [TOC]

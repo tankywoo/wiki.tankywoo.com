@@ -3,6 +3,7 @@ title: "Git"
 date: 2013-11-08 00:02
 updated: 2017-03-07 17:55
 collection: "版本控制管理"
+tag: git
 log: "增加缓存用户名/密码"
 ---
 

@@ -2,6 +2,7 @@
 title: "JavaScript"
 date: 2016-08-21 22:29
 updated: 2016-10-03 11:00
+collection: javascript
 tag: javascript
 log: "增加$(document).ready()相关"
 ---
