@@ -1,7 +1,7 @@
 ---
 title: "InfluxDB"
 date: 2016-09-21 10:40
-updated: 2016-11-10 18:00
+updated: 2017-03-26 17:35
 logs: "更新RP和CQ文档"
 ---
 
@@ -102,6 +102,7 @@ Using database mydb
 # 查询数据
 # 需要用 **双引号**
 # 也可以 **都** 不用双引号
+# ref: https://docs.influxdata.com/influxdb/v1.2/write_protocols/line_protocol_tutorial/#quoting
 > SELECT "host", "region", "value" FROM "cpu"
 name: cpu
 ---------
@@ -259,6 +260,10 @@ Using retention policy one_day
 
 如上可以看到, 说有使用`one_day`这个RP, 后续如果直接`insert mem value=3`，则依然是写入`one_day`这个RP. 要么重新`insert into`指定, 要么重新登录cli client.
 
+如果需要清空 RP 里的数据，则直接删掉 RP 即可。
+
+目前这块没法针对 RP 中的某个 measurement 单独删除，因为 `drop measurement "xxx"` 是没法指定 RP 的，以前这样会导致将默认RP的 measurement 删掉，现在会有提示（在 Issue 上看到的，没具体尝试）。
+
 构建CQ:
 
 ```
@@ -266,6 +271,19 @@ Using retention policy one_day
 
 # 查看
 > show continuous queries
+```
+
+关于这块，两点需要注意：
+
+1 `GROUP BY` 后面如果没有接指定的 **tags** （逗号分隔），则生成的 RP 数据中，这些 tags 的值都是空的。
+
+2 在我使用的情况，一个 db 里 N 个 measurements，一个 measurement 中 N 个 fields。全部按上面来添加，会累晕的，后来有支持 [Automatically downsample a database with backreferencing](https://docs.influxdata.com/influxdb/v1.0/query_language/continuous_queries/#example-3-automatically-downsample-a-database-with-backreferencing)，但是有个蛋疼的地方，比如用 `mean()`，它会将所有的 field 的名字都改为 *mean_field*，优点就是一个 CQ 就解决了所有 measurements 的问题，而且后面的 tags 也可以省略。不过最后我还是选择写个脚本生成20多个 CQ……
+
+```
+CREATE CONTINUOUS QUERY "cq_basic_br" ON "transportation"
+BEGIN
+  SELECT mean(*) INTO "downsampled_transportation"."autogen".:MEASUREMENT FROM /.*/ GROUP BY time(30m),*
+END
 ```
 
 参考文档:
