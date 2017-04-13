@@ -1,8 +1,8 @@
 ---
 title: "InfluxDB"
 date: 2016-09-21 10:40
-updated: 2017-03-26 17:35
-logs: "更新RP和CQ文档"
+updated: 2017-04-13 12:30
+logs: "测试 Point 唯一性"
 ---
 
 [TOC]
@@ -295,9 +295,36 @@ END
 
 ## 其它
 
-1\. 覆盖原来的point:
+### 关于 point 的唯一性
 
-插入point时指定需要覆盖的point的时间戳即可
+一个 Point 由 timestamp 和 tag 唯一识别。
+
+所以要覆盖一个 Point 时，即修改这个 Point 的某些 value，只需要插入时指定相应的 timestamp 和 tag 即可：
+
+```
+> insert load,host=server1 value=0.00 1488435842307330152
+> select * from load
+name: load
+---------
+time                    host    value
+1488435842307330152     server1 0
+
+# 插入一条相同的
+> insert load,host=server1 value=0.00 1488435842307330152
+> select * from load
+name: load
+---------
+time                    host    value
+1488435842307330152     server1 0
+
+# 插入一条值修改后的
+> insert load,host=server1 value=0.01 1488435842307330152
+> select * from load
+name: load
+---------
+time                    host    value
+1488435842307330152     server1 0.01
+```
 
 
 ## 术语
