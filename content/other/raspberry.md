@@ -2,7 +2,8 @@
 layout: page
 title: "树莓派 Raspberry"
 date: 2015-10-30 08:30
-update: 2015-10-30 08:30
+update: 2017-04-13 10:30
+log: "补充一些资源"
 ---
 
 [TOC]
@@ -16,6 +17,14 @@ update: 2015-10-30 08:30
 然后装的基于Debian6的Raspbian wheezy
 
 最近刚换上基于Debian7的[Raspbian Jessie](https://www.raspberrypi.org/downloads/raspbian/)
+
+*（2017-04-13 补充）*
+
+一些资源：
+
+* [树莓派安装 Gentoo](https://wiki.gentoo.org/wiki/Raspberry_Pi)  算了，还是别自己遭罪了，最近刚买了一个 Deskmini，专门来跑 Gentoo
+* [树莓派可以安装的Linux发行版有哪些？](https://www.zhihu.com/question/31632573)  看看大家都给出了哪些资源
+* [官方下载页面](https://www.raspberrypi.org/downloads/) | [官方下载目录](https://downloads.raspberrypi.org/) 不折腾了，还是 Raspbian
 
 
 ## 安装镜像 ##
