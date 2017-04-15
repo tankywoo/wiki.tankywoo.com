@@ -1,8 +1,8 @@
 ---
 title: "Let’s Encrypt"
 date: 2016-05-06 22:30
-updated: 2016-08-02 00:05
-log: "更新acme协议说明"
+updated: 2017-04-15 17:50
+log: "增加 解析 certbot-auto"
 ---
 
 [TOC]
@@ -153,6 +153,46 @@ Let’s Encrypt 签发的证书只有 90 天有效期，但可以通过crontab�
 也可以强制更新，用`--renew-by-default`选项：
 
 	./certbot-auto certonly --manual --renew-by-default -d tankywoo.com --email me@tankywoo.com
+
+
+## 解析 certbot-auto
+
+在使用 certbot 时，有一点比较让人恼火，就是隔一段时间再使用，运行时会升级，然后重新常见 venv 然后安装一堆包，甚至我想 `--help` 看个帮助文档也给先升级，等的让人恼火。
+
+主要目的是解决几个问题：
+
+- 不做自动更新
+- 不删除旧的 venv 并重新创建 venv
+- 安装包时使用的源是本地配置还是强制走官方 pypi 了？
+
+所以看了下 certbot-auto 的脚本（目前版本 0.13.0），步骤主要是：
+
+- 先确认是否是 root 用户执行，不是则设置好 sudo 所使用的命令，以及相关的环境变量
+- 进入 Phase 1，即 else 部分
+	+ 如果在 venv/bin 目录下没有 letsencrypt 可执行文件，则进入 Bootstrap 部分，这块会根据不同发行版，检查指定软件如 dev-python/virtualenv，dev-libs/openssl 等是否安装，如果没有则安装。就算都安装了，检查还是需要一点时间。
+	+ 如果有 letsencrypt 可执行文件，如果没有指定 `--no-self-upgrade` 选项，则会下拉最新的 certbot-auto 脚本，并和当前版本对比，如果有则更新 certbot-auto。这块也比较耗时。并影响后面。
+- 进入 Phase 2 部分
+	+ 如果更新后的 certbot-auto 版本和本地安装的 letsencrypt 可执行文件版本不一致，则删除 venv，然后重建 venv
+	+ 然后通过脚本从官方 PyPI 上安装 pip、easy_install 等几个基本工具。对于国内来说，会比较慢，所以这块也是一个耗时的地方。
+	+ 然后有一大串需要安装的 Python Package，通过 pip 安装，所以这块是会用到本地配置的 pip 源，如果有配置的话。但是也顶不住这么多包要安装，所以也很耗时。
+- 都搞定后，就根据子命令，该签发的签发，该 renew 的就 renew……
+
+总结（适合临时急着签发，平时不急的话可以更新下）：
+
+1. 不要允许自更新，选项 `--no-self-upgrade`
+2. 不用 bootstrap 去检查了，选项 `--no-bootstrap`
+
+所以建议后续签发时执行：
+
+```bash
+# 签发
+./certbot-auto certonly --no-bootstrap --debug --no-self-upgrade --verbose --manual -d example.com
+
+# 更新
+./certbot-auto certonly --no-bootstrap --debug --no-self-upgrade --renew-by-default --verbose --manual -d example.com
+```
+
+也可以开启 `--verbose`，自行观察具体哪块耗时。
 
 
 ## 其它 ##
