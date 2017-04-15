@@ -2,8 +2,8 @@
 layout: page
 title: "树莓派 Raspberry"
 date: 2015-10-30 08:30
-update: 2017-04-13 10:30
-log: "补充一些资源"
+update: 2017-04-15 23:16
+log: "更新树莓派 ssh 的一些问题"
 ---
 
 [TOC]
@@ -46,10 +46,12 @@ Win下好像使用的是win32diskimager这个工具.
 
 ## 镜像源 ##
 
-找了一圈, 发现国内 [清华mirror](http://mirrors.tuna.tsinghua.edu.cn/help/#raspbian) 支持Jessie.
+<strike>找了一圈, 发现国内</strike> [清华mirror](http://mirrors.tuna.tsinghua.edu.cn/help/#raspbian) 支持Jessie.
 
 	deb http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ jessie main non-free contrib
 	deb-src http://mirrors.tuna.tsinghua.edu.cn/raspbian/raspbian/ jessie main non-free contrib
+
+还有 [LUG@USTC](https://lug.ustc.edu.cn/wiki/mirrors/help/raspbian)
 
 更多的源列表见官方 [Raspbian Mirrors](https://www.raspbian.org/RaspbianMirrors)
 
@@ -179,7 +181,56 @@ name是映射到/dev/mapper/下的设备名, 可以任意写
 
 发现默认的locale不知为何设置为`en_GB.UTF-8`, 导致使用mosh有问题, 使用export没法修改`LC_ALL`等.
 
-没去具体看原因, 然后发现`raspi-config`里有对本地化的设置.(应该是之前`en_US.UTF-8`没有安装)
+没去具体看原因, 然后发现`raspi-config`里有对本地化的设置.(原因是 `en_US.UTF-8` 没有预生成)
+
+
+## 开启 ssh ##
+
+在 2016.11 的 release 中，ssh 默认开启给关闭了，开启很简单，具体参考官方文档 [REMOTE-ACCESS](https://www.raspberrypi.org/documentation/remote-access/ssh/)。
+
+另外，开启 ssh server 后，连接报错：
+
+```
+$ ssh pi@192.168.1.200
+Connection reset by 192.168.1.200
+```
+
+排查后，发现 `host_key_file` 有问题：
+
+```
+$ file /etc/ssh/ssh_host_*
+/root/ssh.bak/ssh_host_dsa_key:         empty
+/root/ssh.bak/ssh_host_dsa_key.pub:     empty
+/root/ssh.bak/ssh_host_ecdsa_key:       empty
+/root/ssh.bak/ssh_host_ecdsa_key.pub:   empty
+/root/ssh.bak/ssh_host_ed25519_key:     empty
+/root/ssh.bak/ssh_host_ed25519_key.pub: empty
+/root/ssh.bak/ssh_host_key:             OpenSSH RSA1 private key, version 1.1
+/root/ssh.bak/ssh_host_key.pub:         ASCII text, with very long lines
+/root/ssh.bak/ssh_host_rsa_key:         empty
+/root/ssh.bak/ssh_host_rsa_key.pub:     empty
+```
+
+ssh protocol 2 的相关 host key 文件都是空的，只有 protocol 1 的 key，但是 sshd_config 配置默认是 `Protocol 2`。
+
+删掉这些空文件，然后重新生成：
+
+```
+$ dpkg-reconfigure openssh-server
+```
+
+这一块再继续深挖了一下：
+
+目前稍微新一些的 OpenSSH 版本，`Protocol` 的版本默认都是2，如果要指定 1 和 2 混合，则显示写为 `Protocol 1,2`。默认的 `HostKey` 都是相应协议下的 host_key_file 文件名。
+
+在 OpenSSH 6.7，`HostKey` 如果指定了相应的 host_key_file，比如只指定了 2 的，则哪怕写了协议是 1 和 2，客户端也无法用协议 1 登录。除非也写了协议 1 的 `HostKey`，或者全部注释使用默认。
+
+在 OpenSSH 7.3，貌似不论怎么配置，客户端还是无法使用协议 1，这块就没有继续深究下去了。
+
+
+## 配置 Wifi ##
+
+参考 [SETTING WIFI UP VIA THE COMMAND LINE](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)，wpa-supplicant 默认是运行的，修改配置后，执行 `wpa_cli reconfigure` 重新加载配置即可。
 
 
 ## 其它 ##
