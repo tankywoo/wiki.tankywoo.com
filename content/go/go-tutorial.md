@@ -628,7 +628,7 @@ var v Vertex
 
 // 针对上面的Scale
 ScaleFunc(v, 3)      // compile error!
-ScaleFunc(v, 3)      // ok
+ScaleFunc(&v, 3)      // ok
 v.ScaleMethod(3)     // ok, as (&v).ScaleMethod()
 p := &v
 p.ScaleMethod(3)     // ok
@@ -638,7 +638,7 @@ AbsFunc(v)           // ok
 AbsFunc(&v)          // compile error!
 v.AbsMethod()        // ok
 p := &v
-p.AbsMehod()         // ok, as (*p).AbsMethod()
+p.AbsMethod()         // ok, as (*p).AbsMethod()
 ```
 
 为了方便, Go的解释器对method作了一些自动化处理, 如上例子, 不论是pointer receiver还是value receiver的方法, 都可以通过pointer或value来调用.
