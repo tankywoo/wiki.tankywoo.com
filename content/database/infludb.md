@@ -1,8 +1,8 @@
 ---
 title: "InfluxDB"
 date: 2016-09-21 10:40
-updated: 2017-04-13 12:30
-logs: "测试 Point 唯一性"
+updated: 2017-05-05 15:00
+logs: "增加 GROUP BY 语句说明"
 ---
 
 [TOC]
@@ -291,6 +291,31 @@ END
 * [Downsampling and Data Retention](https://docs.influxdata.com/influxdb/v1.0/guides/downsampling_and_retention/)
 * [Continuous Queries](https://docs.influxdata.com/influxdb/v1.0/query_language/continuous_queries/)
 * [InfluxDB学习之InfluxDB数据保留策略](http://www.linuxdaxue.com/retention-policies-in-influxdb.html)
+
+
+## 关于 GROUP BY 语句
+
+GROUP BY 语句用于筛选数据，最常见的是 `GROUP BY time(interval)`，除了这个外，还有 `GROUP BY tag`。
+
+之前有个需求，机器外网流量的 points 有 location、if_name、host 几个字段，现在 Grafana 要画出同一个 location 的每个节点流量：
+
+初始的写法是：
+
+```
+SELECT non_negative_derivative(mean("out"), 1s) * 8 as wan FROM "net" WHERE location = '$idc' AND "if_name" = 'wan' GROUP BY time($interval) fill(null)
+```
+
+但是这样画出来的所有数据是在一个数据里，无法区别同一个机房的每一台机器，且画出来的数据因为是混合的 derivative 操作，所以总数据也是错误的。
+
+后来看文档发现还有 `GROUP BY tag` 的用法，可以将数据按指定的 tag 分开，适合这样的场景。
+
+改正后的 metric 语句：
+
+```
+SELECT non_negative_derivative(mean("out"), 1s) * 8 as wan FROM "net" WHERE location = '$idc' AND "if_name" = 'wan' GROUP BY host, time($interval) fill(null)
+```
+
+参考：[The GROUP BY clause](https://docs.influxdata.com/influxdb/v1.2/query_language/data_exploration/#the-group-by-clause)
 
 
 ## 其它
