@@ -1,8 +1,8 @@
 ---
 title: "InfluxDB"
 date: 2016-09-21 10:40
-updated: 2017-05-05 15:00
-logs: "增加 GROUP BY 语句说明"
+updated: 2017-07-10 17:50
+logs: "增加单双引号使用说明"
 ---
 
 [TOC]
@@ -350,6 +350,15 @@ name: load
 time                    host    value
 1488435842307330152     server1 0.01
 ```
+
+
+### 关于单双引号
+
+总是忘了哪里改用单引号，哪里该用双引号，还是直接看文档吧：
+
+* [When should I single quote and when should I double quote in queries?](https://docs.influxdata.com/influxdb/v1.2/troubleshooting/frequently-asked-questions/#when-should-i-single-quote-and-when-should-i-double-quote-in-queries)
+* [TL;DR InfluxDB Tech Tips – Using Single Quotes vs Double Quotes Within InfluxQL](https://www.influxdata.com/tldr-influxdb-tech-tips-july-21-2016/)
+* [InfluxQL Reference](https://docs.influxdata.com/influxdb/v1.2/query_language/spec/) 搜关键字 `quote`
 
 
 ## 术语
