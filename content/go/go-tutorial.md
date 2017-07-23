@@ -1,8 +1,8 @@
 ---
 title: "Go入门笔记"
 date: 2016-12-15 22:00
-updated: 2017-07-23 13:30
-log: "调整格式"
+updated: 2017-07-23 15:00
+log: "补充、完善"
 ---
 
 [TOC]
@@ -126,15 +126,28 @@ func main() {
 // 输出: false false 1 2 abc 100 200
 ```
 
-Go中声明(declaration)和定义(definition)个人理解是不做区分的(和C不一样)，因为如果声明了变量但是未显式赋值，会隐式复制给各类型的初始值(zero value，**零值**)。
+Go中声明(declaration)和定义(definition)个人理解是不做区分的(和C不一样)，因为如果声明了变量但是未显式赋值，会隐式赋值给各类型的初始值(zero value，**零值**)。
 
-另外`var var_name var_type`和函数参数一样，变量名在前，类型在后。
+另外 `var var_name var_type` 和函数参数一样，变量名在前，类型在后。
 
-另外也可以不指定类型名，Go会根据赋值判断相应类型
+另外也可以不指定类型名，Go 会根据赋值判断相应类型
 
-最后，也可以不写`var`，改用`:=`的简明赋值语句，但是此语法**只能用于函数内**，而`var`则可以在函数外使用。
+最后，也可以不写 `var`，改用 `:=` 的简明赋值语句，但是此语法 **只能用于函数内**，而 `var` 则可以在函数外使用。
 
-声明和导入包一样，可以**打包声明**:
+并且在至少有一个新变量，`:=` 可以用于重声明，比如下面的例子：
+
+```go
+func main() {
+    var a, b = 1, 2
+    fmt.Println(a, b)
+    // b 是重声明的，c 是新变量
+    // 如果改为 a, b := 3, 4 则报错：no new variables on left side of :=
+    c, b := 3, 4
+    fmt.Println(c, b)
+}
+```
+
+声明和导入包一样，可以 **打包声明**:
 
 ```go
 var (
@@ -144,9 +157,9 @@ var (
 )
 ```
 
-关于类型关键词，其中`byte`是`uint8`的别名，`rune`是`int32`的别名。
+关于类型关键词，其中 `byte` 是 `uint8` 的别名，`rune` 是 `int32` 的别名。
 
-一般情况下，数字用`int`即可。
+一般情况下，数字用 `int` 即可。
 
 一些基本类型的零值:
 
@@ -154,16 +167,16 @@ var (
 * 布尔: false
 * 字符串: ""
 
-Go中类型的转换用`T(v)`，将值v转换为类型T:
+Go中类型的转换用 `T(v)`，将值 v 转换为类型 T:
 
 ```go
 i := 1
 f := float64(i)
 ```
 
-Go中类型转换必须显示指定(C中是可以做隐式转换的)。
+Go中类型转换 **必须** 显示指定（C中是可以做隐式转换的）。
 
-常量类型变量声明，不过使用关键字`const`，不能使用`:=`语法
+常量类型变量声明，使用关键字 `const`，不能使用 `:=` 语法
 
 ```go
 const World = '世界'
@@ -255,15 +268,15 @@ default:
 
 注:
 
-* Go中初始、条件等语句不需要用`()`阔起来
-* 主体部分必须用花括号`{}`阔起来
+* Go中初始、条件等语句不需要用 `()` 阔起来
+* 主体部分必须用花括号 `{}` 阔起来
 
 
 ### defer
 
-`defer`语句用于延迟函数的执行直到当前函数return，但是defer的参数会立刻生成。
+`defer` 语句用于延迟函数的执行直到当前函数 return，但是 defer 的参数会立刻生成。
 
-多个defer语句会进行压栈，最后执行时是LIFO:
+多个defer语句会进行 **压栈**，最后执行时是 LIFO:
 
 ```go
 fmt.Println("begin")
@@ -288,9 +301,9 @@ p2 := &i
 fmt.Println(i, *p1, *p2)
 ```
 
-* `*T`在声明时表示指向值T的指针
-* `&`用于对值`取址`
-* `*p*`在使用时表示对指针的`解引用`，即取指针指向的值。
+* `*T` 在声明时表示指向值T的指针
+* `&` 用于对值 **取址**
+* `*p` 在使用时表示对指针的 **解引用**，即取指针指向的值。
 
 这里`*`需要注意，在不同地方的含义不一样。
 
@@ -330,7 +343,7 @@ fmt.Println(v1, v2, p)
 
 ### Array
 
-数组是**定长**的`[n]T`
+数组是**定长**的 `[n]T`
 
 ```go
 var a1 [2]string
@@ -341,18 +354,18 @@ fmt.Println(a1, a2)
 // 输出: [hello world] [1 2 3]
 ```
 
-注意长度`[n]`也是类型的一部分
+注意长度 `[n]` 也是类型的一部分
 
 
 ### Slice
 
 数组是定长的，Go还提供了切片这个数据结构，长度是**动态变化**的，所以这个用的比数组更频繁。
 
-(刚看到 slice/切片 这个词，第一反应是一个函数，结果是一个数据结构...)
+（刚看到 slice/切片 这个词，第一反应是一个函数，结果是一个数据结构...）
 
-因为长度是动态变化，所以声明是`[]T`，括号中不写。
+因为长度是动态变化，所以声明是 `[]T`，括号中不写。
 
-Go中做切片(这里是动词)操作，返回的是切片。
+Go中做切片（这里是动词）操作，返回的是切片。
 
 ```go
 array := [3]int{1, 2, 3}
@@ -377,7 +390,7 @@ fmt.Println(array, slice1, slice2)
 // 输出: [1 100 3] [100 3] [1 100]
 ```
 
-切片字面值(slice literal)和数组字面值(array literal)一样，只是不需要指定长度:
+切片字面值（slice literal）和数组字面值（array literal）一样，只是不需要指定长度:
 
 ```go
 slice1 := []int{1, 2, 3}
@@ -394,7 +407,17 @@ fmt.Println(slice1, slice2)
 // 输出: [1 2 3] [{1 true} {2 false} {3 true}]
 ```
 
-切片的使用和Python类似，支持:
+上面注意最后的逗号不能省略，否则报错：
+
+> missing ',' before newline in composite literal
+
+原因参考 [这个回答](https://stackoverflow.com/a/29301344/1276501)：
+
+> a semicolon is automatically inserted into the token stream at the end of a non-blank line if the line's final token is
+> - ...
+> - one of the operators and delimiters ++, --, ), ], or }
+
+切片的使用和 Python 类似，支持:
 
 ```go
 s[0:10]
@@ -403,10 +426,10 @@ s[0:]
 s[:]
 ```
 
-切片有length和capacity的概念
+切片有 length 和 capacity 的概念
 
-* length通过`len(s)`获取，表示切片中元素的个数
-* capacity通过`cap(s)`获取，表示切片引用的**底层数组**中元素的个数，从切片的第一个元素开始计算
+* `length` 通过 `len(s)` 获取，表示切片中元素的个数
+* `capacity` 通过 `cap(s)` 获取，表示切片引用的 **底层数组** 中元素的个数，从切片的第一个元素开始计算
 
 下面这个例子比较有意思，感觉容易入坑:
 
@@ -435,7 +458,7 @@ func main() {
 // len=3 cap=3 [3 4 5]
 ```
 
-切片的零值是`nil`:
+切片的零值是 `nil`:
 
 ```go
 var s []int  // 注意和s := []int{}不一样，这个是空切片，赋值过的
@@ -445,7 +468,7 @@ if s == nil {
 }
 ```
 
-`make`函数可以用来创建切片，并指定length(必选)和capacity(可选):
+`make` 函数可以用来创建切片，并指定 length（必选）和 capacity（可选）:
 
 ```go
 s1 := make([]int, 3)
@@ -468,7 +491,7 @@ s := [][]string{
 }
 ```
 
-Go对切片的append操作提供了内置函数`append(s []T, v1, v2, v3, ...T) []T`，最后返回append后的切片; 因为切片大小是动态的，所以如果capacity不够，会自动扩容:
+Go对切片的 append 操作提供了内置函数`append(s []T, v1, v2, v3, ...T) []T`，最后返回append后的切片; 因为切片大小是动态的，所以如果capacity不够，会自动扩容:
 
 ```go
 s := make([]int, 1, 3)
@@ -505,11 +528,13 @@ for i := range s {
 
 ### Maps
 
-映射(也就是字典吧)表示一个key/value对集合，声明语法:
+映射（也就是字典吧）表示一个 key/value 对集合，声明语法:
 
 ```go
 var map_name map[map_key_type]map_value_type
 ```
+
+`map_value_type` 表示 map 值的类型，类似于 slice 的 `[]int` 这种表示 slice 中的值是 int。
 
 即:
 
@@ -542,8 +567,8 @@ var m = map[string]Vertex{
 	"b": Vertex{1, 2},  // 注意逗号
 }
 
-// TODO: If the top-level type is just a type name, you can omit it from the elements of the literal.
-// 什么是顶级类型?
+// If the top-level type is just a type name, you can omit it from the elements of the literal.
+// 按我理解是表示 map 已经定义了值的类型，所以在里面的字面值不需要再定义
 // 下面是简写，省去内部的值类型
 var m = map[string]Vertex{
 	"a": {3, 4},
@@ -571,9 +596,9 @@ v, ok = m[k]
 
 ### Methods
 
-Go没有类，但是可以给自定义类型(如结构体)定义方法(methods)。
+Go没有类，但是可以给自定义类型（如结构体）定义方法（methods）。
 
-method和function类似，只不过多了一个特殊的接收者参数(receiver)，位置在func关键字和method name之间。
+method 和 function 类似，只不过多了一个特殊的接收者参数（receiver），位置在 func 关键字和 method name 之间。
 
 ```go
 // 如这里定义Abs这个方法，属于Vertex这个结构体，`(v Vertex)`就是function没有的多出的部分
@@ -606,9 +631,9 @@ func (f MyFloat) Abs() float64 {
 }
 ```
 
-但是**receiver的类型必须定义在当前包里，不能给其它包里定义的类型声明method，比如内置类型**。
+但是 **receiver的类型必须定义在当前包里，不能给其它包里定义的类型声明method，比如内置类型**。
 
-上面使用的receiver是一个值(value receiver)，receiver还可以是一个指针(pointer receiver)，如:
+上面使用的 receiver 是一个值（value receiver），receiver还可以是一个指针（pointer receiver），如:
 
 ```go
 // method
@@ -624,9 +649,9 @@ func ScaleFunc(v *Vertex, f float64) {
 }
 ```
 
-因为Go里函数参数是传值，相当于一份拷贝，所以如果使用`func (v Vertex) Scale...`而不是`func (v *Vertex) Scale...`，则实际v.X和v.Y的值并没有被改变。
+因为Go里函数参数是传值，相当于一份拷贝，所以如果使用 `func (v Vertex) Scale...` 而不是 `func (v *Vertex) Scale...` ，则实际 v.X 和 v.Y 的值并没有被改变。
 
-关于这块调用Scale时针对pointer和value，需要注意一个坑:
+关于这块调用 Scale 时针对 pointer 和 value，需要注意一个坑:
 
 ```go
 var v Vertex
@@ -646,11 +671,11 @@ p := &v
 p.AbsMethod()         // ok, as (*p).AbsMethod()
 ```
 
-为了方便，Go的解释器对method作了一些自动化处理，如上例子，不论是pointer receiver还是value receiver的方法，都可以通过pointer或value来调用。
+为了方便，Go的解释器对 method 作了一些自动化处理，如上例子，不论是 pointer receiver 还是 value receiver 的方法，都可以通过 pointer 或 value 来调用。
 
-更倾向于选择使用pointer receiver的原因有两个:
+更倾向于选择使用 pointer receiver 的原因有两个:
 
-1. method内部可以修改receiver的值
+1. method 内部可以修改 receiver 的值
 2. 不是按值传递，所以更节省空间，比如需要传递的是一个很大的结构体
 
 
@@ -660,11 +685,11 @@ Go Tour上这块英文感觉有点绕，需要多读几遍。
 
 > An interface type is defined as a set of method signatures.
 
-一个接口类型是一组method的定义的集合。
+一个接口类型是一组 method 的定义的集合。
 
 > A value of interface type can hold any value that implements those methods.
 
-接口类型是一个抽象类型，它的值可以是任何值，只需要这个值实现了接口的methods
+接口类型是一个抽象类型，它的值可以是任何值，只需要这个值实现了接口的 methods
 
 接口的好处就是将接口的定义和实现分离。
 
@@ -710,13 +735,13 @@ func main() {
 
 **一个接口需要挂载到一个底层具体类型上，调用接口的方法实际就是调用底层具体类型的同名方法.**
 
-如果实际类型是nil (nil underlying value)，则接口也是nil
+如果实际类型是 nil (nil underlying value)，则接口也是 nil
 
-但如果接口类型是nil (nil interface value)，则无法调用它的method，否则报错
+但如果接口类型是 nil (nil interface value)，则无法调用它的 method，否则报错
 
 空接口定义: `var i interface{}`，接口i可以是任何值。
 
-类型断言(type assertion)让接口值可以访问所挂载具体类型的值: `t := i.(T)`，其中i是接口值，T是具体类型名：
+类型断言（type assertion）让接口值可以访问所挂载具体类型的值: `t := i.(T)`，其中i是接口值，T是具体类型名：
 
 ```go
 var i interface{} = "hello"
