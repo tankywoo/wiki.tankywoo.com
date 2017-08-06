@@ -1,8 +1,8 @@
 ---
 title: "Go入门笔记"
 date: 2016-12-15 22:00
-updated: 2017-07-23 15:00
-log: "补充、完善"
+updated: 2017-08-06 15:55
+log: "Go get 被 X 的解决"
 ---
 
 [TOC]
@@ -907,3 +907,16 @@ default:
 	...
 }
 ```
+
+## Go get 被 X 的解决
+
+```
+http_proxy=127.0.0.1:8123 https_proxy=127.0.0.1:8123 go get -u ...
+```
+
+注意有些地址是 https 的，所以将两个都配置了。
+
+参考：
+
+* [GoGetProxyConfig](https://github.com/golang/go/wiki/GoGetProxyConfig)
+* [Set proxy when executing “go get” command](http://nanxiao.me/en/set-proxy-when-executing-go-get-command/)
