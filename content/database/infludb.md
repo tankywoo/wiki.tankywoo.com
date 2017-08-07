@@ -1,8 +1,8 @@
 ---
 title: "InfluxDB"
 date: 2016-09-21 10:40
-updated: 2017-07-10 17:50
-logs: "增加单双引号使用说明"
+updated: 2017-08-07 18:00
+logs: "增加几个参考链接"
 ---
 
 [TOC]
@@ -373,3 +373,6 @@ time                    host    value
 * [python-influxdb](http://influxdb-python.readthedocs.io/en/latest/index.html)
 * [influxdata/telegraf](https://github.com/influxdata/telegraf)  The plugin-driven server agent for collecting & reporting metrics.
 * [时间序列数据库调研之InfluxDB](http://blog.fatedier.com/2016/07/05/research-of-time-series-database-influxdb/)
+* [mark-rushakoff/awesome-influxdb](https://github.com/mark-rushakoff/awesome-influxdb) awesome 系列之 influxdb 篇
+* [influxdata/chronograf](https://github.com/influxdata/chronograf) influxdata 自家的画图工具，不过感觉比 grafana 差太多……
+* [使用 Kapacitor 对 InfluxDB 数据进行统计处理](http://hugoren.iteye.com/blog/2312979) influxdata 自家的数据预警工具
