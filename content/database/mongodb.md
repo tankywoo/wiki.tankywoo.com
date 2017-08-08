@@ -1,8 +1,8 @@
 ---
 title: "MongoDB"
 date: 2016-09-16 14:00
-updated: 2016-09-24 23:00
-logs: "更新多级字典修改某列操作"
+updated: 2017-08-08 17:55
+logs: "补充认证相关"
 ---
 
 [TOC]
@@ -18,6 +18,48 @@ db.users.insert({'username': 'tankywoo', 'email': 'me@tankywoo.com', 'name': 'Ta
 ```
 
 ### 用户认证
+
+目前最新的稳定版是 3.X 版本，认证这块改动还是非常大：
+
+首先，认证机制由 `MONGODB-CR` 改为 `SCRAM-SHA-1`，[参考](https://docs.mongodb.com/manual/release-notes/3.0-scram/#upgrade-2-6-mongodb-cr-users-to-scram-sha-1)，具体看[这里](https://docs.mongodb.com/manual/core/authentication-mechanisms/)
+
+创建用户的命令也变了，改用 `db.createUser()`
+
+最后，用户的角色也变得非常复杂，比如针对数据库用户、数据库管理员、超级管理员等等，具体看 [Built-In Roles](https://docs.mongodb.com/manual/reference/built-in-roles/#all-database-roles)
+
+大致的步骤就是：
+
+- 先关闭认证，切换到 admin 数据库
+- 创建管理员用户，用于后续针对数据库创建的读写用户
+- 开启认证，使用管理员登录
+- 切换到欲创建的数据库，创建用户，授予如 `readWrite` 角色使其可以读写
+
+注：一个用户可以配置多个角色，比如我使用 [mongo-hacker](https://github.com/TylerBrock/mongo-hacker) 会在 `find` 后读取 profile 信息，而这个信息需要 `dbAdmin` 角色读，所以我最后给用户 `readWrite` 和 `dbAdmin` 两个角色：
+
+```text
+> show users
+{
+  "_id": "mydb.myuser",
+  "user": "myuser",
+  "db": "mydb",
+  "roles": [
+    {
+      "role": "dbAdmin",
+      "db": "mydb"
+    },
+    {
+      "role": "readWrite",
+      "db": "mydb"
+    }
+  ]
+}
+
+```
+
+还可以参考这篇 [博文](http://tgrall.github.io/blog/2015/02/04/introduction-to-mongodb-security/)，更详细可以看官方文档 [Enable Auth](https://docs.mongodb.com/manual/tutorial/enable-authentication/)
+
+
+以下是 MongoDB 2.x 的用户认证相关：
 
 首先先添加一个管理员帐号
 
