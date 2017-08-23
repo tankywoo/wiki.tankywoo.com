@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>Go 资源汇总 - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#go">go</a>
+    &nbsp;&#187;&nbsp;Go 资源汇总
+    <span class="updated">当前页面最后更新&nbsp;
+    2017-08-23 16:52
+    
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <h2 id="_1">资源/文章</h2>
+<h3 id="_2">全面型</h3>
+<ul>
+<li><a href="https://golang.org/ref/spec">The Go Programming Language Specification</a></li>
+<li><a href="https://github.com/a8m/go-lang-cheat-sheet">a8m/go-lang-cheat-sheet</a></li>
+</ul>
+<h2 id="_3">入门练手项目</h2>
+<ul>
+<li><a href="https://gobyexample.com/">gobyexample</a></li>
+<li><a href="https://segmentfault.com/q/1010000002481792">初学Go语言，哪类小项目适合练手</a>  介绍 <a href="https://github.com/lilydjwg/swapview">swapview</a> 查看系统每个进程的 swap 使用情况</li>
+<li><a href="http://www.cnblogs.com/baiyuxiong/p/4309934.html">go语言值得学习的开源项目推荐</a>  提到 Go 在 Github 上维护的一个 <a href="https://github.com/golang/go/wiki/Projects">Go 优秀项目列表</a></li>
+<li><a href="https://www.zhihu.com/question/33241133">有什么适合 Go 语言初学者的 Starter Project？</a></li>
+</ul>
+<h3 id="import">import 包</h3>
+<ul>
+<li><a href="https://stackoverflow.com/questions/21220077/what-does-an-underscore-in-front-of-an-import-statement-mean-in-golang">What does an underscore in front of an import statement mean in Golang?</a></li>
+<li><a href="https://stackoverflow.com/questions/6478962/what-does-the-dot-or-period-in-a-go-import-statement-do">What does the '.' (dot or period) in a Go import statement do?</a></li>
+</ul>
+<h3 id="json">json 相关</h3>
+<ul>
+<li><a href="https://stackoverflow.com/questions/30681054/what-is-the-usage-of-backtick-in-golang-structs-definition">What is the usage of backtick in golang structs definition?</a></li>
+</ul>
+<h3 id="_4">命令行参数</h3>
+<ul>
+<li><a href="http://www.nljb.net/default/Golang-%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0/">Golang-使用命令行参数</a></li>
+<li><a href="http://studygolang.com/articles/2878">golang 命令行处理</a></li>
+</ul>
+<h3 id="json_1">json 处理</h3>
+<ul>
+<li><a href="http://n.thepana.com/2015/10/21/go-json/">Go 处理 JSON</a></li>
+<li><a href="https://github.com/astaxie/build-web-application-with-golang/blob/master/zh/07.2.md">astaxie/build-web-application-with-golang</a></li>
+<li><a href="https://segmentfault.com/q/1010000000583211">golang - 解析复杂json</a></li>
+<li><a href="http://xiaorui.cc/2016/03/06/golang%E8%A7%A3%E6%9E%90%E5%88%9B%E5%BB%BA%E5%A4%8D%E6%9D%82%E5%B5%8C%E5%A5%97%E7%9A%84json%E6%95%B0%E6%8D%AE/">golang解析创建复杂嵌套的json数据</a></li>
+</ul>
+<h3 id="yaml">yaml 处理</h3>
+<ul>
+<li><a href="http://sweetohm.net/article/go-yaml-parsers.en.html">A tour of YAML parsers for Go</a></li>
+<li><a href="http://xiaorui.cc/2016/03/20/golang%E4%BD%BF%E7%94%A8yaml%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">golang使用yaml格式解析构建配置文件</a></li>
+<li><a href="http://ghodss.com/2014/the-right-way-to-handle-yaml-in-golang/">The right way to handle YAML in Go</a></li>
+</ul>
+<h2 id="qa">Q&amp;A</h2>
+<h3 id="go-get-x">Go get 被 X 的解决</h3>
+<div class="hlcode"><pre><span class="n">http_proxy</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">8123</span> <span class="n">https_proxy</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">8123</span> <span class="n">go</span> <span class="n">get</span> <span class="o">-</span><span class="n">u</span> <span class="p">...</span>
+</pre></div>
+
+
+<p>注意有些地址是 https 的，所以将两个都配置了。</p>
+<p>参考：</p>
+<ul>
+<li><a href="https://github.com/golang/go/wiki/GoGetProxyConfig">GoGetProxyConfig</a></li>
+<li><a href="http://nanxiao.me/en/set-proxy-when-executing-go-get-command/">Set proxy when executing “go get” command</a></li>
+</ul>
+<h3 id="_5">关于单引号和双引号</h3>
+<p>如果是单引号，'b'，则输出98<br />
+如果是双引号，"b"，则输出b</p>
+<p>参考<a href="http://stackoverflow.com/a/34691123/1276501">http://stackoverflow.com/a/34691123/1276501</a>:</p>
+<blockquote>
+<p>In Go, <code>'⌘'</code> represents a single character (called a Rune), whereas <code>"⌘"</code> represents a string containing the character <code>⌘</code>. <br />
+This is true in many programming languages where the difference between strings and characters is notable, such as C++.<br />
+Check out the "Code points, characters, and runes" section in the <a href="https://blog.golang.org/strings">Go Blog on Strings</a></p>
+</blockquote>
+  
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2017 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2017-08-23 16:55:42</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+
+    
+    
+
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>

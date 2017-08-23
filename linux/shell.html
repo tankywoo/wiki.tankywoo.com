@@ -204,13 +204,13 @@
 
 <p>特殊变量:</p>
 <p>具体看<code>man bash</code>的<code>Special Parameters</code>一节</p>
-<p><code>$0</code>: 当前执行的脚本名. 和python里的sys.argv[0]一样
-<code>$X</code>: X是数字, 表示第几个参数, 比如脚本后接的第一个参数, 就是$1
-<code>$?</code>: 上一条命令的返回值
-<code>$!</code>: 上一个放入后台执行的进程的pid (适合获取并后续kill)
-<code>$$</code>: 当前shell pid
-<code>$#</code>: 传递给脚本或函数 参数的个数
-<code>$*</code>: 参数列表. 当有双引号阔起来时, 则是一个元素
+<p><code>$0</code>: 当前执行的脚本名. 和python里的sys.argv[0]一样<br />
+<code>$X</code>: X是数字, 表示第几个参数, 比如脚本后接的第一个参数, 就是$1<br />
+<code>$?</code>: 上一条命令的返回值<br />
+<code>$!</code>: 上一个放入后台执行的进程的pid (适合获取并后续kill)<br />
+<code>$$</code>: 当前shell pid<br />
+<code>$#</code>: 传递给脚本或函数 参数的个数<br />
+<code>$*</code>: 参数列表. 当有双引号阔起来时, 则是一个元素<br />
 <code>$@</code>: 参数列表. 当有双引号阔起来时, 还是多个元素</p>
 <div class="hlcode"><pre><span class="c">% more foo.sh</span>
 #!<span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">bash</span>
@@ -702,7 +702,7 @@ $<span class="n">foo</span>
 <p>set [+abefhkmnptuvxBCEHPT] [+o option-name] [arg ...]</p>
 <p>Without  options,  the  name  and  value  of each shell variable are displayed in a format that can be reused as input for setting or resetting the currently-set variables.  Read-only variables cannot be reset.  In posix mode, only shell variables are listed.  The output is sorted according to the current locale.  When options are specified, they set or unset shell attributes.</p>
 </blockquote>
-<p>% set -o 显示所有的set选项配置情况, on/off形式
+<p>% set -o 显示所有的set选项配置情况, on/off形式<br />
 % set +o 显示所有的set选项配置情况, 命令形式</p>
 <p>参考:</p>
 <ul>
@@ -752,8 +752,8 @@ two
 <h2 id="_3">补充</h2>
 <p>关于<code>true</code>和<code>false</code>:</p>
 <p>shell里没有boolean值, 不过有true和false这两个shell builtin命令:</p>
-<p>TankyWoo ~/dev_env/bash_learn % which true false
-true: shell built-in command
+<p>TankyWoo ~/dev_env/bash_learn % which true false<br />
+true: shell built-in command<br />
 false: shell built-in command</p>
 <p>既然是命令, 就不能用<code>[ ]</code>或<code>test</code>来判断, 直接使用:</p>
 <table class="hlcodetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
@@ -898,7 +898,7 @@ false: shell built-in command</p>
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-03-26 18:14:45</p>
+        <p>站点最后生成 2017-08-23 16:55:42</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

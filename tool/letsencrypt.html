@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Let’s Encrypt
     <span class="updated">当前页面最后更新&nbsp;
-    2016-08-02 00:05
+    2017-04-15 17:50
     
     </span>
   </div>
@@ -38,6 +38,7 @@
 </li>
 <li><a href="#_2">生成证书</a></li>
 <li><a href="#_3">更新证书</a></li>
+<li><a href="#certbot-auto">解析 certbot-auto</a></li>
 <li><a href="#_4">其它</a></li>
 <li><a href="#_5">其它参考</a></li>
 </ul>
@@ -177,6 +178,45 @@ Press ENTER to continue
 </pre></div>
 
 
+<h2 id="certbot-auto">解析 certbot-auto</h2>
+<p>在使用 certbot 时，有一点比较让人恼火，就是隔一段时间再使用，运行时会升级，然后重新常见 venv 然后安装一堆包，甚至我想 <code>--help</code> 看个帮助文档也给先升级，等的让人恼火。</p>
+<p>主要目的是解决几个问题：</p>
+<ul>
+<li>不做自动更新</li>
+<li>不删除旧的 venv 并重新创建 venv</li>
+<li>安装包时使用的源是本地配置还是强制走官方 pypi 了？</li>
+</ul>
+<p>所以看了下 certbot-auto 的脚本（目前版本 0.13.0），步骤主要是：</p>
+<ul>
+<li>先确认是否是 root 用户执行，不是则设置好 sudo 所使用的命令，以及相关的环境变量</li>
+<li>进入 Phase 1，即 else 部分<ul>
+<li>如果在 venv/bin 目录下没有 letsencrypt 可执行文件，则进入 Bootstrap 部分，这块会根据不同发行版，检查指定软件如 dev-python/virtualenv，dev-libs/openssl 等是否安装，如果没有则安装。就算都安装了，检查还是需要一点时间。</li>
+<li>如果有 letsencrypt 可执行文件，如果没有指定 <code>--no-self-upgrade</code> 选项，则会下拉最新的 certbot-auto 脚本，并和当前版本对比，如果有则更新 certbot-auto。这块也比较耗时。并影响后面。</li>
+</ul>
+</li>
+<li>进入 Phase 2 部分<ul>
+<li>如果更新后的 certbot-auto 版本和本地安装的 letsencrypt 可执行文件版本不一致，则删除 venv，然后重建 venv</li>
+<li>然后通过脚本从官方 PyPI 上安装 pip、easy_install 等几个基本工具。对于国内来说，会比较慢，所以这块也是一个耗时的地方。</li>
+<li>然后有一大串需要安装的 Python Package，通过 pip 安装，所以这块是会用到本地配置的 pip 源，如果有配置的话。但是也顶不住这么多包要安装，所以也很耗时。</li>
+</ul>
+</li>
+<li>都搞定后，就根据子命令，该签发的签发，该 renew 的就 renew……</li>
+</ul>
+<p>总结（适合临时急着签发，平时不急的话可以更新下）：</p>
+<ol>
+<li>不要允许自更新，选项 <code>--no-self-upgrade</code></li>
+<li>不用 bootstrap 去检查了，选项 <code>--no-bootstrap</code></li>
+</ol>
+<p>所以建议后续签发时执行：</p>
+<div class="hlcode"><pre><span class="c"># 签发</span>
+./certbot-auto certonly --no-bootstrap --debug --no-self-upgrade --verbose --manual -d example.com
+
+<span class="c"># 更新</span>
+./certbot-auto certonly --no-bootstrap --debug --no-self-upgrade --renew-by-default --verbose --manual -d example.com
+</pre></div>
+
+
+<p>也可以开启 <code>--verbose</code>，自行观察具体哪块耗时。</p>
 <h2 id="_4">其它</h2>
 <p>(<em>2016-06-13更新</em>)</p>
 <p>试了下<a href="https://github.com/xdtianyu/scripts/tree/master/lets-encrypt">这个脚本</a>，在它的基础上改了一些，签发/更新比较方便（其实就是重新签发）。核心是使用<a href="https://github.com/diafygi/acme-tiny">diafygi/acme-tiny</a>，相对于certbot复杂以及各种环境检查，安装一堆东西，这个Python写的工具我感觉好用多了，在傻瓜式和使用上选择了一个折中合适的点。</p>
@@ -206,7 +246,7 @@ Press ENTER to continue
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-03-26 18:14:45</p>
+        <p>站点最后生成 2017-08-23 16:55:42</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

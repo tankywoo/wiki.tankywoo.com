@@ -79,7 +79,7 @@
 </div>
 <p>Git的<code>help</code>信息非常好，很多可以直接help来了解</p>
 <h2 id="git">给Git输出信息增加颜色</h2>
-<p>编辑<code>/etc/gitconfig</code>
+<p>编辑<code>/etc/gitconfig</code><br />
 比如要对<code>git status</code>设置颜色，可以:</p>
 <div class="hlcode"><pre><span class="k">[color]</span>
     <span class="na">ui</span> <span class="o">=</span> <span class="s">auto</span>
@@ -213,7 +213,7 @@
 <h2 id="pull">指定路径pull</h2>
 <p>以前都是 cd 到仓库当前目录然后 pull. 因为想到 <code>svn up</code> 可以直接指定路径, 这种基本功能 git 肯定会有的, 但是直接指定路径不行.</p>
 <p>搜了下, StackOverflow 上的 <a href="http://stackoverflow.com/a/9876901/1276501">回答1</a> 和 <a href="http://stackoverflow.com/a/9746005/1276501">回答2</a> 非常给力.</p>
-<p>Git 的参数 <code>--git-dir</code> 可以指定 Git 的路径, 即使用这个 <code>.git</code> 的配置等来更新 repo. 但是这个会以 <code>pwd</code> 为要更新的 repo 路径.
+<p>Git 的参数 <code>--git-dir</code> 可以指定 Git 的路径, 即使用这个 <code>.git</code> 的配置等来更新 repo. 但是这个会以 <code>pwd</code> 为要更新的 repo 路径.<br />
 所以还需要 <code>--work-tree</code> 来指定要更新的 repo 的路径, 而不需要 cd 过去.</p>
 <div class="hlcode"><pre>git --git-dir<span class="o">=</span>/path/to/git-repo/.git --work-tree<span class="o">=</span>/path/to/git-repo/ pull
 </pre></div>
@@ -399,7 +399,7 @@
 </pre></div>
 
 
-<p><code>ORIG_HEAD</code> 用于指向前一个操作状态，因此在git pull之后如果想得到pull的
+<p><code>ORIG_HEAD</code> 用于指向前一个操作状态，因此在git pull之后如果想得到pull的<br />
     内容就可以：</p>
 <div class="hlcode"><pre><span class="n">git</span> <span class="n">diff</span> <span class="n">ORIG_HEAD</span>
 
@@ -1071,7 +1071,7 @@ $ USERNAME=tankywoo PASSWORD=*** git pull
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-03-26 18:14:45</p>
+        <p>站点最后生成 2017-08-23 16:55:42</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

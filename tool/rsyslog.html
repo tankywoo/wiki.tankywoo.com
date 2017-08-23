@@ -158,19 +158,19 @@
 <li>uucp</li>
 <li>local0 - local7</li>
 </ul>
-<p>priority 列表: 
-debug
-info
-notice
-warning
-warn (same as warning)
-err
-error (same as err)
-crit, alert
-emerg
+<p>priority 列表: <br />
+debug<br />
+info<br />
+notice<br />
+warning<br />
+warn (same as warning)<br />
+err<br />
+error (same as err)<br />
+crit, alert<br />
+emerg<br />
 panic (same as emerg)</p>
 <p>error, warn, panic已经过时，不应该再使用。</p>
-<p>星号符(<code>*</code>)可以表示所有facility或所有priority。 
+<p>星号符(<code>*</code>)可以表示所有facility或所有priority。 <br />
 关键词none表示为指定级别的。</p>
 <p>一个priority可以指定多个facilities, 使用逗号(<code>,</code>)分隔。(priority不能这么做)</p>
 <p>在一个action下配置多个selectors，使用分号(<code>;</code>)分隔。</p>
@@ -190,10 +190,10 @@ panic (same as emerg)</p>
 <p>value 是用来比较的值，必须用引号括起来。</p>
 <p>注意 property和compare-operation是大小写敏感的。</p>
 <p>compare-operation 有:</p>
-<p>contains : property 包含指定 value
-isequal : property 和指定 value 相等
-startswith : 以 value 起始的property
-regex
+<p>contains : property 包含指定 value<br />
+isequal : property 和指定 value 相等<br />
+startswith : 以 value 起始的property<br />
+regex<br />
 ereregex</p>
 <h2 id="rsyslog-queue">Rsyslog Queue</h2>
 <p>队列是 rsyslog 的核心。下图(<a href="https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/7-Beta/html/System_Administrators_Guide/s1-working_with_queues_in_rsyslog.html">来源</a>) 展示了rsyslog处理消息的流程:</p>
@@ -239,7 +239,7 @@ ereregex</p>
 <li><code>$MainMsgQueueMaxDiskSpace</code> 控制占用硬盘总空间大小</li>
 </ul>
 <p>DA 对于阈值处理的逻辑比较有意思，并不是单纯的内存满了就开始使用硬盘。首先，有 <code>low watermark</code> 和 <code>high watermark</code> 这两个概念。</p>
-<p>如果队列大小达到 high watermark，队列开始写数据到disk
+<p>如果队列大小达到 high watermark，队列开始写数据到disk<br />
 如果队列大小降到 low watermark，停止写入disk(直到再次达到 high watermark); 或者 disk queue 队列为空(即da队列里的数据处理完)，这两种情况都会进入in-memory 模式</p>
 <p>关于终止队列的一些处理配置:</p>
 <ul>
@@ -258,9 +258,9 @@ ereregex</p>
 <li><code>$MainMsgQueueWorkerThreads &lt;number&gt;</code> [num worker threads, default 1, recommended 1]</li>
 <li><code>$MainMsgQueueWorkerTimeoutThreadShutdown &lt;number&gt;</code> [number is timeout in ms (1000ms is 1sec!), default 60000 (1 minute)]</li>
 </ul>
-<p>每个队列(direct queue除外)都有一个工作线程池(worker thread pool).
-初始时，是没有worker thread的，当有消息来是，会自动启动一个.
-<code>$MainMsgQueueWorkerThreadMinumumMessages</code> 配置一个worker thread处理的消息大小，
+<p>每个队列(direct queue除外)都有一个工作线程池(worker thread pool).<br />
+初始时，是没有worker thread的，当有消息来是，会自动启动一个.<br />
+<code>$MainMsgQueueWorkerThreadMinumumMessages</code> 配置一个worker thread处理的消息大小，<br />
 <code>$MainMsgQueueWorkerThreads</code> 配置work thread的上限值。</p>
 <p>比如设置一个worker thread的最小处理消息大小是100个，当小于100个是，只有一个worker，当超过100个，小于200个时，会有两个worker...</p>
 <p>以上配置要注意<code>单位</code>, <code>默认值</code>，Main Queue 和 Action Queue 可能有些配置的默认值不一样。</p>
@@ -472,7 +472,7 @@ ereregex</p>
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-03-26 18:14:45</p>
+        <p>站点最后生成 2017-08-23 16:55:42</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

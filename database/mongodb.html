@@ -23,7 +23,7 @@
     <a href="/#database">database</a>
     &nbsp;&#187;&nbsp;MongoDB
     <span class="updated">当前页面最后更新&nbsp;
-    2016-09-24 23:00
+    2017-08-08 17:55
     
     </span>
   </div>
@@ -50,6 +50,39 @@
 
 
 <h3 id="_3">用户认证</h3>
+<p>目前最新的稳定版是 3.X 版本，认证这块改动还是非常大：</p>
+<p>首先，认证机制由 <code>MONGODB-CR</code> 改为 <code>SCRAM-SHA-1</code>，<a href="https://docs.mongodb.com/manual/release-notes/3.0-scram/#upgrade-2-6-mongodb-cr-users-to-scram-sha-1">参考</a>，具体看<a href="https://docs.mongodb.com/manual/core/authentication-mechanisms/">这里</a></p>
+<p>创建用户的命令也变了，改用 <code>db.createUser()</code></p>
+<p>最后，用户的角色也变得非常复杂，比如针对数据库用户、数据库管理员、超级管理员等等，具体看 <a href="https://docs.mongodb.com/manual/reference/built-in-roles/#all-database-roles">Built-In Roles</a></p>
+<p>大致的步骤就是：</p>
+<ul>
+<li>先关闭认证，切换到 admin 数据库</li>
+<li>创建管理员用户，用于后续针对数据库创建的读写用户</li>
+<li>开启认证，使用管理员登录</li>
+<li>切换到欲创建的数据库，创建用户，授予如 <code>readWrite</code> 角色使其可以读写</li>
+</ul>
+<p>注：一个用户可以配置多个角色，比如我使用 <a href="https://github.com/TylerBrock/mongo-hacker">mongo-hacker</a> 会在 <code>find</code> 后读取 profile 信息，而这个信息需要 <code>dbAdmin</code> 角色读，所以我最后给用户 <code>readWrite</code> 和 <code>dbAdmin</code> 两个角色：</p>
+<div class="hlcode"><pre>&gt; show users
+{
+  &quot;_id&quot;: &quot;mydb.myuser&quot;,
+  &quot;user&quot;: &quot;myuser&quot;,
+  &quot;db&quot;: &quot;mydb&quot;,
+  &quot;roles&quot;: [
+    {
+      &quot;role&quot;: &quot;dbAdmin&quot;,
+      &quot;db&quot;: &quot;mydb&quot;
+    },
+    {
+      &quot;role&quot;: &quot;readWrite&quot;,
+      &quot;db&quot;: &quot;mydb&quot;
+    }
+  ]
+}
+</pre></div>
+
+
+<p>还可以参考这篇 <a href="http://tgrall.github.io/blog/2015/02/04/introduction-to-mongodb-security/">博文</a>，更详细可以看官方文档 <a href="https://docs.mongodb.com/manual/tutorial/enable-authentication/">Enable Auth</a></p>
+<p>以下是 MongoDB 2.x 的用户认证相关：</p>
 <p>首先先添加一个管理员帐号</p>
 <div class="hlcode"><pre>&gt; use admin
 switched to db admin
@@ -136,7 +169,7 @@ WriteResult({
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-03-26 18:14:45</p>
+        <p>站点最后生成 2017-08-23 16:55:42</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

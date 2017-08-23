@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>ranger - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#tool">tool</a>
+    &nbsp;&#187;&nbsp;ranger
+    <span class="updated">当前页面最后更新&nbsp;
+    2017-04-15 11:15
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">快捷键</a></li>
+<li><a href="#_2">其它</a></li>
+</ul>
+</div>
+<p>之前偶然在一个知乎专栏看到推荐 <a href="https://midnight-commander.org/">MC</a>，一个终端文本模式的文件浏览/管理工具。觉得这类工具还是挺方便的，毕竟长期都是在终端下工作，有时目录太多或太深。</p>
+<p>所以简单了解了下这方面的工具，除了上面的 MC，另外一个就是 <a href="http://ranger.nongnu.org/">ranger</a>。</p>
+<p>因为 ranger 支持 vim mode，所以选择了尝试下它，之前只限于安装后简单试试，今天看了下它的 man 手册，觉得功能/默认快捷键上还是挺符合我的习惯的。</p>
+<p>ranger 默认会生成一些基本配置在 <code>~/.config/ranger/</code> 下，也可以通过 <code>ranger --copy-config=???</code> 来指定从默认配置目录中复制哪些文件。</p>
+<h2 id="_1">快捷键</h2>
+<p>下面列出一些我觉得常用的快捷键，具体还是建议直接 man ：</p>
+<p>移动：也是我选择的原因，支持 vim mode，比如 <code>h</code>、<code>j</code>、<code>k</code>、<code>l</code>、<code>gg</code>、<code>G</code> 等操作。</p>
+<p>复制、剪切、粘贴、删除：<code>yy</code> 复制当前文件，还有相关的 <code>ya</code> 表示 copy mode 是 add file to copy buffer，<code>yr</code> 表示 copy mode 是 remove file from copy buffer。感觉 <code>yy</code> 和 <code>ya</code> 效果是一样 （也许 <code>yy</code> 是 copy 类操作的默认，也就是 add）。本地使用默认配色，<code>yy</code> 后，文件名颜色会改为黑色，<code>yr</code> remove 后恢复正常。<code>dd</code> 是剪切；<code>pp</code> 是粘贴，如果同级目录下有同名文件，则不覆盖，加了一个后缀，如果是 <code>po</code> 则覆盖。<code>dD</code> 是删除文件。</p>
+<p>编辑文件：光标在指定文件直接 <code>E</code>，使用 <code>$EDITOR</code> 环境变量设置的编辑器打开，修改完后保存退出，会返回 ranger。</p>
+<p>开启一个 Shell：在非 Tmux 的情况下，会 fork 一个 shell 子进程，进程退出后返回 ranger；在 Tmux 的情况下，会新建一个 Window。</p>
+<p>书签：<code>mX</code> 即 <code>m</code> 后接一个字符（比如大小写字母、数字等），给当前所在目标打一个书签并给予一个书签名，后续可以 `X （因为转义，就没用 code 标签了）来快速跳转到指定书签，和 jump 工具类似。标签是持久存储的，文件在 <code>~/.config/ranger/bookmarks</code>。</p>
+<p>标记文件：使用 <code>Space</code> 空格，标记后背景高亮，但是注意这个是临时操作，退出 ranger 后就没了。</p>
+<p>文件排序：<code>o</code>，方法和 mutt 一样。这个功能也非常赞，在工作中使用 mutt 处理报警邮件时，快速排序这个功能给了很大的帮助。</p>
+<p>tab 页：也是类 vim mode 操作，<code>gn</code> 开启一个新标签页，标签页列表在右上角，<code>gt/gT</code> 前后换页，<code>gc</code> 关闭当前页。</p>
+<p>终端刷新：有 <code>C-R</code> 和 <code>C-L</code>，<code>C-L</code> 是重绘窗口，<code>C-R</code> 是刷新所有。注意如果在其它地方新增、删除文件等，ranger 是会自动刷新的。</p>
+<p>另外还支持 <code>:</code>、<code>!</code> 等操作。</p>
+<h2 id="_2">其它</h2>
+<p>关于 colorscheme，有 4 个可选，可以临时修改或写在配置文件 <code>~/.config/ranger/rc.conf</code> 中。还可以自定义配置文件，放在 <code>~/.config/ranger/colorschemes/</code> 下。可参考 <a href="https://github.com/ranger/ranger/blob/20f0f2ba96a4a9dcbb8beffbee957b42157d4efd/doc/colorschemes.txt">colorschemes</a>。</p>
+<p>关于样式，建议开启 border，不然看起来好丑，<code>set draw_borders true</code>。</p>
+  
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2017 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2017-08-23 16:55:42</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+
+    
+    
+
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>

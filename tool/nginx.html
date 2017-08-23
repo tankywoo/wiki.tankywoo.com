@@ -126,11 +126,11 @@
 <p>但是，针对第二点，涉及到一个 <code>internal redirect</code> 的问题，具体看<a href="http://nginx.org/en/docs/http/ngx_http_index_module.html#index">index指令</a></p>
 <blockquote>
 <p>It should be noted that using an index file causes an internal redirect, and the request can be processed in a different location. For example, with the following configuration:</p>
-<p>location = / {
-      index index.html;
+<p>location = / {<br />
+      index index.html;<br />
   }</p>
-<p>location / {
-      ...
+<p>location / {<br />
+      ...<br />
   }</p>
 <p>a “/” request will actually be processed in the second location as “/index.html”.</p>
 </blockquote>
@@ -339,7 +339,7 @@ Date: Sun, 21 Aug 2016 14:15:32 GMT
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-03-26 18:14:45</p>
+        <p>站点最后生成 2017-08-23 16:55:42</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

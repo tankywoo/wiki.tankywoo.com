@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>Sentry - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#tool">tool</a>
+    &nbsp;&#187;&nbsp;Sentry
+    <span class="updated">当前页面最后更新&nbsp;
+    2017-06-21 15:18
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">简介</a></li>
+<li><a href="#_2">部署</a></li>
+</ul>
+</div>
+<h2 id="_1">简介</h2>
+<p>Sentry 是一个跨平台的日志收集、聚合的平台。</p>
+<p>它自身的 UI Web Server 是用 Python（Django）写的，所以可以使用 pip 直接安装（当然，官方推荐是使用 Docker）。不过它的API有很多语言的实现版本，所以使用上并不限于 Python。</p>
+<ul>
+<li><a href="https://github.com/getsentry/sentry">项目主页</a></li>
+<li><a href="https://sentry.io">官网</a></li>
+<li><a href="https://docs.sentry.io/">文档</a></li>
+</ul>
+<h2 id="_2">部署</h2>
+<p>参考：<a href="https://docs.sentry.io/server/installation/">Installation</a></p>
+<ul>
+<li>系统：Gentoo</li>
+<li>Sentry版本：8.17.0</li>
+</ul>
+<p>部署选择了 pip 安装，所以更具体的可以参考 <a href="https://docs.sentry.io/server/installation/python/">Installation with Python</a></p>
+<p>部署前需要一些基本的服务：</p>
+<ul>
+<li>PostgreSQL</li>
+<li>Redis</li>
+<li>本机域名</li>
+</ul>
+<p>关于 PostgreSQL，可以更改为 MySQL，之前没有接触 Sentry，不过看一些资料，貌似以前默认使用 MySQL？目前的文档都没有提使用 MySQL，不过使用了的 Django，可以通过配置 db engine 改为 mysql 即可。</p>
+<p>但是，因为 Sentry 有个依赖包 <code>psycopg2</code>，而这个包安装时如果没有 <code>pg_config</code> 命令，则报错进而导致 Sentry 安装失败。我为了偷懒还是先装上了 PostgreSQL。不想装 PG 的话可以试试将项目克隆下来，修改 <code>setup.py</code> 去掉 <code>psycopg2</code> 这个依赖包，我没去实际测试，但是问题不大，除非还有级联的依赖等。</p>
+<p>改用 MySQL 的话记得安装 <code>mysql-python</code> 包。</p>
+<p>将 MySQL 起来，建立一个数据库，考虑安全性的话可以考虑增加一个专用的数据库用户。</p>
+<p>安装完 Sentry 后生成配置：</p>
+<div class="hlcode"><pre><span class="nx">sentry</span> <span class="nb">init</span> <span class="o">&lt;</span><span class="nx">sentry_config_dir</span><span class="o">&gt;</span>
+</pre></div>
+
+
+<p>里面会生成 <code>sentry.conf.py</code> 和 <code>config.yml</code> 两个配置文件，前者配置 PostgreSQL/MySQL 等，后者配置 Redis 和一个加密私钥。</p>
+<div class="hlcode"><pre><span class="cp"># sentry.conf.py 中 MySQL 配置相关</span>
+<span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="err">&#39;</span><span class="k">default</span><span class="err">&#39;</span><span class="o">:</span> <span class="p">{</span>
+        <span class="err">#</span> <span class="err">&#39;</span><span class="n">ENGINE</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">sentry</span><span class="p">.</span><span class="n">db</span><span class="p">.</span><span class="n">postgres</span><span class="err">&#39;</span> <span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">ENGINE</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">django</span><span class="p">.</span><span class="n">db</span><span class="p">.</span><span class="n">backends</span><span class="p">.</span><span class="n">mysql</span><span class="err">&#39;</span> <span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">NAME</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">sentry</span><span class="err">&#39;</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">USER</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">sentry</span><span class="err">&#39;</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">PASSWORD</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">xxxxxxxx</span><span class="err">&#39;</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">HOST</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">PORT</span><span class="err">&#39;</span><span class="o">:</span> <span class="err">&#39;&#39;</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">AUTOCOMMIT</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">True</span><span class="p">,</span>
+        <span class="err">&#39;</span><span class="n">ATOMIC_REQUESTS</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">False</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cp"># config.yml 中加密私钥和 Redis 相关</span>
+<span class="n">system</span><span class="p">.</span><span class="n">secret</span><span class="o">-</span><span class="n">key</span><span class="o">:</span> <span class="err">&#39;</span><span class="n">a</span> <span class="n">random</span> <span class="n">string</span><span class="err">&#39;</span>
+
+<span class="n">redis</span><span class="p">.</span><span class="n">clusters</span><span class="o">:</span>
+  <span class="nl">default:</span>
+    <span class="nl">hosts:</span>
+      <span class="mi">0</span><span class="o">:</span>
+        <span class="nl">host:</span> <span class="mf">127.0.0.1</span>
+        <span class="nl">port:</span> <span class="mi">6379</span>
+        <span class="nl">password:</span> <span class="n">xxxxxxxx</span>
+</pre></div>
+
+
+<p>文档里写：</p>
+<blockquote>
+<p>Starting with 8.0.0, init now creates two files, sentry.conf.py and config.yml. To avoid confusion, config.yml will slowly be replacing sentry.conf.py, but right now, the uses of config.yml are limited.</p>
+</blockquote>
+<p>最开始我还以为目前暂时还是使用 <code>sentry.conf.py</code>，结果是两个都需要配置……</p>
+<p>然后初始化创建数据表，并会创建用户：</p>
+<div class="hlcode"><pre><span class="nx">sentry</span> <span class="o">--</span><span class="nx">config</span> <span class="o">&lt;</span><span class="nx">sentry_config_dir</span><span class="o">&gt;</span> <span class="nx">upgrade</span>
+</pre></div>
+
+
+<p>这块用到的 Python 包 <code>symsynd</code>，里面会用到 <code>libncurses.so.5</code>，先开始我本地装的是 <code>ncurses 6.x</code> 的版本导致找不到动态库，所以需要安装 <code>ncurses 5.x</code> 的版本。</p>
+<p>运行 Web 服务，通过 <code>http://x.x.x.x:9000</code> 访问测试：</p>
+<div class="hlcode"><pre><span class="n">SENTRY_CONF</span><span class="o">=&lt;</span><span class="nx">sentry_config_dir</span><span class="o">&gt;</span> <span class="nx">sentry</span> <span class="nb">run</span> <span class="nx">web</span>
+</pre></div>
+
+
+<p>在运行时点击 Members 时发现连接报错：</p>
+<blockquote>
+<p>ResponseError: NOAUTH Authentication required.</p>
+</blockquote>
+<p>这个是 <code>sentry.conf.py</code> 中的配置：</p>
+<div class="hlcode"><pre><span class="n">BROKER_URL</span> <span class="o">=</span> <span class="s1">&#39;redis://:&lt;password&gt;@localhost:6379&#39;</span>
+</pre></div>
+
+
+<p>因为 redis 配置了密码，所以这里也需要指定，注意前面的冒号，因为 redis 没有用户的概念。参考了<a href="https://github.com/niwinz/django-redis/issues/112">这个</a>和<a href="https://github.com/getsentry/sentry/issues/2655">这个</a>才想起来这里没有配置密码。</p>
+<p>最后线上正式部署时，可以配合 <code>Supervisord</code> 来使用。记得同时启动 <code>sentry run worker</code> 和 <code>sentry run cron</code>。</p>
+  
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2017 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2017-08-23 16:55:42</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+
+    
+    
+
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>

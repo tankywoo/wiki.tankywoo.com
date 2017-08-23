@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>Redis - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#database">database</a>
+    &nbsp;&#187;&nbsp;Redis
+    <span class="updated">当前页面最后更新&nbsp;
+    2017-04-16 21:25
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul></ul>
+</div>
+<p><a href="https://redis.io/">Redis</a> 是一个基于 key-value 的 NoSQL 数据库。学习成本也比较低。</p>
+<p>以前都是在运维层面关注它比较多，最近有一个项目选择用它，所以快速扫了一遍。</p>
+<p>大概方向就是：</p>
+<ul>
+<li>基本配置</li>
+<li>基本的命令。如 <code>SELECT</code>，<code>KEYS</code>，<code>EXISTS</code>，<code>DEL</code>，<code>TYPE</code> 等</li>
+<li>基本类型。了解每种的基本命令、使用方法和使用场景<ul>
+<li>字符串</li>
+<li>哈希</li>
+<li>列表</li>
+<li>集合</li>
+<li>有序集合</li>
+</ul>
+</li>
+<li>高级<ul>
+<li>事务 <code>MULTI</code>、<code>EXEC</code></li>
+<li>排序 <code>SORT</code>、<code>SORT .. BY ..</code></li>
+<li>过期时间 <code>EXPIRE</code>、<code>TTL</code>、<code>PERSIST</code>，以及知道什么操作会将失效时间变为持久</li>
+</ul>
+</li>
+<li>持久化，包括 RDB 和 AOF</li>
+<li>主从配置 以及 哨兵</li>
+<li>管理，如 <code>SLOWLOG</code>，<code>MONITOR</code></li>
+<li>安全，配置密码</li>
+</ul>
+<p>一些需要关注的点：</p>
+<ul>
+<li>字符串类型是其它几种基本类型的根本，其它类型的字段值只能是字符串</li>
+<li>如 哈希、列表、集合类型的 key 个数最多 <code>2^32-1</code> 个</li>
+<li>安全性要注意，默认是无密码，监听环回地址。这块的安全性交由使用者决定，操作如果是监听非环回，尤其外网，一定要做好相应的安全报障，如 iptables 限制访问 ip，配置 <code>requirepass</code> 等</li>
+<li>如果配置了哨兵，注意 master 选举切换时，是会自动修改原 master 的配置的，增加 <code>slaveof</code></li>
+<li>针对事务，因为是 <code>MULTI</code> 和 <code>EXEC</code> 之间的一串命令最后一起执行，所以针对期间的语法错误，是会在开始就捕获，相当于未执行；但是运行时错误，因为顺序执行下去，遇到错误时当前这条命令不生效，后续继续执行。</li>
+</ul>
+<p>资源：</p>
+<ul>
+<li>《<a href="https://book.douban.com/subject/26419240/">Redis入门指南</a>》适合用来快速入门</li>
+<li>命令文档 <a href="https://redis.io/commands">官网</a> | <a href="http://redisdoc.com/">中文</a> 入门后遇到就直接查文档</li>
+</ul>
+  
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2017 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2017-08-23 16:55:42</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+
+    
+    
+
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>

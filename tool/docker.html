@@ -119,8 +119,8 @@
 <h3 id="loop-module">loop module</h3>
 <p>Gentoo下安装docker后启动报错, 看日志:</p>
 <blockquote>
-<p>level=info msg="Listening for HTTP on unix (/var/run/docker.sock)"
-level=error msg="There are no more loopback devices available."
+<p>level=info msg="Listening for HTTP on unix (/var/run/docker.sock)"<br />
+level=error msg="There are no more loopback devices available."<br />
 level=fatal msg="Error starting daemon: error initializing graphdriver: loopback mounting failed"</p>
 </blockquote>
 <p>原因是没有加载<code>loop</code>模块. 在<code>/etc/conf.d/modules</code> 中加入模块:</p>
@@ -244,7 +244,7 @@ library/python                 0
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-03-26 18:14:45</p>
+        <p>站点最后生成 2017-08-23 16:55:42</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
