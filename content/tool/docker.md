@@ -1,9 +1,9 @@
 ---
 title: "Docker"
 date: 2015-11-08 12:34
-updated: 2016-09-20 11:30
+updated: 2017-08-23 17:30
 collection: "虚拟化"
-log: "增加CMD vs. ENTRYPOINT"
+log: "增加 docker registry"
 ---
 
 [TOC]
@@ -211,6 +211,72 @@ curl https://registry.hub.docker.com/v1/repositories/ubuntu/tags 2>/dev/null | j
 * `docker stop`会先发SIGTERM信号，等待默认10s后发SIGKILL信号 (graceful关闭)
 * `docker kill`直接发送默认SIGKILL信号，也可以指定其它信号 (暴力关闭)
 
+
+## Docker Registry
+
+docker registry 最开始是 v1 版本，参见我三年前写的博客 [Docker 3 -- 自建Docker Registry](https://blog.tankywoo.com/2014/05/08/docker-3-docker-registry.html)，但是现在这个版本已经过时了，更多的是使用 v2 版本。
+
+部署 docker registry 最简单的方法就是直接通过 docker 镜像来运行，docker hub 上的地址 [registry](https://hub.docker.com/_/registry/)。直接 pull 然后运行，不过运行前建议先看看 Dockerfile，比如 push 上去的镜像是放在 `/var/lib/registry`，所以建议将本地目录挂载到容器的这个目录，否则容器重启后数据就没了，具体的启动命令见：
+
+```
+docker run -d -p 5000:5000 --restart always --name registry \
+        -v /home/registry/data:/var/lib/registry \
+        registry:2
+```
+
+注意要指定为 v2 的版本。
+
+推送到 registry 根据镜像的前缀确认推送的地址，所以需要给本地的镜像打一个额外的tag：
+
+```
+docker tag alpine:latest 127.0.0.1:5000/alpine
+```
+
+然后推送到本地的 registry。
+
+可以通过如下查看目前有哪些镜像：
+
+```
+curl http://127.0.0.1:5000/v2/_catalog
+```
+
+关于认证，没有深入研究，直接使用了 registry 自带的 basic auth，参考 [native basic auth](https://docs.docker.com/registry/deploying/#native-basic-auth)：
+
+```
+# 创建一个 auth 目录，生成简单认证的用户密码对
+$ mkdir auth
+$ docker run \
+        --entrypoint htpasswd \
+        registry:2 -Bbn testuser testpassword > auth/htpasswd
+```
+
+当然如果安装了 `apache-tools` 也可以直接使用 `htpasswd` 命令生成：
+
+```
+htpasswd -bBn testuser testpassword > auth/htpasswd
+```
+
+注意 `-B` 参数，使用 bcrypt 加密。
+
+新的启动命令：
+
+```
+docker run -d -p 5000:5000 --restart always --name registry \
+        -v /home/registry/data:/var/lib/registry \
+        -v /home/registry/auth:/auth \
+        -e "REGISTRY_AUTH=htpasswd" \
+        -e "REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm" \
+        -e REGISTRY_AUTH_HTPASSWD_PATH=/auth/htpasswd \
+        registry:2
+```
+
+然后通过 `docker login` 来登录，登录会话保存到 `~/.docker/config.json` 中，使用 `docker logout` 删除。通过 curl 访问：
+
+```
+curl -u testuser:testpassword --basic  http://127.0.0.1:5000/v2/_catalog
+```
+
+看到还有推荐 [cesanta/docker_auth](https://github.com/cesanta/docker_auth) 这个仓库，未尝试。
 
 ## 一些链接 ##
 
