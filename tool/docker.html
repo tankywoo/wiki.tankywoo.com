@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Docker
     <span class="updated">当前页面最后更新&nbsp;
-    2016-09-20 11:30
+    2017-08-23 17:30
     
     </span>
   </div>
@@ -44,6 +44,7 @@
 <li><a href="#docker-stop-vs-docker-kill">docker stop vs. docker kill</a></li>
 </ul>
 </li>
+<li><a href="#docker-registry">Docker Registry</a></li>
 <li><a href="#_5">一些链接</a></li>
 </ul>
 </div>
@@ -226,6 +227,59 @@ library/python                 0
 <li><code>docker stop</code>会先发SIGTERM信号，等待默认10s后发SIGKILL信号 (graceful关闭)</li>
 <li><code>docker kill</code>直接发送默认SIGKILL信号，也可以指定其它信号 (暴力关闭)</li>
 </ul>
+<h2 id="docker-registry">Docker Registry</h2>
+<p>docker registry 最开始是 v1 版本，参见我三年前写的博客 <a href="https://blog.tankywoo.com/2014/05/08/docker-3-docker-registry.html">Docker 3 -- 自建Docker Registry</a>，但是现在这个版本已经过时了，更多的是使用 v2 版本。</p>
+<p>部署 docker registry 最简单的方法就是直接通过 docker 镜像来运行，docker hub 上的地址 <a href="https://hub.docker.com/_/registry/">registry</a>。直接 pull 然后运行，不过运行前建议先看看 Dockerfile，比如 push 上去的镜像是放在 <code>/var/lib/registry</code>，所以建议将本地目录挂载到容器的这个目录，否则容器重启后数据就没了，具体的启动命令见：</p>
+<div class="hlcode"><pre><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5000</span><span class="o">:</span><span class="mi">5000</span> <span class="o">--</span><span class="n">restart</span> <span class="n">always</span> <span class="o">--</span><span class="n">name</span> <span class="n">registry</span> \
+        <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">registry</span><span class="o">/</span><span class="n">data</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">registry</span> \
+        <span class="nl">registry:</span><span class="mi">2</span>
+</pre></div>
+
+
+<p>注意要指定为 v2 的版本。</p>
+<p>推送到 registry 根据镜像的前缀确认推送的地址，所以需要给本地的镜像打一个额外的tag：</p>
+<div class="hlcode"><pre><span class="n">docker</span> <span class="n">tag</span> <span class="n">alpine</span><span class="o">:</span><span class="n">latest</span> <span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">5000</span><span class="o">/</span><span class="n">alpine</span>
+</pre></div>
+
+
+<p>然后推送到本地的 registry。</p>
+<p>可以通过如下查看目前有哪些镜像：</p>
+<div class="hlcode"><pre><span class="n">curl</span> <span class="n">http</span><span class="o">:</span><span class="c1">//127.0.0.1:5000/v2/_catalog</span>
+</pre></div>
+
+
+<p>关于认证，没有深入研究，直接使用了 registry 自带的 basic auth，参考 <a href="https://docs.docker.com/registry/deploying/#native-basic-auth">native basic auth</a>：</p>
+<div class="hlcode"><pre><span class="cp"># 创建一个 auth 目录，生成简单认证的用户密码对</span>
+<span class="err">$</span> <span class="n">mkdir</span> <span class="n">auth</span>
+<span class="err">$</span> <span class="n">docker</span> <span class="n">run</span> \
+        <span class="o">--</span><span class="n">entrypoint</span> <span class="n">htpasswd</span> \
+        <span class="nl">registry:</span><span class="mi">2</span> <span class="o">-</span><span class="n">Bbn</span> <span class="n">testuser</span> <span class="n">testpassword</span> <span class="o">&gt;</span> <span class="n">auth</span><span class="o">/</span><span class="n">htpasswd</span>
+</pre></div>
+
+
+<p>当然如果安装了 <code>apache-tools</code> 也可以直接使用 <code>htpasswd</code> 命令生成：</p>
+<div class="hlcode"><pre><span class="n">htpasswd</span> <span class="o">-</span><span class="n">bBn</span> <span class="n">testuser</span> <span class="n">testpassword</span> <span class="o">&gt;</span> <span class="n">auth</span><span class="o">/</span><span class="n">htpasswd</span>
+</pre></div>
+
+
+<p>注意 <code>-B</code> 参数，使用 bcrypt 加密。</p>
+<p>新的启动命令：</p>
+<div class="hlcode"><pre><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5000</span><span class="o">:</span><span class="mi">5000</span> <span class="o">--</span><span class="n">restart</span> <span class="n">always</span> <span class="o">--</span><span class="n">name</span> <span class="n">registry</span> \
+        <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">registry</span><span class="o">/</span><span class="n">data</span><span class="o">:/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">registry</span> \
+        <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">registry</span><span class="o">/</span><span class="n">auth</span><span class="o">:/</span><span class="n">auth</span> \
+        <span class="o">-</span><span class="n">e</span> <span class="s">&quot;REGISTRY_AUTH=htpasswd&quot;</span> \
+        <span class="o">-</span><span class="n">e</span> <span class="s">&quot;REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm&quot;</span> \
+        <span class="o">-</span><span class="n">e</span> <span class="n">REGISTRY_AUTH_HTPASSWD_PATH</span><span class="o">=/</span><span class="n">auth</span><span class="o">/</span><span class="n">htpasswd</span> \
+        <span class="nl">registry:</span><span class="mi">2</span>
+</pre></div>
+
+
+<p>然后通过 <code>docker login</code> 来登录，登录会话保存到 <code>~/.docker/config.json</code> 中，使用 <code>docker logout</code> 删除。通过 curl 访问：</p>
+<div class="hlcode"><pre><span class="n">curl</span> <span class="o">-</span><span class="n">u</span> <span class="n">testuser</span><span class="o">:</span><span class="n">testpassword</span> <span class="o">--</span><span class="n">basic</span>  <span class="n">http</span><span class="o">:</span><span class="c1">//127.0.0.1:5000/v2/_catalog</span>
+</pre></div>
+
+
+<p>看到还有推荐 <a href="https://github.com/cesanta/docker_auth">cesanta/docker_auth</a> 这个仓库，未尝试。</p>
 <h2 id="_5">一些链接</h2>
 <ul>
 <li><a href="https://www.gitbook.com/book/yeasy/docker_practice/details">Docker —— 从入门到实践</a></li>
@@ -244,7 +298,7 @@ library/python                 0
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-08-23 16:55:42</p>
+        <p>站点最后生成 2017-08-23 18:19:23</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
