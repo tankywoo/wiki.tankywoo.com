@@ -2,8 +2,8 @@
 layout: page
 title: "树莓派 Raspberry"
 date: 2015-10-30 08:30
-update: 2017-04-15 23:16
-log: "更新树莓派 ssh 的一些问题"
+update: 2017-08-23 16:33
+log: "更新树莓派wifi链接的参考链接"
 ---
 
 [TOC]
@@ -231,6 +231,11 @@ $ dpkg-reconfigure openssh-server
 ## 配置 Wifi ##
 
 参考 [SETTING WIFI UP VIA THE COMMAND LINE](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)，wpa-supplicant 默认是运行的，修改配置后，执行 `wpa_cli reconfigure` 重新加载配置即可。
+
+更多参考：
+
+* [树莓派连接WiFi](https://i.cmgine.net/archives/11053.html)
+* [树莓派 Raspberry Pi 设置无线上网](http://www.jianshu.com/p/b42e8d3df449)
 
 
 ## 其它 ##
