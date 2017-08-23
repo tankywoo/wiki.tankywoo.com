@@ -1,8 +1,8 @@
 ---
 title: "Go入门笔记"
 date: 2016-12-15 22:00
-updated: 2017-08-06 15:55
-log: "Go get 被 X 的解决"
+updated: 2017-08-23 16:52
+log: "更新一些扩展阅读"
 ---
 
 [TOC]
@@ -15,6 +15,7 @@ log: "Go get 被 X 的解决"
 * [Go入门指南](http://wiki.jikexueyuan.com/project/the-way-to-go/) / [Github](https://github.com/Unknwon/the-way-to-go_ZH_CN)
 * [Go 语言程序设计](https://book.douban.com/subject/24869910/)
 * [怎么学习golang？](https://www.zhihu.com/question/23486344) 里面给出了一些不错的入门资料
+* [Go Wiki](https://github.com/golang/go/wiki)
 
 
 ## 笔记
@@ -525,6 +526,13 @@ for i := range s {
 
 和Python一样，如果不关心索引，可以直接赋值给变量名`_`
 
+关于 range 的扩展阅读：
+
+* [聊聊Go中的Range关键字](https://xiaozhou.net/something-about-range-of-go-2016-04-10.html)
+* [unicode — Unicode码点、UTF-8/16编码](https://qianlonggit.gitbooks.io/the-golang-standard-library-by-example/content/chapter02/02.5.html)
+* [go wiki - Range](https://github.com/golang/go/wiki/Range)
+* [Go by Example: Range](https://gobyexample.com/range)
+
 
 ### Maps
 
@@ -907,16 +915,3 @@ default:
 	...
 }
 ```
-
-## Go get 被 X 的解决
-
-```
-http_proxy=127.0.0.1:8123 https_proxy=127.0.0.1:8123 go get -u ...
-```
-
-注意有些地址是 https 的，所以将两个都配置了。
-
-参考：
-
-* [GoGetProxyConfig](https://github.com/golang/go/wiki/GoGetProxyConfig)
-* [Set proxy when executing “go get” command](http://nanxiao.me/en/set-proxy-when-executing-go-get-command/)
