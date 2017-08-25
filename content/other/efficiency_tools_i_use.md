@@ -67,6 +67,8 @@ log: "更新网盘"
 
 主要需求还是偏 Mac下，其次是全平台支持。Dropbox 可以自定义代理，这个挺不错的。
 
+详见 [Wiki - Dropbox](/other/dropbox.html)
+
 <b>Google Drive</b>
 
 个人还是比较喜欢 Google 家的产品，我一直认为，苹果家主要是靠第三方优质的工具环境，而 Google 家则自身的产品都挺优秀。
