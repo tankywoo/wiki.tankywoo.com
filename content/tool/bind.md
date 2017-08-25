@@ -39,7 +39,7 @@ $ named-checkconf /etc/bind/named.conf
 
 ```bash
 # named-checkzone <zonename> <filename>
-$ named-checkzone intra.example.com /etc/bind/ks/intra.example.com.zone
+$ named-checkzone intra.example.com /etc/bind/intra.example.com.zone
 zone intra.example.com/IN: loaded serial 2016092801
 OK
 ```
