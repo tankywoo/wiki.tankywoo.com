@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>DNS - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#linux">linux</a>
+    &nbsp;&#187;&nbsp;DNS
+    <span class="updated">当前页面最后更新&nbsp;
+    2017-08-28 15:30
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <p>关于 DNS 这块，<b>TCP/IP协议详解</b> 有专门一章讲解，入门非常合适。这里再补充一些其它方面的。</p>
+<p>首先看下 DNS 首部结构图，图片来至 <a href="http://www.troyjessup.com">http://www.troyjessup.com</a> (这个网站好像无法打开了，从其它站点找到的图)：</p>
+<p><img alt="DNS HEADER" src="https://tankywoo-wb.b0.upaiyun.com/dns/dns-header.jpg" /></p>
+<p>例1：</p>
+<div class="hlcode"><pre><span class="o">$</span> dig tankywoo.com <span class="o">@</span><span class="m">114.114.114.114</span> A
+
+<span class="p">;</span> <span class="o">&lt;&lt;&gt;&gt;</span> DiG <span class="m">9.10.3</span><span class="o">-</span>P2 <span class="o">&lt;&lt;&gt;&gt;</span> tankywoo.com <span class="o">@</span><span class="m">114.114.114.114</span> A
+<span class="p">;;</span> global options<span class="o">:</span> <span class="o">+</span>cmd
+<span class="p">;;</span> Got answer<span class="o">:</span>
+<span class="p">;;</span> <span class="o">-&gt;&gt;</span>HEADER<span class="o">&lt;&lt;-</span> opcode<span class="o">:</span> QUERY<span class="p">,</span> status<span class="o">:</span> NOERROR<span class="p">,</span> id<span class="o">:</span> <span class="m">12839</span>
+<span class="p">;;</span> flags<span class="o">:</span> qr rd ra<span class="p">;</span> QUERY<span class="o">:</span> <span class="m">1</span><span class="p">,</span> ANSWER<span class="o">:</span> <span class="m">1</span><span class="p">,</span> AUTHORITY<span class="o">:</span> <span class="m">2</span><span class="p">,</span> ADDITIONAL<span class="o">:</span> <span class="m">11</span>
+
+<span class="p">;;</span> OPT PSEUDOSECTION<span class="o">:</span>
+<span class="p">;</span> EDNS<span class="o">:</span> version<span class="o">:</span> <span class="m">0</span><span class="p">,</span> flags<span class="o">:</span><span class="p">;</span> udp<span class="o">:</span> <span class="m">4096</span>
+<span class="p">;;</span> QUESTION SECTION<span class="o">:</span>
+<span class="p">;</span>tankywoo.com.                  IN      A
+
+<span class="p">;;</span> ANSWER SECTION<span class="o">:</span>
+tankywoo.com.           <span class="m">496</span>     IN      A       <span class="m">192.168.1.100</span>
+
+<span class="p">;;</span> AUTHORITY SECTION<span class="o">:</span>
+tankywoo.com.           <span class="m">86370</span>   IN      NS      f1g1ns2.dnspod.net.
+tankywoo.com.           <span class="m">86370</span>   IN      NS      f1g1ns1.dnspod.net.
+
+<span class="p">;;</span> ADDITIONAL SECTION<span class="o">:</span>
+f1g1ns1.dnspod.net.     <span class="m">3928</span>    IN      A       <span class="m">180.163.19.15</span>
+f1g1ns1.dnspod.net.     <span class="m">3928</span>    IN      A       <span class="m">182.140.167.166</span>
+<span class="kc">...</span>
+
+<span class="p">;;</span> Query time<span class="o">:</span> <span class="m">3</span> msec
+<span class="p">;;</span> SERVER<span class="o">:</span> <span class="m">114.114.114.114</span><span class="c1">#53(114.114.114.114)</span>
+<span class="p">;;</span> WHEN<span class="o">:</span> Mon Aug <span class="m">28</span> <span class="m">08</span><span class="o">:</span><span class="m">43</span><span class="o">:</span><span class="m">08</span> UTC <span class="m">2017</span>
+<span class="p">;;</span> MSG SIZE  rcvd<span class="o">:</span> <span class="m">271</span>
+</pre></div>
+
+
+<h2 id="dns-flags">DNS 包的 Flags</h2>
+<p>具体可以看看 <a href="http://www.ietf.org/rfc/rfc1035.txt">RFC 1035</a> 的 <code>Header section format</code> 部分。</p>
+<p>常见的如：</p>
+<ul>
+<li>RD(Recursion Desired) 表示请求时(QUERY)期望递归</li>
+<li>RA(Recursion Available) 表示响应(RESPONSE)带的标记，标识NS服务器是否支持递归</li>
+</ul>
+<p>也可以看看 <a href="http://www.networksorcery.com/enp/protocol/dns.htm#RD, Recursion Desired">DNS, Domain Name System</a></p>
+<h2 id="recursiveiterative">递归(Recursive)和迭代(Iterative)</h2>
+<p>迭代，即非递归(Non-Recursive)。</p>
+<p>如上例1中 <code>;; flags: qr rd ra;</code>，一般的 dns 请求工具如 dig，默认都是期望递归(rd)，并且一般我们直接请求的 ns 服务器也支持递归请求(ra)。</p>
+<p>如下这幅图，<a href="http://slideplayer.com/slide/9431631/">图片来源</a>：</p>
+<p><img alt="Recursive and Iterative" src="https://tankywoo-wb.b0.upaiyun.com/dns/dns-recursive-and-iterative.jpg" /></p>
+<p>可以看到 <code>1, 8</code> 这个过程是递归查询，其余是非递归查询。一般我们直接请求的 ns 服务器承担了递归、转发(forward)、缓存的作用。</p>
+<p>如果查询的域名没有在缓存和zone中，则向根域请求，根域是非递归服务器，会告诉请求ns需要向哪个ns服务器作查询，然后迭代直到查到记录并返回给用户。</p>
+<p>直接执行 <code>dig</code> 可以获取所有根域服务器。</p>
+<p>如果不想递归请求，针对 dig 可以：</p>
+<div class="hlcode"><pre><span class="n">dig</span> <span class="o">+</span><span class="n">norecurse</span> <span class="n">tankywoo</span><span class="p">.</span><span class="n">com</span> <span class="n">A</span> <span class="err">@</span><span class="mf">114.114.114.114</span>
+</pre></div>
+
+
+<p>再比如 DNS 服务器使用 bind 的话，可以设置 <code>recursion no</code> 使 NS 服务器作为一个非递归服务器，这时 dig 查询可以看到没有 <code>ra</code> 这个标记。</p>
+<h2 id="authoritative-dns">权威(Authoritative) DNS</h2>
+<p>权威DNS就是管理域名zone记录的DNS服务器，DNS查询最终会到权威DNS并返回记录。</p>
+<p>比如DNSPOD提供的NS服务，我们可以将域名放到DNSPOD上解析，在权威上可以设置，修改，删除该区域内的解析记录，而非权威DNS只能是查询。</p>
+<p>具体可以可以看维基百科 <a href="https://en.wikipedia.org/wiki/Name_server#Authoritative_name_server">Authoritative name server</a></p>
+<p>如下这幅图，<a href="http://social.dnsmadeeasy.com/blog/authoritative-vs-recursive-dns-servers-whats-the-difference/">图片来源</a>：</p>
+<p><img alt="Authoritative DNS" src="https://tankywoo-wb.b0.upaiyun.com/dns/dns-authoritative-server.png" /></p>
+<p>可以看到，中间经过递归查询，最终查询到权威服务器，然后返回记录。</p>
+<p>例1中的 <code>;; AUTHORITY SECTION:</code> 就是授权DNS部分。</p>
+<p>通过 <code>nslookup</code> 命令也可以看：</p>
+<div class="hlcode"><pre><span class="c1"># 直接查询的 dns 是非授权服务器</span>
+root <span class="o">~</span> <span class="o">% nslookup tankywoo.com 114.114.114.114</span>
+<span class="o">Server:         114.114.114.114</span>
+<span class="o">Address:        114.114.114.114#53</span>
+
+<span class="o">Non-authoritative answer:   // &lt;- 注意这个说明</span>
+<span class="o">Name:   tankywoo.com</span>
+<span class="o">Address: 192.168.1.100</span>
+
+<span class="o"># 直接查询的 dns 是授权服务器</span>
+<span class="o">root ~ %</span> nslookup tankywoo.com f1g1ns2.dnspod.net.
+Server<span class="o">:</span>         f1g1ns2.dnspod.net.
+Address<span class="o">:</span>        <span class="m">182.140.167.188</span><span class="c1">#53</span>
+
+Name<span class="o">:</span>   tankywoo.com
+Address<span class="o">:</span> <span class="m">192.168.1.100</span>
+</pre></div>
+
+
+<h2 id="bind">Bind 中的转发与递归</h2>
+<p>在 Bind 中，转发是通过 <code>forward</code> 和 <code>forwarders</code> 来配置的，比如配置 <code>forward only</code> 则此 DNS 服务器只将请求转到 <code>forwarders</code> 列表中，而不请求到 root server。</p>
+<p>通过抓包也可以看到，比如A记录查询，在 <code>first first</code> 时会只向 <code>forwarders</code> 请求 A 记录；而后者则会同时请求 <code>A</code> 记录，如果没有则向 root server 请求。</p>
+<p>这两者本身来说没有什么关联性，递归是一种查询/响应的方式，而转发则是对查询请求的处理方式。</p>
+<p>一个常见的使用尝试就是个人部署一个只做转发的DNS缓存服务器。</p>
+<p>扩展阅读：</p>
+<ul>
+<li><a href="https://serverfault.com/questions/661821/what-s-the-difference-between-recursion-and-forwarding-in-bind">What’s the difference between recursion and forwarding in bind</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-caching-or-forwarding-dns-server-on-ubuntu-14-04">How To Configure Bind as a Caching or Forwarding DNS Server on Ubuntu 14.04</a></li>
+</ul>
+<h2 id="_1">扩展阅读</h2>
+<ul>
+<li><a href="https://danielmiessler.com/study/dns/">A DNS Primer</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/a-comparison-of-dns-server-types-how-to-choose-the-right-dns-configuration">A Comparison of DNS Server Types: How To Choose the Right DNS Configuration</a></li>
+<li><a href="http://anouar.adlani.com/2011/12/useful-dig-command-to-troubleshot-your-domains.html">10 frequently asked questions about DNS solved with DIG</a></li>
+<li><a href="https://support.rackspace.com/how-to/using-dig-to-query-nameservers/">Use dig to query nameservers</a></li>
+</ul>
+  
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2017 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2017-08-28 18:40:47</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+
+    
+    
+
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>
