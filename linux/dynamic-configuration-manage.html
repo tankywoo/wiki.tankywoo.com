@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>动态配置管理 - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#linux">linux</a>
+    &nbsp;&#187;&nbsp;动态配置管理
+    <span class="updated">当前页面最后更新&nbsp;
+    2017-09-04 18:45
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <p>（目前只是浅显的研究）</p>
+<p>涉及到的工具：</p>
+<ul>
+<li>confd: <a href="http://www.confd.io/">website</a> / <a href="https://github.com/kelseyhightower/confd">github</a></li>
+<li>etcd: <a href="https://coreos.com/etcd/">website</a> / <a href="https://github.com/coreos/etcd">github</a></li>
+<li>consul: <a href="https://www.consul.io/">website</a> / <a href="https://github.com/hashicorp/consul">github</a></li>
+</ul>
+<p>这几个工具都是 Go 写的，开箱即用。</p>
+<p>consul 和 etcd 提供类似的服务，还没去研究，只是看到有人提到使用时遇到不少坑，所以暂时先不去研究了。</p>
+<h2 id="etcd">etcd</h2>
+<p>etcd 是一个分布式的k/v存储，通过Raft保证一致性。</p>
+<p>扩展阅读：</p>
+<ul>
+<li><a href="http://cizixs.com/2016/08/02/intro-to-etcd">etcd 使用入门</a></li>
+<li><a href="http://www.jianshu.com/p/6160d414dd5e">服务发现之 Etcd VS Consul</a></li>
+<li><a href="http://dockone.io/article/667">服务发现：Zookeeper vs etcd vs Consul</a></li>
+<li><a href="https://toutiao.io/posts/s866l/preview">Consul 和 ZooKeeper、Doozerd、Etcd 的区别</a></li>
+</ul>
+<h2 id="confd">confd</h2>
+<p>confd 是一个轻量的配置管理工具，配合 <code>etcd</code>、<code>consul</code>、<code>redis</code> 等后端提供配置数据，模板配置使用 toml，模板使用 Go Text 来管理配置，通过间隔周期检查后端存储里的变动，进而动态的更新配置。</p>
+<p>扩展阅读：</p>
+<ul>
+<li><a href="http://www.pydevops.com/2015/10/29/etcd-%E5%92%8Cconfd-%E5%AE%9E%E7%8E%B0nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%87%AA%E5%8A%A8%E7%AE%A1%E7%90%86/">etcd 和confd 实现nginx配置文件自动管理</a></li>
+<li><a href="http://vernonzheng.com/2015/02/09/%E5%BC%80%E6%BA%90%E5%88%86%E5%B8%83%E5%BC%8F%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E9%80%89%E5%9E%8B/">开源分布式配置中心选型</a></li>
+<li><a href="http://www.zenlife.tk/%E5%85%B3%E4%BA%8E%E9%85%8D%E7%BD%AE%E7%9A%84%E6%80%9D%E8%80%83.md">关于配置的思考</a></li>
+<li><a href="https://poweryang1990.github.io/2016-03-24/configmanage/">配置中心</a></li>
+</ul>
+<h2 id="_1">考虑点和想法</h2>
+<p>目前关注这么几点：</p>
+<ul>
+<li>和传统的静态配置管理工具如 SaltStack/Ansible 有什么区别？</li>
+<li>etcd 这样的存储是否提供了安全性的配置</li>
+<li>既然是直接存储的，那么是否有方便的大量配置管理工具，如可视化的 Web 平台</li>
+<li>实践场景介绍</li>
+</ul>
+<p>像 confd + etcd 这类配置模式，可以做到动态更新，不过 Salt/Ansible 这些其实也可以通过定时任务执行检查diff进而直接应用或者发邮件告警。所以这块还有没有其它的特点呢？目前没有想到。</p>
+<p>看了下 etcd（目前 V3 版本），V3 版本好像没有直接提供安全性的处理，可能需要外部来做了。</p>
+<p>而管理方面，常规手法就是 Web 上管理，这个搜下还是有的，不过规模看起来都不大；可能更使用以静态配置管理，定期导入到 etcd 中？</p>
+<p>实践场景方面，其实是想看看其它朋友是否有一些经验可以介绍，不过找了很久，似乎除了和官方教程一样的 nginx 配置外，没什么好的经验介绍了。</p>
+<p>关于我们目前的配置管理，都是 salt 定期检查并且将 diff 以邮件方式告警，因为配置和进程管理这块不敢百分百相信第三方工具，毕竟像这类工具由太多人一起维护，质量上我不敢担保，所以我们一般确认 diff 后会手动更新。那么像 confd + etcd 这种模式，姑且认为工具是百分百可靠，那么人为失误导致配置更新有误怎么办呢？没有一个显式的 diff 来确认，就这么自动更新了，感觉不太安心啊……</p>
+<p>如果看到的朋友有这块经验，欢迎邮件一起交流下：）</p>
+  
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2017 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://git.coding.net/tankywoo/yasimple_x2.git" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2017-09-04 19:21:05</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+
+    
+    
+
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>
