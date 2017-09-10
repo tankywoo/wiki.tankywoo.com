@@ -23,7 +23,7 @@
     <a href="/#database">database</a>
     &nbsp;&#187;&nbsp;SQLite 3
     <span class="updated">当前页面最后更新&nbsp;
-    2016-04-11 23:33
+    2017-09-10 17:28
     
     </span>
   </div>
@@ -34,6 +34,7 @@
 <li><a href="#_1">常用命令</a></li>
 <li><a href="#tips">Tips</a><ul>
 <li><a href="#_2">备份</a></li>
+<li><a href="#_3">增加列</a></li>
 </ul>
 </li>
 </ul>
@@ -60,6 +61,21 @@
 
 
 <p>参考: <a href="http://stackoverflow.com/a/25684912/1276501">How to backup sqlite database?</a></p>
+<h3 id="_3">增加列</h3>
+<p>如果是附加列到末尾，则直接：</p>
+<div class="hlcode"><pre><span class="n">ALTER</span> <span class="n">TABLE</span> <span class="n">table_name</span> <span class="n">ADD</span> <span class="n">new_column_name</span> <span class="n">column_type</span><span class="p">;</span>
+</pre></div>
+
+
+<p>但是如果想插入列到中间某个地方，则比较麻烦，解决方法是先将表更名，然后新建一个带有新列的新表，并将旧表的值复制过去，参考<a href="https://stackoverflow.com/a/4253879/1276501">回答</a>：</p>
+<div class="hlcode"><pre><span class="n">sqlite</span><span class="o">&gt;</span> <span class="n">ALTER</span> <span class="n">TABLE</span> <span class="n">table_name</span> <span class="n">RENAME</span> <span class="n">TO</span> <span class="n">table_name_old</span><span class="p">;</span>
+
+<span class="cp"># 新建表并新增列 col_new</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">IF</span> <span class="n">NOT</span> <span class="n">EXISTS</span> <span class="n">table_name</span> <span class="p">(</span><span class="n">id</span> <span class="n">INTEGER</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span> <span class="n">name</span> <span class="n">TEXT</span><span class="p">,</span> <span class="n">col1</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">col_new</span> <span class="n">INTEGER</span><span class="p">,</span> <span class="n">col2</span> <span class="n">INTEGER</span><span class="p">);</span>
+
+<span class="cp"># 将旧表数据复制过来并将新列 col_new 默认置为 0</span>
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="n">INSERT</span> <span class="n">INTO</span> <span class="n">table_name</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">col1</span><span class="p">,</span> <span class="n">col_new</span><span class="p">,</span> <span class="n">col2</span><span class="p">)</span> <span class="n">SELECT</span> <span class="n">name</span><span class="p">,</span> <span class="n">col1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">col2</span> <span class="n">FROM</span> <span class="n">table_name_old</span><span class="p">;</span>
+</pre></div>
   
 </div>
     </div>
@@ -73,7 +89,7 @@
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-09-04 19:21:05</p>
+        <p>站点最后生成 2017-09-10 17:28:54</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
