@@ -1,9 +1,9 @@
 ---
 title: "Go 资源汇总"
 date: 2017-08-10 14:50
-updated: 2017-08-23 16:52
+updated: 2017-09-12 18:30
 description: "包括资源、文章、问题"
-log: "更新资源和Q&A"
+log: "新增pkg manage资源"
 ---
 
 ## 资源/文章
@@ -51,6 +51,18 @@ log: "更新资源和Q&A"
 - [golang使用yaml格式解析构建配置文件](http://xiaorui.cc/2016/03/20/golang%E4%BD%BF%E7%94%A8yaml%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/)
 - [The right way to handle YAML in Go](http://ghodss.com/2014/the-right-way-to-handle-yaml-in-golang/)
 
+### Go包依赖管理
+
+- [官方给出的这类工具列表](https://github.com/golang/go/wiki/PackageManagementTools)
+- [govendor](https://github.com/kardianos/govendor)
+- [glide](https://github.com/Masterminds/glide)
+- [Go Vendoring Tools 使用总结](http://www.grdtechs.com/2016/05/24/comparison-of-Go-Vendoring-Tools/)
+- [大家推荐哪种golang包管理方式？](https://gocn.io/question/9)  讨论
+- [Should I add "vendor" directory into .gitignore if I am using tools like glide or godep ?](https://www.reddit.com/r/golang/comments/6b9817/should_i_add_vendor_directory_into_gitignore_if_i/)  讨论
+
+最后一个问题，需要将 vendor 目录加入 git 中吗？包括参考了 [github上一些大的golang项目](https://github.com/search?l=&p=1&q=language%3AGo+stars%3A%3E1000+forks%3A%3E50&ref=advsearch&type=Repositories&utf8=%E2%9C%93)，有的项目压根不存 vendor，有的只存了 `vendor/vendor.json`，也有的将整个 vendor 目录都加入 git 中了。
+
+虽然帖子里有提到都是文本不会很大，但是实际并不是这样，比如我用了 `github.com/mattn/go-sqlite3` 这个包，里面有一个 sqlite3-binding.c 占了 6.8M。
 
 ## Q&A
 
