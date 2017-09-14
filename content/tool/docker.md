@@ -1,9 +1,9 @@
 ---
 title: "Docker"
 date: 2015-11-08 12:34
-updated: 2017-08-23 17:30
+updated: 2017-09:14 15:00
 collection: "虚拟化"
-log: "增加 docker registry"
+log: "增加 docker compose"
 ---
 
 [TOC]
@@ -277,6 +277,26 @@ curl -u testuser:testpassword --basic  http://127.0.0.1:5000/v2/_catalog
 ```
 
 看到还有推荐 [cesanta/docker_auth](https://github.com/cesanta/docker_auth) 这个仓库，未尝试。
+
+
+## Docker Compose
+
+顾名思义，一个 `Dockerfile` 是针对于一个容器（服务），编排就是将项目所包含的一组服务组合起来，是更高一级的配置管理。
+
+[Docker Compose](https://docs.docker.com/compose/) 安装参考官方 [Install Compose](https://docs.docker.com/compose/install/#install-compose)，官方直接提供了编译好的二进制程序，放到 `$PATH` 下即可，或者通过 `pip` 安装。
+
+下面这两篇都给出了一样的例子，通过 flask web 配合 redis 做一个简单的demo：
+
+- [Docker：容器编排利器Compose（起步篇）](https://lw900925.github.io/docker/docker-compose-getting-started.html)
+- [使用docker-compose实现容器编排](https://www.centos.bz/2017/08/docker-compose-container-choreography/)
+
+Docker Compose 会给里面定义的各服务做相应的 dns 记录，使一组服务之间方便互联。
+
+其它参考：
+
+- [Docker Compose 项目](https://yeasy.gitbooks.io/docker_practice/content/compose/)
+
+
 
 ## 一些链接 ##
 
