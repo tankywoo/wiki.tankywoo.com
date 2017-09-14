@@ -23,7 +23,7 @@
     <a href="/#go">go</a>
     &nbsp;&#187;&nbsp;Go 资源汇总
     <span class="updated">当前页面最后更新&nbsp;
-    2017-08-23 16:52
+    2017-09-12 18:30
     
     </span>
   </div>
@@ -70,6 +70,17 @@
 <li><a href="http://xiaorui.cc/2016/03/20/golang%E4%BD%BF%E7%94%A8yaml%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/">golang使用yaml格式解析构建配置文件</a></li>
 <li><a href="http://ghodss.com/2014/the-right-way-to-handle-yaml-in-golang/">The right way to handle YAML in Go</a></li>
 </ul>
+<h3 id="go">Go包依赖管理</h3>
+<ul>
+<li><a href="https://github.com/golang/go/wiki/PackageManagementTools">官方给出的这类工具列表</a></li>
+<li><a href="https://github.com/kardianos/govendor">govendor</a></li>
+<li><a href="https://github.com/Masterminds/glide">glide</a></li>
+<li><a href="http://www.grdtechs.com/2016/05/24/comparison-of-Go-Vendoring-Tools/">Go Vendoring Tools 使用总结</a></li>
+<li><a href="https://gocn.io/question/9">大家推荐哪种golang包管理方式？</a>  讨论</li>
+<li><a href="https://www.reddit.com/r/golang/comments/6b9817/should_i_add_vendor_directory_into_gitignore_if_i/">Should I add "vendor" directory into .gitignore if I am using tools like glide or godep ?</a>  讨论</li>
+</ul>
+<p>最后一个问题，需要将 vendor 目录加入 git 中吗？包括参考了 <a href="https://github.com/search?l=&amp;p=1&amp;q=language%3AGo+stars%3A%3E1000+forks%3A%3E50&amp;ref=advsearch&amp;type=Repositories&amp;utf8=%E2%9C%93">github上一些大的golang项目</a>，有的项目压根不存 vendor，有的只存了 <code>vendor/vendor.json</code>，也有的将整个 vendor 目录都加入 git 中了。</p>
+<p>虽然帖子里有提到都是文本不会很大，但是实际并不是这样，比如我用了 <code>github.com/mattn/go-sqlite3</code> 这个包，里面有一个 sqlite3-binding.c 占了 6.8M。</p>
 <h2 id="qa">Q&amp;A</h2>
 <h3 id="go-get-x">Go get 被 X 的解决</h3>
 <div class="hlcode"><pre><span class="n">http_proxy</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">8123</span> <span class="n">https_proxy</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">8123</span> <span class="n">go</span> <span class="n">get</span> <span class="o">-</span><span class="n">u</span> <span class="p">...</span>
@@ -104,7 +115,7 @@ Check out the "Code points, characters, and runes" section in the <a href="https
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-09-10 17:28:54</p>
+        <p>站点最后生成 2017-09-14 15:08:22</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
