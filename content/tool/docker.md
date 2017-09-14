@@ -1,9 +1,9 @@
 ---
 title: "Docker"
 date: 2015-11-08 12:34
-updated: 2017-09:14 15:00
+updated: 2017-09-14 15:10
 collection: "虚拟化"
-log: "增加 docker compose"
+log: "增加 docker hub 使用 mirror"
 ---
 
 [TOC]
@@ -68,6 +68,20 @@ rsync同步时/var/lib/docker/devicemapper/devicemapper/data这个文件显示10
 
 * [In Linux, how can I create thin-provisioned file so it can be mounted and a filesystem created on it?](http://serverfault.com/questions/344518/in-linux-how-can-i-create-thin-provisioned-file-so-it-can-be-mounted-and-a-file)
 * [Finding sparse files?](http://unix.stackexchange.com/questions/86442/finding-sparse-files)
+
+
+使用国内的 Docker Hub Mirror，编辑 `/etc/docker/daemon.json`，加上如使用 ustc：
+
+```
+{
+	"registry-mirrors": ["https://docker.mirrors.ustc.edu.cn/"]
+}
+```
+
+参考：
+
+- [Docker Hub 源使用帮助](http://mirrors.ustc.edu.cn/help/dockerhub.html)
+- [Ubuntu16.04安装Docker及配置镜像加速器](http://www.itfanr.cc/2017/01/14/ubuntu-install-docker-and-configure-mirror-accelerator/)
 
 
 ### CMD 与 ENTRYPOINT 的区别
