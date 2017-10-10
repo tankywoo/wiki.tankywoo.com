@@ -64,7 +64,7 @@ log: "更新go vendor"
 
 虽然帖子里有提到都是文本不会很大，但是实际并不是这样，比如我用了 `github.com/mattn/go-sqlite3` 这个包，里面有一个 sqlite3-binding.c 占了 6.8M。
 
-（2017-10-10更新）再次研究了下，首先glide除了引入vendor目录，还引入了glide.yaml和glide.lock，两个额外文件在一级目录下，相比而言，govendor只引入了vendor目录，而它的版本元信息维护文件在`vendor/vendor.json`中，个人比较倾向这种方式。另外依然是上面的问题，最终我决定使用 [hugo](https://github.com/gohugoio/hugo)的方式，只维护`vendor/vendor.json`文件，其它的包先不维护了。
+（2017-10-10更新）再次研究了下，首先glide除了引入vendor目录，还引入了glide.yaml和glide.lock，两个额外文件在一级目录下，且使用起来比较麻烦；相比而言，govendor只引入了vendor目录，而它的版本元信息维护文件在`vendor/vendor.json`中，维护也比较简单，个人比较倾向这种方式。另外依然是上面的问题，最终我决定使用 [hugo](https://github.com/gohugoio/hugo)的方式，只维护`vendor/vendor.json`文件，依赖包自身内容先不维护了。
 
 ## Q&A
 
