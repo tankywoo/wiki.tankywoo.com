@@ -81,7 +81,7 @@
 </ul>
 <p>最后一个问题，需要将 vendor 目录加入 git 中吗？包括参考了 <a href="https://github.com/search?l=&amp;p=1&amp;q=language%3AGo+stars%3A%3E1000+forks%3A%3E50&amp;ref=advsearch&amp;type=Repositories&amp;utf8=%E2%9C%93">github上一些大的golang项目</a>，有的项目压根不存 vendor，有的只存了 <code>vendor/vendor.json</code>，也有的将整个 vendor 目录都加入 git 中了。</p>
 <p>虽然帖子里有提到都是文本不会很大，但是实际并不是这样，比如我用了 <code>github.com/mattn/go-sqlite3</code> 这个包，里面有一个 sqlite3-binding.c 占了 6.8M。</p>
-<p>（2017-10-10更新）再次研究了下，首先glide除了引入vendor目录，还引入了glide.yaml和glide.lock，两个额外文件在一级目录下，相比而言，govendor只引入了vendor目录，而它的版本元信息维护文件在<code>vendor/vendor.json</code>中，个人比较倾向这种方式。另外依然是上面的问题，最终我决定使用 <a href="https://github.com/gohugoio/hugo">hugo</a>的方式，只维护<code>vendor/vendor.json</code>文件，其它的包先不维护了。</p>
+<p>（2017-10-10更新）再次研究了下，首先glide除了引入vendor目录，还引入了glide.yaml和glide.lock，两个额外文件在一级目录下，且使用起来比较麻烦；相比而言，govendor只引入了vendor目录，而它的版本元信息维护文件在<code>vendor/vendor.json</code>中，维护也比较简单，个人比较倾向这种方式。另外依然是上面的问题，最终我决定使用 <a href="https://github.com/gohugoio/hugo">hugo</a>的方式，只维护<code>vendor/vendor.json</code>文件，依赖包自身内容先不维护了。</p>
 <h2 id="qa">Q&amp;A</h2>
 <h3 id="go-get-x">Go get 被 X 的解决</h3>
 <div class="hlcode"><pre><span class="n">http_proxy</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">8123</span> <span class="n">https_proxy</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="o">:</span><span class="mi">8123</span> <span class="n">go</span> <span class="n">get</span> <span class="o">-</span><span class="n">u</span> <span class="p">...</span>
@@ -116,7 +116,7 @@ Check out the "Code points, characters, and runes" section in the <a href="https
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-10-10 14:59:13</p>
+        <p>站点最后生成 2017-10-10 15:01:19</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->
