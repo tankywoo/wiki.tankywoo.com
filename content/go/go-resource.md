@@ -1,9 +1,9 @@
 ---
 title: "Go 资源汇总"
 date: 2017-08-10 14:50
-updated: 2017-09-12 18:30
+updated: 2017-10-10 15:00
 description: "包括资源、文章、问题"
-log: "新增pkg manage资源"
+log: "更新go vendor"
 ---
 
 ## 资源/文章
@@ -63,6 +63,8 @@ log: "新增pkg manage资源"
 最后一个问题，需要将 vendor 目录加入 git 中吗？包括参考了 [github上一些大的golang项目](https://github.com/search?l=&p=1&q=language%3AGo+stars%3A%3E1000+forks%3A%3E50&ref=advsearch&type=Repositories&utf8=%E2%9C%93)，有的项目压根不存 vendor，有的只存了 `vendor/vendor.json`，也有的将整个 vendor 目录都加入 git 中了。
 
 虽然帖子里有提到都是文本不会很大，但是实际并不是这样，比如我用了 `github.com/mattn/go-sqlite3` 这个包，里面有一个 sqlite3-binding.c 占了 6.8M。
+
+（2017-10-10更新）再次研究了下，首先glide除了引入vendor目录，还引入了glide.yaml和glide.lock，两个额外文件在一级目录下，相比而言，govendor只引入了vendor目录，而它的版本元信息维护文件在`vendor/vendor.json`中，个人比较倾向这种方式。另外依然是上面的问题，最终我决定使用 [hugo](https://github.com/gohugoio/hugo)的方式，只维护`vendor/vendor.json`文件，其它的包先不维护了。
 
 ## Q&A
 
