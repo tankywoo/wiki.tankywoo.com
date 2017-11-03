@@ -1,9 +1,9 @@
 ---
 title: "rsync"
 date: 2013-08-17 07:36
-updated: 2016-07-24 22:13
+updated: 2017-11-03 18:06
 collection: "数据管理/传输"
-log: "增加--ignore-existing参数"
+log: "增加同步所有子目录指定的文件"
 ---
 
 [TOC]
@@ -184,7 +184,7 @@ rsyncd 可以配置多个modules, 如:
 
 这里不清楚怎么使用?  **TODO**
 
-## 关于权限问题 ##
+### 关于权限问题
 
 同步时会看到有些文件报 `failed: Permission denied`, `uid` 选项给出了说明:
 
@@ -193,7 +193,55 @@ rsyncd 可以配置多个modules, 如:
 所以需要配置 `uid = root` (或其它足够的权限)
 
 
-## Troubleshoot ##
+### rsync命令行只同步所有子目录指定的文件
+
+例子：
+
+```
+dir
+|---sub_dir1
+|   |-file_a
+|   |-file_b
+|   |-file_c
+|---sub_dir2
+|   |-file_a
+|   |-file_b
+|   |-file_c
+|---sub_dir3
+|   |-file_a
+|   |-file_b
+|   |-file_c
+|...
+```
+
+即某个目录下一堆子目录，每个子目录下都有一堆同名文件，现在只想同步各子目录下的 file_b：
+
+```
+$ rsync -hvarHEXAi --stats --progress --filter="+ *file_b" --filter="+ */" --filter="- *" root@server:/dir/ /dir/
+```
+
+如果是rsync server端，配合 filter 还是比较好弄，记得以前做过。
+
+注意上面 `--filter="+ */" --filter="- *"` 是个 trick。后者排除所有，前者不排除所有子目录。具体是看了文档`PATTERN`的描述：
+
+```
+Note that, when using the --recursive (-r) option (which is implied by -a), every subcomponent of every path is visited from the top down, so include/exclude patterns get applied recursively to each subcomponent’s full name (e.g. to include "/foo/bar/baz" the subcomponents "/foo" and "/foo/bar" must not be excluded). The exclude patterns actually short-circuit the directory traversal stage when rsync finds the files to send. If a pattern excludes a particular parent directory, it can render a deeper include pattern ineffectual because rsync did not descend through that excluded section of the hierarchy. This is particularly important when using a trailing ’*’ rule. For instance, this won’t work:
+
+    + /some/path/this-file-will-not-be-found
+    + /file-is-included
+    - *
+
+This fails because the parent directory "some" is excluded by the ’*’ rule, so rsync never visits any of the files in the "some" or "some/path" directories. One solution is to ask for all directories in the hierarchy to be included by using a single rule: "+ */" (put it somewhere before the "- *" rule), and perhaps use the --prune-empty-dirs option. Another solution is to add specific include rules for all the parent dirs that need to be visited. For instance, this set of rules works fine:
+
+    + /some/
+    + /some/path/
+    + /some/path/this-file-is-found
+    + /file-also-included
+    - *
+```
+
+
+## Troubleshoot
 
 > rsync: didn't get server startup line
 
