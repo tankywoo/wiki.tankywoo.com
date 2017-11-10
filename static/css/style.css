@@ -1,0 +1,353 @@
+/*
+Theme Name: YASimple_X2
+Author: Tanky Woo<me@tankywoo.com>
+Author URI: https://tankywoo.com
+Home Page: https://github.com/tankywoo/yasimple_x2
+Description: Fork of YASimple_X
+Version: 0.1
+License: The MIT License (MIT)
+Tags: simple, single-columns, code, codehighlight, white, markdown
+ */
+
+/* Global Configuration */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* IE6 ignores this and uses default size of 16pt */
+html>body { font-size: 15px; }
+
+html {
+  font-size: 100%;
+  overflow-y: scroll;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  font-family: "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  line-height: 1.5em;
+}
+
+a         { color: #296bcc; }
+a:link    { text-decoration: underline; }
+a:visited { color: #296bcc; }
+a:hover   { color: #075b8d; }
+a:active  { color: #296bcc; }
+
+p {
+  line-height: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+blockquote {
+  margin-left: 0;
+  border-left: 0.15em solid #8c8c8c;
+  padding-left: 1em;
+  color: #8c8c8c;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+hr {
+  margin: 2em 0;
+  color: #ccc;
+  background-color: #ccc;
+  height: 1px;
+  border: none;
+}
+
+#header {
+  border-bottom: 0.1em solid #ccc;
+  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+#header a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #555;
+}
+
+#header a:hover {
+  color: black;
+}
+
+#header .updated {
+  float: right;
+  font-size: 80%;
+  color: #555;
+}
+
+#footer {
+  width: 60%;
+  margin: 1em auto;
+  font-size: 80%;
+  color: #555;
+}
+
+#footer a { color: #555; }
+#footer a:hover { color: black; }
+
+#footer p {
+  margin: 0;
+}
+
+#footer .footer-left {
+  float: left;
+  max-width: 70%;
+}
+
+#footer .footer-right {
+  float: right;
+  text-align: right;
+  max-width: 30%;
+}
+
+#container {
+  width: 60%;
+  margin: 0.5em auto 1em auto;
+}
+
+.category {
+  border-bottom: 0.1em solid #ccc;
+  min-height: 3em;
+}
+
+.category_name {
+  float: right;
+  text-align: right;
+  word-wrap: break-word;
+}
+
+.category_item a:link {
+  text-decoration: none;
+}
+
+.category_list ul {
+  padding-left: 0em;
+}
+
+li.pagelist {
+  list-style: none;
+}
+
+.item_arrow:before {
+    content: "\0BB \020";
+    color: gray;
+}
+
+.category_list li.pagelist {
+  width: 70%;
+  margin-right: 1.5em;
+}
+
+.category a { color: #555; }
+.category a:hover { color: black; }
+
+.category .page_description {
+  color: gray;
+}
+
+.category h2 {
+  color: #333;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+.coll_name {
+  float: left;
+}
+
+#content {
+  border-bottom: 0.1em solid #ccc;
+  padding: 0.2em 0;
+}
+
+#content img {
+  border: 0;
+  vertical-align: middle;
+  margin: 0 auto;
+  max-width: 90%;
+  display: block;
+}
+
+.category a, .toc a {
+  text-decoration: none;
+}
+
+.relation {
+  border: 1px solid #eee;
+  padding: 1em;
+  margin: 1em 0;
+  background: #fefefe;
+  font-size: 80%;
+}
+
+/* Table of Contents */
+.toc {
+  margin: 0 0.5em;
+  padding: 0.5em 1em;
+  border: 0.1em dashed silver;
+  background-color: #fbfffd;  /* Override others, the same with bg */
+  float: right;
+  display: block;
+  font-size: 75%;
+  max-width: 30%;
+}
+
+.toc > .toctitle {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.toc ul {
+  padding-left: 1.5em;
+}
+
+/* Tables */
+table {
+  padding: 0;
+  border-collapse: collapse;  /* *** */
+  border-spacing: 0;  /* *** */
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th :first-child, table tr td :first-child {
+  margin-top: 0;
+}
+
+table tr th :last-child, table tr td :last-child {
+  margin-bottom: 0;
+}
+
+/* Code Highlight */
+pre code {
+  font-size: 1em;
+  padding: 0px;
+  top: 0px;
+}
+
+code, pre {
+  color: rgb(46, 65, 92);
+  background-color: #f1f5fa;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  border-radius: 3px;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+pre {
+  font-size: .9em;
+  padding: 16px 16px 14px 16px;
+  white-space: pre-wrap;
+}
+
+code {
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: .9em;
+  position: relative;
+  top: -1px;
+}
+
+.hlcode pre {
+  overflow: auto;
+  margin: 1em 0;
+  white-space: pre-wrap;       /* CSS 3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+table.hlcodetable {
+    border-collapse: separate !important;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+}
+
+.hlcodetable td {
+    padding: 0;
+    border: none;
+}
+
+.hlcodetable td.code {
+  width: 100%;
+}
+
+.hlcodetable pre {
+  font-size: .9em;
+  padding: 8px 8px 7px 8px;
+  white-space: pre-wrap;
+}
+
+.hlcodetable .linenodiv {
+    border-right: 1px solid #ccc;
+}
+
+.hlcodetable .linenodiv pre {
+    margin: 0;
+    border: none;
+}
+
+.hlcodetable .hlcode pre {
+    margin: 0;
+    border: none;
+}
+
+/* Reset pygement css */
+.hlcode .err {
+  color: inherit;
+  background-color: inherit;
+}
+
+/* Clear the float problem */
+.clearfix:after {
+  visibility: hidden;
+  clear: both;
+  font-size: 0;
+  content: ".";
+  display: block;
+  height: 0;
+}

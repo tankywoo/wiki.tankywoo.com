@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="{{ site.root }}/static/css/style.css">
+    <link rel="shortcut icon" href="{{ site.root }}/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="{{ site.root }}/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="keywords" content="{{ site.keywords }}"/>
+    <meta name="description" content="{{ site.description }}"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    {% block extra_scripts %}{% endblock %}
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      {% block container %}
+      {% endblock %}
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © {{ site.time.strftime("%Y") }} {{ site.author }}.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://github.com/tankywoo/yasimple_x2" target="_blank">YASimple_X2</a>.
+        </p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>Site Generated {{ site.time.strftime("%Y-%m-%d %H:%M:%S") }}</p>
+      </div> <!-- end footer-right -->
+    </div>
+
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>
