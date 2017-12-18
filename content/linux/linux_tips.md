@@ -1,9 +1,9 @@
 ---
 title: "Linux Tips"
 date: 2013-08-17 07:23
-updated: 2016-12-27 09:00
+updated: 2017-12-18 15:30
 description: "查漏补缺, Tricks/Tips/Fragments"
-log: "增加named pipe"
+log: "增加删除文件末尾换行符方法"
 ---
 
 [TOC]
@@ -515,3 +515,42 @@ cmp的这个用法前几天还见过.
 * [Introduction to Named Pipes](http://www.linuxjournal.com/article/2156?page=0,0)
 * [How can I get more info on open pipes show in /proc in Linux?](http://serverfault.com/questions/48330/how-can-i-get-more-info-on-open-pipes-show-in-proc-in-linux)
 * [Why bash is closed while writing to named pipe?](http://stackoverflow.com/questions/37673392/why-bash-is-closed-while-writing-to-named-pipe)
+
+
+### 删除文件末尾的换行符
+
+```text
+# 生成测试文件
+$ echo 'abcd\nefgh\nijkl' > file.txt
+
+# 查看文件内容（方式1）
+$ od -c file.txt
+0000000   a   b   c   d  \n   e   f   g   h  \n   i   j   k   l  \n
+0000017
+
+# 查看文件内容（方式2）
+$ hexdump -C file.txt
+00000000  61 62 63 64 0a 65 66 67  68 0a 69 6a 6b 6c 0a     |abcd.efgh.ijkl.|
+0000000f
+
+# 删除文件末尾换行符（非原地操作）（方式1）
+$ perl -pe 'chomp if eof' file.txt | hexdump -C
+00000000  61 62 63 64 0a 65 66 67  68 0a 69 6a 6b 6c        |abcd.efgh.ijkl|
+0000000e
+
+# 删除文件末尾换行符（非原地操作）（方式2）
+$ printf %s "$(< file.txt)"  | hexdump -C
+00000000  61 62 63 64 0a 65 66 67  68 0a 69 6a 6b 6c        |abcd.efgh.ijkl|
+0000000e
+
+# 删除文件末尾换行符（原地操作）（方式3）
+$ truncate -s -1 file.txt
+$ hexdump -C file.txt
+00000000  61 62 63 64 0a 65 66 67  68 0a 69 6a 6b 6c        |abcd.efgh.ijkl|
+0000000e
+```
+
+参考：
+
+- [How can I delete a newline if it is the last character in a file?](https://stackoverflow.com/questions/1654021/how-can-i-delete-a-newline-if-it-is-the-last-character-in-a-file)
+- [How do I remove newline character at the end of file?](https://unix.stackexchange.com/questions/254644/how-do-i-remove-newline-character-at-the-end-of-file)
