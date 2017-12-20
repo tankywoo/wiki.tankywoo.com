@@ -6,7 +6,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
-    <title>BIND - Wiki · Tanky Woo</title>
+    <title>Kafka - Wiki · Tanky Woo</title>
     <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
     <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,42 +21,44 @@
     <a href="/">Wiki · Tanky Woo</a>
     &nbsp;&#187;&nbsp;
     <a href="/#tool">tool</a>
-    &nbsp;&#187;&nbsp;BIND
+    &nbsp;&#187;&nbsp;Kafka
     <span class="updated">当前页面最后更新&nbsp;
-    2016-09-29 14:50
-    
+    2017-04-09 14:45
     </span>
   </div>
 </div>
 <div class="clearfix"></div>
 <div id="content">
   <div class="toc"><span class="toctitle">Table of Contents</span><ul>
-<li><a href="#_1">历史</a></li>
-<li><a href="#_2">工具</a></li>
+<li><a href="#_1">简介</a></li>
+<li><a href="#_2">参考</a></li>
 </ul>
 </div>
-<h3 id="_1">历史</h3>
-<p>BIND是目前最常用的一个DNS实现工具。</p>
-<p>之前由伯克利分校(UCB)开发维护，最后一个版本是BIND9。</p>
-<p>2009年后开始由Internet Software Consortium (ISC)开发新版BIND10</p>
-<p>所以目前官方是 <a href="https://www.isc.org/downloads/bind/">https://www.isc.org/downloads/bind/</a></p>
-<p>摘自 <a href="https://en.wikipedia.org/wiki/BIND">维基百科</a></p>
-<h2 id="_2">工具</h2>
-<p>bind配置、zone文件等如果出问题，会导致bind服务异常，印象中以前zone文件出现过一个语法错误。</p>
-<p>好在bind包提供了一些工具集：</p>
-<p><code>named-checkconf</code>用于检查bind配置。</p>
-<p>如果没问题，则不会有任何输出，否则报错：</p>
-<div class="hlcode"><pre><span class="nv">$ </span>named-checkconf /etc/bind/named.conf
-/etc/bind/named.conf:125: unknown option <span class="s1">&#39;inclxude&#39;</span>
-</pre></div>
-
-
-<p><code>named-checkzone</code>用于检查zone文件：</p>
-<div class="hlcode"><pre><span class="c"># named-checkzone &lt;zonename&gt; &lt;filename&gt;</span>
-<span class="nv">$ </span>named-checkzone intra.example.com /etc/bind/intra.example.com.zone
-zone intra.example.com/IN: loaded serial 2016092801
-OK
-</pre></div>
+<h2 id="_1">简介</h2>
+<p>Kafka 入门</p>
+<ul>
+<li>特点：<br />
+  ⁃ 分布式消息发布订阅系统</li>
+<li>术语：<br />
+  ⁃ Topic：将消息种子（Feed）分类，每一类的消息称为一个话题<br />
+  ⁃ Producer：生产者，发布消息的对象<br />
+  ⁃ Consumer：消费者，订阅消息并处理的对象<br />
+  ⁃ Broker：代理，Kafka 集群中的每一个服务器都是一个代理</li>
+<li>客户端：<br />
+  ⁃ kafka-python</li>
+</ul>
+<h2 id="_2">参考</h2>
+<ul>
+<li><a href="http://www.cnblogs.com/binyue/p/4763764.html">消息队列入门（一）关于消息队列</a> / <a href="http://www.cnblogs.com/binyue/p/4763766.html">http://www.cnblogs.com/binyue/p/4763764.html</a></li>
+<li><a href="http://colobu.com/2014/08/06/kafka-quickstart/">Kafka快速入门</a></li>
+<li><a href="http://blog.jobbole.com/99195/">Kafka集群操作指南</a>  同 "Kafka快速入门" 类似，讲解内置的基本命令脚本</li>
+<li><a href="https://leokongwq.github.io/2017/02/06/mq-kafka-tutorial.html">kafka入门教程</a></li>
+<li><a href="http://www.cnblogs.com/smartloli/p/4530117.html">Kafka实战－入门</a></li>
+<li><a href="http://www.openskill.cn/article/441">Kafka入门简介</a> 同上篇貌似基本一样</li>
+<li><a href="http://xstarcd.github.io/wiki/Cloud/kafka_Working_Principles.html">kafka工作原理</a></li>
+<li><a href="https://www.oschina.net/question/181141_2157270">为什么搭建Kafka需要zookeeper?</a></li>
+<li><a href="https://www.iteblog.com/archives/1420.html">Apache kafka入门篇:工作原理简介</a></li>
+</ul>
   
 </div>
     </div>

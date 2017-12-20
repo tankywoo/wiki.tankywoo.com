@@ -23,7 +23,7 @@
     <a href="/#tool">tool</a>
     &nbsp;&#187;&nbsp;Git
     <span class="updated">当前页面最后更新&nbsp;
-    2017-03-07 17:55
+    2017-12-20 16:10
     
     </span>
   </div>
@@ -388,6 +388,17 @@
 <li><a href="http://stackoverflow.com/questions/750172/how-do-i-change-the-author-of-a-commit-in-git">How do I change the author of a commit in git?</a></li>
 <li><a href="http://stackoverflow.com/questions/3042437/change-commit-author-at-one-specific-commit">Change commit author at one specific commit</a></li>
 </ul>
+<p>（2017-12-20补充）</p>
+<p>强制同步远程并覆盖本地历史。</p>
+<p>比如某个项目，用如上方法修改了所有提交的用户名和邮箱，然后想更新线上一批机器的这个项目。第一个是想到 <code>git pull --force</code>，但是此方法会做一个合并，所以不行；另外想到 <code>git fetch; git merge -X theirs master</code> 也不行。</p>
+<p>后来搜到 <a href="https://gist.github.com/vladimirtsyupko/10964772">这个回答</a>：</p>
+<div class="hlcode"><pre><span class="n">git</span> <span class="n">fetch</span>
+<span class="n">git</span> <span class="n">reset</span> <span class="o">--</span><span class="n">hard</span> <span class="n">origin</span><span class="o">/</span><span class="n">master</span>
+</pre></div>
+
+
+<p>首先在线上环境这种只做 <code>clone</code>、<code>pull</code> 等操作（核心是 <code>fetch</code>），如果没有异同，则没有 <code>.git/refs/remote/origin/master</code> 文件（指向远程的最新 commit id）。</p>
+<p>如果有异同，如上修改了提交者姓名和邮箱，会生成 <code>origin/master</code>，然后 <code>git reset</code> 即将当前 <code>head</code> 变更为指定的状态，也就是远程更新后的。</p>
 <h2 id="git-diff">Git diff 技巧</h2>
 <p>(待整理)</p>
 <div class="hlcode"><pre><span class="n">git</span> <span class="n">diff</span> <span class="n">tag</span>                    <span class="err">比较</span><span class="n">tag</span><span class="err">和</span><span class="n">HEAD</span><span class="err">之间的不同。</span>
@@ -1071,7 +1082,7 @@ $ USERNAME=tankywoo PASSWORD=*** git pull
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-11-10 15:53:49</p>
+        <p>站点最后生成 2017-12-20 17:19:45</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

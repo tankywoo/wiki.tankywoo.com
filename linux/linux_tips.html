@@ -23,7 +23,7 @@
     <a href="/#linux">linux</a>
     &nbsp;&#187;&nbsp;Linux Tips
     <span class="updated">当前页面最后更新&nbsp;
-    2016-12-27 09:00
+    2017-12-18 15:30
     
     </span>
   </div>
@@ -65,6 +65,7 @@
 <li><a href="#days-since-19700101">days since 1970/01/01 和 当前日期互相转换</a></li>
 <li><a href="#_10">如何加密文件</a></li>
 <li><a href="#named-pipe">Named Pipe</a></li>
+<li><a href="#_11">删除文件末尾的换行符</a></li>
 </ul>
 </div>
 <h3 id="shell">查看现在使用的是哪一个shell</h3>
@@ -514,6 +515,43 @@ prw-r--r-- 1 root root    0 Dec 27 08:52 mypipe
 <li><a href="http://serverfault.com/questions/48330/how-can-i-get-more-info-on-open-pipes-show-in-proc-in-linux">How can I get more info on open pipes show in /proc in Linux?</a></li>
 <li><a href="http://stackoverflow.com/questions/37673392/why-bash-is-closed-while-writing-to-named-pipe">Why bash is closed while writing to named pipe?</a></li>
 </ul>
+<h3 id="_11">删除文件末尾的换行符</h3>
+<div class="hlcode"><pre># 生成测试文件
+$ echo &#39;abcd\nefgh\nijkl&#39; &gt; file.txt
+
+# 查看文件内容（方式1）
+$ od -c file.txt
+0000000   a   b   c   d  \n   e   f   g   h  \n   i   j   k   l  \n
+0000017
+
+# 查看文件内容（方式2）
+$ hexdump -C file.txt
+00000000  61 62 63 64 0a 65 66 67  68 0a 69 6a 6b 6c 0a     |abcd.efgh.ijkl.|
+0000000f
+
+# 删除文件末尾换行符（非原地操作）（方式1）
+$ perl -pe &#39;chomp if eof&#39; file.txt | hexdump -C
+00000000  61 62 63 64 0a 65 66 67  68 0a 69 6a 6b 6c        |abcd.efgh.ijkl|
+0000000e
+
+# 删除文件末尾换行符（非原地操作）（方式2）
+$ printf %s &quot;$(&lt; file.txt)&quot;  | hexdump -C
+00000000  61 62 63 64 0a 65 66 67  68 0a 69 6a 6b 6c        |abcd.efgh.ijkl|
+0000000e
+
+# 删除文件末尾换行符（原地操作）（方式3）
+$ truncate -s -1 file.txt
+$ hexdump -C file.txt
+00000000  61 62 63 64 0a 65 66 67  68 0a 69 6a 6b 6c        |abcd.efgh.ijkl|
+0000000e
+</pre></div>
+
+
+<p>参考：</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/1654021/how-can-i-delete-a-newline-if-it-is-the-last-character-in-a-file">How can I delete a newline if it is the last character in a file?</a></li>
+<li><a href="https://unix.stackexchange.com/questions/254644/how-do-i-remove-newline-character-at-the-end-of-file">How do I remove newline character at the end of file?</a></li>
+</ul>
   
 </div>
     </div>
@@ -527,7 +565,7 @@ prw-r--r-- 1 root root    0 Dec 27 08:52 mypipe
         <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
       </div> <!-- end footer-left -->
       <div class="footer-right">
-        <p>站点最后生成 2017-11-10 15:53:49</p>
+        <p>站点最后生成 2017-12-20 17:19:45</p>
         <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
         <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
       </div> <!-- end footer-right -->

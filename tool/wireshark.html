@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="Stylesheet" type="text/css" href="/static/css/colorful.css">
+    <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="alternate" type="application/atom+xml" href="atom.xml" title="Atom feed">
+    <title>Wireshark - Wiki · Tanky Woo</title>
+    <meta name="keywords" content="wiki, makrdown, linux, python, cpp, ops, simiki"/>
+    <meta name="description" content="Tanky Woo's personal wiki, powered by vim and markdown. Focus on Python, C/C++, Linux, Ops-Dev, Gentoo, and so on."/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+  </head>
+
+  <body>
+    <div id="container" class="typo">
+      
+<div id="header">
+  <div id="post-nav">
+    <a href="/">Wiki · Tanky Woo</a>
+    &nbsp;&#187;&nbsp;
+    <a href="/#tool">tool</a>
+    &nbsp;&#187;&nbsp;Wireshark
+    <span class="updated">当前页面最后更新&nbsp;
+    2017-03-05 15:20
+    </span>
+  </div>
+</div>
+<div class="clearfix"></div>
+<div id="content">
+  <div class="toc"><span class="toctitle">Table of Contents</span><ul>
+<li><a href="#_1">问题</a><ul>
+<li><a href="#mac">Mac下找不到网卡设备</a></li>
+<li><a href="#pcapng-vs-pcap">pcapng vs pcap</a></li>
+</ul>
+</li>
+<li><a href="#_2">待看</a></li>
+</ul>
+</div>
+<p><a href="http://www.ttlsa.com/linux/wireshark-detailed/">FROM</a></p>
+<div class="hlcode"><pre><span class="n">Wireshark</span><span class="err">基于</span><span class="n">libpcap</span> <span class="n">on</span> <span class="n">unix</span><span class="o">-</span><span class="n">like</span><span class="err">，</span><span class="n">winpcap</span> <span class="n">on</span> <span class="n">windows</span><span class="err">。</span><span class="n">Tcpdump</span><span class="err">同样基于</span><span class="n">libpcap</span><span class="err">实现。</span><span class="n">Libpcap</span><span class="err">来自于</span><span class="n">BPF</span>
+</pre></div>
+
+
+<h2 id="_1">问题</h2>
+<h3 id="mac">Mac下找不到网卡设备</h3>
+<p>打开 Wireshark，设备那一块报：<em>No interfaces found</em>。</p>
+<p>原因是因为 <strong>bpf</strong> 设备权限不够，原来好像是 <code>0400</code>，从官网下载 DMG 安装包，点开始有一个 Read me first 文件，其中也提及这个问题。</p>
+<p>Mac下，依赖额外的一个 <code>ChmodBPF</code> 工具（<code>brew info wireshark</code> 也可以通过 brew 来安装 Wireshark）：</p>
+<blockquote>
+<p>This creates an 'access_bpf' group and adds a launch daemon that changes the permissions of your BPF devices so that all users in that group have both read and write access to those devices.</p>
+</blockquote>
+<p>预期如下所示：</p>
+<div class="hlcode"><pre><span class="err">$</span> <span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">bpf</span><span class="o">*</span>
+<span class="n">crw</span><span class="o">-</span><span class="n">rw</span><span class="o">----</span>  <span class="mi">1</span> <span class="n">root</span>  <span class="n">access_bpf</span>   <span class="mi">23</span><span class="p">,</span>   <span class="mi">0</span> <span class="n">Mar</span>  <span class="mi">5</span> <span class="mi">15</span><span class="o">:</span><span class="mi">56</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">bpf0</span>
+<span class="n">crw</span><span class="o">-</span><span class="n">rw</span><span class="o">----</span>  <span class="mi">1</span> <span class="n">root</span>  <span class="n">access_bpf</span>   <span class="mi">23</span><span class="p">,</span>   <span class="mi">1</span> <span class="n">Mar</span>  <span class="mi">5</span> <span class="mi">15</span><span class="o">:</span><span class="mi">56</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">bpf1</span>
+<span class="p">...</span>
+</pre></div>
+
+
+<h3 id="pcapng-vs-pcap">pcapng vs pcap</h3>
+<p>PCAPNG：PCAP Next Generation Dump File Format，即PCAP下一代文件格式，后缀为.pacapng</p>
+<h2 id="_2">待看</h2>
+<ul>
+<li><a href="http://blog.jobbole.com/70907/">一站式学习Wireshark（一）：Wireshark基本用法</a></li>
+<li><a href="http://www.s0nnet.com/archives/wireshark-1">Wireshark数据包分析(一)——使用入门</a>  系列</li>
+<li><a href="http://blog.csdn.net/qq_29277155/article/details/52059123">Wireshark入门与进阶系列一之基本使用</a> 系列</li>
+<li><a href="http://bbs.ichunqiu.com/thread-5410-1-1.html">【存储入门必读】Wireshark入门：第一次亲密接触</a></li>
+</ul>
+  
+</div>
+    </div>
+    <div id="footer">
+      <div class="footer-left">
+        <p>
+        Copyright © 2012-2017 Tanky Woo.
+        Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+        Theme by <a href="https://github.com/tankywoo/yasimple_x2" target="_blank">YASimple_X2</a>.
+        </p>
+        <p>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。</p>
+      </div> <!-- end footer-left -->
+      <div class="footer-right">
+        <p>站点最后生成 2017-12-20 17:19:45</p>
+        <p><a href="https://github.com/tankywoo/wiki.tankywoo.com">Fork me on Github</a></p>
+        <p><a href="http://www.miitbeian.gov.cn/">京ICP备16016622号</a></p>
+      </div> <!-- end footer-right -->
+    </div>
+
+    
+    
+
+    <script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F754de327571c0ba7ff50a61fc964e196' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+  </body>
+</html>
