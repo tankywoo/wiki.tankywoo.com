@@ -1,10 +1,10 @@
 ---
 title: "Git"
 date: 2013-11-08 00:02
-updated: 2017-03-07 17:55
+updated: 2017-12-20 16:10
 collection: "版本控制管理"
 tag: git
-log: "增加缓存用户名/密码"
+log: "强制同步远程并覆盖本地"
 ---
 
 [TOC]
@@ -342,6 +342,24 @@ StackOverflow上有两篇讨论非常好:
 
 * [How do I change the author of a commit in git?](http://stackoverflow.com/questions/750172/how-do-i-change-the-author-of-a-commit-in-git)
 * [Change commit author at one specific commit](http://stackoverflow.com/questions/3042437/change-commit-author-at-one-specific-commit)
+
+（2017-12-20补充）
+
+强制同步远程并覆盖本地历史。
+
+比如某个项目，用如上方法修改了所有提交的用户名和邮箱，然后想更新线上一批机器的这个项目。第一个是想到 `git pull --force`，但是此方法会做一个合并，所以不行；另外想到 `git fetch; git merge -X theirs master` 也不行。
+
+后来搜到 [这个回答](https://gist.github.com/vladimirtsyupko/10964772)：
+
+```
+git fetch
+git reset --hard origin/master
+```
+
+首先在线上环境这种只做 `clone`、`pull` 等操作（核心是 `fetch`），如果没有异同，则没有 `.git/refs/remote/origin/master` 文件（指向远程的最新 commit id）。
+
+如果有异同，如上修改了提交者姓名和邮箱，会生成 `origin/master`，然后 `git reset` 即将当前 `head` 变更为指定的状态，也就是远程更新后的。
+
 
 ## Git diff 技巧 ##
 
