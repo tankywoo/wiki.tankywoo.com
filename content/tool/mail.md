@@ -17,7 +17,7 @@ log: "增加mutt limit的逻辑操作"
 * MDA(Mail Delivery Agent): 在邮件经过N个MTA达到目标的邮件服务器(local MTA)时, MDA将邮件放到相应的目录下.
 * Mailbox: 信箱, linux下一般存在/var/spool/mail下
 
-![mail process](https://tankywoo-wb.b0.upaiyun.com/mail-1.jpg)
+![mail process](https://images.tankywoo.com/mail-1.jpg)
 
 (图片引用自[How a mail server works](http://xmodulo.com/how-mail-server-works.html))
 

@@ -226,7 +226,7 @@ rrdtool graph 需要数据提供以画图. 它并不局限于单个RRD, 可以�
 
 
 效果图:  
-![效果图](https://tankywoo-wb.b0.upaiyun.com/rrd1.png)
+![效果图](https://images.tankywoo.com/rrd1.png)
 
 
 

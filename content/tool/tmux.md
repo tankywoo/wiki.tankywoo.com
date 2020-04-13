@@ -157,7 +157,7 @@ google搜出来的讲解tmux脚本化的E文不少, 不过没几个解释了 `C-
 在 ~/.tmux.conf 里绑定快捷键: bind T source-file ~/.tmux/tanky
 
 这样, 就可以通过快捷键 C-b S-t 一键初始化一个如下图的布局.
-![Script Tmux](https://tankywoo-wb.b0.upaiyun.com/tmux_new.png)
+![Script Tmux](https://images.tankywoo.com/tmux_new.png)
 
 另外, 还可以直接写shell脚本, 然后运行, 比如:
 

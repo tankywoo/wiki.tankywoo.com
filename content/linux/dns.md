@@ -7,7 +7,7 @@ date: 2017-08-28 15:30
 
 首先看下 DNS 首部结构图，图片来至 <http://www.troyjessup.com> (这个网站好像无法打开了，从其它站点找到的图)：
 
-![DNS HEADER](https://tankywoo-wb.b0.upaiyun.com/dns/dns-header.jpg)
+![DNS HEADER](https://images.tankywoo.com/dns/dns-header.jpg)
 
 例1：
 
@@ -64,7 +64,7 @@ f1g1ns1.dnspod.net.     3928    IN      A       182.140.167.166
 
 如下这幅图，[图片来源](http://slideplayer.com/slide/9431631/)：
 
-![Recursive and Iterative](https://tankywoo-wb.b0.upaiyun.com/dns/dns-recursive-and-iterative.jpg)
+![Recursive and Iterative](https://images.tankywoo.com/dns/dns-recursive-and-iterative.jpg)
 
 可以看到 `1, 8` 这个过程是递归查询，其余是非递归查询。一般我们直接请求的 ns 服务器承担了递归、转发(forward)、缓存的作用。
 
@@ -91,7 +91,7 @@ dig +norecurse tankywoo.com A @114.114.114.114
 
 如下这幅图，[图片来源](http://social.dnsmadeeasy.com/blog/authoritative-vs-recursive-dns-servers-whats-the-difference/)：
 
-![Authoritative DNS](https://tankywoo-wb.b0.upaiyun.com/dns/dns-authoritative-server.png)
+![Authoritative DNS](https://images.tankywoo.com/dns/dns-authoritative-server.png)
 
 可以看到，中间经过递归查询，最终查询到权威服务器，然后返回记录。
 
